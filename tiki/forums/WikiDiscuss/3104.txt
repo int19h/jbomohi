@@ -5684,3 +5684,68 @@ out.
 
 
 
+
+## 2004-12-22T20:06:02Z — rlpowell (@rlpowell) (post 3257)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041222193640.GT20429@chain.digitalkingdom.org
+In-Reply-To: 20041222185813.GP20429@chain.digitalkingdom.org
+
+On Wed, Dec 22, 2004 at 10:58:13AM -0800, Robin Lee Powell wrote:
+> Cage match between camxes and valfendi, round one:
+> 
+> $ echo "muSTEl,aVIson" | valfendi -a -l -s
+> >muSTE< -l,a VIson.
+> 
+> (which means "muSTE" is a non-Lojban word, "l,a" is a cmavo, and
+> "VIson" is a cmene)
+> 
+> $ echo "muSTEl,aVIson" | myparser -m
+> text
+> |- CMAVO
+> |     PA: mu
+> |- BRIVLA
+> |     gismu: STEl,a
+> |- CMENE
+>       cmene: VIson
+> 
+> Seems to me like valfendi's bad here, but I'll let you guys fight it
+> out.
+
+Heh.
+
+*** Sentence: muSTElaVIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu (STEla) VIson.
+
+*** Sentence: muSTEla.VIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu (STEla) VIson.
+
+*** Sentence: muSTE.laVIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu (STEla) VIson.
+
+*** Sentence: muSTE.la.VIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu (STEla) VIson.
+
+*** Sentence: muSTEl,aVIson  1
+MISMATCH!
+valfendi: >muSTE< -l,a VIson.
+pegbased: -mu (STEl,a) VIson.
+
+These have been normalized to valfendi's format, which is:
+
+>nonLojbanWord< (brivla) -ma'o cmen.
+
+valfendi *really* doesn't want to take that mu.
+
+-Robin
+
+
+
