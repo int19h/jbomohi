@@ -1,0 +1,73 @@
+# mail/lojban-list thread f7b087ae504a-word_trainer_-_jdictp | root 422a9da9.9060407@gulik.co.nz | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2005-03-06T06:05:29Z | Michael van der Gulik <mikevdg@gulik.co.nz> | 422a9da9.9060407@gulik.co.nz | mail/lojban-list/cur/1110089129.f7b087ae504a8faf.jbomohi:2,S
+Hi all.
+
+I've tried to convert Robin's word lists for SuperMemo for use with 
+jdictp. jdictp is another flash-card program - see 
+http://jdict.sourceforge.net.
+
+Unfortunately it doesn't work yet; jdictp crashes when I try to load the 
+lojban list. I'm still investigating. If anybody else has more luck then 
+please let me know.
+
+The palm .pdb file is at http://www.gulik.co.nz/lojban.pdb; 666kb. 
+You'll need to install the SuperWaba JVM (http://www.superwaba.org) and 
+jdictp first.
+
+I used this very small Python script to convert 
+big_list_supermemo_win.txt into a TEI.2 file, and then manually made 
+changes to the resulting file until it was accepted by the jdictp parser:
+
+#!/bin/python
+# This file converts Robin's Supermemo word list into a jdictp 
+compatible wordlist (I.e. TEI 2)
+
+infile = open("big_list.txt", "r+")
+outfile = open("lojban.tei", "w+")
+
+outfile.writelines(["<?xml version=\"1.0\"?>\n",
+                    "<TEI.2>\n",
+                    "<TEIHEADER>\n",
+                    "<FILEDESC>\n",
+                    "<TITLESTMT><TITLE>Lojban</TITLE></TITLESTMT>\n",
+                    "</FILEDESC>\n",
+                    "</TEIHEADER>\n",
+                    "<TEXT>\n<BODY>"])
+
+currentq = ""
+currenta = ""
+lines = infile.readlines()
+
+for aline in lines:
+    if (aline.strip() == ''):
+        # Then we have reached the end of a question/answer. We write it 
+out.
+        outfile.writelines(["<ENTRY>\n<FORM>\n<ORTH>\n",
+                            currentq,
+                            "</ORTH>\n</FORM>\n",
+                            "<TRANS>\n<TR>\n",
+                            currenta,
+                            "</TR>\n</TRANS>\n",
+                            "</ENTRY>\n"
+                            ])
+        currentq = ""
+        currenta = ""
+    elif aline.startswith("Q"):
+        # Add to the question
+        currentq = currentq + aline[3:]
+    elif aline.startswith("A"):
+        currenta = currenta + aline[3:]
+
+outfile.writelines(["</BODY></TEXT>\n",
+                    "</TEI.2>\n"
+                    ])
+
+infile.close()
+outfile.close()
+
+
+Mikevdg.
+
+
+
