@@ -1,6 +1,88 @@
-# mail/lojban-list thread 984971cedb84-prolog_semantic_analyser | root t1kbzddeiji.a.78h.r00klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 984971cedb84-prolog_semantic_analyser | root t1kbzddeiji.a.78h.r00klb@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1993-05-03T05:05:03Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | be60955ad7d0e16e6dc993b9e77e6a7c04989859@jbomohi.invalid | mail/lojban-list/cur/736405503.cc7f864b640f30c7.jbomohi:2,S
+Haven't been working on this for a while, as other stuff has come up. I've
+just started implementing question answering on text currently being
+processed. As you can see, the processor can reorder prenexes in acceptable
+ways; it cannot yet handle conjunctions in question answering, nor inferences
+based on quantifiers.
+
+Note that questions are treated as parenthetical comments: {.i broda .i xu
+broda .ije brode} is parsed as: {.i broda to .i xu broda toi .ije brode}
+
+1)
+
+i mi nelci lo gerku ku vau i xu koha nelci lo gerku ku
+vau i je mi gerku vau
+
+***
+
+c(e, q(suho(1), _FJKGQ, gerku(_FJKGQ, _FJKLO, _FJKLP, _FJKLQ, _FJKLR), [],
+nelci(mi, _FJKGQ, _FJKGR, _FJKGS, _FJKGT)), gerku(mi, _FJLGM, _FJLGN, _FJLGO,
+_FJLGP))
+Answers to the questions: [no_answer]
+true.
+
+2)
+
+i mi nelci lo gerku ku vau i xu mi nelci lo gerku ku
+vau i je mi gerku vau
+
+***
+
+c(e, q(suho(1), _FJKGQ, gerku(_FJKGQ, _FJKLO, _FJKLP, _FJKLQ, _FJKLR), [],
+nelci(mi, _FJKGQ, _FJKGR, _FJKGS, _FJKGT)), gerku(mi, _FJLHM, _FJLHN, _FJLHO,
+_FJLHP))
+Answers to the questions: [yes]
+true.
+
+3)
+
+lo prenu ku lo gerku ku lo dakfu ku ro boi lo xamsi ku
+ ro boi lo dertu ku cu klama vau i xu fi lo dakfu ku
+ fe lo gerku ku fa lo prenu ku fu ro boi lo dertu ku
+fo ro boi lo xamsi ku cu klama vau
+
+***
+
+c(seq, q(suho(1), _FJKTN, prenu(_FJKTN, _FJKYB, _FJKYC, _FJKYD, _FJKYE), [],
+q(suho(1), _FJKYK, gerku(_FJKYK, _FJLCY, _FJLCZ, _FJLDA, _FJLDB), [],
+q(suho(1), _FJLDH, dakfu(_FJLDH, _FJLHV, _FJLHW, _FJLHX, _FJLHY), [], q(ro,
+_FJLIE, xamsi(_FJLIE, _FJLMS, _FJLMT, _FJLMU, _FJLMV), [], q(ro, _FJLNB,
+dertu(_FJLNB, _FJLRP, _FJLRQ, _FJLRR, _FJLRS), [], klama(_FJKTN, _FJKYK,
+_FJLDH, _FJLIE, _FJLNB)))))), [])
+Answers to the questions: [yes]
+true.
+
+4)
+
+lo prenu ku lo gerku ku lo dakfu ku ro boi lo xamsi ku
+ ro boi lo dertu ku cu klama vau i xu fu ro boi lo dertu ku
+ fe lo gerku ku fa lo prenu ku fi lo dakfu ku
+fo ro boi lo xamsi ku cu klama vau
+
+***
+
+c(seq, q(suho(1), _FJKTN, prenu(_FJKTN, _FJKYB, _FJKYC, _FJKYD, _FJKYE), [],
+q(suho(1), _FJKYK, gerku(_FJKYK, _FJLCY, _FJLCZ, _FJLDA, _FJLDB), [],
+q(suho(1), _FJLDH, dakfu(_FJLDH, _FJLHV, _FJLHW, _FJLHX, _FJLHY), [], q(ro,
+_FJLIE, xamsi(_FJLIE, _FJLMS, _FJLMT, _FJLMU, _FJLMV), [], q(ro, _FJLNB,
+dertu(_FJLNB, _FJLRP, _FJLRQ, _FJLRR, _FJLRS), [], klama(_FJKTN, _FJKYK,
+_FJLDH, _FJLIE, _FJLNB)))))), [])
+Answers to the questions: [no_answer]
+true.
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nick S. Nicholas,                      "Rode like foam on the river of pity
+CogSci & CompSci student,               Turned its tide to strength
+University of Melbourne, Australia.     Healed the hole that ripped in living"
+nsn@{munagin.ee|mundil.cs}.mu.oz.au           - Suzanne Vega, Book Of Dreams
+______________________________________________________________________________
+
+
+
+=== 2 | 1993-05-03T05:05:03Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | nqpfl1sngll.a.i_h.x00klb@chain.digitalkingdom.org | mail/lojban-list/cur/736405503.919bae14c2d55618.jbomohi:2,S
 Haven't been working on this for a while, as other stuff has come up. I've
 just started implementing question answering on text currently being
 processed. As you can see, the processor can reorder prenexes in acceptable
