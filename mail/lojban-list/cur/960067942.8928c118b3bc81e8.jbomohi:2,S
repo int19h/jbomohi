@@ -1,0 +1,77 @@
+Return-Path: <richard@rrbcurnow.freeuk.com>
+Received: (qmail 22828 invoked from network); 3 Jun 2000 21:43:02 -0000
+Received: from unknown (10.1.10.26) by m1.onelist.org with QMQP; 3 Jun 2000 21:43:02 -0000
+Received: from unknown (HELO scrabble.freeuk.net) (212.126.144.6) by mta1 with SMTP; 3 Jun 2000 21:43:02 -0000
+Received: from [212.126.155.71] (helo=rrbcurnow.freeuk.com ident=root) by scrabble.freeuk.net with esmtp (Exim 3.12 #1) id 12yLh5-0005Kt-00 for lojban@egroups.com; Sat, 03 Jun 2000 22:43:00 +0100
+Received: from richard by rrbcurnow.freeuk.com with local (Exim 2.02 #2) id 12yLWo-00005x-00 for lojban@egroups.com; Sat, 3 Jun 2000 22:32:22 +0100
+Date: Sat, 3 Jun 2000 22:32:22 +0100
+To: "lojban@onelist.com" <lojban@egroups.com>
+Subject: Re: [lojban] (Technical) Problem area in v3 grammar
+Message-ID: <20000603223222.A300@rrbcurnow.freeuk.com>
+Reply-To: Richard Curnow <rpc@myself.com>
+Mail-Followup-To: "lojban@onelist.com" <lojban@egroups.com>
+References: <4.2.2.20000520151902.00ac1a60@127.0.0.1> <3936B311.172FF7D6@reutershealth.com> <20000602232742.A484@rrbcurnow.freeuk.com> <393835AB.BFD52E8F@reutershealth.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.2i
+In-Reply-To: <393835AB.BFD52E8F@reutershealth.com>; from jcowan@reutershealth.com on Fri, Jun 02, 2000 at 06:31:07PM -0400
+From: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-Yahoo-Message-Num: 2929
+Content-Length: 2025
+
+(Apologies if this looks a bit cryptic - I sent a private mail to John
+yesterday about this topic - the citation is taken from that and lacks
+the previous context.)
+
+On Fri, Jun 02, 2000 at 06:31:07PM -0400, John Cowan wrote:
+> Richard Curnow wrote:
+> 
+> > term<83> = sumti | (tag | FA #) (sumti | /KU#/ | termset) | termset | NA KU #
+> > 
+> > Yes? No?
+> 
+> Yes.
+
+Having had another day to think about this, I think John's suggested
+modification to grammar.300 provides more generality than is actually
+required to fix the problem.
+
+I believe the minimal change needed is to redefine term<83> to look like
+this :
+
+ term<83> = sumti | tag /NUhI/ sumti | tag /KU#/ | FA # (sumti | /KU#/) | termset | NA KU #
+
+i.e. make it optional to insert nu'i between a tag and the following
+sumti.  This provides the delineation required between the pu and the zi
+in my original problem example.  Probably lots of other cmavo would be
+useable instead of nu'i without problems - I've just picked nu'i to
+mirror John's suggestion most closely.
+
+Whether this is easy to do in grammar.300, I don't know.  It does have
+the advantage of fixing only the buggy case.  It could be trivially
+implemented in jbofi'e (as could John's proposal).
+
+>  
+> > I'm interested in this because the parser in my jbofi'e program was
+> > written from the bnf.300 file - I've avoided looking at grammar.300 and
+> > your lexer + missing terminator insertion code altogether, to try and
+> > keep my program completely indepedent.
+> 
+> Okay.  In case of conflict, though, grammar.300 is authoritative.
+
+But as I mentioned in my previous mail to John, it's useful to develop a
+parser from bnf.300 alone, if only to give an further check of whether
+bnf.300 and grammar.300 describe the same grammar.
+
+co'o mi'e ritcyd.
+
+-- 
+----------------------------------------------------------------------
+Richard P. Curnow                                       rpc@myself.com
+Weston-super-Mare
+United Kingdom                        http://www.rrbcurnow.freeuk.com/
+
+
+           
+
