@@ -1,4 +1,4 @@
-# mail/lojban-list thread fd6db2917e8c-le_stura_be_la_gihuste | root pine.lnx.4.21.0008221742550.3127-100000@burp.n | 5 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread fd6db2917e8c-le_stura_be_la_gihuste | root pine.lnx.4.21.0008221742550.3127-100000@burp.n | 6 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-08-22T19:02:31Z | Elrond <grey.havens@earthling.net> | pine.lnx.4.21.0008221742550.3127-100000@burp.n | mail/lojban-list/cur/966970951.fd6db2917e8c3d02.jbomohi:2,S
 
@@ -418,6 +418,210 @@ lojbab                                             lojbab@lojban.org
 Bob LeChevalier, President, The Logical Language Group, Inc.
 2904 Beau Lane, Fairfax VA 22031-1303 USA                    703-385-0273
 Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+           
+
+
+
+=== 6 | 2000-08-23T15:28:14Z | Elrond <grey.havens@earthling.net> | pine.lnx.4.21.0008231614470.3775-100000@burp.n | mail/lojban-list/cur/967044494.33e9b231719b2076.jbomohi:2,S
+
+> I don't see how this is so.  The difficulty is all on the human end - 
+> preparing the files.  Computer memory and speed is cheap and hardly 
+> challenged by the size of the lists that are being searched for Lojban 
+> processing (and if they are, then indexing a file isn't difficult), and any 
+> format can be manipulated into any other format by a computer program as 
+> part of setup, if the original format is regular. 
+
+Leaving apart the amount of difficulty in doing any translation work (that
+is my problem to evaluate it, and not subject to discussion, obviously),
+there is still *much* work to be done on the lists' format before anyone
+can write *SIMPLE* yet *efficient* programs that can, for example, convert
+Lojban text to correct English. This work includes *adding* fields,
+keywords, prepositions, connect words, grammar information, and so on, to
+the gismu, cmavo and lujvo lists.
+	Once this work is done, which means that the various list,
+considered as *computer files*, are rewritten in a way that
+parsing/reading it is easy and precise and/or unambiguous from a *computer
+program*'s standpoint, then the material for an easier "field filling"
+translation work of the lists themselves is there.
+
+This is what I meant. I do not consider changing the gismu list, but
+modify the structure of the files which contain it.
+
+> >now with those several ideas, I can already think about
+> >having standardized tools, more complex translation capabilities and so
+> >on, both for French AND English versions of the list. Ask for further
+> >details.
+> 
+> Consider yourself asked
+li'o
+> Like I said: do the translation, and THEN worry about conforming it to some 
+> standardized format.
+
+	I do not want this. I want to care about and devise a format which
+will make it easy to modify/revise the translated list *before* starting
+the translation. For having used computer material which was created from
+the ground up without structure design before, and knowing how difficult
+it is to "patch", or even *use* (in an automated fashion) a file with
+bogus/random structure, I cannot just impose the same thing to a
+newly-written computer entity. Look, this is just what everyone teaches to
+database or programs writers: write with regular patterns, document them,
+for the sake of maintainability!
+
+	I believe that I now have to insert the ideas I thought about.
+
+My goals were the following:
+
+* The files should be formatted in plain text, with (preferably) only
+ASCII characters, or, when the character set is different, have it
+specified at the beginning (in a "header") in a standard fashion.
+
+* Fields should not be fixed-width, not because it is a waste of computer
+space, but because a certain width often later on proves too narrow.
+Instead, have them separated by "control" characters/tags, preferably
+using tabulations or newlines so that
+   1) it is easily parsable (main goal)
+   2) it formats automatically nicely when displayed on a standard
+computer display.
+
+* In addition to the "unique" keywords for each lojban word, should be
+added place keywords. The grammar class of sumti fitting in each place
+should, when needed, specified clearly and separately from the
+translation.
+
+* The translation should be done in two parts: the first part translating
+what fits in each place (creating these "place keywords"), and the other
+part specifying the relationship stated by the gismu between the places,
+together with all connection words needed when doing a lojban-to-other
+language translation.
+
+This is about the gismu, lujvo, and possibly fu'ivla lists (I did not --
+yet -- think much about the cmavo lists, while however I am considering
+doing so soon).
+
+As for the implementation of these ideas, the best thing would be an
+XML-like database format. Unfortunately, I do not (yet) know much about
+XML parsers and therefore did not bother working on an appropriate set of
+XML tags. I instead tried a simplified syntax to firstly format, and
+secondly translate, the first few gismu. Here is what I got, explanation
+follows:
+
+betfu (bef, be'u): "abdomen", "belly"
+	1: "abdomen", "belly", "lower trunk" \
+           [body part; \
+            metaphor: midsection; \
+            also: "stomach" (= djaruntyrango); \
+            also: "digestive tract" (= befctirango, befctirangyci'e)]
+	2: "body"
+	r 1* : $1 is [!:an] [2:a/the] abdomen [2:of body $2]
+	r 2* : $2 has [!:an] [1:for] abdomen [1:$1]
+	related: cutne; livga; canti; djaruntyrango; befctirango; \
+		befctirangyci'e
+
+kakne (ka'e): "able", "can"
+	1: "able", "capable" [also: "talentuous"] (1)
+	2 (event, state): "ability", "capacity"
+	3 (event, state): "cond. of ability"
+	r 1* : $1 is/are able [2:to do/be $2] [3: under cond. $3]
+	r 2* : $2 is/are ability [1:of $1] [3: under cond. $3]
+	r 3* : $3 is/are cond. of ability [1:of $1] [2:to do/be $2]
+	n 1 : also: "has talent", "know how to"
+	n 2 : also: "know how to use" (= plika'e)
+	related: stati; certu; gasnu [in the time-free potiential sense]; \
+		 djuno; zifre; plika'e; ka'e; nu'o; pu'i
+
+gapru (gap): "above", "up"
+	1: "thing directly above", "thing vertically above", \
+	   "thing upwards"
+	2: "origin of above-ness"
+	3: "frame of ref.", "gravity of ref."
+	r 1* : $1 is/are above [2:$2] [3:in frame of ref. $3]
+	r 2, 23 : $2 has s/g above it [3:in frame of ref. $3]
+	r 21* : $2 has, above it, $1 [3: in frame of ref. $3]
+	r 3+ : $3 is frame of ref. [*:in which !]
+	r 3 : $3 is frame of ref. in which s/g is above s/g else
+	related: tsani; galtu; cnita; drudi; gacri; dizlo; farna
+
+(some more upto janta stripped)
+
+here are the corresponding translations:
+
+betfu (bef, be'u): "abdomen", "ventre"
+        1: "abdomen", "ventre, "tronc inférieur" \
+	   [partie du corps; \
+	    métaphore: section intermédiaire;
+ 	    aussi: estomac]
+        2: "corps"
+        r 1* : $1 est [2:un/l'] abdomen [2:du corps $2]
+        r 21 : $2 a pour abdomen $1
+        r 2 : $2 a un abdomen
+
+kakne (ka'e): "capable", "pouvoir" [capacité]
+        1: "ent. capable", "ent. pouvant" [aussi: "talentueux"] (1)
+        2 (event, state) : "capacité", "pouvoir"
+        3 (event, state) : "cond. de capacité"
+        r 1* : $1 est capable [2:de $2] [3:sous condition $3]
+        r 2* : $2 est capacité [1:de $1] [3:sous condition $3]
+        r 3* : $3 est condition de capacité [1:de $1] [2:à $2]
+	n 1 : aussi: "avoir du talent", "savoir faire"
+
+gapru (gap): "au-dessus", "surplomber"
+        1: "ent. au-dessus", "ent. qui surplombe"
+        2: "obj. surplombé", "origine"
+        3: "référentiel", "gravité de référence"
+        r 1* : $1 est au-dessus [2:de $2] [3:dans le réf. $3]
+        r 2* : $2 est surplombé [1:par $1] [3:dans le ref. $3]
+        r 3+ : $3 est réf. [dans lequel !]
+        r 3 : $3 est référentiel d'une relation de surplomb
+
+Enough for now on. Of course this bit might seem much less clear and/or
+obvious than a straight translation as in the current list. However this
+"format" makes it easy to *convert* it, for example, to the actual format
+and thus print the whole list in a more understandable way, all this by a 
+*single* tool. Such a syntax allows both for easy translation of
+
+   da de di gapru
+into
+   "da" (ent. au-dessus) est au-dessus de "de" (obj. surplombé) dans le
+réf. "di" (référentiel)
+
+and
+   da de di te gapru
+into
+   "da" (référentiel) est réf. dans lequel "di" (ent. au-dessus) est au
+dessus de "de" (obj. surplombé)
+
+The process, while not obviously clear, is intuitive from the information
+provided in each gismu record.
+
+
+	As one might have noted, I tried to use this "two parts in
+translation" pattern I talked about. 
+
+In a first part of each record, there are place keywords with notes
+corresponding to each particular places.
+The second part states different possible foreign translation of the
+*relationship* itself, one for each possible useful place structure. For
+example purposes, I tried to specify every relevant relationship
+translation for each gismu; of course it is possible to specify only one
+and eventually complete what's remaining later.
+The last part states notes and related information for the gismu record as
+a whole.
+
+I won't include here the detailed explanation of each syntax bit, even
+if the bracket things, for example, are truly not obvious. This was a
+draft idea.
+
+I also do know that these choices are suboptimal -- I feel like there
+would be much less to write if any modification/translation of the list
+could be written as a "patch" to a previous version. This is why tagged
+syntax is nice, btw.
+
+So, what do you think of it ? Any derived ideas show up ?
+
+Thanks for your attention
+raph
 
 
            
