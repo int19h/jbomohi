@@ -1,4 +1,4 @@
-# mail/lojban-list thread 842b71f2eff0-updated_letter_frequency_data | root 20041204184629.gu25791@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 842b71f2eff0-updated_letter_frequency_data | root 20041204184629.gu25791@chain.digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-12-04T18:46:29Z | Robin Lee Powell <lojban-out@lojban.org> | 20041204184629.gu25791@chain.digitalkingdom.org | mail/lojban-list/cur/1102185989.842b71f2eff094ac.jbomohi:2,S
 I've just generated new letter frequency data based on all but the
@@ -168,5 +168,73 @@ The day and hour soon are coming / When all the IT folks say "Gosh!"
 It isn't from a clever lawsuit / That Windowsland will finally fall,
 But thousands writing open source code / Like mice who nibble through a wall.
         --The Linux-nationale by Greg Baker
+
+
+
+=== 3 | 2004-12-05T03:06:22Z | Robin Lee Powell <lojban-out@lojban.org> | 20041205030622.gw25791@chain.digitalkingdom.org | mail/lojban-list/cur/1102215982.75a095d578b327cc.jbomohi:2,S
+On Sat, Dec 04, 2004 at 06:44:14PM -0500, John Cowan wrote:
+> Robin Lee Powell scripsit:
+> 
+> > My data, sorted by number of occurences:
+> 
+> [snip]
+> 
+> > The only previous work on this I'm aware of is:
+> > 
+> > http://www.lojban.org/files/papers/scrabble.unf
+> > 
+> > Which, it turns out, is amazingly flawed (which is fine, because
+> > that was a long time ago!).
+> 
+> The two sets of statistics aren't comparable, because the Scrabble
+> data counts each distinct word only once, which is appropriate for
+> Scrabble.  Your data (I assume) counts every letter in the running
+> text.
+
+I don't see how that's appropriate for scrabble, actually, but I can
+edit my data to work that way trivially:
+
+grep -v '^#' test_sentences.txt | sed 's/ -- .*//' | tr -d -c "aeiouybcdfgjklmnprstvxz' .A-Z" | tr ' .' '\n' | sort | uniq | tr -d -c "aeiouybcdfgjklmnprstvxz'" | sed 's/\(.\)/\1\n/g' | sort | uniq -c | sort -r
+
+Gives:
+
+  21732 i
+  17703 a
+  14387 o
+  11890 e
+  10319 u
+   9585 n
+   8434 c
+   8011 r
+   7560 l
+   7084 s
+   6816 m
+   5780 '
+   5496 t
+   5144 d
+   4290 k
+   3870 b
+   3453 p
+   3124 j
+   2720 g
+   2032 x
+   2010 v
+   1915 z
+   1749 y
+   1632 f
+
+Which is within spitting distance of identical to my previous result.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
+
+
+           
 
 
