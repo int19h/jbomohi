@@ -1,4 +1,4 @@
-# mail/lojban-list thread 385cbcf273ab-tech%3A_ai_project_proposal | root sqd7ywxonih.a.u3.620klb@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 385cbcf273ab-tech%3A_ai_project_proposal | root sqd7ywxonih.a.u3.620klb@chain.digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 1993-03-12T06:44:05Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | 48a6f0ee3a709b5441918f438e20a24262785b82@jbomohi.invalid | mail/lojban-list/cur/731918645.b236eb7540b99175.jbomohi:2,S
 I am *not* asking any of you to do my homework for me! :) (In fact, I
@@ -134,6 +134,139 @@ Momenton senpretende paseman mi retenis kaj # [Victor Sadler, _Memkritiko_ 90]
 
 
 === 2 | 1993-03-12T06:44:05Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | iyoodx78ttb.a.t3.720klb@chain.digitalkingdom.org | mail/lojban-list/cur/731918645.a3caf72ae902a494.jbomohi:2,S
+I am *not* asking any of you to do my homework for me! :) (In fact, I
+ask that you not). BUT: I've decided to do a semester project on a
+Lojban to Prolog translator, and would ask your comments on the following
+proposal. And if possible, make your comments soon: I want to have this
+proposal on my supervisor's desk first think Monday morning (Sunday
+afternoon, US Time; Sunday evening, UK Time). I'd particularly welcome
+suggestions on what parts of Lojban grammar I should admit: I suspect
+the program presented here is too ambitious for the 60 hours of work I
+had in mind.
+
+[cut here]
+
+Project Proposal for 433-603: A Lojban-to-Prolog translator.
+
+Lojban is an artificial language intended for human use, of the type
+exemplified by Esperanto and Interlingua. It is an offshoot of an
+earlier such language, Loglan, and shares with it the ostensible _raison
+d'etre_ of helping test the Sapir-Whorf hypothesis by deviating from
+natural human language in a known, predictable manner, and observing
+whether this deviation would have a noticeable effect on its speakers'
+thinking. The hypothesis and the merits of its testing in this manner
+are not held in universal esteem in the Lojban community; I, for one, am
+quite skeptical that such a project can or need be realised. What is
+of interest here is that, in order to implement this 'deviation', the
+languages have been explicitly based on predicate logic. Predicates
+serve the role of verbs, predicates with determines preposed serve the
+role of nouns, and predications serve as sentences.
+
+The immediate question that arises on considering such a language is:
+to what extent can a logic (not necessarily First Order) adequately
+express what human language can express? Again, this is a matter of
+contention within the community; I believe that, if Lojban acquires a
+true (second-language) speech community, its speakers will end up speaking
+a human language no matter what, and that in the conflict between logic
+and human language instinct, the latter will win (this is complicated
+by the considerable risk that the language will end up as a code for
+English, with little autonomy from that language; this tendency has been
+resisted so far). Nonetheless, the language already provides a model
+for natural language, with considerable expressive power, and with an
+affinity to "logical forms" through its predicate logic origins, that
+make a Lojban-to-Prolog translator an appealing task. The translator,
+given a text in Lojban, would construct a Prolog database storing the
+information denoted in the text.
+
+The task is simplified in that an unambiguous context free grammar exists
+for the language (implemented in YACC, with some imaginative use of error
+recovery, but retaining LALR(1) nature). But even though syntactical
+considerations have already been dealt with, most of the semantic issues
+complicating logic-programming-based knowledge representation of natural
+language remain in Lojban: higher-order predicates; metalinguistic comments
+and attitudinals; the ambiguous semantic relationship of head and modifier
+in word compounding; the representation of numbers, prepositional phrases,
+non-logical connectives, negation, tense and modality; the distinction
+between "the" and "a", partly echoed in the language's veridical and
+non-veridical determiners; the distinction between individual and
+collective plurals; subject-raising; relative clauses, and so forth.
+
+In effect, a Lojban-to-Prolog translator would be addressing many of
+the current issues in NLP knowledge representation, though it would be
+biased towards predicate logic in the way it does so. With the way Lojban
+grammar is structured, results will become available a short time into
+the project without being distracted by parsing issues or syntactic
+ambiguity.
+
+In order to keep the project manageable, a subset of the language will have
+to be considered; this is in line with the Lojban Canonicaliser proposed
+by John Cowan. The subset of Lojban I intend to work on is be described
+as follows, in stages:
+
+1. Simple predications with a known predicate, and with arguments without
+internal structure (Proper names, logical variables). No quantification
+other than existential.
+eg. mi prami da --- There exists an X such that LOVES(i,X).
+2. Non-Veridical arguments (cf. English "the") based on predicates, with
+internal arguments.
+eg. mi catra le prami be le pulji --- KILLS(i,x) & LOVE(x,y) & POLICE(y):
+I kill the lover of the policeman.
+3. Veridical arguments (cf. English "an") based on predicates, with
+internal arguments.
+eg. mi catra lo prami be lo pulji --- There exist X and Y such that:
+KILLS(i,X) & LOVE(X,Y) & POLICE(Y): I kill a lover of a policeman.
+4. Resolution of logical connectives.
+eg. mi nelci do .e ko'a ---> mi nelci do .ije mi nelci ko'a ---
+LIKES(i,you) & LIKES(i,x1): I like you and him.
+5. Restrictive and non-restrictive relative clauses.
+eg. mi nelci le prenu poi do xebni ke'a --- (There exists x such that
+HATES(you,x)) & LIKES(i,x) & person(x): I like the person you hate.
+6. Higher order predicates.
+eg. lenu mi cadzu cu nandu --- DIFFICULT(event:WALKS(i)): My walking is
+difficult.
+7. Prepositional phrases (other than tense and location).
+eg. mi naumau do nelci ko'a ---> mi zmadu do leni da nelci ko'a ---
+EXCEEDS(i,you,quantity:LIKES(X,x1)): I like him more than you.
+8. Attitudinals.
+eg. mi .ui sidju do ---> mi sidju do .ije mi gleki mi va'o lenu mi sidju
+do: HELP(i,you) & HAPPY(i,i) & CONTEXT((state:HAPPY(i,i),event:HELP(i,you)):
+I *smile* will help you, I am happy to help you.
+9. Tense (including location), and prepositions of tense (including location).
+Also includes modality and event contours.
+eg. mi ba'o tavla ---> lenu mi tavla cu ba'o zei balvi zo'e:
+AFTERMATH(event:talk(i,_,_,_),_): I have spoken.
+10. Non-logical connectors.
+eg. la gilbrt. joi la salivn. cu finti la mikadon. --- INVENT(X,mikado) &
+JOINT_MASS(X,gilbert,sullivan): G & S (as a joint unit) wrote The Mikado.
+11. Masses and sets as arguments.
+eg. loi remna cu sipna: the mass of humans sleep (Even though it is not
+true at any given moment that For all X: HUMAN(X) => SLEEPS(X)
+12. Quantification (including numerical):
+eg. mu le ze mensi cu cucycau: five of the seven sisters are barefoot.
+13, Negation. Contradictory, scalar. Use of prenexes.
+mi naku ro prenu cu prami: NOT(For all X:PERSON(X), LOVES(i,X))
+mi ro prenu na prami: For all X:PERSON(X), NOT(LOVES(i,X))
+
+Sections of Lojban Grammar not anticipated to be included in the model:
+
+1. The mathematical subgrammar of Lojban.
+2. Any analysis of word compounds.
+3. Metalinguistic comments.
+
+The detail of coverage of some sections, particularly tense, will probably
+have to be curtailed due to time constraints. It is anticipated to have
+this project take at most 80 hours of work.
+
+Enclosures: [Bits of JL, John Cowan's sketch of a Lojban Canonicaliser]
+
+Momenton senpretende paseman mi retenis kaj # [Victor Sadler, _Memkritiko_ 90]
+   kultis kvazaux                           &  (NICK NICHOLAS. Melbourne.
+      senhorlogxan elizeon                  #   Australia. IRC: nicxjo.
+         (Dume:                             &   nsn@munagin.ee.mu.oz.au .)
+
+
+
+=== 3 | 1993-03-12T06:44:05Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | sqd7ywxonih.a.u3.620klb@chain.digitalkingdom.org | mail/lojban-list/cur/731918645.385cbcf273ab5676.jbomohi:2,S
 I am *not* asking any of you to do my homework for me! :) (In fact, I
 ask that you not). BUT: I've decided to do a semester project on a
 Lojban to Prolog translator, and would ask your comments on the following
