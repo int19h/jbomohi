@@ -1,0 +1,21 @@
+# mail/lojban-list thread 3e15062efdd4-how_do_you_parse_lujvo_into_the_component_rafsi | root 002d01c0a920$b720c680$825681ce@wlink.net | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2001-03-10T05:12:33Z | seidensticker <seidensticker@msn.com> | 002d01c0a920$b720c680$825681ce@wlink.net | mail/lojban-list/cur/984201153.3e15062efdd44e09.jbomohi:2,S
+I'm working on an algorithm for breaking a lujvo into its component parts.  (My goal: given an unknown lujvo, break it up into parts and display the definitions of each of those parts.)  Chapter 4, section 11 of the grammar book ("The lujvo-making algorithm") talks about creating lujvo, but my question is about the reverse.  Is there a place where this is simply described?
+
+If there's not, let me try this: I've tried to compose a grammar that defines a lujvo.  Could someone critique it?
+
+lujvo  =  InitialRafsi  TermainlRafsi
+InitialRafsi  =  Rafsi  InitialRafsi  |  <null>
+Rafsi  =  4Rafsi  |  3Rafsi
+
+TerminalRafsi  =  CCV | CVV | CVCCV | CCVCV
+4Rafsi  =  CVCCy | CCVCy
+3Rafsi  =  CVV | CCV | CVVr | CVVn | CVC | CVCy
+
+Must the parsing of the unknown lujvo begin from the right?  or left?  or is it unambiguous regardless?  Given a 4Rafsi of the form CVCCy or CCVCy, I'm assuming that there's only one gismu with those first 4 letters -- right?  
+
+Any other suggestions for how to do the parsing?
+
+Thanks.
+           
