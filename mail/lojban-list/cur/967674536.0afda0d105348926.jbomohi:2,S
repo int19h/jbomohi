@@ -1,0 +1,75 @@
+Return-Path: <jimc@math.ucla.edu>
+Received: (qmail 8819 invoked from network); 30 Aug 2000 22:28:56 -0000
+Received: from unknown (10.1.10.142) by m3.onelist.org with QMQP; 30 Aug 2000 22:28:56 -0000
+Received: from unknown (HELO simba.math.ucla.edu) (128.97.4.125) by mta3 with SMTP; 30 Aug 2000 22:28:56 -0000
+Received: from localhost (jimc@localhost) by simba.math.ucla.edu (8.10.2/8.10.2) with ESMTP id e7UMSuU00712 for <lojban@egroups.com>; Wed, 30 Aug 2000 15:28:56 -0700
+X-Authentication-Warning: simba.math.ucla.edu: jimc owned process doing -bs
+Date: Wed, 30 Aug 2000 15:28:56 -0700 (PDT)
+To: lojban@egroups.com
+Subject: Re: [lojban] Just in case you're interested
+In-Reply-To: <20000830155153.8517.qmail@pi.meson.org>
+Message-ID: <Pine.LNX.4.21.0008301514170.411-100000@simba.math.ucla.edu>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: "James F. Carter" <jimc@MATH.UCLA.EDU>
+X-Yahoo-Message-Num: 4144
+Content-Length: 2168
+
+For those of you who receive your mail on a UNIX system that you have a
+shell account on, and who have procmail installed, here's a quick fix for
+the stupid advertisements.  Someone pointed out that ads sent back to the
+list were getting mangled, so in what follows let SOA (start of
+advertisement) represent tilde hyphen tilde greaterthan, and EOA = hyphen
+underbar hyphen greaterthan.  (You can see these at the start and end of
+the advt.)  Create this file as $HOME/.procmailrc (procmail looks for this
+by default).
+
+:0 BfW
+*--------------------SOA
+*--------------------EOA
+|sed -e '/--------------------SOA/,/--------------------EOA/d'
+
+This causes the mail to be filtered deleting from the start to the end of
+(each) advertisement.  When they change the advt. boundary markers, change
+the match strings accordingly, but these are Extended Regular Expressions,
+so any metacharacters have to be escaped.
+
+Then create $HOME/.forward containing the line:
+
+| /usr/local/bin/procmail
+
+(Find out where procmail is actually installed on your own system.)  And it
+works!  (Do send a test message to yourself to be completely sure.)  If
+your system delivers mail using procmail you can omit .forward, as it will
+be sensitive to $HOME/.procmailrc without extra stimulation.  We did this
+in order to recognize and toss out Love Bug messages.
+
+I asked a co-worker how a similar effect could be obtained with Microsoft
+Outlook.  Apparently Outlook can't edit the body of a message.  Too bad,
+non-UNIX users.
+
+I sent a polite but firm message of opinion to suggestion@egroup.com.
+
+James F. Carter        Voice 310 825 2897	FAX 310 206 6673
+UCLA-Mathnet;  6115 MSA; 405 Hilgard Ave.; Los Angeles, CA, USA  90095-1555
+Internet: jimc@math.ucla.edu (finger for PGP key)
+UUCP:...!{ucsd,ames,ncar,gatech,purdue,rutgers,decvax,uunet}!math.ucla.edu!jimc
+
+On 30 Aug 2000, Mark E. Shoulson wrote:
+
+> 
+> >From: Elrond <grey.havens@earthling.net>
+> >Date: Wed, 30 Aug 2000 13:15:09 +0200 (CET)
+> >
+> 
+> Bleah.  They've started putting the ad at the *top* of the messages instead
+> of the bottom!
+> 
+> ~mark
+> 
+> To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+> 
+
+
+           
+
