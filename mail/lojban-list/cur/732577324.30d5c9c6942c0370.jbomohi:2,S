@@ -1,0 +1,265 @@
+Received: from YALEVM.YCC.YALE.EDU by MINERVA.CIS.YALE.EDU via SMTP; Fri, 19 Mar 1993 16:48:04 -0500
+Received: from CUVMB.CC.COLUMBIA.EDU by YaleVM.YCC.Yale.Edu (IBM VM SMTP V2R2)    with BSMTP id 2166; Fri, 19 Mar 93 16:46:52 EST
+Received: from CUVMB.BITNET by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with BSMTP  id 3373; Fri, 19 Mar 93 16:46:34 EST
+Date:         Fri, 19 Mar 1993 16:42:04 EST
+Reply-To: bob@gnu.ai.mit.edu
+Sender: Lojban list <LOJBAN%CUVMB.bitnet@YaleVM.YCC.YALE.EDU>
+Comments:     Warning -- original Sender: tag was bob@GRACKLE.STOCKBRIDGE.MA.US
+From: bob@GNU.AI.MIT.EDU
+Subject:      dictionary look up command
+X-To:         lojban@cuvmb.cc.columbia.edu, bob@grackle.stockbridge.ma.us
+To: Erik Rauch <erikr@MINERVA.CIS.YALE.EDU>
+Status: OR
+
+Some of you may be able to use this.  A hastily written look-up and
+insertion command.
+
+;;;;;;;;;;;;;;;; lojban-lookup.el ;;;;;;;;;;;;;;;;
+
+;;; Lojban dictionary look up
+
+;;; Robert J. Chassell
+;;; bob@gnu.ai.mit.edu
+
+;;; This is a file of Emacs Lisp functions that enable you to look up
+;;; lojban definitions that match a regular expression; and insert the
+;;; lojban in your working buffer.
+;;;
+;;; You can use this inside of GNU Emacs.
+;;; Specify the `main-lojban-dictionary' (see the `defvar' below) and
+;;; then load this file.
+;;;
+;;; How to use:
+;;;
+;;; Type `C-c C-l' (or whatever key you have bound to `lojban-lookup')
+;;; and then type the regular expression that you want matched; then
+;;; type RET.
+;;;
+;;; The regular expression can be a word, such as `banana' or part of
+;;; a word, such as `ban', or any other regular expression.  A regular
+;;; expression such as `man' matches not only the word `man' but also
+;;; `manual'.  Use `\<man\>' to match just `man'.
+;;;
+;;; Definitions that contain matches to the regular expression pop up
+;;; in a temporary buffer.
+;;;
+;;; You can insert the lojban gismu for the definition you want in
+;;; your working buffer by typing the number of the definition.  If
+;;; the number is greater then `9', type `C-c C-c' and then the number.
+;;;
+;;; If you do not want to insert a gismu in your working buffer, type
+;;; `C-x 0' (delete-window) to delete the popped up window.
+;;;
+;;;;;;;;;;;;;;;;             NOTE            ;;;;;;;;;;;;;;;;
+;;;
+;;;    ==> These functions work only with the gismu list. <==
+;;;
+;;; The other lists are formatted differently than the gismu list.
+;;; This needs a more general form to make it easy to extend it to
+;;; work with all the lists.
+;;;
+;;; Will some one volunteer to extend `lojban-lookup'?
+;;;
+;;; ==> These functions work with a gismu list formatted as follows:
+;;;
+;;; 01358 Lojban         working test file for new LogFlash 09/09/90
+;;; bajra              run    <whitespace deleted>   x1 runs on surface x2 ....
+;;;
+;;; `x1' is in column 61.
+;;;
+;;; I think this is the format of the `raw' gismu list from the PLS,
+;;; but it may not be.  I have refomatted the lists on my machine
+;;; several times and may have inadvertently reformatted this one.
+
+;;; ==> If `lojban-lookup' does not work for the actual file, please
+;;; ==> tell me so that I can modify the
+;;; ==> `lojban-reformat-lookup-buffer' function.
+
+;;; ==> Specify the name of the lojban gismu list <==
+(defvar main-lojban-dictionary "/u/lojban/gismu-91-raw")
+
+;;; Change Log ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Version 0.01
+;;; 19 Mar 1993 - Initial definitions.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Redefine this key to suit yourself
+(global-set-key "\C-c\C-l" 'lojban-lookup)
+
+(defun lojban-lookup (english-regexp)
+  "Look up the Lojban corresponding to an English word (written as a regexp).
+Display Lojban definitions in pop up buffer.
+
+The regular expression can be a word, such as `banana' or part of a
+word, such as `ban', or any other regular expression.  An expression
+such as `man' matches not only the word `man' but also `manual'.  Use
+`\<man\>' to match just `man'.
+
+You can insert the lojban gismu for the definition you want in
+your working buffer by typing the number of the definition.  If
+the number is greater then `9', type
+\\[lookup-mode-goto-definition-numbered] and then the number."
+
+  (interactive "sList lines matching regexp: ")
+  (catch 'no-match
+    (setq lojban-window-configuration (current-window-configuration))
+    (setq lojban-buffer (current-buffer))
+    (let ((count 1)
+          (dictionary-buffer
+           (set-buffer (find-file-noselect main-lojban-dictionary))))
+      (goto-char (point-min))
+
+      ;; `with-output-to-temp-buffer' binds the value of the variable
+      ;; `standard-output' to the buffer named as its first argument,
+      ;; but does not switch to that buffer.
+      (with-output-to-temp-buffer "*Lookup*"
+        (save-excursion
+
+          ;; Look for match.
+          (while (re-search-forward english-regexp nil t)
+            (save-excursion
+              (let ((beg (save-excursion (beginning-of-line 1) (point)))
+                    (end (save-excursion (end-of-line 1) (point))))
+                (set-buffer (get-buffer "*Lookup*"))
+                (insert-buffer-substring dictionary-buffer beg end)
+                (insert "\n")))
+            (forward-line 1))
+
+          (set-buffer standard-output)
+          (goto-char (point-min))
+          ;; Check if no match.
+          (if (looking-at "^$")
+              (progn
+                (set-window-configuration lojban-window-configuration)
+                (throw 'no-match
+                       (message "No match for regular expression: %s"
+                                english-regexp))))
+
+          ;; If a match, then set up *Lookup* buffer
+          (lookup-mode)
+          (insert (format "Definitions matching \"%s\".  \
+To insert lojban, type number of definition.\n\n" english-regexp))
+          ;; Number each definition.
+          (while (not (eobp))
+            (insert (format "%d: " count ))
+            (setq count (1+ count))
+            (forward-line 1))
+          (goto-char (point-min))
+
+          ;; Untabify buffer.
+          (while (search-forward "\t" nil t)
+            (let ((start (point))
+                  (column (current-column))
+                  (indent-tabs-mode nil))
+              (skip-chars-backward "\t")
+              (delete-region start (point))
+              (indent-to column)))
+          (goto-char (point-min))
+          (forward-line 1)
+
+          ;; Reformat definitions so they are more readable.
+          (lojban-reformat-lookup-buffer)
+
+          (goto-char (point-min))
+          (pop-to-buffer (current-buffer)))))))
+
+(defun lojban-reformat-lookup-buffer ()
+  "Reformat the lookup buffer.  You man have to modify this."
+          (while (not (eobp))
+            (let ((here (point)))
+              (delete-region (+ 30 here)  (+ 61 here)))
+            ;; Fold long line
+            (end-of-line)
+            (while (> (current-column) 78)
+              (move-to-column 72)
+              (forward-word -1)
+              (if (looking-at-backward "\(") (forward-char -1))
+              (insert "\n                                    "))
+            (forward-line 1)))
+
+(defun lookup-mode ()
+  "Major mode for output from \\[lookup].
+Type the definition's number to insert the lojban word into the buffer."
+  (kill-all-local-variables)
+  (use-local-map lookup-mode-map)
+  (setq major-mode 'lookup-mode)
+  (setq mode-name "Lookup"))
+
+(defvar lookup-mode-map ())
+(if lookup-mode-map
+    ()
+  (setq lookup-mode-map (make-sparse-keymap))
+  (define-key lookup-mode-map "1" 'lookup-mode-goto-definition-1)
+  (define-key lookup-mode-map "2" 'lookup-mode-goto-definition-2)
+  (define-key lookup-mode-map "3" 'lookup-mode-goto-definition-3)
+  (define-key lookup-mode-map "4" 'lookup-mode-goto-definition-4)
+  (define-key lookup-mode-map "5" 'lookup-mode-goto-definition-5)
+  (define-key lookup-mode-map "6" 'lookup-mode-goto-definition-6)
+  (define-key lookup-mode-map "7" 'lookup-mode-goto-definition-7)
+  (define-key lookup-mode-map "8" 'lookup-mode-goto-definition-8)
+  (define-key lookup-mode-map "9" 'lookup-mode-goto-definition-9)
+  (define-key lookup-mode-map "\C-c\C-c" 'lookup-mode-goto-definition))
+
+(defun lookup-mode-goto-definition-numbered (number)
+  "In Lookup mode buffer, insert lojban word with this NUMBER."
+  (or (re-search-forward (concat "^" number ":") nil t)
+      (message "Definition number %d not found." number))
+  (let ((here (point))
+        (lojban-lookup-buffer (current-buffer)))
+     (delete-window)
+     (switch-to-buffer lojban-buffer)
+     (insert-buffer-substring lojban-lookup-buffer (1+ here) (+ 6 here))))
+
+(defun lookup-mode-goto-definition (number)
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive "nDefinition's number: ")
+  (lookup-mode-goto-definition-numbered number))
+
+;;; Should use a macro
+(defun lookup-mode-goto-definition-1 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 1))
+
+(defun lookup-mode-goto-definition-2 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 2))
+
+(defun lookup-mode-goto-definition-3 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 3))
+
+(defun lookup-mode-goto-definition-4 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 4))
+
+(defun lookup-mode-goto-definition-5 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 5))
+
+(defun lookup-mode-goto-definition-6 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 6))
+
+(defun lookup-mode-goto-definition-7 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 7))
+
+(defun lookup-mode-goto-definition-8 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 8))
+
+(defun lookup-mode-goto-definition-9 ()
+  "In Lookup mode buffer, insert lojban word with this number."
+  (interactive)
+  (lookup-mode-goto-definition-numbered 9))
+
+;;;;;;;;;;;;;;;; end lojban-lookup.el ;;;;;;;;;;;;;;;;
+
