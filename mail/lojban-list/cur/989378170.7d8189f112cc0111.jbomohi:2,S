@@ -1,0 +1,66 @@
+Return-Path: <lojban@lojban.org>
+X-Sender: lojban@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_1_2); 9 May 2001 03:14:37 -0000
+Received: (qmail 45601 invoked from network); 9 May 2001 03:13:44 -0000
+Received: from unknown (10.1.10.142) by l9.egroups.com with QMQP; 9 May 2001 03:13:44 -0000
+Received: from unknown (HELO stmpy-1.cais.net) (205.252.14.71) by mta3 with SMTP; 9 May 2001 03:13:44 -0000
+Received: from bob.lojban.org (dynamic213.cl8.cais.net [205.177.20.213]) by stmpy-1.cais.net (8.11.1/8.11.1) with ESMTP id f493Dg658445 for <lojban@yahoogroups.com>; Tue, 8 May 2001 23:13:43 -0400 (EDT)
+Message-Id: <4.3.2.7.2.20010508231409.00cab470@127.0.0.1>
+X-Sender: vir1035/pop.cais.com@127.0.0.1
+X-Mailer: QUALCOMM Windows Eudora Version 4.3.2
+Date: Tue, 08 May 2001 23:16:10 -0400
+To: Lojban List <lojban@yahoogroups.com>
+Subject: Re: [lojban] Parsing "na ku" and "na" followed by other things
+In-Reply-To: <20010508222721.C138@rrbcurnow.freeuk.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+From: Logical Language Group <lojban@lojban.org>
+X-Yahoo-Message-Num: 7112
+Content-Length: 1944
+
+At 10:27 PM 05/08/2001 +0100, Richard Curnow wrote:
+>I've had a bug report for jbofi'e which identifies an incompatibility
+>with the 'official' parser.  This seems to be the version that targets
+>v2.33 of the Lojban grammar.  [I am not aware of any publically visible
+>source code for an 'official' parser for v3.00 of the grammar.]
+>
+>The example is
+>
+>   i mi djica le nu le nu pensi na zekri
+>
+>which parses on the 'official' parser, but not on jbofi'e.  The problem
+>has, I think, been discussed at least once on this list - it's that the
+>word "na" is shifted as though "na ku" is coming, rather than the bridi
+>"pensi" being reduced first.
+>
+>I've looked into how the official parser handles this, and it looks like
+>there's some special logic to recognize "na ku" as a special case, as
+>though it's a single token (hence the LALR(1) mechanism in the parser
+>doesn't get confused and shift "na" wrongly.  Hence "na" followed by
+>something else would cause the bridi "pensi" to be reduced in the
+>example.)
+>
+>Is this handling of "na ku" considered current behaviour for the v3.00
+>Lojban grammar?  I'm asking because the official parser's behaviour for
+>this case was never discussed when the "na ku" issue was discussed on
+>the list before.
+>
+>I want to go ahead and fix jbofi'e for this case, but obviously only if
+>detecting "na ku" as though it's a single token is still considered
+>correct behaviour in grammar v3.00.
+
+Per step 5 in the algorithm stated in the front of grammar.300, all lexer 
+lexemes must be inserted before submitting the text to YACC parsing or 
+LALR1 will fail.  NA+KU must be tagged by lexer_J per rule 950.
+
+lojbab
+--
+lojbab                                             lojbab@lojban.org
+Bob LeChevalier, President, The Logical Language Group, Inc.
+2904 Beau Lane, Fairfax VA 22031-1303 USA                    703-385-0273
+Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+           
+

@@ -1,4 +1,4 @@
-# mail/lojban-list thread e79dca66f760-parsing_%22na_ku%22_and_%22na%22_followed_by_ot | root 20010508222721.c138@rrbcurnow.freeuk.com | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread e79dca66f760-parsing_%22na_ku%22_and_%22na%22_followed_by_ot | root 20010508222721.c138@rrbcurnow.freeuk.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2001-05-08T21:27:21Z | Richard Curnow <richard@rrbcurnow.freeuk.com> | 20010508222721.c138@rrbcurnow.freeuk.com | mail/lojban-list/cur/989357241.e79dca66f760e4cd.jbomohi:2,S
 I've had a bug report for jbofi'e which identifies an incompatibility
@@ -35,6 +35,54 @@ correct behaviour in grammar v3.00.
 Richard P. Curnow, Weston-super-Mare, UK
 http://www.rrbcurnow.freeuk.com/
 email:richard@rrbcurnow.freeuk.com  email:rpc@myself.com
+
+           
+
+
+
+=== 2 | 2001-05-09T03:16:10Z | Logical Language Group <lojban@lojban.org> | 4.3.2.7.2.20010508231409.00cab470@127.0.0.1 | mail/lojban-list/cur/989378170.7d8189f112cc0111.jbomohi:2,S
+At 10:27 PM 05/08/2001 +0100, Richard Curnow wrote:
+>I've had a bug report for jbofi'e which identifies an incompatibility
+>with the 'official' parser.  This seems to be the version that targets
+>v2.33 of the Lojban grammar.  [I am not aware of any publically visible
+>source code for an 'official' parser for v3.00 of the grammar.]
+>
+>The example is
+>
+>   i mi djica le nu le nu pensi na zekri
+>
+>which parses on the 'official' parser, but not on jbofi'e.  The problem
+>has, I think, been discussed at least once on this list - it's that the
+>word "na" is shifted as though "na ku" is coming, rather than the bridi
+>"pensi" being reduced first.
+>
+>I've looked into how the official parser handles this, and it looks like
+>there's some special logic to recognize "na ku" as a special case, as
+>though it's a single token (hence the LALR(1) mechanism in the parser
+>doesn't get confused and shift "na" wrongly.  Hence "na" followed by
+>something else would cause the bridi "pensi" to be reduced in the
+>example.)
+>
+>Is this handling of "na ku" considered current behaviour for the v3.00
+>Lojban grammar?  I'm asking because the official parser's behaviour for
+>this case was never discussed when the "na ku" issue was discussed on
+>the list before.
+>
+>I want to go ahead and fix jbofi'e for this case, but obviously only if
+>detecting "na ku" as though it's a single token is still considered
+>correct behaviour in grammar v3.00.
+
+Per step 5 in the algorithm stated in the front of grammar.300, all lexer 
+lexemes must be inserted before submitting the text to YACC parsing or 
+LALR1 will fail.  NA+KU must be tagged by lexer_J per rule 950.
+
+lojbab
+--
+lojbab                                             lojbab@lojban.org
+Bob LeChevalier, President, The Logical Language Group, Inc.
+2904 Beau Lane, Fairfax VA 22031-1303 USA                    703-385-0273
+Artificial language Loglan/Lojban:                 http://www.lojban.org
+
 
            
 
