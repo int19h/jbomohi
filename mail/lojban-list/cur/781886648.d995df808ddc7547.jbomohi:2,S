@@ -1,0 +1,48 @@
+Received: from access2.digex.net by nfs1.digex.net with SMTP id AA11092
+  (5.67b8/IDA-1.5 for <lojbab@access.digex.net>); Tue, 11 Oct 1994 10:44:14 -0400
+Received: by access2.digex.net id AA28475
+  (5.67b8/IDA-1.5 for lojbab@access.digex.net); Tue, 11 Oct 1994 10:44:10 -0400
+From: Logical Language Group <lojbab>
+Message-Id: <199410111444.AA28475@access2.digex.net>
+Subject: Re: Mystery message
+To: pcliffje@crl.com (John E. Clifford)
+Date: Tue, 11 Oct 1994 10:44:08 -0400 (EDT)
+Cc: lojbab@access.digex.net
+In-Reply-To: <Pine.3.87.9410101300.A20093-0100000@crl3.crl.com> from "John E. Clifford" at Oct 10, 94 01:13:00 pm
+X-Mailer: ELM [version 2.4 PL24beta]
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-From-Space-Date: Tue Oct 11 10:44:25 1994
+X-From-Space-Address: lojbab
+Content-Length: 1323
+
+> Thanx for the clues but apparently something I did the second time worked.
+> First time: machine to mailer by xmodem sb-rb , into pine mail program by 
+> Read file in the Compose menu.  The result had ^M at the end of each line 
+> and various other places. Despite the claim that it would be cleaned up 
+> in process, you have seen the results.
+
+Aha.  The ^M is CR as in CR-LF, the DOS end-of-line delimiter.  Since Unix
+uses only LF, DOS text files look to Unix like files with a ^M at the
+end of each line.  Since Unix doesn't think text contains control characters
+other than LF, TAB, and maybe FF (^L) and backspace, Pine interpreted your
+message as non-text and used the base64 encoding suitable for binary files
+(see my earlier message).
+
+> Second time, several changes (alas, I'll never know what works now): 
+> xmodemmed as text not binary (my machine doesn't have fancy stuff like 
+> zmodem), sucked up to pine as before but this time justied in the Compose 
+> mode.  However, the ^M's were already not there to begin with.  Go 
+> figure! I have most of what you all received, so I am trying to crack the 
+> code.
+
+The "xmodem as text" probably did the conversion to Unix format (stripping
+the CR/^M characters).
+
+
+
+-- 
+John Cowan		sharing account <lojbab@access.digex.net> for now
+		e'osai ko sarji la lojban.
+
