@@ -1,0 +1,126 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 10 May 2004 04:52:50 -0700 (PDT)
+Received: from n21.grp.scd.yahoo.com ([66.218.66.77])
+	by chain.digitalkingdom.org with smtp (Exim 4.31)
+	id 1BN9Kr-00009D-UU
+	for lojban-in@lojban.org; Mon, 10 May 2004 04:52:42 -0700
+X-eGroups-Return: sentto-44114-22221-1084189930-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.67.194] by n21.grp.scd.yahoo.com with NNFMP; 10 May 2004 11:52:11 -0000
+X-Sender: lojbab@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 36562 invoked from network); 10 May 2004 11:52:08 -0000
+Received: from unknown (66.218.66.172)
+  by m12.grp.scd.yahoo.com with QMQP; 10 May 2004 11:52:08 -0000
+Received: from unknown (HELO lakermmtao05.cox.net) (68.230.240.34)
+  by mta4.grp.scd.yahoo.com with SMTP; 10 May 2004 11:52:07 -0000
+Received: from bob.lojban.org ([68.228.12.146]) by lakermmtao05.cox.net
+          (InterMail vM.6.01.03.02 201-2131-111-104-20040324) with ESMTP
+          id <20040510115140.PAWA18641.lakermmtao05.cox.net@bob.lojban.org>
+          for <lojban@yahoogroups.com>; Mon, 10 May 2004 07:51:40 -0400
+Message-Id: <5.2.0.9.0.20040510074646.03350bd0@pop.east.cox.net>
+X-Sender: lojbab@pop.east.cox.net
+X-Mailer: QUALCOMM Windows Eudora Version 5.2.0.9
+To: lojban@yahoogroups.com
+In-Reply-To: <20040507204023.GA27947@digitalkingdom.org>
+References: <20040507193128.20639.qmail@web41903.mail.yahoo.com>
+ <20040507185509.GN7020@digitalkingdom.org>
+ <20040507193128.20639.qmail@web41903.mail.yahoo.com>
+X-eGroups-Remote-IP: 68.230.240.34
+From: Bob LeChevalier <lojbab@lojban.org>
+X-Yahoo-Profile: lojbab
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Mon, 10 May 2004 07:50:27 -0400
+Subject: [lojban] Re: My parser, SI, SA, and ZOI
+Content-Type: text/plain; charset=US-ASCII
+X-archive-position: 7736
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: lojbab@lojban.org
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 3081
+Lines: 79
+
+At 01:40 PM 5/7/04 -0700, Robin Lee Powell wrote:
+>On Fri, May 07, 2004 at 12:31:28PM -0700, Jorge Llamb?as wrote:
+> >
+> > --- Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+> > > > What does {da zo si si} do?
+> > >
+> > > It *should* result in just 'da', because zo is defined as turning
+> > > itself and the next argument into a single word.  zoi is *not* so
+> > > defined.
+> >
+> > Is there a justification for that difference?
+>
+>Huh.
+>
+>I'm sorry, I thought that that difference was explicitely stated
+>somewhere, but I can't find it.  The Red Book doesn't seem to say
+>whether or not "zo da" is treated as a single word at all.
+>
+>So unless I'm missing something, all we have to go on is grammar.300,
+>which says:
+>
+>a. If the Lojban word "zoi" (selma'o ZOI) is identified, take the
+>following Lojban word (which should be end delimited with a pause for
+>separation from the following non-Lojban text) as an opening delimiter.
+>Treat all text following that delimiter, until that delimiter recurs
+>*after a pause*, as grammatically a single token (labelled
+>'anything_699' in this grammar).  There is no need for processing within
+>this text except as necessary to find the closing delimiter.
+>
+>b. If the Lojban word "zo" (selma'o ZO) is identified, treat the
+>following Lojban word as a token labelled 'any_word_698', instead of
+>lexing it by its normal grammatical function.
+>
+>So "zoi da de da" is turned into four tokens, "zoi da anything_699 da"
+>and "zo da" is turned into the single token "any_word_698".
+>
+>It is this behaviour that I am trying to emulate, without being a slave
+>to YACC restrictions (which, for example, make it so that "zoi da weeble
+>da si si si si" works, but no lesser number of "si" after the zoi have
+>any effect.
+
+Lojban grammar was DESIGNED to be a slave to YACC restrictions, that being 
+a working definition of LALR1 for purposes of language design.  That it 
+isn't a correct definition is irrelevant.
+
+In answer to the question in this thread, I believe that the text comment 
+in the body of the grammar after the rule defining LohU 436 addresses the 
+intent for interactions between si and zo and zoi.
+
+lojbab
+
+-- 
+lojbab                                             lojbab@lojban.org
+Bob LeChevalier, Founder, The Logical Language Group
+(Opinions are my own; I do not speak for the organization.)
+Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+
+
+------------------------ Yahoo! Groups Sponsor ---------------------~-->
+Make a clean sweep of pop-up ads. Yahoo! Companion Toolbar.
+Now with Pop-Up Blocker. Get it for free!
+http://us.click.yahoo.com/L5YrjA/eSIIAA/yQLSAA/GSaulB/TM
+---------------------------------------------------------------------~->
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+Yahoo! Groups Links
+
+<*> To visit your group on the web, go to:
+     http://groups.yahoo.com/group/lojban/
+
+<*> To unsubscribe from this group, send an email to:
+     lojban-unsubscribe@yahoogroups.com
+
+<*> Your use of Yahoo! Groups is subject to:
+     http://docs.yahoo.com/info/terms/
+ 
+
