@@ -1,0 +1,76 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 40719 invoked from network); 7 Nov 2004 08:20:28 -0000
+Received: from unknown (66.218.66.216)
+  by m11.grp.scd.yahoo.com with QMQP; 7 Nov 2004 08:20:28 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta1.grp.scd.yahoo.com with SMTP; 7 Nov 2004 08:20:28 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CQiHh-0002xp-Ly
+	for lojban@yahoogroups.com; Sun, 07 Nov 2004 00:20:25 -0800
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.34)
+	id 1CQiGK-0002wa-8Z; Sun, 07 Nov 2004 00:19:00 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 07 Nov 2004 00:18:56 -0800 (PST)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CQiG8-0002wK-2y
+	for lojban-list@lojban.org; Sun, 07 Nov 2004 00:18:48 -0800
+Date: Sun, 7 Nov 2004 00:18:48 -0800
+Message-ID: <20041107081848.GW18082@chain.digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040722i
+X-archive-position: 8954
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Computer grammar question: non-left recursive RPN?
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 23360
+Content-Length: 814
+
+Lojban has a reverse polish (i.e. postfix math) mode built in.
+
+The ABNF form of this rule is:
+
+rp-expression = rp-operand rp-operand operator
+
+rp-operand = operand / rp-expression
+
+which does exactly what you'd expect.
+
+I can't figure out a way to convert this into a version without left
+recursion.  I've got:
+
+rp-expression = operand rp-expression-tail
+rp-expression-tail = rp-expression operator rp-expression-tail / ()
+
+(where () is the empty production), but I'm not at all certain it's
+equivalent, and the parse trees it produces look very wrong (i.e.
+not left recursive at all).
+
+Help?
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
+
+
+           
+

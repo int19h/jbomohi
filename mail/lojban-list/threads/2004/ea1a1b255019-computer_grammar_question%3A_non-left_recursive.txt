@@ -1,0 +1,38 @@
+# mail/lojban-list thread ea1a1b255019-computer_grammar_question%3A_non-left_recursive | root 20041107081848.gw18082@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2004-11-07T08:18:48Z | Robin Lee Powell <lojban-out@lojban.org> | 20041107081848.gw18082@chain.digitalkingdom.org | mail/lojban-list/cur/1099815528.ea1a1b255019e51a.jbomohi:2,S
+Lojban has a reverse polish (i.e. postfix math) mode built in.
+
+The ABNF form of this rule is:
+
+rp-expression = rp-operand rp-operand operator
+
+rp-operand = operand / rp-expression
+
+which does exactly what you'd expect.
+
+I can't figure out a way to convert this into a version without left
+recursion.  I've got:
+
+rp-expression = operand rp-expression-tail
+rp-expression-tail = rp-expression operator rp-expression-tail / ()
+
+(where () is the empty production), but I'm not at all certain it's
+equivalent, and the parse trees it produces look very wrong (i.e.
+not left recursive at all).
+
+Help?
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
+
+
+           
+
+
