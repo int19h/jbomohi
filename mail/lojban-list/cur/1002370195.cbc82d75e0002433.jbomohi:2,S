@@ -1,0 +1,83 @@
+Return-Path: <thinkit8@lycos.com>
+X-Sender: thinkit8@lycos.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_4_1); 6 Oct 2001 12:07:23 -0000
+Received: (qmail 65492 invoked from network); 6 Oct 2001 12:07:23 -0000
+Received: from unknown (10.1.10.26)
+  by 10.1.1.220 with QMQP; 6 Oct 2001 12:07:23 -0000
+Received: from unknown (HELO n17.groups.yahoo.com) (10.1.1.36)
+  by mta1 with SMTP; 6 Oct 2001 12:10:00 -0000
+X-eGroups-Return: thinkit8@lycos.com
+Received: from [10.1.10.107] by n17.groups.yahoo.com with NNFMP; 06 Oct 2001 12:10:00 -0000
+Date: Sat, 06 Oct 2001 12:09:55 -0000
+To: lojban@yahoogroups.com
+Subject: lujvo expander version 0.2
+Message-ID: <9pmsaj+v6vk@eGroups.com>
+User-Agent: eGroups-EW/0.82
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+X-Mailer: eGroups Message Poster
+X-Originating-IP: 24.4.255.70
+From: thinkit8@lycos.com
+X-Yahoo-Message-Num: 11387
+Content-Length: 1362
+
+well, not that i'm really versioning it.  it's extremely ugly now, 
+but i fixed some things.  it won't try to replace a lujvo in the 
+middle of a word.  and it displays the replaced word in the 
+replacement phrase (useful for when it seems to recognize an english 
+word).  it worked very well for me in reading alice.  if i make it 
+more elegant i'll put it on the wiki.  anybody want to do a perl 
+version?  i have a feeling it'd be easier in perl.
+
+lujvo.bat:
+python space.py < %1 > temp1.txt
+vlatai -el < temp1.txt > temp2.txt
+python sub.py < %1 > %2
+
+space.py:
+import re
+while 1:
+ try:
+  s=raw_input()
+  a=re.split("[^a-zA-Z\',]+",s);
+  for x in a:
+   print x
+ except EOFError:
+  break
+
+
+sub.py:
+import re,string
+qb=[]
+qa=[]
+f=open("temp2.txt")
+s=f.readline()
+while s!="":
+ if re.search(": lujvo :",s) is not None:
+  res=re.match("[a-z\',]+",s)
+  if qb.count(res.group(0)) == 0:
+   qb.append(res.group(0))
+   res=re.search("\[[a-z\',\+\?]+",s)
+   s2=res.group(0)
+   qa.append(string.replace(s2,"[",""))
+ s=f.readline()
+s2="%"
+while 1:
+ try:
+  s2+=raw_input()
+  s2+="\n"
+ except EOFError:
+  break
+s2+="%"
+for x in range(len(qa)):
+ while re.search("[^a-z\',]"+qb[x]+"[^a-z\',]",s2) is not None:
+  res=re.search("[^a-z\',]"+qb[x]+"[^a-z\',]",s2)
+  ts1=res.group(0)
+  s2=re.sub(ts1,ts1[0]+"_,"+qb[x]+",="+qa[x]+"_"+ts1[len(ts1)-1],s2,1)
+print s2
+
+
+
+           
+

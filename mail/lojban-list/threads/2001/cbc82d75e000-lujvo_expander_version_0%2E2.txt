@@ -1,0 +1,63 @@
+# mail/lojban-list thread cbc82d75e000-lujvo_expander_version_0%2E2 | root 9pmsaj+v6vk@egroups.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2001-10-06T12:09:55Z | thinkit8@lycos.com | 9pmsaj+v6vk@egroups.com | mail/lojban-list/cur/1002370195.cbc82d75e0002433.jbomohi:2,S
+well, not that i'm really versioning it.  it's extremely ugly now, 
+but i fixed some things.  it won't try to replace a lujvo in the 
+middle of a word.  and it displays the replaced word in the 
+replacement phrase (useful for when it seems to recognize an english 
+word).  it worked very well for me in reading alice.  if i make it 
+more elegant i'll put it on the wiki.  anybody want to do a perl 
+version?  i have a feeling it'd be easier in perl.
+
+lujvo.bat:
+python space.py < %1 > temp1.txt
+vlatai -el < temp1.txt > temp2.txt
+python sub.py < %1 > %2
+
+space.py:
+import re
+while 1:
+ try:
+  s=raw_input()
+  a=re.split("[^a-zA-Z\',]+",s);
+  for x in a:
+   print x
+ except EOFError:
+  break
+
+
+sub.py:
+import re,string
+qb=[]
+qa=[]
+f=open("temp2.txt")
+s=f.readline()
+while s!="":
+ if re.search(": lujvo :",s) is not None:
+  res=re.match("[a-z\',]+",s)
+  if qb.count(res.group(0)) == 0:
+   qb.append(res.group(0))
+   res=re.search("\[[a-z\',\+\?]+",s)
+   s2=res.group(0)
+   qa.append(string.replace(s2,"[",""))
+ s=f.readline()
+s2="%"
+while 1:
+ try:
+  s2+=raw_input()
+  s2+="\n"
+ except EOFError:
+  break
+s2+="%"
+for x in range(len(qa)):
+ while re.search("[^a-z\',]"+qb[x]+"[^a-z\',]",s2) is not None:
+  res=re.search("[^a-z\',]"+qb[x]+"[^a-z\',]",s2)
+  ts1=res.group(0)
+  s2=re.sub(ts1,ts1[0]+"_,"+qb[x]+",="+qa[x]+"_"+ts1[len(ts1)-1],s2,1)
+print s2
+
+
+
+           
+
+
