@@ -1,0 +1,26 @@
+# mail/lojban-list thread e2168a688110-c_question%3A_how_to_or_strings_and_get_a_strin | root 200301222226.16684.phma@webjockey.net | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2003-01-23T03:26:16Z | Pierre Abbat <phma@webjockey.net> | 200301222226.16684.phma@webjockey.net | mail/lojban-list/cur/1043292376.e2168a688110b62f.jbomohi:2,S
+I am very close to having a tolpo'u a'o ke valfendi mutmi'i. There are a few 
+lines in the program that I'm not sure how to fix:
+
+#define is3rafsi(str) (monmapti("ICV",str) || monmapti("CVC",str) || 
+monmapti("CUV",str))
+#define is4rafsi(str) (monmapti("CVCC",str) || monmapti("ICVC",str))
+#define isgismu(str) (monmapti("CVCCV",str) || monmapti("ICVCV",str))
+
+monmapti returns NULL if it didn't match or a pointer to the first character 
+after the matching string if it does. is3rafsi is supposed to do the same, 
+but instead it returns 1, which confuses isslinkuhi, which then calls 
+is3rafsi(1) and crashes. I can't just add 3 because the string contains 
+commas ju apostrophes. Is there a way to write a macro to do this, or do I 
+need to write a function?
+
+phma
+
+
+
+
+           
+
+
