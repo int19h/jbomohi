@@ -1,0 +1,183 @@
+# mail/lojban-list thread 925569f3b556-no_subject | root dthuuh6io2p.a.6xb.m40klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1996-02-28T13:59:53Z | - | dthuuh6io2p.a.6xb.m40klb@chain.digitalkingdom.org | mail/lojban-list/cur/825515993.925569f3b556c931.jbomohi:2,S
+>>[long omitted text]
+>>That's handwaving, not mathematically tight argument, of course, but I
+>>think it perhaps explains why the cited result might be true.  (I'm
+>>certainly not inclined to doubt Knuth's math!)
+
+No, that's not the way Knuth proves his theorem (check pages 629-632 of
+his article). He uses a theorem by Ginsburg and Greibach on DCF and regular
+languages, then a constructive association between deterministic stack
+automata and LR(1) grammars (the LR(0) claim is a corollary).
+
+>>Section II -- LALR(0) grammars as a programming language -- engineering take
+>>----------------------------------------------------------------------------
+>>
+>>[lots of omitted text]
+>>So, adding our 35 bits of state will require multiplying the number of
+>>rules in that part of the grammar by 2^35, or roughly 32 trillion.
+
+I didn't check it, but that may be true only if you use your own construction,
+if it is valid at all (demonstrations?). Knuth's construction is quite
+different,
+and I can't see how it could possibly impose such a huge amount of storage. Hmm,
+I think I saw his E-mail address somewhere; perhaps you would like to ask
+him :-)
+
+However, if you are not satisfied with this, try Earley's general context-free
+parsing algorithm. It is guaranteed to handle *any* CFG, uses polynomial
+resources (in general, cubic time and quadratic space, in terms of actual input
+sentences rather than grammars), and for a class of grammars larger than LR
+only linear resources.
+
+By the way, only *checking* if a grammar is LR(k) for a given k (without
+explicitly
+building the parsing automaton) can be done in polynomial time (in the size
+of the
+grammar). This is an efficient way of keeping a grammar LR(k) when studying,
+say,
+how a lexer pseudo-token can be safely removed from the grammar.
+
+But before we continue, let me point out that I *have* recognized somewhere in
+the thread that the existing YACC grammar is fine for parser construction: it is
+not suitable as a means of proving Lojban's asserted nonambiguity (no, do not
+even remotely think of denying this: it's simply *too* hacked).
+
+>>| Finally, I don't see why Lojbab's afraid of trying
+>>| to find such a grammar, as its equivalence (in the
+>>| sense of generating the same language) to the
+>>| current YACC grammar should be a stated in the
+>>| form of a *theorem*, not a gratuitous assertion.
+>>| (I don't think the proof would be longer than that
+>>| of Fermat's last theorem, or the four-color
+>>| theorem for planar graphs :-)
+>>
+>>Admitting the point, I think -- since the four-color proof was too long
+>>for a human to comprehend, and required a lot of computer time just to
+>>generate and check.
+
+It's not so long that a human can't comprehend it, just tedious, and tedious
+activities often cause humans to make mistakes. This is true also for LR
+parser generation (have you ever tried to do it by hand even for toy
+languages?).
+
+>>A Lojban grammar too long for any human to read might be cute, but would
+>>it be useful?  :)
+
+Sorry, you are implicitly assuming an LR(k) grammar to model Lojban is
+necessarily
+enormous, but the "handwaving" you presented is not an evidence of that for
+lack of
+demonstration. In fact, it doesn't even provide us with such a grammar, only
+parsing tables or something like that.
+
+But speaking of usefulness, the starting point of this discussion was to show
+in formal language theoretical terms that Lojban is unambiguous (up to now,
+I only know that by faith :-) As you perhaps know, John Cowan recently
+discovered
+a structural ambiguity (something like a "dangling bo") that was hidden by the
+complex preprocessing performed by the Lojban parser, so my faith in Lojban's
+unambiguity is a bit disturbed :-)
+
+>>LALR(1) grammars may be able to express arbitrary Fortran programs,
+
+They aren't. LALR(1) are unable to express context conditions (e.g. to forbid
+scalar variables of being indexed).
+
+>>I think it is clear that for most programs, most of the time, they are
+>>an exceedingly opaque way of describing the computation.
+
+Could you explain this assertion? The only computations described by grammars
+(actually by the corresponding automata) are parsing/translation actions, and
+for this end they are fine (IMHO they are the most transparent way of doing
+that).
+If you are alluding to a Fortran program execution, then context-free grammars
+*are* exceedingly opaque, because they do *not* describe this.
+
+>>IMHO, a significant fraction of the Lojban grammar lies outside that domain,
+
+That's the fraction describing semantics and context conditions (in other words,
+Cowan's refgrammar). But you can compare it to the Algol 60 Report: syntax is
+modelled by BNF productions, semantics is described by English text.
+
+>>is much more perspicuously described by other computational paradigms,
+>>and the current Lojban grammatical description quite properly
+>>and pragmatically uses non-LALR descriptions for those parts.  (I'm
+>>thinking in particular of various sorts of canonicalization and
+>>grammatical "noise" filtering which at least used to be done before
+>>turning the LALR(1) machine proper loose on the input.)
+
+Do you really think you can write a reliable compiler/interpreter for any
+language if you can't trust the parsing mechanism? Would you believe the context
+analysis is properly executed if parsing is flawed?
+
+>>Section III -- LALR(0) grammars as a programming language -- intuitive take
+>>----------------------------------------------------------------------------
+>>[more omitted text]
+
+>>The counting problem demonstrates that there are quite trivial languages
+>>which are not LALR(k) for any k.
+>>
+>>It also seems likely to me that some Lojban constructions are not
+>>LALR(k) for any k, meaning that Knuth's above-cited proof may not apply
+>>anyhow:
+
+En passant: you have skipped Chomsky type-1 (context-sensitive) languages
+by mentioning only type-3 (regular), type-2 (context-free) and type-0
+(irrestricted) languages. You don't need a full Turing machine (with a semi-
+infinite tape) for languages as {a^k b^k c^k, k = 1,2,3,...}; a linear-bounded
+automaton is enough.
+
+Here you certainly missed my early observation that effective Lojban is
+context-sensitive due to the ZOI constructions (the non-Lojban text delimiters
+are arbitrary Lojban words, but must be equal). But also Pascal-like languages
+fail to be context-free because of similar problems (e.g. any identifier must be
+declared before being used).
+
+From the very beginning I'm considering context-free MODELS for Lojban, and
+arguing that they should be as implementation-independent as possible. Lojbab
+however insists that the "Lojban parser" is a sufficient definition for the
+language. I just wonder which parser he's talking about; mine accepts forbidden
+consonant clusters, sumti introduced by repeated members of FA and the ambiguous
+construction with "bo", but is unable to parse a sentence where all nonessential
+pauses are removed. Thats an interesting "definition" of Lojban, to say the
+least.
+
+>>The preprocessing hacks have no trouble stripping out an arbitrarily long
+>>interpolation,
+
+And (as we saw) they have no trouble in hiding ambiguities, either.
+
+>>[...]
+>>We avoid taking this approach not because it is mathematically unsound,
+>>but because it is unhelpful and unperspicuous -- explicit effectively
+>>infinite lists of strings aren't good ways of describing languages in
+>>practice, even if they suffice in principle.
+
+Sorry, I've missed your point here. Where did the infinite grammar come from?
+Not from anything I or anyone else has posted to the Lojban list. It's therefore
+completely unrelated to the formal proof of unambiguity we are discussing.
+
+>>I think we similarly avoid LALR(0) descriptions of Lojban not because
+>>they are mathematically unsound or impossible, but because they would be
+>>unhelpful and unperspicuous -- explicit effectively infinite lists of
+>>grammatical rules aren't good ways of describing languages in practice,
+>>even if they suffice in principle.
+
+Oh, now I see that my assumption that by "LALR(0)" you mean "LR(0)" is false :-)
+Then I (finally) agree with you: such grammars are worth avoiding, though the
+topic of this discussion is now completely distinct from the original one.
+
+Now a last remark: in a very precise and concrete sense, there *are* entities
+you could well describe as "explicit effectively infinite lists of grammatical
+rules" that are nevertheless quite "good ways of describing languages in
+practice": attribute grammars, as each attributed production in fact stands
+for a
+(possibly infinite) set of plain productions. But I think we should transfer
+this
+thread to comp.compilers if things flow in that direction :-)
+
+co'o mi'e paulos.
+
+
