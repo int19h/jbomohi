@@ -26,7 +26,9 @@
 ; 1. no joik-jek, text-1
 ; 2. joik-jek, text-1 optional
 ; 3. neither
-text <- (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO dotStar)?) / (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? joik-jek text-1? (FAhO dotStar)?) / (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? (FAhO dotStar)?)
+text <- (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO dotStar)?) / (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? joik-jek text-1? (FAhO dotStar)?) / (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? (FAhO dotStar)?)
+
+intro-sa-clause <- SA / any-word-SA-handling intro-sa-clause
 
 NORATS dotStar <- .*
 
@@ -236,10 +238,15 @@ indicator <-  ((UI / CAI) NAI? / Y / DAhO / FUhO) !BU
 ; Do *NOT* delete the line above!
 
 ;         any single lexable Lojban words 
-any-word <- CMAVO-no-absorb / BRIVLA-no-absorb / CMENE-no-absorb
-any-word-no-SI-handling <- CMAVO-no-SI-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
-any-word-no-SA-handling <- CMAVO-no-SA-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
-any-word-no-BU-handling <- CMAVO-no-BU-handling / BRIVLA-no-BU-handling / CMENE-no-BU-handling
+any-word <- zo-word-clause / CMAVO-no-absorb / BRIVLA-no-absorb / CMENE-no-absorb
+any-word-SA-handling <- zo-word-clause / CMAVO / BRIVLA / CMENE
+any-word-no-SI-handling <- zo-word-clause / CMAVO-no-SI-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
+any-word-no-SA-handling <- zo-word-clause / CMAVO-no-SA-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
+any-word-no-BU-handling <- zo-word-clause / CMAVO-no-BU-handling / BRIVLA-no-BU-handling / CMENE-no-BU-handling
+
+; Special case of 'zo' when it and what it eats need to be treated as a single word (i.e. matched by any-word)
+zo-word-clause <- ZO zo-word-si-clause? Y / ZO zo-word-si-clause? any-word
+zo-word-si-clause <- (Y / any-word-no-SI-handling) SI / (Y / any-word-no-SI-handling) zo-word-si-clause SI
 
 ;; -- General Morphology Issues
 ;
@@ -269,6 +276,7 @@ absorb-indicators <- UI NAI? / CAI NAI? / Y / DAhO / FUhO / FUhE
 ; Handling of spaces
 spacing <- !. / spaces si-clause absorb-indicators*
 spacing-no-absorb <- !. / spaces si-clause
+spacing-no-absorb-opt <- !. / spaces? si-clause
 spacing-opt <- !. / spaces si-clause absorb-indicators* / si-clause absorb-indicators*
 space-chars <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
 spaces <- space-chars* "y"+ space-chars+ !"'" !vowel / space-chars+
@@ -350,7 +358,7 @@ CMAVO-post-no-SI-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (
 CMAVO-post-no-BU-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 
 CMAVO <- pre-cmavo-check known-cmavo / pre-cmavo-check consonant? vowel (['] vowel / vowel)+ spacing !BU-bare
-CMAVO-no-absorb <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* spacing-no-absorb !BU-bare / BU
+CMAVO-no-absorb <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* spacing-no-absorb-opt !BU-bare / BU
 CMAVO-no-SI-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo-no-SI-handling
 CMAVO-no-SA-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo
 CMAVO-no-BU-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo-no-BU-handling
