@@ -54,9 +54,11 @@ gismu <- !cmene (stressed-CCV-rafsi / stressed-CVC-rafsi) consonant vowel &post-
 
 lujvo <- !cmene !tosmabru (stressed-initial-rafsi short-final-rafsi / initial-rafsi medial-rafsi* final-rafsi) !cmene
 
-tosmabru <- unstressed-cmavo-form lujvo
+;tosmabru <- unstressed-cmavo-form lujvo
 
-stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi r-hyphen / stressed-CVV-rafsi &CCV-rafsi
+tosmabru <- unstressed-cmavo-form brivla-form
+
+stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi r-hyphen / stressed-CVV-rafsi !cmavo-form
 
 initial-rafsi <- (fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi r-hyphen) &consonant
 
@@ -66,7 +68,7 @@ final-rafsi <- fuhivla / gismu / CVV-final-rafsi / (stressed-initial-rafsi / str
 
 CVV-final-rafsi <- consonant stressed-vowel h vowel &post-word
 
-short-final-rafsi <- (consonant unstressed-diphthong / CCV-rafsi) &post-word
+short-final-rafsi <- (consonant diphthong / CCV-rafsi / stressed-CCV-rafsi) &post-word
 
 stressed-long-rafsi <- (stressed-CCV-rafsi / stressed-CVC-rafsi) consonant y
 stressed-CVC-rafsi <- consonant stressed-vowel consonant !any-fuhivla-rafsi
@@ -116,19 +118,23 @@ y-less-rafsi <- CVC-rafsi / CCV-rafsi / CVV-rafsi
 
 ;-------------------------------------------------------------------
 
-fuhivla <- !cmene !gismu !lujvo (fuhivla-A / fuhivla-B / fuhivla-C / fuhivla-D) !cmene
+;fuhivla <- !cmene !gismu !lujvo !tosmabru (fuhivla-A / fuhivla-B / fuhivla-C / fuhivla-D) !cmene
 
-fuhivla-A <- stressed-cmavo-form cluster syllable &post-word
+;fuhivla-A <- stressed-cmavo-form cluster syllable &post-word
 
-fuhivla-B <- unstressed-cmavo-form non-initial-cluster fuhivla-tail
+;fuhivla-B <- unstressed-cmavo-form non-initial-cluster fuhivla-tail
 
-fuhivla-C <- unstressed-cmavo-form slinkuhi
+;fuhivla-C <- unstressed-cmavo-form slinkuhi
 
-fuhivla-D <- !slinkuhi initial-cluster fuhivla-tail
+;fuhivla-D <- !slinkuhi initial-cluster fuhivla-tail
  
-slinkuhi <- consonant !any-fuhivla-rafsi medial-rafsi* final-rafsi 
+;fuhivla-tail <- unstressed-syllable* stressed-syllable syllable &post-word
 
-fuhivla-tail <- unstressed-syllable* stressed-syllable syllable &post-word
+fuhivla <- !gismu !lujvo brivla-form
+
+brivla-form <- !cmene !(cmavo-form cmavo-form) !tosmabru !slinkuhi !non-initial-cluster unstressed-syllable* stressed-syllable syllable &post-word !cmene
+
+slinkuhi <- consonant !any-fuhivla-rafsi medial-rafsi* final-rafsi 
 
 ;-------------------------------------------------------------------
 
@@ -136,12 +142,12 @@ cmavo <- !cmene !gismu !lujvo !fuhivla (cmavo-form / consonant y / y h y / y+) &
 
 ;-------------------------------------------------------------------
 
-stressed-cmavo-form <- !cluster !h (unstressed-syllable &h)* stressed-syllable
+stressed-cmavo-form <- !cluster !h (syllable &h)* stressed-syllable
 stressed-syllable <- &stressed syllable / syllable &stress
 stressed-diphthong <- &stressed diphthong / diphthong &stress
 stressed-vowel <- &stressed vowel / vowel &stress
 
-unstressed-cmavo-form <- !cluster !h unstressed-syllable (&h unstressed-syllable)*
+unstressed-cmavo-form <- !cluster !h (syllable &h)* unstressed-syllable
 unstressed-syllable <- !stressed syllable !stress
 unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
@@ -171,7 +177,7 @@ initial-cluster <- initial-consonant+ consonant !consonant
 
 initial-pair <- initial-consonant consonant !consonant
 
-initial-consonant <- (c / s / j !n / z !n) &consonant / d-t &sibilant / !l !n consonant &r / !r !n !d-t consonant &l
+initial-consonant <- (c / s !x / j !n / z !n) &consonant / d-t &sibilant / !l !n consonant &r / !r !n !d-t consonant &l
 
 consonant <- voiced-consonant / unvoiced-consonant / l / m / n / r
 
@@ -205,7 +211,7 @@ h <- comma* [['h] &(vowel / y)
 
 ;-------------------------------------------------------------------
 
-post-word <- spaces / (consonant / digit) !non-lojban-word
+post-word <- spaces / !non-lojban-word (consonant / digit) 
 
 digit <- comma* [[0123456789] !h !vowel !y
 
