@@ -88,23 +88,37 @@ r-hyphen <- r &consonant / n &r
 
 ;-------------------------------------------------------------------
 
-fuhivla <- !non-fuhivla unstressed-syllable* stressed-syllable !stressed syllable &post-word
-
-stressed-fuhivla-rafsi <- !non-fuhivla unstressed-syllable* stressed-syllable consonant+ y
-
-fuhivla-rafsi <- !non-fuhivla unstressed-syllable+ consonant+ y
-
-non-fuhivla <- lujvy / consonant lujvy / tosmabru / non-initial-cluster / h
-
-tosmabru <- unstressed-cmavo-form (lujvy / any-fuhivla-rafsi) / cmavo-form (cmavo-form / consonant y / spaces)
-
 any-fuhivla-rafsi <- stressed-fuhivla-rafsi / fuhivla-rafsi / fuhivla
 
-lujvy <- y-less-rafsi* (!any-fuhivla-rafsi final-rafsi / y-rafsi / stressed-y-rafsi)
+stressed-fuhivla-rafsi <- !stressed-lujvy !stressed-tosmabry !stressed-slinkujy !non-initial-cluster !h unstressed-syllable* stressed-syllable consonant+ y
+
+stressed-lujvy <- y-less-rafsi* stressed-y-rafsi
+
+stressed-tosmabry <- unstressed-cmavo-form (stressed-lujvy / stressed-fuhivla-rafsi) / cmavo-form cmavo-form / stressed-cmavo-form consonant y
+
+stressed-slinkujy <- consonant stressed-lujvy
 
 stressed-y-rafsi <- (stressed-long-rafsi / stressed-CVC-rafsi / stressed-y-less-rafsi initial-pair) y
 
+fuhivla-rafsi <- !lujvy !tosmabry !slinkujy !non-initial-cluster !h unstressed-syllable+ consonant+ y
+
+lujvy <- y-less-rafsi* y-rafsi
+
+tosmabry <- unstressed-cmavo-form (lujvy / fuhivla-rafsi) / cmavo-form (cmavo-form / consonant y)
+
+slinkujy <- consonant lujvy
+
 y-rafsi <- (long-rafsi / CVC-rafsi / initial-pair) y
+
+;-------------------------------------------------------------------
+
+fuhivla <- !non-fuhivla unstressed-syllable* stressed-syllable !stressed syllable &post-word
+
+non-fuhivla <- gismu / lujvo / tosmabru / slinkuhi / non-initial-cluster / h 
+
+tosmabru <- unstressed-cmavo-form (lujvo / fuhivla) / cmavo-form (cmavo-form / spaces)
+
+slinkuhi <- consonant y-less-rafsi* !any-fuhivla-rafsi final-rafsi 
 
 stressed-y-less-rafsi <- stressed-CVC-rafsi !y / stressed-CCV-rafsi / stressed-CVV-rafsi
 
@@ -131,12 +145,13 @@ unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 cmavo-form <- !cluster !h syllable (&h syllable)*
-syllable <- (h / consonant*) (diphthong / (i / u) vowel / vowel) !y / digit 
+syllable <- (h / consonant*) (diphthong / semi-consonant? vowel) / digit 
+semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
-vowel <- a / e / o / (i / u) !vowel
+vowel <- a / e / i / o / u
 
 stress <- (consonant+ y)? syllable spaces
-stressed <- (!vowel .)* comma* [[AEIOU]
+stressed <- (h / consonant / y)* semi-consonant? comma* [[AEIOU]
 
 a <- comma* [[aA] !y
 e <- comma* [[eE] !y
