@@ -1,0 +1,32 @@
+Return-Path: <cowan>
+Message-Id: <m0jSsSa-00036fC@snark.thyrsus.com>
+From: cowan (John Cowan)
+Subject: Re: Elision, or: Nick rides again in jbonai
+To: lojban-list
+Date: Tue, 16 Apr 91 12:00:50 EDT
+In-Reply-To: <9104121339.AA02476@bigd.cray.com>; from "bigd.cray.com!dmb" at Apr 12, 91 8:39 am
+X-Mailer: ELM [version 2.2 PL13]
+X-From-Space-Date: Tue Apr 16 12:01:28 1991
+X-From-Space-Address: cowan
+Content-Length: 883
+
+Dave Bowen <dmb@bigd.cray.com> writes:
+
+> The formal grammar with all of the terminators made non-elidible is
+>    LR(1) and hence unambiguous.
+
+Almost true.  There are localized regions of the grammar that are not LALR(1),
+and the lexer has to reduce these.  The parser I'm currently writing uses
+recursive descent with backtracking.  In the published YACC grammar, these
+constructs are flagged by being preceded by a "lexer_?_nnn" token where
+? ranges from A-Y; they may be found in rules numbered 900 to 1099.
+
+None of these lexer constructs contain elidable terminators.  They include
+the logical connectives, numbers and letteral-strings, NAhE BO and NA KU,
+and tense/aspect markers.  Many of them are unbounded in size due to embedded
+optional tenses, so Lojban as a whole is LALR(omega).
+
+-- 
+cowan@snark.thyrsus.com		...!uunet!cbmvax!snark!cowan
+		e'osai ko sarji la lojban
+
