@@ -52,13 +52,13 @@ cmene-rafsi <- cmene-part (i / u) y
 
 cmene-part <- cmene-syllable* consonant+ 
 
-cmene-syllable <- !doi-la-lai-lahi consonant* (syllable / y-syllable)
+cmene-syllable <- !doi-la-lai-lahi (syllable / consonantal-syllable / y-syllable)
 
 doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !vowel
 
 ;-------------------------------------------------------------------
 
-gismu <- stressed-long-rafsi !stressed vowel &post-word
+gismu <- stressed-long-rafsi &final-syllable vowel
 
 ;-------------------------------------------------------------------
 
@@ -82,13 +82,13 @@ brivla-head <- !cmavo !slinkuhi &initial unstressed-syllable*
 
 slinkuhi <- consonant rafsi-string
 
-rafsi-string <- (!y-rafsi y-less-rafsi)* (gismu / CVV-final-rafsi / stressed-y-less-rafsi short-final-rafsi / y-rafsi / stressed-y-rafsi / stressed-y-less-rafsi? initial-pair y)
+rafsi-string <- y-less-rafsi* (gismu / CVV-final-rafsi / stressed-y-less-rafsi short-final-rafsi / y-rafsi / stressed-y-rafsi / stressed-y-less-rafsi? initial-pair y)
 
 ;-------------------------------------------------------------------
 
-CVV-final-rafsi <- consonant stressed-vowel h !stressed vowel &post-word
+CVV-final-rafsi <- consonant stressed-vowel h &final-syllable vowel
 
-short-final-rafsi <- !stressed (consonant diphthong / initial-pair vowel) &post-word
+short-final-rafsi <- &final-syllable (consonant diphthong / initial-pair vowel)
 
 stressed-y-rafsi <- (stressed-long-rafsi / stressed-CVC-rafsi) y
 
@@ -104,7 +104,7 @@ stressed-CVV-rafsi <- consonant (unstressed-vowel h stressed-vowel / stressed-di
 
 y-rafsi <- (long-rafsi / CVC-rafsi) y
 
-y-less-rafsi <- (CVC-rafsi !y / CCV-rafsi / CVV-rafsi) !any-extended-rafsi
+y-less-rafsi <- !y-rafsi (CVC-rafsi !y / CCV-rafsi / CVV-rafsi) !any-extended-rafsi
 
 long-rafsi <- (CCV-rafsi / CVC-rafsi) consonant 
 
@@ -164,16 +164,20 @@ unstressed-nucleus <- !stressed nucleus !stress
 unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
-y-syllable <- (h / coda? consonantal-syllable? initial) y !y
-final-syllable <- !stressed onset? nucleus &post-word
-syllable <- (h / coda? consonantal-syllable? initial) nucleus !y / digit 
+y-syllable <- onset? y !y
+
+final-syllable <- onset? !stressed nucleus !y &post-word
+
+post-word <- spaces / !non-lojban-word !cmene (consonant / digit) 
+
+syllable <- onset? nucleus coda? !y / digit 
 nucleus <- diphthong / semi-consonant? vowel
 semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / i / o / u
 
 stress <- (consonant+ y?)? syllable spaces
-stressed <- (h / consonant / y)* semi-consonant? comma* [[AEIOU]
+stressed <- onset? semi-consonant? comma* [[AEIOU]
 
 a <- comma* [[aA]
 e <- comma* [[eE]
@@ -194,7 +198,7 @@ consonantal-syllable <- consonant syllabic-consonant &initial
 
 initial-pair <- &initial consonant consonant !consonant
 
-initial <- (affricate / sibilant? other? liquid?) &vowel
+initial <- (affricate / sibilant? other? liquid?) !consonant
 
 affricate <- t c / t s / d j / d z
 
@@ -235,8 +239,6 @@ h <- comma* [['h] &(vowel / y)
 digit <- comma* [[0123456789] !h !y
 
 ;-------------------------------------------------------------------
-
-post-word <- spaces / !non-lojban-word !cmene (consonant / digit) 
 
 spaces <- !Y initial-spaces
 
