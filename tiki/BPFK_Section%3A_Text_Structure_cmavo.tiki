@@ -1,21 +1,14 @@
-!NOTE: Draft version
-This is a work in progress.
+!This is a work in progress
 
-Selma'o to be covered: FAhO NIhO I MAI TUhE TUhU ZOhU
-
-;__fa'o__ (FAhO): end of text -- unconditional end of text; outside regular grammar; used for computer input --
-;__ni'o__ (NIhO): new topic -- discursive: paragraph break; introduce new topic --
-;__no'i__ (NIhO): old topic -- discursive: paragraph break; resume previous topic --
-;__.i__ (I): sentence link -- sentence link/continuation; continuing sentences on same topic; normally elided for new speakers --
-;__mai__ (MAI): sentence ordinal -- utterance ordinal suffix; converts a number to an ordinal, such as an item or paragraph number --
-;__mo'o__ (MAI): section ordinal -- higher-order utterance ordinal suffix; converts a number to ordinal, usually a section/chapter --
-;__tu'e__ (TUhE): start text scope -- start of multiple utterance scope; used for logical/non-logical/ordinal joining of sentences --
-;__tu'u__ (TUhU): end text scope -- elidable terminator: end multiple utterance scope; seldom elidable --
-;__zo'u__ (ZOhU): end prenex -- marks end of logical prenex quantifiers/topic identification and start of sentence bridi --
+Remaining issues:
+* the meaning of multiple consecutive ni'o.
+* usage survey of no'i.
 
 !Prior usage and discussion
+MAI is postfix, this was probably decided to make it analogous to mei, moi, roi, and re'u. However, this serves to make the grammar of Lojban non-LALR(1), because the parser may have to look through an arbitrarily large numeral string to decvide that it actually belongs in a free modifier. This should not be a problem if Robin's PEG parser is made official. If Robin's PEG parser is ''not'' made official, however, extensive pre-processing will be required.
+
 !!fa'o
-Evidently intended only for machine input.
+Described as unconditional end of parsing. Evidently intended only for machine input. Sometimes used in the sense of "the end". Some erroneous uses, such as inside of tu'e -- tu'u groups. See [http://66.102.9.104/search?q=cache:MpjTKbPZY88J:www.lojban.org/twiki/pub/Files/Documents/carvi.html+%22fa%27o%22+site:.lojban.org&hl=no|1] I see no reason to legalize this practice, since ''fe'o'' is available for this purpose.
 
 !!ni'o
 Seems to be used mostly parallel to paragraph breaks in natural languages. See [http://www.lojban.org/], [http://www.wiw.org/~jkominek/lojban/9312/msg00394.html], and [http://www.wiw.org/~jkominek/lojban/9107/msg00052.html]. On IRC, which is indicative of spoken language,  this appears to have more of a meaning of changing the subject. Examples: [http://www.digitalkingdom.org/lojban/irclog/lojban/2004_06_02-02_21.txt], [http://www.digitalkingdom.org/lojban/irclog/lojban/2002_05_12--2002_11_28.txt].
@@ -33,21 +26,19 @@ Does not appear to have had __any__ usage.
 !!zo'u
 Marks the end of a prenex. A prenex can have one or more terms, which may constrain the instantiation of logical variables in the main sentence. Prenexes are also used as a topic field.
 
-!Text structure cmavo
 
-MAI is postfix, this was probably decided to make it analogous to mei, moi, roi, and re'u. However, this serves to make the grammar of Lojban non-LALR(1), because the parser may have to look through an arbitrarily large numeral string to decvide that it actually belongs in a free modifier. This should not be a problem if Robin's PEG parser is made official. If Robin's PEG parser is ''not'' made official, however, extensive pre-processing will be required.
+!Proposed dictionary entries
+;__fa'o__ (FAhO):Marks the end of input to be parsed. Any remaining text is to be disregarded.
+;__i__ (I):Starts a new sentence.
+;__mai__ (MAI):Enumerates a point in the text. Combines with the preceding numeral to make a free modifier.
+;__mo'o__ (MAI):Enumerates a higher-level section or chapter in the text. Combines with the preceding numeral to make a free modifier.
+;__ni'o__ (NIhO):Marks the start of a parapgraph and a change of subject. Multiple "ni'o" in a row means higher-level section breaks.
+;__no'i__ (NIhO):Marks the start of a paragraph and change back to the previous subject.
+;__tu'e__ (TUhE):Starts a text scope, which is a group of sentences. The text scope acts as a single sentence externally, for purposes such as logical operators.
+;__tu'u__ (TUhU):Ends a text scope. Elidable terminator for tu'e.
+;__zo'u__ (ZOhU):Marks the end of a prenex. A prenex can consist of one or more terms.
 
-;fa'o:Marks the end of input to be parsed.
-;i:Starts a new sentence.
-;mai:Enumerates a point in the text. Combines with the preceding numeral to make a free modifier.
-;mai:Enumerates a higher-level section in the text. Combines with the preceding numeral to make a free modifier.
-;ni'o:Marks the start of a parapgraph and a change of subject. Multiple "ni'o" in a row means higher-level section breaks.
-;no'i:Marks the start of a paragraph and change back to the previous subject.
-;tu'e:Starts a group of sentences. The group acts as a single sentence externally, for purposes such as logical operators.
-;tu'u:Terminator for tu'e.
-;zo'u:Marks the end of a prenex. A prenex can consist of one or more terms. __This is understood from the YACC grammar. Do I need to define a term here?__
-
-!Draft keywords
+!Proposed keywords
 ;fa'o:The End. parsing ends here. end parsing here.
 ;i:and then.
 ;mai:-stly. -ndly. -thly.
@@ -55,5 +46,11 @@ MAI is postfix, this was probably decided to make it analogous to mei, moi, roi,
 ;ni'o:continuing to the next topic.
 ;no'i:returning to the previous topic.
 ;zo'u:so that. such that.
+
+!Interaction with other sections
+The word fa'o, as defined here, currently __~~#FF0000:contradicts ~~__ an example described as valid in ((BPFK Section: Nonce Connectives))
+
+!Impact
+* Requires either preprocessing prior to YACC, or a PEG grammar.
 
 {POLL(pollId=>16)}Text Structure cmavo Poll{POLL}
