@@ -1,0 +1,144 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 89790 invoked from network); 6 May 2004 22:19:38 -0000
+Received: from unknown (66.218.66.218)
+  by m12.grp.scd.yahoo.com with QMQP; 6 May 2004 22:19:38 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 6 May 2004 22:19:38 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.31)
+	id 1BLrDK-00078y-St
+	for lojban@yahoogroups.com; Thu, 06 May 2004 15:19:35 -0700
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.31)
+	id 1BLrCg-000786-AA; Thu, 06 May 2004 15:18:54 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 06 May 2004 15:18:51 -0700 (PDT)
+Received: from lakermmtao12.cox.net ([68.230.240.27])
+	by chain.digitalkingdom.org with esmtp (Exim 4.31)
+	id 1BLrCU-00077g-AP
+	for lojban-list@lojban.org; Thu, 06 May 2004 15:18:42 -0700
+Received: from nora.cox.net ([68.228.12.146]) by lakermmtao12.cox.net
+          (InterMail vM.6.01.03.02 201-2131-111-104-20040324) with ESMTP
+          id <20040506221810.PZKO164.lakermmtao12.cox.net@nora.cox.net>
+          for <lojban-list@lojban.org>; Thu, 6 May 2004 18:18:10 -0400
+Message-Id: <5.1.0.14.0.20040506181623.032d1340@pop.east.cox.net>
+X-Sender: noras@pop.east.cox.net
+X-Mailer: QUALCOMM Windows Eudora Version 5.1
+Date: Thu, 06 May 2004 18:20:33 -0400
+In-Reply-To: <20040506003409.GI7020@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+X-archive-position: 7676
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: noras@cox.net
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Nora LeChevalier <noras@cox.net>
+From: Nora LeChevalier <lojban-out@lojban.org>
+Reply-To: noras@cox.net
+Subject: [lojban] Re: My parser, SI, SA, and ZOI
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 22142
+Content-Length: 3815
+
+At 05:34 PM 5/5/04 -0700, Robin wrote:
+>Now that I can parse ZOI, it was necessary to figure out what the
+>interactions with it and SI and SA would be.  Along the way, I added
+>some features to the interaction between SI and SA.  This is what I've
+>currently got on my parser page, and I'd very much like people's
+>opinions.
+>
+>In particular, if there is a direct contradiction with grammar.300 that is
+>*not* obviously based on YACC limitations, or anything that seems strongly
+>counter-intuitive, please let me know.
+>
+>The main page for my parser is
+>http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/
+>
+>
+>   * Groups of "si" and everything up to a "sa" are both erased at the 
+> beginning
+>of a string. This may or may not be justifiable according to grammer.300;
+>no-one's really sure. This means that sentences like "si si si" and "sa" are
+>legal, as well as sentences like "le broda sa .i mi cusku".
+>
+>   * SA and SI now interact in a more obvious fashion. For example, "le broda
+>brode brodi .y. sa le si la broda brode brodi" is equivalent to "la broda 
+>brode
+>brodi". Just using "sa" would not work because "le" and "lo" are in different
+>selma'o.
+>
+>   * Interactions between ZOI, SI, and SA are much richer. The goal is to
+>achieve something more like what a user would 'expect', given the basic
+>definitions of those words. Details:
+>
+>
+>       + The first SI after the close of a ZOI clause erases the closing
+>delimiter, allowing one to add to the protected text. "zoi gy weeble gy si bob
+>gy" is equivalent to "zoi gy weeble bob gy".
+>
+>       + Two consecutive SI after the close of a ZOI erases the non-Lojban 
+> text
+>itself; while it would theoretcially be possible to have consecutive SI after
+>the close of a ZOI erase individual words inside the ZOI protected text, this
+>is a bad idea because (for example) breaking up a bird call into words makes
+>very little sense.
+>
+>         So, for example, "zoi gy da da da gy si si de gy" is equivalent 
+> to "zoi
+>gy de gy".
+>
+>       + The interaction of these two features leads to a somewhat 
+> strange, but
+>very minor, side effect: It is impossible to add to the protected text 
+>inside a
+>zoi clause (i.e. using a single SI after the closing delimiter) any text that
+>starts with "si" (unless it then goes on to be something that looks like a
+>Lojban brivla or cmene), because it will be interpreted as two SI, causing
+>erasure of the entire protected text.
+>
+>       + Three consecutive SI after the close of a ZOI erases everything 
+> but the
+>ZOI itself, so that, for example, "zoi gy da da da gy si si si dy weeble 
+>dy" is
+>equivalent to "zoi dy weeble dy".
+>
+>       + Four consecutive SI after the close of a ZOI erases the entire ZOI
+>clause, including the ZOI.
+>
+>       + Because of the SA and SI interaction enhancements, the fast way to
+>delete and accidental ZOI is to close the delimiter and say "sa zoi si", and
+>then continue on. For example, "broda zoi gy da da da da gy sa zoi si da" is
+>equivalent to "broda da".
+>
+>
+>-Robin
+
+I think I've seen someone use "si" as the delimiter.  This majorly 
+complicates things, no?
+
+Also, from a making-sense point of view, I prefer "si" after the closing 
+delimiter to delete the entire zoi phrase (back to and including the 
+zoi).  To say that "The first SI after the close of a ZOI clause erases the 
+closing delimiter..." would make one think the next thing said is part of 
+the inside of the ZOI; so you would never be able to get back to the 
+ZOI.  I had this trouble with the current version, too, by the way.  There 
+is a precedent for this.  When applying a UI, if it's after something like 
+a le broda ku, it applies to the whole le ... ku construct.
+
+
+-- 
+mi'e noras                                             noras@cox.net
+Nora LeChevalier
+
+
+
+
+
+
+           
+
