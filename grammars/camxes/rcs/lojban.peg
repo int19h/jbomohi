@@ -96,7 +96,7 @@ sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri KU-clause? 
 
 sumti-6 <- zo-clause indicators* free* / LOhU-clause lohu-tail free* / lerfu-string !MOI-clause BOI-clause? free* / LU-clause text LIhU-clause? free* / (LAhE-clause free* / NAhE-clause BO-clause free*) relative-clauses? sumti LUhU-clause? free* / KOhA-clause free* / LA-clause free* relative-clauses? (CMENE !BU-clause !ZEI-clause)+ free* / (LA-clause / LE-clause) free* sumti-tail KU-clause? free* / li-clause / zoi-clause indicators* free*
 
-li-clause <- LI-clause free* mex LOhO-clause? free* / zoi-clause indicators* free*
+li-clause <- LI-clause free* mex LOhO-clause? free*
 
 lohu-tail <- lehu-si-clause lohu-tail / LEhU-clause / any-word-no-SI-handling lohu-tail
 
@@ -145,7 +145,10 @@ mex-2 <- operand / PEhO-clause? free* operator mex-2+ KUhE-clause? free*
 ;li fu'a reboi ci pi'i voboi mu pi'i su'i reboi ci vu'u su'i du li rexa
 ;rp-expression <- rp-operand rp-operand operator
 ;rp-operand <- operand / rp-expression
+; AKA (almost; this one allows a single operand; above does not.
+;rp-expression <- rp-expression rp-expression operator / operand
 
+; Right recursive version.
 rp-expression <- operand rp-expression-tail
 rp-expression-tail <- rp-expression operator rp-expression-tail / ()
 
