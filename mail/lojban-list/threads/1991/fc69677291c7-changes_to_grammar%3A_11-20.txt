@@ -1,0 +1,213 @@
+# mail/lojban-list thread fc69677291c7-changes_to_grammar%3A_11-20 | root m0jxlu4-0001bxc@snark.thyrsus.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1991-07-09T17:31:11Z | cowan | m0jxlu4-0001bxc@snark.thyrsus.com | mail/lojban-list/cur/679080671.fc69677291c76aa3.jbomohi:2,S
+Change 11:
+
+CURRENT LANGUAGE:
+
+The grouping of PU_mods means that a free modifier at the end of a
+PU_mod applies to the whole PU_mod rather than just to the tense_modal
+at the end, whereas free modifiers embedded within the PU_mod refer
+only to the tense_modals they follow.  So "puxipa je puxire", which
+should mean "past-time t1 or past-time-t2" means "(past-time t1 or
+some-past-time)-sub-2".  As a result, there is no way to subscript
+a conjoint tense, but it is not clear what such subscripts would mean
+anyhow.
+
+PROPOSED CHANGE:
+
+Move the free modifier to tense_modal.
+
+RATIONALE:
+
+See CURRENT LANGUAGE section.
+
+
+Change 12:
+
+CURRENT LANGUAGE:
+
+An initial FAhA cannot be followed by space offsets, but only by a space
+interval (or by nothing at all).  Analogously for a ZI in the time system.
+
+PROPOSED CHANGE:
+
+Allow FAhA followed by space-time-offsets and ZI followed by time offsets.
+
+RATIONALE:
+
+This allows the currently ungrammatical "vizu'a" in the sense of "to the
+left of a nearby point".  "Zu'avi" on the other hand means "a point not
+far to the left of here".  This distinction is subtle, but real.  The
+change to the time system follows by symmetry, although initial ZI is
+probably not of much use, since it means "a short/medium/long time distance
+from now" without specifying either past or future.
+
+
+Change 13:
+
+CURRENT LANGUAGE:
+
+Utterance ordinals using MAI are currently considered indicators, and
+can appear after any word and get absorbed.
+
+PROPOSED CHANGE:
+
+Shift MAI constructs to the more restrictive free modifier group.
+
+RATIONALE:
+
+The absorber routines in the parsing program which need to remove
+non-initial utterance ordinals before YACC sees them have to read an
+arbitrary number of PA or BY tokens, determine whether the next token
+is a MAI, and if so absorb, but if not push back all the PA/BY stuff.
+This requires unbounded pushback capability in the absorber, which is
+to be avoided.
+
+This change was proposed earlier but never consummated.  A side effect
+of this change is that lexer_A now flags utterance ordinals
+only, and the regular indicators (UI, CAI, Y) no longer need lexer
+flagging.  Another side effect is that FUhO, DAhO, and POhA
+can now be treated as indicators (and PEhA as a forethought indicator
+like BAhE) rather than with special magic.
+
+Change 14:
+
+CURRENT LANGUAGE:
+
+A tense can be prefixed with arbitrary numbers of NAhE tokens.
+
+PROPOSED CHANGE:
+
+Allow only one NAhE token at most.
+
+RATIONALE:
+
+The compounder needs to read past a potentially infinite
+number of NAhEs to decide whether what follows is a selbri (which is
+not compounded) or a tense.  If this change is made, the compounder
+will always be able to decide within 2 tokens whether it has a
+compound or not.  If multiple NAhEs are really needed, the tense
+can be expanded to use the predicate grammar instead.
+
+
+Change 15:
+
+*ANNULLED*
+
+
+Change 16:
+
+*ANNULLED*
+
+
+Change 17:
+
+CURRENT LANGUAGE:
+
+Logical operators can be represented in either forethought or afterthought
+(except for tenses and abstractors), as can aspectual (BAI) operators,
+but the non-logical operators of JOI and BIhI have no forethought versions.
+
+PROPOSED CHANGE:
+
+Allow "[SE] JOI GI [NAI]" and "[SE] BIhI GI [NAI]" as new kinds of geks,
+analogous to the existing "stag GI [NAI]".  Forethought would still be
+disallowed in tanru (no GUhEK equivalent of this) and where the GAhO
+endpoint markers are required.
+
+RATIONALE:
+
+Completeness, plus the fact that natural languages such as English
+usually represent joiks with forethought constructs ("the union of...and...",
+"from...to...", etc.)  Institute Loglan had only one joik, "ze" (the
+equivalent of "joi"), so a forethought construction was not felt
+necessary.  The far more elaborate joiks of Lojban can easily be
+extended to forethought.
+
+
+Change 18:
+
+CURRENT LANGUAGE:
+
+"bu", selma'o BU, has a very restricted use.  It can only appear after
+bare vowels (selma'o A, I, and Y) to create the lerfu for those vowels.
+
+PROPOSED CHANGE:
+
+Allow "bu" after any (lexable) word whatever, to create something
+equivalent to selma'o BY.  Remove the ZAI...FOI construct for change
+of character set, as well as the TEI construct.  LAU is kept and extended to
+hold all lerfu prefixes, including "zai" to specify character set
+and "tau" to force a next-lerfu shift.
+
+Composite symbols are now represented by TEI letteral ... FOI, which has
+the grammar of a single letteral.
+
+All the various kinds of letterals are now also allowed in numbers
+(although not initially).
+
+RATIONALE:
+
+This allows the creation of a bunch of new lerfu.  The Latin and Greek
+alphabets can be more readily accomodated; for example, "q" could have
+"kybu" as its lerfu.  Lerfu for the digits become possible; for example
+"pabu" would be the digit 1, as opposed to the number 1.
+
+The ZAI...FOI construct is meant to specify new character sets, but
+requires spelling out the name of the character set in lerfu, for
+example "zai dy ebu vy abu ny abu gy abu ry ibu foi" to enable
+Devanagari mode.  This is ugly.  Using the new flexibility of "bu",
+we can say "zai .devanagar. bu" instead.  (The pauses are needed
+for morphological reasons.)
+
+
+Change 19:
+
+CURRENT LANGUAGE:
+
+There is a special category of predicates called "MEX relations" which
+have special grammar; they represent mathematical relations.
+
+MEX relations are also used to specify the precedence of mekso operators
+using a free-modifier construct starting with TIhO.
+
+PROPOSED CHANGE:
+
+Assimilate mekso relations to ordinary predicates.  Eliminate the special
+TIhO grammar, and move "ti'o" itself to selma'o SEI.
+
+RATIONALE:
+
+mekso relations as defined cannot be logically connected and overlap ordinary
+predicates.  The only mekso relation cmavo defensible on Zipfean grounds is
+"du", which is moved to selma'o GOhA.
+
+The grammar of TIhO was an attempt to allow a "smart" parser to understand
+mekso operator precedence declarations, since they override the default
+grammar of mekso.  This grammar was not well thought out, and it seems better
+to allow any selbri after "ti'o", the same grammar as for SEI.  Smart
+parsers will just have to do the best they can.
+
+
+Change 20:
+
+CURRENT LANGUAGE:
+
+ZAhOs cannot stand alone in interval modifiers in tenses.  An interval
+modifier currently consists of ROI/TAhE constructs with interspersed
+ZAhOs.
+
+PROPOSED CHANGE:
+
+Allow ZAhOs to stand alone or to come first in complex interval modifiers.
+
+RATIONALE:
+
+Stand-alone ZAhO has a clear meaning and should be allowed.  The only
+remaining restriction is that consecutive ROI/TAhE options are not permitted
+without at least one intervening ZAhO.
+
+
+
+
