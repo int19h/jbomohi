@@ -1,3 +1,68 @@
+For computer applications of Lojban, there needs to be a formal grammar of numbers. I started from ((xorxes))' grammar below, and revised it in places and made it into a ((PEG)) grammar.
+
+This meets all the rules in chapter 18 of CLL, except the one where it contradicts Lojban for Beginners, and LfB has the more useful reading. Namely, you can have a decimal point inside a "digit" (segment) of a mixed-base number like a time.
+
+This involves defining 14 new selma'o. SA is not handled yet (what should it do inside a number?) Also, letters mixed with numbers are not handled, but I consider this a feature and not a bug.
+
+The "number" rule in the existing grammar is replaced, and these rules are inserted:
+
+^digit <- NO / TUhO
+digits <- digit+
+thousand <- digits KIhO
+whole <- thousand+ digits
+decimal2 <- whole (PI digits (RAhE digits)?)? / PAI
+decimal1 <- MAhU? decimal2 / MAhU
+decimal <- decimal1 CEhI?
+digitplace <- decimal PIhE?
+tuple <- digitplace+
+real <- decimal / tuple
+indef <- PI? RO / TUhO
+component <- real / indef
+fraction <- component FIhU fraction / component
+complex <- fraction? KAhO fraction? / fraction
+quantity <- component / fraction / DAhA quantity
+range <- SUhO quantity?
+fuzzy <- complex JIhI complex
+
+number <- quantity / complex / fuzzy / range / indef number
+
+NO <- pre-cmavo NO-words post-cmavo
+NO-words <- "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9"
+
+MAhU <- pre-cmavo MAhU-words post-cmavo
+MAhU-words <- "ma'u" / "ni'u"
+SUhO <- pre-cmavo SUhO-words post-cmavo
+SUhO-words <- "su'e" / "su'o" / "me'i" / "za'u"
+TUhO <- pre-cmavo TUhO-words post-cmavo
+TUhO-words <- "tu'o" / "xo"
+PAI <- pre-cmavo PAI-words post-cmavo
+PAI-words <- "pai" / "te'o" / "ci'i"
+CEhI <- pre-cmavo CEhI-words post-cmavo
+CEhI-words <- "ce'i"
+KIhO <- pre-cmavo KIhO-words post-cmavo
+KIhO-words <- "ki'o"
+PI <- pre-cmavo PI-words post-cmavo
+PI-words <- "pi"
+PIhE <- pre-cmavo PIhE-words post-cmavo
+PIhE-words <- "pi'e"
+RAhE <- pre-cmavo RAhE-words post-cmavo
+RAhE-words <- "ra'e"
+RO <- pre-cmavo RO-words post-cmavo
+RO-words <- "ro" / "so'a" / "so'e" / "so'i" / "so'o" / "so'u" / "rau" / "du'e" / "mo'a" / "no'o"
+JIhI <- pre-cmavo JIhI-words post-cmavo
+JIhI-words <- "ji'i"
+KAhO <- pre-cmavo KAhO-words post-cmavo
+KAhO-words <- "ka'o"
+DAhA <- pre-cmavo DAhA-words post-cmavo
+DAhA-words <- "da'a"
+FIhU <- pre-cmavo FIhU-words post-cmavo
+FIhU-words <- "fi'u"
+^
+
+''mi'e ((rab.spir))''
+
+---
+
 Here is an informal grammar of numbers. I am not even
 suggesting that this should be part of the formal grammar,
 it is just an exercise to sort out which combinations
