@@ -81,3 +81,28 @@ So how do x3 and x4 differ?
 
 mi'e xorxes
 
+
+## 2004-11-22T19:50:12Z — rlpowell (comment 172, on definition 2647, in reply to 171)
+
+Re: Fourth place.
+
+xorxes wrote:
+> rlpowell wrote:
+> > xorxes wrote:
+> > > rlpowell wrote:
+> > > > According to the ma'oste, there's a fourth place, "in property".
+> > > 
+> > > But where would it come from, and what would it mean?
+> > > There is already x3 for a property.
+> > 
+> > From "tai": (x1 resembles x2 sharing ideal form/shape x3 in property
+x4)
+> 
+> So how do x3 and x4 differ? 
+
+da de tamsmi lo bolci lo ka bartu
+
+"da resembles de in that it has the outer shape of a ball".
+
+-Robin
+
