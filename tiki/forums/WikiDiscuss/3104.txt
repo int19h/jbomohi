@@ -2848,3 +2848,44 @@ Working on it.
 
 
 
+
+## 2004-12-21T00:27:55Z — rlpowell (@rlpowell) (post 3183)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041220223429.GH20429@chain.digitalkingdom.org
+In-Reply-To: 20041220213334.60480.qmail@web41902.mail.yahoo.com
+
+On Mon, Dec 20, 2004 at 01:33:34PM -0800, Jorge Llamb?as wrote:
+> 
+> --- Robin Lee Powell wrote:
+> 
+> > This:
+> > 
+> > cmavo <- !cmene !gismu !lujvo !fuhivla consonant? vowels
+> > &(spaces / consonant)
+> > 
+> > can't work, because at least one of those ! productions has
+> > stuff out front that calls cmavo (or !cmavo, or whatever).  One
+> > of them I've found, which is the lujvo !tosmabru test, but
+> > there's at least one other. 
+> 
+> fuhivla-head started with &cmavo
+> 
+> > Having cmavo call cmavo to match cmavo is left recursion, and is
+> > bad.
+> 
+> Changed to:
+> 
+>  cmavo <- !cmene !gismu !lujvo !fuhivla cmavo-form
+> 
+>  cmavo-form <- consonant? vowels &(spaces / consonant)
+> 
+> lujvo and fuhivla now use cmavo-form.
+
+A couple more places needed to use cmavo-form, but it seems to work
+now.
+
+-Robin
+
+
+
