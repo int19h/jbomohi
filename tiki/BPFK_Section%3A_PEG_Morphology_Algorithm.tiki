@@ -84,7 +84,7 @@ r-hyphen <- r &consonant / n &r
 
 any-fuhivla-rafsi <- stressed-fuhivla-rafsi / fuhivla-rafsi / fuhivla
 
-stressed-fuhivla-rafsi <- !lujvy (stressed-fuhivla-rafsi-A / stressed-fuhivla-rafsi-B / stressed-fuhivla-rafsi-C / stressed-fuhivla-rafsi-D) 
+stressed-fuhivla-rafsi <- !stressed-lujvy (stressed-fuhivla-rafsi-A / stressed-fuhivla-rafsi-B / stressed-fuhivla-rafsi-C / stressed-fuhivla-rafsi-D) 
 
 stressed-fuhivla-rafsi-A <- stressed-cmavo-form cluster y 
 
@@ -126,13 +126,13 @@ fuhivla-C <- unstressed-cmavo-form slinkuhi
 
 fuhivla-D <- !slinkuhi initial-cluster fuhivla-tail
  
-slinkuhi <- consonant !fuhivla-rafsi medial-rafsi* final-rafsi 
+slinkuhi <- consonant !any-fuhivla-rafsi medial-rafsi* final-rafsi 
 
 fuhivla-tail <- unstressed-syllable* stressed-syllable syllable &post-word
 
 ;-------------------------------------------------------------------
 
-cmavo <- !cmene !gismu !lujvo !fuhivla (cmavo-form / consonant y / y h y / y+)
+cmavo <- !cmene !gismu !lujvo !fuhivla (cmavo-form / consonant y / y h y / y+) &post-word
 
 ;-------------------------------------------------------------------
 
@@ -147,11 +147,11 @@ unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 cmavo-form <- !cluster !h syllable (&h syllable)*
-syllable <- (h / consonant* (diphthong / (i / u) vowel / vowel)) !vowel / digit 
+syllable <- (h / consonant*) (diphthong / (i / u) vowel / vowel) !vowel / digit 
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / o / (i / u) !vowel
 
-stress <- (cluster y)? syllable spaces
+stress <- (consonant+ y)? syllable spaces
 stressed <- (!vowel .)* comma* [[AEIOU]
 
 a <- comma* [[aA] !a !e !o !y
