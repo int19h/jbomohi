@@ -1,0 +1,64 @@
+Reply-To: Jorge Llambias <jorge@PHYAST.PITT.EDU>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Jorge Llambias <jorge@PHYAST.PITT.EDU>
+Subject:      Re: TECH: PROPOSED GRAMMAR CHANGE X4: Forethought bridi and
+              bridi-tail connection
+X-To:         lojban@cuvmb.cc.columbia.edu, jorge@minerva.phyast.pitt.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+Status: OR
+
+la lojbab cusku di'e
+
+> This one I am SURE won't YACC.  We tried - many times.  It requires
+> eliminating the grammatical distinction between bridi and bridi-tail
+> absolutely, not just in forethought connection.
+
+But that is exactly what I am proposing. Why should there be a
+grammatical distinction between bridi and bridi-tail, when there
+is no semantic distinction? This is the sort of modification I had
+in mind:
+
+
+sentence = [term ...] bridi-tail | prenex sentence
+
+bridi-tail = bridi-tail-1
+        [gihek [stag] KE # bridi-tail /KEhE#/ tail-terms] ...
+
+bridi-tail-1 = bridi-tail-2 [gihek # bridi-tail-2 tail-terms] ...
+
+bridi-tail-2 = bridi-tail-3 [gihek [stag] BO # bridi-tail-2 tail-terms]
+
+bridi-tail-3 = [CU #] selbri tail-terms | gek-sentence tail-terms
+
+gek-sentence = gek sentence gik sentence
+
+
+
+Instead of the current:
+
+
+sentence<40> = bridi-tail | sentence-1
+
+sentence-1<41> = term ... [CU #] bridi-tail | gek sentence-1 gik sentence |
+        prenex sentence
+
+bridi-tail<50> = bridi-tail-1
+        [gihek [stag] KE # bridi-tail /KEhE#/ tail-terms] ...
+
+bridi-tail-1<51> = bridi-tail-2 [gihek # bridi-tail-2 tail-terms] ...
+
+bridi-tail-2<52> = bridi-tail-3 [gihek [stag] BO # bridi-tail-2 tail-terms]
+
+bridi-tail-3<53> = selbri tail-terms | gek-bridi-tail
+
+gek-bridi-tail<54> = gek bridi-tail gik bridi-tail-3 |
+        tag KE gek-bridi-tail /KEhE#/ | NA # gek-bridi-tail
+
+
+
+The only important difference is that {i cu broda} would be allowed
+(I don't see why it isn't allowed now), but that can be changed back,
+although in that case the rules would look more complicated.
+
+Jorge
+
