@@ -56,7 +56,7 @@ CVCy-lujvo <- CVC-rafsi y initial-rafsi* brivla-core / stressed-CVC-rafsi y shor
 
 post-cmavo <- spaces / !nucleus &independent lojban-word
 
-independent <- stressed / consonant vowel-y / !final-syllable / cmene
+independent <- stressed / consonant nucleus / !final-syllable / cmene
 
 stressed-cmavo-form <- consonant? (nucleus &nucleus)* &stressed nucleus
 
@@ -72,7 +72,7 @@ short-lujvo <- stressed-initial-rafsi short-final-rafsi
 
 stressed-initial-rafsi <- stressed-extended-rafsi / stressed-y-rafsi / stressed-y-less-rafsi
 
-initial-rafsi <- (extended-rafsi / y-rafsi / !any-extended-rafsi y-less-rafsi) !nucleus h?
+initial-rafsi <- extended-rafsi / y-rafsi / !any-extended-rafsi y-less-rafsi
 
 ;-------------------------------------------------------------------
 
@@ -86,11 +86,11 @@ extended-rafsi <- brivla-rafsi / fuhivla-rafsi
 
 stressed-brivla-rafsi <- &unstressed-syllable brivla-head stressed-syllable y
 
-brivla-rafsi <- &(unstressed-syllable unstressed-syllable) brivla-head y
+brivla-rafsi <- &(unstressed-syllable unstressed-syllable) brivla-head y h?
 
 stressed-fuhivla-rafsi <- fuhivla-head stressed-syllable &consonant y-syllable
 
-fuhivla-rafsi <- &unstressed-syllable fuhivla-head &consonant y-syllable
+fuhivla-rafsi <- &unstressed-syllable fuhivla-head &consonant y-syllable h?
 
 fuhivla-head <- !rafsi-string brivla-head
 
@@ -120,7 +120,7 @@ stressed-CCV-rafsi <- initial-pair stressed-vowel
 
 stressed-CVV-rafsi <- consonant (unstressed-vowel h stressed-vowel / stressed-diphthong) r-hyphen? 
 
-y-rafsi <- (long-rafsi / CVC-rafsi) y
+y-rafsi <- (long-rafsi / CVC-rafsi) y h?
 
 y-less-rafsi <- !y-rafsi (CVC-rafsi !y / CCV-rafsi / CVV-rafsi) !any-extended-rafsi
 
@@ -149,7 +149,7 @@ unstressed-vowel <- !stressed vowel !stress
 stress <- y-syllable* syllable spaces
 stressed <- onset? semi-consonant? comma* [[AEIOU]
 
-syllable <- onset? !y-nucleus nucleus / digit 
+syllable <- onset? !y-nucleus nucleus
 y-syllable <- onset? y !y
 
 nucleus <- (diphthong / semi-consonant? vowel / y-nucleus) !y h?
@@ -169,10 +169,14 @@ h <- comma* [['h] &nucleus
 
 ;-------------------------------------------------------------------
 
-onset <- syllabic? consonant? consonantal-syllable? initial
+onset <- coda? consonantal-syllable? initial
 
-consonantal-syllable <- consonant? syllabic &consonant
+coda <- !initial syllabic? (!initial !syllabic consonant)?
+
+consonantal-syllable <- (!syllabic consonant)? syllabic &initial &consonant
+
 initial-pair <- &initial consonant consonant !consonant
+
 initial <- (affricate / sibilant? other? liquid?) !consonant
 
 affricate <- t c / t s / d j / d z
