@@ -51,3 +51,18 @@ OK, I take it back.  Sorry.  Do it either way, as you like.
 
 -Robin
 
+
+## 2003-10-14T18:50:03Z — arj (comment 114)
+
+Additional places
+
+Rlpowell mentioned that it might be a good idea to expand the place
+structure of this word.
+
+We have the x1 and the x2 of skami left over. (Computer and purpose,
+respectively). Programming for a specific computer is not metaphysically
+necessary for the relation to hold.
+
+We are then left with "purpose of computer", which might actually be a
+good idea to put in.
+
