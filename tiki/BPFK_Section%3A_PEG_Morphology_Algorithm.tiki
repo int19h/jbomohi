@@ -44,7 +44,7 @@ lojban-word <- cmene / cmavo / brivla
 
 ;-------------------------------------------------------------------
 
-cmene <- !h &consonant-final any-syllable* onset? &pause
+cmene <- !h &consonant-final any-syllable* &pause
 
 consonant-final <- (non-space &non-space)* consonant &pause
 
@@ -149,9 +149,9 @@ any-syllable <- onset nucleus coda? / consonantal-syllable
 
 syllable <- onset !y nucleus coda?
 
-consonantal-syllable <- consonant syllabic &(consonantal-syllable / onset)
+consonantal-syllable <- consonant syllabic &(consonantal-syllable / onset / pause)
 
-coda <- !initial !consonantal-syllable consonant 
+coda <- !initial !consonantal-syllable (syllabic !initial !consonantal-syllable)? consonant 
 
 onset <-  h / consonant? glide / initial
 
