@@ -1,0 +1,49 @@
+http://nuzban.wiw.org/rand/
+
+Makes 100 random sentences at a time. They're generated from __sentence_11__ (in the YACC grammar description), so you'll never see ''fa'o'', for instance.
+* He means statement_11.  -RobinLeePowell
+
+Source code is:
+http://nuzban.wiw.org/rand/generator.pl
+
+Needs the ((Perl)) module __Memoize__.
+
+Uses [http://www.cosc.canterbury.ac.nz/research/reports/TechReps/1997/tr_9710.pdf|an algorithm] devised by ((Bruce McKenzie)) to ensure that all strings of length ''n'' have the same chance of being generated.
+
+Currently not all sentences are valid (a few percent). Its because I don't fully reverse all of the lexer preprocessing done, yet.
+
+Notably, ((jbofi'e)) parses all the validish sentences. The ones it fails on are visibly malformed. (My generator produces output using the LLG's official ((YACC)) grammar, whereas ((jbofi'e))'s grammar is based off of the ((EBNF)) grammar. So if ((jbofi'e)) can parse everything produced by my generator, then that means that ((jbofi'e)) is correct.)
+
+As far as tuning the output:
+
+The only feasible method is to adjust the grammar used to produce sentences by removing rules which produce things you don't want, and duplicating rules for things which you want to have a higher likely hood. If anyone would like to take a copy of grammar.300 from the Lojban site and adjust it like that, I'd love to see the result.
+
+----------
+
+Very cool. However, I think there still needs to be some sort of weighting - the vast majority of Lojban sentences of length ''n'' are ugly things only a computer could love. I don't think I saw the word ''le'' anywhere on the page I got. --((rab.spir))
+
+----
+
+Wonderful! But it looks like it needs some tuning: it gave me '''jai jai jai na'e jai je'a klesi jai cupra'''.
+
+What? Thats a valid sentence. Merely completely nonsensical... I have noticed that it __really__ likes jai, though. --jay
+
+''Maybe it's trying to produce the name of its creator? --pne''
+
+-----
+
+I took a copy of grammar.300, as you suggested, and modified it. Basically, I took options which went directly to another rule without extra stuff, and repeated those 3 times. I also repeated things I thought were important, such as sumti, 5 times.
+
+The result: nearly every sentence consisted of 8 anaphora filling the places of one bridi. Sometimes there would be a ''nai'' instead of one anaphora, or a two-word tanru for the bridi, but always generally the same thing.
+
+And now I see why. This algorithm gives every 9-word sentence an equal chance of being produced. ''(right, that was the whole point. :) sadly it didn't turn out quite so well. --jay)'' And there are LOTS of 9-word sentences with 8 anaphora and a bridi, especially as my weighting steered the sentences away from strange grammatical structures which there could also be lots of.
+
+In contrast, since this generator seems to never drop KU, every sentence which has a LE in it has to also have a KU in it. There are not lots of these sentences. Very few of them, in fact. No amount of weighting would fix the fact that 1 word is easier to fit in a random sentence than 3, so it was always anaphora everywhere.
+
+So I deleted the anaphora rule. Now it generates boring sentences which at least have LE in them, like ''la pilji ku ralju gigdo le'i co'e melbi ku''.
+
+So from what I've seen, we don't want every sentence to have an equal chance. In fact, I'd say we want some sentences like ''tu de'u kerfa di ko'a do de ko ti'' to ((dies in the arse|die in the arse)).
+
+So I think the purely weighted approach, as used in the original ((random sentence generator)), is the only way to get random sentences meant for humans. Jay, could I have a copy of your original attempt which generated huge stuff, so I can try it with my weighted version of the grammar? ''sent''
+
+--((rab.spir))
