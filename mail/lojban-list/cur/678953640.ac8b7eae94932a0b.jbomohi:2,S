@@ -1,0 +1,159 @@
+Return-Path: <lojbab>
+Message-Id: <m0jwork-00037yC@snark.thyrsus.com>
+Date: Mon, 8 Jul 91 02:14 EDT
+From: lojbab (Bob LeChevalier)
+To: lojban-list
+Subject: Jeff Prothero on elidable terminators issue from before LogFest
+X-From-Space-Date: Mon Jul  8 02:15:15 1991
+X-From-Space-Address: lojbab
+Content-Length: 5733
+
+The following paper was written by Jeff Prothero as an answer to
+criticism of the use of elidable tokens in the Loglan formal grammar.
+The argument applies to Lojban as well as to any other version of the
+Loglan grammar, provided that the grammar abides by the defining rules
+of Bracket Languages (I am not sure that current Institute Loglan abides
+by these defining rules - comment is sought from anyone who has such
+knowledge.)  The reference to GU in the title is to the older Loglan
+RightBracket selma'o that in Lojban was re-lexed to KU.  The title is
+thus a bit of a pun for Lojbanists, since the 'GU' is gone from our
+selma'o list as well.
+
+I beleive that this paper answers at least partially the criticisms
+raised by various people before LogFest on this list, and would like
+confirmation of that belief, criticism of the argument, or other
+comment.
+----
+lojbab = Bob LeChevalier, President, The Logical Language Group, Inc.
+         2904 Beau Lane, Fairfax VA 22031-1303 USA
+         703-385-0273
+         lojbab@snark.thyrsus.com
+
+
+
+                          THE GU IS GONE!
+            Elidable Terminators in Logical Languages
+                Copyright {c) 1989 Jeff Prothero
+ Distributed for comment on lojban-list with permission from the author.
+
+The elision of trailing terminators has been a prime problem for
+everyone seriously working to understand the Lo--an grammar.  This paper
+is a first attempt to deal with this problem.  The major questions to
+resolve:
+
+   When can terminators be elided?
+   When would such elision introduce ambiguity?
+   How does one recover the full syntax of a sentence containing such
+      elisions?
+
+The first step is to establish a simple analytical model, which exhibits
+the relevant problems without extraneous detail and complexity.  We
+consider the Bracket Languages BL, defined by the following grammatical
+properties:
+
+   Each grammatical construct consists of a leading LeftBracket token,
+a trailing RightBracket token,and some number of substructures trapped
+between these two tokens.
+   Every token is either a LeftBracket or a RightBracket.
+   No token is both a LeftBracket and a RightBracket.
+   Every LeftBracket has a unique matching RightBracket.
+
+Note that we do not require that each RightBracket have a unique
+matching LeftBracket.
+
+Sample Bracket Language:
+
+start   ->      bracket | broket | mixed
+
+bracket ->      '['   ']'
+        |       '[' start ']'
+        |       '[' start start ']'
+
+broket  ->      '<'   '>'
+        |       '<' start '>'
+        |       '<' start start '>'
+
+mixed   ->      '{'   '>'
+        |       '{' start '>'
+        |       '{' start start '>'
+
+This grammar species the infinite set of strings
+
+   []
+   <>
+   {>
+   [[]]
+   [[][]]
+   [{><>]
+   . . .
+
+For tersenes, we would like to omit some of the  trailing terminators
+"when no ambiguity would result".  The problem is to formally specify
+the latter constraint.
+
+From a mathematical-linguistic point of view, dropping some of the
+trailing terminators corresponds to adding various strings to the above
+language, such as:
+
+   [
+   {
+   [[]
+   [[][]
+   [{><>
+   [{><
+   [{><]
+   . . .
+
+How do we specify the full set of strings to be added?  Given such a
+string, how do we recover the full syntax?
+
+I propose the following Augmentation Rule for adding the strings:
+
+   IF "a]Bc" is in the language, where:
+     "a" is any sequence of tokens
+     "]" is any RightBracket
+     "B" is any token
+     "c" is any sequence of tokens
+   AND IF "aB" is not a prefix of any string in the language,
+   THEN we add "aBc" to the language.
+
+Given a Bracket Language BL, application of the Augmentation Rule until
+closure is achieved results in a new language BL' which contains BL as a
+subset.  Let us call BL'-BL "E" (for "Elisions").  These are the strings
+added to BL as a result of the Augmentation Rule.
+
+Question 1:  Does the Augmentation Rule introduce ambiguities?  Let us
+make the question more precise.  Each e in E was derived from some
+parent p in BL (not BL'!) by one or more applications of the
+Augmentation Rule.  We want to know if this derivation was unique, or if
+some such e has two possible parents in BL.  Formally:  can there exist
+a pair <e,p>, e in E and p in BL with p -> (via repeated Augmentation
+Rule) e, such that r is in (BL-p)'?  If so our Augmentation Rule has
+introduced an ambiguity into the language by erasing an essential token,
+rather than merely a redundant token.
+
+Answer   1:  No such ambiguity is introduced by the Augmentation Rule.
+PROOF:  Let us assume that such an ambiguity exists.  Then either e, or
+some other string along the path from p to e, has two possible
+legitimate parents under the Augmentation Rule.  Let us call this child
+c, and the two possible parents p0 and p1.  Then we have
+   p0 == "a]Bc" for some a,],B,c
+   p1 == "a>Bc" for some > != ], same a,B,c.
+Now > and ] both match the same LeftBracket in "a", since p0 and p1 are
+both strings from our Bracket Language.  But each LeftBracket has a
+UNIQUE matching RightBracket, by our definition of Bracket Languages,
+hence we must have > == ], hence p0==p1, hence no such distinct
+parent-pair is possible. QED.
+
+Question 2:  Is a LALR(1) parser capable of detecting such elided
+tokens?
+
+Answer   2:  Yes.  If "a]Bc" has been reduced to "aBc", then we must
+have the condition that "aB" is not a legal prefix of any string in BL.
+But an LALR(1) parser has a table which tells it, at any given instant,
+the legal set of lookahead tokens.  If the current lookahead token is
+not in that set, there will be at most one RightBracket in the lookahead
+set, by a simple variant of the above argument.  The parser can then
+insert that unique RightBRacket in its input stream and continue.
+
+
