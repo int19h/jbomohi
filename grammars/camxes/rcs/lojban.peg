@@ -24,7 +24,7 @@
 
 text <- spaces* su-clause* spaces* (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO .*)?
 
-text-1 <- ((I (jek / joik)? (stag? BO)? text-1 free*)+ / NIhO+ paragraphs? free*)? (paragraphs / joik-jek paragraphs / joik-jek / ())
+text-1 <- (I (jek / joik)? (stag? BO)? text-1 free*)+ / NIhO+ paragraphs? free* / (paragraphs / joik-jek paragraphs / joik-jek / ())
 
 paragraphs <- paragraph (NIhO+ free* paragraphs)?
 
@@ -34,7 +34,7 @@ statement <- statement-1 / prenex statement
 
 statement-1 <- statement-2 (I joik-jek statement-2)* / statement-2 (I joik-jek statement-2?)*
 
-statement-2 <- statement-3 (I (jek / joik)? stag? BO free* statement-2)? / statement-3 (I (jek / joik)? stag? BO free* statement-2?)?
+statement-2 <- statement-3 (I (jek / joik)? stag? BO free* statement-2)? / statement-3 (I (jek / joik)? stag? BO free*)?
 
 statement-3 <- sentence / tag? TUhE free* text-1 (TUhU free*)?
 
@@ -274,6 +274,9 @@ spacing-no-BU-handling <- spaces+ absorb-indicators*
 ;		/ /[aeiou]('?[aeiou]){,2}[bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
 
 BRIVLA <- BAhE? initial-pair lojban-letter lojban-letter brivla-tail / BAhE? consonant !"y" vowel consonant 'y'? consonant brivla-tail / BAhE? consonant !"y" vowel [']? !"y" vowel consonant consonant brivla-tail
+;/ FUHIVLA
+
+; FUHIVLA <- !['] consonant consonant brivla-tail / !CMAVO cmene-letter consonant consonant brivla-tail / !CMAVO cmene-letter cmene-letter consonant consonant brivla-tail / cmene-letter cmene-letter consonant "y" consonant (consonant / vowel-not-y) brivla-tail / cmene-letter cmene-letter cmene-letter consonant consonant brivla-tail
 
 brivla-tail <- vowel-not-y spacing / lojban-letter brivla-tail
 
@@ -298,13 +301,13 @@ CMENE-no-BU-handling <- cmene-letter cmene-tail-no-BU-handling
 cmene-tail-no-BU-handling <- cmene-consonant !"y" spacing-no-BU-handling / cmene-letter cmene-tail-no-BU-handling
 
 ;; CMAVO morphology
-CMAVO-post-morphology <- CMAVO-cmene-check CMAVO-consonant-check
+CMAVO-post-morphology <- spaces-not-Y+ / CMAVO-cmene-check (CMAVO-brivla-check / CMAVO-consonant-check)
+CMAVO-brivla-check <- &(consonant? vowel (['] vowel / vowel)* initial-pair vowel lojban-letter lojban-letter) 
 
 CMAVO-cmene-check <- !( cmene-letter CMAVO-cmene-check-tail )
 CMAVO-cmene-check-tail <- consonant spaces-not-Y+ / cmene-letter CMAVO-cmene-check-tail
 
 CMAVO-consonant-check <- !['] !( consonant consonant / cmene-letter consonant consonant / cmene-letter cmene-letter consonant consonant / cmene-letter cmene-letter consonant "y" consonant (consonant / vowel-not-y) / cmene-letter cmene-letter cmene-letter consonant consonant )
-
 ; The "CMAVO-post" productions only occur after another cmavo as a
 ; test for whether another cmavo immediately follows, with  no
 ; intervening spaces; hence must start with consonant.
@@ -312,18 +315,18 @@ CMAVO-post <- !. / !vowel CMAVO-post-morphology known-cmavo / !vowel CMAVO-post-
 CMAVO-post-no-SI-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 CMAVO-post-no-BU-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 
-CMAVO <- CMAVO-post-morphology known-cmavo post-cmavo-spacing / CMAVO-post-morphology consonant? vowel (['] vowel / vowel)+ post-cmavo-spacing
-CMAVO-no-SI-handling <- CMAVO-post-morphology consonant? vowel (['] vowel / vowel)* post-cmavo-no-SI-handling
-CMAVO-no-SA-handling <- CMAVO-post-morphology consonant? vowel (['] vowel / vowel)* post-cmavo
-CMAVO-no-BU-handling <- CMAVO-post-morphology consonant? vowel (['] vowel / vowel)* post-cmavo-no-BU-handling
+CMAVO <- known-cmavo post-cmavo-spacing / consonant? vowel (['] vowel / vowel)+ post-cmavo-spacing
+CMAVO-no-SI-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo-no-SI-handling
+CMAVO-no-SA-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo
+CMAVO-no-BU-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo-no-BU-handling
 
 known-cmavo <- A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / BY / CAI / CAhA / CEI / CEhE / CO / COI / CU / CUhE / DAhO / DOI / DOhU / FA / FAhA / FAhO / FEhE / FEhU / FIhO / FOI / FUhA / FUhE / FUhO / GA / GAhO / GEhU / GI / GIhA / GOI / GOhA / GUhA / I / JA / JAI / JOI / JOhI / KE / KEI / KEhE / KI / KOhA / KU / KUhE / KUhO / LA / LAU / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / MAhO / ME / MEhU / MOI / MOhE / MOhI / NA / NAI / NAhE / NAhU / NIhE / NIhO / NOI / NU / NUhA / NUhI / NUhU / PA / PEhE / PEhO / PU / RAhO / ROI / SA / SE / SEI / SEhU / SI / SOI / SU / TAhE / TEI / TEhU / TO / TOI / TUhE / TUhU / UI / VA / VAU / VEI / VEhA / VEhO / VIhA / VUhO / VUhU / XI / Y / ZAhO / ZEI / ZEhA / ZI / ZIhE / ZO / ZOI / ZOhU
 
 ; Handling of what can go after a cmavo
 post-cmavo <- !BU-bare post-cmavo-spacing
 post-cmavo-spacing <- post-cmavo-check si-clause absorb-indicators*
-post-cmavo-check <- !. / spaces+ / &CMAVO-post / &BRIVLA
-post-cmavo-no-SI-handling <- si-spacing / &CMAVO-post-no-SI-handling / &BRIVLA / SI
+post-cmavo-check <- !. / spaces-not-Y+ / &CMAVO-post / &BRIVLA
+post-cmavo-no-SI-handling <- !. / spaces-not-Y+ / &CMAVO-post-no-SI-handling / &BRIVLA / SI
 post-cmavo-no-BU-handling <- spacing-no-BU-handling / &CMAVO-post-no-BU-handling / &BRIVLA / BU
 
 pre-cmavo <- BAhE? spaces-not-Y*
@@ -1062,7 +1065,7 @@ ZIhE-words <- "zi'e"
 ;         single word metalinguistic quote marker 
 ZO <- pre-cmavo ZO-words zo-post-cmavo
 ZO-words <- "zo"
-zo-post-cmavo <-  spaces-not-Y+ / &CMAVO-post-no-SI-handling / SI
+zo-post-cmavo <-  spaces-not-Y+ / &CMAVO-post-no-SI-handling / SI / &BRIVLA
 ;         delimited quote marker 
 ZOI <- pre-cmavo ZOI-sa-clause? ZOI-words post-cmavo
 ZOI-no-SA-handling <- pre-cmavo ZOI-words post-cmavo
