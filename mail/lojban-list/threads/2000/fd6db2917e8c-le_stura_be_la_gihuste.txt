@@ -1,4 +1,4 @@
-# mail/lojban-list thread fd6db2917e8c-le_stura_be_la_gihuste | root pine.lnx.4.21.0008221742550.3127-100000@burp.n | 11 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread fd6db2917e8c-le_stura_be_la_gihuste | root pine.lnx.4.21.0008221742550.3127-100000@burp.n | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-08-22T19:02:31Z | Elrond <grey.havens@earthling.net> | pine.lnx.4.21.0008221742550.3127-100000@burp.n | mail/lojban-list/cur/966970951.fd6db2917e8c3d02.jbomohi:2,S
 
@@ -1052,7 +1052,81 @@ United Kingdom                            http://go.to/richard.curnow/
 
 
 
-=== 11 | 2000-08-24T23:04:46Z | Invent Yourself <xod@sixgirls.org> | pine.neb.4.21.0008241903001.26437-100000@erika.sixgirls.org | mail/lojban-list/cur/967158286.9137c0a2730fac0b.jbomohi:2,S
+=== 11 | 2000-08-25T00:54:48Z | John Leuner <jewel@pixie.co.za> | pine.lnx.4.10.10008242224520.13448-100000@svetlana.mweb.co.za | mail/lojban-list/cur/967164888.dab505b05c88153f.jbomohi:2,S
+> >As for the implementation of these ideas, the best thing would be an
+> >XML-like database format. Unfortunately, I do not (yet) know much about
+> >XML parsers and therefore did not bother working on an appropriate set of
+> >XML tags.
+> 
+> I have no idea even what XML is, and the only kind of parser I know 
+> anything about is a YACC parser (and not much even then).
+
+XML is an extremely popular way of representing structured data. It allows
+you to put your data in a file where a tag indicates what "field" that
+data belongs to. I'm busy working on a java version of logflash and I have
+this xml document to specify what "piles" are used:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Levels>
+  <Level name="Under Control" count="0" type="TYPE_RECALL" match="Under Control" dontmatch="Recalled 1x"/>
+  <Level name="Recalled 1x" count="1" type="TYPE_RECALL" match="Under Control" dontmatch="Recognised 3x"/>
+  <Level name="Recognised 3x" count="1" type="TYPE_RECALL" match="Recalled 1x" dontmatch="Recognised 2x"/>
+  <Level name="Recognised 2x" count="1" type="TYPE_RECOGNISE" match="Recognised 3x" dontmatch="Recognised 1x"/>
+  <Level name="Recognised 1x" count="1" type="TYPE_RECOGNISE" match="Recognised 2x" dontmatch="Drop Back"/>
+  <Level name="Drop Back" count="1" type="TYPE_RECOGNISE" match="Recognised 1x" dontmatch="Drop Back"/>
+  <Level name="New Word" count="1" type="TYPE_RECOGNISE" dest="Recognised 1x" match="Recognised 1x" dontmatch="Drop Back"/>
+</Levels>
+ 
+This doesn't really demonstrate normal use of XML, because usually you
+have tags within tags, eg:
+
+<GISMULIST>
+ <GISMUENTRY>
+    <rafsi text="bef"/>
+    <rafsi text="be'u"/>
+    <keyword text="abdomen" lang="english"/>
+    <keyword text="belly" lang="english"/>
+	
+    <DEFINITION>
+	<keyword text="lower trunk" lang="english"/>
+	<crossref type="lojban" subtype="lujvo" text="djaruntyrango">
+	<crossref type="nonlojban" text="stomach">
+    </DEFINITION>
+    <DEFINITION>
+	//other definition stuff here
+    </DEFINITION>
+ </GISMUENTRY>
+ <GISMUENTRY>
+	//Entry for kakne here
+ </GISMUENTRY>
+</GISMULIST>
+
+The power of XML is that it is platform-agnostic (UNIX/Windows/ ..
+whatever), it is popular (hence there are many freely available tools) and
+language-agnostic (you can use C, Java, Pascal  or whatever you like).
+
+For the programmer or person entering / editing data it's very powerful
+because the part of the software that reads and interprets the syntax of
+the file is provided by the XML parser. This means less work for the
+programmer and makes it very easy to write a program that converts from
+the XML to some other format.
+
+What I haven't said about XML here is that it allows you to specify a type
+of "grammar" which dicates or controls the format of the XML document. In
+conjunction with the "grammar" you can easily check for the syntactic
+correctness of a document, making life easier for someone editing the
+document and for a program that has to read the document.
+
+John Leuner
+
+
+
+           
+
+
+
+=== 12 | 2000-08-24T23:04:46Z | Invent Yourself <xod@sixgirls.org> | pine.neb.4.21.0008241903001.26437-100000@erika.sixgirls.org | mail/lojban-list/cur/967158286.9137c0a2730fac0b.jbomohi:2,S
 On Thu, 24 Aug 2000, John Leuner wrote:
 
 > > I have no idea even what XML is, and the only kind of parser I know 

@@ -1,0 +1,89 @@
+Return-Path: <jewel@pixie.co.za>
+Received: (qmail 2519 invoked from network); 24 Aug 2000 22:59:08 -0000
+Received: from unknown (10.1.10.26) by m1.onelist.org with QMQP; 24 Aug 2000 22:59:08 -0000
+Received: from unknown (HELO cpt-mailhost2.mweb.co.za) (196.2.48.239) by mta1 with SMTP; 24 Aug 2000 22:59:07 -0000
+Received: from pta-dial-196-31-185-110.mweb.co.za by cpt-mailhost2.mweb.co.za (Sun Internet Mail Server sims.3.5.2000.01.05.12.18.p9) with ESMTP id <0FZT00D15JUAUR@cpt-mailhost2.mweb.co.za> for lojban@egroups.com; Fri, 25 Aug 2000 00:59:03 +0200 (GMT-2)
+Date: Thu, 24 Aug 2000 22:54:48 -0200 (GMT+2)
+Subject: Re: [lojban] le stura be la gihuste - XML
+In-reply-to: <4.2.2.20000824085154.00a693e0@127.0.0.1>
+X-Sender: jewel@svetlana.mweb.co.za
+To: "Bob LeChevalier (lojbab)" <lojbab@lojban.org>
+Cc: Lojban List <lojban@egroups.com>
+Message-id: <Pine.LNX.4.10.10008242224520.13448-100000@svetlana.mweb.co.za>
+MIME-version: 1.0
+Content-type: TEXT/PLAIN; charset=US-ASCII
+From: John Leuner <jewel@pixie.co.za>
+X-Yahoo-Message-Num: 4026
+Content-Length: 2983
+
+> >As for the implementation of these ideas, the best thing would be an
+> >XML-like database format. Unfortunately, I do not (yet) know much about
+> >XML parsers and therefore did not bother working on an appropriate set of
+> >XML tags.
+> 
+> I have no idea even what XML is, and the only kind of parser I know 
+> anything about is a YACC parser (and not much even then).
+
+XML is an extremely popular way of representing structured data. It allows
+you to put your data in a file where a tag indicates what "field" that
+data belongs to. I'm busy working on a java version of logflash and I have
+this xml document to specify what "piles" are used:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Levels>
+  <Level name="Under Control" count="0" type="TYPE_RECALL" match="Under Control" dontmatch="Recalled 1x"/>
+  <Level name="Recalled 1x" count="1" type="TYPE_RECALL" match="Under Control" dontmatch="Recognised 3x"/>
+  <Level name="Recognised 3x" count="1" type="TYPE_RECALL" match="Recalled 1x" dontmatch="Recognised 2x"/>
+  <Level name="Recognised 2x" count="1" type="TYPE_RECOGNISE" match="Recognised 3x" dontmatch="Recognised 1x"/>
+  <Level name="Recognised 1x" count="1" type="TYPE_RECOGNISE" match="Recognised 2x" dontmatch="Drop Back"/>
+  <Level name="Drop Back" count="1" type="TYPE_RECOGNISE" match="Recognised 1x" dontmatch="Drop Back"/>
+  <Level name="New Word" count="1" type="TYPE_RECOGNISE" dest="Recognised 1x" match="Recognised 1x" dontmatch="Drop Back"/>
+</Levels>
+ 
+This doesn't really demonstrate normal use of XML, because usually you
+have tags within tags, eg:
+
+<GISMULIST>
+ <GISMUENTRY>
+    <rafsi text="bef"/>
+    <rafsi text="be'u"/>
+    <keyword text="abdomen" lang="english"/>
+    <keyword text="belly" lang="english"/>
+	
+    <DEFINITION>
+	<keyword text="lower trunk" lang="english"/>
+	<crossref type="lojban" subtype="lujvo" text="djaruntyrango">
+	<crossref type="nonlojban" text="stomach">
+    </DEFINITION>
+    <DEFINITION>
+	//other definition stuff here
+    </DEFINITION>
+ </GISMUENTRY>
+ <GISMUENTRY>
+	//Entry for kakne here
+ </GISMUENTRY>
+</GISMULIST>
+
+The power of XML is that it is platform-agnostic (UNIX/Windows/ ..
+whatever), it is popular (hence there are many freely available tools) and
+language-agnostic (you can use C, Java, Pascal  or whatever you like).
+
+For the programmer or person entering / editing data it's very powerful
+because the part of the software that reads and interprets the syntax of
+the file is provided by the XML parser. This means less work for the
+programmer and makes it very easy to write a program that converts from
+the XML to some other format.
+
+What I haven't said about XML here is that it allows you to specify a type
+of "grammar" which dicates or controls the format of the XML document. In
+conjunction with the "grammar" you can easily check for the syntactic
+correctness of a document, making life easier for someone editing the
+document and for a program that has to read the document.
+
+John Leuner
+
+
+
+           
+
