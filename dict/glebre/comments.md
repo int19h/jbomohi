@@ -51,3 +51,19 @@ If I'm not mistaken, the "notes" field will end up in the English part of
 the dictionary, together with the definition. Therefore, it should be in
 English, not in Lojban.
 
+
+## 2004-12-12T23:30:32Z — phma (comment 185, on definition 15373, in reply to 184)
+
+Re: Inappropriately abstracted gloss words
+
+arj wrote:
+> If I'm not mistaken, the "notes" field will end up in the English part
+of
+> the dictionary, together with the definition. Therefore, it should be in
+> English, not in Lojban.
+
+The notes field of "glebre" ends up in the Lojban-English part. The note
+about musth is for a jbopli who knows "glebre" but not "musth". Other
+notes, such as the one at {naxle}, are for glipli and clarify the meaning
+of the Lojban word.
+
