@@ -3660,3 +3660,40 @@ http://celebrity.mail.yahoo.com
 
 
 
+
+## 2004-12-21T20:29:08Z — rlpowell (@rlpowell) (post 3202)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041221181224.GC20429@chain.digitalkingdom.org
+In-Reply-To: 20041221180831.69795.qmail@web41903.mail.yahoo.com
+
+On Tue, Dec 21, 2004 at 10:08:31AM -0800, Jorge Llamb?as wrote:
+> 
+> --- Robin Lee Powell wrote:
+> 
+> > You just got bitten by greedy absorption.  Welcome to my world.
+> > :-)
+> 
+> Aaahhrgghhh!!
+> 
+> > The solution is:
+> > 
+> > initial-cluster <- (initial-consonant &consonant)+ consonant
+> > !consonant
+> 
+> Or how about:
+> 
+>  initial-cluster <- initial-consonant+ consonant? !consonant
+
+Nope.  That will match {t} alone.  What you're trying to do there
+is:
+    initial-cluster <- initial-consonant initial-consonant+
+    consonant? !consonant / initial-consonant+
+    consonant !consonant
+
+which seems needlessly complicated.
+
+-Robin
+
+
+
