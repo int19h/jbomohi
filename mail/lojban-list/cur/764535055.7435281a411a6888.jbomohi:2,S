@@ -1,0 +1,145 @@
+Return-Path: <@FINHUTC.HUT.FI:LOJBAN@CUVMB.BITNET>
+Received: from FINHUTC.hut.fi by xiron.pc.helsinki.fi  with smtp
+	(Linux Smail3.1.28.1 #14) id m0pjuWT-0000R1C; Thu, 24 Mar 94 20:52 EET
+Message-Id: <m0pjuWT-0000R1C@xiron.pc.helsinki.fi>
+Received: from FINHUTC.HUT.FI by FINHUTC.hut.fi (IBM VM SMTP V2R2)
+   with BSMTP id 2660; Thu, 24 Mar 94 20:52:42 EET
+Received: from SEARN.SUNET.SE (NJE origin MAILER@SEARN) by FINHUTC.HUT.FI (LMail V1.1d/1.7f) with BSMTP id 2659; Thu, 24 Mar 1994 20:52:42 +0200
+Received: from SEARN.SUNET.SE (NJE origin LISTSERV@SEARN) by SEARN.SUNET.SE
+ (LMail V1.2a/1.8a) with BSMTP id 7083; Thu, 24 Mar 1994 19:51:36 +0100
+Date:         Thu, 24 Mar 1994 13:50:55 -0500
+Reply-To:     Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Sender:       Lojban list <LOJBAN%CUVMB.bitnet@FINHUTC.hut.fi>
+From:         Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Subject:      Re: Brainstorm! (two years too late)
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+In-Reply-To:  <199403231514.AA18025@nfs1.digex.net> from "Nick NICHOLAS" at Mar
+              24, 94 00:26:36 am
+Content-Length: 4707
+Lines: 123
+
+la nitcion. cusku di'e
+
+> So it's like this. You want to append a relative clause to a conjunction of
+> sumti. Like, you're talking about Emma Thompson and Kenneth Branagh who are
+> actors. If you say
+>
+>        la .ebu.ty. .e. la ky.by. noi xe draci
+
+Minor nit:  either "la .ebutys." or ".ebu ty.", preferably the latter.
+LA+sumti is not allowed.  (Nick knows this, but I want to reinforce it for
+others.)
+
+> you mean
+>
+>        E.T., and [K.B who is an actor].
+>
+> You want to say both are actors.
+>
+> Until now, the only real option has been to say
+>
+>       lu'a la .ebu.ty. .e. la ky.by. lu'u noi xe draci.
+>
+> But you need a "lu'a" before you get started. You can't
+> change the scope of the following rel.clause, from the sumti it immediately
+> hooks on to, to the conjunction of sumti, as an *afterthought*. You can't
+> say the equivalent of "E.T. and K.B..... oh, yeah, who are both of them
+> actors", because that "who" is bound to Branagh perforce, once you neglected
+> to start the phrase with "lu'a". In Lojban, you're currently forced to say
+> the whole phrase from the start --- which doesn't match what you can usually
+> do in such cases in the language.
+
+[...]
+
+>  [Consider a]n elidable terminator for EK-joined sumti.
+>
+> Let's call it XOI. (It could be a CVhV no problem; won't be used all that
+> often.) It would change the existing sumti scheme as follows:
+>
+> sumti = sumti-1 [(joik # | ek #) sumti-1 /XOI/] ...
+>
+> sumti-1 = sumti-2 [ek [stag] BO # sumti-1 /XOI/]
+>
+> You could then say:
+>
+>       la .ebu.ty. .e. la ky.by. noi xe draci
+>       ET and (KB who is an actor)
+>
+>       la .ebu.ty. .e. la ky.by. xoi noi xe draci
+>       (ET and KB) who are actors
+>
+>       la .ebu.ty. .e. la ky.by. xoi noi xe draci ku'o .e.
+>               la margrit.tatcer. xoi noi brito:
+>       ((ET and KB) who are actors, and MT) who are British.
+
+Both lojbab and I thought this idea was indeed worth pursuing, and I've just
+been doing some YACCing.  Well, it won't work as specified, unfortunately,
+but I think the basic idea is salvageable.
+
+We can indeed add an elidable terminator like XOI above, but it doesn't do
+the necessary, because down in sumti-4 we still have only a sumti-5, not
+a full sumti.  And we cannot change this without multitudinous reduce-reduce
+errors.  Without such a change, the elidable terminator is useless.
+
+I experimented a bit, and finally came up with the following idea.  We
+demote all the existing sumti rules by one notch, and add a new top-level
+kind of sumti, with rule:
+
+        sumti<90> = sumti-1 [XUhO relative-clauses]
+
+This cmavo XUhO is not an elidable terminator, but simply serves as glue between
+a full sumti and one or more relative clauses which are intended to modify
+the full sumti.  This allows:
+
+        by .e cy noi broda cu brode
+        B and (C who is a thingummy) are whatchacallits
+
+        by .e cy xu'o noi broda cu brode
+        B and C (who are thingummies) are whatchacallits
+
+but not
+
+        *by. .e cy. xu'o noi broda ku'o .e dy. xu'o noi brodi cu brode
+        (B and C (who are thingummies) and D) (who are all furgles)
+                are whatchacallits.
+
+because allowing this "XUhO + relative-clauses" at more than one level
+causes shift-reduce errors.  So we can afterthought-modify a whole sumti,
+but not part of a sumti.  I think this is an acceptable restriction.
+Here's the formal change proposal:
+
+CHANGE 34
+
+CURRENT LANGUAGE:
+
+Relative clauses always attach to the simple sumti (sumti-5) immediately
+to the left; the only way to attach a relative clause to a larger construct,
+like logically or non-logically connected sumti, is to bracket the construct
+with LAhE...LUhU.
+
+PROPOSED CHANGE:
+
+Introduce a new cmavo "xu'o" of selma'o XUhO (note: assign non-experimental
+value later) which serves as glue between a full sumti and one or more
+relative clauses (joined with ZIhE, if there's more than one).  The new
+construct would have lower precedence than any other sumti construction.
+Therefore, it would be possible to attach relative clauses to a complete
+sumti (with XUhO), or to a simple sumti (with no cmavo), but not to anything
+in between.
+
+RATIONALE:
+
+The LAhE...LUhU construction has two limitations.  First, it is inherently
+forethought in nature, making it impossible to add long-scope relative clauses
+in afterthought.  Second, LAhE cmavo have semantic import, so when used
+merely for bracketing purposes, it is important that the correct cmavo
+("lu'a" for individuals, "lu'o" for masses, "lu'i" for sets) be chosen
+so as to have a null semantic effect; this is annoying.
+
+Comments?
+
+--
+John Cowan              sharing account <lojbab@access.digex.net> for now
+                e'osai ko sarji la lojban.
+
