@@ -1,0 +1,89 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 71183 invoked from network); 27 Mar 2004 10:56:45 -0000
+Received: from unknown (66.218.66.218)
+  by m4.grp.scd.yahoo.com with QMQP; 27 Mar 2004 10:56:45 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 27 Mar 2004 10:56:45 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1B7BUE-0004Na-14
+	for lojban@yahoogroups.com; Sat, 27 Mar 2004 02:56:22 -0800
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1B7BTT-0004Mj-RO; Sat, 27 Mar 2004 02:55:35 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sat, 27 Mar 2004 02:55:32 -0800 (PST)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1B7BTK-0004MW-4Y
+	for lojban-list@lojban.org; Sat, 27 Mar 2004 02:55:26 -0800
+Date: Sat, 27 Mar 2004 02:55:26 -0800
+Message-ID: <20040327105526.GA18619@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.5.1+cvs20040105i
+X-archive-position: 7356
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Further Parser Confusion
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 21830
+Content-Length: 1514
+
+Parsing an example sentence:
+
+    rlpowell@chain.digitalkingdom.org> echo "le broda .i je klama" | parser -h -t
+
+    3;0;00moi ke lojbo genturfa'i
+    Copyright 1991,1992,1993 The Logical Languages Group, Inc.  All Rights
+    Reserved
+    1               la
+    2       cmene_404       djan
+    3       terms_80        1       2
+    4       VAU     VAU
+    5       paragraph_10    3       4
+    6       I       i
+    7       JA      je
+    8               7
+    9       I_819   6       8
+    10      selbri_130      klama
+    11      tail_terms_71   VAU
+    12      paragraph_A_11  10      11
+    13      text_0  5       9       12
+    Space used: 5600 bytes for tokens, 100 bytes for strings
+    Time used: 0 seconds
+
+Note lines 9, where it eats I_819.  This eventually becaumes I_root_956,
+which as I've already pointed out *erroneously* eats ijeks.
+
+So I'm kind of stuck here: that sentence may or may not be parseable,
+but I don't think it is under the current grammar, because only
+paragraph_10 calls 'fragment', and only 'fragment' can eat "le broda" by
+itself as a sentence.
+
+Note that fixing the I_root_956 bug (by making /*TRY(I_root_956_2);*/
+in lexrulek.c) causes this sentence to fail to parse.
+
+-Robin
+
+-- 
+Me: http://www.digitalkingdom.org/~rlpowell/  ***   I'm a *male* Robin.
+"Constant neocortex override is the only thing that stops us all
+from running out and eating all the cookies."  -- Eliezer Yudkowsky
+http://www.lojban.org/             ***              .i cimo'o prali .ui
+
+
+
+
+           
+
