@@ -1,0 +1,72 @@
+Received: from access1.digex.net by nfs1.digex.net with SMTP id AA17116
+  (5.67b8/IDA-1.5 for <lojbab@access.digex.net>); Wed, 17 Aug 1994 12:47:20 -0400
+Received: from xiron.pc.Helsinki.FI by access1.digex.net with SMTP id AA15702
+  (5.67b8/IDA-1.5 for <lojbab@access.digex.net>); Wed, 17 Aug 1994 12:47:17 -0400
+Received: by xiron.pc.helsinki.fi (Linux Smail3.1.28.1 #1)
+	id m0qao8g-00004xC; Wed, 17 Aug 94 19:46 EET DST
+Message-Id: <m0qao8g-00004xC@xiron.pc.helsinki.fi>
+From: veion@xiron.pc.helsinki.fi
+Subject: YACC for nested preposed relatives
+To: lojbab@access.digex.net
+Date: Wed, 17 Aug 1994 19:46:57 +0300 (EET DST)
+X-Mailer: ELM [version 2.4 PL23]
+Content-Type: text
+X-From-Space-Date: Wed Aug 17 12:47:23 1994
+X-From-Space-Address: veion@xiron.pc.helsinki.fi
+Content-Length: 1996
+
+You haven't commented on my posting concerning the nested
+preposed relative clauses. I know you are busy preparing 
+the papers for publication and I DO remember the policy
+concerning last minute enhancements to the grammar.
+(The change I proposed would be an enhancement only as
+there isn't actually anything broken.)
+
+I'm no YACC expert but I tried to put together the changes
+that would be required in order to implement the change.
+I enclose the modifications (just in case | for your 
+records to wait for a more appropriate moment).
+
+  Veijo
+
+-----------------------
+/* modified rule */
+
+sumti_tail_111          :  sumti_tail_A_112
+                           /* inner-quantified sumti relative clause */
+/* next line modified */
+                        |  preposed_relative_clause_125  sumti_tail_A_112
+                           /* pseudo-possessive
+                              (an abbreviated inner restriction);
+                              note that sumti cannot be quantified */
+                        |  sumti_F_96  sumti_tail_A_112
+                           /* pseudo-possessive with outer restriction */
+                        |  sumti_F_96  relative_clauses_121  sumti_tail_A_112
+                        ;
+
+/* added rules */
+
+preposed_relative_clause_125 : GOI_542  term_81  GEhU_gap_464
+                        |  NOI_585  rel_chain_126 KUhO_gap_469
+                        ;
+
+rel_chain_126           :  sentence_40
+                        |  rel_chain_126 XUhO_gap_xxx  statement_tail_127
+  /* NB.   XUhO_gap_xxx */
+
+
+statement_tail_127      :  term_tail_128  front_gap_451  bridi_tail_50
+                        |  term_tail_128  bridi_tail_50
+                        ;
+
+term_tail_128           : sumti_tail_P_129
+                        | sumti_tail_P_129 terms_80
+                        ;
+
+sumti_tail_P_129        : sumti_tail_A_112 gap_450
+                        ;
+
+---------------------------------
+.i mi du la'o sy. Veijo Vilva sy.
+---------------------------------
+
