@@ -1,0 +1,148 @@
+Return-Path: <richard@rrbcurnow.freeuk.com>
+X-Sender: richard@rrbcurnow.freeuk.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_3_1); 9 Aug 2001 22:27:07 -0000
+Received: (qmail 51468 invoked from network); 9 Aug 2001 22:27:06 -0000
+Received: from unknown (10.1.10.26)
+  by l10.egroups.com with QMQP; 9 Aug 2001 22:27:06 -0000
+Received: from unknown (HELO scrabble.freeuk.net) (212.126.144.6)
+  by mta1 with SMTP; 9 Aug 2001 22:27:06 -0000
+Received: from du-008-0101.freeuk.com ([212.126.151.101] helo=rrbcurnow.freeuk.com)
+	by scrabble.freeuk.net with esmtp (Exim 3.12 #2)
+	id 15UyGb-00003F-00; Thu, 09 Aug 2001 23:27:02 +0100
+Received: from richard by rrbcurnow.freeuk.com with local (Exim 2.02 #2)
+	id 15Uy8T-000063-00; Thu, 9 Aug 2001 23:18:37 +0100
+Date: Thu, 9 Aug 2001 23:18:37 +0100
+To: lojban@yahoogroups.com, jbofihe@yahoogroups.com
+Subject: Jbofi'e version 0.37 is now available
+Message-ID: <20010809231837.A352@rrbcurnow.freeuk.com>
+Mail-Followup-To: lojban@yahoogroups.com, jbofihe@yahoogroups.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.2i-nntp
+From: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-Yahoo-Message-Num: 9364
+Content-Length: 5010
+
+It's quite some time since version 0.36 appeared, so I decided it was
+time to make public a new version with all the bug fixes + various
+enhancements I've done since.  The changes are quite diverse - see the
+release notes from the NEWS file at the bottom.
+
+You can get it via the web-site
+
+    http://www.rrbcurnow.freeuk.com/jbofihe/
+
+Anyone wanting to stay up-to-date with the 'bleeding edge' can get the
+current sources via CVS by setting their CVSROOT variable to
+
+    :pserver:username@digitalkingdom.org:/home/cvs/jbofihe
+
+*HOWEVER*, please note, this repository is read-only.  Any attempt to
+commit changes will bounce and give you an error message.  The reason is
+that I keep the master repository on my own PC, and the digitalkingdom
+one is just a mirror of my local one.  If you make changes and want them
+included, the best thing to do is to send me a patch by email and I'll
+merge it in (I'll credit you in the comments.)
+
+Some time ago I registered the jbofihe@yahoogroups.com mailing list.
+I'm taking this opportunity to publicise it.  I'm hoping the list can be
+used for topics relevant to jbofi'e which are not particularly relevant
+to Lojban folks who don't use the software.  Topics like
+
+- bug reporting/tracking
+- new feature requests + requirements discussion
+- coordinating development work
+- announcements of interim & test releases
+
+would come within its scope.  The subscription address is
+jbofihe-subscribe@yahoogroups.com, for anyone wanting to join up.  (You
+can do it via the yahoo web pages as well, of course.)
+
+Cheers
+Richard
+
+The release notes follow :
+
+New in version 0.37
+===================
+
+general
+=======
+- Include contributed Emacs Lisp functions for driving jbofi'e.
+- Add fold markers in some of the source code for editing with VIM version 6
+
+jbofi'e
+=======
+- Improve translations of vowels & other words followed by "bu".  (Only a
+  partial list is included in the extradict file.)
+- Fix crashes which occurred when tagging term places when the selbri was "jai"
+  followed by something other than a brivla.
+- Add entries for mu'e, pu'u, za'i, zu'o to the 'patterns' file for use in
+  glossing unknown lujvo.
+- Integrate recognition of cultural rafsi in lujvo into the ordinary state
+  machine (so now 1 integrated state machine instead of 2 separate ones).
+  Consequent reduction in table sizes.
+- Recognize stage-3-like fu'ivla with >1 short rafsi before the hyphen and
+  gloss accordingly if the word isn't in the dictionary 'as-is'.
+- New more robust checking for bad cmene (containing la, doi etc)
+- Fix bug : missing 'break' statements causing fall-through and hence bogus
+  access on another branch of a union.
+- Deprecate -g command option from man page.
+- Fix glossing of the words for 10**X (the asterisks were treated as
+  meta-characters by the glosser)
+- Add support for experimental cmavo "xa'o" (selma'o ZAhO, opposite of "za'o")
+
+vlatai
+======
+- For stage 3 fu'ivla, show forward slashes to split the rafsi prefix from the
+  hyphen and the hyphen from the word tail.
+- Recognize an extension to stage 3 fu'ivla, with >1 rafsi before the hyphen
+- Cultural rafsi scanning improvement as for jbofi'e.  Remove -cr command line
+  argument.
+- Only show exit value of state machine in verbose (-v) mode.
+- Detect and show bad cmene forms (la/lai/doi break-up)
+- New option '-el' to show a lujvo broken into its component words.
+- Fixed some more obscure faults with words containing patterns like "nytc" and
+  "ntyc".
+
+cmafi'e
+=======
+- Include contribution from Björn Gohla to output GNUStep property lists for
+  the vocabulary found in the input.
+
+jvocuhadju
+==========
+- Complete rewrite of the lujvo form checker used to detect tosmabru failures.
+  The old one was completely broken.
+- Added the script testing/jvocipra.pl, which couples jvocuhadju and vlatai in
+  a back-to-back configuration for mutual testing.
+- Add '-l' switch to try long rafsi even if a short one is available.
+- Add '-a' switch to show all possible lujvo forms, not just the 8 most
+  preferred ones.
+
+lexer generator (dfasyn/*)
+===============
+- Add handling of 'state attributes' (to allow actions to be run when automaton
+  is in DFA states corresponding to particular NFA states)
+- Fix bug in NFA compressor, where algorithm could run off the end of an array.
+- Fix bug in DFA compressor (was functionally correct but over-pessimistic
+  about combining states)
+- Improve command line options
+- Add %{ ... %} text inclusion facility
+- Allow exit and attribute table element types to be defined by input grammar
+- Add 'early exit' capability for DFA states that will immediately exit (=>
+  reduced table sizes + more state merging)
+- Provide next_state functions in the output file.
+- Renamed "dfasyn" with a view to it being made a project in its own right.
+
+
+-- 
+R.P.Curnow,Weston-super-Mare,UK  |lo samskiro'a cu simsa lo'e glefau
+http://www.rrbcurnow.freeuk.com/ |isa'e le xamgu cu tcetcexau ije
+richard@rrbcurnow.freeuk.com     |le xlali cu xagmau lenu nomei
+
+           
+
