@@ -1,0 +1,50 @@
+Received: from VMS.DC.LSOFT.COM (vms.dc.lsoft.com [205.186.43.2]) by locke.ccil.org (8.6.9/8.6.10) with ESMTP id PAA20744 for <cowan@LOCKE.CCIL.ORG>; Wed, 13 Mar 1996 15:50:40 -0500
+Message-Id: <199603132050.PAA20744@locke.ccil.org>
+Received: from PEACH.EASE.LSOFT.COM (205.186.43.4) by VMS.DC.LSOFT.COM (LSMTP for OpenVMS v1.0a) with SMTP id 84997609 ; Wed, 13 Mar 1996 15:52:16 -0500
+Date:         Wed, 13 Mar 1996 22:50:29 +0200
+Reply-To: Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+X-UIDL: 826754219.001
+From: Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Subject:      Re: TECH: PROPOSED GRAMMAR CHANGE 2$i
+X-To:         lojban@cuvmb.cc.columbia.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+X-Mozilla-Status: 0011
+X-From-Space-Date: Thu Mar 14 11:53:55 1996
+X-From-Space-Address: -
+Content-Length: 916
+
+> Date:         Wed, 13 Mar 1996 14:26:10 -0300
+> From: "Jorge J. Llambias" <jorge@INTERMEDIA.COM.AR>
+> Subject:      Re: TECH: PROPOSED GRAMMAR CHANGE 2$i
+
+>>> (Even better if the first NUhU could be avoided.)
+>>
+>>   1 shift/reduce conflict
+>
+> Is it possible to identify when this happens? When a {gi} is found,
+> the only possibility is that it is closing the latest open gek,
+> isn't it? In other words, under what circumstances would the first
+> nu'u not be elidable?
+
+After some juggling I found a solution at the YACC level:
+
+ --- in the rules for term_set_83 replace
+
+       GEK_807 terms_80 GIK_816 NUhU_gap_460
+          terms_80 NUhU_gap_460
+
+     with
+
+       GEK_807 terms_80 term_81 GIK_816
+          terms_80 term_81 NUhU_gap_460
+
+Now, a termset must have at least two terms.
+
+
+  co'o mi'e veion
+
+---------------------------------
+.i mi du la'o sy. Veijo Vilva sy.
+---------------------------------
+
