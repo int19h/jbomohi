@@ -1,0 +1,54 @@
+# mail/lojban-list thread 9e8a50d97f4c-lexing_text_with_%7Bfa'o%7D_and_%7Bzoi%7D_in_it | root 200302020059.24435.phma@webjockey.net | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2003-02-02T05:59:24Z | Pierre Abbat <phma@webjockey.net> | 200302020059.24435.phma@webjockey.net | mail/lojban-list/cur/1044165564.9e8a50d97f4c645c.jbomohi:2,S
+Is this a correct way of lexing zoi-quotes?:
+
+1.  Scan the line from left to right. Convert all spaces to pauses
+2.  Break at all pauses (cannot pause in the middle of a word).
+3. If the FAhO flag is set, resolve the piece as foreign text and skip to step 
+9.
+4. If the ZOI flag is set:
+  A. If the beginning of the current unresolved piece matches the delimiter 
+(which is the value of the ZOI flag), ignoring commas and capitalization, 
+break the current piece after the delimiter (if there is anything after it), 
+resolve it as the ending delimiter, and clear the ZOI flag.
+5.  Pick the first piece that has not been resolved.
+  A.  If the piece ends in a consonant...
+  B.  If the piece ends in 'y'...
+  C.  If the piece does not end in 'y' or a consonant and has no consonant...
+  D.  If the piece contains 'y' and no consonant following the last 'y' is...
+  E.  If the piece contains a consonant followed two letters later, not...
+6. If the piece is a cmavo of selma'o ZOI and the ZO flag is clear, resolve 
+the next piece as the starting delimiter and set the ZOI flag to a copy of 
+it.
+7. If the piece is a cmavo of selma'o FAhO and the ZO flag is clear, set the 
+FAhO flag.
+8. If the piece is a cmavo of selma'o ZO and the ZO flag is clear, set the ZO 
+flag; otherwise clear the ZO flag.
+9.  If there are any more pieces unresolved, return to step 3.
+
+According to 19:10, if {le'u} appears in a {zoi} quotation which is inside a 
+{lo'u} quotation, the {lo'u} quotation is prematurely terminated. If the 
+{le'u} is not surrounded by pauses, I don't see how that can work. For 
+instance:
+/lo'ugA'ocUskuzoixy.vaiic.alE'umal`asOt.xy.axacuEroc.le'u/
+The {le'u} inside the {zoi} quotation is embedded in the Hebrew word 
+"wayish'alehu", which, being inside a {zoi} quotation, is not attempted to 
+lex (and if it did, it would choke on the `ayin of "mah l`asot").
+
+Chapter 21, step 2, says that the word following {zoi} *should* be delimited 
+with a pause, not that it *must*. If it is not delimited with a pause, this 
+can cause text to be lexed that is part of the quotation. For instance:
+/zoiladjAn.bagram.ladjAn/
+is lexed as {zoi la djan. bagram. la djan.}. Conversely, two words could be 
+taken as the delimiter, as in /zoi.flAlukAvbu.../ that I mentioned before. 
+Should the word be changed to "must"?
+
+phma
+
+
+
+
+           
+
+

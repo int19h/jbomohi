@@ -1,0 +1,94 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_3_4); 2 Feb 2003 06:00:55 -0000
+Received: (qmail 71849 invoked from network); 2 Feb 2003 06:00:55 -0000
+Received: from unknown (66.218.66.218)
+  by m1.grp.scd.yahoo.com with QMQP; 2 Feb 2003 06:00:55 -0000
+Received: from unknown (HELO digitalkingdom.org) (204.152.186.175)
+  by mta3.grp.scd.yahoo.com with SMTP; 2 Feb 2003 06:00:55 -0000
+Received: from lojban-out by digitalkingdom.org with local (Exim 4.05)
+	id 18fDBX-0001RP-00
+	for lojban@yahoogroups.com; Sat, 01 Feb 2003 22:00:55 -0800
+Received: from digitalkingdom.org ([204.152.186.175] helo=chain)
+	by digitalkingdom.org with esmtp (Exim 4.05)
+	id 18fDAi-0001R5-00; Sat, 01 Feb 2003 22:00:04 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sat, 01 Feb 2003 22:00:03 -0800 (PST)
+Received: from 208-150-110-21-adsl.precisionet.net ([208.150.110.21] helo=blackcat.ixazon.lan)
+	by digitalkingdom.org with esmtp (Exim 4.05)
+	id 18fDAb-0001Qj-00
+	for lojban-list@lojban.org; Sat, 01 Feb 2003 21:59:57 -0800
+Received: by blackcat.ixazon.lan (Postfix, from userid 1001)
+	id 12BB58F7F; Sun,  2 Feb 2003 05:59:25 +0000 (UTC)
+Organization: dis
+To: lojban-list@lojban.org
+Subject: [lojban] Lexing text with {fa'o} and {zoi} in it
+Date: Sun, 2 Feb 2003 00:59:24 -0500
+User-Agent: KMail/1.5
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+Message-Id: <200302020059.24435.phma@webjockey.net>
+X-archive-position: 3976
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: phma@webjockey.net
+Precedence: bulk
+X-list: lojban-list
+From: Pierre Abbat <phma@webjockey.net>
+Reply-To: phma@webjockey.net
+X-Yahoo-Group-Post: member; u=92712300
+X-Yahoo-Message-Num: 18441
+Content-Length: 2334
+
+Is this a correct way of lexing zoi-quotes?:
+
+1.  Scan the line from left to right. Convert all spaces to pauses
+2.  Break at all pauses (cannot pause in the middle of a word).
+3. If the FAhO flag is set, resolve the piece as foreign text and skip to step 
+9.
+4. If the ZOI flag is set:
+  A. If the beginning of the current unresolved piece matches the delimiter 
+(which is the value of the ZOI flag), ignoring commas and capitalization, 
+break the current piece after the delimiter (if there is anything after it), 
+resolve it as the ending delimiter, and clear the ZOI flag.
+5.  Pick the first piece that has not been resolved.
+  A.  If the piece ends in a consonant...
+  B.  If the piece ends in 'y'...
+  C.  If the piece does not end in 'y' or a consonant and has no consonant...
+  D.  If the piece contains 'y' and no consonant following the last 'y' is...
+  E.  If the piece contains a consonant followed two letters later, not...
+6. If the piece is a cmavo of selma'o ZOI and the ZO flag is clear, resolve 
+the next piece as the starting delimiter and set the ZOI flag to a copy of 
+it.
+7. If the piece is a cmavo of selma'o FAhO and the ZO flag is clear, set the 
+FAhO flag.
+8. If the piece is a cmavo of selma'o ZO and the ZO flag is clear, set the ZO 
+flag; otherwise clear the ZO flag.
+9.  If there are any more pieces unresolved, return to step 3.
+
+According to 19:10, if {le'u} appears in a {zoi} quotation which is inside a 
+{lo'u} quotation, the {lo'u} quotation is prematurely terminated. If the 
+{le'u} is not surrounded by pauses, I don't see how that can work. For 
+instance:
+/lo'ugA'ocUskuzoixy.vaiic.alE'umal`asOt.xy.axacuEroc.le'u/
+The {le'u} inside the {zoi} quotation is embedded in the Hebrew word 
+"wayish'alehu", which, being inside a {zoi} quotation, is not attempted to 
+lex (and if it did, it would choke on the `ayin of "mah l`asot").
+
+Chapter 21, step 2, says that the word following {zoi} *should* be delimited 
+with a pause, not that it *must*. If it is not delimited with a pause, this 
+can cause text to be lexed that is part of the quotation. For instance:
+/zoiladjAn.bagram.ladjAn/
+is lexed as {zoi la djan. bagram. la djan.}. Conversely, two words could be 
+taken as the delimiter, as in /zoi.flAlukAvbu.../ that I mentioned before. 
+Should the word be changed to "must"?
+
+phma
+
+
+
+
+           
+
