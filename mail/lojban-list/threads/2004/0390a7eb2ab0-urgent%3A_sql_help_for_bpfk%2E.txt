@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0390a7eb2ab0-urgent%3A_sql_help_for_bpfk%2E | root 20040604012056.ge26987@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0390a7eb2ab0-urgent%3A_sql_help_for_bpfk%2E | root 20040604012056.ge26987@chain.digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-06-04T01:20:56Z | Robin Lee Powell <lojban-out@lojban.org> | 20040604012056.ge26987@chain.digitalkingdom.org | mail/lojban-list/cur/1086312056.0390a7eb2ab00d60.jbomohi:2,S
 I have a table with message_id and in_reply_to.
@@ -46,6 +46,51 @@ zunle.in_reply_to=pritu.message_id where pritu.in_reply_to is null;
 phma
 -- 
 li fi'u vu'u fi'u fi'u du li pa
+
+
+
+
+           
+
+
+
+=== 3 | 2004-06-04T02:15:16Z | Robin Lee Powell <lojban-out@lojban.org> | 20040604021516.gf26987@chain.digitalkingdom.org | mail/lojban-list/cur/1086315316.b2cb2094d58af1ea.jbomohi:2,S
+On Thu, Jun 03, 2004 at 10:03:04PM -0400, Pierre Abbat wrote:
+> On Thursday 03 June 2004 21:20, Robin Lee Powell wrote:
+> > I have a table with message_id and in_reply_to.
+> >
+> > I need to select all rows that have an in_reply_to that is not equal
+> > to *any* message_id anywhere in the same table.
+> >
+> > This is MySQL, so I don't *think* I can use sub-selects.
+> >
+> > This is rather urgent, as it's breaking the BPFK boards.
+> 
+> Never done this in one table, and most of my SQL experience is in
+> Postgres, but it should be something like this:
+>
+> select * from cartu as zunle left outer join cartu as pritu on
+> zunle.in_reply_to=pritu.message_id where pritu.in_reply_to is null;
+
+Yep.  Thanks.
+
+select distinct tk1.in_reply_to from tiki_comments tk1 left outer join
+tiki_comments tk2 on tk1.in_reply_to = tk2.message_id where
+tk2.message_id is null;
+
+This only partly solves the problem, unfortunately, because I need to
+wedge it into a larger expression, but I think I can work it out.
+
+BTW, once the boards are working again (which should be momentarily),
+you owe the group responses.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
 
 
 
