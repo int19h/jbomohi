@@ -1,0 +1,130 @@
+I guess you think of something like "Japanese Language Kit (JLK)" for Mac. This is an ''extension'' parallel to Macintosh "Chinese Language Kit (CLK)" what I'm using. Since I don't intend to write Japanese (Kana+Kanji) on my machine, this solution is far too expensive and sophisticated for the purpose of just typing in some Lojban-Hiragana syllables.
+Yet, there could be still another way: recently, I downloaded some other fonts together with a software allowing to create kind of scripts in order to access every place on your keyboard you want, e.g. "a" -> "xy". I just don't know yet how to have that little program installed... -.aulun.
+
+----
+
+''Getting dangerously off-topic here, but the language kits come free with System 9. Lamentably, MacOS X is yet to get its sh*t together wth customisable (or not!) Unicode keyboards, though at least it does allow you to use Unicode fonts. (System 9 only claims to.) For people who might care, could someone say whether there are shareware/freeware PC and Unix input methods? Or point to a good website? -- nitcion''
+
+* There is a Unicode text editor for UNIX (maybe even available for Windows) called [http://www.yudit.org|yudit]. In it you can define arbitrary key maps producing any ((Unicode)) character. (I think it is limited to plane 0, though.)Getting Unicode characters working everywhere else in Unix (or X) is significantly more difficult. See the [http://www.linuxdoc.org/HOWTO/Unicode-HOWTO.html|Unicode HOWTO] for Linux, 90% of which is applicable to every form of Unix.
+
+----
+
+Don't think that this is off-topic, but useful for further efforts with creating alternative Lojban scripts (and their specific input!).
+Since always having been working with Mac (and Atari) machines, I know next to nothing about .uindoz. stuff. But there might be a solution:
+Contact SIL (Summer Institute for Linguistics) in Dallas/Tx and ask for shareware "SILKey" (a package of the program SILKey,  SIL extension, SIL Weaver and some sample files like Pig Latin kbd and a tutorial). This is for Macintosh. But there's also hope for DOSen-user ;-), since there's "excellent" KeyMan for Windows! ('''''www.sil.org''''').
+Using the ''weaver'' software, one is able to generate kbd-files in order to manipulate the keyboard access in many different ways... (just gave it a rudimentary try - yet it works!) - .aulun.
+
+----
+
+Here's a keyboard script that I wrote (within "Weaver" - prior to compilation and installation). The script addresses the original font's places '''except''' for the consonant-n's and the (new) L-row's places (of my own modified font-version):
+
+// Hiragana keyboard AWT 8.01
+// access to syllabic chars 
+
+keyboardname "U.S."
+
+initialgroup (Main)
+
+store(vowel) "aiueo"
+store(hiravow) "qwert"
+store(marks) ".,;"
+store(hiramrk) '?"'
+
+group (Main) using keys 
+"t"+"a" > "y"
+"t"+"i" > "u"
+"ch"+"i" > "u"
+"ts"+"u" > "i"
+"t"+"u" > "i"
+"t"+"e" > "o"
+"t"+"o" > "p"
+"y"+"a" > "Q"
+"y"+"i" > "W"
+"y"+"u" > "E"
+"y"+"e" > "R"
+"y"+"o" > "T"
+"m"+"a" > "Y"
+"m"+"i" > "U"
+"m"+"u" > "I"
+"m"+"e" > "O"
+"m"+"o" > "P"
+"k"+"a" > "a"
+"k"+"i" > "s"
+"k"+"u" > "d"
+"k"+"e" > "f"
+"k"+"o" > "g"
+"n"+"a" > "h"
+"n"+"i" > "j"
+"n"+"u" > "k"
+"n"+"e" > "l"
+"n"+"o" > ";"
+"w"+"a" > "A"
+"w"+"i" > "S"
+"w"+"u" > "D"
+"w"+"e" > "F"
+"w"+"o" > "G"
+"v"+"a" > "A"
+"v"+"i" > "S"
+"v"+"u" > "D"
+"v"+"e" > "F"
+"v"+"o" > "G"
+"r"+"a" > "H"
+"r"+"i" > "J"
+"r"+"u" > "K"
+"r"+"e" > "L"
+"r"+"o" > ":"
+"l"+"a" > "Ï" // produces special chars for L-syllables (altered by myself and not included in the font available)...
+"l"+"i" > "¥"
+"l"+"u" > "€"
+"l"+"e" > "£"
+"l"+"o" > "¢"
+"s"+"a" > "z"
+"s"+"i" > "x"
+"sh"+"i" > "x"
+"s"+"u" > "c"
+"s"+"e" > "v"
+"s"+"o" > "b"
+"h"+"a" > "n"
+"h"+"i" > "m"
+"h"+"u" > ","
+"f"+"u" > ","
+"h"+"e" > "."
+"h"+"o" > "/"
+"d"+"a" > "´"
+"d"+"i" > "$"
+"j"+"i" > "$"
+"dj"+"i" > "$"
+"d"+"u" > "%"
+"dz"+"u" > "%"
+"d"+"e" > "¿"
+"d"+"o" > "1"
+"g"+"a" > "Œ"
+"g"+"i" > "§"
+"g"+"u" > "¶"
+"g"+"e" > "Ä"
+"g"+"o" > "©"
+"z"+"a" > "*"
+"z"+"i" > "Å"
+"z"+"u" > "V"
+"z"+"e" > "Ã"
+"z"+"o" > "º"
+"b"+"a" > "!"
+"b"+"i" > "µ"
+"b"+"u" > "2"
+"b"+"e" > "3"
+"b"+"o" > "Ö"
+"p"+"a" > "÷"
+"p"+"i" > "å"
+"p"+"u" > "ø"
+"p"+"e" > "ù"
+"p"+"o" > "À"
+"k"+"l" > "(("   //Some still provisory commands to produce some small-size chars ...
+"k"+"k" > "))"
+"k"+"j" > "{"
+"k"+"m" > "}"
+"n"+"n" > "Æ" //hitting the n-key '''twice''' produces Japanese consonant-n 
+
+any(vowel) > index(hiravow,1) fix 
+any(marks) > index(hiramrk,1) fix 
+
+----
