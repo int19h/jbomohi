@@ -1,4 +1,4 @@
-# mail/lojban-list thread e5205b9043f9-fyfyfyfy | root 199412200920.aa14766@access1.digex.net | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread e5205b9043f9-fyfyfyfy | root 199412200920.aa14766@access1.digex.net | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 1994-12-20T09:20:55Z | Logical Language Group <lojbab> | 199412200920.aa14766@access1.digex.net | mail/lojban-list/cur/787915255.e5205b9043f9d015.jbomohi:2,S
 I tried this on the parser, and suspect a problem.
@@ -44,5 +44,38 @@ of lerfu words.  To get four instances of the "f" pro-sumti, we need
 --
 John Cowan              sharing account <lojbab@access.digex.net> for now
                 e'osai ko sarji la lojban.
+
+
+
+=== 3 | 1994-12-20T16:54:56Z | Logical Language Group <lojbab> | 199412201654.aa05515@access2.digex.net | mail/lojban-list/cur/787942496.f90c9bf155174515.jbomohi:2,S
+la lojbab. cusku di'e
+
+> I tried this on the parser, and suspect a problem.
+> It does not break up fyfyfyfy before the selbri, nor implies that ti takes
+> it as a sumti.  When followed by a separate fy "fyfyfyfy fy klama", it blows
+> up.  But "fy fy fy fy klama" parses fine, and with a single sumti, unless
+> split up by BOI.
+
+There are two problems here: one is with the current machine parser's
+feeble morphology algorithm, one with what I said.
+
+The parser distinguishes brivla from compound cmavo by looking for
+consonant clusters, defined as two successive consonants optionally
+separated by "y".  By that standard, the word "fyfyfyfy" appears to have
+a y-hyphenated consonant cluster in the first 3 letters.  Thus it is
+lexed as a brivla, with resulting problems.  IMAO, this is no worse that
+the treatment of "secmene" as a brivla rather than as "se cmene",
+or the fact that the lexer breaks up stuff within "zoi" quotes as if it
+were Lojban.  Eventually, there will be a proper morphological preprocessor
+that handles all cases.
+
+However, I was wrong to say that "fy fy fy fy" was four sumti; it is a
+single sumti, because the lerfu-word pro-sumti actually consist of a string
+of lerfu words.  To get four instances of the "f" pro-sumti, we need
+"fyboi fyboi fyboi fy[boi]".
+
+-- 
+John Cowan		sharing account <lojbab@access.digex.net> for now
+		e'osai ko sarji la lojban.
 
 

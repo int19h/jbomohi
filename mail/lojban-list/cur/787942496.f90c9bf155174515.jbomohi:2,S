@@ -1,0 +1,49 @@
+Received: from access2.digex.net by nfs1.digex.net with SMTP id AA26446
+  (5.67b8/IDA-1.5 for <lojbab@nfs1.digex.net>); Tue, 20 Dec 1994 11:55:16 -0500
+Received: by access2.digex.net id AA05515
+  (5.67b8/IDA-1.5 for lojbab); Tue, 20 Dec 1994 11:54:57 -0500
+From: Logical Language Group <lojbab>
+Message-Id: <199412201654.AA05515@access2.digex.net>
+Subject: Re: fyfyfyfy
+To: lojban@cuvmb.cc.columbia.edu (Lojban List)
+Date: Tue, 20 Dec 1994 11:54:56 -0500 (EST)
+Cc: lojbab@access.digex.net (Logical Language Group)
+In-Reply-To: <199412200920.AA14766@access1.digex.net> from "Logical Language Group" at Dec 20, 94 04:20:55 am
+X-Mailer: ELM [version 2.4 PL24beta]
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-From-Space-Date: Tue Dec 20 11:55:20 1994
+X-From-Space-Address: lojbab
+Content-Length: 1381
+
+la lojbab. cusku di'e
+
+> I tried this on the parser, and suspect a problem.
+> It does not break up fyfyfyfy before the selbri, nor implies that ti takes
+> it as a sumti.  When followed by a separate fy "fyfyfyfy fy klama", it blows
+> up.  But "fy fy fy fy klama" parses fine, and with a single sumti, unless
+> split up by BOI.
+
+There are two problems here: one is with the current machine parser's
+feeble morphology algorithm, one with what I said.
+
+The parser distinguishes brivla from compound cmavo by looking for
+consonant clusters, defined as two successive consonants optionally
+separated by "y".  By that standard, the word "fyfyfyfy" appears to have
+a y-hyphenated consonant cluster in the first 3 letters.  Thus it is
+lexed as a brivla, with resulting problems.  IMAO, this is no worse that
+the treatment of "secmene" as a brivla rather than as "se cmene",
+or the fact that the lexer breaks up stuff within "zoi" quotes as if it
+were Lojban.  Eventually, there will be a proper morphological preprocessor
+that handles all cases.
+
+However, I was wrong to say that "fy fy fy fy" was four sumti; it is a
+single sumti, because the lerfu-word pro-sumti actually consist of a string
+of lerfu words.  To get four instances of the "f" pro-sumti, we need
+"fyboi fyboi fyboi fy[boi]".
+
+-- 
+John Cowan		sharing account <lojbab@access.digex.net> for now
+		e'osai ko sarji la lojban.
+
