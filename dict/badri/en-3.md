@@ -20,3 +20,7 @@ $x_{1}$ is sad/depressed/dejected/[unhappy/feels sorrow/grief] about $x_{2}$ (ab
 See also {klaku}, {gleki}, {betri}, {cinmo}, {junri}.
 
 ## Examples
+
+### Example 39
+
+mi so'e roi badri da poi mi na djuno vau ca lo zeldei
