@@ -1,0 +1,201 @@
+Return-Path: <cbmvax!uunet!PICA.ARMY.MIL!protin>
+Resent-From: cbmvax!uunet!PICA.ARMY.MIL!protin
+Resent-Message-Id: <9106192210.AA23227@relay1.UU.NET>
+          26 May 90 21:33 EDT
+Message-Id: <m0hYkrg-0002N1C@marob.masa.com>
+From: John Cowan <cbmvax!uunet!marob.masa.com!cowan>
+Subject: Proposed changes to the Lojban lerfu system
+To: lojban-list@snark
+Date: Fri, 25 May 90 16:02:31 EDT
+X-Mailer: ELM [version 2.2 PL16]
+Resent-Date:  Wed, 19 Jun 91 18:08:24 EDT
+Resent-To: John Cowan <cowan@snark.thyrsus.com>
+X-From-Space-Date: Wed Jun 19 19:49:40 1991
+X-From-Space-Address: cbmvax!uunet!PICA.ARMY.MIL!protin
+Content-Length: 8342
+
+The following is a proposal to simplify and streamline the parts of Lojban
+related to lerfu (letterals).  The present system is summarized, a revised
+system proposed and explained, and a rationale for the suggested changes
+presented.  Information on the present system is drawn from LLG documentation,
+including the >Overview of Lojban Grammar<,
+as corrected by the 5 May 1990 edition of the machine grammar.
+
+
+THE PRESENT SYSTEM:
+
+At present, 42 cmavo are assigned for letterals and related purposes, grouped
+into seven lexemes known as BY, NEI, FAU, VOI, NAU, FOI, and SIhE.
+
+BY lexeme includes the 23 letterals themselves:  abu, ebu, ibu, obu, ubu
+for the vowel letterals; by, cy, dy, ... zy for the consonant letterals,
+and y'y for the vowel buffer letteral.
+
+NEI lexeme signals an "alphabet selection shift":  members of NEI cause
+letterals to be interpreted as representing characters from non-Lojban
+alphabets.
+
+	nei enables the Lojban alphabet;
+	ra'o enables the Arabic alphabet;
+	ru'o enables the Russian alphabet;
+	ge'o enables the Greek alphabet;
+	jo'o enables the Hebrew alphabet;
+	de'a enables part 1 of the Hindi alphabet;
+	de'o enables part 2 of the Hindi alphabet;
+	la'o enables the Latin alphabet.
+
+FAU lexeme signals a "special character shift": members of FAU cause 
+letterals to be interpreted as representing non-standard letters or other
+characters.
+
+	fau enables up to 22 more letters from the current alphabet;
+	lau enables up to 22 non-letter characters;
+	ba'o enables up to 22 user-defined characters.
+
+VOI lexeme signals an "upper/lower case shift":  members of VOI cause
+letterals to be interpreted as upper or lower case.
+
+	ga'e enables upper case;
+	voi enables lower case;
+	tei toggles case (enables upper if lower is enabled, or vice versa);
+	tau toggles case for the next character only;
+	to'o toggles case for the next word only.
+
+NAU lexeme signals "default case shift".
+
+	nau cancels any current FAU or VOI in effect.
+
+FOI lexeme signals an "operator set shift".  A string of letterals may be
+used within MEX to represent a mathematical operator, if preceded by the
+marker ma'o.  These operators are grouped into operator sets, each of which
+is numbered by a numeral (string of digits).
+
+	foi + numeral + BOI enables the operator set specified by the numeral.
+
+SIhe lexeme signals "default operator shift".
+
+	si'e cancels any FOI currently in effect.
+
+Members of NEI, FAU, VOI, NAU, and SIhe have null grammar.  Sequences of
+the form FOI + numeral + BOI also effectively have null grammar.
+
+
+PROPOSED REVISION:
+
+Only 34 cmavo are used, grouped into only three lexemes:  BY, FAU, and GAhE.
+
+Lexeme BY contains the existing 23 letterals, plus two new ones for
+representing the remaining two characters of the Lojban alphabet.
+
+	sa'a (derived from slaka) represents the close-comma written ",";
+	si'e (derived from sisti) represents the pause written ".".
+
+Lexeme FAU contains the letteral shift characters that must be followed by BY.
+
+	fau + BY sets the letteral set;
+	lau + BY sets the 2nd-order letteral set.
+
+Lexeme GAhE contains all the letteral shift characters that have null grammar.
+
+	ga'e enables upper case;
+	voi returns to default lower case;
+	tau enables upper case for the next letteral (or double letteral) only;
+	nau resets the letteral set to default;
+	nei resets the 2nd-order letteral set to default;
+	ba'o enables double-letteral mode;
+	to'o disables double-letteral mode.
+
+
+DISCUSSION:
+
+The cmavo "ga'e" and "voi" are meant primarily for spelling out
+Lojban cmene, which may contain upper case letters to mark terbasna.
+For example, the name ".eiRIK. TIdeman." would be spelled out as follows:
+	si'e. .ibu. ga'e. ry. .ibu. ky. si'e.
+	ty. .ibu. voi. dy. .ebu. my. .abu. ny. si'e.
+Since pauses may be inserted between any Lojban words for added clarity,
+"si'e" may be inserted between the spelled-out versions of words as well.
+
+The cmavo "tau" is not likely to be used in a name, although the name "Rl."
+(= English "Earl") could be spelled "tau. ry. ly. si'e".  Instead, it
+is meant primarily as a prefix when using letterals as symbolic names,
+to provide more symbolic names.  For example, in Newtonian mechanics
+the symbols "g" and "G" are commonly used with different meanings;
+Lojban would represent these as "gy" and "taugy" respectively.
+
+The cmavo "fau", "lau", "nau", and "nei" give access to the full range
+of representable characters.  The assignments of the 25 lerfu to the specified
+uses apply only by default: they constitute the "default letteral set".
+By saying "fau.abu" we remap the 25 letterals onto a new (non-Lojbanic) set
+of characters.  Similarly, "fauby" makes another 25 available, and so on up
+to "fausi'e", for a total of 625 new characters.  To restore the Lojbanic
+interpretation, use "nau".
+
+If 650 characters are not enough, "lau.abu" changes to a new set of 650
+characters, and so on to "lausi'e".  The cmavo "nei" restores the default
+set of 650.  The total number of characters available is thus 16,900, which
+can be doubled by the upper/lower case shifts to a grand total of 33,800.
+
+When using alphabets which have many more than 22 characters, constant flipping
+of the fau switch may become uncomfortable or verbose.  The cmavo "ba'o"
+enables a special mode of letteral interpretation called double-letteral mode.
+In this mode, two letterals are needed to represent a character.  The first
+one specifies the letteral set; the second, the letteral within that set.
+This is equivalent to placing "fau" before every pair of letterals, but
+saves space and time.  To turn off double-letteral mode, use "to'o".
+
+The operator shifts currently specified by FOI and SIhE are no longer
+handled in this part of the grammar.  Instead, they are specified by
+placing subscripts on ma'o.  Thus, ma'oxipa signifies that the following
+letteral operator (and any to come) are drawn from the first operator set;
+ma'oxire enables the second set, and so on.
+
+The cmavo ba'o, foi, ra'o, ru'o, ge'o, jo'o, de'a, de'o, la'o, and tei are
+now freed up for other uses.  The currently unassigned cmavo sa'a is assigned.
+
+
+RATIONALE:
+
+I believe that the proposal above is both more complete and simpler than
+the existing system.  Obviously, all things being equal, three lexemes are
+better than seven, especially when the grammar could not distinguish between
+five of the old lexemes anyway (all had null grammar).  This could be
+achieved simply by lumping the old lexemes together, however.
+
+The proposed system handles Lojban's own needs better, by providing for
+exactly those constructs that are needed to write Lojban itself:  the
+25 characters in the Lojban alphabet, the two cases (upper and lower) and
+the space between words.  (Space and pause are not distinguished, but the
+language allows every space to be replaced by pause anyway.)
+
+The list of alphabets in old lexeme NEI is incorrigibly miscellaneous.
+It neither represents all the world's alphabets nor even all the important
+ones (the omission of Japanese is notable).  In particular, it has to handle
+Devanagari with two cmavo; Japanese might require four just for hiragana/
+katakana, and Japanese kanji/Chinese hanzi are totally beyond its reach,
+even if every existing cmavo were assigned to this one function of handling
+foreign alphabets!  The proposal, on the other hand, deals with over 25
+cubed different characters without ambiguity and with only four cmavo.
+Some conventional assignments could evolve if some alphabets are more
+needed in running text (especially MEX text) than others:  for example
+"fauly" might come to be used for the non-Lojban Latin letters, and
+"faugy" for the Greek letters.
+
+The treatment of operator sets using ma'o subscripts above is an "optional"
+part of this proposal.  The language in the >Overview< implies that lerfu-type
+MEX operators are single lerfu, whereas the grammar describes them as lerfu
+strings.  With lerfu strings available, the whole idea of needing separate
+sets of operators may be in fact obsolete.  If not, the subscripts on ma'o
+at least put the burden where it belongs, within MEX.
+
+Please send comments on the above to cowan@magpie.masa.com, to the lojban-list,
+or to:
+	John Cowan
+	Chemical Bank, Cooperative Systems
+	95 Wall St., 6th floor
+	New York NY  10005  USA
+
+-- 
+cowan@marob.masa.com			(aka ...!hombre!marob!cowan)
+			e'osai ko sarji la lojban
+
