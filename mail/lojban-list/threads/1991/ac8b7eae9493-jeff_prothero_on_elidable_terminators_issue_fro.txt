@@ -1,4 +1,4 @@
-# mail/lojban-list thread ac8b7eae9493-jeff_prothero_on_elidable_terminators_issue_fro | root m0jwork-00037yc@snark.thyrsus.com | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread ac8b7eae9493-jeff_prothero_on_elidable_terminators_issue_fro | root m0jwork-00037yc@snark.thyrsus.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1991-07-08T06:14:00Z | lojbab | m0jwork-00037yc@snark.thyrsus.com | mail/lojban-list/cur/678953640.ac8b7eae94932a0b.jbomohi:2,S
 The following paper was written by Jeff Prothero as an answer to
@@ -149,5 +149,51 @@ not in that set, there will be at most one RightBracket in the lookahead
 set, by a simple variant of the above argument.  The parser can then
 insert that unique RightBRacket in its input stream and continue.
 
+
+
+
+=== 2 | 1991-07-08T13:46:23Z | cbmvax!uunet!ctr.columbia.edu!shoulson | 9107081447.aa26127@relay2.uu.net | mail/lojban-list/cur/678980783.67b6fc36b9a446a4.jbomohi:2,S
+I thought I had a counter-example, but it may run afoul of some conditions
+in the proof.  I'm going to send it out anyway, so you all can think about
+it.
+
+Consider the language:
+
+A --> e | < A > | < A A >    (e is the empty string)
+
+Now, we can obviously derive strings (1) <<<><>>> and (2) <<<>><>> from
+this.  Now, eliding the last two rightbrackets from (1), we get <<<><>.
+This is probably legal, though the "not the prefix of any string"
+restriction probably cuts me down.  We can also elide the last and
+second-to-last rightbracket in (2), yielding <<<><>, the same string.
+
+I noticed this when constructing a tanru, using ke/ke'e brackets.
+Basically, the problem is possible ambiguity between ((A(B))) and ((A)(B)).
+If you elide all the closing braces from both, you get the same string.
+
+I'm pretty sure you're restriction avoids such a mess, but it's something
+to consider.  I mean,
+
+broda ke brode ke brodo brodu
+
+is taken to mean
+
+broda ke brode ke brodo brodu ke'e ke'e
+
+But *could* mean
+
+broda ke brode ke'e ke brodo brodu ke'e  (though why you'd want to is beyond
+me)
+
+Simple pragmatics could rule out the latter reading, as could precedence
+rules which determine how and when to elide and how to replace terminators.
+But it doesn't seem so simple as many think it.  In the tanru examples, I
+doubt anyone would deny that the terminators are elidable, but I can't see
+how the elided version precludes the second reading without some additional
+rules.
+
+This is probably no big deal, as I think I just missed a rule someplace.
+
+~mark
 
 
