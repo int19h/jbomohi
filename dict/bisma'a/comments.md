@@ -12,3 +12,13 @@ Re: spisa be lo bisri'e
 
 How else are they formed?
 
+
+## 2003-04-26T19:15:23Z — arj (comment 83, in reply to 82)
+
+Re: spisa be lo bisri'e
+
+phma wrote:
+> How else are they formed?
+
+They break off of ice shelfs.
+
