@@ -14463,3 +14463,83 @@ li ci su'i ze te'a mu bi'e vu'u ci
 
 
 
+
+## 2005-02-17T05:47:45Z — xorxes (@xorxes) (post 4002)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20050217031211.29654.qmail@web41905.mail.yahoo.com
+In-Reply-To: 200502162141.06335.phma@phma.hn.org
+
+
+--- Pierre Abbat wrote:
+> On Wednesday 16 February 2005 15:25, Jorge "LlambÃ­as" wrote:
+> > This is a fairly inconsequential issue, but one that
+> > needs resolution one way or the other.
+> >
+> > What should the official morphology do with a
+> > string such as {MIFRAti}?
+> >
+> > (1) Parse it as {mifra ti}.
+> > (2) Parse it as {mi frati}.
+> > (3) Parse it as a non-lojban word.
+> > (4) Something else.
+> 
+> (1) or (2). If I had to pick one, I'd say (2); but this is a corner case, 
+> resulting from someone inadvertently stressing a syllable, and it may be 
+> impossible to tell which is meant without analyzing semantics.
+
+Yes, but we're not trying to guess what someone may have meant, just 
+decide what the official parse should give. An intelligent parser will 
+allow more leeway in interpretation, but the official morphology won't.
+
+> > PEG currently does (2) on the grounds that for any cmavo followed
+> > by a stressed syllable, if it can fall off, it will fall off, even
+> > if it is a stressed cmavo without a following pause.
+> 
+> Valfendi also does (2).
+> 
+> > CLL in principle would not allow (2): "Lojban structural
+> > words (called ''cmavo'') may be stressed on any syllable or
+> > none at all. However, primary stress may not be used in a
+> > syllable just preceding a brivla, unless a pause divides
+> > them; otherwise, the two words may run together."
+> 
+> The words will be misdivided if the first syllable of the brivla is
+> unstressed 
+> and the second syllable could be the beginning of a brivla or cmavo (e.g. 
+> /LEkraTAIgo/ -> {lekra tai go}). If the first syllable is stressed, they can 
+> be misdivided; this is your example. If the second syllable could not begin a
+> brivla or cmavo, valfendi breaks the cmavo off (e.g. /LEskalDUna/ -> {le 
+> skalduna}).
+
+PEG will break a finally stressed cmavo off in the following cases: 
+
+1- When followed by a brivla with initial stress e.g. {MIFRAti}.
+2- When followed by a cmavo or a brivla that starts with CV, e.g. {LElujvo}
+3- When followed by a word such that if you remove the first syllable
+the rest is not a word, e.g. {LEskalDUna}, but also {CIskapre.}
+4- When followed by a cmene, (of course the only cmavo that can be followed
+without a pause by cmene are doi/la/lai/la'i) e.g. LAknedjan. 
+
+I believe that's the maximally permissive set of rules, i.e. in no
+other case can a finally stressed cmavo be followed directly by a word 
+without causing trouble.
+
+The rules in CLL would not allow 1, 2 or 3. Not sure about 4.
+
+> If the stressed word before the brivla is a Cy cmavo, valfendi breaks it off.
+
+PEG takes y to be always unstressed.
+
+mu'o mi'e xorxes
+
+
+
+		
+__________________________________ 
+Do you Yahoo!? 
+All your favorites on one personal page Â– Try My Yahoo!
+http://my.yahoo.com 
+
+
+
