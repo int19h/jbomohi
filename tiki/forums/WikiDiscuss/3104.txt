@@ -22276,3 +22276,113 @@ http://info.mail.yahoo.com/mail_250
 
 
 
+
+## 2005-02-26T02:28:32Z — noras (@noras) (post 4192)
+
+Title: PEG Morphology Algorithm
+Message-Id: 5.1.0.14.0.20050224231801.03b00b50@pop.east.cox.net
+In-Reply-To: 20050217031211.29654.qmail@web41905.mail.yahoo.com
+
+Thanks, Jorge, for your description of the PEG algorithm.  That should help 
+me understand a bit better what's going on there.
+
+However, I'm still back at square one.  What I expect from a morphology 
+algorithm is not merely that it breaks down a sequence uniquely.  I could 
+do that by separating into "words" at each and every letter.  That does not 
+make it correct.  In order to determine if the break-down is correct, we 
+need to go back to the beginning.  We need to consider what the speaker (of 
+a valid lojban utterance) actually meant to say.  If he/she has said that 
+utterance in conformance with lojban valid grammar, word-formation and 
+pronunciation rules, then we should get back out of the algorithm a 
+breakdown of the words that is exactly what that person intended, and no 
+other.  Always.  If two different people, intending two different 
+utterances, can both produce the same speech stream, and both are in 
+accordance with all the rules (like, in English: "I scream" and "Ice 
+cream"), then something is broken - EVEN IF the morphology algorithm 
+consistently breaks it down the same way; that would just mean that the 
+morphology algorithm was not exhaustive.
+
+To check that the algorithm will always break into what the utterer meant, 
+we need the word *formation* rules (like: where a pause is required, where 
+it's allowed, where it's not allowed;  the rules on lujvo building; the 
+correct forms of cmavo, fu'ivla and names).
+
+To prove that there is only one possible breakdown, we need commentary on 
+the reasoning for each step.  And that commentary should make reference to 
+the word formation rules to rule out other breakdowns.  For example (from 
+the old morphology algorithm, draft 4.0):        "...You want to break it 
+up into words.  First, break at all pauses (cannot pause in the middle of a 
+word)."
+
+What I want first - before I will be able to evaluate that the algorithm 
+looks good - is that full statement of the rules of formation of words, and 
+of combination of words into utterances.  "A gismu must be of the for 
+CVC/CV or CCVCV where CC is ...", "A pause is required: after a name; 
+before a name unless preceeded by la, lai or la'i, before a vowel-initial 
+word; ...".  Many of these have been defined before, but some are part of 
+the controversy we've been having now:  the valid fu'ivla forms, the valid 
+consonant clusters in fu'ivla and names, the valid vowel combinations in 
+the expanded cmavo.
+
+Let me give an example of something where, if we had missed a rule, the 
+algorithm would go on it's merry way and break the utterance down 
+consistently, but it would not be unique.  Let's suppose we didn't realize 
+that a pause was between a stressed cmavo and a gismu, so we never made 
+that rule.  Therefore, the programmer(s) never added a check for it.  Now 
+lets take 2 speakers, both following all the rules that they would 
+have.  One wants to say "re spabrucla" with emphasis on the "re" 
+(/rEspabrUcla/), and the other one wants to say "respa brucla" 
+(/rEspabrUcla/).  We feed the first one into the PEG that was created 
+without checking for stressed-cmavo-before-brivla.  Since we're checking 
+for a cmavo to break off first in PEG, it does, and we get "re spabrucla"; 
+person #1 is happy.  Then we feed the second person's utterance into 
+PEG.  It gets the same thing - "re spabrucla", and person #2 is very 
+unhappy.  (A cry goes up from the community - "we can't have this - there 
+must be only one breakdown".  The byfy says: "we voted in the PEG 
+algorithm, so what it says goes".  The people say "but then how DO you say 
+"respa brucla" - do we have to pause???".  Etc.).  The parenthetical is 
+just for grins.  The REAL problem is that the discrepancy might not be noticed.
+
+I understand that, in working on the PEG algorithm program, you come up 
+with a good idea of what might be allowed (and still have a unique 
+breakdown) and what might not.  But "can be uniquely broken down" does not 
+mean "should be allowed".  This is where I disagree with some of what 
+Pierre has suggested.  If the rules are too complex, no one will get them 
+right.  As an example, take "aslinku'i".  From the point of view of "can", 
+it obviously "can" be a fu'ivla: the "a" cannot fall off because "slinku'i" 
+is not a valid gismu or fu'ivla.  From the point of view of a speaker - or, 
+even worse, a listener - this is triple-think.  First thought: "the 'a' 
+breaks off and the rest is a ... um ... fu'ivla (because it isn't a lujvo 
+because: sli+nk - no, not a rafsi initial; slink - no, not a 
+CCVCy).  Second thought: "wait a minute - it can't be a fu'ivla because it 
+fails slinku'i test".  Third thought: "oh - if it can't be a fu'ivla, then 
+I guess the 'a' might not be able to fall off".  If a listener had to got 
+through all of this, the speaker would already be on the next topic.
+
+A comment on the PEG algorithm itself.  (Umm... how to say this?)  We don't 
+need an algorithm to help us break down lojban text; text has [unspoken] 
+rules that there are spaces between all words except for a string of only 
+cmavo, where it's optional.  We need the algorithm to break down a speech 
+stream.  Of course, the algorithm will be working on a representation of a 
+speech stream in text, but that's not the same thing.  In particular, 
+why-all is there a mention of a "digit"?  Please - speak the digit 2, and 
+then transcribe what you said;  you got "re", didn't you.  To add "digit" 
+to the rules (for checking cmene, before we ever check for cmavo) 
+PRE-SUPPOSES a previous break-out of a cmavo.  Is there a pre-PEGGER that 
+recognizes "re" and changes it to "2"?  If so, what rules does it 
+use?  Other mentions that pertain to text are not as destructive, but it 
+gives me the feeling that you are not taking into consideration that there 
+is a speaker and a listener involved - that it is sounds that we are 
+resolving.  This makes me a little doubtful of results when you start 
+discussing valid consonant clusters and such; if they are just a string of 
+letters to you, and not a string of sounds, you may miss why they were not 
+allowed in the first place.
+
+
+mi'e noras                                             noras@cox.net
+Nora LeChevalier
+
+
+
+
+
