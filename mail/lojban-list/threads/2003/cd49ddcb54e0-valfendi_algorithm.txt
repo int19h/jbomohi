@@ -1,4 +1,4 @@
-# mail/lojban-list thread cd49ddcb54e0-valfendi_algorithm | root 200301222303.45852.phma@webjockey.net | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread cd49ddcb54e0-valfendi_algorithm | root 200301222303.45852.phma@webjockey.net | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2003-01-23T04:03:45Z | Pierre Abbat <phma@webjockey.net> | 200301222303.45852.phma@webjockey.net | mail/lojban-list/cur/1043294625.cd49ddcb54e044e2.jbomohi:2,S
 This is hopefully complete and correct, except for handling ZOI and FAhO, but
@@ -146,5 +146,79 @@ http://www.lojban.org/   ***   to sa'a cu'u lei pibyta'u cridrnoma toi
 
 
            
+
+
+
+=== 3 | 2003-01-23T23:32:18Z | Pierre Abbat <phma@webjockey.net> | 200301231832.18683.phma@webjockey.net | mail/lojban-list/cur/1043364738.69f33657f39ba00c.jbomohi:2,S
+On Thursday 23 January 2003 15:13, Robin Lee Powell wrote:
+> Hoo-boy.
+>
+> What, exactly, do the proofs demonstrate?
+
+Hopefully, that all well-formed Lojban words can be lexed correctly by the 
+algorithm, regardless of what Lojban words precede and follow them, as long 
+as the syllables are stressed correctly and pauses are inserted where 
+required.
+
+> I hereby offer to attempt to debug any reasonably rigorous proof you
+> come up with.
+
+Lemma: All brivla contain a consonant followed two letters later, ignoring
+apostrophes, by a vowel. If a brivla contains 'y', it contains such a
+consonant after the 'y'.
+
+Proof: If a brivla contains no 'y', it contains two adjacent consonants
+in the first five letters, ignoring apostrophes. Find the first vowel
+after this consonant cluster. Two letters before it is a consonant.
+If a brivla contains 'y', there is at least one rafsi after 'y'. Consider
+the last rafsi. Either it is a CVV or CCV rafsi of a gismu, in which case
+the first and last letters of the rafsi are the consonant and the vowel
+two letters later, or it is the final long rafsi of a gismu or fu'ivla,
+in which case, being identical to the selrafsi, it has such a consonant
+by the first part.
+
+Theorem: If two lerpoi R and S which both lack 'y' are such that for all i
+R[i:i+1] is a valid initial consonant pair, valid consonant pair, valid lujvo
+diphthong, fa'u valid fu'ivla diphthong iff S[i:i+1], and R[i] is a vowel,
+consonant, fa'u y'ybu iff S[i] is, then R is a valid brivla iff S is,
+regardless of whether for some i R[i] is 'n', 'r', or 'l' and S[i] isn't.
+
+The proof of this was discussed on the list, and I think it's right, but 
+haven't written it down as a proof yet.
+
+Also some theorems about rafsi fu'ivla and slinku'i. I found a bug in the 
+previously posted algorithm: in step 3.E.VI I have to check whether there is 
+a consonant cluster in the first five letters (otherwise {lebicyCTIcpi} gets 
+broken as {lebi cyCTIcpi}) and whether the part beginning with the first 
+consonant cluster is monosyllabic, as well as whether it is a slinku'i or 
+begins with a non-initial consonant cluster. There were also some bugs 
+causing the program to crash or hang.
+
+Please send me any test data you can think of. This should be Lojban or 
+not-quite-Lojban text with words run together and stress indicated, such as
+
+rotu'urselDE'iCUrikteROpu
+
+which produces the output
+
+-ro (tu'u,rse,LDE'i) -CU (ri,kte,RO,pu)
+
+(I'm going to leave off syllabification of output or make it an option, but 
+brivlavau must be syllabified to lex them.) Note that the pause after {CU} 
+was left out, but it still was lexed. Lines beginning with a number sign are 
+comments. You may put commas in weird places to see what happens, or even 
+feed it garbage to try to crash it. I'll put the program on the Web soon.
+
+I'd also like any experimental gismu you know of, with rafsi if they have 
+them, and rafsi fu'ivla (the program will, when building the cdb, ignore 
+fu'ivla that don't have rafsi). I don't need this now; it's for a part of the 
+program I haven't started writing yet, which will take a lujvo (including one 
+made with fu'ivla rafsi, if given a command-line option to do so) and output 
+its tanru.
+
+phma
+
+
+
 
 
