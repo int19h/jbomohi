@@ -1,6 +1,39 @@
-# mail/lojban-list thread ce78350298fc-double_oops%21_2_nd_fix_for_lojban-lookup | root 9303192225.aa02768@grackle.stockbridge.ma.us | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread ce78350298fc-double_oops%21_2_nd_fix_for_lojban-lookup | root 9303192225.aa02768@grackle.stockbridge.ma.us | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1993-03-19T22:50:44Z | bob@GNU.AI.MIT.EDU | 448899201f9fab7baa01c594d8ccc28d18469205@jbomohi.invalid | mail/lojban-list/cur/732581444.62687ccd0239c492.jbomohi:2,S
+The so called `fixed' copy of `lojban-reformat-lookup-buffer' I just
+sent was the wrong one.  :-( :-(
+
+It had the spelling error corrected but not the missing `forward-line'
+nor the replacement for `looking-at-backward', which is part of my
+personal environment but not a standard function.
+
+Sorry about that.  This should work; I tried it with a completely
+bland, standard, out of the box Emacs 18.57.
+
+(defun lojban-reformat-lookup-buffer ()
+  "Reformat the lookup buffer.  You may have to modify this."
+  (forward-line 1)
+  (while (not (eobp))
+    (let ((here (point)))
+      (delete-region (+ 30 here)  (+ 61 here)))
+    ;; Fold long line
+    (end-of-line)
+    (while (> (current-column) 78)
+      (move-to-column 72)
+      (forward-word -1)
+      ;; Replace missing `looking-at-backward' function.
+      (if (let* ((begin (point))
+                 (found (re-search-backward "\(" nil t)))
+            (goto-char begin)
+            (and found (= begin (match-end 0))))
+          (forward-char -1))
+      (insert "\n                                    "))
+    (forward-line 1)))
+
+
+
+=== 2 | 1993-03-19T22:50:44Z | bob@GNU.AI.MIT.EDU | o67nqr7qbh.a.geb.h30klb@chain.digitalkingdom.org | mail/lojban-list/cur/732581444.37d999779d1d2cda.jbomohi:2,S
 The so called `fixed' copy of `lojban-reformat-lookup-buffer' I just
 sent was the wrong one.  :-( :-(
 
