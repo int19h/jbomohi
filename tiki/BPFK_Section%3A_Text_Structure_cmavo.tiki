@@ -1,0 +1,57 @@
+!NOTE: Draft version
+This is a work in progress.
+
+Selma'o to be covered: FAhO NIhO I MAI TUhE TUhU ZOhU
+
+;FAhO:fa'o
+;NIhO:ni'o no'i
+;I:i
+;MAI:mai mo'o
+;TUhE:tu'e
+;TUhU:tu'u
+;ZOhU:zo'u
+
+I __think__ i is the only cmavo in I, but cmavo.txt is a bitch to search in. Help wanted.
+
+!Prior usage and discussion
+!!fa'o
+Evidently intended only for machine input.
+
+!!ni'o
+Seems to be used mostly parallel to paragraph breaks in natural languages. See [http://www.lojban.org/], [http://www.wiw.org/~jkominek/lojban/9312/msg00394.html], and [http://www.wiw.org/~jkominek/lojban/9107/msg00052.html]. On IRC, which is indicative of spoken language,  this appears to have more of a meaning of changing the subject. Examples: [http://www.digitalkingdom.org/lojban/irclog/lojban/2004_06_02-02_21.txt], [http://www.digitalkingdom.org/lojban/irclog/lojban/2002_05_12--2002_11_28.txt].
+
+!!i
+Ubiquitous. This is used mostly in front of sentences that are not the first sentence in the text. Sometimes also the first sentence in the text is prefixed with .i.
+
+!!no'i
+Does not appear to have had __any__ usage.
+
+!!tu'e - tu'u
+''tu'e'' - ''tu'u'' seems to be used mainly to be used to set off a large block of text and refer to it metalinguisticially. For instance, there is a (very large) mailing list thread called [http://www.lojban.org/lists/lojban-list/msg03769.html|loi preti be fi lo nincli zo'u tu'e]. Also lots of poetry are prefixed with titles that uses ''di'e'' to refer to the body of the poem, set of with ''tu'e''.
+* [http://lojban.org/lists/lojban-list/msg08842.html|Confusion as to the fact that tu'e clauses don't fit into relative clauses]
+
+!!zo'e
+Marks the end of a prenex. A prenex can have one or more terms, which may constrain the instantiation of logical variables in the main sentence. Prenexes are also used as a topic field.
+
+!Text structure cmavo
+
+MAI is postfix, this was probably decided to make it analogous to mei, moi, roi, and re'u. However, this serves to make the grammar of Lojban non-LALR(1), because the parser may have to look through an arbitrarily large numeral string to decvide that it actually belongs in a free modifier. This should not be a problem if Robin's PEG parser is made official. If Robin's PEG parser is ''not'' made official, however, extensive pre-processing will be required.
+
+;fa'o:Marks the end of input to be parsed.
+;i:Starts a new sentence.
+;mai:Enumerates a point in the text. Combines with the preceding numeral to make a free modifier.
+;mai:Enumerates a higher-level section in the text. Combines with the preceding numeral to make a free modifier.
+;ni'o:Marks the start of a parapgraph and a change of subject. Multiple "ni'o" in a row means higher-level section breaks.
+;no'i:Marks the start of a paragraph and change back to the previous subject.
+;tu'e:Starts a group of sentences. The group acts as a single sentence externally, for purposes such as logical operators.
+;tu'u:Terminator for tu'e.
+;zo'u:Marks the end of a prenex. A prenex can consist of one or more terms. __This is understood from the YACC grammar. Do I need to define a term here?__
+
+!Draft keywords
+;fa'o:The End. parsing ends here. end parsing here.
+;i:and then.
+;mai:-stly. -ndly. -thly.
+;mo'o:-st section. -nd section. -rd section.
+;ni'o:continuing to the next topic.
+;no'i:returning to the previous topic.
+;zo'u:so that. such that.
