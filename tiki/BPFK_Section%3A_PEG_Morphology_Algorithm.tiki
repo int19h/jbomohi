@@ -42,7 +42,7 @@ word <- cmene / gismu / lujvo / fuhivla / cmavo / non-lojban-word
 
 ;-------------------------------------------------------------------
 
-cmene <- !h y? (!doi-la-lai-lahi syllable)* consonant+ ((i / u)? &y cmene)* &spaces
+cmene <- !h (!doi-la-lai-lahi syllable)* consonant+ ((i / u)? y h? cmene)? &spaces
 
 doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !vowel
 
@@ -58,11 +58,11 @@ short-lujvo <- stressed-initial-rafsi short-final-rafsi
 
 stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi y / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi
 
-initial-rafsi <- (fuhivla-rafsi / long-rafsi y / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) &consonant
+initial-rafsi <- (fuhivla-rafsi / long-rafsi y / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) !vowel
 
-medial-rafsi <- !fuhivla !gismu !stressed-fuhivla-rafsi initial-rafsi &consonant
+medial-rafsi <- h? !fuhivla !gismu !stressed-fuhivla-rafsi initial-rafsi
 
-final-rafsi <- fuhivla / gismu / CVV-final-rafsi / short-lujvo
+final-rafsi <- h? fuhivla / gismu / CVV-final-rafsi / h? short-lujvo
 
 CVV-final-rafsi <- consonant stressed-vowel h !stressed vowel &post-word
 
@@ -145,7 +145,7 @@ unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 cmavo-form <- !cluster !h syllable (&h syllable)*
-syllable <- (h / consonant*) (diphthong / semi-consonant? vowel) / digit 
+syllable <- (h / consonant*) (diphthong / semi-consonant? vowel) !y / digit 
 semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / i / o / u
