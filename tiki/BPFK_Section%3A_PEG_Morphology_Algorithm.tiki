@@ -61,13 +61,13 @@ lujvo <- !tosmabru initial-rafsi medial-rafsi* final-rafsi
 
 tosmabru <- cmavo lujvo
 
-initial-rafsi <- long-rafsi / CVC-rafsi / CCV-rafsi / CVV-rafsi (r / n &r) !(CCV-rafsi &space) / CVV-rafsi &(CCV-rafsi &space) / stressed-initial-rafsi &short-final-rafsi
+initial-rafsi <- fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi (r / n &r) !(CCV-rafsi &space) / CVV-rafsi &(CCV-rafsi &space) / stressed-initial-rafsi &short-final-rafsi
 
-stressed-initial-rafsi <- stressed-long-rafsi / stressed-CVC-rafsi / stressed-CCV-rafsi / stressed-last-CVV-rafsi (r / n &r) !CCV-rafsi / stressed-last-CVV-rafsi  &CCV-rafsi
+stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi / stressed-CVC-rafsi / stressed-CCV-rafsi / stressed-last-CVV-rafsi (r / n &r) !CCV-rafsi / stressed-last-CVV-rafsi  &CCV-rafsi
 
-medial-rafsi <- !gismu (long-rafsi / CVC-rafsi / CCV-rafsi / CVV-rafsi) &consonant
+medial-rafsi <- !gismu (fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) &consonant
 
-final-rafsi <- (gismu / CVV-rafsi / CCV-rafsi) &space / stressed-first-CVV-rafsi &(space / consonant) / (stressed-long-rafsi / stressed-CVC-rafsi / stressed-CCV-rafsi / stressed-last-CVV-rafsi) short-final-rafsi
+final-rafsi <- (fuhivla / gismu / CVV-rafsi / CCV-rafsi) &space / stressed-first-CVV-rafsi &(space / consonant) / (stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-last-CVV-rafsi) short-final-rafsi
 
 short-final-rafsi <- (short-CVV-rafsi / CCV-rafsi) &(space / consonant)
 
@@ -79,7 +79,7 @@ stressed-last-CVV-rafsi <- consonant (vowel h stressed-vowel / stressed-diphthon
 
 stressed-CCV-rafsi <- initial-pair stressed-vowel
 
-stressed-CVC-rafsi <- consonant stressed-vowel consonant y?
+stressed-CVC-rafsi <- consonant stressed-vowel consonant 
 
 stressed-long-rafsi <- (initial-pair stressed-vowel / consonant stressed-vowel consonant) consonant y
 
@@ -87,9 +87,21 @@ CVV-rafsi <- consonant (vowel h vowel / diphthong)
 
 CCV-rafsi <- initial-pair vowel
 
-CVC-rafsi <- consonant vowel consonant y?
+CVC-rafsi <- consonant vowel consonant 
 
 long-rafsi <- (initial-pair vowel / consonant vowel consonant) consonant y
+
+stressed-fuhivla-rafsi <- !lujvo-y (&cmavo (syllable (!consonant syllable)* !consonant)? stressed-syllable cluster y / &cmavo syllable (!consonant syllable)* non-initial-cluster syllable* stressed-syllable consonant+ y / !slinkujy initial-cluster syllable* stressed-syllable consonant+ y)
+
+fuhivla-rafsi <- !lujvo-y (&cmavo syllable (!consonant syllable)* cluster y / &cmavo syllable (!consonant syllable)* non-initial-cluster syllable+ consonant+ y / !slinkujy initial-cluster syllable+ consonant+ y)
+
+lujvo-y <- (CVV-rafsi (r / n&r))? y-less-rafsi* y-rafsi
+
+slinkujy <- consonant y-less-rafsi* y-rafsi
+
+y-less-rafsi <- CVC-rafsi / CCV-rafsi / CVV-rafsi
+
+y-rafsi <- long-rafsi / CVC-rafsi y / stressed-long-rafsi / stressed-CVC-rafsi y
 
 ;-------------------------------------------------------------------
 
