@@ -1,0 +1,24 @@
+!!Current Grammar
+
+''free*'' appears 147 times in the PEG grammar
+
+indicator <-  (UI-clause / CAI-clause) NAI-clause? / DAhO-clause / FUhO-clause
+
+!!Proposed Grammar
+
+Eliminate ''free*'' from every current rule and add it to:
+
+indicator <-  (UI-clause / CAI-clause) NAI-clause? / DAhO-clause / FUhO-clause / free
+
+!!Rationale
+
+Since the PEG grammar allows infinite lookahead, there is no point in having to learn the 147 places where free is currently allowed (or the fifty something places where it is not allowed, depending on how you count). It is easier to learn that it is allowed everywhere, like indicators.
+
+!!Notes
+
+The exceptions to where indicator/free would be allowed are:
+
+*After a right grabbing magic word (ZO, ZOI, LOhU, ZEI)
+*''(number / lerfu-string) MAI-clause'' can't come after a ''number'' or ''lerfu-string'' that is not part of it, because it would absorb it.
+*''vocative'' can't come after a ''COI-clause'' that is not part of it, because it would absorb it.
+
