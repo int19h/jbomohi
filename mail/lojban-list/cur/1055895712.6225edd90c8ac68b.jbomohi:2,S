@@ -1,0 +1,87 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 31306 invoked from network); 18 Jun 2003 00:21:19 -0000
+Received: from unknown (66.218.66.216)
+  by m14.grp.scd.yahoo.com with QMQP; 18 Jun 2003 00:21:19 -0000
+Received: from unknown (HELO digitalkingdom.org) (204.152.186.175)
+  by mta1.grp.scd.yahoo.com with SMTP; 18 Jun 2003 00:21:18 -0000
+Received: from lojban-out by digitalkingdom.org with local (Exim 4.12)
+	id 19SQhS-00044n-00
+	for lojban@yahoogroups.com; Tue, 17 Jun 2003 17:21:18 -0700
+Received: from digitalkingdom.org ([204.152.186.175] helo=chain)
+	by digitalkingdom.org with esmtp (Exim 4.12)
+	id 19SQhJ-00044K-00; Tue, 17 Jun 2003 17:21:09 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 17 Jun 2003 17:21:08 -0700 (PDT)
+Received: from ca-ontario-cmts7c-29.anhmca.adelphia.net
+	([68.169.172.29] helo=ben ident=mail)
+	by digitalkingdom.org with esmtp (Exim 4.12)
+	id 19SQhA-00044B-00
+	for lojban-list@lojban.org; Tue, 17 Jun 2003 17:21:00 -0700
+Received: from rizen by ben with local (Exim 3.36 #1 (Debian))
+	id 19SQi0-0006ab-00
+	for <lojban-list@lojban.org>; Tue, 17 Jun 2003 17:21:52 -0700
+Date: Tue, 17 Jun 2003 17:21:52 -0700
+To: lojban-list@lojban.org
+Subject: [lojban] Re: mumym problem
+Message-Id: <20030617172152.40049388.rizen@surreality.us>
+In-Reply-To: <LPBBLNNHBOGBGAINBIEFMEEPDHAA.ragnarok@pobox.com>
+References: <20030617165623.104468ff.rizen@surreality.us>
+	<LPBBLNNHBOGBGAINBIEFMEEPDHAA.ragnarok@pobox.com>
+X-Mailer: Sylpheed version 0.9.0 (GTK+ 1.2.10; i386-debian-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg="pgp-sha1"; boundary="=.p,qAldgONI3NdH"
+X-archive-position: 5684
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rizen@surreality.us
+Precedence: bulk
+X-list: lojban-list
+X-eGroups-From: Theodore Reed (bancus) <rizen@surreality.us>
+From: Theodore Reed (bancus) <lojban-out@lojban.org>
+Reply-To: rizen@surreality.us
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 20165
+Content-Length: 1191
+Lines: 37
+
+           
+--=.p,qAldgONI3NdH 
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+
+On Tue, 17 Jun 2003 20:06:14 -0400
+"Craig" <ragnarok@pobox.com> wrote:
+
+> Problems that have arisen recently:
+> 1. Gismu it chooses can have repeated letters. I got sputu, for
+> instance. 2. Gismu you guess can be nonwords. It doesn't care.
+> 3. If it tries to start a zero-player game, it quits.
+
+Regarding 2, it does care:
+
+self.gismu_validator    =
+re.compile("^[bcdfgjklmnprstvxz]([bcdfgjklmnprstvxz][aeiou][bcdfgjklmnp
+rstvxz]|[aeiou][bcdfgjklmnprstvxz][bcdfgjklmnprstvxz])[aeiou]$")
+
+All guesses are checked against that regexp. So you *can* guess fake
+words, but they must be valid gismu. However, it will never choose a
+gismu that is not in the gi'uste (as distributed in the lojban-common
+debian package).
+
+The other two will be fixed tonight. I also plan on adding a scoreboard
+feature.
+
+-- 
+mu'o mi'e la'o gy. Theodore Reed gy. .e la bancus.
+to zoi gy. http://surreality.us/lojban/ gy.
+mi zmanei lo notci poi mifra fi la pygypys.
+           
+--=.p,qAldgONI3NdH 
+Content-Type: application/pgp-signature
+
+[Attachment content not displayed.]           
+--=.p,qAldgONI3NdH--
+

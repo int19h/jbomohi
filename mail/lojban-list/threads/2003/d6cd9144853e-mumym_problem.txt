@@ -1,4 +1,4 @@
-# mail/lojban-list thread d6cd9144853e-mumym_problem | root lpbblnnhbogbgainbiefieebdhaa.ragnarok@pobox.com | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread d6cd9144853e-mumym_problem | root lpbblnnhbogbgainbiefieebdhaa.ragnarok@pobox.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2003-06-17T14:35:49Z | Craig <ragnarok@pobox.com> | lpbblnnhbogbgainbiefieebdhaa.ragnarok@pobox.com | mail/lojban-list/cur/1055860549.d6cd9144853e9219.jbomohi:2,S
 I just attmepted to start a game of mumym on IRC. Nothing had been said on
@@ -75,3 +75,32 @@ Problems that have arisen recently:
            
 
 
+
+=== 4 | 2003-06-18T00:21:52Z | Theodore Reed <lojban-out@lojban.org> | 20030617172152.40049388.rizen@surreality.us | mail/lojban-list/cur/1055895712.6225edd90c8ac68b.jbomohi:2,S
+On Tue, 17 Jun 2003 20:06:14 -0400
+"Craig" <ragnarok@pobox.com> wrote:
+
+> Problems that have arisen recently:
+> 1. Gismu it chooses can have repeated letters. I got sputu, for
+> instance. 2. Gismu you guess can be nonwords. It doesn't care.
+> 3. If it tries to start a zero-player game, it quits.
+
+Regarding 2, it does care:
+
+self.gismu_validator    =
+re.compile("^[bcdfgjklmnprstvxz]([bcdfgjklmnprstvxz][aeiou][bcdfgjklmnp
+rstvxz]|[aeiou][bcdfgjklmnprstvxz][bcdfgjklmnprstvxz])[aeiou]$")
+
+All guesses are checked against that regexp. So you *can* guess fake
+words, but they must be valid gismu. However, it will never choose a
+gismu that is not in the gi'uste (as distributed in the lojban-common
+debian package).
+
+The other two will be fixed tonight. I also plan on adding a scoreboard
+feature.
+
+-- 
+mu'o mi'e la'o gy. Theodore Reed gy. .e la bancus.
+to zoi gy. http://surreality.us/lojban/ gy.
+mi zmanei lo notci poi mifra fi la pygypys.
+           
