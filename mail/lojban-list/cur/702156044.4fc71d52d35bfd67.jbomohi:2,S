@@ -1,0 +1,135 @@
+Subject: Operator precedence in Lojban mathematics: we need your help again!
+To: lojban@cuvmb.cc.columbia.edu (Lojban List)
+From: cowan
+Date: Wed, 1 Apr 92 14:20:44 EST
+X-Mailer: ELM [version 2.3 PL11]
+X-From-Space-Date: Wed Apr  1 14:20:44 1992
+X-From-Space-Address: cowan
+Message-ID: <epYrvMBQWE.A.nJB.y30kLB@chain.digitalkingdom.org>
+Content-Length: 6274
+
+Yet another of those appeals to the Lojbani masses (or the net-aware masses,
+anyhow) about a fine point in Lojban mathematical expression (mekso).
+This one involves how Lojban manages the precedence of its operators.
+"Precedence" is the property of an operator that decides whether it is to
+be applied before or after other operators.  For example, in normal
+mathematics
+
+1)	3 + 4 x 5
+
+means 23, because multiplication has precedence over addition.  If addition
+had precedence, the result would be 35.
+
+The Lojban parser does not assign precedence to the various built-in
+and ad hoc operators: all of them are equal, and grouping is left to right,
+as in most parts of the language.  So the straight translation of Example 1
+is:
+
+2)	ci su'i vo pi'i mu
+
+and this does mean 35, because of left-grouping.  This result violates the
+general design goal of making mekso "spoken mathematics", which requires
+matching the conventions of mathematics as much as possible.
+
+Let me quote from the current draft of my paper on the subject:
+
+The first solution is to ignore the problem.  People will say "li ci
+su'i vo pi'i mu" and mean 23 by it, because the notion that multiplication
+takes precedence over addition is too deeply ingrained to be eradicated
+by Lojban parsing, which totally ignores semantics.  This convention
+essentially allows semantics to dominate syntax in this one area.
+
+(Why not hard-wire the precedences into the grammar, as is done in computer
+programming languages?  Essentially because there are too many operators,
+known and unknown, with levels of precedence that vary according to usage.
+The programming language 'C' has 13 levels of precedence, and its list
+of operators is not even extensible.  For Lojban this approach is just not
+practical.  In addition, hard-wired precedence could not be overridden in
+mathematical systems such as spreadsheets where the conventions are
+different.)
+
+The second solution is to use explicit means to specify the precedence
+of operators.  This approach is fully general, but clumsy.  [It involves
+the use of the metalinguistic declaration "ti'o", which a smart parser
+could use to change an operator's precedence.   The current parser cannot
+interpret such declarations.]
+
+The third solution is simple but not very general.  It builds on a
+mechanism used elsewhere in the language: the short-scope cmavo "bo".
+When an operator is prefixed with "bo", it becomes automatically of
+higher precedence than other operators not so prefixed.  Thus,
+
+3)	li ci su'i vo bo pi'i mu du li reci
+	the-number three plus four-times-five equals the-number two-three
+	3 + 4 x 5 = 23
+
+is a truthful Lojban bridi.
+
+In addition, of course, Lojban has the mathematical parentheses "vei" and
+"ve'o", which can be used just like their written equivalents "(" and ")"
+to group expressions in any way desired.
+
+### end of excerpt ###
+
+In reviewing this paper, Colin Fine has proposed that we explicitly
+implement a fixed priority of operators within the grammar so as to get
+the simple cases right:
+
+> [P]recedence.  I find this very unsatisfactory as stated. Any
+> of the solutions will do, but the uncertainty is intolerable. In your
+> quadratic [formula] example later, you use the 'conventional' interpretation.
+
+The quadratic formula is the most complex mekso example in the paper, and it
+was full of subtle precedence errors.  Thanks to Colin and to Mark Shoulson
+for pointing these out and helping me work out the correct answer.
+
+> There are two possible problems in this interpretation: the opposing
+> pull of syntactic and semantic structure and the problem of operator
+> precedence.  [...]
+> The precedence problem is also superable. I suggest the following:
+> 1) define the order of precedence for VUhU (don't try and give them
+> precedence values, that's an irrelevant nuisance).
+> 2) define a means for setting/overriding precedence, as suggested
+> elsewhere in the paper.
+> 3) define all nonce and constructed operators to have the same default
+> precedence, probably coming below all the defined ones, but that will
+> need a bit of thought. In any case, in a defined place in the VUhU
+> hierarchy.
+> 4) operators with the same precedence associate to the left.
+
+A discussion of this idea with Bob and Nora produced the following suggestion:
+Currently there are basically only two rules in the YACC grammar for handling
+infix mekso of the kind discussed here:  one for ordinary operators, and one
+for operators with prefixed "bo".  If we split each rule into some number
+of sub-rules (say ten), and divide the VUhU selma'o (which contains the
+built-in mekso operators) into ten sub-selma'o, then we can allow the part
+of the parser that assigns cmavo to their selma'o, which is currently just
+a big lookup table, to be a little smarter.
+
+In the absence of other information, the parser would place all mekso operators
+into a single sub-selma'o, say "VUhU1".  All would therefore have the same
+precedence.  Through appropriate parsing options, however, a different table
+would be installed which could assign the VUhUs to different sub-selma'o,
+giving them in effect different precedences.  For example, "su'i" and "vu'u",
+which are addition and subtraction, might belong to VUhU3 whereas "pi'i" and
+"fe'i", which are multiplication and division, might belong to VUhU5.  This
+would give times and divide higher precedence.  Changing the table would change
+the precedence.  Eventually, the parser could have a semantic routine which
+altered the table when a "ti'o" clause was parsed.
+
+The arguments in favor of this change are that it matches standard elementary
+mathematics far better, and does not require elaborate hand-waving to explain
+easy cases.  The meanings of simple expressions like "ci su'i vo pi'i mu"
+come out right automatically.  In unusual circumstances, the precedence could
+still be overridden by convention (first method above) or by the explicit
+use of declarations (method 2 above).
+
+Bob and Nora and I agreed that the question should be put to the Lojban List.
+Please give us your feedback as soon as possible, as Bob is even as we
+speak (read, write) preparing JL17, and the mekso paper will hopefully
+appear in that issue.
+
+-- 
+cowan@snark.thyrsus.com		...!uunet!cbmvax!snark!cowan
+		e'osai ko sarji la lojban
+
