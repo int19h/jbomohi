@@ -1,4 +1,4 @@
-# mail/lojban-list thread 888cf0842554-gen%3A_almost-proposal%3A_intervals | root 199602121648.laa01061@locke.ccil.org | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 888cf0842554-gen%3A_almost-proposal%3A_intervals | root 199602121648.laa01061@locke.ccil.org | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 1996-02-12T04:36:58Z | Veijo Vilva <veion@XIRON.PC.HELSINKI.FI> | 199602120439.gaa03348@xiron.pc.helsinki.fi | mail/lojban-list/cur/824099818.261d51e1970cdc8f.jbomohi:2,S
 ERROR: the YACC modification I previously sent works at the YACC
@@ -54,5 +54,52 @@ truly intolerable.
 I am still thinking about the other possibilities.  I weakly favor 
 messing with "ve'i <sumti>", although I recognize the annoying doubled 
 semantics of the i/a/u vowel plus what the sumti actually says.
+
+
+
+=== 4 | 1996-02-14T19:42:14Z | veion@xiron.pc.helsinki.fi | 199602141942.vaa06542@xiron.pc.helsinki.fi | mail/lojban-list/cur/824326934.96139598560148cf.jbomohi:2,S
+John Cowan cusku di'e
+> From: John Cowan <cowan@locke.ccil.org>
+> Organization: Lojban Central
+> Subject: Re: GEN: almost-PROPOSAL: intervals
+> 
+> Regrettably, it can't.  Whatever is done in the preparser rules (900-end) 
+> can't refer to things in the earlier rules, on pain of implementing the 
+> entire parser within the preparser.  So "NOI sentence" within a tense is 
+> impossible, even though it YACCs, it doesn't fit the schema of the 
+> parser, which is to keep the compounded forms simple.  Of these, tense 
+> (lexer_O) is already the worst offender, and further complications are 
+> truly intolerable.
+> 
+
+   Have you considered my later posting where the rel_clause was moved
+   quite high:
+
+> However,
+>
+>   adding the following two lines to the rules for 'modifier_82'
+>   
+>         |  tense_modal_815  relative_clauses_121
+>         |  tense_modal_815  relative_clauses_121 BO_508 sumti_90
+>
+>   (in the unmodified grammar) would give us a working solution.
+>
+>   Examples:
+>   
+>      *   mi ba zinoi jeftu ku'o cliva
+> or   *   mi cliva bazinoi jeftu
+>      *   mi zano'u pimu loi mi gu'arna'a ge'u vi gunka
+> or   *   mi vi gunka zano'u pimu loi mi gu'arna'a
+>      *   mi xabju vanoi mitre li paxaki'o bo la'o sy Helsinki sy
+
+This form is quite general, perhaps too general, but it parses OK
+and it could be restricted as required by replacing various components
+with more restricted representatives: a subset of tense_modals,
+a subset of rel_clause and sumti types allowed -- but I'm not quite sure
+a restriction would be necessary. Almost anything at this position is more
+flexible -- and certainly much simpler -- than my original scheme.
+
+   Veijo
+ 
 
 
