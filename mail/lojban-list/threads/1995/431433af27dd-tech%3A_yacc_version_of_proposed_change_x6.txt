@@ -1,0 +1,62 @@
+# mail/lojban-list thread 431433af27dd-tech%3A_yacc_version_of_proposed_change_x6 | root 6836032fa6eddb6e4e22c6fc69c75ea0a352a7c0@jbomohi.invalid | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1995-12-08T21:37:15Z | Jorge Llambias <jorge@PHYAST.PITT.EDU> | 6836032fa6eddb6e4e22c6fc69c75ea0a352a7c0@jbomohi.invalid | mail/lojban-list/cur/818458635.431433af27dd8b8f.jbomohi:2,S
+CHANGE X6 - YACC version.
+
+PRESENT LANGUAGE:
+
+> time_interval_1034      :  ZEhA_622
+>                         |  ZEhA_622  time_direction_1035
+>                         |  interval_modifier_1050
+>                         |  ZEhA_622  interval_modifier_1050
+>                         |  ZEhA_622  time_direction_1035
+ interval_modifier_1050
+>                         ;
+>
+>
+> interval_modifier_1050  :  interval_property_1051
+>                         |  interval_property_1051  event_mod_1052
+>                         |  event_mod_1052
+>                         ;
+>
+> interval_property_1051  :  number_root_961  ROI_594
+>                         |  number_root_961  ROI_594  NAI_581
+>                         |  TAhE_604
+>                         |  TAhE_604  NAI_581
+>                         ;
+>
+> event_mod_1052          :  event_mod_A_1053
+>                         |  event_mod_1052  event_mod_A_1053
+>                         ;
+>
+> event_mod_A_1053        :  ZAhO_621
+>                         |  ZAhO_621  NAI_581
+>                         |  ZAhO_621  interval_property_1051
+>                         |  ZAhO_621  NAI_581  interval_property_1051
+>                         ;
+
+PROPPOSED CHANGE:
+
+All of the above is replaced by:
+
+> time_interval_1034      :  ZEhA_622
+>                         |  ZEhA_622  time_direction_1035
+>                         |  number_root_961  ROI_594
+>                         |  number_root_961  ROI_594  NAI_581
+>                         |  TAhE_604
+>                         |  TAhE_604  NAI_581
+>                         |  ZAhO_621
+>                         |  ZAhO_621  NAI_581
+>                         |  time_interval_1034 time_interval_1034
+>                         ;
+
+
+I notice that YACC permits ZAhO NAI, but (at least my version of) EBNF
+does not. This is good, then ZAhO and TAhE would effectively be blended
+into one.
+
+(I can post the corresponding one for space tenses if needed.)
+
+Jorge
+
+
