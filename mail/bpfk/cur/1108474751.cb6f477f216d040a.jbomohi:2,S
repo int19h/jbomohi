@@ -1,0 +1,199 @@
+Received: with ECARTIS (v1.0.0; list bpfk-announce); Tue, 15 Feb 2005 10:31:17 -0800 (PST)
+Received: from web41905.mail.yahoo.com ([66.218.93.156])
+	by chain.digitalkingdom.org with smtp (Exim 4.34)
+	id 1D12vW-0006j8-II
+	for bpfk-announce@lojban.org; Tue, 15 Feb 2005 05:39:42 -0800
+Received: (qmail 80140 invoked by uid 60001); 15 Feb 2005 13:39:11 -0000
+Message-ID: <20050215133911.80138.qmail@web41905.mail.yahoo.com>
+Received: from [200.49.74.2] by web41905.mail.yahoo.com via HTTP; Tue, 15 Feb 2005 05:39:11 PST
+Date: Tue, 15 Feb 2005 05:39:11 -0800 (PST)
+From: Jorge "Llambías" <jjllambias2000@yahoo.com.ar>
+Subject: [bpfk-announce] Re: Next Up: Morphology
+To: bpfk-announce@lojban.org
+In-Reply-To: <5.1.0.14.0.20050214220556.03a3c260@pop.east.cox.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-archive-position: 103
+X-Approved-By: rlpowell@digitalkingdom.org
+X-ecartis-version: Ecartis v1.0.0
+Sender: bpfk-announce-bounce@lojban.org
+Errors-to: bpfk-announce-bounce@lojban.org
+X-original-sender: jjllambias2000@yahoo.com.ar
+Precedence: bulk
+Reply-to: bpfk-announce@lojban.org
+X-list: bpfk-announce
+Content-Length: 6730
+
+
+--- Nora LeChevalier wrote:
+> Various comments in no particular order.
+
+ki'e noras
+
+> If we vote in the Morphology Algorithm, we are agreeing to the setting of 
+> what the valid word-forms are.  It is obvious that fu'ivla forms and cmavo 
+> forms have changed, but nowhere is there a reasonbly concise statement of 
+> what the new forms are.
+
+Nothing is definite yet. In particular, vowel clusters and
+consonant clusters are under discussion.
+
+> The "algorithm" is program code.  One usually checks a program against the 
+> desired results to see if it works.  We have no statement of the desired 
+> results.  I can't read the code without more explanation.  For example : "& 
+> indicates that the element to the right must follow" [follow what?  it's at 
+> the beginning - example: BU <- &cmavo (b u ) &postword] "but the marked 
+> element itself" [the thing to the right of the &, I presume] "does not 
+> absorb anything" [what does this mean?].
+
+The PEG is a formal grammar, like EBNF. 
+
+"BU <- &cmavo (b u ) &postword" means construct BU consists of 
+construct b followed by construct u, and the construct must be 
+followed by construct postword, but construct postword is not
+part of construct BU. Construct cmavo must also be satisfied 
+from the beginning in order to produce construct BU, but
+construct BU could in principle be longer or shorter than
+construct cmavo (in this case that would never happen, but
+you can't tell that from this rule only).
+
+I wrote the explanations of & and !, sorry if they are not
+very clear. (Suggestions for better wording are welcome!)
+I found the first few paragraphs of this paper:
+<http://www.pdos.lcs.mit.edu/~baford/packrat/popl04/> 
+very helpful to understand the symbols & and !.
+
+> Correct me if I'm wrong, but have we just added things like "sia" /sya/ and 
+> "rua" /rwa/ to the CVV space? 
+
+Those are currently allowed by the PEG, yes. It is yet under discussion
+whether they should be allowed or not.
+
+> In making Lojban, we made a deliberate 
+> decision to exclude these (which were present in Loglan) for 2 
+> reasons.  Some of them are too hard to say ("rui"), especially as a single 
+> syllable.  Some, like "sia", tend to degenerate into other sound sequences 
+> (as English "sion" endings are now pronounced "shun").
+
+OK, then they should be disallowed everywhere, right? If they are hard
+to say or distinguish in cmavo they are equally hard to say or distinguish
+in cmene and fu'ivla. And in fact, allowing them in cmavo causes less
+problems because it is unlikely that more than a few cmavo will ever be
+added to the language, whereas cmene and fu'ivla are much more productive.
+For example, the name "Colombia" would be lojbanized as {kolombi'as}
+if the sequence {bia} was disallowed.
+
+> What are the valid fu'ivla forms? It looks to me like "jritata" is valid 
+> (initial cluster OK, passes slinku'i test, doesn't break up into gismu 
+> and/or rafsi).  So, given "All fu'ivla can be used as final 
+> rafsi",  "prijritata" is no longer a valid fu'ivla because it is 
+> "pri"+jritata", right? 
+
+Extended rafsi can only be connected with y-hyphens. This was the 
+case for the CLL proposal too. {prina zei jritata} can only be 
+reduced to {prinyjitrata}. {prijitrata} remains a separate fu'ivla.
+
+> Also, we need to revise "slinku'i" itself a bit if r-hyphens are allowed 
+> when not required.  We have a valid lujvo "li'erla'i" (li'e + r + 
+> la'i).  If we allow someone to add an affix on the front without removing 
+> the "r" ("tos + li'e + r + la'i), we then need to disallow a potential 
+> fu'ivla "sli'erla'i" (originally OK - good initial cluster, doesn't break 
+> down into rafsi and/or gismu, used to pass to+sli'erla'i "slinku'i" test 
+> but now will not). 
+
+Yes. The rule for slinku'i is not that complicated though:
+
+slinkuhi <- consonant rafsi-string
+
+where rafsi-string is any string of y-less rafsi, including
+CVV(r/n) types.
+
+> Making fu'ivla is a mine-field.
+
+Indeed it is. 
+
+> In the presentation on Controversial topics, it looks like fu'ivla initial 
+> clusters disallow sx (good!) - but not cx? 
+
+"cx" is for some reason disallowed anywhere, so it need not be 
+disallowed again as an initial cluster:
+
+c <- comma* [cC] !h !sibilant !voiced-consonant !x
+
+> "jl", "jr" "zl", "zr" are  allowed? 
+
+That's a bug. Fixed.
+
+> "jk"?
+
+voiced-unvoiced disallowed everywhere:
+
+j <- comma* [jJ] !h !sibilant !unvoiced-consonant
+
+> If "non-y cmavo can have non-final rafsi by adding 'y", then are we 
+> removing the restriction that there must be a consonant cluster in the 
+> first 5 [non-'-non-y] letters?  "oi'ycai'ylujvo". 
+
+Yes. 
+
+> How do they attach on 
+> the left if they're vowel-initial - eg: klama + o + sutra = klamy[what]sutra?
+
+klamy'o'ysutra
+
+Anything that starts with .V changes to 'V for non-initial rafsi.
+
+> "cmene can have inital rafsi by adding iy".  Can names have "iy" 
+> internally, or is that disallowed like la/lai/la'i/doi?
+
+They can. Names with internal iy (or even plain y) can be thought of
+as hyphenated names if so desired: {sanxiyn} could be thought of
+as Sanx-N. It doesn't matter much because names don't have
+internal semantics, but it doesn't hurt to think of them that way
+either.
+
+>  Must the name be 
+> entirely unstressed if it doesn't have the penultimate syllable?  I don't 
+> think it causes a problem, but I'm not yet sure.
+
+It doesn't matter. {iy} plays basically the same role as the final 
+pause in cmene, so stress remains irrelevant.
+
+> I notice there are 2 things that are being allowed to have rafsi by 
+> following them by 'y: cmavo and fu'ivla. 
+
+In fact any brivla not just fu'ivla. The only exception being lujvo
+that end in -yCVV. Probably klama'y- won't be much used given the
+availability of klamy- and kla, but maybe in a context where one needs
+to be very clear it could be useful.
+
+(I'm considering adding final rafsi for cmavo too, by preceding with
+an r-hyphen.) 
+
+> Does this cause a problem?  Take 
+> for example stura [gismu] + o'a [cmavo] + klama [gismu].  This would be, 
+> stura'o'a'yklama (note: here, I'm presuming that the vowel-initial cmavo 
+> will attach to the left using ', as vowel-initial fu'ivla do). 
+
+It would be {stury'o'a'yklama}
+
+> But, might 
+> "stura'o'a'yklama" instead break down as stura'o'a [fu'ivla] + klama? 
+
+That's the only possible break.
+
+> Or 
+> is stura'o'a not a valid fu'ivla because it could break down into stura + ' 
+> + o'a when in front of something else (oh boy - another test for 
+> fu'ivla)?  Which has precedence?
+
+There is always a "y" separating extended rafsi on both sides.
+
+mu'o mi'e xorxes
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
+
