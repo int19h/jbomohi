@@ -1,4 +1,4 @@
-# mail/bpfk-announce thread 4a21d472527e-next_up%3A_morphology | root 20050211203349.gd7929@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
+# mail/bpfk-announce thread 4a21d472527e-next_up%3A_morphology | root 20050211203349.gd7929@chain.digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2005-02-11T20:33:49Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20050211203349.gd7929@chain.digitalkingdom.org | mail/bpfk-announce/cur/1108154029.4a21d472527edb4d.jbomohi:2,S
 xorxes has put together a lovely morphology algorithm for us, and he
@@ -124,4 +124,99 @@ fu'ivla)?  Which has precedence?
 --
 mi'e noras                                             noras@cox.net
 Nora LeChevalier
+
+
+=== 3 | 2005-02-15T10:53:40Z | Pierre Abbat <phma@phma.hn.org> | 200502150553.01735.phma@phma.hn.org | mail/bpfk-announce/cur/1108464820.ec8fc5fa2efba5de.jbomohi:2,S
+On Monday 14 February 2005 22:12, Nora LeChevalier wrote:
+> Various comments in no particular order.
+>
+> If we vote in the Morphology Algorithm, we are agreeing to the setting of
+> what the valid word-forms are.  It is obvious that fu'ivla forms and cmavo
+> forms have changed, but nowhere is there a reasonbly concise statement of
+> what the new forms are.
+>
+> The "algorithm" is program code.  One usually checks a program against the
+> desired results to see if it works.  We have no statement of the desired
+> results.  I can't read the code without more explanation.  For example : "&
+> indicates that the element to the right must follow" [follow what?  it's at
+> the beginning - example: BU <- &cmavo (b u ) &postword] "but the marked
+> element itself" [the thing to the right of the &, I presume] "does not
+> absorb anything" [what does this mean?].
+>
+> Correct me if I'm wrong, but have we just added things like "sia" /sya/ and
+> "rua" /rwa/ to the CVV space?  In making Lojban, we made a deliberate
+> decision to exclude these (which were present in Loglan) for 2
+> reasons.  Some of them are too hard to say ("rui"), especially as a single
+> syllable.  Some, like "sia", tend to degenerate into other sound sequences
+> (as English "sion" endings are now pronounced "shun").
+>
+> What are the valid fu'ivla forms?  It looks to me like "jritata" is valid
+> (initial cluster OK, passes slinku'i test, doesn't break up into gismu
+> and/or rafsi).  So, given "All fu'ivla can be used as final
+> rafsi",  "prijritata" is no longer a valid fu'ivla because it is
+> "pri"+jritata", right?  Thus we can add to the "[to]slinku'i" test the
+> "prijritata" test to eliminate invalid fu'ivla.  This seems too complex to
+> me.
+
+{jritata} is invalid because "jr" isn't a valid initial. {critata} is valid. 
+{pricritata} is still a fu'ivla because "pri + critata" is {prinycritata}. 
+Fu'ivla rafsi must be connected with "y" to adjacent rafsi.
+
+My version of the algorithm (and I still haven't made a proper regression 
+test) doesn't allow {critata} or {skalduna} to be used as a rafsi fu'ivla 
+anywhere. As I understand xorxes' version, {critata} can be used only in 
+final position and {skalduna} can be used only medially and finally, but I 
+haven't examined it.
+
+> Also, we need to revise "slinku'i" itself a bit if r-hyphens are allowed
+> when not required.  We have a valid lujvo "li'erla'i" (li'e + r +
+> la'i).  If we allow someone to add an affix on the front without removing
+> the "r" ("tos + li'e + r + la'i), we then need to disallow a potential
+> fu'ivla "sli'erla'i" (originally OK - good initial cluster, doesn't break
+> down into rafsi and/or gismu, used to pass to+sli'erla'i "slinku'i" test
+> but now will not).  Making fu'ivla is a mine-field.
+
+Hmm...
+
+> If "non-y cmavo can have non-final rafsi by adding 'y", then are we
+> removing the restriction that there must be a consonant cluster in the
+> first 5 [non-'-non-y] letters?  "oi'ycai'ylujvo".  How do they attach on
+> the left if they're vowel-initial - eg: klama + o + sutra =
+> klamy[what]sutra?
+
+I think making rafsi from cmavo like this is crazy.
+
+> "cmene can have inital rafsi by adding iy".  Can names have "iy"
+> internally, or is that disallowed like la/lai/la'i/doi?  Must the name be
+> entirely unstressed if it doesn't have the penultimate syllable?  I don't
+> think it causes a problem, but I'm not yet sure.
+
+This too is crazy. {uiliym} has "iy", and it has no consonant cluster, so 
+{uiliymiytavla} is not a word and would parse wrong. Cmene lujvo aren't 
+nearly common enough to make this rule for them; the only one that comes to 
+mind is {ctelr zei xasybakni}, which could just as well be called {xasybakni 
+la ctelr}.
+
+> I notice there are 2 things that are being allowed to have rafsi by
+> following them by 'y: cmavo and fu'ivla.  Does this cause a problem?  Take
+> for example stura [gismu] + o'a [cmavo] + klama [gismu].  This would be,
+> stura'o'a'yklama (note: here, I'm presuming that the vowel-initial cmavo
+> will attach to the left using ', as vowel-initial fu'ivla do).  But, might
+> "stura'o'a'yklama" instead break down as stura'o'a [fu'ivla] + klama?  Or
+> is stura'o'a not a valid fu'ivla because it could break down into stura + '
+> + o'a when in front of something else (oh boy - another test for
+> fu'ivla)?  Which has precedence?
+
+My head is spinning! Let's quit this nonsense. I'm still mourning the loss of 
+my koala and dandelion. Two weeks isn't enough time; I think we should wait 
+till March or April, when I should have enough time to work on valfendi. Both 
+the PEG and valfendi should have the same set of valid words, so if a set of 
+words can't be implemented in both methods easily, it's wrong. This doesn't 
+mean that they'll accept the same set of speech streams; corner cases like 
+{lekybumoi} can produce different output.
+
+phma
+-- 
+S Fa1>+/- !TM Ng--- M-- K H T-- t? AT++ SY Te- SC- FO- D P !Tz E++ L 
+Am I Ha- hc-- FH+++ IP?
 
