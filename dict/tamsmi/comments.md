@@ -222,3 +222,46 @@ similar in property x4".
 
 mi'e xorxes
 
+
+## 2004-11-22T20:55:05Z — rlpowell (comment 176, on definition 2647, in reply to 175)
+
+Re: Fourth place.
+
+xorxes wrote:
+> rlpowell wrote: 
+> > da tamsmi de lo bolci tu'a lo nenri .i ku'i da tamsmi de lo bliku tu'a
+> lo
+> > bartu
+> 
+> Well, that would be:
+> 
+> da e de tamsmi lo bolci tu'a lo nenri i ku'i da e de 
+> tamsmi lo bliku tu'a lo bartu
+> 
+> so that doesn't really make it more clear.
+> 
+> > Certainly in the first case you wouldn't say that da and de both
+> resemble
+> > an (idealized) ball?
+> 
+> Why not? They both look like balls in their outsides.
+
+No, on their *insides*.
+
+> What else could it mean to say that they resemble each
+> other in that they have the outer shape of a ball?
+
+Because they are round on the inside.
+
+> > Besidse, the point is that the x3 is a platonic ideal; nothing
+*really*
+> > resembles it, it's more of a concept.
+> 
+> But why make it so complicated? 
+
+Because this is how the ma'oste currently defines it!
+
+Jesus, is a little backwards compatibility worth *this* much of a fight?
+
+-Robin
+
