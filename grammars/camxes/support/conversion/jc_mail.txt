@@ -1,0 +1,272 @@
+From jcowan@reutershealth.com Mon Feb  9 11:52:58 2004
+Return-path: <jcowan@reutershealth.com>
+Envelope-to: rlpowell@digitalkingdom.org
+Delivery-date: Mon, 09 Feb 2004 11:52:58 -0800
+Received: from [65.246.141.36] (helo=mail.reutershealth.com)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1AqHSk-0002KO-O2
+	for rlpowell@digitalkingdom.org; Mon, 09 Feb 2004 11:52:58 -0800
+Received: from skunk.reutershealth.com (mail [65.246.141.36])
+	by mail.reutershealth.com (Pro-8.9.3/Pro-8.9.3) with SMTP id OAA14234
+	for <rlpowell@digitalkingdom.org>; Mon, 9 Feb 2004 14:47:09 -0500 (EST)
+Received: by skunk.reutershealth.com (sSMTP sendmail emulation); Mon,  9 Feb 2004 14:52:51 -0500
+Date: Mon, 9 Feb 2004 14:52:51 -0500
+From: jcowan@reutershealth.com
+To: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Subject: Re: BNF rule 10?
+Message-ID: <20040209195251.GC3152@skunk.reutershealth.com>
+References: <20040209190546.GC1600@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20040209190546.GC1600@digitalkingdom.org>
+User-Agent: Mutt/1.4.1i
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	chain.digitalkingdom.org
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.7 required=5.0 tests=BAYES_00,NO_REAL_NAME 
+	autolearn=no version=2.63
+Status: RO
+X-Status: A
+Content-Length: 843
+Lines: 23
+
+Robin Lee Powell scripsit:
+> Hey, John.
+> 
+> Looking at the BNF grammar, was hoping you could give a formalized
+> explanation of:
+> 
+>     10) // encloses an elidable terminator, which may be omitted
+>     (without change of meaning) if no grammatical ambiguity results.
+> 
+> I assume this is different then merely making something optional?
+
+An elidable terminator is, strictly speaking, only optional if all other
+elidable terminators at that point are apparent.  If I write
+
+	le nu broda /kei/ /ku/ brode
+
+then I can leave out kei or ku but not both.
+
+-- 
+Even a refrigerator can conform to the XML      John Cowan
+Infoset, as long as it has a door sticker       jcowan@reutershealth.com
+saying "No information items inside".           http://www.reutershealth.com
+        --Eve Maler                             http://www.ccil.org/~cowan
+
+From jkominek@miranda.org Mon Feb  9 12:08:46 2004
+Return-path: <jkominek@miranda.org>
+Envelope-to: rlpowell@digitalkingdom.org
+Delivery-date: Mon, 09 Feb 2004 12:08:46 -0800
+Received: from miranda.org ([209.58.150.153] ident=qmailr)
+	by chain.digitalkingdom.org with smtp (Exim 4.30)
+	id 1AqHi2-0002Z4-9p
+	for rlpowell@digitalkingdom.org; Mon, 09 Feb 2004 12:08:46 -0800
+Received: (qmail 16212 invoked by uid 534); 9 Feb 2004 20:08:44 -0000
+From: jkominek@miranda.org
+Date: Mon, 9 Feb 2004 13:08:44 -0700
+To: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Cc: jcowan@reutershealth.com
+Subject: Re: BNF rule 10?
+Message-ID: <20040209200844.GK30563@miranda.org>
+References: <20040209190546.GC1600@digitalkingdom.org> <20040209195251.GC3152@skunk.reutershealth.com> <20040209200518.GA8463@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20040209200518.GA8463@digitalkingdom.org>
+User-Agent: Mutt/1.3.28i
+Accept-Language: jbo, en
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	chain.digitalkingdom.org
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.8 required=5.0 tests=AWL,BAYES_00,NO_REAL_NAME 
+	autolearn=no version=2.63
+Status: RO
+X-Status: A
+Content-Length: 497
+Lines: 12
+
+On Mon, Feb 09, 2004 at 12:05:18PM -0800, Robin Lee Powell wrote:
+> But from that point I'm stuck with what to do with the stuff in //s.
+> Jay says that you just make one rule with the option and one without
+> (i.e. that they're the same as []), which makes sense to me but I
+> thought I'd check with you.
+
+I'd like to mention that I put a number of caveats on that.
+
+-- 
+Jay Kominek <jkominek@miranda.org>
+Genius may have its limitations, but stupidity
+is not thus handicapped. -- Elbert Hubbard
+
+From jcowan@reutershealth.com Mon Feb  9 12:19:48 2004
+Return-path: <jcowan@reutershealth.com>
+Envelope-to: rlpowell@digitalkingdom.org
+Delivery-date: Mon, 09 Feb 2004 12:19:48 -0800
+Received: from [65.246.141.36] (helo=mail.reutershealth.com)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1AqHsi-0002cZ-L9
+	for rlpowell@digitalkingdom.org; Mon, 09 Feb 2004 12:19:48 -0800
+Received: from skunk.reutershealth.com (mail [65.246.141.36])
+	by mail.reutershealth.com (Pro-8.9.3/Pro-8.9.3) with SMTP id PAA14550
+	for <rlpowell@digitalkingdom.org>; Mon, 9 Feb 2004 15:14:02 -0500 (EST)
+Received: by skunk.reutershealth.com (sSMTP sendmail emulation); Mon,  9 Feb 2004 15:19:46 -0500
+Date: Mon, 9 Feb 2004 15:19:46 -0500
+From: jcowan@reutershealth.com
+To: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Subject: Re: BNF rule 10?
+Message-ID: <20040209201946.GE3152@skunk.reutershealth.com>
+References: <20040209190546.GC1600@digitalkingdom.org> <20040209195251.GC3152@skunk.reutershealth.com> <20040209200518.GA8463@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20040209200518.GA8463@digitalkingdom.org>
+User-Agent: Mutt/1.4.1i
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	chain.digitalkingdom.org
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.7 required=5.0 tests=BAYES_00,NO_REAL_NAME 
+	autolearn=no version=2.63
+Status: RO
+X-Status: A
+Content-Length: 1506
+Lines: 35
+
+Robin Lee Powell scripsit:
+
+> But from that point I'm stuck with what to do with the stuff in //s.
+> Jay says that you just make one rule with the option and one without
+> (i.e. that they're the same as []), which makes sense to me but I
+> thought I'd check with you.
+
+You can't transform them into BNF at all, because the whole point
+is that the behavior of /xxx/ is not context-free: you can't decide
+whether a terminator is elidable without looking at the entire context.
+Consider this simplified grammar:
+
+	start = sumti selbri
+	sumti = LE selbri /KU/
+	selbri = tanru | NU tanru /KEI/
+	tanru = BRIVLA | tanru BRIVLA
+
+then "le nu broda ku brode" and "le nu broda kei brode" are grammatical,
+but "le nu broda brode", eliding both terminators, is not.  But if we
+rewrote the elidable terminators as optional elements, then "le nu broda
+brode" would be grammatical and ambiguous.
+
+The way the official parser implements elidable terminators is using
+the yyerror routine: a terminator is a choice between the appropriate
+selma'o and "error"; the error routine figures out which selma'o should
+be present and inserts it into the token stream.  If it has a choice,
+it chooses the innermost one, so "le nu broda brode" above would be
+rewritten as "le nu broda brode kei ku" and blow up because there is
+nothing to match the "selbri" rule.
+
+
+-- 
+John Cowan  <jcowan@reutershealth.com>  http://www.ccil.org/~cowan
+        Raffiniert ist der Herrgott, aber boshaft ist er nicht.
+                --Albert Einstein
+
+From jcowan@reutershealth.com Tue Feb 10 14:24:43 2004
+Return-path: <jcowan@reutershealth.com>
+Envelope-to: rlpowell@digitalkingdom.org
+Delivery-date: Tue, 10 Feb 2004 14:24:43 -0800
+Received: from [65.246.141.36] (helo=mail.reutershealth.com)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1AqgJ9-0006Mw-3j
+	for rlpowell@digitalkingdom.org; Tue, 10 Feb 2004 14:24:43 -0800
+Received: from skunk.reutershealth.com (mail [65.246.141.36])
+	by mail.reutershealth.com (Pro-8.9.3/Pro-8.9.3) with SMTP id RAA05500
+	for <rlpowell@digitalkingdom.org>; Tue, 10 Feb 2004 17:18:54 -0500 (EST)
+Received: by skunk.reutershealth.com (sSMTP sendmail emulation); Tue, 10 Feb 2004 17:24:35 -0500
+Date: Tue, 10 Feb 2004 17:24:35 -0500
+From: jcowan@reutershealth.com
+To: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Subject: Re: JCBNF & operator
+Message-ID: <20040210222435.GA2647@skunk.reutershealth.com>
+References: <20040210220015.GX8463@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20040210220015.GX8463@digitalkingdom.org>
+User-Agent: Mutt/1.4.1i
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	chain.digitalkingdom.org
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.7 required=5.0 tests=BAYES_00,NO_REAL_NAME 
+	autolearn=no version=2.63
+Status: RO
+X-Status: A
+Content-Length: 702
+Lines: 19
+
+Robin Lee Powell scripsit:
+
+>     A & B & C == A [B] [C] | [A] B [C] | [A] [B] C
+
+Yes.  Here's the proof for 3 arguments:
+
+	A & B & C = A & (B & C)
+		= A | (B & C) | A (B & C)
+		= A | (B | C | B C) | A (B | C | B C)
+		= A | B | C | B C | A B | A C | A B C
+
+Mathematical induction tells us if it works for 3, it works for every case.
+
+-- 
+John Cowan  www.ccil.org/~cowan  www.reutershealth.com  jcowan@reutershealth.com
+We want more school houses and less jails; more books and less arsenals;
+more learning and less vice; more constant work and less crime; more
+leisure and less greed; more justice and less revenge; in fact, more of
+the opportunities to cultivate our better natures.  --Samuel Gompers
+
+From jcowan@reutershealth.com Tue Feb 10 15:04:22 2004
+Return-path: <jcowan@reutershealth.com>
+Envelope-to: rlpowell@digitalkingdom.org
+Delivery-date: Tue, 10 Feb 2004 15:04:22 -0800
+Received: from [65.246.141.36] (helo=mail.reutershealth.com)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1AqgvW-0006wr-62
+	for rlpowell@digitalkingdom.org; Tue, 10 Feb 2004 15:04:22 -0800
+Received: from skunk.reutershealth.com (mail [65.246.141.36])
+	by mail.reutershealth.com (Pro-8.9.3/Pro-8.9.3) with SMTP id RAA06197
+	for <rlpowell@digitalkingdom.org>; Tue, 10 Feb 2004 17:58:35 -0500 (EST)
+Received: by skunk.reutershealth.com (sSMTP sendmail emulation); Tue, 10 Feb 2004 18:02:22 -0500
+Date: Tue, 10 Feb 2004 18:02:22 -0500
+From: jcowan@reutershealth.com
+To: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Subject: Re: JCBNF & operator
+Message-ID: <20040210230222.GB2647@skunk.reutershealth.com>
+References: <20040210220015.GX8463@digitalkingdom.org> <20040210222435.GA2647@skunk.reutershealth.com> <20040210223357.GZ8463@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20040210223357.GZ8463@digitalkingdom.org>
+User-Agent: Mutt/1.4.1i
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	chain.digitalkingdom.org
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.7 required=5.0 tests=BAYES_00,NO_REAL_NAME 
+	autolearn=no version=2.63
+Status: RO
+Content-Length: 670
+Lines: 15
+
+Robin Lee Powell scripsit:
+
+> I've just finished turning bnf.300 into ABNF format, prepratory for
+> Jay and I taking a hard look at the elidable terminators issue.  Do
+> you mind if I post the discussion we've had thus far?
+
+No problem.
+
+-- 
+They do not preach                              John Cowan
+  that their God will rouse them                jcowan@reutershealth.com
+    A little before the nuts work loose.        http://www.ccil.org/~cowan
+They do not teach                               http://www.reutershealth.com
+  that His Pity allows them                         --Rudyard Kipling,
+    to drop their job when they damn-well choose.   "The Sons of Martha"
+

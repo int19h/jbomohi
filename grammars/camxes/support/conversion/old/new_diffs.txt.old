@@ -1,0 +1,61 @@
+#########
+# This file contains diffs between the ABNF version of the grammar
+# and a new version which attempts to formalize the elidable
+# terminators.
+#
+# Please do not expect to be able to use thes diffs as a patch; they
+# were constructed in very odd ways.
+#########
+
+
+####
+# TUhU
+#
+# tu'u is only 'elidable' at the end of text, since it can include
+# essentially *anything*.  So we merely make it optional: if you
+# forget to put tu'u in, the tu'e block will just keep eating text
+# forever.
+####
+
+28a29,30
+> ;
+> ; A pre-processor should remove everything after the first fa'o.
+30,31c32
+< text<0> = [1*NAI] [1*CMENE *free / (indicators / 1*free / indicators 1*free)] [joik-jek] text-1
+---
+> text<0> = [1*NAI] [1*CMENE *free / (indicators / 1*free / indicators 1*free)] [joik-jek] text-1 [FAhO]
+45c46
+< statement-3<14> = sentence / [tag] TUhE *free text-1 {TUhU *free}
+---
+> statement-3<14> = sentence / [tag] TUhE *free text-1 [TUhU *free]
+217,218d217
+< ;
+< ; FAhO is a universal terminator and signals the end of parsable input.
+
+####
+# VAU
+#
+# As far as I can tell, everywhere that vau can be used, eliding it
+# results in a valid parse.  More importantly, it is not possible to
+# determine that the speaker did *not* mean to elide any given vau
+# without making a guess as to what you think they actually meant in
+# the context of the conversation.  This is not something we can
+# expect any computer to do, let alone a CFG.
+#
+# Example: User means "le nu mi klama vau xamgu".  User says "le nu
+# mi klama xamgu".  There is no way to fix that without guessing
+# what the user meant to say, because what the user actually said is
+# perfectly valid.
+#
+# Therefore, VAU is made simply optional.
+####
+52c52
+< fragment<20> = ek *free / gihek *free / quantifier / NA *free / terms [VAU *free] / prenex / relative-clauses / links / linkargs
+---
+> fragment<20> = ek *free / gihek *free / quantifier / NA *free / terms {VAU *free} / prenex / relative-clauses / links / linkargs
+70c70
+< tail-terms<71> = [terms] [VAU *free]
+---
+> tail-terms<71> = [terms] {VAU *free}
+
+

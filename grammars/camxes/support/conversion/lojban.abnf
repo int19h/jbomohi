@@ -1,0 +1,522 @@
+; This is an RFC 2234 (ABNF) version of bnf.300.  See
+; http://www.faqs.org/rfcs/rfc2234.html
+; 
+; The only part that is not ABNF is the elidable terminators.  The
+; conversion was done entirely programatically, by a perl program.
+; 
+; All rules have the form:
+; 
+; 	name = bnf-expression
+; 
+; which means that the grammatical construct "name" is defined by
+; "bnf-expression".  The number cross-references this grammar with
+; the rule numbers in the YACC grammar.  The names are the same as those
+; in the YACC grammar, except that subrules are labeled with A, B, C, ... in the
+; YACC grammar and with 1, 2, 3, ... in this grammar.  In addition, rule 971 is
+; "simple_tag" in the YACC grammar but "stag" in this grammar, because of its
+; frequent appearance.
+; 
+; 1)  Names in lower case are grammatical constructs.
+; 2)  Names in UPPER CASE are selma'o (lexeme) names, and are terminals.
+; 3)  Concatenation is expressed by juxtaposition with no operator symbol.
+; 4)  / represents alternation (choice).
+; 5)  [] represents an optional element.
+; 6)  * represents optional repetition of the construct to the right.
+; 7)  1* represents one-or-more repetition of the construct to the right.
+; 8)  () serves to indicate the grouping of the other operators.
+; 9) {} encloses an elidable terminator, which may be omitted (without change
+;     of meaning) if no grammatical ambiguity results.
+;
+; A pre-processor should remove everything after the first fa'o.
+
+; --- GRAMMAR ---
+; Do not *ever* remove the line above this one.
+
+text = [1*NAI] [1*CMENE *free / (indicators / 1*free / indicators 1*free)] [joik-jek] text-1 [FAhO]
+
+text-1 = [1*(I [jek / joik] [[stag] BO] *free) / 1*NIhO *free] [paragraphs]
+
+paragraphs = paragraph [1*NIhO *free paragraphs]
+
+paragraph = (statement / fragment) *(I *free [statement / fragment])
+
+statement = statement-1 / prenex statement
+
+statement-1 = statement-2 *(I joik-jek [statement-2])
+
+statement-2 = statement-3 [I [jek / joik] [stag] BO *free [statement-2]]
+
+statement-3 = sentence / [tag] TUhE *free text-1 {TUhU *free}
+
+fragment = ek *free / gihek *free / quantifier / NA *free / terms {VAU *free} / prenex / relative-clauses / links / linkargs
+
+prenex = terms ZOhU *free
+
+sentence = [terms [CU *free]] bridi-tail
+
+subsentence = sentence / prenex subsentence
+
+bridi-tail = bridi-tail-1 [gihek [stag] KE *free bridi-tail {KEhE *free} tail-terms]
+
+bridi-tail-1 = bridi-tail-2 *(gihek *free bridi-tail-2 tail-terms)
+
+bridi-tail-2 = bridi-tail-3 [gihek [stag] BO *free bridi-tail-2 tail-terms]
+
+bridi-tail-3 = selbri tail-terms / gek-sentence
+
+gek-sentence = gek subsentence gik subsentence tail-terms / [tag] KE *free gek-sentence {KEhE *free} / NA *free gek-sentence
+
+tail-terms = [terms] {VAU *free}
+
+terms = 1*terms-1
+
+terms-1 = terms-2 *(PEhE *free joik-jek terms-2)
+
+terms-2 = term *(CEhE *free term)
+
+term = sumti / ( (tag / FA *free) (sumti / {KU *free}) ) / termset / NA KU *free
+
+termset = NUhI *free gek terms {NUhU *free} gik terms {NUhU *free} / NUhI *free terms {NUhU *free}
+
+sumti = sumti-1 [VUhO *free relative-clauses]
+
+sumti-1 = sumti-2 [(ek / joik) [stag] KE *free sumti {KEhE *free}]
+
+sumti-2 = sumti-3 *(joik-ek sumti-3)
+
+sumti-3 = sumti-4 [(ek / joik) [stag] BO *free sumti-3]
+
+sumti-4 = sumti-5 / gek sumti gik sumti-4
+
+sumti-5 = [quantifier] sumti-6 [relative-clauses] / quantifier selbri {KU *free} [relative-clauses]
+
+sumti-6 = (LAhE *free / NAhE BO *free) [relative-clauses] sumti {LUhU *free} / KOhA *free / lerfu-string {BOI *free} / LA *free [relative-clauses] 1*CMENE *free / (LA / LE) *free sumti-tail {KU *free} / LI *free mex {LOhO *free} / ZO any-word *free / LU text {LIhU *free} / LOhU 1*any-word LEhU *free / ZOI any-word anything any-word *free
+
+sumti-tail = [sumti-6 [relative-clauses]] sumti-tail-1 / relative-clauses sumti-tail-1
+
+sumti-tail-1 = [quantifier] selbri [relative-clauses] / quantifier sumti
+
+relative-clauses = relative-clause *(ZIhE *free relative-clause)
+
+relative-clause = GOI *free term {GEhU *free} / NOI *free subsentence {KUhO *free}
+
+selbri = [tag] selbri-1
+
+selbri-1 = selbri-2 / NA *free selbri
+
+selbri-2 = selbri-3 [CO *free selbri-2]
+
+selbri-3 = 1*selbri-4
+
+selbri-4 = selbri-5 *(joik-jek selbri-5 / joik [stag] KE *free selbri-3 {KEhE *free})
+
+selbri-5 = selbri-6 [(jek / joik) [stag] BO *free selbri-5]
+
+selbri-6 = tanru-unit [BO *free selbri-6] / [NAhE *free] guhek selbri gik selbri-6
+
+tanru-unit = tanru-unit-1 *(CEI *free tanru-unit-1)
+
+tanru-unit-1 = tanru-unit-2 [linkargs]
+
+tanru-unit-2 = BRIVLA *free / GOhA [RAhO] *free / KE *free selbri-3 {KEhE *free} / ME *free sumti {MEhU *free} [MOI *free] / (number / lerfu-string) MOI *free / NUhA *free mex-operator / SE *free tanru-unit-2 / JAI *free [tag] tanru-unit-2 / any-word 1*(ZEI any-word) / NAhE *free tanru-unit-2 / NU [NAI] *free *(joik-jek NU [NAI] *free) subsentence {KEI *free}
+
+linkargs = BE *free term [links] {BEhO *free}
+
+links = BEI *free term [links]
+
+quantifier = number {BOI *free} / VEI *free mex {VEhO *free}
+
+mex = mex-1 *(operator mex-1) / FUhA *free rp-expression
+
+mex-1 = mex-2 [BIhE *free operator mex-1]
+
+mex-2 = operand / [PEhO *free] operator 1*mex-2 {KUhE *free}
+
+rp-expression = rp-operand rp-operand operator
+
+rp-operand = operand / rp-expression
+
+operator = operator-1 *(joik-jek operator-1 / joik [stag] KE *free operator {KEhE *free})
+
+operator-1 = operator-2 / guhek operator-1 gik operator-2 / operator-2 (jek / joik) [stag] BO *free operator-1
+
+operator-2 = mex-operator / KE *free operator {KEhE *free}
+
+mex-operator = SE *free mex-operator / NAhE *free mex-operator / MAhO *free mex {TEhU *free} / NAhU *free selbri {TEhU *free} / VUhU *free
+
+operand = operand-1 [(ek / joik) [stag] KE *free operand {KEhE *free}]
+
+operand-1 = operand-2 *(joik-ek operand-2)
+
+operand-2 = operand-3 [(ek / joik) [stag] BO *free operand-2]
+
+operand-3 = quantifier / lerfu-string {BOI *free} / NIhE *free selbri {TEhU *free} / MOhE *free sumti {TEhU *free} / JOhI *free 1*mex-2 {TEhU *free} / gek operand gik operand-3 / (LAhE *free / NAhE BO *free) operand {LUhU *free}
+
+number = PA *(PA / lerfu-word)
+
+lerfu-string = lerfu-word *(PA / lerfu-word)
+
+lerfu-word = BY / any-word BU / LAU lerfu-word / TEI lerfu-string FOI
+
+ek = [NA] [SE] A [NAI]
+
+gihek = [NA] [SE] GIhA [NAI]
+
+jek = [NA] [SE] JA [NAI]
+
+joik = [SE] JOI [NAI] / interval / GAhO interval GAhO
+
+interval = [SE] BIhI [NAI]
+
+joik-ek = joik *free / ek *free
+
+joik-jek = joik *free / jek *free
+
+gek = [SE] GA [NAI] *free / joik GI *free / stag gik
+
+guhek = [SE] GUhA [NAI] *free
+
+gik = GI [NAI] *free
+
+tag = tense-modal *(joik-jek tense-modal)
+
+stag = simple-tense-modal *((jek / joik) simple-tense-modal)
+
+tense-modal = simple-tense-modal *free / FIhO *free selbri {FEhU *free}
+
+simple-tense-modal = [NAhE] [SE] BAI [NAI] [KI] / [NAhE] ((time [space] / space [time]) / CAhA / (time [space] / space [time]) CAhA) [KI] / KI / CUhE
+
+time = ZI [1*time-offset] [ZEhA [PU [NAI]]] [1*interval-property] / [ZI] 1*time-offset [ZEhA [PU [NAI]]] [1*interval-property] / [ZI] [1*time-offset] ZEhA [PU [NAI]] [1*interval-property] / [ZI] [1*time-offset] [ZEhA [PU [NAI]]] 1*interval-property
+
+time-offset = PU [NAI] [ZI]
+
+space = VA [1*space-offset] [space-interval] [(MOhI space-offset)] / [VA] 1*space-offset [space-interval] [(MOhI space-offset)] / [VA] [1*space-offset] space-interval [(MOhI space-offset)] / [VA] [1*space-offset] [space-interval] (MOhI space-offset)
+
+space-offset = FAhA [NAI] [VA]
+
+space-interval = (((VEhA / VIhA / VEhA VIhA) [FAhA [NAI]]) / space-int-props / ((VEhA / VIhA / VEhA VIhA) [FAhA [NAI]]) space-int-props)
+
+space-int-props = 1*(FEhE interval-property)
+
+interval-property = number ROI [NAI] / TAhE [NAI] / ZAhO [NAI]
+
+free = SEI *free [terms [CU *free]] selbri {SEhU} / SOI *free sumti [sumti] {SEhU} / vocative [relative-clauses] selbri [relative-clauses] {DOhU} / vocative [relative-clauses] 1*CMENE *free [relative-clauses] {DOhU} / vocative [sumti] {DOhU} / (number / lerfu-string) MAI / TO text {TOI} / XI *free (number / lerfu-string) {BOI} / XI *free VEI *free mex {VEhO}
+
+vocative = (1*(COI [NAI]) / DOI / 1*(COI [NAI]) DOI)
+
+indicators = [FUhE] 1*indicator
+
+indicator =  (UI / CAI) [NAI] / Y / DAhO / FUhO
+
+; The following rules are non-formal:
+; 
+; word<1100> = [BAhE] any-word [indicators]
+; 
+; any-word = "any single word (no compound cmavo)"
+; 
+; anything = "any text at all, whether Lojban or not"
+; 
+; null<1101> = any-word SI / utterance SA / text SU
+
+; --- MORPHOLOGY ---
+; Do not *ever* remove the line above this one.
+; (currently, nothing special is done to the morphology section; it
+; is treated as part of the main grammar)
+
+;         a string of lexable Lojban words 
+any_words = 1*any_word 
+;         any single lexable Lojban words 
+any_word = BRIVLA / CMENE / CMAVO 
+;         a possibly unlexable phoneme string 
+anything = "AnyThing" 
+
+;         any brivla 
+; For now: gismu pattern.
+; BRIVLA	: /[bcdfgjklmnprstvxz]{2}['a-z]{2,}[aeiou]/
+;		/ /[bcdfgjklmnprstvxz][aeiou][bcdfgjklmnprstvxz]y?[bcdfgjklmnprstvxz]['a-z]*[aeiou]/
+;		/ /[bcdfgjklmnprstvxz][aeiou]'?[aeiou][bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
+;		/ /[aeiou]('?[aeiou]){,2}[bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
+BRIVLA = "broda" / "brode" / "brodi" / "brodo" / "brodu"
+
+; CMENE = /\.?[,'a-pr-z]+[bcdfgjklmnprstvxz]/
+CMENE = "cmene" / ".alis" / "bab"
+
+CMAVO = A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / BY / CAI / CAhA / CEI / CEhE / CO / COI / CU / CUhE / DAhO / DOI / DOhU / FA / FAhA / FAhO / FEhE / FEhU / FIhO / FOI / FUhA / FUhE / FUhO / GA / GAhO / GEhU / GI / GIhA / GOI / GOhA / GUhA / I / JA / JAI / JOI / JOhI / KE / KEI / KEhE / KI / KOhA / KU / KUhE / KUhO / LA / LAU / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / MAhO / ME / MEhU / MOI / MOhE / MOhI / NA / NAI / NAhE / NAhU / NIhE / NIhO / NOI / NU / NUhA / NUhI / NUhU / PA / PEhE / PEhO / PU / RAhO / ROI / SA / SE / SEI / SEhU / SI / SOI / SU / TAhE / TEI / TEhU / TO / TOI / TUhE / TUhU / UI / VA / VAU / VEI / VEhA / VEhO / VIhA / VUhO / VUhU / XI / Y / ZAhO / ZEI / ZEhA / ZI / ZIhE / ZO / ZOI / ZOhU
+
+; --- SELMAHO ---
+; Do not *ever* remove the line above this one.
+; Special processing is done on the selma'o to stop abnf2bison from
+; breaking them up into many, many productions.
+
+;         eks; basic afterthought logical connectives 
+A = ".a" / ".e" / "ji" / ".o" / ".u" 
+
+;         modal operators 
+BAI = "du'o" / "si'u" / "zau" / "ki'i" / "du'i" / "cu'u" / "tu'i" / "ti'u" / "di'o" / "ji'u" / "ri'a" / "ni'i" / "mu'i" / "ki'u" / "va'u" / "koi" / "ca'i" / "ta'i" / "pu'e" / "ja'i" / "kai" / "bai" / "fi'e" / "de'i" / "ci'o" / "mau" / "mu'u" / "ri'i" / "ra'i" / "ka'a" / "pa'u" / "pa'a" / "le'a" / "ku'u" / "tai" / "bau" / "ma'i" / "ci'e" / "fau" / "po'i" / "cau" / "ma'e" / "ci'u" / "ra'a" / "pu'a" / "li'e" / "la'u" / "ba'i" / "ka'i" / "sau" / "fa'e" / "be'i" / "ti'i" / "ja'e" / "ga'a" / "va'o" / "ji'o" / "me'a" / "do'e" / "ji'e" / "pi'o" / "gau" / "zu'e" / "me'e" / "rai" 
+;         next word intensifier 
+BAhE = "ba'e" / "za'e" 
+;         sumti link to attach sumti to a selbri 
+BE = "be" 
+;         multiple sumti separator between BE, BEI 
+BEI = "bei" 
+;         terminates BEBEI specified descriptors 
+BEhO = "be'o" 
+;         prefix for high-priority MEX operator 
+BIhE = "bi'e" 
+;         interval component of JOI 
+BIhI = "mi'i" / "bi'o" / "bi'i" 
+;         joins two units with shortest scope 
+BO = "bo"
+;         number or lerfu-string terminator 
+BOI = "boi" 
+;         turns any word into a BY lerfu word 
+BU = "bu" 
+;         individual lerfu words 
+BY = "jo'o" / "ru'o" / "ge'o" / "je'o" / "lo'a" / "na'a" / "se'e" / "to'a" / "ga'e" / ".y'y" / "by" / "cy" / "dy" / "fy" / "gy" / "jy" / "ky" / "ly" / "my" / "ny" / "py" / "ry" / "sy" / "ty" / "vy" / "xy" / "zy" 
+
+;         specifies actualitypotentiality of tense 
+CAhA = "ca'a" / "pu'i" / "nu'o" / "ka'e" 
+;         afterthought intensity marker 
+CAI = "pei" / "cai" / "cu'i" / "sai" / "ru'e" 
+;         pro-bridi assignment operator 
+CEI = "cei" 
+;         afterthought term list connective 
+CEhE = "ce'e" 
+;         names; require consonant end, then pause no
+;                                    LA or DOI selma'o embedded, pause before if
+;                                    vowel initial and preceded by a vowel 
+;         tanru inversion  
+CO = "co" 
+COI = "ju'i" / "coi" / "fi'i" / "ta'a" / "mu'o" / "fe'o" / "co'o" / "pe'u" / "ke'o" / "nu'e" / "re'i" / "be'e" / "je'e" / "mi'e" / "ki'e" / "vi'o"
+;         vocative marker permitted inside names; must
+;                                    always be followed by pause or DOI 
+;         separator between head sumti and selbri 
+CU = "cu" 
+;         tensemodal question 
+CUhE = "cu'e" / "nau" 
+
+;         cancel anaphoracataphora assignments 
+DAhO = "da'o" 
+;         vocative marker 
+DOI = "doi" 
+;         terminator for DOI-marked vocatives 
+DOhU = "do'u" 
+
+;         modifier head generic case tag 
+FA = "fa" / "fe" / "fi" / "fo" / "fu" / "fai" / "fi'a" 
+;         superdirections in space 
+FAhA = "du'a" / "be'a" / "ne'u" / "vu'a" / "ga'u" / "ti'a" / "ni'a" / "ca'u" / "zu'a" / "ri'u" / "ru'u" / "re'o" / "te'e" / "bu'u" / "ne'a" / "pa'o" / "ne'i" / "to'o" / "zo'i" / "ze'o" / "zo'a" / "fa'a" 
+FAhO = "fa'o"
+;         normally elided 'done pause' to indicate end
+;                                    of utterance string 
+;         space interval mod flag 
+FEhE = "fe'e" 
+;         ends bridi to modal conversion 
+FEhU = "fe'u" 
+;         marks bridi to modal conversion 
+FIhO = "fi'o" 
+;         end compound lerfu 
+FOI = "foi" 
+;         reverse Polish flag 
+FUhA = "fu'a" 
+;         open long scope for indicator 
+FUhE = "fu'e" 
+;         close long scope for indicator 
+FUhO = "fu'o" 
+
+;         geks; forethought logical connectives 
+GA = "ge" / "ge'i" / "go" / "ga" / "gu" 
+;         openclosed interval markers for BIhI 
+GAhO = "ke'i" / "ga'o" 
+;         marker ending GOI relative clauses 
+GEhU = "ge'u" 
+;         forethought medial marker 
+GI = "gi"   
+;         logical connectives for bridi-tails 
+GIhA = "gi'e" / "gi'i" / "gi'o" / "gi'a" / "gi'u" 
+;         attaches a sumti modifier to a sumti 
+GOI = "no'u" / "ne" / "po" / "goi" / "po'u" / "pe" / "po'e" 
+;         pro-bridi 
+GOhA = "mo" / "nei" / "go'u" / "go'o" / "go'i" / "no'a" / "go'e" / "go'a" / "du" / "bu'a" / "bu'e" / "bu'i" / "co'e" 
+;         GEK for tanru units, corresponds to JEKs 
+GUhA = "gu'e" / "gu'i" / "gu'o" / "gu'a" / "gu'u" 
+
+;         sentence link 
+I = ".i" 
+
+;         jeks; logical connectives within tanru 
+JA = "je" / "je'i" / "jo" / "ja" / "ju" 
+;         modal conversion flag 
+JAI = "jai" 
+;         flags an array operand 
+JOhI = "jo'i" 
+;         non-logical connectives 
+JOI = "fa'u" / "pi'u" / "joi" / "ce'o" / "ce" / "jo'u" / "ku'a" / "jo'e" / "ju'e" 
+
+;         left long scope marker 
+KE = "ke" 
+;         right terminator for KE groups 
+KEhE = "ke'e" 
+;         right terminator, NU abstractions 
+KEI = "kei" 
+;         multiple utterance scope for tenses 
+KI = "ki" 
+;         sumti anaphora 
+KOhA = "da" / "de" / "di" / "da'u" / "da'e" / "di'u" / "di'e" / "de'u" / "de'e" / "dei" / "do'i" / "ko" / "mi" / "mi'o" / "ma'a" / "mi'a" / "do" / "do'o" / "ko'a" / "fo'u" / "ko'e" / "ko'i" / "ko'o" / "ko'u" / "fo'a" / "fo'e" / "fo'i" / "fo'o" / "vo'a" / "vo'e" / "vo'i" / "vo'o" / "vo'u" / "ru" / "ri" / "ra" / "ta" / "tu" / "ti" / "zi'o" / "ke'a" / "ma" / "zu'i" / "zo'e" / "ce'u" 
+;         right terminator for descriptions, etc. 
+KU = "ku" 
+;         MEX forethought delimiter 
+KUhE = "ku'e" 
+;         right terminator, NOI relative clauses 
+KUhO = "ku'o" 
+
+;         name descriptors 
+LA = "la" / "lai" / "la'i" 
+;         lerfu prefixes 
+LAU = "ce'a" / "lau" / "zai" / "tau" 
+;         sumti qualifiers 
+LAhE = "tu'a" / "lu'a" / "lu'o" / "la'e" / "vu'i" / "lu'i" / "lu'e" 
+;         sumti descriptors 
+LE = "le" / "lei" / "loi" / "lo" / "le'i" / "lo'i" / "le'e" / "lo'e" 
+;         possibly ungrammatical text right quote 
+LEhU = "le'u" 
+;         convert number to sumti 
+LI = "me'o" / "li" 
+;         grammatical text right quote 
+LIhU = "li'u" 
+;         elidable terminator for LI 
+LOhO = "lo'o" 
+;         possibly ungrammatical text left quote 
+LOhU = "lo'u" 
+;         grammatical text left quote 
+LU = "lu" 
+;         LAhE close delimiter 
+LUhU = "lu'u" 
+
+;         change MEX expressions to MEX operators 
+MAhO = "ma'o" 
+;         change numbers to utterance ordinals 
+MAI = "mo'o" / "mai" 
+;         converts a sumti into a tanru_unit 
+ME = "me" 
+;         terminator for ME 
+MEhU = "me'u" 
+;         change sumti to operand, inverse of LI 
+MOhE = "mo'e" 
+;         motion tense marker 
+MOhI = "mo'i" 
+;         change number to selbri 
+MOI = "mei" / "moi" / "si'e" / "cu'o" / "va'e" 
+
+;         bridi negation  
+NA = "ja'a" / "na" 
+;         attached to words to negate them 
+NAI = "nai" 
+;         scalar negation  
+NAhE = "to'e" / "je'a" / "na'e" / "no'e" 
+;         change a selbri into an operator 
+NAhU = "na'u" 
+;         change selbri to operand; inverse of MOI 
+NIhE = "ni'e" 
+;         new paragraph; change of subject 
+NIhO = "ni'o" / "no'i" 
+;         attaches a subordinate clause to a sumti 
+NOI = "voi" / "noi" / "poi" 
+;         abstraction  
+NU = "ni" / "du'u" / "si'o" / "nu" / "li'i" / "ka" / "jei" / "su'u" / "zu'o" / "mu'e" / "pu'u" / "za'i" 
+;         change operator to selbri; inverse of MOhE 
+NUhA = "nu'a" 
+;         marks the start of a termset 
+NUhI = "nu'i" 
+;         marks the middle and end of a termset 
+NUhU = "nu'u" 
+
+;         numbers and numeric punctuation 
+PA = "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "pi" / "pi'e" / "fi'u" / "za'u" / "me'i" / "ni'u" / "ki'o" / "ce'i" / "ma'u" / "ra'e" / "da'a" / "so'a" / "ji'i" / "su'o" / "su'e" / "ro" / "rau" / "so'u" / "so'i" / "so'e" / "so'o" / "mo'a" / "du'e" / "te'o" / "ka'o" / "ci'i" / "tu'o" / "xo" / "pai" / "no'o" 
+;         afterthought termset connective prefix 
+PEhE = "pe'e" 
+;         forethought (Polish) flag 
+PEhO = "pe'o" 
+;         directions in time 
+PU = "ba" / "pu" / "ca" 
+
+;         flag for modified interpretation of GOhI 
+RAhO = "ra'o" 
+;         converts number to extensional tense 
+ROI = "re'u" / "roi" 
+
+SA = "sa"
+;         metalinguistic eraser to the beginning of
+;                                    the current utterance 
+;         conversions 
+SE = "se" / "te" / "ve" / "xe" 
+;         metalinguistic bridi insert marker 
+SEI = "sei" / "ti'o" 
+;         metalinguistic bridi end marker 
+SEhU = "se'u" 
+;         metalinguistic single word eraser 
+SI = "si" 
+;         reciprocal sumti marker 
+SOI = "soi" 
+;         metalinguistic eraser of the entire text 
+SU = "su" 
+
+;         tense interval properties 
+TAhE = "ru'i" / "ta'e" / "di'i" / "na'o" 
+;         closing gap for MEX constructs 
+TEhU = "te'u" 
+;         start compound lerfu 
+TEI = "tei" 
+;         left discursive parenthesis 
+TO = "to'i" / "to" 
+;         right discursive parenthesis 
+TOI = "toi" 
+;         multiple utterance scope mark 
+TUhE = "tu'e" 
+;         multiple utterance end scope mark 
+TUhU = "tu'u" 
+
+;         attitudinals, observationals, discursives 
+UI = ".i'a" / ".ie" / ".a'e" / ".u'i" / ".i'o" / ".i'e" / ".a'a" / ".ia" / ".o'i" / ".o'e" / ".e'e" / ".oi" / ".uo" / ".e'i" / ".u'o" / ".au" / ".ua" / ".a'i" / ".i'u" / ".ii" / ".u'a" / ".ui" / ".a'o" / ".ai" / ".a'u" / ".iu" / ".ei" / ".o'o" / ".e'a" / ".uu" / ".o'a" / ".o'u" / ".u'u" / ".e'o" / ".io" / ".e'u" / ".ue" / ".i'i" / ".u'e" / "ba'a" / "ja'o" / "ca'e" / "su'a" / "ti'e" / "ka'u" / "se'o" / "za'a" / "pe'i" / "ru'a" / "ju'a" / "ta'o" / "ra'u" / "li'a" / "ba'u" / "mu'a" / "do'a" / "to'u" / "va'i" / "pa'e" / "zu'u" / "sa'e" / "la'a" / "ke'u" / "sa'u" / "da'i" / "je'u" / "sa'a" / "kau" / "ta'u" / "na'i" / "jo'a" / "bi'u" / "li'o" / "pau" / "mi'u" / "ku'i" / "ji'a" / "si'a" / "po'o" / "pe'a" / "ro'i" / "ro'e" / "ro'o" / "ro'u" / "ro'a" / "re'e" / "le'o" / "ju'o" / "fu'i" / "dai" / "ga'i" / "zo'o" / "be'u" / "ri'e" / "se'i" / "se'a" / "vu'e" / "ki'a" / "xu" / "ge'e" / "bu'o" 
+
+;         distance in space-time 
+VA = "vi" / "va" / "vu" 
+;         end simple bridi or bridi-tail 
+VAU = "vau" 
+;         left MEX bracket 
+VEI = "vei" 
+;         right MEX bracket 
+VEhO = "ve'o" 
+;         MEX operator 
+VUhU = "ge'a" / "fu'u" / "pi'i" / "fe'i" / "vu'u" / "su'i" / "ju'u" / "gei" / "pa'i" / "fa'i" / "te'a" / "cu'a" / "va'a" / "ne'o" / "de'o" / "fe'a" / "sa'o" / "re'a" / "ri'o" / "sa'i" / "pi'a" / "si'i" 
+;         space-time interval size 
+VEhA = "ve'u" / "ve'a" / "ve'i" / "ve'e" 
+;         space-time dimensionality marker 
+VIhA = "vi'i" / "vi'a" / "vi'u" / "vi'e" 
+VUhO = "vu'o"
+;         glue between logically connected sumti
+;                                     and relative clauses 
+
+;         subscripting operator 
+XI = "xi" 
+
+;         hesitation 
+Y = ".y" 
+
+;         event properties - inchoative, etc. 
+ZAhO = "co'i" / "pu'o" / "co'u" / "mo'u" / "ca'o" / "co'a" / "de'a" / "ba'o" / "di'a" / "za'o" 
+;         time interval size tense 
+ZEhA = "ze'u" / "ze'a" / "ze'i" / "ze'e" 
+;         lujvo glue 
+ZEI = "zei" 
+;         time distance tense 
+ZI = "zu" / "za" / "zi" 
+;         conjoins relative clauses 
+ZIhE = "zi'e" 
+;         single word metalinguistic quote marker 
+ZO = "zo" 
+;         delimited quote marker 
+ZOI = "zoi" / "la'o" 
+;         prenex terminator (not elidable) 
+ZOhU = "zo'u" 
+
