@@ -1,0 +1,289 @@
+# mail/lojban-list thread d8e7a3647309-no_subject | root 9208030640.aa22079@daily.grebyn.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1992-08-03T06:40:36Z | lojbab@grebyn.com | 9208030640.aa22079@daily.grebyn.com | mail/lojban-list/cur/712824036.d8e7a3647309a9ae.jbomohi:2,S
+
+
+part 2 - explanation of change proposal package and relative clause proposal
+
+Colin's last rebuttal on the issue finally convinced me and Nora, that
+there is indeed a problem that requires fixing.  Cowan remains less than
+convinced that a change of this magnitude at this late date is tolerable
+even if the problem is real, but will go along with consensus.  Nora's
+priority in this issue is to minimize the effect on existing text and
+documentation. and this has led to a complication in the proposal.  All
+three of us are fairly certain that Colin's solution, which is to
+separate the grammars of restrictive and incidental clauses, is not the
+right solution, and also results in too much complication to grammar,
+documentation, and teaching.
+
+My solution instead attempts to see the problem as a restriction in what
+can be said in the language, specifically in where a relative clause
+may/must be attached.  Indeed, my solution is mostly an unexpected side
+benefit of trying to add preposed inside relative clauses as a way
+around the oft-occuring problem of "*<le [ci mi] broda ku>" that was
+mucking up my attempts to understand what Colin was arguing.
+
+My solution to that problem was to allow "le pe ci mi broda ku".
+
+I had not at that point realized that the real argument was centering on
+the distinction between inside and outside quantified sets, since I had
+not yet read Colin's paper (and indeed remain stuck in my May mail for
+the most part).  Cowan had put the issue to me in terms of an attempt to
+attach relative clauses to explicitly include the outside quantifier
+without mentioning that there was a reason why someone might want to
+also relatively modify the inside set as well.  Thus I saw the initial
+form of the attached solution as merely explicitly moving the relative
+clauses indisputably outside.  (A major side effect of this turned out
+to be the need to put a terminator on LAhE clauses, which in turn has
+resulted in the simplification of the language indicated by Change 18.
+That change is numbered first because we agreed on it before this
+proposal reached its full glory.  Indeed, changes 17 and 19 are also
+side effects of this proposal.)
+
+I also attempted to pretty up the grammar by combining indefinites with
+relative clauses in one place.  The rule I proposed basically saw the
+use of an inside quantifier as "le indefinite" or "le quantifier lo
+description", a plausible but arguable proposition that Cowan later
+talked me out for desire to minimize change (it would put the "ku" after
+relative clauses for all indefinites, a change to the current language,
+whereas indefinites have no explicit 'inside' to be modified).  The
+grammatical rule stayed in minus mention of indefinites, because by then
+the change was evolving to the current proposal.  The remnant of this is
+what is called option 3) under the change.
+
+Upon seeing Colin's rebuttal, my first inclination was to say that
+inside clauses could be solved under this plan in a way that apparently
+Veijo proposed "le ci le description ku poi broda ku", and indeed it is
+a tribute to Veijo that this almost works.  The only problem is when
+there is no explicit outside quantifier, a problem that only manifests
+with "lo" and family, since "le" has a "ro" outside quantifier as
+default.  For a variant of Colin's example "lo sipna noi melbi", I
+raised the question with Nora that since the default quantification is
+"su'o lo ro sipna noi melbi", was the unexpanded form claiming that the
+indefinite sleeper was beautiful, or that all of them were.  The answer
+appeared to depend on whether you expanded the quantifiers or not - the
+unexpanded form appears to be outside because we haven't explicitly
+quantified the inside; the expanded form seems more ambiguous.  The
+problem is even worse when repeated with poi, and Nora declared that
+something was indeed 'broken'.  You cannot use Veijo's solution to fix
+this since "*le [su'o] lo sipna poi melbi ku" isn;t grammatical with the
+su'o implicit.
+
+Thus we needed some kind of inside relative clause, and I looked at my
+working proposal and said, voila - it is already there.  The preposed
+relative clause is indisputably 'inside', and I even have a postposed
+version when the inside is quantified, based on the internal-indefinite
+rule.
+
+Indefinites were separated back out per Cowan's argument, as mentioned
+above, but the result is highlighted in the following extracts from the
+BNF and YACC grammars.  Not that I consider the question of nesting of
+relative clauses and a couple of other things that came up, as side
+issues, but they also appear in the rules quoted.
+
+sumti-3<93> = sumti-4 | gek sumti gik sumti-3
+
+sumti-4<94> = sumti-5 | quantifier selbri /KU#/ | sumti-4 relative-clauses
+
+sumti-5<95> = sumti-6 | quantifier sumti-5
+
+sumti-6<96> = (LAhE # | NAhE BO #) sumti /LUhU#/ | gek sumti gik sumti-4 |
+        KOhA # | letteral-string /BOI#/ | LA CMENE ... # |
+        (LA | LE) sumti-tail /KU#/ | LI mex /LOhO#/ |
+        ZO any-word # | LU text /LIhU/ # | LOhU any-word ... LEhU # |
+        ZOI any-word anything any-word #
+
+sumti-tail<111> = relative-clauses sumti-tail |
+        [sumti-6 [nested-relative-clauses] sumti-tail-1
+
+sumti-tail-1<112> = selbri | sumti-tail-2 | quantifier sumti
+
+sumti-tail-2<113> = quantifier selbri | sumti-tail-2 relative-clauses
+
+nested-relative-clauses<120> = relative-clauses ...
+
+relative-clauses<121> = relative-clause [ZIhE relative-clause] ...
+
+relative-clause<122> = GOI term /GEhU#/ | NOI sentence /KUhO#/
+
+sumti-tail<113> = [sumti-4] [quantifier] selbri | quantifier sumti
+
+free<32> = SEI # [term ... [CU #]] selbri /SEhU/ | SOI sumti [sumti] /SEhU/ |
+        vocative selbri [nested-relative-clauses] /DOhU/ |
+        vocative relative-clauses sumti-tail /DOhU/ |
+        vocative CMENE ... # [nested-relative-clauses] /DOhU/ |
+        vocative [sumti] /DOhU/ | (number | letteral-string) MAI |
+        TO text /TOI/ | XI number /BOI/ | XI letteral-string /BOI/ |
+        XI VEI mex /VEhO/
+
+
+vocative_35             :  DOI_415  selbri_130  DOhU_gap_457
+                        |  DOI_415  selbri_130
+                                  relative_clause_120  DOhU_gap_457
+                        |  DOI_415  relative_clause_A_121
+                                  sumti_tail_111  DOhU_gap_457
+                        |  DOI_415  cmene_404  DOhU_gap_457
+                        |  DOI_415  cmene_404
+                                  relative_clause_120  DOhU_gap_457
+                        |  DOI_415  sumti_90  DOhU_gap_457
+                        |  DOI_415  DOhU_gap_457
+                        ;
+
+sumti_D_94              :  sumti_E_95
+                           /* indefinite sumti */
+                        |  quantifier_300  selbri_130  gap_450
+                           /* relative clause on outer-quantified sumti */
+                        |  sumti_D_94  relative_clause_A_121
+                        ;
+
+sumti_E_95              :  sumti_F_96
+                           /* outer-quantified sumti */
+                        |  quantifier_300  sumti_E_95
+                        ;
+
+sumti_F_96              :  qualifier_483  sumti_90  LUhU_gap_463
+                           /*sumti grouping, set/mass/individual conversion */
+                           /*also sumti scalar negation */
+                        |  anaphora_400
+                        |  LA_558  cmene_404
+                        |  LI_566  MEX_310  LOhO_gap_472
+                        |  description_110
+                        |  quote_arg_432
+                        ;
+
+description_110         :  LA_558  sumti_tail_111  gap_450
+                        |  LE_562  sumti_tail_111  gap_450
+                        ;
+
+sumti_tail_111          :  sumti_tail_A_112
+                           /* inner-quantified sumti relative clause
+                              (nestable) */
+                        |  relative_clause_A_121  sumti_tail_111
+                           /* pseudo-possessive
+                              (an abbreviated inner restriction);
+                              note that sumti cannot be quantified */
+                        |  sumti_F_96  sumti_tail_A_112
+                           /* pseudo-possessive with outer restriction */
+                        |  sumti_F_96  relative_clause_120  sumti_tail_A_112
+                        ;
+
+sumti_tail_A_112        :  selbri_130
+                           /* explicit inner quantifier */
+                        |  sumti_tail_B_113
+                           /* quantifier both internal to a description,
+                              and external to a sumti thereby made specific */
+                        |  quantifier_300  sumti_90
+                        ;
+
+sumti_tail_B_113        :  quantifier_300  selbri_130
+                           /* inner-quantified description may have postposed
+                              relative clause for backwards compatibility
+                              but note thst this is inside the gap/KU */
+                        |  sumti_tail_B_113  relative_clause_A_121
+                        ;
+
+relative_clause_120     :  relative_clause_A_121
+                           /* postposed relative clauses are left-grouping;
+                              this rule used only when explicit nesting
+                              causes over-complication to the grammar */
+                        |  relative_clause_120  relative_clause_A_121
+                        ;
+
+relative_clause_A_121   :  relative_clause_B_122
+                        |  relative_clause_A_121 ZIhE_624 relative_clause_B_122
+                        ;
+
+relative_clause_B_122   :  GOI_542  term_81  GEhU_gap_464
+                        |  NOI_584  sentence_40  KUhO_gap_469
+                        ;
+
+qualifier_483           :  LAhE_561
+                        |  LAhE_561  free_modifier_32
+                        |  NAhE_BO_809
+                        ;
+
+
+The rule that is now _113 is the remnant of the attempt to merge
+indefinites and inside quantifiers.  It now allows inside postposed
+relative quantifiers before the ku IFF there is an inside quantifier.
+My argument for this is that it allows the most natural meshing with the
+defauts assumed in the past language, which perhaps have been
+excessively English-based, but in any event are indeed historical and at
+least plausible interpretations.  A complete compendium of the possible
+interpretations of trailing relative clauses under this rule is given in
+Change 20 as sent separately.
+
+Cowan does not like this idea, because it makes "lo sipna poi melbi" and
+"su'o lo ro sipna poi melbi" group differently even though one is the
+defined transformation of the other.  I answer by arguing that the
+transformation must include the ku explicitly before expanding, and thus
+there is no inconsistency.  "lo sipna ku poi melbi" expands to "su'o lo
+ro sipna ku poi melbi".  However, the inside restriction is requires
+that the relative clause be preposed in order to contract it "su'o lo ro
+sipna poi melbi ku" -> "lo poi melbi vau/ku'o sipna ku"
+
+Note that you need a terminator on the preposed relative clauses most of
+the time.  I would use vau, though ku'o is more exact, because vau is
+monosyllabic and the idea of preposing is to contract.  This suggests
+that since neither vau nor ku'o are much used in a mandatory way, that
+they could be reversed in meaning - a further grammar change that puts
+the grammar in line with Zipf on this point.  I oppose this change as
+being too big for this late stage given its small benefit, but put it up
+for consideration.
+
+Alternatives to this proposal are 1)
+
+sumti_tail_A_112        :  selbri_130
+                           /* explicit inner quantifier */
+                        |  sumti_tail_B_113
+                           /* quantifier both internal to a description,
+                              and external to a sumti thereby made specific */
+                        |  quantifier_300  sumti_90
+                        ;
+
+sumti_tail_B_113        :  selbri_130
+                           /* a description may have postposed
+                              relative clause for backwards compatibility
+                              but note that this is inside the gap/KU
+                              making the gap/KU NEVER elidable for the
+                              more common outside relative clause */
+                        |  sumti_tail_B_113  relative_clause_A_121
+                        ;
+
+which makes outside relative clauses cumbersome while provided redundant
+ways to express inside relative clauses (though indeed the
+forethought/afterthought dichotomy is welcome when it causes no problems).
+
+By compariosn, the basic option (3) requires a "ku" before an outside
+relative clause ONLY when there is an inside quantifier, which is
+exactly when there is greatest expectation of semantic ambiguity as to
+whether a speaker means to modify inside or outside in the current
+language.
+
+and 2), which eliminates the _113 rule completely
+
+sumti_tail_A_112        :  selbri_130
+                           /* explicit inner quantifier */
+                        |  quantifier_300  selbri_130
+                           /* quantifier both internal to a description,
+                              and external to a sumti thereby made specific */
+                        |  quantifier_300  sumti_90
+                        ;
+
+In this case a postposed relative clause is ALWAYS outside, but it means
+that inside restrictions must always be forethought, something that
+seems counterintuitive in spite of Colin's arguments that postposed
+relatives are abnormal to all but English speakers in an AN-ordered
+language.
+
+I selected option 3) as the basic one because of Nora's desire to have
+the grammar change existing usage minimally, which I also favor.  Upon
+reviewing this writeup, however, Nora somewhat prefers option 1), even
+at the expense of some change, because it seems less complicated to
+explain.  Cowan also prefers either 1) or 2), but I still weakly prefer
+3) with a slight preference for 1) over 2) if not supported.
+
+Have fun, and feel free to comment on any of the other change proposals
+while you are at it.
+
+
