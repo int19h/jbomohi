@@ -1,0 +1,44 @@
+# mail/lojban-list thread e52ffd64ecd0-updated_%28faster%21%21%21%29_parser%2Fglosser_ | root 44114.181.1044.959273824@egroups.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1999-07-02T06:02:33Z | Bob LeChevalier-Logical Language Group <lojbab@lojban.org> | 44114.181.1044.959273824@egroups.com | mail/lojban-list/cur/930895353.e52ffd64ecd0213c.jbomohi:2,S
+Nora and I, finally having time to look at the parser glosser this week to
+find out why it was running so slow, discovered some unnecessary and
+grossly slow code in the innermost loop of the Glosser.  The program was
+converting all strings to upper case before doing a string compare -
+usually a sound safety check, but unnecessary for the strings we are
+comparing in this program.  Removing this conversion has shortened time in
+the glosser to less than 1/3 of the former eon that it was taking, and
+Saki's The Open Window, an 8k file which is at about the upper limit for
+token space for the Lojban parser, takes under a minute on a 486-100
+Windows machine (it was taking almost 4 minutes before the change).
+Other experiments to speed up the processing had only tiny effects, so we
+don't think much further improvement can be made, but I'm sure people will
+be glad for this one.
+
+The file is at
+
+http://www.lojban.org/files/glosser3.ZIP    (226K)
+
+This address is NOT on the file archive roadmap.
+
+See my message of 8 May on the archive for more details on the program.
+This remains a Beta version - please make this clear if you link to it
+and/or put a copy on your site.
+
+As before, comments and bug reports are welcome.
+
+lojbab
+----
+lojbab                     ***NOTE NEW ADDRESS***           lojbab@lojban.org
+Bob LeChevalier, President, The Logical Language Group, Inc.
+2904 Beau Lane, Fairfax VA 22031-1303 USA               703-385-0273
+Artificial language Loglan/Lojban: 
+  see Lojban WWW Server: href=" http://xiron.pc.helsinki.fi/lojban/ "
+  Order _The Complete Lojban Language_ - see our Web pages or ask me.
+
+
+
+
+           
+
+
