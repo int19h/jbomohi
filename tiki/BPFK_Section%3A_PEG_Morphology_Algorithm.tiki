@@ -184,23 +184,19 @@ y <- comma* [[yY]
 
 ;-------------------------------------------------------------------
 
-non-initial-cluster <- !initial-cluster cluster
+non-initial-cluster <- !initial cluster
 
-cluster <- consonant (initial-cluster / consonant) !consonant
+cluster <- &consonant+ coda? consonantal-syllable? initial
 
-;cluster <- consonant initial-consonant* consonant !consonant
+coda <- !initial !consonantal-syllable consonant
 
-;initial-cluster <- initial-consonant+ consonant !consonant
+consonantal-syllable <- consonant (l / m / n / r) &initial
 
-;initial-pair <- initial-consonant consonant !consonant
+initial-pair <- &initial consonant consonant !consonant
 
-;initial-consonant <- !l !n !r !(d-t l) consonant &(r / l) / !(s x) !(j n) !(z n) sibilant &consonant / d-t &sibilant !(sibilant consonant)
+initial-cluster <- &initial consonant consonant+
 
-;d-t <- d / t
-
-initial-pair <- &initial-cluster consonant consonant !consonant
-
-initial-cluster <- &(consonant consonant+) (affricate / sibilant? other? liquid?) !consonant
+initial <- (affricate / sibilant? other? liquid?) &vowel
 
 affricate <- t c / t s / d j / d z
 
