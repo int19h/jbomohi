@@ -44,7 +44,9 @@ lojban-word <- cmene / cmavo / brivla
 
 ;-------------------------------------------------------------------
 
-cmene <- (!doi-la-lai-lahi onset nucleus / digit)* &consonant onset &spaces
+cmene <- cmene-syllable* &consonant coda? onset &spaces
+
+cmene-syllable <- !doi-la-lai-lahi coda? onset nucleus / consonantal-syllable / digit
 
 doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !nucleus
 
@@ -57,9 +59,9 @@ CVCy-lujvo <- CVC-rafsi y h? initial-rafsi* brivla-core
 ;post-cmavo <- spaces / !nucleus &independent lojban-word
 ;independent <- stressed / consonant nucleus / !final-syllable / cmene
 
-stressed-cmavo-form <- consonant? (nucleus &nucleus)* &stressed nucleus
+stressed-cmavo-form <- (consonant / glide)? (nucleus h)* &stressed nucleus
 
-cmavo-form <- consonant? (nucleus &nucleus)* !stressed nucleus / y+ / digit
+cmavo-form <- (consonant / glide)? (nucleus h)* !stressed nucleus / y+ / digit
 
 ;-------------------------------------------------------------------
 
@@ -146,33 +148,35 @@ unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 stress <- y-syllable* syllable spaces
-stressed <- onset? semi-consonant? comma* [[AEIOU]
+stressed <- onset? glide? comma* [[AEIOU]
 
-syllable <- onset? !y-nucleus nucleus
-y-syllable <- onset? y !y
+syllable <- consonantal-syllable? onset? !y-nucleus nucleus coda?
+y-syllable <- consonantal-syllable? onset? y !y
 
-nucleus <- (diphthong / semi-consonant? vowel / y-nucleus) !y h?
-y-nucleus <- (i /u)? y
-semi-consonant <- (i / u) &vowel
-diphthong <- a i / a u / e i / o i
+consonantal-syllable <- consonant syllabic &consonant
+
+onset <-  h / glide / initial
+
+coda <- !initial !consonantal-syllable consonant 
+
+nucleus <- (diphthong / vowel / y) h?
+
+glide <- (i / u) &vowel
+
+diphthong <- (a i / a u / e i / o i) !glide
+
 vowel <- a / e / i / o / u
 
-a <- comma* [[aA] !y
-e <- comma* [[eE] !y
+a <- comma* [[aA] !a !e !o !y
+e <- comma* [[eE] !a !e !o !y
 i <- comma* [[iI] 
-o <- comma* [[oO] !y
+o <- comma* [[oO] !a !e !o !y
 u <- comma* [[uU] 
-y <- comma* [[yY] !vowel
+y <- comma* [[yY] !a !e !o
 
 h <- comma* [['h] &nucleus
 
 ;-------------------------------------------------------------------
-
-onset <- coda? consonantal-syllable? initial
-
-coda <- !initial !consonantal-syllable syllabic? (!initial !consonantal-syllable consonant)?
-
-consonantal-syllable <- !initial consonant? (!initial syllabic)? &initial &consonant
 
 initial-pair <- &initial consonant consonant !consonant
 
