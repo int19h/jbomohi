@@ -1,0 +1,137 @@
+X-Digest-Num: 269
+Message-ID: <44114.269.1474.959273825@eGroups.com>
+Date: Fri, 29 Oct 1999 02:10:41 -0400 (EDT)
+From: "Michal Wallace (sabren)" <sabren@manifestation.com>
+Subject: Re: lojban newbie: an outsider looking in
+X-Yahoo-Message-Num: 1474
+Content-Length: 5107
+Lines: 127
+
+On Thu, 28 Oct 1999, Richard Curnow wrote:
+
+> > I think I might be able to manage a crappy sentence with a lot
+> > of parentheses on my own.. And probably do a lot better after
+> > studying YACC.
+> 
+> Given all the talk of parenthesis, I guess it's my jbofi'e program being
+> discussed.
+
+Well, *I* was talking about a hypothetical parser of my own.
+I've seen your source, but haven't been able to get it to compile..
+In reading about the ins and outs of parsing, I found a program
+that does for perl what yacc/bison does for c. So I ran that against
+the LLG grammar and produced a parser. 
+
+Unfortunately, I don't have a lexer, and I'm not really sure how to
+create one.. I tried looking at your code, but the only lex file you
+seem to have is for stripping out comments... (???) (without being
+able to compile it, I can't run the perl debugger to step through
+it..) I know less about parsing than I do about lojban.. but don't
+you have to have a lexer in there somewhere?
+
+Also, did you create your own version of the grammar?
+
+(I'm still trying to make sense of the 6 steps listed in the LLG's
+grammar)
+
+> To set the record straight, my aims were not so ambitious as to include
+> the production of reasonable English sentences as direct translations.
+
+I hope you didn't think I was slamming your code! I was just imagining
+what *my* parser might do, and I figured it would look mostly like
+english but with parentheses around stuff like translated tanru.. hence,
+crappy english with a bunch of parentheses.. :)
+
+
+> 1. To check syntax and subtle errors of meaning in Lojban I wrote myself.
+> 2. To do the drudgery of looking up words in the dictionary when reading
+> other people's Lojban posted to this list.
+
+> Goal (2) often fails to be realised, because so much published Lojban does
+> not in fact have the correct syntax :-(
+
+Perhaps a validating parser ought to be incorporated into a training
+program...
+
+> 3. To mark the sumti with a reminder of their meaning within the
+> definition of the main selbri within the sentence, to assist in the
+> interpretation once the individual words have been translated.
+
+I like this idea very much. Looking at the html output on your
+site, I think it might be somewhat easier on the eyes if it could
+be done in multiple lines.. (lojban on one line, "engloj" on the 
+next..)
+
+ 
+> Once you get used to the output format, it is a useful 'half-way house'
+> between the raw Lojban and a smooth English translation.
+
+That's pretty much my goal as well.
+
+> I'd bet that if you try doing a Lojban -> English translator more akin to
+> Babelfish, you'll find the front-end YACC/Bison stuff a piece of cake
+> compared to the back-end task of producing reasonable English with the
+> same meaning.  OK, you can probably do quite well for a limited range of
+> Lojban constructions, but I'm sure the task is very hard indeed in its
+> full generality.  One particularly dull aspect that I've jibbed at doing
+> is re-formulating all the gismu definitions depending on which of the
+> places has the 'focus' in the sentence (i.e. which of se, te etc precede
+> the selbri). 
+
+
+> The parentheses in jbofi'e's output, incidentally, show how various
+> constructions nest within each other.  It's useful for seeing the nesting
+> order of connectives, the binding order of the brivla within tanru etc.  
+> I agree they're a bit of a distraction as well, but they are useful for
+> checking subtle details of meaning that differ depending on binding order.
+
+That's the other reason I was envisioning a bunch of parentheses in my
+version.. :)
+
+> > part of the reason I suggested a perl version was because the dictionary
+> > looks like: "x1 eats x2 ..." and it would be fairly easy, once you know
+> > which sumti are x1 and x2, to do a search and replace (at least with
+> > perl's regular expressions)..
+> 
+> Fine for 'citka', however you need to generate templates for
+> 
+> se citka : x1 is eaten by x2
+> ctigau   : x1 feeds x2 with x3
+> te se ctigau : x1 feeds x2 to x3
+> citka jubme : dining table
+> ctijbu      : ditto
+> 
+> and so on, ad infinitum.  The construction of this template dictionary is
+> the really dreary part of the project.
+
+Yeah. But I think that's overkill at the moment. I'd be perfectly happy 
+with:
+
+se citka : x2 eats x1
+ctigau   : x1 {to feed} x2  # since that's what's in the dictionary
+te se ctigau : ????  # I don't yet understand how "te" and "se" interact
+citka jubme : [eat-table]  # since it's just a tanru
+ctijbu : [eat-table]  # since it isn't in the lujvo dictionary
+ctijbu : dining table # if it were
+
+[] might designate tanru
+{} might designate unconjugated english.
+
+for past tense, I'd even be happy with: x1 {past: eats} x2
+
+At some point in the future, someone who wasn't me :) could do
+all the messy work of creating hashes or tables to conjugate
+the english verbs, pluralize nouns, etc..
+
+Cheers,
+
+- Michal
+-------------------------------------------------------------------------
+http://www.manifestation.com/         http://www.linkwatcher.com/metalog/
+-------------------------------------------------------------------------
+
+
+
+
+           
+
