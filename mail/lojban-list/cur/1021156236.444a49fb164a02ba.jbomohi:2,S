@@ -1,0 +1,142 @@
+Return-Path: <fracture@cs6668125-184.austin.rr.com>
+X-Sender: fracture@cs6668125-184.austin.rr.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_0_3_2); 11 May 2002 22:24:59 -0000
+Received: (qmail 32008 invoked from network); 11 May 2002 22:24:59 -0000
+Received: from unknown (66.218.66.217)
+  by m5.grp.scd.yahoo.com with QMQP; 11 May 2002 22:24:59 -0000
+Received: from unknown (HELO cs6668125-184.austin.rr.com) (66.68.125.184)
+  by mta2.grp.scd.yahoo.com with SMTP; 11 May 2002 22:24:58 -0000
+Received: (from fracture@localhost)
+	by cs6668125-184.austin.rr.com (8.11.6/8.11.6) id g4BMUag88179
+	for lojban@yahoogroups.com; Sat, 11 May 2002 17:30:36 -0500 (CDT)
+	(envelope-from fracture)
+Date: Sat, 11 May 2002 17:30:36 -0500
+To: lojban@yahoogroups.com
+Subject: Yet another jbovla lookup script, from a lojban newbie
+Message-ID: <20020511173036.A88145@allusion.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-md5;
+	protocol="application/pgp-signature"; boundary="U+BazGySraz5kW0T"
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5i
+From: Jordan DeLong <fracture@allusion.net>
+X-Yahoo-Group-Post: member; u=72693208
+X-Yahoo-Message-Num: 14248
+Content-Length: 2252
+
+           
+--U+BazGySraz5kW0T 
+Content-Type: multipart/mixed; boundary="/9DWx/yDrRhgMJTb"
+Content-Disposition: inline
+
+           
+--/9DWx/yDrRhgMJTb 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+coi rodo
+
+.i mi finti lo samselpla goi ko'a .i ko'a facki le datni le jbovla
+.i la perl bangu ko'a .i ko'a jorne le mi mrilu
+
+.i .u'u le mi gerna na'e drani .i mi se cnino la lojban
+
+ki'e
+
+--=20
+Jordan DeLong
+fracture@allusion.net
+
+           
+--/9DWx/yDrRhgMJTb 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=viska
+
+#!/usr/bin/env perl -w
+#
+# ko facki fi le jbovla
+#
+
+# le kadje xamgu mi
+use strict;
+
+# ko cpacu le sumti
+use vars qw($opt_g $opt_a $opt_c $opt_C $opt_l $opt_L);
+use Getopt::Std;
+getopts("gcClLa");
+if ($#ARGV != 0 ||
+		(($opt_a && ($opt_c || $opt_l || $opt_L || $opt_C)) ||
+		($opt_C && ($opt_c || $opt_l || $opt_L)) ||
+		($opt_L && ($opt_l || $opt_c || $opt_C)))) {
+	print "plino: viska [-g] [-a | [-lc | -C | -L]] valsi\n";
+	exit 1;
+}
+if ($opt_a) {
+	$opt_c = 1;
+	$opt_l = 1;
+}
+my $valsi="$ARGV[0]";
+
+# caku ko troci fi le gismu
+if (!$opt_C && !$opt_L) {
+	open GISMU, "< /home/fracture/misc/lojban/gismu.txt"
+		or die "open";
+	while (<GISMU>) {
+		if ($opt_g) {
+			# le glico
+			my $str = substr($_, 19);
+			print if $str =~ /^$valsi/;
+		} else {
+			# la lojban
+			print if /^$valsi/;
+		}
+	}
+	close GISMU;
+}
+
+# caku ko troci fi le cmavo
+if (($opt_c || $opt_C) && !$opt_L) {
+	open CMAVO, "< /home/fracture/misc/lojban/cmavo.txt"
+		or die "open";
+	while (<CMAVO>) {
+		if ($opt_g) {
+			# le glico
+			my $str = substr($_, 20);
+			print if $str =~ /^$valsi/;
+		} else {
+			# la lojban
+			print if /^.?$valsi/;
+		}
+	}
+	close CMAVO;
+}
+
+# ko ca troci fi le lujvo
+if ($opt_l || $opt_L) {
+	open LUJVO, "< /home/fracture/misc/lojban/lujvo.txt"
+		or die "open";
+	while (<LUJVO>) {
+		if ($opt_g) {
+			# le glico
+			if (/^(.*):  (.*)/) {
+				print if $2 =~ /$valsi/;
+			}
+		} else {
+			# la lojban
+			print if /^$valsi/;
+		}
+	}
+	close LUJVO;
+}
+
+exit 0;
+           
+--/9DWx/yDrRhgMJTb----U+BazGySraz5kW0T 
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+[Attachment content not displayed.]           
+--U+BazGySraz5kW0T--
+
