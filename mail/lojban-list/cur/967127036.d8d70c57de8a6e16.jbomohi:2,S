@@ -1,0 +1,355 @@
+Return-Path: <lojbab@lojban.org>
+Received: (qmail 4088 invoked from network); 24 Aug 2000 14:26:34 -0000
+Received: from unknown (10.1.10.27) by m4.onelist.org with QMQP; 24 Aug 2000 14:26:34 -0000
+Received: from unknown (HELO stmpy-5.cais.net) (205.252.14.75) by mta2 with SMTP; 24 Aug 2000 14:26:25 -0000
+Received: from bob (155.dynamic.cais.com [207.226.56.155]) by stmpy-5.cais.net (8.10.1/8.9.3) with ESMTP id e7OEQLa43951 for <lojban@egroups.com>; Thu, 24 Aug 2000 10:26:21 -0400 (EDT) (envelope-from lojbab@lojban.org)
+Message-Id: <4.2.2.20000824085154.00a693e0@127.0.0.1>
+X-Sender: vir1036/pop.cais.com@127.0.0.1
+X-Mailer: QUALCOMM Windows Eudora Pro Version 4.2.2 
+Date: Thu, 24 Aug 2000 10:23:56 -0400
+To: Lojban List <lojban@egroups.com>
+Subject: Re: [lojban] le stura be la gihuste
+In-Reply-To: <Pine.LNX.4.21.0008231614470.3775-100000@burp.n>
+References: <4.2.2.20000823084322.00a24cb0@127.0.0.1>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"; format=flowed
+Content-Transfer-Encoding: 8bit
+From: "Bob LeChevalier (lojbab)" <lojbab@lojban.org>
+X-Yahoo-Message-Num: 4019
+Content-Length: 16341
+
+At 05:28 PM 08/23/2000 +0200, Elrond wrote:
+> > I don't see how this is so.  The difficulty is all on the human end -
+> > preparing the files.  Computer memory and speed is cheap and hardly
+> > challenged by the size of the lists that are being searched for Lojban
+> > processing (and if they are, then indexing a file isn't difficult), and 
+> any
+> > format can be manipulated into any other format by a computer program as
+> > part of setup, if the original format is regular.
+>
+>Leaving apart the amount of difficulty in doing any translation work (that
+>is my problem to evaluate it, and not subject to discussion, obviously),
+>there is still *much* work to be done on the lists' format before anyone
+>can write *SIMPLE* yet *efficient* programs that can, for example, convert
+>Lojban text to correct English. This work includes *adding* fields,
+>keywords, prepositions, connect words, grammar information, and so on, to
+>the gismu, cmavo and lujvo lists.
+
+OK, I understand and agree these added fields may be necessary.  But they 
+are not (as yet) planned to be part of the baselined list.  Currently most 
+of the stuff, to the extent that it has been devised, exists in separate 
+lists, and not in a single file.
+
+>Once this work is done, which means that the various list,
+>considered as *computer files*, are rewritten in a way that
+>parsing/reading it is easy and precise and/or unambiguous from a *computer
+>program*'s standpoint, then the material for an easier "field filling"
+>translation work of the lists themselves is there.
+
+I guess what you are saying is that it would be easiest to translate all of 
+the field information for a single word at one time, and not to require 
+multiple passes through multiple files.  If so, I can understand this.
+
+>This is what I meant. I do not consider changing the gismu list, but
+>modify the structure of the files which contain it.
+>
+> > >now with those several ideas, I can already think about
+> > >having standardized tools, more complex translation capabilities and so
+> > >on, both for French AND English versions of the list. Ask for further
+> > >details.
+> >
+> > Consider yourself asked
+>li'o
+> > Like I said: do the translation, and THEN worry about conforming it to 
+> some
+> > standardized format.
+>
+>         I do not want this. I want to care about and devise a format which
+>will make it easy to modify/revise the translated list *before* starting
+>the translation. For having used computer material which was created from
+>the ground up without structure design before, and knowing how difficult
+>it is to "patch", or even *use* (in an automated fashion) a file with
+>bogus/random structure, I cannot just impose the same thing to a
+>newly-written computer entity. Look, this is just what everyone teaches to
+>database or programs writers: write with regular patterns, document them,
+>for the sake of maintainability!
+
+The question is whether we know the regular patterns that we shall 
+eventually want/need, and furthermore whether it is possible to write them 
+with regular patterns and end up with consistency.  More on this below.
+
+>         I believe that I now have to insert the ideas I thought about.
+>
+>My goals were the following:
+>
+>* The files should be formatted in plain text, with (preferably) only
+>ASCII characters, or, when the character set is different, have it
+>specified at the beginning (in a "header") in a standard fashion.
+
+OK.  Obviously we have to do different things when working with Cyrillic 
+for Russian.  The first line of the gismu list serves as such a header now.
+
+>* Fields should not be fixed-width, not because it is a waste of computer
+>space, but because a certain width often later on proves too narrow.
+>Instead, have them separated by "control" characters/tags, preferably
+>using tabulations or newlines so that
+>    1) it is easily parsable (main goal)
+>    2) it formats automatically nicely when displayed on a standard
+>computer display.
+
+I am with you up until the last point.  I understand that Unix-based tools 
+use control-character delimiters for fields, but I have seldom seen 
+DOS/Windows programs do so.  As such, while what you produced below is 
+quite readable on a standard display, as a database display, it is hard to 
+use because I cannot easily match fields from multiple words.
+
+I think this is perhaps the main difference between the two 
+approaches.  When translating, you are focusing on translating all material 
+for a single word at one time.  On the other hand, when creating such 
+lists, we found it most highly essential to be able to look at the same 
+fields for large numbers of words at one time, which allows me to sort on 
+the fly on any of the fields, and to compare the same fields of all words 
+of certain types; to the extent that the place structure definitions are 
+consistent, it has been because we were able to do such multi-word 
+comparisons easily in a single page display.  This necessitates either 
+fixed length fields, or perhaps a spreadsheet-style database (I haven't 
+used spreadsheets in years, so I am not sure the state of the art in 
+user-friendliness of display, but I am thinking of Excel, which Nora has 
+used on occasion.) which does allow for variable length fields (but I have 
+no idea how the data is stored internally).
+
+We have never had a qualm about adding a field later, when it was shown to 
+be needed, and I don't think we have the design competence at this point to 
+be certain what fields would be needed for a variety of tools, or even for 
+a variety of natural languages.  It seems that you want to add all the 
+fields now and do the translation for each word for all fields, but 
+practically speaking, I don't think that we can reasonably produce even the 
+English form of such a list with added fields for grammatical information 
+any time soon.
+
+>* In addition to the "unique" keywords for each lojban word, should be
+>added place keywords.
+
+That currently exists as a separate file.
+
+>The grammar class of sumti fitting in each place
+>should, when needed, specified clearly and separately from the
+>translation.
+
+It is a matter of design principle that in Lojban, all sumti have the same 
+grammar class.  I understand that in natural languages, the corresponding 
+places of the corresponding predicates will often have grammatical 
+restrictions, but I think these restrictions differ with different 
+languages, and perhaps even with the choice of word used to translate the 
+Lojban.
+
+>* The translation should be done in two parts: the first part translating
+>what fits in each place (creating these "place keywords"), and the other
+>part specifying the relationship stated by the gismu between the places,
+>together with all connection words needed when doing a lojban-to-other
+>language translation.
+
+I don't think this is simple.  I think a quality translation tool will 
+sometimes need more than one template of relationship and connection 
+words.  But I think the data exists more or less for English for the 
+parser/glosser, just not in the master gismu file.
+
+>This is about the gismu, lujvo, and possibly fu'ivla lists (I did not --
+>yet -- think much about the cmavo lists, while however I am considering
+>doing so soon).
+
+We cannot even get people to do keywords for the lujvo and fu'ivla 
+lists.  The dikyjvo place structure analysis per the Book is immensely time 
+consuming.
+
+In short, generating data for each of these fields of information is a 
+major project in itself.  We have generally done this by getting one 
+field/data-category filled in for several hundred words at a time, then 
+verified for consistency in style and content over all the words, before 
+going on to a new word.  You are in effect proposing that we add several 
+more fields to each word, and the easy answer is that it will likely be 
+years efore they are done for the lujvo and fu'ivla even if we keep it real 
+simple.
+
+>As for the implementation of these ideas, the best thing would be an
+>XML-like database format. Unfortunately, I do not (yet) know much about
+>XML parsers and therefore did not bother working on an appropriate set of
+>XML tags.
+
+I have no idea even what XML is, and the only kind of parser I know 
+anything about is a YACC parser (and not much even then).
+
+>  I instead tried a simplified syntax to firstly format, and
+>secondly translate, the first few gismu. Here is what I got, explanation
+>follows:
+>
+>betfu (bef, be'u): "abdomen", "belly"
+>         1: "abdomen", "belly", "lower trunk" \
+>            [body part; \
+>             metaphor: midsection; \
+>             also: "stomach" (= djaruntyrango); \
+>             also: "digestive tract" (= befctirango, befctirangyci'e)]
+>         2: "body"
+>         r 1* : $1 is [!:an] [2:a/the] abdomen [2:of body $2]
+>         r 2* : $2 has [!:an] [1:for] abdomen [1:$1]
+>         related: cutne; livga; canti; djaruntyrango; befctirango; \
+>                 befctirangyci'e
+>
+>kakne (ka'e): "able", "can"
+>         1: "able", "capable" [also: "talentuous"] (1)
+
+I don't recognize "talentuous" as a valid English word, and based on its 
+roots, would not associate it with mere ability.  The use of "talent" in 
+the current gismu definition is out in the related information area, and 
+makes sense only if one immediately contrasts it with stati which is the 
+normal word used to refer to talent.
+
+>         2 (event, state): "ability", "capacity"
+>         3 (event, state): "cond. of ability"
+>         r 1* : $1 is/are able [2:to do/be $2] [3: under cond. $3]
+>         r 2* : $2 is/are ability [1:of $1] [3: under cond. $3]
+>         r 3* : $3 is/are cond. of ability [1:of $1] [2:to do/be $2]
+>         n 1 : also: "has talent", "know how to"
+>         n 2 : also: "know how to use" (= plika'e)
+>         related: stati; certu; gasnu [in the time-free potiential sense]; \
+>                 djuno; zifre; plika'e; ka'e; nu'o; pu'i
+>
+>gapru (gap): "above", "up"
+>         1: "thing directly above", "thing vertically above", \
+>            "thing upwards"
+>         2: "origin of above-ness"
+>         3: "frame of ref.", "gravity of ref."
+>         r 1* : $1 is/are above [2:$2] [3:in frame of ref. $3]
+>         r 2, 23 : $2 has s/g above it [3:in frame of ref. $3]
+>         r 21* : $2 has, above it, $1 [3: in frame of ref. $3]
+>         r 3+ : $3 is frame of ref. [*:in which !]
+>         r 3 : $3 is frame of ref. in which s/g is above s/g else
+>         related: tsani; galtu; cnita; drudi; gacri; dizlo; farna
+
+This is very good, almost ideal, for what I originally had in mind for the 
+dictionary firm of the gismu list (but which I've concluded cannot be 
+produced in any reasonable amount of time).  But I think it fails as a 
+computer tool.  The keywords listed for the places contain a lot of human 
+information, but the computer program needs a single keyword, and not a choice.
+
+The "also:" information in x1 of betfu is "related" info - indeed all of 
+the stuff in square brackets in the regular gismu list is "related" 
+stuff.  Related stuff is important for a human translation (but is likely 
+to be very natlang specific), and yet is not useful for computer application.
+
+>Enough for now on.
+
+Yes that is  a sufficient sample.  I think others can and should comment, 
+and I will have Nora look (she may very well disagree with me).  Comments 
+from others such as R Curnow, who have done computer tools based on the 
+existing list, would be especially informative.
+
+>Of course this bit might seem much less clear and/or
+>obvious than a straight translation as in the current list. However this
+>"format" makes it easy to *convert* it, for example, to the actual format
+>and thus print the whole list in a more understandable way, all this by a
+>*single* tool.
+
+Unix people talk about such tools.  DOS/Windows people tend to use screen 
+editors and not tools, and indeed seldom think in terms of a tool to do 
+what you describe.  As such, if I wanted to do anything with your list in a 
+different format, it would be a severe pain for me to convert it to 
+anything else.
+
+>  Such a syntax allows both for easy translation of
+>
+>    da de di gapru
+>into
+>    "da" (ent. au-dessus) est au-dessus de "de" (obj. surplombé) dans le
+>réf. "di" (référentiel)
+>
+>and
+>    da de di te gapru
+>into
+>    "da" (référentiel) est réf. dans lequel "di" (ent. au-dessus) est au
+>dessus de "de" (obj. surplombé)
+>
+>The process, while not obviously clear, is intuitive from the information
+>provided in each gismu record.
+
+I'll have to believe you on this.
+
+>         As one might have noted, I tried to use this "two parts in
+>translation" pattern I talked about.
+>
+>In a first part of each record, there are place keywords with notes
+>corresponding to each particular places.
+>The second part states different possible foreign translation of the
+>*relationship* itself, one for each possible useful place structure. For
+>example purposes, I tried to specify every relevant relationship
+>translation for each gismu; of course it is possible to specify only one
+>and eventually complete what's remaining later.
+>The last part states notes and related information for the gismu record as
+>a whole.
+
+This part sounds very useful as an additional template.  But it is going to 
+be language specific which place structures are "useful" or which have a 
+translation, so I question that this needs to be done in English and then 
+translated to French - I am sure there are idiomatic French phrasings for 
+some gismu that there is no corresponding English for, and vice versa.
+
+>I won't include here the detailed explanation of each syntax bit, even
+>if the bracket things, for example, are truly not obvious. This was a
+>draft idea.
+
+This would have been useful. It is not clear what syntax information you 
+are trying to communicate with the various symbols and codes.
+
+>I also do know that these choices are suboptimal -- I feel like there
+>would be much less to write if any modification/translation of the list
+>could be written as a "patch" to a previous version. This is why tagged
+>syntax is nice, btw.
+
+I do not know the conventions of syntax tagging, and had the impression 
+that there are numerous ways to do it, all mutually incompatible.
+
+>So, what do you think of it ? Any derived ideas show up ?
+
+I'll let others tackle improvements.  From my perspective, just producing 
+the English files would take man-weeks of effort that we have no one to 
+spare; the result would then be used without being checked by the years of 
+multiple reviewers and proofreading that have gone into the existing gismu 
+list.  And we get no French gismu list until the English is complete.  This 
+merely heightens the existing dependence of Lojban on its English roots, 
+when I think the goal of translation into other languages is as much as 
+possible to cut Lojban loose from English.
+
+The tradeoff is that in cutting loose from English, the solidity of the 
+baseline is weakened - will a French Lojbanist working from a French 
+translation of the gismu list communicate well with a Russian Lojbanist 
+working from a Russian translation, with neither resorting to the English 
+lists?  We cannot know until we have those translations.
+
+I am more hungry now for the tools that people need to learn Lojban in the 
+different languages, and less focused on the tools that might be need for 
+computer translation applications.
+
+>Thanks for your attention
+
+You definitely have my attention.
+
+If I sound negative, it is not that your ideas are bad, but rather that I 
+think the job is too big for the people we have and their low levels of 
+time-availability, and ill-suited for the diverse methods different 
+volunteers will use in working on it on different computer platforms using 
+different software.  (Nora, for example, does all of her word list work on 
+paper while riding on the subway, ideally entering it later into the 
+computer; she doesn't use any standard format for her notes and comments, 
+so only she can enter them into the machine, and she usually does that as 
+straight unformatted text.)
+
+lojbab
+--
+lojbab                                             lojbab@lojban.org
+Bob LeChevalier, President, The Logical Language Group, Inc.
+2904 Beau Lane, Fairfax VA 22031-1303 USA                    703-385-0273
+Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+           
+
