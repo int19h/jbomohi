@@ -162,8 +162,8 @@ unstressed-syllable <- !stressed syllable !stress
 unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
-y-syllable <- (cluster / consonant / h?) y !y
-syllable <- (cluster / consonant / h?) semi-consonant? (diphthong / vowel) !y / digit 
+y-syllable <- (h / coda? consonantal-syllable? initial) y !y
+syllable <- (h / coda? consonantal-syllable? initial) (diphthong / semi-consonant? vowel) !y / digit 
 semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / i / o / u
@@ -180,7 +180,7 @@ y <- comma* [[yY]
 
 ;-------------------------------------------------------------------
 
-cluster <- &(consonant consonant+) coda? consonantal-syllable? initial
+cluster <- consonant consonant+
 
 coda <- !initial !consonantal-syllable consonant
 
