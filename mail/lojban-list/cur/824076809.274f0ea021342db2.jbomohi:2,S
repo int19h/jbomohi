@@ -1,0 +1,106 @@
+Received: from VMS.DC.LSOFT.COM (vms.dc.lsoft.com [205.186.43.2]) by locke.ccil.org (8.6.9/8.6.10) with ESMTP id LAA29971 for <cowan@LOCKE.CCIL.ORG>; Mon, 12 Feb 1996 11:33:36 -0500
+Message-Id: <199602121633.LAA29971@locke.ccil.org>
+Received: from PEACH.EASE.LSOFT.COM (205.186.43.4) by VMS.DC.LSOFT.COM (LSMTP for OpenVMS v1.0a) with SMTP id F05BA93B ; Sun, 11 Feb 1996 21:04:04 -0500
+Date:         Mon, 12 Feb 1996 00:13:29 +0200
+Reply-To: veion@XIRON.PC.HELSINKI.FI
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Subject:      Re: GEN: almoat-PROPOSAL: intervals
+X-To:         lojban@cuvmb.cc.columbia.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+X-Mozilla-Status: 0011
+X-From-Space-Date: Wed Feb 14 12:44:38 1996
+X-From-Space-Address: -
+Content-Length: 2862
+
+> Date:         Sun, 11 Feb 1996 12:21:17 +0100
+> From: Goran Topic <topic@STUDENT.MATH.HR>
+> Subject:      GEN: almost-PROPOSAL: intervals
+
+> Anything except 0da will satisfy me. I *need* such a mechanism, and
+> I believe this should be expressible within the tense system. It
+> ba'e belongs into the tense system. I hate writing
+
+>  lenu mi pu klama la glazgov. cu temci lo cabna lo nanca belipimu
+
+> when I can say
+
+>  mi klama la glazgov. puxe'i lo nanca belipimu
+
+> or
+
+>  mi klama la glazgov. puza lo nanca belipimu
+
+> It is not a question of extra 6-7 syllables. It is a matter of principle.
+
+> ta'o, this was rauroi written in lojban... I thought it might be time to
+> set it forth in English. Details left to the expert community to work
+> out. I am being boring, I know. But I *need* cai this. Really.
+
+> co'o mi'e. goran.
+
+   This posting is NOT pro or con the proposal and
+   NOT A CHANGE PROPOSAL, just a technical feasibility study.
+
+   If we overload NOI and make the following changes to the YACC grammar,
+   we can express both an origin and an offset:
+
+C time_1030               :  time_distance_1036
+C                         |  time_distance_1036  time_A_1031
+                          |  time_A_1031
+                          ;
+
+  time_offset_1033        :  time_direction_1035
+C                         |  time_direction_1035 time_distance_1036
+                          ;
+
++ time_distance_1036      :  ZI_624
++                         |  ZI_624 NOI_585 sentence_40 BO_508
+
+
+C space_A_1042          :  space_distance_1049
+C                       |  space_distance_1049  space_B_1043
+                        |  space_B_1043
+                        ;
+
+  space_offset_1045       :  space_direction_1048
+C                         |  space_direction_1048  space_distance_1049
+
++ space_distance_1049   :  VA_613
++                       |  VA_613 NOI_585 sentence_40 BO_508
+
+
+   A more general form would replace 'NOI_585 sentence_40' with
+   'relative_clauses_121'.
+
+   Corresponding changes could be made to the grammar of VEhA/ZEhA.
+
+   All these modifications pass YACC without conflicts.
+
+   VA/ZI+NOI is more verbose than xe'i but also more expressive as it
+   combines subjective and objective distances.
+
+   Examples:
+
+     *   mi pu zanoi nanca lipimu bo klama la glazgov.
+     *   mi zano'u pimu loi mi gu'arna'a bo vi gunka
+     *   mi xabju vanoi mitre lipaxaki'o bo la'o sy Helsinki sy
+
+   ------------------------------------------------
+
+   I REPEAT:
+
+   THIS IS NOT A CHANGE PROPOSAL. I REFRAIN FROM MAKING ANY NEW PROPOSALS
+   -- AND I'M NOT PUSHING EVEN THE ONE I MADE ONE AND A HALF YEARS AGO.
+
+   In general, I'm more con than pro at the moment. We need the books
+   and we need the baselines, soon.
+
+--
+
+  co'o mi'e veion
+
+---------------------------------
+.i mi du la'o sy. Veijo Vilva sy.
+---------------------------------
+
