@@ -18,3 +18,20 @@ officialdata wrote:
 
 You mean d places, right? "zi'o" doesn't have places. -phma
 
+
+## 2004-08-12T20:57:56Z — officialdata (comment 158, on definition 13295, in reply to 157)
+
+Re: Please mark places.
+
+phma wrote:
+> officialdata wrote:
+> > Which places of datni do your places come from?  Please rename them to
+z
+> > places.
+> 
+> You mean d places, right? "zi'o" doesn't have places. -phma
+
+Right, sorry.
+
+-Robin
+
