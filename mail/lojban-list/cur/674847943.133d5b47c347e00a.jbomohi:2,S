@@ -1,0 +1,135 @@
+Return-Path: <cowan>
+Message-Id: <m0jfamG-0002TPC@snark.thyrsus.com>
+From: cowan (John Cowan)
+Subject: MEX paper, draft 1.0, part #2 of 5
+To: lojban-list
+Date: Tue, 21 May 91 13:45:43 EDT
+X-Mailer: ELM [version 2.2 PL13]
+X-From-Space-Date: Tue May 21 13:46:58 1991
+X-From-Space-Address: cowan
+Content-Length: 5281
+
+3. Simple Infix Expressions and Equations
+
+Let us begin at the beginning:  one plus one equals two.  In Lojban,
+that sentence translates to:
+
+	li pa su'i pa du li re
+	the-number one plus one equals the-number two.
+
+This mekso sentence is a regular Lojban bridi that exploits mekso features.
+"du" is the predicate meaning "x1 is mathematically equal to x2".
+It is a cmavo for conciseness, but it has the same grammatical uses as
+any brivla.
+
+"li" is the number article.  It is required whenever a sentence talks
+about numbers as numbers, as opposed to the use of numbers to quantify
+things.  For example:
+
+	le ci prenu
+	the three persons
+
+requires no "li" article, because the "ci" is being used to specify the
+number of "prenu".  However, the sentence
+
+	li ci cu kancu le'i prenu
+	the-number three counts the-set-of persons [I have in mind]
+
+requires "li" because "ci" is being used as a sumti.
+
+"su'i" is the first purely mekso cmavo.  It belongs to selma'o VUhU,
+which is composed of mathematical operators, and means "plus".  As
+mentioned before, it is distinct from "ma'u" which means the plus
+sign as an indication of a positive number:
+
+	li ma'u pa su'i ni'u pa du li no
+	the-number plus-sign one plus minus-sign one equals the-number zero
+	+1 + -1 = 0
+
+Of course, it is legal to have complex mekso on both sides of "du":
+
+	li mu su'i pa du li ci su'i ci
+	the-number five plus one equals the-number three plus three
+	5 + 1 = 3 + 3
+
+Why don't we say "li mu su'i li pa" rather than just "li mu su'i pa"?
+The answer is that VUhU operators connect mekso operands (numbers,
+in this case), not general sumti.  "li" is used to convert the entire
+mekso into a sumti, which then plays the roles applicable to other sumti:
+in this case, filling the place structures of a bridi.
+
+By default, Lojban mathematics is like calculator mathematics: there is
+no notion of "priority of operators".  Consider the following example
+("pi'i" means "times", the multiplication operator):
+
+	li ci su'i vo pi'i mu du li reci
+	the-number three plus four times five equals the-number two-three
+	3 + 4 x 5 = 23
+
+Is this Lojban statement true?  No!  "3 + 4 x 5" is indeed 23, because the
+conventions of mathematics state that multiplication takes precedence over
+addition; that is, the multiplication "4 x 5" is done first, and then
+the addition "3 + 20".  But VUhU operators by default are done left to
+right, like other Lojban grouping, and so the correct statement would be:
+
+	li ci su'i vo pi'i mu du li cimu
+	the-number three plus four times five equals the-number three-five
+	3 + 4 x 5 = 35
+
+Here we do the "3 + 4" first, and then the "7 x 5" second, leading to the
+result 35.  While possessing the advantage of simplicity, this violates
+the design goal of matching the standards of international mathematics.
+What can be done?
+
+There are three solutions, all of which will probably be used to some degree.
+The first solution is to ignore the problem.  People will say "li ci
+su'i vo pi'i mu" and mean 23 by it, because the notion that multiplication
+takes precedence over addition is too deeply ingrained to be eradicated
+by the Lojban parser with its total ignorance of semantics.  This essentially
+allows semantics to dominate syntax in this one area.
+
+(Why not hard-wire the precedences into the grammar, as is done in computer
+programming languages?  Essentially because there are too many operators,
+known and unknown, with levels of precedence that vary according to usage.
+The programming language 'C' has 13 levels of precedence, and its list
+of operators is not extensible.  For Lojban this approach is just not
+practical.)
+
+The second solution is to use explicit means to specify the precedence
+of operators.  This approach is fully general, but clumsy, and will be
+explained in a later section.
+
+The third solution is simple but not very general.  It builds on a
+mechanism used elsewhere in the language: the short-scope cmavo "bo".
+When an operator is prefixed with "bo", it becomes automatically of
+higher precedence than other operators not so prefixed.  Thus,
+
+	li ci su'i vo bo pi'i mu du li reci
+	the-number three plus four-times-five equals the-number two-three
+	3 + 4 x 5 = 23
+
+is a truthful Lojban bridi.
+
+In addition, of course, Lojban has the mathematical parentheses "vei" and
+"ve'o", which can be used just like their written equivalents "(" and ")"
+to group things in any way desired:
+
+	li vei ny. su'i pa ve'o pi'i ve'i ny. su'i pa
+		du li ny. bo te'a re su'i re bo pi'i ny. su'i pa
+	the-number ( n plus one ) times ( n plus one
+		equals the-number n-power-two plus two-times-n plus 1
+	                  2
+	(n + 1)(n + 1) = n  + 2n + 1
+
+There are several new things here:  "te'a" means "raised to the power",
+and we also see the use of the lerfu "ny", representing the letter "n".
+In mekso, letters mean just what they mean in ordinary mathematics:
+variables.  The parser will accept a string of letters as the equivalent
+of a single letter, in agreement with computer science; "abc" is a single
+variable, not the equivalent of "a x b x c".
+
+Note that the explicit operator "pi'i" is required in the Lojban verbal
+form whereas multiplication is implicit in the symbolic form.  Note also
+that "ve'o" is an elidable terminator, and is actually elided here before
+the "du".
+
