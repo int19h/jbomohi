@@ -56,17 +56,17 @@ stressed-gismu <- !cmene (initial-pair stressed-vowel / consonant stressed-vowel
 
 ;-------------------------------------------------------------------
 
-lujvo <- !cmene !tosmabru initial-rafsi medial-rafsi* final-rafsi 
+lujvo <- !cmene !tosmabru (initial-rafsi medial-rafsi* final-rafsi / stressed-initial-rafsi short-final-rafsi)
 
-tosmabru <- cmavo-form lujvo
+tosmabru <- C-vowels lujvo
 
-initial-rafsi <- fuhivla-rafsi / y-rafsi / CVC-rafsi / CCV-rafsi / CVV-rafsi r-hyphen !(CCV-rafsi spaces) / CVV-rafsi &(CCV-rafsi spaces) / stressed-initial-rafsi &short-final-rafsi
+initial-rafsi <- (fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi r-hyphen !(CCV-rafsi spaces)) &consonant / CVV-rafsi &(CCV-rafsi spaces)
 
-stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-CVC-rafsi / stressed-CCV-rafsi / stressed-last-CVV-rafsi r-hyphen !CCV-rafsi / stressed-last-CVV-rafsi &CCV-rafsi
+stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-last-CVV-rafsi r-hyphen !CCV-rafsi / stressed-last-CVV-rafsi &CCV-rafsi
 
-medial-rafsi <- !fuhivla !gismu (&consonant fuhivla-rafsi / long-rafsi / CVC-rafsi y / y-less-rafsi) &consonant
+medial-rafsi <- !fuhivla !gismu (fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) &consonant
 
-final-rafsi <- &consonant fuhivla / gismu / (CVV-rafsi / CCV-rafsi) &spaces / stressed-first-CVV-rafsi &post-word / (stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-last-CVV-rafsi) short-final-rafsi
+final-rafsi <- fuhivla / gismu / (CVV-rafsi / CCV-rafsi) &spaces / stressed-first-CVV-rafsi &post-word / (stressed-fuhivla-rafsi / stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-last-CVV-rafsi) short-final-rafsi
 
 short-final-rafsi <- (short-CVV-rafsi / CCV-rafsi) &post-word
 
@@ -98,7 +98,7 @@ stressed-fuhivla-rafsi <- !lujvy (stressed-C-vowels cluster y / C-vowels non-ini
 
 fuhivla-rafsi <- !lujvy (C-vowels cluster y / C-vowels non-initial-cluster syllable+ consonant+ y / !slinkujy initial-cluster syllable+ consonant+ y / C-vowels slinkujy)
 
-lujvy <- (CVV-rafsi (r / n &r))? y-less-rafsi* y-rafsi
+lujvy <- (CVV-rafsi r-hyphen)? y-less-rafsi* y-rafsi
 
 slinkujy <- consonant y-less-rafsi* y-rafsi
 
@@ -108,23 +108,23 @@ y-rafsi <- long-rafsi / CVC-rafsi y / stressed-long-rafsi / stressed-CVC-rafsi y
 
 ;-------------------------------------------------------------------
 
-fuhivla <- !cmene !gismu !lujvo (stressed-fuhivla-head cluster fuhivla-tail / fuhivla-head cluster stressed-fuhivla-tail)
+fuhivla <- !cmene !gismu !lujvo (fuhivla-A / fuhivla-B / fuhivla-C)
+
+fuhivla-A <- stressed-fuhivla-head cluster syllable &post-word
+
+fuhivla-B <- C-vowels (non-initial-cluster fuhivla-tail / slinkuhi)
+
+fuhivla-C <- !slinkuhi initial-cluster fuhivla-tail
 
 stressed-fuhivla-head <- stressed-C-vowels / C-vowels &(syllable spaces)
  
-fuhivla-head <- !slinkuhi &initial-cluster / C-vowels &(non-initial-cluster / slinkuhi)
-
 slinkuhi <- consonant !fuhivla !fuhivla-rafsi !stressed-fuhivla-rafsi medial-rafsi* final-rafsi 
 
-stressed-fuhivla-tail <- syllable syllable+ &spaces / syllable* stressed-syllable syllable &post-word
-
-fuhivla-tail <- syllable &post-word
+fuhivla-tail <- syllable syllable+ &spaces / syllable* stressed-syllable syllable &post-word
 
 ;-------------------------------------------------------------------
 
-cmavo <- !cmene !gismu !lujvo !fuhivla cmavo-form 
-
-cmavo-form <- consonant? vowels / digit / y+
+cmavo <- !cmene !gismu !lujvo !fuhivla (consonant? vowels / digit / y+)
 
 ;-------------------------------------------------------------------
 
