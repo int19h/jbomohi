@@ -1,0 +1,66 @@
+Return-Path: <lojbab@lojban.org>
+X-Sender: lojbab@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_0_0_1); 16 Nov 2001 23:42:33 -0000
+Received: (qmail 84823 invoked from network); 16 Nov 2001 23:41:25 -0000
+Received: from unknown (216.115.97.171)
+  by m5.grp.snv.yahoo.com with QMQP; 16 Nov 2001 23:41:25 -0000
+Received: from unknown (HELO stmpy-4.cais.net) (205.252.14.74)
+  by mta3.grp.snv.yahoo.com with SMTP; 16 Nov 2001 23:41:24 -0000
+Received: from bob.lojban.org (ppp2.net-A.cais.net [205.252.61.2])
+	by stmpy-4.cais.net (8.11.1/8.11.1) with ESMTP id fAGNfN445347
+	for <lojban@yahoogroups.com>; Fri, 16 Nov 2001 18:41:23 -0500 (EST)
+Message-Id: <4.3.2.7.2.20011116183302.00cdfdd0@pop.cais.com>
+X-Sender: vir1036@pop.cais.com
+X-Mailer: QUALCOMM Windows Eudora Version 4.3.2
+Date: Fri, 16 Nov 2001 18:41:39 -0500
+To: lojban@yahoogroups.com
+Subject: Re: [lojban] Re: ca'a pu (was: Why is there so much
+  irregularity in cmavo/gismu?)
+In-Reply-To: <20011116225514.A218@rrbcurnow.freeuk.com>
+References: <Pine.GSO.4.40.0111140724360.11466-100000@ucsub.colorado.edu>
+ <3BF274A8.2070903@reutershealth.com>
+ <Pine.GSO.4.40.0111140724360.11466-100000@ucsub.colorado.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+From: "Bob LeChevalier (lojbab)" <lojbab@lojban.org>
+X-Yahoo-Message-Num: 12197
+Content-Length: 1573
+
+At 10:55 PM 11/16/01 +0000, Richard Curnow wrote:
+>On Wed, Nov 14, 2001 at 07:33:06AM -0700, Jay Kominek wrote:
+>Obviously {mi pu ca'a broda} does work.  So the key difference is that
+>'pu' cannot follow 'ca'a' within a single time construction.
+>
+>I've investigated why jbofi'e doesn't reduce ca'a to a standalone term
+>(inferring 'ku') when 'pu' is the lookahead token.  Essentially, it's
+>because it thinks it's starting to see something like
+>
+>   mi ca'a pu gi le nanmu gi le ninmu cu broda
+>
+>(whatever that might mean), i.e. it's expecting to see 'gi' after pu to
+>make everything work out OK. This expression parses OK on the official
+>v2.33 parser.  (I don't actually have the official v3 parser running yet
+>- I've never got round to sorting the build out.)
+>
+>I need to away and think quite hard about this problem.  The full extent
+>of the bug is not yet clear to me - I presume I'm missing one of the
+>pre-parser stages that the official parser has.
+
+ca'a pu should never be acceptable even before a gi.  It has to have the ku 
+(or have it inferred by YACCs error processing.
+
+simple tag + GI is a lexer_G construction, and the simple tag cannot 
+include the ca'a.  It should know before it leaves preparsing whether the 
+PU is or is not part of a lexer_G.
+
+lojbab
+--
+lojbab                                             lojbab@lojban.org
+Bob LeChevalier, President, The Logical Language Group, Inc.
+2904 Beau Lane, Fairfax VA 22031-1303 USA                    703-385-0273
+Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+           
+
