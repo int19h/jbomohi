@@ -1,0 +1,122 @@
+Return-Path: <cbmvax!uunet!CUVMA.BITNET!LOJBAN>
+Received: by snark.thyrsus.com (/\==/\ Smail3.1.21.1 #21.19)
+	id <m0lCmSE-00033mC@snark.thyrsus.com>; Sat, 8 Feb 92 02:26 EST
+Received: by cbmvax.cbm.commodore.com (5.57/UUCP-Project/Commodore 2/8/91)
+	id AA14137; Fri, 7 Feb 92 20:36:15 EST
+Received: from cunixf.cc.columbia.edu (via [128.59.40.130]) by relay1.UU.NET with SMTP 
+	(5.61/UUNET-internet-primary) id AA26666; Fri, 7 Feb 92 15:27:57 -0500
+Received: from cuvmb.cc.columbia.edu by cunixf.cc.columbia.edu (5.59/FCB)
+	id AA04867; Fri, 7 Feb 92 15:25:46 EST
+Message-Id: <9202072025.AA04867@cunixf.cc.columbia.edu>
+Received: from CUVMB.COLUMBIA.EDU by CUVMB.COLUMBIA.EDU (IBM VM SMTP R1.2.1) with BSMTP id 6340; Fri, 07 Feb 92 15:24:18 EST
+Received: by CUVMB (Mailer R2.07) id 6173; Fri, 07 Feb 92 15:22:50 EST
+Date:         Fri, 7 Feb 1992 15:49:32 GMT
+Reply-To: cbmvax!uunet!bradford.ac.uk!cuvmb.cc.columbia.edu!c/j/fine.maildb
+Sender: Lojban list <cbmvax!uunet!CUVMA.BITNET!cuvmb.cc.columbia.edu!LOJBAN>
+From: CJ FINE <cbmvax!uunet!BRADFORD.AC.UK!cuvmb.cc.columbia.edu!C.J.Fine>
+Subject:      proposed extension to grammar
+X-To:         Lojban list <lojban@cuvmb.cc.columbia.edu>
+To: John Cowan <cowan@SNARK.THYRSUS.COM>,
+        Eric Raymond <eric@SNARK.THYRSUS.COM>,
+        Eric Tiedemann <est@SNARK.THYRSUS.COM>
+Content-Length: 3940
+
+I propose two extensions to the grammar for the next
+baseline - both are for greater generality.
+
+Lojban is canonically SVO (subject-verb-object) and AN (adjective-noun
+or at least MH - modifier-head), but allows you to vary either of these
+orders for style, effect, or concordance with the shape of another language.
+
+There is one structure which is compulsorily HM (head-modifier), and
+that is relative clauses/phrases.
+        le zdani pe mi
+        le dinju po'u la kreml
+        le zdani noi lemi rirme'i cu xabju ke'a
+etc.  [Actually, there is one slight exception - "lemi rirme'i"  is a MH
+version of "le rirme'i pemi". I have always found this an admittedly
+useful, but very ad hoc and awkward construction, particularly when the
+modifier is more than just a KOhA.]
+
+I would like to suggest that relative phrases/clauses be permitted
+before the selbri of a description or name:
+        le pemi zdani
+        le po'u la kreml. dinju
+        le noi lemi rirme'i cu xabju ke'a [ko'u] zdani.
+
+I have not looked at the formal grammar, only the bnf, and I haven't a
+parser, but it seems to me that this extension is simple and does not
+cause ambiguity. I would change
+
+        sumti_tail = [sumti-4] selbri
+
+to read
+        sumti-tail = [pre-relative] selbri
+and add
+        pre-relative = sumti-4 | relative-clauses
+
+Note that the existing sumti-4 expression just becomes a zipfian contraction
+("lemi zdani" for "lepemi zdani") rather like "ze prenu" for "ze lo prenu".
+
+I am not claiming this allows you to express anything more than at
+present, merely that it removes an unnecessary restriction for no
+significant cost - and it allows translation from certain languages to
+maintain the structural order:
+
+In Japanese, adjectives are a special kind of verb, and a (verb-final)
+relative clause precedes its head just like an adjective.
+
+        omosiroi     hito
+        interesting person
+
+        boku ga   kinoo    mita hito
+        I (subj) yesterday saw  person ("the person I saw yesterday")
+
+        le poi mi viska cale prulamdei ke'a [ku'o] prenu
+
+2. (This suggestion is less strongly motivated, but still worth
+considering).
+Extend this pre-relative to all sumti. This will need a cmavo - I have
+picked "na'a" from the currently unused ones, but I have no particular
+motivation for this choice. The cmavo then introduces a
+relative-clause(s) which stands before the modified sumti. The only
+question is what level of sumti it attaches to.
+
+My suggestion would be to replace
+        sumti-2 = sumti-3 [KE etc]
+by
+        sumti-2 = [NAhA pre-relative] sumti-3 [KE etc]
+
+Thus:
+        na'a poi xabju co lamji mi ku'o la fred.
+        na'a ne le ckule la djenis
+        na'a noi mi gleki lenu tirne ke'a ko'u ra
+        na'ami la mam.
+
+(again the last could be thought of as a contraction of "na'apemi la mam"
+
+The main use I have thought of for this is epithets and restrictions
+before names:
+
+        na'a pe la bakin,mcr la xodjez  "The Buckinghamshire Hodges"
+        na'a noi misno la ringos. star. "The famous Ringo Starr"
+        na'a poi nolraitru la xusEIn.   "King Hussein"
+
+There is actually a further wrinkle you can put in this one: in the NAhA
+construction (not in the LE construction above) you could allow a
+selbri, and interpret this as an omitted "poi" (you could actually go to
+a sumti-tail or a full bridi-tail, but then you would always need to
+terminate it, so I don't think that's worth it. ) This allows a rather
+neat construction for titles that can be expressed by selbri:
+
+        na'a nolraitru la xusEIn. "The Hussein who kings"
+        na'a kicmu la uotsn.
+        na'a misno la ringos. star. (restrictive: as opposed to all the
+                                        non-famous ones)
+        na'a nolraitru bero natmrbelgi'e la boduan "King of the Belgians
+                                                        Baudouin"
+
+Any takers?
+                Colin
+                c.j.fine@bradford.ac.uk
+
