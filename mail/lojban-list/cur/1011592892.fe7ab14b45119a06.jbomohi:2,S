@@ -1,0 +1,71 @@
+Return-Path: <jimc@math.ucla.edu>
+X-Sender: jimc@math.ucla.edu
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_0_1_3); 21 Jan 2002 06:01:36 -0000
+Received: (qmail 41501 invoked from network); 21 Jan 2002 06:01:36 -0000
+Received: from unknown (216.115.97.167)
+  by m4.grp.snv.yahoo.com with QMQP; 21 Jan 2002 06:01:36 -0000
+Received: from unknown (HELO bodhi.math.ucla.edu) (128.97.4.253)
+  by mta1.grp.snv.yahoo.com with SMTP; 21 Jan 2002 06:01:36 -0000
+Received: from localhost (bodhi.math.ucla.edu [128.97.4.253])
+	by bodhi.math.ucla.edu (8.8.8/8.8.8) with ESMTP id WAA13831
+	for <lojban@yahoogroups.com>; Sun, 20 Jan 2002 22:01:34 -0800 (PST)
+Date: Sun, 20 Jan 2002 22:01:32 -0800 (PST)
+Sender: <jimc@xena.cft.ca.us>
+To: <lojban@yahoogroups.com>
+Subject: Re: [lojban] SpeakFreely results
+In-Reply-To: <02012016543426.01718@neofelis>
+Message-ID: <Pine.LNX.4.33.0201202128000.1053-100000@xena.cft.ca.us>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Jim Carter <jimc@MATH.UCLA.EDU>
+X-Yahoo-Group-Post: member; u=810565
+X-Yahoo-Message-Num: 13003
+Content-Length: 2011
+
+On Sun, 20 Jan 2002, Pierre Abbat wrote:
+> I am behind a desktop computer which is running Linux 2.4 and which uses
+> iptables to let the laptop get to the outside world. What do I do so that
+> SpeakFreely can get through the desktop to the laptop?
+
+Here are a few lines from my firewall script on Linux kernel 2.4.16.  My
+setup is laptop <-(radio)-> server <-(DSL)-> internet and hackers.  This
+firewall is on the laptop.
+
+iptables  -t nat -A PREROUTING -p udp --dport domain  -j ACCEPT
+iptables -t nat -A PREROUTING -p IPv6-Crypt          -j ACCEPT
+(and several others, plus -p tcp --dport ssh)
+iptables -t nat -P PREROUTING DROP                   # Shields up!
+
+I would suggest adding this one (of course I haven't actually tried it :-)
+
+iptables -t nat -a PREROUTING -p udp --dport 2074 -j ACCEPT
+
+The server does IP masquerade (NAT), but it matches up laptop packets with
+their replies for DNS and NTP, so most likely it will do the same for any
+port including 2074.  Here's an excerpt from the server rules.
+
+iptables -t nat -A PREROUTING -i eth1 -p udp --dport ntp  -j ACCEPT
+iptables  -t nat -A PREROUTING -i eth1 -p icmp             -j ACCEPT
+(plus other ports and protocols; include 2074)
+iptables -t nat -P PREROUTING DROP
+iptables -t nat -A POSTROUTING -o eth1 -s \! fafnir -p udp -j MASQUERADE \
+    --to-ports 61000-65096
+(and similarly for tcp and icmp).
+
+Actually, while helping you I helped myself!  I had been having trouble
+with doing NTP and DNS through the firewall, and it turned out I had some
+bogus rules specifically for them.  Removing them made those UDP services
+start working.
+
+Hope this helps!  It's a jungle out there (I got attacked by viruses 4
+times in 3 hours at work on an supposedly secure network :-) and you should
+keep your shields up.
+
+James F. Carter          Voice 310 825 2897    FAX 310 206 6673
+UCLA-Mathnet;  6115 MSA; 405 Hilgard Ave.; Los Angeles, CA, USA  90095-1555
+Email: jimc@math.ucla.edu    http://www.math.ucla.edu/~jimc (q.v. for PGP key)
+
+
+           
+
