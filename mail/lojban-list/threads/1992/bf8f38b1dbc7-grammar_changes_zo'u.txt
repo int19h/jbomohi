@@ -1,0 +1,108 @@
+# mail/lojban-list thread bf8f38b1dbc7-grammar_changes_zo'u | root 9208051430.aa12306@getafix.oasis.icl.co.uk | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1992-08-05T15:30:54Z | I.Alexander.bra0122@oasis.icl.co.uk | 9208051430.aa12306@getafix.oasis.icl.co.uk | mail/lojban-list/cur/713028654.bf8f38b1dbc701eb.jbomohi:2,S
+
+I lost track of which of your messages were to the list, and which
+only to the baseline review committee, so I've just replied
+to the latter.
+This is just a quick first pass through,  to get the easy
+ones out the way, and mention some of the issues arising.
+
+1.      YESBUT.  Looks superficially OK, although your description
+in the "rationale" appears to have got confused between
+high and low precedence.  Although it makes sense as it
+stands, there may be other considerations which make it
+obsolete - see later.
+
+2-4.    YES.  They look useful, and no apparent complications.
+I second Mark's comments on 4.
+
+5.      SHRUG.  I can't get excited about this.  I don't really
+understand the LALR(1) problem, although I haven't looked
+deeply into it, and my parsing theory's very rusty.
+(But I guess it's not surprising if LALR(1) imposes _some_
+restrictions.)
+
+6.      YES.  A borderline "yes" on the grounds of
+compatibility with {ve'o}.  (What's this "separate cmavo
+for the subscript"?)
+
+7.      SHRUG.  Mark's objection has some merit.
+
+8-12.   YES.
+
+13.     NO.  If it ain't broke, don't fix it.
+
+14-19.  YES.  Like Mark, I didn't understand 15 until I
+checked with the grammar.  Re 17, I never :) understood
+why these three were separated in the first place.
+
+20-21.  ABSTAIN.  I need more time on these, and it may
+depend on sorting out some problems in the grammar:-
+
+BNF
+
+(I haven't got round to checking most of these in the YACC yet.)
+
+sumti-5<95>:
+        I notice that in getting rid of multiple quantifiers
+on an indefinite description, you've ended up with multiple
+quantifiers on a sumti-6 :-)
+(I now see that Veijo's already pointed this out.)
+
+sumti-tail<111>:
+        There's a missing ']' in "[sumti-6".  I take it these
+        [nested-relative-clauses] refer to the sumti-6.
+
+sumti-tail<113>:
+        This relic of the previous grammar appears between
+relative-clause<122> and selbri<130>.
+(I now see that Veijo's already pointed this out.)
+
+selbri-1<131>:
+        It seems odd putting <selbri-1> after 'CO' - this means
+you can have a tag after the {co}, as long as you start with
+a {na}.  If you can think of a use for the tag here, use
+<selbri>, otherwise move all the tag/NA stuff up into selbri<130>,
+(which'll probably cost you another YACC rule).
+
+Rewind
+
+sumti<90>:
+        My first thought was why didn't you make "KE sumti /KEhE/"
+a sumti-6, analogously to what is now tanru-unit-2.  Then I
+remembered two reasons - the ambiguity with the use of {ke}
+in tanru grouping, and the desire to use "ek stag ke".  Pity,
+it would have been a potential solution to a lot of grouping
+problems (see e.g. sumti-6 below) -
+the position of 'NU' and 'NAhE' in the old selbri
+grammar was awkward, but could always have been circumvented
+by using {ke ... ke'e}.  I suppose you can still do the same
+sort of thing with sumti in an emergency using which ever
+LUhI fits, but this isn't very attractive.
+
+sumti-6<96>:
+        I wrote a whole tirade on the "gek sumti gik sumti-4"
+here, but eventually I checked the YACC, where it is
+absent.  It did however help to draw my attention to the
+grouping problem.
+        You _do_ want some way of attaching relative
+clauses unambiguously to a whole "gek ... gik"
+or "sumti ek sumti" (which I don't
+think the old grammar could do, except using the LUhI trick
+mentioned above), and I think the only way to do
+that is some kind of terminator or grouping mechanism.
+        Similarly we _do_ need to say things like
+"Three of the people who voted", or "Three of the men who
+voted".  But you can either use some sort of inside quantifier
+or use "ci lu'a ... lu'u", so we're covered.
+        If you come back and say LUhI is the answer, then I'll
+accept that.  My main concern is that we can say what
+we want to say, and that we document what the various
+constructions mean, so that we can figure out how to
+say it.  Fine tuning of elidable terminators is a new
+problem to me, so I'll rely on your obvious experience
+in this area.
+        I think this means my vote on 1 becomes a YES.
+
+
