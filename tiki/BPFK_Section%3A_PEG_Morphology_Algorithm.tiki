@@ -42,7 +42,7 @@ word <- lojban-word / non-lojban-word
 
 lojban-word <- cmene / gismu / lujvo / fuhivla / cmavo
 
-non-lojban-word <- !lojban-word (!spaces .)+
+non-lojban-word <- !cmene !gismu !lujvo !fuhivla !cmavo (!spaces .)+
 
 ;-------------------------------------------------------------------
 
@@ -72,13 +72,17 @@ final-rafsi <- fuhivla / gismu / CVV-final-rafsi / short-lujvo
 
 ;-------------------------------------------------------------------
 
-fuhivla <- fuhivla-head stressed-syllable !stressed syllable &post-word
+fuhivla <- (fuhivla-head stressed-syllable / stressed-type-III) !stressed syllable &post-word 
 
-stressed-fuhivla-rafsi <- fuhivla-head stressed-syllable consonant+ y
+stressed-fuhivla-rafsi <- (fuhivla-head stressed-syllable / stressed-type-III) consonant+ y
 
-fuhivla-rafsi <- fuhivla-head unstressed-syllable consonant+ y
+fuhivla-rafsi <- (fuhivla-head unstressed-syllable / type-III) consonant+ y
 
-fuhivla-head <- !cmavo !rafsi-string !slinkuhi !non-initial-cluster !h (unstressed-syllable &syllable)*
+fuhivla-head <- (!cmavo !rafsi-string !slinkuhi !non-initial-cluster !h / type-III) (unstressed-syllable &syllable)*
+
+stressed-type-III <- (stressed-long-rafsi / stressed-CVC-rafsi) (r / n / l) &consonant
+
+type-III <- (long-rafsi / CVC-rafsi) (r / n / l) &consonant 
 
 slinkuhi <- consonant rafsi-string
 
@@ -148,8 +152,8 @@ unstressed-syllable <- !stressed syllable !stress
 unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
-y-syllable <- (h / consonant+) y
-syllable <- (h / consonant*) (diphthong / semi-consonant? vowel) !y / digit 
+y-syllable <- (consonant (initial-pair / consonant)? / h?) y
+syllable <- (consonant (initial-pair / consonant)? / h?) semi-consonant? (diphthong / vowel) !y / digit 
 semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / i / o / u
