@@ -106,3 +106,31 @@ da de tamsmi lo bolci lo ka bartu
 
 -Robin
 
+
+## 2004-11-22T20:22:06Z — xorxes (comment 173, on definition 2647, in reply to 172)
+
+Re: Fourth place.
+
+rlpowell wrote:
+> xorxes wrote:
+> > rlpowell wrote:
+> > > From "tai": (x1 resembles x2 sharing ideal form/shape x3 in property
+> x4)
+> > 
+> > So how do x3 and x4 differ? 
+> 
+> da de tamsmi lo bolci lo ka bartu
+> 
+> "da resembles de in that it has the outer shape of a ball".
+
+Wouldn't that be:
+
+da .e de tamsmi lo bolci lo ka (makau) bartu (ce'u)
+x and y resemble a ball in their outsides.
+
+If x3 is not a property, then x1, x2 and x3 resemble
+one another in property x4, but it is not clear
+where that place structure comes from.
+
+mi'e xorxes
+
