@@ -42,7 +42,7 @@ word <- cmene / gismu / lujvo / fuhivla / cmavo / non-lojban-word
 
 ;-------------------------------------------------------------------
 
-cmene <- !h (!doi-la-lai-lahi syllable)* consonant+ (i y cmene)* &spaces
+cmene <- !h (!doi-la-lai-lahi syllable)* consonant+ (i? y cmene)* &spaces
 
 doi-la-lai-lahi <- (d o i / l a (h? i)?) &post-word
 
@@ -132,7 +132,7 @@ fuhivla-tail <- unstressed-syllable* stressed-syllable syllable &post-word
 
 ;-------------------------------------------------------------------
 
-cmavo <- !cmene !gismu !lujvo !fuhivla (cmavo-form / y h y / y+)
+cmavo <- !cmene !gismu !lujvo !fuhivla (cmavo-form / consonant y / y h y / y+)
 
 ;-------------------------------------------------------------------
 
@@ -147,7 +147,7 @@ unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 cmavo-form <- !cluster !h syllable (&h syllable)*
-syllable <- (h / consonant*  (i / u)?) (diphthong / vowel) !vowel / digit 
+syllable <- (h / consonant* (diphthong / (i / u) vowel / vowel) !vowel / digit 
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / o / (i / u) !vowel
 
@@ -209,7 +209,7 @@ post-word <- spaces / consonant / digit
 
 digit <- comma* [[0123456789] !h !vowel !y
 
-spaces <- (space-chars / Y !(space-chars* BU) )+ / comma* !.
+spaces <- (space-chars  (Y !(space-chars* BU))?)+ / comma* !.
 
 space-chars <- comma* [[.\t\n\r?!\u0020]
 
