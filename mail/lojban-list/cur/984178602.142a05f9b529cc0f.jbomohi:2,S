@@ -1,0 +1,88 @@
+Return-Path: <richard@rrbcurnow.freeuk.com>
+X-Sender: richard@rrbcurnow.freeuk.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_0_4); 9 Mar 2001 23:00:58 -0000
+Received: (qmail 40761 invoked from network); 9 Mar 2001 23:00:58 -0000
+Received: from unknown (10.1.10.27) by l7.egroups.com with QMQP; 9 Mar 2001 23:00:58 -0000
+Received: from unknown (HELO s1.uklinux.net) (212.1.130.11) by mta2 with SMTP; 9 Mar 2001 23:00:58 -0000
+Received: from rrbcurnow.freeuk.com (root@ppp-1-146.cvx5.telinco.net [212.1.152.146]) by s1.uklinux.net (8.11.2/8.11.1) with ESMTP id f29N0sB27245 for <lojban@yahoogroups.com>; Fri, 9 Mar 2001 23:00:54 GMT
+Envelope-To: <lojban@yahoogroups.com>
+Received: from richard by rrbcurnow.freeuk.com with local (Exim 2.02 #2) id 14bVoQ-00006x-00 for lojban@yahoogroups.com; Fri, 9 Mar 2001 22:56:43 +0000
+Date: Fri, 9 Mar 2001 22:56:42 +0000
+To: lojban@yahoogroups.com
+Subject: Re: [lojban] bi'i syntax
+Message-ID: <20010309225642.A412@rrbcurnow.freeuk.com>
+Reply-To: Richard Curnow <rpc@myself.com>
+Mail-Followup-To: lojban@yahoogroups.com
+References: <0103021945090G.22570@neofelis>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.2i-nntp
+In-Reply-To: <0103021945090G.22570@neofelis>; from phma@oltronics.net on Fri, Mar 02, 2001 at 07:42:23PM -0500
+Sender: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-eGroups-From: Richard Curnow <rpc@myself.com>
+From: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-Yahoo-Message-Num: 5743
+Content-Length: 2186
+
+On Fri, Mar 02, 2001 at 07:42:23PM -0500, Pierre Abbat wrote:
+> I tried these utterances on jbofi'e:
+> 
+> mi klama le zdani ku bi'i le ckule
+> (parses)
+> mi klama le zdani bi'i le ckule
+> --------------------
+> SYNTAX ERROR IN TEXT
+> --------------------
+> Misparsed token :
+>   le [LE] (line 1, col 24)
+> Latest successfully parsed tokens :
+>   bi'i [BIhI] (line 1, col 19)
+>   MARKER : PRIVATE_START_JOIK
+>   zdani [BRIVLA] (line 1, col 13)
+>   le [LE] (line 1, col 10)
+>   klama [BRIVLA] (line 1, col 4)
+>   mi [KOhA3] (line 1, col 1)
+> --------------------
+> What's wrong with the second one? I just dropped "ku" which is elidable...
+> 
+
+The problem is that joiks are used as connectives for both selbri and
+for sumti.  Contrast the logical connectives, where selbri use jeks and
+sumti use eks.
+
+The problem comes down to how the Lojban grammar is specified in terms
+of LALR1 parsing behaviour.  In particular, whether or not an elidable
+terminator can be elided in a particular case comes down to whether its
+elision would change how the text is recognised by a yacc/bison style
+LALR parsing automaton.
+
+Because bi'i is a valid selbri connective, when it appears after le
+zdani the parser will think that it's a selbri connective and shift it.
+Now it finds 'le', which cannot be valid in this context => parse error.
+By this stage it is too late to back up and reduce 'le zdani' as a sumti
+so that bi'i can be applied as a sumti connective - yacc/bison generated
+parsers simply don't work that way.
+
+The jbofihe -sev option merely confirms the diagnosis :
+
+echo "mi klama le zdani ku bi'i le ckule" | test_jbofihe -sev
+Early shift hazards for words 'ku' (at line 1 col 19)
+   <- ku
+  X| <- <NEXT WORD>
+
+The 'X' means that the next word (in this case bi'i) can be shifted in
+some context which occurs prior to the 'ku' being shifted, i.e. removing
+'ku' will change the meaning (or even, as in this case, the validity) of
+the text.
+
+-- 
+----------------------------------------------------------------------
+Richard P. Curnow                                       rpc@myself.com
+Weston-super-Mare
+United Kingdom                            http://go.to/richard.curnow/
+
+
+           
+

@@ -1,4 +1,4 @@
-# mail/lojban-list thread 94792358c7e9-bi'i_syntax | root 0103021945090g.22570@neofelis | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 94792358c7e9-bi'i_syntax | root 0103021945090g.22570@neofelis | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2001-03-03T00:42:23Z | Pierre Abbat <phma@oltronics.net> | 0103021945090g.22570@neofelis | mail/lojban-list/cur/983580143.94792358c7e98221.jbomohi:2,S
 I tried these utterances on jbofi'e:
@@ -27,7 +27,70 @@ phma
 
 
 
-=== 2 | 2001-03-03T01:19:13Z | Jorge Llambias <jjllambias@hotmail.com> | f116hrqaxibm60wcp2d00003d83@hotmail.com | mail/lojban-list/cur/983582353.f281f95577c3f1fc.jbomohi:2,S
+=== 2 | 2001-03-09T22:56:42Z | Richard Curnow <richard@rrbcurnow.freeuk.com> | 20010309225642.a412@rrbcurnow.freeuk.com | mail/lojban-list/cur/984178602.142a05f9b529cc0f.jbomohi:2,S
+On Fri, Mar 02, 2001 at 07:42:23PM -0500, Pierre Abbat wrote:
+> I tried these utterances on jbofi'e:
+> 
+> mi klama le zdani ku bi'i le ckule
+> (parses)
+> mi klama le zdani bi'i le ckule
+> --------------------
+> SYNTAX ERROR IN TEXT
+> --------------------
+> Misparsed token :
+>   le [LE] (line 1, col 24)
+> Latest successfully parsed tokens :
+>   bi'i [BIhI] (line 1, col 19)
+>   MARKER : PRIVATE_START_JOIK
+>   zdani [BRIVLA] (line 1, col 13)
+>   le [LE] (line 1, col 10)
+>   klama [BRIVLA] (line 1, col 4)
+>   mi [KOhA3] (line 1, col 1)
+> --------------------
+> What's wrong with the second one? I just dropped "ku" which is elidable...
+> 
+
+The problem is that joiks are used as connectives for both selbri and
+for sumti.  Contrast the logical connectives, where selbri use jeks and
+sumti use eks.
+
+The problem comes down to how the Lojban grammar is specified in terms
+of LALR1 parsing behaviour.  In particular, whether or not an elidable
+terminator can be elided in a particular case comes down to whether its
+elision would change how the text is recognised by a yacc/bison style
+LALR parsing automaton.
+
+Because bi'i is a valid selbri connective, when it appears after le
+zdani the parser will think that it's a selbri connective and shift it.
+Now it finds 'le', which cannot be valid in this context => parse error.
+By this stage it is too late to back up and reduce 'le zdani' as a sumti
+so that bi'i can be applied as a sumti connective - yacc/bison generated
+parsers simply don't work that way.
+
+The jbofihe -sev option merely confirms the diagnosis :
+
+echo "mi klama le zdani ku bi'i le ckule" | test_jbofihe -sev
+Early shift hazards for words 'ku' (at line 1 col 19)
+   <- ku
+  X| <- <NEXT WORD>
+
+The 'X' means that the next word (in this case bi'i) can be shifted in
+some context which occurs prior to the 'ku' being shifted, i.e. removing
+'ku' will change the meaning (or even, as in this case, the validity) of
+the text.
+
+-- 
+----------------------------------------------------------------------
+Richard P. Curnow                                       rpc@myself.com
+Weston-super-Mare
+United Kingdom                            http://go.to/richard.curnow/
+
+
+           
+
+
+
+=== 3 | 2001-03-03T01:19:13Z | Jorge Llambias <jjllambias@hotmail.com> | f116hrqaxibm60wcp2d00003d83@hotmail.com | mail/lojban-list/cur/983582353.f281f95577c3f1fc.jbomohi:2,S
 
 la pier cusku di'e
 
@@ -56,7 +119,7 @@ Get Your Private, Free E-mail from MSN Hotmail at http://www.hotmail.com.
 
 
 
-=== 3 | 2001-03-03T01:53:01Z | pycyn@aol.com | 33.116c3ab1.27d1a87d@aol.com | mail/lojban-list/cur/983584381.e4469c8c65884d1e.jbomohi:2,S
+=== 4 | 2001-03-03T01:53:01Z | pycyn@aol.com | 33.116c3ab1.27d1a87d@aol.com | mail/lojban-list/cur/983584381.e4469c8c65884d1e.jbomohi:2,S
 In a message dated 3/2/2001 6:45:44 PM Central Standard Time, 
 phma@oltronics.net writes:
 
