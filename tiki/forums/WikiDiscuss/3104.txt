@@ -4739,3 +4739,87 @@ samme sted, er det for =E5 bade!=BB  --Henrik Ibsen
 
 
 
+
+## 2004-12-22T02:57:19Z — xorxes (@xorxes) (post 3234)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041222024901.3215.qmail@web41901.mail.yahoo.com
+In-Reply-To: klark-3104-93968c7fa1@www.lojban.org
+
+
+> The grammar in its current state does four separable things:
+> 1. It partitions the input stream into words.
+> 2. It validates the words, rejecting invalid vowel and consonant patterns.
+> 3. It determines the selma'o of a cmavo.
+> 4. It categorizes brivla into gismu, lujvo and fu'ivla.
+> 
+> As a result, the grammar is fearsomely complex in spots. 
+
+Yes. Unfortunately, this is unavoidable. Lojban morphology is an 
+ugly monster, that's a fact.
+
+It was me who asked Robin to separate the morphology from the main syntax
+part of the grammar. The determination of selmaho is not part of what I
+did, and I agree it belongs in a separate module, but the way it is written
+now, you can ignore the selmaho part and it works with just "words" at the
+highest level.
+
+1, 2 and 4 are inextricably linked. You can't do one without the other.
+
+>(OK, the part that
+> recognizes selma'o isn't complex; it's just huge.) And it could be argued
+> that categorizing brivla really belongs to semantic analysis, not parsing.
+
+You can't detect valid brivla without categorizing it. Brivla is a 
+collection of gismu, lujvo and fuhivla rether than these being a 
+partition of an initial class brivla, as it were.
+
+> For the sake of modularity and reducing point-complexity, I think it would be
+> worth considering splitting the job into its components, and writing separate
+> grammars:
+> 1. A partitioning grammar that considers an input string, and accepts a word
+> (cmene, brivla, cmavo or non-Lojban) from its head.
+> 2. A validating grammar that considers a Lojban word, and rejects it
+> (re-categorizing it as non-Lojban?) if it has invalid vowel or consonant
+> patterns.
+> 3. Selma'o determination might be more easily described as a symbol table
+> lookup than as a parsing problem.
+> 4. A grammar that considers a valid Lojban brivla, and categorizes it.
+
+I tried to make the morphology as modular as possible. Validation of
+consonant and vowel pairs is done at the lowest level.
+
+Then each word class has its own module. You can't put all brivla in 
+a single module. You could say that a brivla is any string that ends
+in a vowel and whose second consonant is part of a cluster, but then 
+you'd be letting in some cmavo+brivla combinations and also some 
+invalid stuff. It doesn't really advance you much.
+
+> Of course this scheme depends on being able to combine multiple PEG-generated
+> parsers into a single program. But if the parser generator takes parameters
+> which can be used to name the input and parser functions, that shouldn't be
+> hard.
+
+I wouldn't know anything about that. The separation can be done within
+a single grammar, by making a section take the output of a lower section
+as its "pseudo-terminals". That's not the problem. The problem is the
+inherent comnplexity of the grammar itself. (Indeed, when I asked Robin
+to separate the morphology part this is all I had in mind.)
+
+> Or is there already a consensus that the requirement is for a single grand
+> grammar covering every relevant aspect of the language?
+
+Not from my part. I want as much modularity as possible. 
+
+mu'o mi'e xorxes
+
+
+
+		
+__________________________________ 
+Do you Yahoo!? 
+Send a seasonal email greeting and help others. Do good. 
+http://celebrity.mail.yahoo.com
+
+
+
