@@ -1,0 +1,38 @@
+# mail/lojban-list thread 8c046ca6a1fa-tech%3A_proposed_grammar_change_x2%3A_non-logic | root m0tl6ew-0000zuc@xiron.pc.helsinki.fi | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1995-11-30T10:26:19Z | Logical Language Group <lojbab@ACCESS.DIGEX.NET> | 199511301038.faa22621@locke.ccil.org | mail/lojban-list/cur/817727179.3c8cfa9fa283af73.jbomohi:2,S
+>John Cowan, in response to a change proposed by Jorge:
+>>This change also looks YACC-safe.  However (and this applies to X1 as well),
+>>changes to the preparser are never very certain until they've been coded
+>>up and tested, because the grammar depends on magic selma'o that don't
+>>really exist, and it's only a guess whether the preparser can insert them
+>>correctly.
+>
+>Has there been much thought put into finding/writing a better parser than
+>YACC so we don't need these messy tricks?  I realize it would be a pain in
+>the butt to switch over at this late date, though.
+
+Yes.
+
+Jeff Prothero was into recursive descent parsing, but it proved very slow.
+
+Doug Landauer was intersted at one point in finding for us or wven writing
+an LR(n) parser generator for n somewhere between 2 and 4.  (Doug, BTW
+was the original person who worked on generating a YACC grammar for Loglan
+starting way back in 1975 or 1976.  Jeff was one of the two who finsished the
+work with JCB, in 1980-82, and invented the elidable terminator concept.
+
+)
+
+But  even LR(4) would not eliminate a couple of the lexer/preparser constructs,
+since some (like numbers) are not LR(k) for any k, though it would have
+allowed the grammar to be significantly simpler.
+
+It is now probably too late because it would take too much work to verify
+that any given LR(non-1) grammar generated the same Lojban grammar, or even
+anything close. (And how do you like THAT example of tricky Mex syntax
+LR(non-1) %^)
+
+lojbab
+
+

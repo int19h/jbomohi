@@ -1,0 +1,49 @@
+Received: from VMS.DC.LSOFT.COM (vms.dc.lsoft.com [205.186.43.2]) by locke.ccil.org (8.6.9/8.6.10) with ESMTP id FAA22621 for <cowan@LOCKE.CCIL.ORG>; Thu, 30 Nov 1995 05:38:34 -0500
+Message-Id: <199511301038.FAA22621@locke.ccil.org>
+Received: from PEACH.EASE.LSOFT.COM (205.186.43.4) by VMS.DC.LSOFT.COM (LSMTP for OpenVMS v1.0a) with SMTP id 36070F0C ; Thu, 30 Nov 1995 5:28:58 -0500
+Date:         Thu, 30 Nov 1995 05:26:19 -0500
+Reply-To: Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Subject:      Re: TECH: PROPOSED GRAMMAR CHANGE X2: non-logical bridi-tail
+X-To:         cbogart@QUETZAL.COM
+X-cc:         lojban@cuvmb.cc.columbia.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+X-From-Space-Date: Thu Nov 30 05:38:36 1995
+X-From-Space-Address: LOJBAN%CUVMB.BITNET@UBVM.CC.BUFFALO.EDU
+Content-Length: 1482
+
+>John Cowan, in response to a change proposed by Jorge:
+>>This change also looks YACC-safe.  However (and this applies to X1 as well),
+>>changes to the preparser are never very certain until they've been coded
+>>up and tested, because the grammar depends on magic selma'o that don't
+>>really exist, and it's only a guess whether the preparser can insert them
+>>correctly.
+>
+>Has there been much thought put into finding/writing a better parser than
+>YACC so we don't need these messy tricks?  I realize it would be a pain in
+>the butt to switch over at this late date, though.
+
+Yes.
+
+Jeff Prothero was into recursive descent parsing, but it proved very slow.
+
+Doug Landauer was intersted at one point in finding for us or wven writing
+an LR(n) parser generator for n somewhere between 2 and 4.  (Doug, BTW
+was the original person who worked on generating a YACC grammar for Loglan
+starting way back in 1975 or 1976.  Jeff was one of the two who finsished the
+work with JCB, in 1980-82, and invented the elidable terminator concept.
+
+)
+
+But  even LR(4) would not eliminate a couple of the lexer/preparser constructs,
+since some (like numbers) are not LR(k) for any k, though it would have
+allowed the grammar to be significantly simpler.
+
+It is now probably too late because it would take too much work to verify
+that any given LR(non-1) grammar generated the same Lojban grammar, or even
+anything close. (And how do you like THAT example of tricky Mex syntax
+LR(non-1) %^)
+
+lojbab
+
