@@ -1,0 +1,86 @@
+Return-Path: <jcowan@reutershealth.com>
+X-Sender: jcowan@reutershealth.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: unknown); 14 Mar 2002 16:08:49 -0000
+Received: (qmail 88159 invoked from network); 14 Mar 2002 16:08:39 -0000
+Received: from unknown (216.115.97.167)
+  by m10.grp.snv.yahoo.com with QMQP; 14 Mar 2002 16:08:39 -0000
+Received: from unknown (HELO mail.reutershealth.com) (204.243.9.36)
+  by mta1.grp.snv.yahoo.com with SMTP; 14 Mar 2002 16:08:39 -0000
+Received: from skunk.reutershealth.com (IDENT:cowan@[10.65.117.21])
+	by mail.reutershealth.com (Pro-8.9.3/Pro-8.9.3) with SMTP id LAA08707
+	for <lojban@yahoogroups.com>; Thu, 14 Mar 2002 11:08:45 -0500 (EST)
+Message-Id: <200203141608.LAA08707@mail.reutershealth.com>
+Received: by skunk.reutershealth.com (sSMTP sendmail emulation); Thu, 14 Mar 2002 11:07:37 -0500
+Subject: Prolog for Lojbanists (was: lojban application in wearable computing)
+To: lojban@yahoogroups.com
+Date: Thu, 14 Mar 2002 11:07:36 -0500 (EST)
+In-Reply-To: <20020314061311.GC2700@twcny.rr.com> from "Rob Speer" at Mar 14, 2002 01:13:11 AM
+X-Mailer: ELM [version 2.5 PL3]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From: John Cowan <jcowan@reutershealth.com>
+X-Yahoo-Group-Post: member; u=8122456
+X-Yahoo-Profile: john_w_cowan
+X-Yahoo-Message-Num: 13716
+Content-Length: 2059
+
+Rob Speer scripsit:
+
+> I wish I knew something about what Prolog was.
+
+Short summary of Prolog for Lojbanists:
+
+A Prolog program consists of a database of rules and facts.  A rule
+is a bridi with the following restricted grammar:
+
+<rule> = <simple-bridi> .ijanai <simple-bridi> |
+          <simple-bridi> .ijanai tu'e <conjunct> tu'u
+
+<conjunct> = <simple-bridi> | <simple-bridi> .ije <conjunct>
+
+<simple-bridi> = <simple-sumti>* <brivla> <simple-sumti>*
+
+<simple-sumti> = la <name> | <quantified-variable> | li <number>
+                 lo <brivla> <be-beho>?
+
+<be-beho> = be <simple-sumti> (bei <simple-sumti)* be'o
+
+All variables are always quantified universally with a scope
+extending over the whole rule.  Facts are degenerate rules with
+just a "<simple-bridi>", and are treated as unconditional rules.
+A fact or rule is said to be "ground" if there are no variables in it.
+
+Prolog interpreters accept queries, which are simple-bridi, and return
+all values of all variables in the simple-bridi which, when substituted
+for those variables, produce either facts in the database or facts
+deducible from the facts and rules in the database.
+
+Here is a trivial Prolog program in Lojban syntax:
+
+la djan. patfu la djordj.
+.i la djordj. patfu la fred.
+.i roda rode rodi zo'u
+	da patpatfu de .ijanai tu'e
+		da patfu di .ije di patfu de tu'u
+
+.i ma patpatfu la fred.
+
+To which the Prolog system will reply "la fred."  The system sees that
+"ma patpatfu la fred." matches the rule head "da patpatfu de" and then
+attempts to match the members of the conjunct against existing facts
+or rule heads.
+
+There are built-in brivla for which the system knows how to compute the
+answer rather than consulting its database: e.g. "li mu du lo sumji
+be li re bei li ci be'o" is always true.  Typically the sumti of such
+predicates must be ground.
+
+-- 
+John Cowan <jcowan@reutershealth.com>     http://www.reutershealth.com
+I amar prestar aen, han mathon ne nen,    http://www.ccil.org/~cowan
+han mathon ne chae, a han noston ne 'wilith.  --Galadriel, _LOTR:FOTR_
+
+           
+

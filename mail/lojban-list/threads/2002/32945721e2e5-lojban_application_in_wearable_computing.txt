@@ -1,4 +1,4 @@
-# mail/lojban-list thread 32945721e2e5-lojban_application_in_wearable_computing | root 02030723525200.01243@linux | 23 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 32945721e2e5-lojban_application_in_wearable_computing | root 02030723525200.01243@linux | 24 messages | rendered by jbomohi mail-v1
 
 === 1 | 2002-03-07T22:52:52Z | Björn Gohla <b.gohla@gmx.de> | 02030723525200.01243@linux | mail/lojban-list/cur/1015541572.32945721e2e5ee0f.jbomohi:2,S
 -----BEGIN PGP SIGNED MESSAGE-----
@@ -730,7 +730,68 @@ that location becomes my new editing point.
 
 
 
-=== 19 | 2002-03-13T13:32:28Z | "Robert J. Chassell" <bob@RATTLESNAKE.COM> | m16l8rk-000if0c@localhost | mail/lojban-list/cur/1016026348.b9830cdc2e5e8fa2.jbomohi:2,S
+=== 19 | 2002-03-14T16:07:36Z | John Cowan <jcowan@reutershealth.com> | 200203141608.laa08707@mail.reutershealth.com | mail/lojban-list/cur/1016122056.6b2b6f96c68a46cf.jbomohi:2,S
+Rob Speer scripsit:
+
+> I wish I knew something about what Prolog was.
+
+Short summary of Prolog for Lojbanists:
+
+A Prolog program consists of a database of rules and facts.  A rule
+is a bridi with the following restricted grammar:
+
+<rule> = <simple-bridi> .ijanai <simple-bridi> |
+          <simple-bridi> .ijanai tu'e <conjunct> tu'u
+
+<conjunct> = <simple-bridi> | <simple-bridi> .ije <conjunct>
+
+<simple-bridi> = <simple-sumti>* <brivla> <simple-sumti>*
+
+<simple-sumti> = la <name> | <quantified-variable> | li <number>
+                 lo <brivla> <be-beho>?
+
+<be-beho> = be <simple-sumti> (bei <simple-sumti)* be'o
+
+All variables are always quantified universally with a scope
+extending over the whole rule.  Facts are degenerate rules with
+just a "<simple-bridi>", and are treated as unconditional rules.
+A fact or rule is said to be "ground" if there are no variables in it.
+
+Prolog interpreters accept queries, which are simple-bridi, and return
+all values of all variables in the simple-bridi which, when substituted
+for those variables, produce either facts in the database or facts
+deducible from the facts and rules in the database.
+
+Here is a trivial Prolog program in Lojban syntax:
+
+la djan. patfu la djordj.
+.i la djordj. patfu la fred.
+.i roda rode rodi zo'u
+	da patpatfu de .ijanai tu'e
+		da patfu di .ije di patfu de tu'u
+
+.i ma patpatfu la fred.
+
+To which the Prolog system will reply "la fred."  The system sees that
+"ma patpatfu la fred." matches the rule head "da patpatfu de" and then
+attempts to match the members of the conjunct against existing facts
+or rule heads.
+
+There are built-in brivla for which the system knows how to compute the
+answer rather than consulting its database: e.g. "li mu du lo sumji
+be li re bei li ci be'o" is always true.  Typically the sumti of such
+predicates must be ground.
+
+-- 
+John Cowan <jcowan@reutershealth.com>     http://www.reutershealth.com
+I amar prestar aen, han mathon ne nen,    http://www.ccil.org/~cowan
+han mathon ne chae, a han noston ne 'wilith.  --Galadriel, _LOTR:FOTR_
+
+           
+
+
+
+=== 20 | 2002-03-13T13:32:28Z | "Robert J. Chassell" <bob@RATTLESNAKE.COM> | m16l8rk-000if0c@localhost | mail/lojban-list/cur/1016026348.b9830cdc2e5e8fa2.jbomohi:2,S
    What resemblance do you see between lisp and lojban, exactly?  At a
    first glance, I see a much stronger resemblance to Prolog.
 
@@ -761,7 +822,7 @@ system that appeals both to sighted people and to the blind.
 
 
 
-=== 20 | 2002-03-13T18:10:00Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20020313181000.gk29405@digitalkingdom.org | mail/lojban-list/cur/1016043000.73d301bb97fe1f35.jbomohi:2,S
+=== 21 | 2002-03-13T18:10:00Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20020313181000.gk29405@digitalkingdom.org | mail/lojban-list/cur/1016043000.73d301bb97fe1f35.jbomohi:2,S
 On Wed, Mar 13, 2002 at 01:32:28PM +0000, Robert J. Chassell wrote:
 >    What resemblance do you see between lisp and lojban, exactly?  At a
 >    first glance, I see a much stronger resemblance to Prolog.
@@ -783,7 +844,7 @@ je xlali -- RLP 				http://www.lojban.org/
 
 
 
-=== 21 | 2002-03-13T02:48:24Z | Ted Reed <rizen@ispwest.com> | b0004883314@ispwestemail.aceweb.net | mail/lojban-list/cur/1015987704.220445023c9c15e0.jbomohi:2,S
+=== 22 | 2002-03-13T02:48:24Z | Ted Reed <rizen@ispwest.com> | b0004883314@ispwestemail.aceweb.net | mail/lojban-list/cur/1015987704.220445023c9c15e0.jbomohi:2,S
 On Tuesday, March 12 2002 03:37 pm, Invent Yourself wrote:
 > I tend to think that Lojban is useful here as a "native language" for such
 > devices, for internal use, testing & debugging and concept proofs, since
@@ -804,7 +865,7 @@ common with lojban. Perhaps some python-esque attributes as well.
 
 
 
-=== 22 | 2002-03-13T09:14:55Z | Björn Gohla <b.gohla@gmx.de> | 02031310145601.01246@linux | mail/lojban-list/cur/1016010895.76b16fa962ef09d9.jbomohi:2,S
+=== 23 | 2002-03-13T09:14:55Z | Björn Gohla <b.gohla@gmx.de> | 02031310145601.01246@linux | mail/lojban-list/cur/1016010895.76b16fa962ef09d9.jbomohi:2,S
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
@@ -852,7 +913,7 @@ iD8DBQE8jxiVbBQ8OYNPSXYRAjPyAJ46OW2sA6HtcF74YwwgD9gbx8TApQCdHKU9
 
 
 
-=== 23 | 2002-03-13T09:36:38Z | Björn Gohla <b.gohla@gmx.de> | 02031310363802.01246@linux | mail/lojban-list/cur/1016012198.dab8314fd31795d8.jbomohi:2,S
+=== 24 | 2002-03-13T09:36:38Z | Björn Gohla <b.gohla@gmx.de> | 02031310363802.01246@linux | mail/lojban-list/cur/1016012198.dab8314fd31795d8.jbomohi:2,S
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
