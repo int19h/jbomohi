@@ -1154,3 +1154,81 @@ you showed me actual examples, maybe even in Lojban.
 
 
 
+
+## 2004-08-06T21:12:11Z — anonymous (@anonymous) (post 1860)
+
+Title: Number subgrammar
+Message-Id: 200408061510.55444.phma@phma.hn.org
+In-Reply-To: 20040722040206.GP2295@chain.digitalkingdom.org
+
+On Thursday 22 July 2004 00:02, Robin Lee Powell wrote:
+> On Wed, Jul 21, 2004 at 10:59:16PM -0400, Pierre Abbat wrote:
+> > On Tuesday 20 July 2004 18:49, Robin Lee Powell wrote:
+> > > On Tue, Jul 20, 2004 at 06:43:44PM -0400, Pierre Abbat wrote:
+> > > > It is also possible to express imaginary numbers in base 1-i,
+> > > > without using ni'u or ka'o. (1+i doesn't work. Why?)
+> > >
+> > > "1+i" doesn't work in what sense?
+> >
+> > I think you're asking the same thing I'm asking. The representation is
+> > binary in base 1+i or 1-i; base 1-i works, but base 1+i doesn't.
+>
+> I'm sorry, I have *NO* idea what you're talking about.  It might help if
+> you showed me actual examples, maybe even in Lojban.
+
+Sorry for the braino, I meant i-1. The reason is that only half the complex 
+integers have a representation in base i+1; in particular, there is no set of 
+powers of 1+i whose sum is 3. Base i-1 does not have this problem; li re du 
+li papanono ju'u ni'upaka'opa .ije li ci du li papanopa ju'u ni'upaka'opa. 
+Below is a Python program that draws the numbers expressible in 16 bits in 
+base i-1.
+
+phma
+---
+#!/usr/bin/env python
+
+import sets
+import sys
+
+minre=maxre=minim=maxim=0
+graph=sets.Set()
+
+def base(a,b):
+    pow=1+0j
+    tot=0+0j
+    while a:
+       if a&1:
+          tot+=pow
+       pow*=b
+       a/=2
+    return tot
+
+for i in range(65536):
+    z=base(i,-1+1j)
+    if z.real<minre: minre=z.real
+    if z.real>maxre: maxre=z.real
+    if z.imag<minim: minim=z.imag
+    if z.imag>maxim: maxim=z.imag
+    graph.add(z)
+for i in range(maxim,minim-1,-1):
+    for r in range(minre,maxre+1):
+        if (complex(r,i) in graph):
+           if (r==0):
+              if (i==0):
+                 sys.stdout.write('+')
+              else:
+                 sys.stdout.write('|')
+           else:
+              if (i==0):
+                 sys.stdout.write('-')
+              else:
+                 sys.stdout.write('*')
+        else:
+           sys.stdout.write(' ')
+    sys.stdout.write('\n')
+    
+-- 
+li fi'u vu'u fi'u fi'u du li pa
+
+
+
