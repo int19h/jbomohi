@@ -1,0 +1,120 @@
+Return-Path: <cbmvax!uunet!computer-lab.cambridge.ac.uk!David.Elworthy>
+          Tue, 30 Apr 1991 11:16:54 +0100
+To: lojban-list@snark.thyrsus.com
+Subject: Re: semantics of "most"
+In-Reply-To: Your message of Mon, 29 Apr 91 12:05:38 -0400. <m0jXajN-0003SNC@snark.thyrsus.com>
+Date: Tue, 30 Apr 91 11:17:08 +0100
+From: David Elworthy <cbmvax!uunet!computer-lab.cambridge.ac.uk!David.Elworthy>
+Message-Id: <"swan.cl.ca.953:30.03.91.10.17.11"@cl.cam.ac.uk>
+X-From-Space-Date: Tue Apr 30 23:40:02 1991
+X-From-Space-Address: cbmvax!uunet!computer-lab.cambridge.ac.uk!David.Elworthy
+Content-Length: 4458
+
+
+I wrote:
+
+>> Do you know how
+>> Lojban handles the semantics of "most"? If it is done by a quantifier similar
+>> to "exists" or "all", be warned that it can be shown this will not work! I'll
+>> forward details if you're interested.
+
+John Cowan replied:
+
+> Please do!  Currently, "most" is a number, like "two".
+
+
+I'll try to give an informal description of the problem. If you want to have a
+formal proof of why you can't express "most" in this way, see Barwise &
+Cooper: reference below (theorem C12).
+
+
+First, to restate the claim in a more formal way:
+ no quantifier with the same meaning as the English word "most" can be defined
+in first order logic, i.e. a logic in which there is quantification over
+individuals drawn from some (finite or infinite) universe.
+
+As an aside, it is a standard result that if a quantifier can be defined in
+first order logic, then it is reducible to some combination of "All" and
+"Exists" (which I will write here as A and E). For example, the derived
+quantifier "two x" can be reduced to "Ex.Ey.x /= y" (where /= is "not equal").
+So we can translate "Two men walk" as "two x.(man(x) & walk(x))", i.e.
+"Ex.Ey.(x /= y & man(x) & man(y) & walk(x) & walk(y))".
+
+Secondly, I should make it clear what I mean by "most". A paraphrase is "more
+than half of", i.e. "Most men walk" is equivalent to
+(1) "more than half of the individuals who are men are individuals who walk."
+
+
+Now, look at how we translate sentences into first order logic and interpret
+the resulting formulae:
+English	A man walks.
+FOL	Ex.(man(x) & walk(x))
+Interp	Examine the universe U, and see if you can find at least one
+	individual i from U for which man(i) and walk(i) both hold.	
+
+English	Every man walk.
+FOL	Ax.(man(x) => walk(x))
+Interp	Examine the universe U, and check that for every individual i from U,
+	if man(i) holds, then walk(i) holds. (And if man(i) does not hold, we
+	don't care if walk(i) does or not.)
+
+English	Two men walk.
+FOL	2x.(man(x) & walk(x))
+Interp	Examine the universe U, and see if you can find at least two different
+	individuals i from U for which man(i) and walk(i) both hold.	
+
+And if we try it for "most":
+English	Most men walk.
+??FOL	Most x.(man(x) c walk(x)), where c is a logical connective.
+Interp	Examine the universe U, and see if more than half the individuals i in
+	U are such that the fact of i being a man is related by c to the fact
+	of walking.
+The question is, then, can we find a connective c, which means that this
+interpretation is equivalent to (1)? Try the most likely candidates: "&" and
+"=>".
+&	Examine the universe U, and see if more than half the individuals i in
+	U are such that both man(i) and walk(i) hold. Paraphrase: "more than
+	half the individuals in the universe are men who walk", which is not
+	the same as (1).
+=>	Examine the universe U, and see if more than half the individuals i in
+	U are such that if man(i) holds, then walk(i) holds. Paraphrase: "more
+	than half the individuals in the universe are either men who walk, or
+	are not men at all", which is not the same as (1).
+... and similarly for all other possible connectives.
+
+
+One solution which is widely used is to adopt what are called "generalized
+quantifiers". Now, instead of translating a sentence into a quantifier over a
+variable, and a formula which uses that variable, we express the quantifier as
+a relation between two sets. Thus
+English	A man walks.
+GQ	The set of men has a non-empty intersection with the set of walkers.
+
+English	Every man walks.
+GQ	The set of men is a subset of the set of walkers.
+
+English	Two men walk.
+GQ	The intersection of the set of men and the set of walkers contains at
+	least two individuals.
+
+English	Most men walk.
+GQ	The intersection of the set of men and the set of walkers contains at
+	least half as many members as the set of men.
+
+
+I don't know if I've explained this terribly clearly. I haven't found any
+reference which states the problem with "most" (and some other quantifiers) in
+an intuitive way, but if you want to follow up the formal details, and see how
+GQ theory works, have a look at:
+
+Jon Barwise and Robin Cooper. Generalized Quantifiers and Natural Language.
+Linguistics and Philosophy Vol.4 (1981), pp. 159-219.
+
+Jan van Eijck. Quantification. In A. von Stechow and D. Wunderlich (eds.)
+Handbook of Semantics. (The copy of the paper I have says "to appear", so I
+can't tell you the date or publisher, but Reidel or Kluwer would be a fair
+bet.)
+
+-- david elworthy
+
+
