@@ -1,0 +1,193 @@
+# mail/lojban-list thread ba7e9bf0fd67-tech%3A_problem_-_morphology_algoirthm_-_import | root rxbzdaafh_g.a.x9h.s00klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1993-05-19T09:42:05Z | Logical Language Group <lojbab@GREBYN.COM> | 5561499252175cf27257dccb180bb039d2ff0ddc@jbomohi.invalid | mail/lojban-list/cur/737804525.8017f826498601a9.jbomohi:2,S
+Ooops.  I may have spoken too soon.  Nora's program and morphology
+algorithm is not yet available.  She just found two unresolved problems,
+one probably minor and the other serious, in our rules for le'avla.
+
+(For those who haven't been following, the proposed baseline morphology
+algorithm printed in JL16 was to be tested for conformance with the
+actual morphology which has long been frozen, and to make sure that
+there were no unforeseen problems that would invalidate the claim that
+Lojban is morphologically unambiguous.  Up till now all problems found
+were in the wording of the algoirthm, which had several problems as
+printed.)
+
+Since we love to air our dirty laundry and language designs for all of
+the community to appreciate (and because these problems are with a
+baselined component of the language, and because we don't have an answer
+to the problems ...), here's what is up.
+
+1. First, the easy one.
+
+Diphthongs
+
+Lojban has 4 diphthongs permitted anywhere in the language:  ai, au, ei,
+oi.  There are also some other diphthongs that occur in vowel-only
+cmavo:  ia, ie, ii, io, iu, ua, ue, ui, uo, uu
+
+It is unclear in the language definitions whether the latter are
+permitted in names and in le'avla.  The former seems relatively likely
+because we worded the rules rather loosely.  The latter is totally
+unclear, and the wording of the algorithm depends on whether they are
+included.  The i- diphthongs seem like they would be especially useful
+with Lojbanizing palatalized Russian consonants in names and borrowings.
+
+I don't think there is any problem with permitting them, but we have to
+make SURE that they don't cause any problems before the book comes out.
+
+Opinions?
+
+2. The bad one
+
+Our technique of making instant le'avla, by gluing an affix on the front
+of most any form with a syllabic consonant, often generates words that
+fail (fall apart), given the most obvious interpretation of the rather
+vague wording that we used in the Synopsis that describes the morphology
+baseline.  Indeed, one of the example words in the Synopsis (ricrmeiple)
+falls apart.  Why?
+
+There is nothing that keeps the "ri" from falling off, leaving the odd,
+but apparently perfectly valid le'avla form "crmeiple".  Our rules on
+consonant clusters are ill defined.  In one place it says that clusters
+must be valid medial triples.  This means, with a few exceptions
+specifically noted, that for a triple C1C2C3, C1C2 must be a valid
+medial and C2C3 must be a valid initial.  No other definition of cluster
+is found in the documentation, and there is thus no official statement
+in print that I know of about clusters of 4 or more consonants (possible
+if one or more is a syllabic l/m/n/r).
+
+(Note that this would appear to completely invalidate "ricrmeiple" since
+C2C3 is 'rm', not a permissible initial, and of course a triple that
+started a name or le'avla would HAVE TO start with a permissible initial
+- this is not explicitly stated in the rules for free-form le'avla.
+This portion of the problem may be just a documentation error, because I
+think the question has come up before about consonant clusters at both
+the beginning and ends of names.)
+
+
+The problem is broad, you get a CV falling off in many cases where there
+is an unreduced affix of the form CVCC(r/n) glued on the front - any
+time that the CC is a permissible initial pair.  e.g.
+
+cidjrspageti
+
+or even worse
+
+ciskrspageti
+
+(which DOES have the valid C2C3 called for in the rules).
+
+The problem also occurs in ALL cases where a CVC affix ending other than
+in l, n, or r is glued onto the front of a le'avla root, since you end
+up with a "Cr" or "Cn" as the first cluster. e.g.
+
+cidrspageti
+
+With vowel initial roots, things are even worse:
+
+Take the simple root:
+okra
+
+Any method used to attach cid(r)- or cidj(r)- or cisk(r)- is going to
+have problems.
+
+History gives us no real answers.  At the end of this message, marked by
+an ***, I discuss TLI's system (for those who want to skip it).
+
+So what can we do?
+
+Fixes can include making far more severe constraints on initial clusters
+in le'avla, probably explicitly excluding syllabic consonants.  If we
+wrote the rules well enough, we can have the algorithm recognize and
+distinguish syllabification caused by these consonants, even when the
+imput is not marked for it (i.e., the rules don't in theory now
+distinguish
+
+"cidrspageti" with no syllabic 'r'
+(which is theoretically pronouncible from
+"cidr,spageti"
+
+(a voice recognition system would probably make such a distinction, but
+it becomes critical to the algorithm to note that syllable break)
+
+Whatever we do, we need to make our definitions of permissible clusters
+much more clear.  And wording those definitions to forbid clusters such
+as "drs" at the beginning of a word, to prevent "cidrspageti" from
+falling apart, could be high on the list.
+
+But we have to remember that every such restriction that we put on
+clusters makes le'avla space a bit smaller, and may thus mean that the
+process of Lojbanizing a word for le'avla-making might get more
+difficult - and less like the way of comparatively Lojbanizing the same
+word into a name form (do we permit a cluster such as "spr" at the
+beginning of a le'avla?)
+
+Nora and I welcome all attempts to state rules for clusters clearly
+for use in the reference book that will shortly replace the Synopsis
+as the standard for Lojban, and preferably which minimize the restriction
+of le'avla space.
+
+lojbab
+
+
+*** TLI system
+
+JCB's description in NB3 is unclear on what types of clusters are
+permitted in borrowings.  Presumably, he would have constrained against
+the forms that cause our problems.  There is no explicit rule that makes
+exceptions to the phonology rules for Loglanizing borrowings (L1
+explicitly places no constraints on names other than consonant ending
+and only-Loglan-phonemes - thus 'hkpth' is theoretically valid in his
+system - and he has many required pauses to prevent things like "la"
+from being absorbed into names (pauses that, as Jeff Prothero just noted
+on conlang, JCB admits he often omits in his own Loglan speech).
+
+The method used for making borrowings given in 4th edition L1 does not
+appear to generate words that fail, but the algorithm isn't stated very
+clearly, and all of the examples given are fairly straightforward
+European roots, most with no impermissible Loglan clusters after the
+obvious phonology changes are taken into account.
+
+However that algorithm uses two techniques we can't or won't adopt, and
+which don't work anyway to solve the problem:  TLI 'repairs' words with
+no consonant cluster or with otherwise permissible initials by inserting
+an 'h' after the cluster, forcing a new syllable since 'h' is not the
+second letter in any permissible initial cluster
+
+(atom -> athomi)
+(asparagus -> aspharage).
+
+Actually, JCB's rules >AS STATED< do not seem to clearly prohibit a
+borrowing such as the apparently unpronouncible "spharage", so he may
+have the same problem we do if he ever tries to computerize his
+'unambiguous' algorithm and process that last example.
+
+The other technique, used when a potentially syllabic consonant is the
+second letter in the cluster, is to make the consonant syllabic, and
+then >WRITE THEM WITH DOUBLED LETTERS<. (They do not do this in other cases
+where they have syllabic consonants, hence this violates the concept of
+having only one way to spell a given phoneme pattern).
+
+(e.g. retrovirus ->retrroviri).
+
+This forces a syllable break between r and o, and again the result could
+never be confused, at least with any other type of predicate word.  This
+violates TLI's stated rules against double letters in a consonant
+cluster, but otherwise is not proscribed - hence "trroviri" should also
+be possible, and the front of the word falls off here too.
+
+But these two ways of 'repairing' borrowing problems might be valid, and
+would avoid the problem, if TLI chose to write their rules a bit more
+tightly, as LLG has now (more-or-less) done.
+
+Other methods of borrowing are permitted by TLI in theory, just as
+Lojban permits other methods of borrowing other than the 'fast route'
+that we have promised by the "glue a rafsi on the front" technique.  But
+JCB, as well as LLG, have reached the same conclusion - that defining
+the bounds of what is valid so as to test such inventions/borrowings
+on-the-fly accurately for validity, isn't a likely possibility.
+
+***
+
+
