@@ -1,4 +1,4 @@
-# mail/lojban-list thread 18033d937aa6-regular_expression_for_brivla%3F | root 20040208091817.gn20322@digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 18033d937aa6-regular_expression_for_brivla%3F | root 20040208091817.gn20322@digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-02-08T09:18:17Z | Robin Lee Powell <lojban-out@lojban.org> | 20040208091817.gn20322@digitalkingdom.org | mail/lojban-list/cur/1076231897.18033d937aa6f8d5.jbomohi:2,S
 Is there a known regular expression that covers all classes of
@@ -52,6 +52,76 @@ string you are checking is a valid Lojban word.
 Arnt Richard Johansen                                http://arj.nvg.org/
 "This is the sort of bloody nonsense up with which I will not put!"
    --attributed to Winston Churchill
+
+
+
+
+           
+
+
+
+=== 3 | 2004-02-08T16:44:28Z | "Adam D. Lopresto" <lojban-out@lojban.org> | pine.gso.4.58.0402081040110.24910@clarion.cec.wustl.edu | mail/lojban-list/cur/1076258668.ab0c4a27055d4814.jbomohi:2,S
+> Is there a known regular expression that covers all classes of
+> brivla?
+>
+> What about one that's just really close?
+>
+> Perl extensions are fine.
+
+Some code I've used in the past.  Note that a lot of it depends on what your
+goal is.  The code that follows doesn't have as its goal to be definitive.
+Rather, it was part of a program to perform various lookups, and first I needed
+to know whether I was searching for rafsi, cmavo, or what.
+
+$C = qr/[bcdfgjklmnprstvxz]/;
+$V = qr/[aeiou]/;
+
+#consonant pairs
+$CC = qr/(?:
+    bd|bl|br|
+    cf|ck|cl|cm|cn|cp|cr|ct|
+    dj|dr|dz|
+    fl|fr|
+    gl|gr|
+    jb|jd|jg|jm|jv|
+    kl|kr|
+    ml|mr|
+    pl|pr|
+    sf|sk|sl|sm|sn|sp|sr|st|
+    tc|tr|ts|
+    vl|vr|xl|xr|zb|zd|zg|zm|zv
+)/x;
+
+#dipthongs
+$VV = qr/(?:ai|ei|oi|au)/;
+
+$rafsi3v = qr/(?:$CC$V|$C$VV|$C$V'$V)/;
+$rafsi3 = qr/(?:$rafsi3v|$C$V$C)/;
+$rafsi4 = qr/(?:$C$V$C$C|$CC$V$C)/;
+$rafsi5 = qr/$rafsi4$V/;
+
+$cmavo = qr/(?:$V|$VV|$C$V|$C$VV|$C$V'$V)/;
+
+INPUT: for (@ARGV){
+    s/h/'/;
+
+    if (/$C$/){
+        print "cmene";
+    } elsif (/$CC/){
+        if (/^.{0,4}$CC/){
+            print "brivla";
+        } else {
+            print "invalid";
+        }
+    } else {
+        print "cmavo cluster";
+    }
+}
+-- 
+Adam Lopresto
+http://cec.wustl.edu/~adam/
+
+"Linux means never having to delete your love mail." -- Don Marti
 
 
 

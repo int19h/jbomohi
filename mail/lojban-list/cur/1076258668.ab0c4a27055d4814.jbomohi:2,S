@@ -1,0 +1,134 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 71592 invoked from network); 8 Feb 2004 16:46:07 -0000
+Received: from unknown (66.218.66.218)
+  by m13.grp.scd.yahoo.com with QMQP; 8 Feb 2004 16:46:07 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 8 Feb 2004 16:46:06 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1Aps3c-0007YI-FI
+	for lojban@yahoogroups.com; Sun, 08 Feb 2004 08:45:20 -0800
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1Aps30-0007Xk-3L; Sun, 08 Feb 2004 08:44:42 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 08 Feb 2004 08:44:38 -0800 (PST)
+Received: from postal.seas.wustl.edu ([128.252.145.2])
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1Aps2r-0007XX-5W
+	for lojban-list@lojban.org; Sun, 08 Feb 2004 08:44:33 -0800
+Received: from clarion.cec.wustl.edu (clarion.cec.wustl.edu [128.252.21.3])
+	by postal.seas.wustl.edu (8.11.6/8.11.6) with ESMTP id i18GjYo04138
+	for <lojban-list@lojban.org>; Sun, 8 Feb 2004 10:45:35 -0600
+Received: from localhost (adam@localhost)
+	by clarion.cec.wustl.edu (8.12.5/8.12.5) with ESMTP id i18GiSEB025009
+	for <lojban-list@lojban.org>; Sun, 8 Feb 2004 10:44:29 -0600 (CST)
+X-Authentication-Warning: clarion.cec.wustl.edu: adam owned process doing -bs
+Date: Sun, 8 Feb 2004 10:44:28 -0600 (CST)
+In-Reply-To: <20040208091817.GN20322@digitalkingdom.org>
+Message-ID: <Pine.GSO.4.58.0402081040110.24910@clarion.cec.wustl.edu>
+References: <20040208091817.GN20322@digitalkingdom.org>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-Spam-Flag: NO
+X-Spam-Status: No, -6.6
+X-Spam-Level: 
+X-Spam-Report: 
+	-6.6/5.0
+	---- Start SpamAssassin results
+	-6.60 points, 5 required;
+	* -0.0 -- Has a valid-looking References header
+	*  0.0 -- Message-Id indicates a non-spam MUA (Pine)
+	* -0.4 -- Has a In-Reply-To header
+	* -0.4 -- Has a X-Authentication-Warning header
+	*  0.0 -- BODY: {2}Letter - garbage - {2}Letter
+	*  0.0 -- BODY: {5}Letter - garbage - {1}Letter
+	* -5.4 -- BODY: Bayesian classifier says spam probability is 1 to 10%
+	          [score: 0.0829]
+	* -0.4 -- BODY: Contains what looks like a quoted email text
+	*  0.0 -- Reply with quoted text
+	---- End of SpamAssassin results
+X-archive-position: 7053
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: adam@pubcrawler.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: "Adam D. Lopresto" <adam@pubcrawler.org>
+From: "Adam D. Lopresto" <lojban-out@lojban.org>
+Reply-To: adam@pubcrawler.org
+Subject: [lojban] Re: Regular expression for brivla?
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 21530
+Content-Length: 1341
+
+> Is there a known regular expression that covers all classes of
+> brivla?
+>
+> What about one that's just really close?
+>
+> Perl extensions are fine.
+
+Some code I've used in the past.  Note that a lot of it depends on what your
+goal is.  The code that follows doesn't have as its goal to be definitive.
+Rather, it was part of a program to perform various lookups, and first I needed
+to know whether I was searching for rafsi, cmavo, or what.
+
+$C = qr/[bcdfgjklmnprstvxz]/;
+$V = qr/[aeiou]/;
+
+#consonant pairs
+$CC = qr/(?:
+    bd|bl|br|
+    cf|ck|cl|cm|cn|cp|cr|ct|
+    dj|dr|dz|
+    fl|fr|
+    gl|gr|
+    jb|jd|jg|jm|jv|
+    kl|kr|
+    ml|mr|
+    pl|pr|
+    sf|sk|sl|sm|sn|sp|sr|st|
+    tc|tr|ts|
+    vl|vr|xl|xr|zb|zd|zg|zm|zv
+)/x;
+
+#dipthongs
+$VV = qr/(?:ai|ei|oi|au)/;
+
+$rafsi3v = qr/(?:$CC$V|$C$VV|$C$V'$V)/;
+$rafsi3 = qr/(?:$rafsi3v|$C$V$C)/;
+$rafsi4 = qr/(?:$C$V$C$C|$CC$V$C)/;
+$rafsi5 = qr/$rafsi4$V/;
+
+$cmavo = qr/(?:$V|$VV|$C$V|$C$VV|$C$V'$V)/;
+
+INPUT: for (@ARGV){
+    s/h/'/;
+
+    if (/$C$/){
+        print "cmene";
+    } elsif (/$CC/){
+        if (/^.{0,4}$CC/){
+            print "brivla";
+        } else {
+            print "invalid";
+        }
+    } else {
+        print "cmavo cluster";
+    }
+}
+-- 
+Adam Lopresto
+http://cec.wustl.edu/~adam/
+
+"Linux means never having to delete your love mail." -- Don Marti
+
+
+
+
+           
+
