@@ -36,7 +36,7 @@
 
 ;-------------------------------------------------------------------
 
-words <- initial-spaces? (word spaces?)*
+words <- pause? (word pause?)*
 
 word <- lojban-word / non-lojban-word
 
@@ -44,9 +44,9 @@ lojban-word <- cmene / cmavo / brivla
 
 ;-------------------------------------------------------------------
 
-cmene <- !h cmene-syllable* &consonant coda? onset &spaces
+cmene <- !h cmene-syllable* &consonant coda? consonantal-syllable* onset &pause
 
-cmene-syllable <- !doi-la-lai-lahi coda? onset nucleus / consonantal-syllable / digit
+cmene-syllable <- !doi-la-lai-lahi coda? consonantal-syllable* onset nucleus / digit
 
 doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !nucleus
 
@@ -56,7 +56,7 @@ cmavo <- !cmene !CVCy-lujvo cmavo-form &post-word
 
 CVCy-lujvo <- CVC-rafsi y h? initial-rafsi* brivla-core
 
-cmavo-form <- (consonant / glide)? (nucleus h)* (!stressed nucleus / nucleus !cluster) / y+ / digit
+cmavo-form <- !h !cluster onset (nucleus h)* (!stressed nucleus / nucleus !cluster) / y+ / digit
 
 ;-------------------------------------------------------------------
 
@@ -84,9 +84,9 @@ stressed-brivla-rafsi <- &unstressed-syllable brivla-head stressed-syllable y
 
 brivla-rafsi <- &(unstressed-syllable unstressed-syllable) brivla-head y h?
 
-stressed-fuhivla-rafsi <- fuhivla-head stressed-syllable &consonant y-syllable
+stressed-fuhivla-rafsi <- fuhivla-head stressed-syllable &consonant onset y 
 
-fuhivla-rafsi <- &unstressed-syllable fuhivla-head &consonant y-syllable h?
+fuhivla-rafsi <- &unstressed-syllable fuhivla-head &consonant onset y h?
 
 fuhivla-head <- !rafsi-string brivla-head
 
@@ -142,14 +142,12 @@ unstressed-syllable <- !stressed syllable !stress / consonantal-syllable
 unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
-stress <- consonant* y? syllable spaces
+stress <- consonant* y? syllable pause
 stressed <- onset comma* [[AEIOU]
 
 syllable <- onset !y nucleus coda?
 
-y-syllable <- onset y !y
-
-consonantal-syllable <- consonant syllabic &consonant
+consonantal-syllable <- consonant syllabic &(consonantal-syllable / initial) &consonant
 
 coda <- !initial !consonantal-syllable consonant 
 
@@ -159,7 +157,7 @@ nucleus <- (diphthong / vowel / y) !nucleus
 
 ;-----------------------------------------------------------------
 
-glide <- (i / u) &vowel !glide
+glide <- (i / u) &nucleus !glide
 
 diphthong <- (a i / a u / e i / o i) !glide
 
@@ -220,13 +218,9 @@ h <- comma* [['h] &nucleus
 
 digit <- comma* [[0123456789] !h !nucleus
 
-post-word <- spaces / !nucleus lojban-word
+post-word <- pause / !nucleus lojban-word
 
-spaces <- !Y initial-spaces
-
-initial-spaces <- (comma* space-char / !ybu Y)+ EOF? / EOF
-
-ybu <- Y space-char* BU
+pause <- comma* space-char / EOF
 
 EOF <- comma* !.
 
@@ -239,6 +233,12 @@ NORATS non-space <- !space-char .
 NORATS space-char <- [[.\t\n\r?!\u0020]
 
 ;-------------------------------------------------------------------
+
+spaces <- !Y initial-spaces
+
+initial-spaces <- (comma* space-char / !ybu Y)+ EOF? / EOF
+
+ybu <- Y space-char* BU
 
 lujvo <- !gismu !fuhivla brivla
 
