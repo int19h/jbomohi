@@ -1,0 +1,61 @@
+Return-Path: <jimc@math.ucla.edu>
+X-Sender: jimc@math.ucla.edu
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_0_1_3); 24 Jan 2002 22:15:27 -0000
+Received: (qmail 10155 invoked from network); 24 Jan 2002 22:15:27 -0000
+Received: from unknown (216.115.97.172)
+  by m12.grp.snv.yahoo.com with QMQP; 24 Jan 2002 22:15:27 -0000
+Received: from unknown (HELO bodhi.math.ucla.edu) (128.97.4.253)
+  by mta2.grp.snv.yahoo.com with SMTP; 24 Jan 2002 22:15:24 -0000
+Received: from localhost (bodhi.math.ucla.edu [128.97.4.253])
+	by bodhi.math.ucla.edu (8.8.8/8.8.8) with ESMTP id OAA17956
+	for <lojban@yahoogroups.com>; Thu, 24 Jan 2002 14:15:24 -0800 (PST)
+Date: Thu, 24 Jan 2002 14:15:22 -0800 (PST)
+Sender: <jimc@xena.cft.ca.us>
+To: <lojban@yahoogroups.com>
+Subject: Re: lojban as a programming language [was Re: [lojban] Lojban for
+ lay programmers]
+In-Reply-To: <3C5081EB.3090405@reutershealth.com>
+Message-ID: <Pine.LNX.4.33.0201241400330.2429-100000@xena.cft.ca.us>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Jim Carter <jimc@MATH.UCLA.EDU>
+X-Yahoo-Group-Post: member; u=810565
+X-Yahoo-Message-Num: 13029
+Content-Length: 1652
+
+On Thu, 24 Jan 2002, John Cowan wrote:
+> The additive inverse of NaN is NaN, I think, depending on your
+> definition of inverse:  NaN + NaN is not 0, but 0 - NaN is definitely
+> NaN.
+
+On this sidetrack we're looking for X such that X + NaN == 0, and if I
+remember the standard right, anything + NaN == NaN, so NaN lacks an
+additive inverse.
+
+> As for not being a group, if they weren't a group over the defined
+> IEEE operations, that would mean that something not an IEEE-float
+> was being delivered, which is self-contradictory, since every
+> bit combination has an IEEE meaning.
+
+In 64 bit IEEE float, let X = 1; Y = 1e-17 (and the LSB is about 2e-16).
+If IEEE floats were closed under addition, the "first law" for groups, then
+X+Y has to have a IEEE representation.  Let Z = X+Y.  But Z == 1; the sum
+is truncated on the right to 56 bits.  So we've just proved that Y == 0,
+because 0 is the group member (provably unique) such that W + 0 == W for
+every W in the group.  Oops.
+
+Unsigned integer arithmetic is truly in the ring of 2^N, but all the other
+data types (signed integer, 32 and 64 bit float) do not fit the neat
+type categories (groups, rings and fields) where useful theorems can be
+proved.  Nonetheless floating point is useful, because it approximates real
+numbers, and within reasonable limits the computer's answer is similar to
+the true answer if authentic real or rational numbers had been used.
+
+James F. Carter          Voice 310 825 2897    FAX 310 206 6673
+UCLA-Mathnet;  6115 MSA; 405 Hilgard Ave.; Los Angeles, CA, USA  90095-1555
+Email: jimc@math.ucla.edu    http://www.math.ucla.edu/~jimc (q.v. for PGP key)
+
+
+           
+
