@@ -41,3 +41,24 @@ story of how {tamsmi} came about.)
 
 mi'e xorxes
 
+
+## 2004-11-22T19:34:24Z — rlpowell (comment 170, on definition 2647, in reply to 169)
+
+Re: Fourth place.
+
+xorxes wrote:
+> rlpowell wrote:
+> > According to the ma'oste, there's a fourth place, "in property".
+> 
+> But where would it come from, and what would it mean?
+> There is already x3 for a property.
+
+From "tai": (x1 resembles x2 sharing ideal form/shape x3 in property x4)
+
+> This lujvo's only reason of existence is to give
+> a source brivla for {tai}. 
+
+And se tai, te tai, and ve tai.
+
+-Robin
+
