@@ -42,7 +42,13 @@ word <- cmene / gismu / lujvo / fuhivla / cmavo / non-lojban-word
 
 ;-------------------------------------------------------------------
 
-cmene <- !h (!doi-la-lai-lahi syllable)* consonant+ ((i / u)? y h? cmene)? &spaces
+;cmene <- !h (!doi-la-lai-lahi syllable)* consonant+ ((i / u)? y h? cmene)? &spaces
+
+cmene <- !h cmene-rafsi* cmene-part &spaces
+
+cmene-rafsi <- cmene-part (i / u) y
+
+cmene-part <- (!doi-la-lai-lahi syllable / y-syllable)* consonant+ 
 
 doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !vowel
 
@@ -145,6 +151,7 @@ unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 cmavo-form <- !cluster !h syllable (&h syllable)*
+y-syllable <- (h / consonant+) y
 syllable <- (h / consonant*) (diphthong / semi-consonant? vowel) !y / digit 
 semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
