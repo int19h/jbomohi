@@ -1,4 +1,4 @@
-# mail/lojban-list thread df32074921fb-error_in_bnf%2E300 | root 20040321184454.ga32271@digitalkingdom.org | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread df32074921fb-error_in_bnf%2E300 | root 20040321184454.ga32271@digitalkingdom.org | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-03-21T18:44:54Z | Robin Lee Powell <lojban-out@lojban.org> | 20040321184454.ga32271@digitalkingdom.org | mail/lojban-list/cur/1079894694.df32074921fb4381.jbomohi:2,S
 There's a contradiction between grammar.300 and bnf.300 and, regardless
@@ -313,7 +313,89 @@ http://www.lojban.org/             ***              .i cimo'o prali .ui
 
 
 
-=== 6 | 2004-03-22T00:54:06Z | Bob LeChevalier <lojbab@lojban.org> | 5.2.0.9.0.20040321193052.0357fd90@pop.east.cox.net | mail/lojban-list/cur/1079916846.7c9e9bc10f6b59d3.jbomohi:2,S
+=== 6 | 2004-03-22T01:40:21Z | Robin Lee Powell <lojban-out@lojban.org> | 20040322014021.ge30473@digitalkingdom.org | mail/lojban-list/cur/1079919621.9593ea244dd2b4b1.jbomohi:2,S
+On Sun, Mar 21, 2004 at 05:30:01PM -0800, Robin Lee Powell wrote:
+> On Sun, Mar 21, 2004 at 07:52:40PM -0500, Bob LeChevalier wrote:
+> > At 11:54 AM 3/21/04 -0800, Robin Lee Powell wrote:
+> > >But the "I jek" has already been eaten, so the appropriate parte of
+> > >paragraph can't match.  Oops, nowhere to go.  Oh well.
+> > >
+> > >(I know this occurs because I just watched my PEG parser do it
+> > >several times until I changed the ordering; it's fixed now, and is
+> > >the only Lojban parser I'm aware of that can parse "mi broda .i je
+> > >bo no da zo'u broda").
+> > 
+> > It prescriptively shouldn't be able to.  Under TECHFIX 45, the
+> > ability to put an unmarked prenex after an IJEK was specifically and
+> > intentionally removed.  
+> 
+> <blink>
+> 
+> Ummm, *OK*.  It's an example from the Reference Grammar.
+> 
+>     roda zo'u mi prami da .ije naku zo'u do prami da
+> 
+> Chapter 16, example 10.5.
+> 
+> I haven't easily been able to find Techfix 45.  Can you point me to
+> it?
+
+Nevermind, I found it:
+
+
+    CHANGE 45
+
+    CURRENT LANGUAGE:
+
+    Grammatically, I and ijek are treated identically, although in the
+    semantics, I constitutes a stronger boundary. Prenexes can be
+    attached only to sentences or to TUhE...TUhU groups, although
+    logically a prenex can persist across several sentences connected by
+    ijeks.
+
+    PROPOSED CHANGE:
+
+    Treat I as a higher-priority break than ijek (which is higher than
+    I+BO or ijek+BO; no distinction is made between I+BO and ijek+BO).
+    Shift all the sentence fragments (the forms of utterance_20 which
+    are not sentence_40) to a higher level; they can only be connected
+    by I, not by any lower-level form. Attach prenexes to the new level
+    "statement_11"; statements contain ijeks and I+BOs, but not bare Is.
+
+    RATIONALE:
+
+    1) It has always been a rule that I and ijek have different semantic
+    implications: I is a pure separator, whereas ijek connects as well
+    as separating.  In particular, logical variables persist across ijek
+    boundaries always, but (by default) not across I boundaries.  This
+    change makes the grammar reflect the semantics.
+
+*That*, by the by, is incredibly useful, and solves a number of
+arguments I've had.
+
+    2) Logically connecting sentence fragments never did make very much
+    sense, but was allowed because of the lack of distinction between I
+    and ijek.
+
+In which case, it's just the Reference Grammar and the official parser's
+lexer that are broken.  Which, I suppose, is better.
+
+-Robin
+
+-- 
+Me: http://www.digitalkingdom.org/~rlpowell/  ***   I'm a *male* Robin.
+"Constant neocortex override is the only thing that stops us all
+from running out and eating all the cookies."  -- Eliezer Yudkowsky
+http://www.lojban.org/             ***              .i cimo'o prali .ui
+
+
+
+
+           
+
+
+
+=== 7 | 2004-03-22T00:54:06Z | Bob LeChevalier <lojbab@lojban.org> | 5.2.0.9.0.20040321193052.0357fd90@pop.east.cox.net | mail/lojban-list/cur/1079916846.7c9e9bc10f6b59d3.jbomohi:2,S
 At 10:44 AM 3/21/04 -0800, Robin Lee Powell wrote:
 >There's a contradiction between grammar.300 and bnf.300 and, regardless
 >of baselining issues, bnf.300 is *clearly* wrong:
@@ -419,7 +501,7 @@ Yahoo! Groups Links
 
 
 
-=== 7 | 2004-03-22T01:32:30Z | Robin Lee Powell <lojban-out@lojban.org> | 20040322013230.gd30473@digitalkingdom.org | mail/lojban-list/cur/1079919150.def15751f98004bf.jbomohi:2,S
+=== 8 | 2004-03-22T01:32:30Z | Robin Lee Powell <lojban-out@lojban.org> | 20040322013230.gd30473@digitalkingdom.org | mail/lojban-list/cur/1079919150.def15751f98004bf.jbomohi:2,S
 On Sun, Mar 21, 2004 at 07:54:06PM -0500, Bob LeChevalier wrote:
 > I could be wrong, but I believe that the EBNF is NOT designed to show
 > the structure within a single rule parses - it just shows what is a
