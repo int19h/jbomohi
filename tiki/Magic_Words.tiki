@@ -12,6 +12,8 @@ It is worth noting that these two documents contradict each other on many points
 * Does zoi function in lo'u...le'u?
 * What does BAhE+BU do?
 * Does SU go back to the last NIhO, LU, TUhE, or TO (as grammar.300 claims) or the beginning of input (as the Red Book claims)?
+* grammer.300 claims that ZEI works on ZOI, ZO and LOhU...LEhU clauses.  I'm pretty sure this is just a YACC side effect; it certainly seems amazingly ridiculous to me.  If anyone disagrees, let me know.
+* The red book claims that UI cmavo can't mark BU.  What's up with that?
 
 ! Magic Words Handling
 
@@ -31,7 +33,7 @@ In order of precedence.  selma'o names used throughout.  + means "a member of th
 # ZEI combines the preceding and the following word into a lujvo, but does not affect SI, SA, SU, ZO, ZOI, LOhU, ZEI, Y and FAhO.
 # BAhE marks the following word, unless it is SI, SA or SU (in which case the eraser erases the BAhE, possibly along with other things in the case of SA and SU), or unless it is preceded by ZO (in which case the BAhE itself is quoted by ZO, and loses its special effect). Multiple BAhE cmavo may be used in succession, in which case they all affect the next non-BAhE word.
 # BU makes the preceding word into a lerfu word, except for SI, SA, SU, ZO, ZOI, LOhU, ZEI, BU, BAhE, and FAhO. Note that Y is specifically included.  Multiple BU may be used in succession, in which case a new letteral is formed for each additional BU (i.e. "broda bu" is a different letteral from "broda bu bu").
-# UI and CAI cmavo mark the previous word, except for SI, SA, SU, ZO, ZOI, LOhU, ZEI, BU, BAhE, Y and FAhO.  Multiple UI cmavo may be used in succession. A following NAI is made part of the UI.
+# UI and CAI cmavo mark the previous word, except for SI, SA, SU, ZO, ZOI, LOhU, ZEI, BU, BAhE, Y and FAhO.  All of these null grammar tokens are permitted following any word of the grammar, without interfering with that word's grammatical function, or causing any effect on the grammatical interpretation of any other token in the text.  Multiple UI cmavo may be used in succession. In the case of BAhE + (UI or CAI), the BAhE marks the UI or CAI, which in turn marks the word before the (stream of) BAhE.  They may also be used at the beginning of text.  A following NAI is made part of the UI.
 # DAhO, FUhE, and FUhO are the same as UI, but do not absorb a following NAI.
 
 ! Special SI and SA Cases
@@ -63,7 +65,8 @@ The following cases are explicitely defined as bad, i.e. error cases.
 
 * ZO + any word + BU
 * ZEI + ZEI
-* BAhE + end of text (along with BAhE+Y+end of text)
+* BAhE + end of text
+* start of text + BU
 * BAhE + BU -- I don't know why this is invalid, exactly.
 * ZOI+delimiter+text+delimiter + BU
 * ZOI+delimiter+text+delimiter + ZEI
@@ -106,29 +109,3 @@ Please not that since this is the very first rule, grammar.300 allows ZOI quotes
    "su"'s are required to erase the entire conversation.
 
 This section directly and drastically contradicts the Red Book's understanding of SU.
-
-   Step 4 - Absorption of Grammar-Free Tokens
-
-   In a new pass, perform the following absorptions (absorption means that
-   the token is removed from the grammar for processing in following steps,
-   and optionally reinserted, grouped with the absorbing token after
-   parsing is completed).
-
-   a. Token sequences of the form any - (ZEI - any) ..., where there may be
-   any number of ZEIs, are merged into a single token of selma'o BRIVLA.
-
-   b. Absorb all selma'o BAhE tokens into the following token.  If
-   they occur at the end of text, leave them alone (they are errors).
-
-   c. Absorb all selma'o BU tokens into the previous token.  Relabel the
-   previous token as selma'o BY.
-
-   d. If selma'o NAI occurs immediately following any of tokens UI or CAI,
-   absorb the NAI into the previous token.
-
-   e. Absorb all members of selma'o DAhO, FUhO, FUhE, UI, Y, and CAI
-   into the previous token.  All of these null grammar tokens are permitted
-   following any word of the grammar, without interfering with that word's
-   grammatical function, or causing any effect on the grammatical
-   interpretation of any other token in the text.  Indicators at the
-   beginning of text are explicitly handled by the grammar.
