@@ -1,0 +1,108 @@
+Received: from punt4.demon.co.uk by stryx.demon.co.uk with SMTP
+	id AA10774 ; Tue, 12 Mar 96 00:03:58 GMT
+Received: from punt-4.mail.demon.net by mailstore for ia@stryx.demon.co.uk
+          id 826508983:02254:0; Mon, 11 Mar 96 01:49:43 GMT
+Received: from cunyvm.cuny.edu ([128.228.1.2]) by punt-4.mail.demon.net
+          id aa01973; 11 Mar 96 1:48 GMT
+Received: from CUVMB.CC.COLUMBIA.EDU by CUNYVM.CUNY.EDU (IBM VM SMTP V2R3)
+   with BSMTP id 4066; Sun, 10 Mar 96 20:48:21 EST
+Received: from CUVMB.COLUMBIA.EDU by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with
+ BSMTP id 7208; Sun, 10 Mar 96 20:48:46 EDT
+Date:         Sun, 10 Mar 1996 20:44:36 -0500
+Reply-To:     John Cowan <cowan@LOCKE.CCIL.ORG>
+Sender:       Lojban list <LOJBAN%CUVMB.bitnet@CUNYVM.CUNY.EDU>
+From:         John Cowan <cowan@LOCKE.CCIL.ORG>
+Subject:      TECH: PROPOSED GRAMMAR CHANGE 2$i
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Multiple recipients of list LOJBAN <LOJBAN%CUVMB.bitnet@CUNYVM.CUNY.EDU>
+Message-ID: <826508932.1973.0@cunyvm.cuny.edu>
+Content-Length: 2939
+
+
+CHANGE 39
+
+CURRENT LANGUAGE:
+
+A high-priority MEX operator is created by prefixing BO to it.
+
+PROPOSED CHANGE:
+
+Rather than using "bo", use "bi'e" in the new selma'o BIhE.
+
+RATIONALE:
+
+There is a hidden conflict between suffixed "bo" at the end of something
+and prefixed "bo", which appears only here.  This does not show up in
+Yacc because all uses of suffixed "bo" are within the lexer rules.
+Changing to a new flag eliminates the problem.
+
+
+3c3
+<      THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-37 DATED 26 OCTOBER 1995
+---
+>      THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-39 DATED 6 JANUARY 1996
+5c5
+<      COPYRIGHT 1989,1990,1991,1992,1993,1994 THE LOGICAL LANGUAGE GROUP, INC.
+---
+> COPYRIGHT 1989,1990,1991,1992,1993,1994,1995,1996 THE LOGICAL LANGUAGE GROUP,
+ INC.
+19c19
+<   grammar.237
+---
+>   grammar.239
+198c198
+< %token CMENE_517        /* DJAN = names; require consonant end, then pause no
+---
+> %token CMENE_518        /* DJAN = names; require consonant end, then pause no
+201,202c201,202
+< %token CO_518           /* GO   = tanru inversion  */
+< %token COI_519          /* UI   = vocative marker permitted inside names; must
+---
+> %token CO_519           /* GO   = tanru inversion  */
+> %token COI_520          /* UI   = vocative marker permitted inside names; must
+204,205c204,205
+< %token CU_520           /* GA   = separator between head sumti and selbri */
+< %token CUhE_521         /*        tense/modal question */
+---
+> %token CU_521           /* GA   = separator between head sumti and selbri */
+> %token CUhE_522         /*        tense/modal question */
+293a294
+> %token BIhE_650         /*        prefix for high-priority MEX operator */
+742c743
+< /*  Support for right-grouping (short scope) infix expressions with BO.  */
+---
+> /*  Support for right-grouping (short scope) infix expressions with BIhE.  */
+745c746
+<                         |  MEX_B_312  BO_508  operator_370  MEX_A_311
+---
+>                         |  MEX_B_312  BIhE_650  operator_370  MEX_A_311
+846,847c847,848
+< cmene_A_405             :  CMENE_517  /* pause */
+<                         |  cmene_A_405  CMENE_517  /* pause*/
+---
+> cmene_A_405             :  CMENE_518  /* pause */
+>                         |  cmene_A_405  CMENE_518  /* pause*/
+896,897c897,898
+< COI_A_417               :  COI_519
+<                         |  COI_519  NAI_581
+---
+> COI_A_417               :  COI_520
+>                         |  COI_520  NAI_581
+988,989c989,990
+< CO_443                  :  CO_518
+<                         |  CO_518  free_modifier_32
+---
+> CO_443                  :  CO_519
+>                         |  CO_519  free_modifier_32
+1015,1016c1016,1017
+< front_gap_451           :  CU_520
+<                         |  CU_520  free_modifier_32
+---
+> front_gap_451           :  CU_521
+>                         |  CU_521  free_modifier_32
+1413c1414
+<                         |  CUhE_521
+---
+>                         |  CUhE_522
+
+
