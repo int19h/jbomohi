@@ -1,0 +1,68 @@
+Return-Path: <richard@rrbcurnow.freeuk.com>
+X-Sender: richard@rrbcurnow.freeuk.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_3_2); 2 Sep 2001 22:49:16 -0000
+Received: (qmail 25886 invoked from network); 2 Sep 2001 22:49:15 -0000
+Received: from unknown (10.1.10.26)
+  by l10.egroups.com with QMQP; 2 Sep 2001 22:49:15 -0000
+Received: from unknown (HELO s1.uklinux.net) (212.1.130.11)
+  by mta1 with SMTP; 2 Sep 2001 22:49:15 -0000
+Received: from rrbcurnow.freeuk.com (root@ppp-1-103.cvx6.telinco.net [212.1.156.103])
+	by s1.uklinux.net (8.11.2/8.11.1) with ESMTP id f82MnCE06528
+	for <lojban@yahoogroups.com>; Sun, 2 Sep 2001 23:49:12 +0100
+Envelope-To: <lojban@yahoogroups.com>
+Received: from richard by rrbcurnow.freeuk.com with local (Exim 2.02 #2)
+	id 15dfPo-00007Q-00; Sun, 2 Sep 2001 23:08:28 +0100
+Date: Sun, 2 Sep 2001 23:08:28 +0100
+To: lojban@yahoogroups.com
+Subject: Re: [lojban] LALR1 question
+Message-ID: <20010902230828.B432@rrbcurnow.freeuk.com>
+Mail-Followup-To: lojban@yahoogroups.com
+References: <20010827163844.A919@twcny.rr.com> <Pine.GSO.4.33.0108271059530.15411-100000@ucsub.colorado.edu> <20010827163844.A919@twcny.rr.com> <20010827135306.A31570@digitalkingdom.org> <4.3.2.7.2.20010831185654.00bd77a0@pop.cais.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.2i-nntp
+In-Reply-To: <4.3.2.7.2.20010831185654.00bd77a0@pop.cais.com>; from lojbab@lojban.org on Fri, Aug 31, 2001 at 08:49:15PM -0400
+From: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-Yahoo-Message-Num: 10409
+Content-Length: 1614
+
+On Fri, Aug 31, 2001 at 08:49:15PM -0400, Bob LeChevalier (lojbab) wrote:
+> 
+> These arguments still remain.  The technology apparently exists to do an 
+> LR(4) version of the grammar, but we've baselined, and proving equivalence 
+> is tougher than writing software.  We similar cannot formally prove that 
+> the E-BNF is identical to the YACC grammar, which is why the latter takes 
+> precedence over the former, if ever a conflict is found).
+> 
+
+I think I agree that LR(4) will deal with almost all the cases.
+However, I still don't see how that would cope with rules like these
+(from the EBNF) :
+
+bridi-tail<50> = bridi-tail-1
+        [gihek [stag] KE # bridi-tail /KEhE#/ tail-terms]
+ 
+bridi-tail-1<51> = bridi-tail-2 [gihek # bridi-tail-2 tail-terms] ...
+
+bridi-tail-2<52> = bridi-tail-3 [gihek [stag] BO # bridi-tail-2 tail-terms]
+
+The problem comes when you're parsing bridi-tail-3 and encounter a gihek
+(in the most general case, something like "na se gi'u nai").  After
+scanning the gihek, you have to decide whether to reduce through 1, 2 or
+3 rules.  This depends on whether you encounter "bo" or "ke" after an
+optional simple tense (stag).  But unfortunately, a simple tense can
+contain arbitrarily many tokens.  Hence, no finite value of 'k' can
+bring the bo or ke within the lookahead window of an LR(k) parser in
+this case.
+
+I guess there's some clever trick being used to workaround this, but
+I've not worked out what it is.  Can anyone enlighten me?
+
+-- 
+R.P.Curnow,Weston-super-Mare,UK  | C++: n., An octopus made by
+http://www.rrbcurnow.freeuk.com/ |  nailing extra legs on a cat.
+
+           
+
