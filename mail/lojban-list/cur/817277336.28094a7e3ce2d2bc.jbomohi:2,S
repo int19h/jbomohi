@@ -1,0 +1,285 @@
+Return-Path: <LOJBAN%CUVMB.BITNET@BITMAIL.LSOFT.COM>
+Received: from SEGATE.SUNET.SE by xiron.pc.helsinki.fi  with smtp
+	(Linux Smail3.1.28.1 #1) id m0tJDFn-0000ZUC; Sat, 25 Nov 95 07:34 EET
+Message-Id: <m0tJDFn-0000ZUC@xiron.pc.helsinki.fi>
+Received: from listmail.sunet.se by SEGATE.SUNET.SE (LSMTP for OpenVMS v1.0a) with SMTP id 85721A74 ; Sat, 25 Nov 1995 6:34:22 +0100
+Date:         Fri, 24 Nov 1995 23:28:56 -0600
+Reply-To:     "Steven M. Belknap" <sbelknap@UIC.EDU>
+Sender:       Lojban list <LOJBAN@CUVMB.BITNET>
+From:         "Steven M. Belknap" <sbelknap@UIC.EDU>
+Subject:      Guttman Scales
+To:           Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Content-Length: 11211
+Lines: 270
+
+There are several newgroups and www pages devoted to discussing fuzzy
+logic, including relative merits, etc.
+(/www.cs.cmu.edu/Web/Groups/AI/html/faqs/ai/fuzzy/part1/faq.html)
+for example is pretty decent. The NASA shell fuzzyCLIPS is interesting.
+(ai.iit.nrc.ca/fuzzy/fuzzy.html) You can download some software which does
+fuzzy stuff if you want. In my experience, Mathematica is the best tool for
+doing things fuzzy, although there are several other pretty good packages
+for MatLab and (I hear) also for Maple. I would refer those interested in
+learning more about fuzzy logic (or in trashing fuzzy logic) to those
+sites. I am more interested in how fuzzy logic can be elegantly described
+in lojban.
+
+There are broader issues raised by the fuzzy logic question which may also
+be of some importance to lojban's implementation of numerical description.
+I have been reading the most recent preliminary version of the document
+describing mathematical description that John Cowan just uploaded - _lojbau
+mekso: Mathematical Expressions in Lojban Revision: 3.31_ contained in
+mex.tex on the lojban ftp site:
+ftp.access.digex.net/pub/access/lojbab/
+(If you try to menu your way into this paper you will get stuck as there is
+some kind of glitch, so just list the whole entry down to access/lojbab
+from the get-go and you will get to the ftp index where mex.tex appears.)
+
+This document is an interesting description of the mekso system in lojban.
+Its quite well written. Its author acknowledges the absence of much
+experience (by anyone) with usage of the mekso. I think it would be
+interesting to explore mekso usage, so perhaps some of you could comment on
+some things I've been thinking about, and how they could be well-expressed
+in lojban.
+
+Robert Chassell recently told me about the Guttman Scales, which is
+apparently the original source of an interesting meme I remember from high
+school physics.  According to Guttman, [Louis Guttman, 1944, _A Basis for
+Scaling Qualitative Data_, American Sociological Review 9:139-150]
+measurement scales come in four flavors: nominal, ordinal, interval, and
+ratio.
+
+
+Some Examples:
+
+ Scale      Example
+Nominal    Animal species
+Ordinal    Mineral Hardness
+Interval   Celsium Temperature
+Ratio      Length, Mass, Density
+
+
+Corresponding mathematical structures and valid operation:
+
+ Scale       Mathematical Structure       Operations
+Nominal     Equivalence Relation        a=b?
+Ordinal     Linear Ordering             a > or = or < b?
+Interval    Abelian Ordered Group       a1-a2 > or = or < b1-b2?
+Ratio       Archimedean Ordered Field   a1/a2 > or = or < b1/b2
+
+
+Statistics:
+
+ Scale     Descriptive      Tendency       Distribution
+Nominal   Frequency        Mode           Membership (True/False)
+Ordinal   Cumulative Freq  Median         Standard Deviation
+Interval                   Mean           Coefficient of Variation
+Ratio                      Geometric Mean
+
+Robert Chassell on Guttman Scales:
+>
+>The four Guttman scales are different primary mathematical structures:
+>equivalence relation, linear ordering, ordered Abelian group, and
+>Archimedean ordered field.  They are different axiomatically, but all
+>serve as means of measurement.
+>
+>Thus you can say this stone weights twice as much as that stone (ratio
+>scale), but you cannot meaningfully say this Fahrenheit temperature
+>(interval scale) is twice that temperature since the Fahrenheit scale
+>has an arbitrary zero.  But you can add ten F. degrees to a
+>F. temperature.  Similarly, you can say that a captain in the Army is
+>superior (ordinal scale) to a lieutenant but you cannot say by how
+>much he is superior (and indeed, the `how-muchness' is irrelevant).
+>Likewise, you can say that topaz is harder than quartz (Moh's ordinal
+>scale of hardness for minerals) but not how many degrees harder.
+>Finally, you can say that one animal is a cat and another one is a
+>dog.
+>
+>Much progress in science comes from changing the type of scale used in
+>a measurement: from `it is cold outside' to `it is colder today than
+>yesterday' to `it is 10 F. degrees colder today than yesterday' to
+>`the thermal energy content of this piece of iron is 0.6% less than it
+>was yesterday'.
+>
+>As for truth: if you are using a categorical scale, you may say that a
+>proposition belongs to the category of truthful propositions or the
+>category of false propositions.  If you use such a scale, you are not
+>saying how much truth there is in a proposition, only that it is true,
+>not false.  Much logic is based on there being only two categories,
+>true and false; it makes the mathematics simpler.  The various fuzzy
+>logics are a formal attempt to add interval or ratio scales to logic.
+>
+>Or you can say that this first proposition is more credible than that
+>second proposition, and that second proposition is more credible than
+>a third.  This is an ordinal scaling.  In a court case, a jury may
+>have to judge whether one person's testimony is more credible than
+>another's (ordinal scale) so as eventually to place the defendant in
+>one of the categories `guilty' or `not guilty'.
+>
+>In artificial intelligence programs, numbers may be used to indicate
+>the quality of the evidence for a proposition.  Even though the
+>numbers appear to suggest a familiar ratio scale, as used in measuring
+>weight or density, the computer program often limits operations on the
+>the numbers to a more restrictive set of axioms than that used by
+>rational numbers.
+
+
+The controversy regarding the utility of fuzzy logic is centered on which
+scale is appropriate to use for logical analysis. Aristotle proposed a
+principle now called the law of the excluded middle which stipulates that
+an element must either be a member or a non-member of the set, that is, it
+must be one or the other, and it can't be both.
+
+In the Aristotlean formulation there are actually four states which can
+obtain regarding set membership: True, False, Indeterminate, & Undecidable.
+Indeterminate applies to situations when there is not enough information;
+Undecidable applies to situations when there is paradoxical or conflicting
+information. Thus, Aristotlean logic is an example of a four-valued nominal
+scale. (Some might object to my inclusion of Indeterminate & Undecidable as
+scale states because they are metareferential.)
+
+The USA criminal justice system is often also cited as being an example of
+a nominal scale: Guilty, Innocent, & Mistrail being the possible outcome
+states. But perhaps this is not actually true: many criminal cases are
+resolved through plea-bargaining, in which the quality of the evidence, the
+heinousness of the offense, the political sensitivity of the crime, the
+closeness to election time, and other factors are used during negotiations
+by prosecutors and defendants (or their proxies) to calculate the
+punishment. Also, sentencing is separate from judgement, and sentencing
+outcome varies within limits set by law.  The scale of criminal justice
+seems more like an (imperfect) interval scale than a nominal scale.
+
+There is an evolving proposal for an ordinal fuzzy scale, which I believe
+xorxes introduced several months ago in response to fuzzy ship of Theseus
+tread, and which <lojbab>, <and>, <jcowan> and others have been shaping. It
+goes something like this:
+
+je'ucai
+je'u(sai)
+je'uru'e
+je'ucu'i
+je'unairu'e
+je'unai(sai)
+je'unaicai
+
+This is an ordinal scale, but is not an interval scale, since the elements
+do not form an Abelian ordered group: no requirement is being made of being
+evenly distributed along the range of false to true. These constructs are
+useful, but there is some disagreement as to whether implementation in
+<jeu> is the proper course.
+
+Several months ago, when I was thinking about the Fuzzy Ship of Theseus, I
+tried to find a gismu which would allow me to express an interval scale,
+but came up empty. So did jorges, which considering his mastery of lojban
+is more relevant than my own failed efforts.
+
+mi cusku di'e
+>> It is possible that there is some easy way to do this already in lojban,
+>> although I haven't seen any posts that quite get at what I want to do.
+>
+la xorxes cusku di'e
+>What predicate would you like in order to say that? Something like:
+>
+>        x1 is x2 units (default=1) on scale/property x3
+>
+>Unfortunately, I can't find a gismu with that structure. I remember that
+>someone once proposed that {gradu} should have that structure, but it
+>seems that it wasn't changed. That the place structure of all the
+>specific units, it is really weird that the generic unit doesn't have
+>that structure.
+
+Agreed. Is there a good reason why gradu has its assigned place structure?
+It seems less useful than it could be, and seems inconsistent with related
+gismu. The nipponized english for fuzzy is something like <fudje>.I believe
+that the Chinese and Russian words are also derived from the English (but I
+don't know what they are) Would <fudje> be a possible lojban word for fuzzy
+logic? What score would it get?
+
+mi cusku di'e
+>> Now, perhaps I saw some shadows which on a 0 to 7 scale I am 4ish certain
+>> corresponded to the defendant and the errant politician, and suppose I saw
+>> these shadows perform the alledged defenestration to certainty 3ish on a 0
+>> to 4 scale.
+>
+la xorxes cusku di'e
+>If I understand correctly, here you want an observative to mark how certain
+>you are of what you are saying. How about this:
+>
+>        sei vofi'uzesi'e selbirti
+>        With 4/7th certainty
+>
+>        sei cifi'uvosi'e selbirti
+>        With 3/4th certainty
+
+The use of rational numbers in this way seems like a good way to express
+ratio scale things, particularly if this were combined with and's
+suggestion:
+
+
+la and cusku di'e
+>I am persuaded by these arguments, and conclude
+>that we therefore need a new one-member selmao that takes
+>a number expression (like MOI and ROI do) and yields a NA.
+>I will call this cmavo {xoi} in selmao XOI.
+
+> mi pi mu xoi clani
+
+"I am 0.5 tallish" or "I am fuzzily tallish to extent 0.5"
+
+>pi mu xoi ku mi clani
+
+
+Perhaps xoi could be one of a multi-member selmao which could distinguish
+which of the 4 Guttman scales was being used.
+
+mi <nominal selmao> clani
+
+"I am categorically tall"
+
+
+mi cifi'uvosi'e <ordinal selmao> clani
+
+"On a (not necessarily evenly distributed) scale of 7 parts,I am 4 tall."
+
+
+mi muzefi'ubiresi'e <interval selmao> clani
+
+"On an (evenly distributed, but not necessarily ratioed) scale of 82 parts
+I am 57 tall."
+
+
+ mi cifi'uzesi'e <ratio selmao> clani
+
+"On a ratioed scale of 7 parts I am 3 tall"
+
+or
+
+"I am 0.5 tallish."
+
+(The above two translations are both accurate. A ratioed seven point scale
+would have values 0,1,2,3,4,5,6. Because it is a ratio scale, we can
+legitimately divide numerator by denominator.)
+
+Thus, the meaning of <scale unspecified> utterances would be unchanged;
+
+do clani
+
+"You are (without reference to a particular scale) tall."
+
+
+I probably have messed up something about selmao, but I hope the benefits
+of this or some similar scheme are clear.
+
+co'o mi'e. stivn.
+
+
+
+
+Steven M. Belknap, M.D.
+Assistant Professor of Clinical Pharmacology and Medicine
+University of Illinois College of Medicine at Peoria
+
+email: sbelknap@uic.edu
+Voice: 309/671-3403
+Fax:   309/671-8413
+
