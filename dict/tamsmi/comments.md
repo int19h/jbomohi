@@ -265,3 +265,49 @@ Jesus, is a little backwards compatibility worth *this* much of a fight?
 
 -Robin
 
+
+## 2004-11-22T21:13:54Z — xorxes (comment 177, on definition 2647, in reply to 176)
+
+Re: Fourth place.
+
+rlpowell wrote:
+> xorxes wrote:
+> > rlpowell wrote: 
+> > > Certainly in the first case you wouldn't say that da and de both
+> > resemble
+> > > an (idealized) ball?
+> > 
+> > Why not? They both look like balls in their outsides.
+> 
+> No, on their *insides*.
+
+Right. The point is the same.
+
+> > What else could it mean to say that they resemble each
+> > other in that they have the outer shape of a ball?
+> 
+> Because they are round on the inside.
+
+All right: What else could it mean to say that they resemble each other in
+that they have the inner 
+shape of a ball?
+
+> > But why make it so complicated? 
+> 
+> Because this is how the ma'oste currently defines it!
+> 
+> Jesus, is a little backwards compatibility worth *this* much of a fight?
+
+I don't care all that much how {tamsmi} ends up being
+defined. As I said, it is unlikely that the word will 
+ever be actually used. But I won't write definitions 
+that I think are wrong just because they appear in 
+the ma'oste. Since we can have two competing 
+definitions here, there is no need to fight. People 
+who want to keep the ma'oste definition can vote for 
+it, and those who don't think it makes much sense can 
+vote for something else. I wouldn't even be sure how 
+to write the ma'oste definition in Lojban.
+
+mi'e xorxes
+
