@@ -1,0 +1,58 @@
+Message-Id: <m0oJ2oS-00012WC@snark.thyrsus.com>
+From: cowan@snark.thyrsus.com (John Cowan)
+Subject: Re: New parser version outputs in Prolog format!
+To: nsn@mullian.ee.mu.oz.au (Nick Nicholas)
+Date: Thu, 22 Jul 1993 11:44:08 -0400 (EDT)
+X-Mozilla-Status: 0011
+Content-Length: 2538
+
+> I'm very happy with it; it should prove quite handy for any future NLP work
+> on Lojban. The one point I can think of: compounds already handled by the
+> lexer in the parser will show up as such, won't they? For example, {.ije}
+> won't be analysed as I+JE, but as LEXER_S or whichever lexer it is. Given
+> the vagaries of YACC parsing, that's fair. 
+
+With the -f option, it comes out both ways.  I no longer downcase selma'o
+names, but I continue to downcase inserted terminators.  Your example also
+stepped on a bug that would produce non-Prolog atoms on certain occasions.
+
+Here's another example:
+
+36 c:/parser> parser -p -f
+2;4;33moi ke lojbo genturfa'i
+Copyright 1991,1992,1993 The Logical Languages Group, Inc.  All Rights Reserved
+>>> prami .ije blanu
+text_0(text_A_1(text_B_2(text_C_3(paragraphs_4(paragraph_10(paragraph_10(
+paragraph_A_11(paragraph_B_12(utterance_20(sentence_40(bridi_tail_50(
+bridi_tail_A_51(bridi_tail_B_52(bridi_tail_C_53(selbri_130(selbri_A_131(
+selbri_B_132(selbri_C_133(selbri_D_134(selbri_E_135(selbri_F_136(
+tanru_unit_150(tanru_unit_A_151(tanru_unit_B_152(bridi_valsi_407(
+bridi_valsi_A_408(BRIVLA(prami))))))))))))),tail_terms_71(vau(vau)))))))))
+)),I_819(lexer_S__i_or_ijek_(I(i),simple_JOIK_JEK_957(JA(je)))),
+paragraph_A_11(paragraph_B_12(utterance_20(sentence_40(bridi_tail_50(
+bridi_tail_A_51(bridi_tail_B_52(bridi_tail_C_53(selbri_130(selbri_A_131(
+selbri_B_132(selbri_C_133(selbri_D_134(selbri_E_135(selbri_F_136(
+tanru_unit_150(tanru_unit_A_151(tanru_unit_B_152(bridi_valsi_407(
+bridi_valsi_A_408(BRIVLA(blanu))))))))))))),tail_terms_71(vau(vau)))))))))
+))))))).
+Space used: 5200 bytes for tokens, 100 bytes for strings
+
+Note the functor "lexer_S___i_or_ijek_" and its parts.  So you can analyze
+at the lexer-compound level or at the single cmavo level.  This works
+because there is only one kind of node inside the parser, and the YACC
+subsystem simply doesn't care if "yylval" is a singleton node or a node
+with lots of subnodes which represent preparser results.
+
+> The output will in fact prove helpful not only to NLP workers, but to people
+> learning Lojban in general. I can't think of any way to improve output format
+> that wouldn't turn out implausible. However, the display option -r of the 
+> current parser should be retained alongside it, I feel; some will find it
+> easier to read.
+
+I have changed the Prolog format to -p.  I can reinstitute the current -r
+if there's demand.
+
+-- 
+John Cowan	cowan@snark.thyrsus.com		...!uunet!lock60!snark!cowan
+			e'osai ko sarji la lojban.
+
