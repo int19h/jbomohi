@@ -125,12 +125,17 @@ cmavo <- consonant? vowel-y (h? vowel-y)*
 
 vowel-y <- a / e / i / o / u / y
 
-stressed-diphthong <- [[iIuU] comma* [[AEIOU] comma* / stressed-rafsi-diphthong
-stressed-rafsi-diphthong <- [[AEO] comma* [[iI] comma* / [[A] comma* [[uU] comma*
-stressed-vowel <- [[AEIOU] comma* !vowel-y
-diphthong <- [[iu] comma* [[aeiou] comma* / rafsi-diphthong
-rafsi-diphthong <- [[aeo] comma* [[i] comma* / [[a] comma* [[u] comma*
-vowel <- [[aeiou] comma* !vowel-y
+stressed-diphthong <- (i / u) stressed-vowel / stressed-rafsi-diphthong
+
+stressed-rafsi-diphthong <- [[AEO] comma* i / [[A] comma* u
+
+stressed-vowel <- [[AEIOU] comma* !a !e !o !y
+
+diphthong <- (i / u) vowel / rafsi-diphthong
+
+rafsi-diphthong <- [[aeo] comma* i / [[a] comma* u
+
+vowel <- [[aeiou] comma* !a !e !o !y
 
 a <- [[aA] comma* !a !e !o !y
 e <- [[eE] comma* !a !e !o !u !y
@@ -142,13 +147,21 @@ y <- [[yY] comma* !a !e !i !o !u
 ;-------------------------------------------------------------------
 
 non-initial-cluster <- !initial-cluster consonant consonant+
+
 initial-cluster <- initial-consonant+ consonant !consonant
+
 initial-pair <- initial-consonant consonant !consonant
+
 initial-consonant <- c / s / j !n / z !n / d-t &sibilant / !l !n consonant &r / !r !n !d-t consonant &l
+
 consonant <- voiced-consonant / unvoiced-consonant / l / m / n / r
+
 voiced-consonant <- b / d / g / j / v / z
+
 unvoiced-consonant <- c / f / k / p / s / t / x
+
 sibilant <- c / j / s / z
+
 d-t <- d / t
 
 l <- [[lL] comma* !h !l
@@ -173,8 +186,9 @@ h <- [['h] comma* &vowel
 
 ;-------------------------------------------------------------------
 
-comma <- [[,]
 space <- [[ .] comma*
+
+comma <- [[,]
 
 non-lojban-word <- (!space .)*
 
