@@ -1,0 +1,82 @@
+Return-Path: <richard@rrbcurnow.freeuk.com>
+X-Sender: richard@rrbcurnow.freeuk.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_0_0_1); 16 Nov 2001 22:55:29 -0000
+Received: (qmail 97552 invoked from network); 16 Nov 2001 22:55:29 -0000
+Received: from unknown (216.115.97.167)
+  by m9.grp.snv.yahoo.com with QMQP; 16 Nov 2001 22:55:29 -0000
+Received: from unknown (HELO tvout.mail.uk.easynet.net) (194.6.96.5)
+  by mta1.grp.snv.yahoo.com with SMTP; 16 Nov 2001 22:55:29 -0000
+Received: from rrbcurnow.freeuk.com (tnt-9-155.easynet.co.uk [195.40.198.155])
+	by tvout.mail.uk.easynet.net (Postfix) with ESMTP id 2FDEE6300D
+	for <lojban@yahoogroups.com>; Fri, 16 Nov 2001 22:55:26 +0000 (GMT)
+Received: from richard by rrbcurnow.freeuk.com with local (Exim 2.02 #2)
+	id 164rtC-00003f-00
+	for lojban@yahoogroups.com; Fri, 16 Nov 2001 22:55:14 +0000
+Date: Fri, 16 Nov 2001 22:55:14 +0000
+To: lojban@yahoogroups.com
+Subject: Re: [lojban] Re: ca'a pu (was: Why is there so much irregularity in cmavo/gismu?)
+Message-ID: <20011116225514.A218@rrbcurnow.freeuk.com>
+Mail-Followup-To: lojban@yahoogroups.com
+References: <3BF274A8.2070903@reutershealth.com> <Pine.GSO.4.40.0111140724360.11466-100000@ucsub.colorado.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Pine.GSO.4.40.0111140724360.11466-100000@ucsub.colorado.edu>; from Jay.Kominek@Colorado.EDU on Wed, Nov 14, 2001 at 07:33:06AM -0700
+Sender: Richard Curnow <richard@rrbcurnow.freeuk.com>
+From: Richard Curnow <rpc@digitalkingdom.org>
+X-Yahoo-Profile: richard_p_curnow
+X-Yahoo-Message-Num: 12196
+Content-Length: 1866
+
+On Wed, Nov 14, 2001 at 07:33:06AM -0700, Jay Kominek wrote:
+> 
+> On Wed, 14 Nov 2001, John Cowan wrote:
+> 
+> > Jay Kominek wrote:
+> >
+> > > {mi ca'a pu broda} does not work.
+> >
+> > If so, that is a bug: ku is not required after a free-standing
+> > modal (unlike after "na"), so ca'a pu is just ca'a[ku] pu.
+> 
+> Being a bit more awake this morning, I thought to check the official
+> parser. {mi ca'a pu broda} does indeed work with it, and it does insert
+> that [ku].
+> 
+> So, it is a jbofi'e bug then, I suppose. (Just tested jbofi'e 0.38, it
+> doesn't work, either)
+> 
+
+Obviously {mi pu ca'a broda} does work.  So the key difference is that
+'pu' cannot follow 'ca'a' within a single time construction.
+
+I've investigated why jbofi'e doesn't reduce ca'a to a standalone term
+(inferring 'ku') when 'pu' is the lookahead token.  Essentially, it's
+because it thinks it's starting to see something like
+
+  mi ca'a pu gi le nanmu gi le ninmu cu broda
+
+(whatever that might mean), i.e. it's expecting to see 'gi' after pu to
+make everything work out OK.  This expression parses OK on the official
+v2.33 parser.  (I don't actually have the official v3 parser running yet
+- I've never got round to sorting the build out.)
+
+I need to away and think quite hard about this problem.  The full extent
+of the bug is not yet clear to me - I presume I'm missing one of the
+pre-parser stages that the official parser has.
+
+It's certainly pointing to a need to press on with building the official
+v3 parser & the random sentence generator I half finished, so I can
+start smoking out other corner-cases like this one.
+
+-- 
+Richard.
+---------------------------------+-------------------------------------
+Richard P. Curnow                | C++: n., An octopus made by
+Weston-super-Mare, UK            |  nailing extra legs on a cat.
+http://www.rrbcurnow.freeuk.com/ |
+
+
+           
+
