@@ -1,0 +1,6 @@
+There are algorithms which can parse any context-free language, ambiguous or not. Earley's Algorithm and Tomita's Parser are such parsers.
+
+* Earley's: A chart parsing algorithm with a complexity of O(n^3), though it is very close to O(n) for ((LR))(k) grammars, and remains roughly O(n^2) for grammars which are only mildly ambiguous.
+* Tomita's: A parser which is based on using an LR(0) parser that splits the parsing in multiple directions whenever ambiguity is encountered. If one of the forks has an error (meaning it wouldn't produce a valid parse), then it is terminated. It remains O(n) for languages which are LR(0), and the additional complexity increases about linearly with the number of ambiguities encountered. (Ambiguities as far as an LR(0) language is concerned.)
+
+General parsers get a bad rap (IMO, --jay), for being excessively complex and having bad computational complexities. With modern computers, though, and processing systems doing non-trivial semantic analysis of the language being parsed, you couldn't tell the difference between O(n^3) and O(n). ('Cause once you toss something like global register allocation into the mix, you're dealing with exponential times anyways...)
