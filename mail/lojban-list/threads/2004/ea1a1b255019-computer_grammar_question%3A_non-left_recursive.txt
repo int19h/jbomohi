@@ -1,4 +1,4 @@
-# mail/lojban-list thread ea1a1b255019-computer_grammar_question%3A_non-left_recursive | root 20041107081848.gw18082@chain.digitalkingdom.org | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread ea1a1b255019-computer_grammar_question%3A_non-left_recursive | root 20041107081848.gw18082@chain.digitalkingdom.org | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-11-07T08:18:48Z | Robin Lee Powell <lojban-out@lojban.org> | 20041107081848.gw18082@chain.digitalkingdom.org | mail/lojban-list/cur/1099815528.ea1a1b255019e51a.jbomohi:2,S
 Lojban has a reverse polish (i.e. postfix math) mode built in.
@@ -123,6 +123,77 @@ Hey, wait! you need a stack to make the tree of rp-notation. You can't do it in 
 
 Greg
 
+
+
+
+
+           
+
+
+
+=== 5 | 2004-11-07T19:16:18Z | Robin Lee Powell <lojban-out@lojban.org> | 20041107191618.gc18082@chain.digitalkingdom.org | mail/lojban-list/cur/1099854978.c0eb76673d3c14ad.jbomohi:2,S
+On Sun, Nov 07, 2004 at 05:38:29PM +0100, GREGORY DYKE wrote:
+> As per promise, first a piece of code to illustrate how to make
+> the tree from the new grammar.
+> 
+> 
+>     /** SumExpression  = Term
+>      *                 | SumExpression SumOp Term
+>      */
+> 
+>     ->LL(1)
+>     SumExpression = Term {SumOp Term}
+
+That doesn't work for the RPN case.  It works here because the
+operator is associative, but RPN has strict grouping.
+
+> > The ABNF form of this rule is:
+> > 
+> > rp-expression = rp-operand rp-operand operator
+> > 
+> > rp-operand = operand / rp-expression
+
+The easier to understand form is:
+
+rp-expression = rp-expression rp-expression operator / operand
+
+They are equivalent, except see below.
+
+> just one thing, can an rp-expression be just an operand? I would
+> have thought so...
+
+Apparently not, although my version does allow this.
+
+I have come up with a version that has no internal grammar at all
+(i.e. is purely iterative), but that is not much more satisfying.
+It is:
+
+rp-expression <- operand / operand operand (operator operand / operand operator)* operator
+
+It's based on my beliefe that any string that starts with two
+operands, ends in an operator, and has an equal number of operands
+and operators in the middle is a valid binary RPN string, but I have
+no proof of this.
+
+> Hey, wait! you need a stack to make the tree of rp-notation. You
+> can't do it in one-token lookahead (I presume the point of this
+> was to make it LL1)...
+
+No, the point was to make it work in a PEG grammar, which is
+LL(inf), sort of.
+
+> (take all this with a pinch of salt: I love this stuff and will
+> gladly look into it further, 
+
+Please do.
+
+-Robin
+
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+Proud Supporter of the Singularity Institute - http://singinst.org/
 
 
 
