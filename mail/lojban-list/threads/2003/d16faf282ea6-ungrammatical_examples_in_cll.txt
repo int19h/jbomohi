@@ -1,4 +1,4 @@
-# mail/lojban-list thread d16faf282ea6-ungrammatical_examples_in_cll | root pine.lnx.4.44.0302011458530.25480-100000@thedave.homelinux.org | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread d16faf282ea6-ungrammatical_examples_in_cll | root pine.lnx.4.44.0302011458530.25480-100000@thedave.homelinux.org | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2003-02-01T15:25:37Z | Martin Bays <lojban-out@lojban.org> | pine.lnx.4.44.0302011458530.25480-100000@thedave.homelinux.org | mail/lojban-list/cur/1044113137.d16faf282ea63d5a.jbomohi:2,S
 Further to the problems with prenex-connective interaction -
@@ -385,7 +385,119 @@ http://www.lojban.org/   ***   to sa'a cu'u lei pibyta'u cridrnoma toi
 
 
 
-=== 8 | 2003-02-07T03:26:10Z | Robert LeChevalier <lojbab@lojban.org> | 5.2.0.9.0.20030206221251.036511d0@pop.east.cox.net | mail/lojban-list/cur/1044588370.b134d38471b3f22d.jbomohi:2,S
+=== 8 | 2003-02-08T04:45:28Z | Robert LeChevalier <lojbab@lojban.org> | 5.2.0.9.0.20030207233754.036a0b90@pop.east.cox.net | mail/lojban-list/cur/1044679528.80bf8b41345f0e5b.jbomohi:2,S
+At 11:03 AM 2/7/03 -0800, Robin Lee Powell wrote:
+> > So you can't put a prenex in there after a .ifoo connective.
+> >
+> > Yes this sucks.
+> >
+> > The older grammar (which the official parser uses) supports this. I
+> > have no idea why it was removed.
+>
+>What did the older rules look like?
+
+Here is the old grammar and Techfix 45 (which incidentally is the format 
+I'm hoping that people will use to propose changes to the baseline).
+
+>CHANGE 45
+>CURRENT LANGUAGE:
+>Grammatically, I and ijek are treated identically, although in the
+>semantics, I constitutes a stronger boundary.
+>Prenexes can be attached only to sentences or to TUhE...TUhU groups, although
+>logically a prenex can persist across several sentences connected by
+>ijeks.
+>PROPOSED CHANGE:
+>Treat I as a higher-priority break than ijek (which is higher than
+>I+BO or ijek+BO; no distinction is made between I+BO and ijek+BO).
+>Shift all the sentence fragments (the forms of utterance_20 which are not
+>sentence_40) to a higher level; they can only be connected by I, not by any
+>lower-level form.
+>Attach prenexes to the new level "statement_11"; statements contain ijeks
+>and I+BOs, but not bare Is.
+>RATIONALE:
+>1) It has always been a rule that I and ijek have different semantic
+>implications: I is a pure separator, whereas ijek connects as well as
+>separating.  In particular, logical variables persist across ijek
+>boundaries always, but (by default) not across I boundaries.  This change
+>makes the grammar reflect the semantics.
+>2) Logically connecting sentence fragments never did make very much sense,
+>but was allowed because of the lack of distinction between I and ijek.
+
+>paragraphs_4            :  utt_string_A_10
+>                         |  utt_string_A_10  para_mark_410  paragraphs_4
+>                         ;
+>
+>utt_string_A_10         :  utt_string_B_11
+>                         |  utt_string_A_10  I_819  utt_string_B_11
+>                         |  utt_string_A_10  I_819  POhO_gap_455
+>                         /* this last fixes an erroneous start to a sentence,
+>                            and permits incomplete JOIK_JEK after I, as well
+>                            in answer to questions on those connectives  */
+>                         ;
+>
+>utt_string_B_11         :  utt_string_C_12
+>                         |  utt_string_C_12  I_BO_811  utt_string_B_11
+>                         |  utt_string_C_12  I_BO_811  POhO_gap_455
+>                         /* this last fixes an erroneous start to a sentence,
+>                            and permits incomplete JOIK_JEK after I, as well
+>                            in answer to questions on those connectives  */
+>                         ;
+>
+>utt_string_C_12         :  utterance_20
+>                         |  TUhE_610  paragraphs_4  TUhU_gap_454
+>                         |  header_terms_30  TUhE_610  paragraphs_4 
+> TUhU_gap_454
+>                         |  PU_mod_491  TUhE_610  paragraphs_4  TUhU_gap_454
+>                         ;
+
+I_819 included the following indirectly:
+>I_root_956              :  I_545
+>                         |  I_545  JOIK_JEK_957
+>                         ;
+>
+>
+>JOIK_JEK_957            :  JOIK_806
+>                         |  JEK_805
+>                         ;
+>                         /* no freemod in this version; cf. JOIK_JEK_422 */
+>                         /* this reference to a version of JOIK and JEK
+>                            which already have the lexer_lexemes attached
+>                            prevents shift/reduce errors.  The problem is
+>                            resolved in a hard-coded parser implementation
+>                            which builds lexer_K, before lexer_S, before
+>                            lexer_E and lexer_F. */
+
+
+> > All that needs to be done to fix it is to make the part after the
+> > connective of the statement1 and statement2 things use a "statement"
+> > rule instead of a "statement2" rule, and to decide what kind of scope
+> > the outer prenex has.
+>
+>That last part might take some work.
+
+Especially since it effectively undoes a grammar change.  It seems clear 
+that Cowan intended it this way, and he apparently convinced me and others 
+at the time.
+
+lojbab
+
+-- 
+lojbab                                             lojbab@lojban.org
+Bob LeChevalier, President, The Logical Language Group, Inc.
+2904 Beau Lane, Fairfax VA 22031-1303 USA                    703-385-0273
+Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
+
+
+=== 9 | 2003-02-07T03:26:10Z | Robert LeChevalier <lojbab@lojban.org> | 5.2.0.9.0.20030206221251.036511d0@pop.east.cox.net | mail/lojban-list/cur/1044588370.b134d38471b3f22d.jbomohi:2,S
 At 08:11 PM 2/6/03 -0600, Jordan DeLong wrote:
 [unquotable]
 
