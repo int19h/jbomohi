@@ -1,0 +1,47 @@
+These rules all have the string "gap" in their names. Most of them have this
+general form:
+
+!!!name_of_rule : ((terminal symbol|terminal_symbol)) | ((terminal symbol|terminal_symbol)) ((free_modifier_32)) | ((error))
+
+In plain language: the containing phrase of an elidable terminator
+contains either the ((elidable terminator)) itself, optionally followed by
+one or more free modifiers, or else nothing at all (because it is
+elided).
+
+!Rules that follow this pattern:
+* ((gap_450))
+* ((MEX_gap_452))
+* ((KEI_gap_453))
+* ((TUhU_gap_454))
+* ((VAU_gap_456))
+* ((FEhU_gap_458))
+* ((NUhU_gap_460))
+* ((BOI_gap_461))
+* ((LUhU_gap_463))
+* ((GEhU_gap_464))
+* ((MEhU_gap_465))
+* ((KEhE_gap_466))
+* ((BEhO_gap_467))
+* ((KUhO_gap_469))
+* ((right_bracket_gap_471))
+* ((LOhO_gap_472))
+* ((TEhU_gap_473))
+
+Originally ((gap_450)) was the only kind of gap, which is why it isn't called KU_gap_450.
+
+Some rules don't allow free modifiers. In other words, they're on this
+form:
+!!!name_of_rule : ((terminal symbol|terminal_symbol)) | ((error))
+* ((DOhU_gap_457)) - This makes kind of sense, because DOhU is the terminator of a vocative, which can always be followed by additional vocatives.
+* ((SEhU_gap_459)) - A comment in the grammar says, "a free modifier on a discursive should be somewhere within the discursive."
+* ((sub_gap_462)) - This is the same as ((BOI_gap_461)), except with no possibility of free modifiers.  This is used when the BOI is itself part of a free modifier, specifically a MAI free modifier.
+* ((TOI_gap_468)) - A parenthesis is another kind of free modifier, and as such, we already know that it can be followed by another one.
+* ((right_br_no_free_474)) - This is a VEhO that terminates a subscript, which is itself a free modifier.
+
+Another kind of "gap" rules are not for terminators, and implement
+elision by some other means than YACC's "error" rule. In other words,
+they're of this form:
+!!!name_of_rule : ((terminal symbol|terminal_symbol)) | ((terminal symbol|terminal_symbol)) ((free_modifier_32))
+* ((front_gap_451)) (for ((CU)))
+
+This rule is called "gap" for historical reasons only.
