@@ -14,3 +14,11 @@ Re: Do we really need ku2?
 If it's not redundant in the original word, I don't see what makes it
 redundant here.
 
+
+## 2004-05-11T00:29:34Z — phma (comment 143, on definition 14878, in reply to 142)
+
+Re: Do we really need ku2?
+
+I meant "dependent". See chapter 12, section 6. {gerzda} loses the g2
+place, for instance.
+
