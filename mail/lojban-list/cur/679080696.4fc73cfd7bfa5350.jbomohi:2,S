@@ -1,0 +1,160 @@
+Return-Path: <cowan>
+Message-Id: <m0jxLuV-0001DAC@snark.thyrsus.com>
+From: cowan (John Cowan)
+Subject: Changes to grammar:  21-28
+To: lojban-list
+Date: Tue, 9 Jul 91 13:31:36 EDT
+X-Mailer: ELM [version 2.3 PL11]
+X-From-Space-Date: Tue Jul  9 13:32:20 1991
+X-From-Space-Address: cowan
+Content-Length: 4834
+
+Change 21:
+
+*ANNULLED*
+
+
+Change 22:
+
+CURRENT LANGUAGE:
+
+CU is treated like the elidable terminators, although it does not terminate.
+
+PROPOSED CHANGE:
+
+Make CU optional (handled directly by grammar rules) rather than elidable.
+This does not change the grammatical status of any text; it is simply a
+change to internal mechanisms in the parser.
+
+RATIONALE:
+
+This change assists correct error recovery in the parser.
+
+
+Change 23:
+
+CURRENT LANGUAGE:
+
+FAhO is currently an elidable terminator for the end of text.  Text refers
+not only to an entire expression, but also to quoted (with LU/LIhU) and
+parenthesized (with TO/TOI) material.  In addition, FAhO is allowed at the
+end of a very-long-scope sentence group marked with TUhE/TUhU.  In all three
+of these cases, the FAhO is redundant to the regular elidable terminator.
+
+PROPOSED CHANGE:
+
+Treat FAhO extra-grammatically as an overriding end of parsable input.
+It would no longer be allowed at the end of quoted or parenthesized text.
+
+RATIONALE:
+
+This change assists correct error recovery in the parser.  It is also closer
+to the original spirit of FAhO, which was intended to assist mechanical
+Lojban users in determining when to terminate input (similar to the RETURN
+or ENTER keys in more conventional programs).
+
+
+Change 24:
+
+*ANNULLED*
+
+
+Change 25:
+
+CURRENT LANGUAGE:
+
+The flag "pe'o", selma'o PEhO, is currently used to mark forethought mekso
+operators.
+
+PROPOSED CHANGE:
+
+Make "pe'o" optional.
+
+RATIONALE:
+
+"pe'o" is not needed to keep the grammar unambiguous, but may still be
+helpful as a heuristic to avoid confusing human readers.
+
+
+Change 26:
+
+CURRENT LANGUAGE:
+
+A time interval specified with ZEhA must be preceded by a time direction
+specified with PU.  An interval without a direction looks like an origin
+specification and is not allowed.  Space intervals have a similar restriction.
+
+PROPOSED CHANGE:
+
+Allow bare ZEhA as a time interval and bare VIhA, VEhA or VEhA+VIhA as a 
+space interval.  Remove origin specifications from the language, and
+space interval, with no directions specified.  If a direction is wanted
+for the interval, allow it after the interval word.  Remove origin-size
+specifications as a special mechanism; origin sizes are set using KI,
+just like origin locations.  (A side effect of this change is that FEhE is
+always required to mark space interval modifiers.)
+
+RATIONALE:
+
+There is no logical reason why intervals must have a direction.  The sentence
+"mi ve'ivi'u xadni" meaning "I small-interval-ly-three-dimensionally am-a-body"
+is ungrammatical without this change, but is perfectly sensible.
+
+
+Change 27:
+
+CURRENT LANGUAGE:
+
+The current use of full mathematical expressions is limited to two areas:
+after LI to form sumti, and as quantifiers.  In the latter use, parentheses
+must be used around any mekso other than a simple number.
+
+Simple numbers and letteral-strings can also be used in some other places:
+with -MOI to form selbri, with -MAI to form utterance ordinals, and with
+-ROI to form quantified tenses, and after XI to make subscripts.
+
+PROPOSED CHANGE:
+
+Allow richer expressions after XI and before MOI.  The grammar of XI
+is extended to allow XI VEI mex /VEhO/ as a subscript, allowing any
+mekso within parentheses (same rule as for quantifiers).
+
+With -MOI, the rule has to be more complex, since simply allowing
+any quantifier + MOI produces conflicts.  Instead, we extend the
+syntax of ME-conversion so that ME sumti /MEhU/ MOI is a legal kind
+of selbri.  Typically the sumti will be either a LI construct, a
+"le ni" construct, or some kind of anaphora.
+
+RATIONALE:
+
+We need to be able to say "x sub (n + 1)" for mathematical and scientific
+text, as well as being able to talk about the "(n + 1)th occurrence"
+of an event.
+
+
+Change 28:
+
+CURRENT LANGUAGE:
+
+Official doctrine states that the sumti tcita of a bridi constitute nonstandard
+places which are co-equal with the regular numbered places.  However, there
+is no way to make these places the subject of a description by moving them
+into a numbered (specifically, the x1) place.
+
+PROPOSED CHANGE:
+
+Add JAI+tag as the equivalent of a SE conversion.  (JAI is a new selma'o.)
+This is usable only on selbri, not in the other places where SE is legal.
+The result is that the se tcita sumti comes to occupy the x1 place, and the
+original x1 place is moved to a new "x0" place, which can be labelled with
+the cmavo "fai" (of selma'o FA).
+
+RATIONALE:
+
+It is currently messy to say "the time of my going to the store"; this
+looks like an abstraction, but does not match any existing abstractor.
+It can be handled quite neatly with "le jai ca klama be fai mi bei le zarci".
+In particular, when a place is meant to be an abstract sumti, and a
+concrete sumti appears ("sumti raising"), these JAI-based descriptors
+provide sumti access to modal places as well as standard ones.
+
