@@ -1,0 +1,33 @@
+Received: from YALEVM.YCC.YALE.EDU by MINERVA.CIS.YALE.EDU via SMTP; Fri, 19 Mar 1993 17:34:28 -0500
+Received: from CUVMB.CC.COLUMBIA.EDU by YaleVM.YCC.Yale.Edu (IBM VM SMTP V2R2)    with BSMTP id 2409; Fri, 19 Mar 93 17:33:17 EST
+Received: from CUVMB.BITNET by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with BSMTP  id 3791; Fri, 19 Mar 93 17:34:18 EST
+Date:         Fri, 19 Mar 1993 17:25:12 EST
+Reply-To: bob@gnu.ai.mit.edu
+Sender: Lojban list <LOJBAN%CUVMB.bitnet@YaleVM.YCC.YALE.EDU>
+Comments:     Warning -- original Sender: tag was bob@GRACKLE.STOCKBRIDGE.MA.US
+From: bob@GNU.AI.MIT.EDU
+Subject:      Oops! fix for lojban-lookup
+X-To:         lojban@cuvmb.cc.columbia.edu, bob@grackle.stockbridge.ma.us
+To: Erik Rauch <erikr@MINERVA.CIS.YALE.EDU>
+Message-ID: <uGos9agcgSP.A.Pz.u20kLB@chain.digitalkingdom.org>
+Content-Length: 680
+
+Ha! found the first bug just after irretrievably mailing off the first
+version. :-(
+
+Use this for `lojban-reformat-lookup-buffer'.
+
+(defun lojban-reformat-lookup-buffer ()
+  "Reformat the lookup buffer.  You may have to modify this."
+          (while (not (eobp))
+            (let ((here (point)))
+              (delete-region (+ 30 here)  (+ 61 here)))
+            ;; Fold long line
+            (end-of-line)
+            (while (> (current-column) 78)
+              (move-to-column 72)
+              (forward-word -1)
+              (if (looking-at-backward "\(") (forward-char -1))
+              (insert "\n                                    "))
+            (forward-line 1)))
+
