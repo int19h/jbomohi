@@ -1,0 +1,58 @@
+Reply-To: BARRETO%VELAHF@ECCSA.TR.UNISYS.COM
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Paulo Barreto <BARRETO%VELAHF@ECCSA.TR.UNISYS.COM>
+Subject:      Re: LR(k) Lojban Grammar
+X-To:         lojban%cuvmb.cc.columbia.edu@TRSVR.BITNET
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+Status: OR
+
+la karl. cusku di'e
+
+>[...] the last I remember was that the grammar
+>was not actually completely context-free -- there were some shift-reduc
+>conflicts that YACC resolved using precedence of rules/productions.
+
+Hmm, probably you read my posting about that. I posted an answer later
+(in Lojban): the problem was not in the grammar but in the yacc I was
+using (that mabla seldapma thing overflowed, and reported this by
+telling the grammar had conflicts).
+
+I wish to point out en passant that there *is* at least one context-
+sensitive construct in Lojban, one that is strictly syntactical in
+nature: the ZOI quote, that requires the chosen opening delimiter to be
+identical to the closing one. This is of course dealt with very simply
+by the preparser. (.oisai I wish it wasn't necessary...)
+
+>[...] syntactic ambiguity exists,
+>it's just hidden by the mechanics of the parser.
+
+Not necessarily. The grammar may be LR(2); still yacc won't be able to
+handle it without resorting to a priori choices of parsing actions.
+
+There are two concepts of ambiguity. Grammar ambiguity occurs when a
+given grammar implies two derivations for some word of the language,
+though other grammars for the same language may allow only one
+derivation. Language ambiguity, on the other hand, is an intrinsic
+property of the language in that all grammars for it will be ambiguous
+as described above.
+
+>[Recursive descent is equivalent in power to any other context-free
+>parsing method, so that won't help and makes lack of ambiguity harder
+
+This is only true if you mean *backtracking* recursive descent. The
+usual meaning of "recursive descent" is that of an LL(1) parser, which
+is not quite "equivalent in power to any other context-free parsing
+method" :-)
+
+Of course, you could code in any kinds of "hacking", thus making your
+parser a full-powered Turing machine. This would also reduce my degree
+of confidence in the parser to a negative value :-) It's a relief
+that the yacc workarounds are *not* used, and that the definition of
+Lojban is *not* made in terms of a particular program.
+
+co'o mi'e paulos.
+
+    Paulo S. L. M. Barreto  --  Software Analyst  --  Unisys Brazil
+    Standard disclaimer applies ("I do not speak for Unisys", etc.)
+                       e'osai ko sarji la lojban.
+
