@@ -1,0 +1,112 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 14105 invoked from network); 8 Nov 2004 13:37:20 -0000
+Received: from unknown (66.218.66.217)
+  by m22.grp.scd.yahoo.com with QMQP; 8 Nov 2004 13:37:20 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta2.grp.scd.yahoo.com with SMTP; 8 Nov 2004 13:37:20 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CR9hD-0008Aa-1N
+	for lojban@yahoogroups.com; Mon, 08 Nov 2004 05:36:35 -0800
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.34)
+	id 1CR9Uh-0007in-KH; Mon, 08 Nov 2004 05:23:39 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 08 Nov 2004 05:23:22 -0800 (PST)
+Received: from mail2.epfl.ch ([128.178.50.133])
+	by chain.digitalkingdom.org with smtp (Exim 4.34)
+	id 1CR9Se-0007hw-7h
+	for lojban-list@lojban.org; Mon, 08 Nov 2004 05:22:40 -0800
+Received: (qmail 11488 invoked by uid 107); 8 Nov 2004 13:21:23 -0000
+Received: from mailav5.epfl.ch (128.178.50.222)
+  by mail2.epfl.ch with SMTP; 8 Nov 2004 13:21:23 -0000
+Received: from (128.178.50.57) by MAILAV5.EPFL.CH via smtp
+	 id 54dd_854ac020_3189_11d9_8501_00304828b418;
+	Mon, 08 Nov 2004 14:24:30 +0100 (CET)
+Received: from imap1.epfl.ch (128.178.50.4)
+  by mail0.epfl.ch (AngelmatoPhylax SMTP proxy); Mon, 08 Nov 2004 14:21:23 +0100
+Received: from [128.178.164.93] by imap1.epfl.ch (mshttpd); Mon, 08 Nov
+ 2004 14:21:23 +0100
+Message-ID: <2756b2b539.2b5392756b@imap.epfl.ch>
+Date: Mon, 08 Nov 2004 14:21:23 +0100
+X-Mailer: iPlanet Messenger Express 5.2 HotFix 1.21 (built Sep  8 2003)
+MIME-Version: 1.0
+Content-Language: en
+X-Accept-Language: en
+Priority: normal
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-archive-position: 8961
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: gregory.dyke@epfl.ch
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: GREGORY DYKE <gregory.dyke@epfl.ch>
+From: GREGORY DYKE <lojban-out@lojban.org>
+Reply-To: gregory.dyke@epfl.ch
+Subject: [lojban] Re: Computer grammar question: non-left recursive
+ RPN?
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 23366
+Content-Length: 1724
+
+I have talked to the kind folks who are post-grads in the lab where the compiler course was given. They have never heard of PEG parsers and don't understand the problem:
+
+rp-notation is not LL(1). This is clear. (well, it is LL1, but you can't easily generate the tree from it). 
+
+rp-notation is however extremely simple to parse with a stack. They say that if PEG is LL(inf) in theory, why can't it do shift reduction like yacc? (I havn't looked into this, so I have no clue...)
+
+In short, they say, a parser is as simple as
+
+while(token=!ENDOFRP) {
+switch (token) 
+case first(operand): push(operand());
+case first(operator): push(operator(),pop(),pop());  
+} //first is the set of terminals which start a    //non-terminal
+}
+if (size()!=1) raise Exception();
+
+return pop();
+
+and if PEG can't do this as well as yacc can, then we're in for trouble...
+
+> I have come up with a version that has no internal grammar at all
+> (i.e. is purely iterative), but that is not much more satisfying.
+> It is:
+> 
+> rp-expression <- operand / operand operand (operator operand / 
+> operand operator)* operator
+
+I see nothing wrong with this. In fact, here is a demonstration of the proof of this grammar:
+
+* = 0
+we know we have content of stack = 2. we know we have an operator at the end, so content of the stack will reduce to one.
+
+so it works for *=0
+
+assume it works for *=n (this means we have reduced to 2 on the stack just before that last operator)
+, show that it works for *=n+1
+
+case a) we added an operator operand:
+operator reduces the stack to 1
+operand goes on the stack. so size()==2
+
+case b) we added an operand operator
+operand brings stack size to 3
+operator reduces stack size to 2
+
+qed.
+
+Greg
+Greg
+
+
+
+
+
+           
+
