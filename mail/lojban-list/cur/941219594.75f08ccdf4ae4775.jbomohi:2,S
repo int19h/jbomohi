@@ -1,0 +1,158 @@
+X-Digest-Num: 271
+Message-ID: <44114.271.1484.959273825@eGroups.com>
+Date: Fri, 29 Oct 1999 13:53:14 -0400 (EDT)
+From: nellardo@concentric.net)
+Subject: Re: Lojban and the Turing machine
+X-Yahoo-Message-Num: 1484
+Content-Length: 5891
+Lines: 148
+
+[ I apologize ahead of time for any grievous errors of syntax, etc. -
+not through the red book yet ]
+
+reciproc@freenet.edmonton.ab.ca writes:
+ > From: reciproc@freenet.edmonton.ab.ca
+ > 
+ > > Lojban texts are parsable, and it should at least be possible to
+ > > formulate computer programs in some lojban-compatible syntax.
+ > 
+ > I was working on exactly that a while back... it never got
+ > anywhere, but if anyone's interested, maybe it could.
+
+I'm interested but for a different reason - spoken programming. I
+suspect that speech recognition with lojban could be more accurate
+than with English as well as faster. lojban sounds different enough
+that you may even be able to automatically extract it from the speech
+stream.  What's the result?
+
+You can speak in English freely, but the computer is always
+listening. It recognizes commands without a special command flag
+("Computer, blow up the Klingons"). And best of all, the semantics are 
+substantially simpler. Each sentence means one thing and one thing
+only (that thing may itself be vague or abstract, but that's different 
+from needing to decide among several possibly contradictory
+meanings and *then* dealing with vagueness or abstraction). 
+
+ > The annoying thing about writing a program in Lojban would normally be all
+ > the "ko"s and especially "ko gasnu le nu"s. 
+
+Not all the "ko"'s would come at the beginning, even in an imperative
+style of programming.  Trivially:
+
+le darcu cu se gasnu ko -- just swap x1 and x2 places
+                        -- the file, cause it to be!
+
+But what about database queries?
+
+ta'i ma do gasnu le darcu -- by what method do you cause the file?
+                          -- How did you make the file?
+ma gasnu le darcu         -- Who made the file? Who caused the file?
+
+ > My idea was, rather than
+ > thinking of it in terms of ordering the computer to do something, you're
+ > describing a world that the computer tries to imitate... it would look
+
+Though it's not quite what you're suggesting below, there's the
+declarative programming approach (typified by Prolog). The programmer
+does not tell the computer how to do something, just what is to be
+done.  For example, code for a fibonacci number in Haskell (while
+Haskell is often called "functional", its nature makes it easy to be
+declarative):
+
+fib 0     = 0                               
+fib 1     = 1                               
+fib (n+2) = fib n + fib (n+1)               
+
+If you look at a math textbook definition, it looks essentially the
+same - except you can typeset it better in a book.  Describe fibonacci 
+numbers in lojban and you get something similar, only readable aloud:
+
+   le noboi pamoi la fibnatcis. -- Zero is first among the fibonacci
+.i le paboi remoi la fibnatcis. -- One is second
+.i la nyso'iremai fibnatcis. du le nyso'ipamai fibnatcis. so'i le
+      nymai fibnatcis. -- The (n+2)th fibonacci equals the (n+1)th
+                       -- fibonacci plus the n'th fibonacci.
+
+Note that lojban's lack of ambiguity gives you a positional freedom
+not usually found in programming languages. Since "la" is a name, we
+know we're talking (implicitly) about a declaration.  If we've seen
+the name before, we're continuing the description, statement,
+whatever.  And this isn't even using lojban's built-in variable
+assignment system.
+
+ > something like this, only with better class names:
+
+ > la .ap. cu ly'apra
+ > i le bi'u ly'uindo cu ly'uindo la .ap.
+
+Better class names indeed - if you're going to use lojban, I can't see 
+much point to prefixing things with letterals.  That trick is for
+dealing with old programming languages that don't have modules or some 
+other sort of name scoping/renaming possibilities.  lojban can be
+unambiguous with its name referents - so use that capability.
+
+ > =
+ > 
+ > App is-an-instance-of-LApp
+ > the newly-introduced LWindow is-an-LWindow-belonging-to App
+
+By using a fu'ivla ("uindo"), you're effectively creating new words
+with their own place structure, aren't you?  That doesn't seem like
+such a great idea, as memorizing place structure seems to be a real
+pain. This is like memorizing argument order when learning a new
+library in programming - with bigger libraries, even experts will sit
+down with all the reference manuals next to them.
+
+Note that people that *write* don't usually need to keep a dictionary
+right on their desk.
+
+ > =
+ > 
+ > LApp app;
+ > app.AddWindow(new LWindow)
+
+Now the programmer's answer is that *this* is much more succinct and
+legible. So what did you gain by using lojban? lojban is a full human
+language - that means it is incredibly rich. Using it to duplicate C++ 
+functionality seems like using a Steyr AUG assault rifle as a
+flyswatter.  Yeah, you can do it, but your bare hand works better.
+
+ > Instead of gismu for classes, it would probably be better to have a gismu
+ > meaning "x1 is an instance of x2 belonging to x3" and then handle classes
+ > with cmene, but the basic idea stands.
+
+Well, that involves both instantiation and (dynamic) containment, if
+you're using a C++-like object model. Your "AddWindow" example
+presumes a certain kind of containment model, common to user interface 
+libraries. C++'s native containment model is instance variables.
+
+But let's look at existing lojban words: mupli and mu'u.
+
+Mupli is a gismu meaning x1 is an example with common property X2 of
+set x3.  In c++ terms, an obvious programming semantics is:
+
+X3 x1(x2); // new variable called x1 of class X3, with initialization
+           // params x2
+
+mu'u is a cmavo meaning "exemplified by", which suggests x1 mu'u x2 is 
+equivalent to "X2 x1;"
+
+
+Even this strikes me as throwing good stuff (lojban) after bad
+(C++). I think lojban can do better.
+
+ > 	co'omi'e xarmuj.
+
+
+co'o mi'e brukcayr.
+---------
+24 hours in a day...24 beers in a case...coincidence?
+
+---------
+Fancy. Myth. Magic.
+http://www.concentric.net/~nellardo/
+
+
+
+           
+
