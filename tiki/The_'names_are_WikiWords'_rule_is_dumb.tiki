@@ -1,0 +1,51 @@
+See ((changes to phpwiki)).
+
+--------------
+
+We've already standardized on ''not'' using the idea of WikiWords;
+
+* What's this 'we' shit, white man?  -- RobinLeePowell
+** everyone who was using the wiki a lot before it moved? --jay
+** It's even (somewhat inexplicably) the second line on the ((FrontPage)).
+
+why should we need to force our names into them? I want to go by ((rab.spir)), because ((RabSpir)) is simply wrong for a Lojban name. ((TsaliTsali)) is even more horribly contrived.
+
+Is there something in the Wiki source that can be easily changed for this?
+
+* What's wrong with ((rab.spir))? ((RabSpir)) is just for sign in (and I have only had to sign in the very first time I used the wiki). --((And))
+** It shows up on the RecentChanges page and links to ((RabSpir)), which I don't intend to create.
+
+The patch is there, so could whoever runs the Wiki (Jay?) please apply it before we get too attached to our WangleWord names?
+
+----
+((Jordan DeLong|I)) agree.  WikiWords are horrible and ugly.  Robin: here's a patch which 'fixes' it.  It however goes all the way and allows everything (spaces, ^H, etc) in user names.  I don't think this is neccesarily bad for our purposes though:
+
+(apply in the lib/ dir).
+
+  --- WikiUser.php.bak	Wed Jan 23 19:26:55 2002
+  +++ WikiUser.php	Mon Nov 18 23:52:06 2002
+  @@ -145,7 +145,7 @@
+               return false;
+           }
+           elseif (ALLOW_BOGO_LOGIN
+  -                && preg_match('/\A' . $WikiNameRegexp . '\z/', $userid)) {
+  +                /*&& preg_match('/\A' . $WikiNameRegexp . '\z/', $userid)*/) {
+               return WIKIAUTH_BOGO;
+           }
+           return false;
+----
+Btw, while we're at it, I also think we should munge it so it doesn't automatically make FooLikeThis into links.  I can put a patch to fix this also if people want.
+* There are a few links on this wiki which rely on that behavior -- ((adam))
+** All the more reason to fix it now and prevent people from introducing new ones. -- mi'e ((.djorden.))
+*** You __must__ be joking.  Tell you what, you go through and fix every place in the wiki that that feature is used, and I'll consider it.  -- RobinLeePowell
+**** Nope:  I think when jay first put up the old wiki he put a thing about wanting to standardize on (Was Footnote:  and ) for links.  Anyone who ignored it deserves to have their pages break.  --jrd
+**** Furthermore, it'd be trival to fix them all using perl, if anyone actually cared to do so.  I'd rather just let them break though (people can fix them if they see them broken).  --jrd
+***** I don't think you understand.  I'm pretty damned certain that the internal functioning of phpwiki relies on this behaviour.  -- RobinLeePowell
+****** I do understand, I looked at the source.  The easy way to fix it is to gut the part of the html renderer which looks for WikiNameRegexp and forms them into links.  I can post a patch which does this if you're willing to apply it. --jrd
+
+----
+Can we fix it so that double (Was Footnote:  always escapes (e.g. "(([rab.spir)" gets turned into a link, I think, as might (Was Footnote: this __nonlink__ here))? (This comes out as garbage on screen, and proves my point.) --[And)) (when I say "can *we* fix" it, I mean us collectively, of course; I myself am incapable, and merely gratefully depend on the expertise of others)
+* This appears to be related to that little "use new markup" button.  Perhaps the way to escape [[ has changed, but a brief glance around yeilded no data---I'm guessing it's a bug.  Workaround is just don't use new things like tables on pages where you also want to escape [[.  -jrd
+* SandBox has tables and escaping [[ both working at once. Are we supposed to use new markup or not use it?
+** SandBox has the "use new markup" button unchecked.  I guess tables are allowed with that off then.
+*** New Markup appears to be broken, AFAICT.  -- RobinLeePowell
