@@ -1,4 +1,4 @@
-# mail/lojban-list thread cb9e79ff9014-perl_and_lojban,_sitting_in_a_tree%2E%2E | root 44114.265.1436.959273825@egroups.com | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread cb9e79ff9014-perl_and_lojban,_sitting_in_a_tree%2E%2E | root 44114.265.1436.959273825@egroups.com | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 1999-10-24T22:22:57Z | "Michal Wallace (sabren)" <sabren@manifestation.com> | 44114.265.1436.959273825@egroups.com | mail/lojban-list/cur/940803777.cb9e79ff9014e74b.jbomohi:2,S
 
@@ -256,6 +256,83 @@ consonant in Lojban.  {maikl.} would be fine, I think, though it
 depends on your pronunciation.
 
 co'o mi'e robin.
+
+
+
+           
+
+
+
+=== 5 | 1999-10-28T13:13:31Z | David Brookshire Conner <nellardo@concentric.net> | 44114.269.1466.959273825@egroups.com | mail/lojban-list/cur/941116411.7865834a562828ce.jbomohi:2,S
+Robin Turner writes:
+ > From: Robin Turner <robin@Bilkent.EDU.TR>
+
+ > Why Perl, in particular?  I don't know much about languages, but
+ > I would have thought Prolog would be more suitable for what you
+ > have in mind.
+
+Basic Prolog is based on predicate calculus, which would make one
+think that it would be a good match to "la lojban."
+
+I'm of a mind that Prolog would be decent for programming in
+lojban. I.e., you define a Prolog predicate for every gismu and then
+can define each gismu in terms of each other (possibly).  You type in
+Prolog but use the well-defined lojban gismu rather than ambiguous
+English names of predicates. But this approach doesn't let you handle
+e.g., lujvo or cmene the way you'd like to. You'd have to define every 
+lujvo explicitly. So what you really need is a good meta-object system 
+or else a new programming language (same thing, really).
+
+For parsing, I'm of the opinion that a stream-based approach in a lazy 
+functional language is much easier to use (Haskell comes to
+mind). What you want to parse becomes a list of characters, and you
+can manipulate it like any list. In theory you don't worry about
+reading in a character or that nonsense.  Here's some code that
+outlines a parser for lojban at a high level. Note that this is pretty 
+much legit Haskell:
+
+data Bridi = (Selbri, [Sumti]). -- A sentence is a preda and its args
+
+type Discourse = [ Bridi ] -- paragraph is a list of sentences
+
+-- take a string and open it as a file to parse
+lojbanParseFromFile :: String -> LojbanDiscourse
+lojbanParseFromFile file = lojbanParse openFile file
+
+
+-- parse a string into a series of lojban statements
+lojbanParse :: String -> Discourse
+lojbanParse stuff = 
+   breakIntoBridi stuff >>=  -- Get back a list of strings that are
+                             -- bridi
+   map (\ oneBridi ->
+          ( extractSelbri oneBridi,
+            extractSumti  oneBridi)) -- for each bridi, pull out the
+                                     -- selbri and sumti
+                        >>=
+    return -- and that's it
+
+extractSelbri and extractSumti can be written for a simple case - they 
+know that they are only getting a single bridi - no
+fluff. extractSelbri will look for a brivla of some sort and work out
+from there to stick on anything that applies (e.g., for tanru and
+such).
+
+       
+Long-winded perhaps, but much more likely to be readable the second
+time than perl (the write-only language :-)....
+
+Speaking of long-winded, that's enough from me.....
+
+co'o mi'e brukcayr.
+
+---------
+% sleep with me 
+bad character
+
+---------
+Fancy. Myth. Magic.
+http://www.concentric.net/~nellardo/
 
 
 
