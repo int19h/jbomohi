@@ -1,4 +1,4 @@
-# mail/lojban-list thread 3c92d0e6d3c1-lojban_word_processor_for_windows%3F | root 44114.235.1273.959273825@egroups.com | 17 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 3c92d0e6d3c1-lojban_word_processor_for_windows%3F | root 44114.235.1273.959273825@egroups.com | 18 messages | rendered by jbomohi mail-v1
 
 === 1 | 1999-09-17T10:14:46Z | Bob LeChevalier-Logical Language Group <lojbab@lojban.org> | 44114.235.1273.959273825@egroups.com | mail/lojban-list/cur/937563286.3c92d0e6d3c1dbfa.jbomohi:2,S
 This came up as an idea in Auxlang (from Robin Turner).
@@ -756,6 +756,139 @@ Artificial language Loglan/Lojban:
    see Lojban WWW Server: href=" http://xiron.pc.helsinki.fi/lojban/ "
    Order _The Complete Lojban Language_ - see our Web pages or ask me.
 
+
+
+
+           
+
+
+
+=== 18 | 1999-09-18T23:28:36Z | David Brookshire Conner <nellardo@concentric.net> | 44114.237.1295.959273825@egroups.com | mail/lojban-list/cur/937697316.99f60b5ec5a4efed.jbomohi:2,S
+Bob LeChevalier (lojbab) writes:
+ > From: "Bob LeChevalier (lojbab)" <lojbab@lojban.org>
+ > 
+ > At 11:02 AM 9/18/99 +0100, Piermaria Maraziti wrote:
+ > >From: Piermaria Maraziti <piermaria@maraziti.it>
+ > >
+ > >At 11.36 18/09/1999 +0200, you wrote:
+ > > >I don't see the point in having an extra word processor just for one
+ > > >language. 
+
+Agreed - that's why I suggested an extension to an existing
+editor. Since I know Framemaker and Emacs best (and neither are
+provided by the Evil Empire :-), I suggested extensions to those.
+
+ > > > Also, I think there are far more important items on the
+ > > >programming agenda:  a good, portable glosser / automatic translator
+ > > >of syntax-parsed lojban text.
+ > >
+ > >The idea is to do a WP with an integrated "good, portable glosser /
+ > >automatic translator
+ > >of syntax-parsed lojban text" - perhaps at least as for vwrsion "1.0",
+ > >without the "automatic translator" part, excluding the interlinearizing
+ > >capabilities that will help so much in translating (and learning)!
+
+Erm, I'd be careful about what "the" idea is. See below.
+
+ > Well, even that is probably version 2.0.  Robin Turner, who originally 
+ > mentioned it on conlang, suggested that being able to click on a word and 
+ > call up its place structure (which implies calling up its tanru breakdown 
+ > if it is not in the dictionary) is the thing most needed for Lojban 
+ > writing.
+
+Yeah, this would seem to be the case - place structure is probably the 
+most opaque part of the language. Sure, natural languages have similar 
+problems (transitive vs intransitive verbs come to mind), but I'll bet 
+people learning English (or anyone trying to write in a non-native
+tongue) would appreciate usage hints comparable to lojban place structure.
+
+ >  Having a dictionary lookup for English words would seem an 
+ > obvious thing to include at the same level.  
+
+Yes, especially with the part of speech identified and allowable
+adjacent parts of speech and their meaning.
+
+ > Such lookups are presumably 
+ > trivial utility routines by now, so if you started from that open software 
+ > base that several have mentioned, we have something that is small enough 
+ > for someone to tackle in their spare time in a few days.
+
+Yep - the "hard" part is having the database of words to look up. But
+le gi'uste looks regular enough in format that it could probably be
+adapted pretty much as is.
+
+So, presuming Emacs as a base, here's the stepping stones:
+
+1. an interactive function that looks up the word under point (the
+   cursor) in various word databases - gismu, cmavo, etc.
+
+2. An extension that provides tab-completion of partial words
+
+3. A major mode that provides some basic functionality:
+   regexps to use with outline-minor-mode (ni'oni'o and the like)
+   notations for use with font-lock (what's a quoted piece of text
+     (string to font-lock), "paren" matching, etc)
+   bindings to 1. and 2.
+   binding to pipe buffer or region to parser
+
+4. A major mode with more functionality 
+   interactive syntax checking
+   auto-suggestion and elision of cmavo
+   spell-checking
+   dictation (!)
+   lujvo tools
+
+ > The fancy version written from scratch that uses Java, and has the 
+ > functionality of the parser/glosser and the lujvo maker and typesetting 
+ > including Tolkienian stuff is a much bigger project - probably
+ > worth doing, 
+ > but not likely to have someone writing it very soon.
+
+I just want to be clear on a few things:
+
+1. Writing a text editor from scratch is an interesting student
+exercise, but I don't see that you'd gain much for lojban
+functionality over existing open source (or closed but extensible)
+text editors.
+
+2. The typography Mark and I have been discussing is (to me, at least, 
+and I imagine to Mark as well) a wholly separate issue from the text
+editor. The issue got raised in the context of the text editor, but
+type-setting and text editing are not the same thing (I write in
+Emacs, but use TeX to type-set - and I'm damn glad I don't typeset in
+Emacs). 
+
+3. Very specifically, the use of Tengwar for lojban is strictly an
+esthetic exercise for me. I make no claims that it has any real
+practical application beyond beauty (for a very conlang-ish kind of
+beauty at that).
+
+ >  You either have to 
+ > write it from scratch or translate the existing code.  Just making existing 
+ > Turbo Pascal code portable has never been accomplished for any of our core 
+ > software (at least a dozen people started to translate LogFlash into C, 
+ > including using an auto-translator to help, and no one in 10 years ever got 
+ > a working program, though Eric Raymond got close.  I suspect that the 
+ > glosser is bigger than LogFlash, though I haven't looked.  Both are very 
+ > time consuming to debug and test).
+
+This doesn't surprise me - especially rewriting Pascal in C (something 
+that strikes me as a largely misguided effort at best, and positively
+sadistic (or masochistic, depending on whether the task was assigned
+or voluntarily undertaken)).
+
+For various kinds of parsing and transformational applications, I'd
+suggest the programming language Haskell. It isn't wide-spread, but it 
+runs everywhere, and is quite well-suited to these kinds of things.
+
+Brook
+
+---------
+All wiyht. Rho sritched mg kegtops awound?
+
+---------
+Fancy. Myth. Magic.
+http://www.concentric.net/~nellardo/
 
 
 
