@@ -59,7 +59,7 @@ stressed-gismu <- !cmene (initial-pair stressed-vowel / consonant stressed-vowel
 
 lujvo <- !cmene !tosmabru initial-rafsi medial-rafsi* final-rafsi 
 
-tosmabru <- cmavo lujvo
+tosmabru <- cmavo-form lujvo
 
 initial-rafsi <- fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi (r / n &r) !(CCV-rafsi spaces) / CVV-rafsi &(CCV-rafsi spaces) / stressed-initial-rafsi &short-final-rafsi
 
@@ -107,9 +107,9 @@ y-rafsi <- long-rafsi / CVC-rafsi y / stressed-long-rafsi / stressed-CVC-rafsi y
 
 fuhivla <- !cmene !gismu !lujvo (stressed-fuhivla-head cluster fuhivla-tail / fuhivla-head cluster stressed-fuhivla-tail)
 
-stressed-fuhivla-head <- &cmavo (syllable (!consonant syllable)* !consonant)? stressed-syllable / &cmavo syllable (!consonant syllable)* &(syllable spaces)
+stressed-fuhivla-head <- &cmavo-form (syllable (!consonant syllable)* !consonant)? stressed-syllable / &cmavo-form syllable (!consonant syllable)* &(syllable spaces)
  
-fuhivla-head <- !slinkuhi &initial-cluster / &cmavo syllable (!consonant syllable)* &non-initial-cluster
+fuhivla-head <- !slinkuhi &initial-cluster / &cmavo-form syllable (!consonant syllable)* &non-initial-cluster
 
 slinkuhi <- consonant medial-rafsi* final-rafsi 
 
@@ -119,8 +119,9 @@ fuhivla-tail <- syllable &(spaces / consonant)
 
 ;-------------------------------------------------------------------
 
-;cmavo <- !cmene !gismu !lujvo !fuhivla consonant? vowels &(spaces / consonant)
-cmavo <- consonant? vowels &(spaces / consonant)
+cmavo <- !cmene !gismu !lujvo !fuhivla cmavo-form
+
+cmavo-form <- consonant? vowels &(spaces / consonant)
 
 ;-------------------------------------------------------------------
 
