@@ -1,0 +1,92 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 13 Dec 2002 11:55:30 -0800 (PST)
+Received: from n1.grp.scd.yahoo.com ([66.218.66.64])
+	by digitalkingdom.org with smtp (Exim 4.05)
+	id 18MvuA-00085q-01
+	for lojban-in@lojban.org; Fri, 13 Dec 2002 11:55:26 -0800
+X-eGroups-Return: sentto-44114-18023-1039809295-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.67.193] by n1.grp.scd.yahoo.com with NNFMP; 13 Dec 2002 19:54:55 -0000
+X-Sender: phma@ixazon.dynip.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_3_0); 13 Dec 2002 19:54:55 -0000
+Received: (qmail 25586 invoked from network); 13 Dec 2002 19:54:55 -0000
+Received: from unknown (66.218.66.218)
+  by m11.grp.scd.yahoo.com with QMQP; 13 Dec 2002 19:54:55 -0000
+Received: from unknown (HELO neofelis.ixazon.lan) (208.150.110.21)
+  by mta3.grp.scd.yahoo.com with SMTP; 13 Dec 2002 19:54:54 -0000
+Received: by neofelis.ixazon.lan (Postfix, from userid 500)
+	id D61CD3C478; Fri, 13 Dec 2002 14:54:53 -0500 (EST)
+To: <lojban@yahoogroups.com>
+X-Mailer: KMail [version 1.2]
+X-Spamtrap: fesmri@ixazon.dynip.com
+Message-Id: <02121314545209.03697@neofelis>
+From: Pierre Abbat <phma@webjockey.net>
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Fri, 13 Dec 2002 14:54:52 -0500
+Subject: [lojban] Word resolution algorithm so far
+Content-Type: text/plain; charset=US-ASCII
+X-archive-position: 3534
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: phma@webjockey.net
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2772
+
+1.  Scan the line from left to right. Convert all spaces to pauses
+    unless preceded by comma; convert space to comma if preceded by comma.
+2.  Break at all pauses (cannot pause in the middle of a word).
+3.  Pick the first piece that has not been resolved.
+  A.  If the piece ends in a consonant:
+    I.  Make a decapitalized copy of the string with commas removed.
+    II. Search backward in the string for a place in the string that is
+        preceded by "la", "lai", "la'i", or "doi" where the 'l' or 'd' is not
+	immediately preceded by a consonant. (ala'um option off)
+    II. Search backward in the string for a place in the string that is
+        preceded by "la", "lai", "la'i", or "doi" where the 'l' or 'd' is not
+        immediately preceded by a consonant and such that the character at
+        that place is a consonant. (ala'um option on)
+    III.If you found such a place:
+      a.  Split before the place and call the second part a cmene.
+      b.  If the second part does not begin with a consonant, resolve it as an
+          error. (not necessary if ala'um option is on)
+      c.  Search backward in the first part for a consonant. If it is not
+          the first character, split before it and resolve the second part as
+          a cmavo.
+    IV. If you did not find such a place, resolve the piece as a cmene.
+  B.  If the piece ends in 'y':
+    I.  Search backward for a consonant.
+    II. If you find one:
+      a.  If it is preceded by a consonant, resolve the piece as an error.
+      b.  If it is not preceded by a consonant, break before the consonant
+          and resolve the second piece as a cmavo.
+    III.If you do not find one, resolve the piece as a cmavo.
+  C.  If the piece does not end in 'y' or a consonant and has no consonant
+      that is adjacent to a consonant when 'y' is removed:
+    I.  Number the consonants starting with 1 and find the last one whose
+        number is a power of 2.
+    II. If this consonant is the first letter in the piece or there are no
+        consonants, resolve the string as a cmavo.
+    III.If this consonant is not the first letter, split before it.
+  C.  If the piece contains 'y' and no consonant following 'y' is followed
+      two letters later, not counting apostrophes and commas, by a vowel,
+      split it after 'y'. (e.g. ly.Ebucy.Obukybu.DENpabu)
+  Z.  Resolve any other kind of piece as an error.
+999.If there are any more pieces unresolved, return to step 3.
+
+3.C is not implemented yet. The reason for writing it that way is that {kybu} 
+stands for a single letter, so it is more natural to say {kybu.DENpabu} than 
+{ky.buDENpabu}.
+
+phma
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
