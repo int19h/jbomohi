@@ -1,0 +1,273 @@
+Received: from minerva.phyast.pitt.edu (minerva.phyast.pitt.edu [136.142.111.2]) by locke.ccil.org (8.6.9/8.6.10) with SMTP id UAA23801 for <cowan@locke.ccil.org>; Tue, 22 Aug 1995 20:08:06 -0400
+From: jorge@phyast.pitt.edu
+Received: from clueless.phyast.pitt.edu by minerva.phyast.pitt.edu (4.1/1.34)
+	id AA14958; Tue, 22 Aug 95 20:00:05 EDT
+Received: by clueless.phyast.pitt.edu (4.1/EMI-2.1)
+	id AA14510; Tue, 22 Aug 95 20:00:38 EDT
+Date: Tue, 22 Aug 95 20:00:38 EDT
+Message-Id: <9508230000.AA14510@clueless.phyast.pitt.edu>
+To: cowan@locke.ccil.org, jorge@phyast.pitt.edu
+Subject: Connectives
+X-From-Space-Date: Tue Aug 22 20:08:09 1995
+X-From-Space-Address: jorge@phyast.pitt.edu
+Content-Length: 9951
+
+
+Here are some comments on the connectives paper.
+
+> If Wishes Were Horses:  The Lojban Connective System
+> $Revision: 1.30 $
+
+I like the colourful titles, but this one seems wrong. It seems
+to be an example where "if" would not be working as a connective, at least
+not as a logical connective.
+
+> 4.  Bridi Logical Connection
+...
+> This is called the "principle of consistency", and may be paraphrased
+> as follows:  "If a false statement is true, any statement follows from it."
+> All uses of English "if" must be watched very carefully to see if they
+> really fit the Lojban mold.
+
+I really don't like the way this is explained. The sense in which
+{ijanai} means "X if Y" is not that X follows from whatever truth
+value Y has. 
+
+If Y is true, then it follows that X is true.
+
+If Y is false, then it follows that "X ijanai Y" is true, no matter
+whether X is true or not, but X doesn't follow. What does it mean to 
+say that "any statement follows from a false statement"? 
+
+  
+> 5.  Forethought Bridi Connection
+...
+> There is a restriction on the bridi used in forethought logical connection:
+> the first one cannot have the form of an observative.  That is, there must
+> be at least one sumti before the selbri.  See Example 10.9 and following
+> text.
+
+(Comment on this later.)
+
+> The syntax of geks is:
+> 
+> 	[se] GA [nai]
+
+Shouldn't {na ga ... gi ...} be grammatical, to negate the whole sentence? 
+ 
+> 6.  Sumti Connection
+...
+> Example 6.2 means EXACTLY the same thing as Example 6.1: one may be
+> rigorously transformed into the other without any change of logical meaning.
+> This rule is true in general for every different kind of logical connection
+> in Lojban; all of them, with one exception (see Section 12), can always be
+> transformed into a logical connection between sentences expressing the same
+> truth function.
+
+Perhaps a comment should be added that the transformation is not always 
+a trivial replication of the words. All the examples you give use only 
+singular terms, which makes things very simple, but with even a slightly 
+more complicated quantifier things get trickier. They can always be 
+expanded, but it has to be done with care.
+
+> 8.  Grouping of Afterthought Connectives
+...
+> But suppose we wished to use afterthought connectives and parentheses.  Two
+> pairs of parentheses, analogous to Example 8.6, would seem to be the right
+> approach.  But it is a rule of Lojban grammar that a sumti may not begin with
+> "ke", so the first set of parentheses must be omitted, producing Example 8.10,
+> which is instead parallel to Example 8.7:
+
+If I thought there was any chance for it, I would propose that ke-ke'e be
+eliminated for any sumti connection, but I guess it won't happen.
+If anybody ever uses them for this purpose, it will be hard to remember
+that they can't be used at the start of the sumti. 
+
+> 10.  Multiple Compound Bridi
+...
+> is the gihek version of Example 8.9.  The same rule about using "ke...ke'e"
+> bracketing only just after a connective applies to bridi-tails as to
+> sumti, so the first two bridi-tails in Example 10.2 cannot be explicitly
+> grouped; implicit left-grouping suffices to associate them.
+
+Again, this rule seems extremely complicated. If ke-ke'e ever come to be
+used for this, it will be hard to avoid using them to group the first
+terms. Hopefully no one will want to use ke-ke'e for this. Forethought
+connectives are much better for grouping, and one has to use forethought
+with ke-ke'e anyway, so they seem to be fairly useless for connectors.
+
+> The entire gek-bridi-tail may be negated as a whole by prefixing "na":
+> 
+> 10.7)	mi na ge klama le zarci gi dzukla le zdani
+> 	It is not the case that I both go to the market and walk to the house.
+
+Shouldn't this rule apply also to forethought bridi connection?
+
+	na ge mi klama le zarci gi do dzukla le zdani
+ 	It is not the case that both I go to the market and you walk to the house.
+
+Is there any parser-reason why this is ungrammatical?
+
+> 10.10)	 ga lo snime cu carvi gi carvi
+> 	Either some snow is-raining or [something] is-raining
+> 	Either it's snowing or it's raining.
+> 
+> Unfortunately, the order cannot be reversed:  "*ga carvi gi lo snime cu carvi"
+> is ungrammatical, because the parser sees "ga carvi" and assumes bridi-tail
+> connection, which the "gi lo snime" thwarts.  
+
+Wouldn't it be possible to treat bridi and bridi-tail connection always 
+as the same thing, and thus allow that? That would also allow things like:
+
+	mi ge le zarci cu klama le zdani gi le panka cu dzukla le zdani
+	I both to the market go from the house and to the park walk 
+	from the house.
+
+But there doesn't seem to be any semantic problem with those. Wouldn't
+that simplify things a lot, and at the same time remove the seemingly 
+arbitrary restriction on having an observative in first position?
+
+I think the rules would change to something like:
+
+sentence-1<41> = term ... [CU #] bridi-tail | prenex sentence
+
+gek-bridi-tail<54> = gek sentence gik sentence |
+	tag KE gek-bridi-tail /KEhE#/ | NA # gek-bridi-tail
+
+
+This seems like a simplification, making the language more regular and
+not having the seemingly arbitrary restriction on "*ga carvi gi lo snime 
+cu carvi"
+
+> 14.  Non-Logical Connectives
+...
+> Example 14.3 covers the case mentioned, where John and Alice divide the
+> labor; it also could mean that John did all the hauling and Alice did
+> the supervising.  This possibility arises because the properties of a mass
+> are the properties of its components, which can lead to apparent
+> contradictions: if John is small and Alice is large, then John-and-Alice
+> is both small and large.
+
+I'd say John-and-Alice is probably not small in the same context. In any 
+case, it will be either small or large as a unit, but not as a direct 
+inheritance of John's smallness or Alice's largeness. 
+
+> Single or compound cmavo involving members of selma'o JOI are called joiks,
+> by analogy with the names for logical connectives.  It is not grammatical to
+> use joiks to connect bridi-tails.
+
+It would really be nice to have gijoiks for that.
+
+> 		A jo'u B	A and B considered jointly
+
+This one is really hard to distinguish from A joi B. In fact, if A jo'u B does
+make any sense at all, it is strange that there is no gadri for that:
+
+la djan e la alis    -> le re prenu
+la djan joi la alis  -> lei re prenu
+la djan ce la alis   -> le'i re prenu
+
+la djan jo'u la alis -> ???
+
+
+> 14.10)	la djeimyz. jo'u la djordj. remei bruna
+> 	James in-common-with George are-a-twosome type-of-brothers.
+
+i la djeimyz jo'u la djordj remei bruna ma?
+
+> The tanru "remei bruna" is not strictly necessary in this sentence,
+> but is used to make clear that we are not saying that James and George
+> are both brothers of some third person not specified.  
+
+I don't think {remei} avoids anything like that. If George and James are 
+Alice's two brothers, then 14.10 would be fine. The way to say that they
+are each other's brother would be
+
+	la djeimyz jo'u la djordj bruna simxu
+
+but I don't see the advantage of {jo'u} over {joi} here.
+
+
+> 16.  Interval Connectives and Forethought Non-Logical Connection
+...
+> BIhI joiks are grammatical anywhere that other joiks are, including in
+> tanru connection and (as ijoiks) between sentences.  No meanings have been
+> found for these uses.
+
+How about:
+
+	ta cmalu bi'i barda
+	That is somewhere between small and large.
+
+	ta snanu bi'i stici
+	That is somewhere between south and west.
+
+	ta verba bi'i makcu
+	That is somewhere between a child and an adult.
+
+
+> 17.  Logical and non-logical connectives within mekso
+
+I suppose that when all the papers are collected in book form, this 
+section should be removed from here and sent to the MEX chapter. 
+ 
+> 18.  Tenses, Modals, and Logical Connection
+> 
+> The tense and modal systems of Lojban interact with the logical connective
+> system.  No one paper can explain all of these simultaneously, so each
+> paper must present its own view of the area of interaction with emphasis
+> on its own concepts and terminology.  For the purposes of this paper,
+> the many tenses of various selma'o as well as the modals of selma'o BAI are
+> reduced to the simple time cmavo "pu", "ca", and "ba" (of selma'o PU)
+> representing the past, the present, and the future respectively.  Preceding
+> a selbri, these cmavo state the time when the bridi was, is, or will be true
+> (analogous to English verb tenses); preceding a sumti, they state that the
+> event of the main bridi is before, simultaneous with, or after the event
+> given by the sumti (which is generally a "le nu" abstraction).
+
+This distinction is not really necessary, because when preceding a selbri
+these also state that the event of the main bridi is before, simultaneous
+with, or after the event of uttering the sentence. {pu broda} is roughly
+the same as {broda puku}. 
+
+(Of course, this may not be true for {pu'o} and {ba'o}, but it holds for all 
+other tenses and BAIs.)
+
+
+> 18.6)	mi pu klama le zarci gi'ebabo pu tervecnu lo cidja
+> 	I [past] go-to the market, and [later] [past] buy items-of food.
+
+With my proposal (below), we could just use {gibabo} without the logical
+connection, which is probably better in general.
+
+Other useful connectors would be the baiboks. Not every BAI gives
+a useful connector, but many do. BAIBO for sumti, GIBAIBO for bridi-tail,
+IBAIBO for bridi, and BAIGI...GI... for forethought (which already exists,
+although this paper doesn't mention them).
+
+
+> 24.  EBNF for Connectives
+> 
+> ek<802> = [NA] [SE] A [NAI]
+> gihek<818> = [NA] [SE] GIhA [NAI]
+> jek<805> = [NA] [SE] JA [NAI]
+> joik<806> = [SE] JOI [NAI] | interval | GAhO interval GAhO
+> interval<932> = [SE] BIhI [NAI]
+> joik-jek<422> = joik # | jek #
+> gek<807> = [SE] GA [NAI] # | joik GI # | stag GI #
+> guhek<808> = [SE] GUhA [NAI] #
+> gik<816> = GI [NAI] #
+
+Proposed additions:
+
+gihek<818> = [NA] [SE] GIhA [NAI] | GI joik-jek
+
+joik-jek<422> = joik # | jek # | stag BO #
+
+
+Well, that's all for now.
+
+Jorge
+
+
+
