@@ -1,4 +1,4 @@
-# mail/lojban-list thread 16847cac696a-sets_etc%2E | root ee.1f8ef09.25ee8bb4@aol.com | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 16847cac696a-sets_etc%2E | root ee.1f8ef09.25ee8bb4@aol.com | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-03-01T15:05:24Z | pycyn@aol.com | 44114.380.2108.959273826@egroups.com | mail/lojban-list/cur/951923124.d0aecd66ce61e466.jbomohi:2,S
 "Wherefore all this strife there be / 'twixt Tweedle Dumm and Tweedle Dee?"
@@ -242,7 +242,97 @@ To unsubscribe, send mail to lojban-unsubscribe@onelist.com
 
 
 
-=== 5 | 2000-03-01T16:42:12Z | Steven Belknap <sbelknap@UIC.EDU> | 44114.380.2110.959273826@egroups.com | mail/lojban-list/cur/951928932.161d35e2d34ba571.jbomohi:2,S
+=== 5 | 2000-03-03T03:13:19Z | Peter Moulder <reiter@netspace.net.au> | m24sao4ugg.fsf@river.nuthouse.au | mail/lojban-list/cur/952053199.5f61d784fec1a6ca.jbomohi:2,S
+From: Peter Moulder <reiter@netspace.net.au>
+
+John Cowan <jcowan@reutershealth.com> writes:
+
+> Which leads me to the following challenge, due to Quine.  A student at Yale
+> may belong to zero or more clubs.  Some clubs are final clubs.  A final
+> club is defined as "a club such that membership in it precludes membership in
+> any other final club".
+  ^^^
+Does `any' above mean `all' or `some'?  I've taken it to mean `all'.
+
+Consider the case where there are two or more clubs, and no club
+precludes membership in any other club.  What answer would you want
+the "definition" to give in this case?
+
+Let's split the problem in two: decide on an answer in predicate logic
+notation first, then translate to Lojban once we're satisfied with a
+predicate logic answer.
+
+Define a predicate final(C, E, F) such that if C is the set of clubs
+at Yale, and E is the set of pairs of clubs (C1, C2) such that
+membership of C1 precludes membership of C2, then final(C, E, F) is
+true iff F is a valid set of final clubs for C, E.
+
+Notation of the below is a mixture of LaTeX and Mercury/Prolog;
+more detail is at end of message.
+
+Domain of `final' is the set of (C, E, F) such that:
+ C is a set of clubs,
+ F \subseteq C,
+ E is a set of pairs of clubs such that
+  all[C1, C2]
+   ((pair(C1, C2) \in E)
+    => ((pair(C2, C1) \in E),
+        (C1 \in C),
+        (C2 \in C))).
+
+For all values of (C, E, F) within the above domain:
+
+ final(C, E, F) <=>
+   (all[C1]
+     ((C1 \in C)
+      => ((C1 \in F)
+          <=> (all[F1]
+                ((F1 \in F)
+                 => ((C1 = F1)
+                     ; (pair(C1, F1) \in E)))))).
+
+
+For any (C, E, F) within the domain, the above definition allows
+deciding whether or not F is a valid set of final clubs for C, E.
+
+pjm.
+
+
+Notation (mixture of LaTeX and Mercury/Prolog):
+  P1 => P2              ganai P1 gi P2
+  P1 <=> P2             iff: go P1 gi P2
+  P1, P2                and: ge P1 gi P2
+  P1 ; P2               or:  ga P1 gi P2
+  E1 \in S1             E1 is an element of S1: E1 cmima S1
+  S1 \subseteq S2       S1 is a subset of (or equal to) S2:
+                         ga S1 gripau S2 gi S1 du S2
+     [I'm not sure whether {gripau} means a proper/strict subset or
+      whether it means the same as \subseteq.]
+  some[V1] P1           existential quantification: su'o V1 zo'u P1
+  all[V1] P1            universal quantification: ro V1 zo'u P1
+  all[V1, V2] P1        abbreviation of `all[V1] all[V2] P1'
+  pair(E1, E2)          E1 ce'o E2
+
+Notation used in the above notation explanations:
+ V1, V2: any variable names
+ P1, P2: any predicate expressions; can be any item of the Notation
+          list other than the last (viz. pair(E1, E2)).
+ S1, S2: any sets
+ E1, E2: elements: pretty much any expressions.
+
+
+------------------------------------------------------------------------
+GET A NEXTCARD VISA, in 30 seconds!  Get rates 
+as low as 0.0% Intro APR and no hidden fees.
+Apply NOW!
+http://click.egroups.com/1/975/1/_/17627/_/952053685/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
+
+
+=== 6 | 2000-03-01T16:42:12Z | Steven Belknap <sbelknap@UIC.EDU> | 44114.380.2110.959273826@egroups.com | mail/lojban-list/cur/951928932.161d35e2d34ba571.jbomohi:2,S
 In high school geometry class, I was taught the importance of having 
 undefined terms as the basis for the development of mathematics. The 
 four undefined terms I was taught for geometry were line, point, set, 
@@ -318,7 +408,7 @@ University of Illinois College of Medicine at Peoria
 
 
 
-=== 6 | 2000-03-01T18:26:24Z | John Cowan <jcowan@reutershealth.com> | 44114.380.2113.959273826@egroups.com | mail/lojban-list/cur/951935184.ee268d3ed8d49542.jbomohi:2,S
+=== 7 | 2000-03-01T18:26:24Z | John Cowan <jcowan@reutershealth.com> | 44114.380.2113.959273826@egroups.com | mail/lojban-list/cur/951935184.ee268d3ed8d49542.jbomohi:2,S
 pycyn@aol.com wrote:
 
 > A class is [...].  A set is [...]  A mass (in the Lojban
@@ -358,7 +448,7 @@ Und trank die Milch vom Paradies.            -- Coleridge (tr. Politzer)
 
 
 
-=== 7 | 2000-03-03T03:13:19Z | Peter Moulder <reiter@netspace.net.au> | 44114.381.2146.959273826@egroups.com | mail/lojban-list/cur/952053199.96bab3ad5a7d9cc6.jbomohi:2,S
+=== 8 | 2000-03-03T03:13:19Z | Peter Moulder <reiter@netspace.net.au> | 44114.381.2146.959273826@egroups.com | mail/lojban-list/cur/952053199.96bab3ad5a7d9cc6.jbomohi:2,S
 John Cowan <jcowan@reutershealth.com> writes:
 
 > Which leads me to the following challenge, due to Quine.  A student at Yale
