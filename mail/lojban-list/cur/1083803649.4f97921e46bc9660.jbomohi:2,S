@@ -1,0 +1,116 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 21683 invoked from network); 6 May 2004 00:35:11 -0000
+Received: from unknown (66.218.66.216)
+  by m25.grp.scd.yahoo.com with QMQP; 6 May 2004 00:35:11 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta1.grp.scd.yahoo.com with SMTP; 6 May 2004 00:35:11 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.31)
+	id 1BLWqw-0007Uq-5Y
+	for lojban@yahoogroups.com; Wed, 05 May 2004 17:35:06 -0700
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.31)
+	id 1BLWqH-0006ty-P0; Wed, 05 May 2004 17:34:25 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 05 May 2004 17:34:22 -0700 (PDT)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.31)
+	id 1BLWq1-0006tV-Sm; Wed, 05 May 2004 17:34:10 -0700
+Date: Wed, 5 May 2004 17:34:09 -0700
+Message-ID: <20040506003409.GI7020@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.5.1+cvs20040105i
+X-archive-position: 7667
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] My parser, SI, SA, and ZOI
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 22135
+Content-Length: 3178
+
+Now that I can parse ZOI, it was necessary to figure out what the
+interactions with it and SI and SA would be.  Along the way, I added
+some features to the interaction between SI and SA.  This is what I've
+currently got on my parser page, and I'd very much like people's
+opinions.
+
+In particular, if there is a direct contradiction with grammar.300 that is
+*not* obviously based on YACC limitations, or anything that seems strongly
+counter-intuitive, please let me know.
+
+The main page for my parser is
+http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/
+
+
+  * Groups of "si" and everything up to a "sa" are both erased at the beginning
+of a string. This may or may not be justifiable according to grammer.300;
+no-one's really sure. This means that sentences like "si si si" and "sa" are
+legal, as well as sentences like "le broda sa .i mi cusku".
+
+  * SA and SI now interact in a more obvious fashion. For example, "le broda
+brode brodi .y. sa le si la broda brode brodi" is equivalent to "la broda brode
+brodi". Just using "sa" would not work because "le" and "lo" are in different
+selma'o.
+
+  * Interactions between ZOI, SI, and SA are much richer. The goal is to
+achieve something more like what a user would 'expect', given the basic
+definitions of those words. Details:
+
+
+      + The first SI after the close of a ZOI clause erases the closing
+delimiter, allowing one to add to the protected text. "zoi gy weeble gy si bob
+gy" is equivalent to "zoi gy weeble bob gy".
+
+      + Two consecutive SI after the close of a ZOI erases the non-Lojban text
+itself; while it would theoretcially be possible to have consecutive SI after
+the close of a ZOI erase individual words inside the ZOI protected text, this
+is a bad idea because (for example) breaking up a bird call into words makes
+very little sense.
+
+	So, for example, "zoi gy da da da gy si si de gy" is equivalent to "zoi
+gy de gy".
+
+      + The interaction of these two features leads to a somewhat strange, but
+very minor, side effect: It is impossible to add to the protected text inside a
+zoi clause (i.e. using a single SI after the closing delimiter) any text that
+starts with "si" (unless it then goes on to be something that looks like a
+Lojban brivla or cmene), because it will be interpreted as two SI, causing
+erasure of the entire protected text.
+
+      + Three consecutive SI after the close of a ZOI erases everything but the
+ZOI itself, so that, for example, "zoi gy da da da gy si si si dy weeble dy" is
+equivalent to "zoi dy weeble dy".
+
+      + Four consecutive SI after the close of a ZOI erases the entire ZOI
+clause, including the ZOI.
+
+      + Because of the SA and SI interaction enhancements, the fast way to
+delete and accidental ZOI is to close the delimiter and say "sa zoi si", and
+then continue on. For example, "broda zoi gy da da da da gy sa zoi si da" is
+equivalent to "broda da".
+
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+
+           
+

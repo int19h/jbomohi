@@ -1,0 +1,79 @@
+# mail/lojban-list thread 4f97921e46bc-my_parser,_si,_sa,_and_zoi | root 20040506003409.gi7020@digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2004-05-06T00:34:09Z | Robin Lee Powell <lojban-out@lojban.org> | 20040506003409.gi7020@digitalkingdom.org | mail/lojban-list/cur/1083803649.4f97921e46bc9660.jbomohi:2,S
+Now that I can parse ZOI, it was necessary to figure out what the
+interactions with it and SI and SA would be.  Along the way, I added
+some features to the interaction between SI and SA.  This is what I've
+currently got on my parser page, and I'd very much like people's
+opinions.
+
+In particular, if there is a direct contradiction with grammar.300 that is
+*not* obviously based on YACC limitations, or anything that seems strongly
+counter-intuitive, please let me know.
+
+The main page for my parser is
+http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/
+
+
+  * Groups of "si" and everything up to a "sa" are both erased at the beginning
+of a string. This may or may not be justifiable according to grammer.300;
+no-one's really sure. This means that sentences like "si si si" and "sa" are
+legal, as well as sentences like "le broda sa .i mi cusku".
+
+  * SA and SI now interact in a more obvious fashion. For example, "le broda
+brode brodi .y. sa le si la broda brode brodi" is equivalent to "la broda brode
+brodi". Just using "sa" would not work because "le" and "lo" are in different
+selma'o.
+
+  * Interactions between ZOI, SI, and SA are much richer. The goal is to
+achieve something more like what a user would 'expect', given the basic
+definitions of those words. Details:
+
+
+      + The first SI after the close of a ZOI clause erases the closing
+delimiter, allowing one to add to the protected text. "zoi gy weeble gy si bob
+gy" is equivalent to "zoi gy weeble bob gy".
+
+      + Two consecutive SI after the close of a ZOI erases the non-Lojban text
+itself; while it would theoretcially be possible to have consecutive SI after
+the close of a ZOI erase individual words inside the ZOI protected text, this
+is a bad idea because (for example) breaking up a bird call into words makes
+very little sense.
+
+	So, for example, "zoi gy da da da gy si si de gy" is equivalent to "zoi
+gy de gy".
+
+      + The interaction of these two features leads to a somewhat strange, but
+very minor, side effect: It is impossible to add to the protected text inside a
+zoi clause (i.e. using a single SI after the closing delimiter) any text that
+starts with "si" (unless it then goes on to be something that looks like a
+Lojban brivla or cmene), because it will be interpreted as two SI, causing
+erasure of the entire protected text.
+
+      + Three consecutive SI after the close of a ZOI erases everything but the
+ZOI itself, so that, for example, "zoi gy da da da gy si si si dy weeble dy" is
+equivalent to "zoi dy weeble dy".
+
+      + Four consecutive SI after the close of a ZOI erases the entire ZOI
+clause, including the ZOI.
+
+      + Because of the SA and SI interaction enhancements, the fast way to
+delete and accidental ZOI is to close the delimiter and say "sa zoi si", and
+then continue on. For example, "broda zoi gy da da da da gy sa zoi si da" is
+equivalent to "broda da".
+
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+
+           
+
+
