@@ -1,5 +1,3 @@
-''text'' has been so far reduced to:
-
 subsentence = sentence | prenex subsentence 
 prenex = terms ZOhU # 
 sentence = [[terms [[CU #]] bridi-tail 
@@ -9,21 +7,36 @@ gek-sentence = gek subsentence gik subsentence tail-terms
 | NA # gek-sentence 
 tail-terms = [[terms] /VAU#/
 terms = term ... 
-term = sumti 
-        | (tag | FA #) (sumti | /KU#/) 
-        | NUhI # gek terms /NUhU#/ gik terms /NUhU#/  
+term = [[FA] sumti 
+        | tag (sumti | /KU#/) 
         | NA KU # 
-sumti = sumti-6 [[relative-clauses]
-          | quantifier KOhA1 xi number [[relative-clauses]
-          | gek sumti gik sumti
-selbri = [tag] selbri-1 
+        | NUhI # gek terms /NUhU#/ gik terms /NUhU#/  
+        
+sumti = [[quantifier] KOhA xi number [[relative-clauses]
+         | gek sumti gik sumti
+selbri = [[tag] selbri-1 
 selbri-1 = selbri-6 | NA # selbri 
 
-(Where ''selbri-6'' is an untagged/unnegated selbri, ''sumti-6'' is an unquantified sumti.)
 
-Still to do:
-#Expand logically connected terms into gek-sentences
-#Absorb common tail-terms into each gek-sentence
-#Absorb common pre-selbri terms into each gek-sentence
-#Export quantifiers and negations to the prenex
+For each ''sentence'', while there are ''terms'' in front of the selbri, starting from the first term, we export them to the prenex as follows. 
+
+If the term is of type "[[FA] [[quantifier] KOhA":
+
+[[FA] [[quantifier] KOhA xi number [[relative-clauses] [[terms [[CU #]] bridi-tail: is reduced to "[[quantifier] KOhA xi number [[relative-clauses] zo'u [[FA] KOhA [[terms [[CU #]] bridi-tail" which is a ''subsentence'' (''prenex sentence'')
+
+If the term is of type "tag ([[quantifier] KOhA | /KU#/) | NA KU #" it is exported directly to the prenex: 
+
+(tag ([[quantifier] KOhA| /KU#/) | NA KU) [[terms [[CU #]] bridi-tail: is reduced to "(tag ([[quantifier] KOhA| /KU#/) | NA KU) zo'u [[terms [[CU #]] bridi-tail" which is a ''subsentence'' (''prenex sentence'')
+
+If the term is of type "([[FA] | tag) gek sumti gik sumti", with logical gek:
+
+([[FA] | tag) gek sumti gik sumti [[terms [[CU #]] bridi-tail: is reduced to ''[[tag zo'u] gek sumti [[terms [[CU #]] bridi-tail gik sumti [[terms [[CU #]] bridi-tail'' which is a ''subsentence'' (''[[prenex] sentence'')
+
+__Note__: In the above rule, ''[[terms [[CU #]] bridi-tail'' appears unchanged in the first connectand. In the second connectand, everything is copied unchanged except for unquantified KOhA terms, which move to the second connectand as ''[[ FA | tag ] KOhA xi number'', dropping any relative clauses. Quantified terms may be copied unchanged, but the variable may be changed to a new one for clarity.
+
+If the term is of type ''NUhI # gek terms /NUhU#/ gik terms /NUhU#/'':
+
+NUhI # gek terms /NUhU#/ gik terms /NUhU#/ [[terms [[CU #]] bridi-tail: is reduced to ''gek terms [[terms [[CU #]] bridi-tail gik terms [[terms [[CU #]] bridi-tail'' which is a ''subsentence'' (''[[prenex] sentence'')
+
+The same caveat as in the previous case applies.
 
