@@ -4290,3 +4290,85 @@ maybe, but zoi is powerful juju.
 
 
 
+
+## 2004-11-10T21:56:00Z — xorxes (@xorxes) (post 2880)
+
+Title: Magic Words
+Message-Id: 20041110164303.46499.qmail@web41905.mail.yahoo.com
+In-Reply-To: 41923465.2060605@kli.org
+
+
+--- "Mark E. Shoulson" wrote:
+>  FAhO is equivalent to 
+> "silence forever on this input stream".  What's important is less its 
+> effect on following words (there are no following words; they don't 
+> count or are a different stream), but under what circumstances is its 
+> own functioning cancelled. 
+
+In left-to-right, it will be cancelled whenever there is a preceding 
+word that grabs it as "any-word". Those cases are: {zo fa'o},
+{lo'u ... fa'o ...le'u}, {zoi fa'o .... fa'o}, and {da zei fa'o}.
+
+Making {fa'o} not count as "any-word" in any one of those
+would constitute an exception to left-to-right processing.
+
+If {fa'o} does not allow reading any following words, then 
+{fa'o bu}, {fa'o zei da}, {fa'o si}, {fa'o sa ...}, {fa'o su} 
+are all impossible: {fa'o} is active here and there cannot be 
+any following words to parse.
+
+{ba'e fa'o} is not problematic: an emphatic end-of-text.
+{sa fa'o} is not problematic either: it will delete everything
+because it won't find any other word from selmaho FAhO, and 
+then {fa'o} itself will end text. It has the same effect as 
+{su fa'o}.
+
+> Since it does affect the whole input and 
+> parsing routine, this is more "magical" than working out when the 
+> function of LE or BAI is cancelled.
+
+Yes, it's much more powerful once it can fulfill its function, but 
+that doesn't seem like a reason to introduce exceptions to allow it
+to fulfill its function in places where no other word is allowed to.
+
+There are other issues I have with FAhO, though.
+
+1) If we really need such a metagrammatical word for 
+end-of-parsable-input, how come a corresponding word for 
+beginning-of-parsable-input is not needed? 
+
+2) At least in Robin's parser implementation, FAhO has a true
+magic word grammatical function besides its end-of-parsable-input
+metagrammatical function. If I understand correctly, in Robin's 
+parser FAhO swallows also any __preceding__ word that makes the 
+text ungrammatical. So for example: {mi klama le zarci le fa'o} 
+will be parsed as {mi klama le zarci /ku/ /vau/ fa'o}. So FAhO 
+is also in the SI, SA, SU group in that it erases zero or more 
+preceding words.
+
+3) I think it would be better if FAhO was just an "end of 
+grammatical text" (elidable) terminator, i.e.:
+text = (rest of grammar) /FAhO/
+This way it would not be a magic word, it could be erased 
+with SI/SA/SU, and used as "any-word" by BU and ZEI.
+So you could easily fix a {fa'o si fo'a} mistake.
+
+Recognizing end-of-parsable-input is a metagrammatical 
+function, akin to recognizing beginning-of-parsable-input.
+Doing it with a word that can also be used within the
+grammar (as in {zo fa'o}) is weird. 
+
+mu'o mi'e xorxes
+
+
+
+		
+__________________________________ 
+Do you Yahoo!? 
+Check out the new Yahoo! Front Page. 
+www.yahoo.com 
+ 
+
+
+
+
