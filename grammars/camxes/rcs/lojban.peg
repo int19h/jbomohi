@@ -238,20 +238,20 @@ zo-clause <- ZO SI SI zo-si-clause? zo-clause / ZO zo-si-clause* SI / ZO zo-si-c
 
 zoi-clause <- ZOI zoi-si-start? any-word-zoi &{ myAssign( new String(anyWordZoiSEP3.toString()) ) } zoi-si-middle? zoi-first-word? zoi-words
 
-zoi-clause-no-SI-handling <- any-word-zoi &{ myAssign( new String(anyWordZoiSEP1.toString()) ) } zoi-first-word-no-SI-handling? zoi-words-no-SI-handling
+zoi-clause-no-SI-handling <- ZOI-no-SA-handling any-word-zoi &{ myAssign2( new String(anyWordZoiSEP2.toString()) ) } zoi-first-word-no-SI-handling? zoi-words-no-SI-handling
 
 zoi-first-word <- zoi-spacing-opt zoi-printable-word &{ !startString.equals(zoiPrintableWordSEP2) }
 
-zoi-first-word-no-SI-handling <- zoi-spacing-opt zoi-printable-word &{ !startString.equals(zoiPrintableWordSEP2) }
+zoi-first-word-no-SI-handling <- zoi-spacing-opt zoi-printable-word &{ !startString2.equals(zoiPrintableWordSEP2) }
 
 zoi-words <- zoi-si-end zoi-printable-word &{ !startString.equals(zoiPrintableWordSEP2) } zoi-words / zoi-spacing zoi-printable-word &{ !startString.equals(zoiPrintableWordSEP2) } zoi-words / zoi-last-word
 
-zoi-words-no-SI-handling <- zoi-spacing zoi-printable-word &{ !startString.equals(zoiPrintableWordSEP2) } zoi-words-no-SI-handling / zoi-last-word-no-SI-handling
+zoi-words-no-SI-handling <- zoi-spacing zoi-printable-word &{ !startString2.equals(zoiPrintableWordSEP2) } zoi-words-no-SI-handling / zoi-last-word-no-SI-handling
 
 zoi-last-word <- zoi-spacing any-word-zoi &{ startString.equals(anyWordZoiSEP2) } zoi-spacing-opt
 
 ; Exactly the same as the above; the point here is to stop the inital *backwards* ZOI check (from the expansion of the initial SI clause) from making bad decisions that we are then forced to keep.
-zoi-last-word-no-SI-handling <- zoi-spacing any-word-zoi &{ startString.equals(anyWordZoiSEP2) } zoi-spacing-opt
+zoi-last-word-no-SI-handling <- zoi-spacing any-word-zoi &{ startString2.equals(anyWordZoiSEP2) } zoi-spacing-opt
 
 
 NORATS zoi-printable-word <- (!space-chars-real .)+
@@ -292,7 +292,7 @@ su-clause <- (!SU !NIhO !LU !TUhE !TO any-word spacing-no-absorb-opt)+ SU / SU
 
 ; Handling of SI and interactions with zo and lo'u...le'u
 
-si-clause <- (Y BU SI SI / ZO-no-SI-handling SI SI SI / zo-clause-no-SI-handling SI SI / LOhU lohu-tail-si-clause SI / ZOI SI / ZOI zoi-clause-no-SI-handling SI SI SI SI / !SI !SA all-sa-clauses CMAVO-no-SA-handling SI / !SA !ZOI !LOhU !SI !ZO any-word-no-SI-handling SI / !SA !ZOI !LOhU !SI !ZO any-word-no-SI-handling si-clause SI )*
+si-clause <- (Y BU SI SI / ZO-no-SI-handling SI SI SI / zo-clause-no-SI-handling SI SI / LOhU lohu-tail-si-clause SI / ZOI SI / zoi-clause-no-SI-handling SI SI SI SI / !SI !SA all-sa-clauses CMAVO-no-SA-handling SI / !SA !ZOI !LOhU !SI !ZO any-word-no-SI-handling SI / !SA !ZOI !LOhU !SI !ZO any-word-no-SI-handling si-clause SI )*
 
 lohu-tail-si-clause <- LEhU-no-SI-handling si-clause SI / !SI any-word-no-SI-handling lohu-tail-si-clause SI
 
@@ -1672,7 +1672,7 @@ MORPHOLOGY ZOI <- ZOI-pre ZOI-words ZOI-post
 ZOI-pre <- pre-cmavo ZOI-sa-clause?
 ZOI-post <- !BU-bare !tick-char !vowel zoi-spacing-opt !ZEI
 SPACE ZOI-no-SA-handling <- pre-cmavo ZOI-words !BU-bare !tick-char !vowel zoi-spacing-opt !ZEI
-SPACE ZOI-sa-clause <- ZOI-no-SA-handling zoi-clause-no-SI-handling ZOI-sa-tail
+SPACE ZOI-sa-clause <- zoi-clause-no-SI-handling ZOI-sa-tail
 SPACE ZOI-sa-tail <- SA &ZOI-no-SA-handling / !ZOI-no-SA-handling !SA any-word-no-SA-handling ZOI-sa-tail / ZOI-no-SA-handling ZOI-sa-tail2 ZOI-sa-tail / !ZOI-no-SA-handling !SA zoi-printable-word zoi-spacing ZOI-sa-tail
 SPACE ZOI-sa-tail2 <- SA / !ZOI-no-SA-handling !SA any-word-no-SA-handling ZOI-sa-tail2 / ZOI-no-SA-handling ZOI-sa-tail2 ZOI-sa-tail2 / !ZOI-no-SA-handling !SA zoi-printable-word zoi-spacing ZOI-sa-tail2
 NORATS ZOI-words <- "zoi" / "la'o"
