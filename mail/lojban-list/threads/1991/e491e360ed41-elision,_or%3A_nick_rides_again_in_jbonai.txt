@@ -1,4 +1,4 @@
-# mail/lojban-list thread e491e360ed41-elision,_or%3A_nick_rides_again_in_jbonai | root m0jrhiw-00033rc@snark.thyrsus.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread e491e360ed41-elision,_or%3A_nick_rides_again_in_jbonai | root m0jrhiw-00033rc@snark.thyrsus.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 1991-04-16T14:19:20Z | cbmvax!uunet!bigd.cray.com!dmb | 9104161419.aa09068@bigd.cray.com | mail/lojban-list/cur/671811560.e6c93f046f40f41c.jbomohi:2,S
    I've considered the use of the <error> production to be a kludge ever
@@ -75,5 +75,72 @@ can compile the tables into hard code... I think Pennello of Metaware
 has a paper or two on better diagnostics for grammar ambiguities,
 automatically producing sample input pairs that trigger the ambiguity,
 &tc.  Parser don't seem a very active field just now...
+
+
+
+=== 3 | 1991-04-17T13:31:45Z | cbmvax!uunet!bigd.cray.com!dmb | 9104171331.aa13189@bigd.cray.com | mail/lojban-list/cur/671895105.4af9861488e3587b.jbomohi:2,S
+jp> = Jeff Prothero
+gs> = Guy Steele Jr.
+me> = Dave Bowen
+
+me>   All of this leaves us with a big research project, namely can we develop
+me>a grammar acceptable to yacc (or some other parser generating system) which
+me>will specify the language with elibible terminators.  Maybe I should have
+me>made that my dissertation topic.
+
+gs>Indeed.  Moreover, it may even be the case that the language actually
+gs>is LR(1), that is, there does exist an LR(1) grammar that specifies
+gs>it but such a grammar has not been found yet.  Part of my point is
+gs>that the attempt to find an unambiguous LR(1) grammar may yield new
+gs>insights about the grammatical structure of the language.
+     <C example deleted>
+gs>om a contained statement to its container did not
+gs>become clear to me until it was forced upon me by the exercise of
+gs>constructing the grammar.  We might find lojban constructs also
+gs>falling into two general categories: those after which (before
+gs>which?) elision is permissible, and all others.  The nature of that
+gs>dichotomy is worth exploring.
+
+
+me>   My real question is for Guy.  If one wished to explore the question of
+me>including elidible terminators in the grammar, how would one go about it?
+me>My approach has been to include a rule allowing the terminator to go to an
+me>empty production and then examine the places where conflicts arise.  Those
+me>places are where ambiguities may arise if a terminator is elided.  Beyond
+me>that things seem to get messy.  We don't have tools for hacking on grammars
+me>that make sure the language being defined doesn't change.  Grammar writing
+me>seems to be an art rather than a science.  My compiler theory classes were
+me>almost twenty years ago, but I do read some of the relevant journals.  The
+me>emphasis seems to be on developing better error recovery techniques and on
+me>modifications to the basic LR(k) algorithms which will produce smaller
+me>parsers.  I haven't seen any work on developing tools for grammar writers.
+
+jp>Basically, you don't use YACC or similar tools to deal with elidable
+jp>terminators.  Elidable terminators are an inherently orthogonal issue
+jp>to the rest of the syntax -- they are a specifically and deliberately
+jp>context-sensitive mechanism inserted into a context-free grammar.
+jp>They change the language by adding to the set of strings specified
+jp>by the context-free grammar many additional, otherwise forbidden,
+jp>strings which are understood as abbreviations for existing strings
+jp>in the language.  You show this correct not by hacking with YACC,
+jp>but by formally specifying the rules for adding these new strings
+jp>to the language and mapping them onto existing strings, and then
+jp>proving that these rules assign a unique interpretation to each
+jp>added string.
+
+
+   That's certainly one way of dealing with the issue of elibable
+terminators.  Guy's comments raised the question, at least for me, of
+whether it is the best way.  Is it possible to create a grammar for
+Lojban which has the terminator as an optional production in those places
+and only those places where it can safely be elided?  Or are we stuck
+with the <error> kludge, even if it is safe?  If the answer to this first
+question is, "We don't know.", then my question is what would be a
+reasonable way to investigate this question, given the lack of tools
+for hacking on grammars?  Sorry for all the quotes, but I wanted to
+ensure people understood the basis for my questions.
+
+Dave Bowen
+
 
 
