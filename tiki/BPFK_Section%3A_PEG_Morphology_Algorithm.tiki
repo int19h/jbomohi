@@ -37,13 +37,13 @@
 
 ;-------------------------------------------------------------------
 
-words <- (space* word)* space*
+words <- (spaces* word)* spaces*
 
 word <- cmene / gismu / lujvo / fuhivla / cmavo / non-lojban-word
 
 ;-------------------------------------------------------------------
 
-cmene <- cmene-syllaboid* consonant+ &space
+cmene <- cmene-syllaboid* consonant+ &spaces
 
 cmene-syllaboid <- !doi-la-lai-lahi consonant* vowels
 
@@ -51,9 +51,9 @@ doi-la-lai-lahi <- (d o i / l a (h? i)?) &consonant
 
 ;-------------------------------------------------------------------
 
-gismu <- (initial-pair vowel / consonant vowel consonant) consonant vowel &space / stressed-gismu
+gismu <- (initial-pair vowel / consonant vowel consonant) consonant vowel &spaces / stressed-gismu
 
-stressed-gismu <- !cmene (initial-pair stressed-vowel / consonant stressed-vowel consonant) consonant vowel &(space / consonant)
+stressed-gismu <- !cmene (initial-pair stressed-vowel / consonant stressed-vowel consonant) consonant vowel &(spaces / consonant)
 
 ;-------------------------------------------------------------------
 
@@ -61,15 +61,15 @@ lujvo <- !cmene !tosmabru initial-rafsi medial-rafsi* final-rafsi
 
 tosmabru <- cmavo lujvo
 
-initial-rafsi <- fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi (r / n &r) !(CCV-rafsi space) / CVV-rafsi &(CCV-rafsi space) / stressed-initial-rafsi &short-final-rafsi
+initial-rafsi <- fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi (r / n &r) !(CCV-rafsi spaces) / CVV-rafsi &(CCV-rafsi spaces) / stressed-initial-rafsi &short-final-rafsi
 
 stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-last-CVV-rafsi (r / n &r) !CCV-rafsi / stressed-last-CVV-rafsi  &CCV-rafsi
 
 medial-rafsi <- !gismu (fuhivla-rafsi / long-rafsi / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) &consonant
 
-final-rafsi <- (fuhivla / gismu / CVV-rafsi / CCV-rafsi) &space / stressed-first-CVV-rafsi &(space / consonant) / (stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-last-CVV-rafsi) short-final-rafsi
+final-rafsi <- (fuhivla / gismu / CVV-rafsi / CCV-rafsi) &spaces / stressed-first-CVV-rafsi &(spaces / consonant) / (stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-last-CVV-rafsi) short-final-rafsi
 
-short-final-rafsi <- (short-CVV-rafsi / CCV-rafsi) &(space / consonant)
+short-final-rafsi <- (short-CVV-rafsi / CCV-rafsi) &(spaces / consonant)
 
 short-CVV-rafsi <- consonant diphthong
 
@@ -107,19 +107,19 @@ y-rafsi <- long-rafsi / CVC-rafsi y / stressed-long-rafsi / stressed-CVC-rafsi y
 
 fuhivla <- !cmene !gismu !lujvo (stressed-fuhivla-head cluster fuhivla-tail / fuhivla-head cluster stressed-fuhivla-tail)
 
-stressed-fuhivla-head <- &cmavo (syllable (!consonant syllable)* !consonant)? stressed-syllable / &cmavo syllable (!consonant syllable)* &(syllable space)
+stressed-fuhivla-head <- &cmavo (syllable (!consonant syllable)* !consonant)? stressed-syllable / &cmavo syllable (!consonant syllable)* &(syllable spaces)
  
 fuhivla-head <- !slinkuhi &initial-cluster / &cmavo syllable (!consonant syllable)* &non-initial-cluster
 
 slinkuhi <- consonant medial-rafsi* final-rafsi 
 
-stressed-fuhivla-tail <- syllable syllable+ &space / syllable* stressed-syllable syllable &(space / consonant)
+stressed-fuhivla-tail <- syllable syllable+ &spaces / syllable* stressed-syllable syllable &(spaces / consonant)
 
-fuhivla-tail <- syllable &(space / consonant)
+fuhivla-tail <- syllable &(spaces / consonant)
 
 ;-------------------------------------------------------------------
 
-cmavo <- !cmene !gismu !lujvo !fuhivla consonant? vowels &(space / consonant)
+cmavo <- !cmene !gismu !lujvo !fuhivla consonant? vowels &(spaces / consonant)
 
 ;-------------------------------------------------------------------
 
@@ -198,137 +198,137 @@ h <- comma* [['h] &vowel-y
 
 ;-------------------------------------------------------------------
 
-space <- space-chars / Y !BU / comma* !.
+spaces <- (space-chars / Y !BU)+ / comma* !.
 
 space-chars <- comma* [[.\t\n\r?!\u0020]
 
 comma <- [[,]
 
-non-lojban-word <- (!space .)+
+non-lojban-word <- (!spaces .)+
 
 digit <- [[0123456789]
 
 ;-------------------------------------------------------------------
 
-A <- &cmavo ( a / e / j i / o / u ) &(space / consonant)
-BAI <- &cmavo ( d u h o / s i h u / z a u / k i h i / d u h i / c u h u / t u h i / t i h u / d i h o / j i h u / r i h a / n i h i / m u h i / k i h u / v a h u / k o i / c a h i / t a h i / p u h e / j a h i / k a i / b a i / f i h e / d e h i / c i h o / m a u / m u h u / r i h i / r a h i / k a h a / p a h u / p a h a / l e h a / k u h u / t a i / b a u / m a h i / c i h e / f a u / p o h i / c a u / m a h e / c i h u / r a h a / p u h a / l i h e / l a h u / b a h i / k a h i / s a u / f a h e / b e h i / t i h i / j a h e / g a h a / v a h o / j i h o / m e h a / d o h e / j i h e / p i h o / g a u / z u h e / m e h e / r a i ) &(space / consonant)
-BAhE <- &cmavo ( b a h e / z a h e ) &(space / consonant)
-BE <- &cmavo ( b e ) &(space / consonant)
-BEI <- &cmavo ( b e i ) &(space / consonant)
-BEhO <- &cmavo ( b e h o ) &(space / consonant)
-BIhE <- &cmavo ( b i h e ) &(space / consonant)
-BIhI <- &cmavo ( m i h i / b i h o / b i h i ) &(space / consonant)
-BO <- &cmavo ( b o ) &(space / consonant)
-BOI <- &cmavo ( b o i ) &(space / consonant)
-BU <- &cmavo ( b u ) &(space / consonant)
-BY <- Y BU / &cmavo ( j o h o / r u h o / g e h o / j e h o / l o h a / n a h a / s e h e / t o h a / g a h e / y h y /  b y / c y / d y / f y / g y / j y / k y / l y / m y / n y / p y / r y / s y / t y / v y / x y / z y ) &(space / consonant)
-CAhA <- &cmavo ( c a h a / p u h i / n u h o / k a h e ) &(space / consonant)
-CAI <- &cmavo ( p e i / c a i / c u h i / s a i / r u h e ) &(space / consonant)
-CEI <- &cmavo ( c e i ) &(space / consonant)
-CEhE <- &cmavo ( c e h e ) &(space / consonant)
-CO <- &cmavo ( c o ) &(space / consonant)
-COI <- &cmavo ( j u h i / c o i / f i h i / t a h a / m u h o / f e h o / c o h o / p e h u / k e h o / n u h e / r e h i / b e h e / j e h e / m i h e / k i h e / v i h o ) &(space / consonant)
-CU <- &cmavo ( c u ) &(space / consonant)
-CUhE <- &cmavo ( c u h e / n a u ) &(space / consonant)
-DAhO <- &cmavo ( d a h o ) &(space / consonant)
-DOI <- &cmavo ( d o i ) &(space / consonant)
-DOhU <- &cmavo ( d o h u ) &(space / consonant)
-FA <- &cmavo ( f a i / f a / f e / f o / f u / f i h a / f i ) &(space / consonant)
-FAhA <- &cmavo ( d u h a / b e h a / n e h u / v u h a / g a h u / t i h a / n i h a / c a h u / z u h a / r i h u / r u h u / r e h  o / t e h e / b u h u / n e h a / p a h o / n e h i / t o h o / z o h i / z e h o / z o h a / f a h a ) &(space / consonant)
-FAhO <- &cmavo ( f a h o ) &(space / consonant)
-FEhE <- &cmavo ( f e h e ) &(space / consonant)
-FEhU <- &cmavo ( f e h u ) &(space / consonant)
-FIhO <- &cmavo ( f i h o ) &(space / consonant)
-FOI <- &cmavo ( f o i ) &(space / consonant)
-FUhA <- &cmavo ( f u h a ) &(space / consonant)
-FUhE <- &cmavo ( f u h e ) &(space / consonant)
-FUhO <- &cmavo ( f u h o ) &(space / consonant)
-GA <- &cmavo ( g e h i / g e /  g o / g a / g u ) &(space / consonant)
-GAhO <- &cmavo ( k e h i / g a h o ) &(space / consonant)
-GEhU <- &cmavo ( g e h u ) &(space / consonant)
-GI <- &cmavo ( g i ) &(space / consonant)
-GIhA <- &cmavo ( g i h e / g i h i / g i h o / g i h a / g i h u ) &(space / consonant)
-GOI <- &cmavo ( n o h u / n e / g o i / p o h u / p e / p o h e / p o ) &(space / consonant)
-GOhA <- &cmavo ( m o / n e i / g o h u / g o h o / g o h i / n o h a / g o h e / g o h a / d u / b u h a / b u h e / b u h i / c o h  e ) &(space / consonant)
-GUhA <- &cmavo ( g u h e / g u h i / g u h o / g u h a / g u h u ) &(space / consonant)
-I <- &cmavo ( i ) &(space / consonant)
-JA <- &cmavo ( j e h i / j e /  j o / j a / j u ) &(space / consonant)
-JAI <- &cmavo ( j a i ) &(space / consonant)
-JOhI <- &cmavo ( j o h i ) &(space / consonant)
-JOI <- &cmavo ( f a h u / p i h u / j o i / c e h o / c e / j o h u / k u h a / j o h e / j u h e ) &(space / consonant)
-KE <- &cmavo ( k e ) &(space / consonant)
-KEhE <- &cmavo ( k e h e ) &(space / consonant)
-KEI <- &cmavo ( k e i ) &(space / consonant)
-KI <- &cmavo ( k i ) &(space / consonant)
-KOhA <- &cmavo ( d a h u / d a h e / d i h u / d i h e / d e h u / d e h e / d e i / d o h i / m i h o / m a h a / m i h a / d o h o  / k o h a / f o h u / k o h e / k o h i / k o h o / k o h u / f o h a / f o h e / f o h i / f o h o / v o h a / v o h e / v o h i /  v o h o / v o h u / r u / r i / r a / t a / t u / t i / z i h o / k e h a / m a / z u h i / z o h e / c e h u / d a / d e / d i / k  o / m i / d o ) &(space / consonant)
-KU <- &cmavo ( k u ) &(space / consonant)
-KUhE <- &cmavo ( k u h e ) &(space / consonant)
-KUhO <- &cmavo ( k u h o ) &(space / consonant)
-LA <- &cmavo ( l a i / l a h i / l a ) &(space / consonant)
-LAU <- &cmavo ( c e h a / l a u / z a i / t a u ) &(space / consonant)
-LAhE <- &cmavo ( t u h a / l u h a / l u h o / l a h e / v u h i / l u h i / l u h e ) &(space / consonant)
-LE <- &cmavo ( l e i / l o i / l e h i / l o h i / l e h e / l o h e / l o / l e ) &(space / consonant)
-LEhU <- &cmavo ( l e h u ) &(space / consonant)
-LI <- &cmavo ( m e h o / l i ) &(space / consonant)
-LIhU <- &cmavo ( l i h u ) &(space / consonant)
-LOhO <- &cmavo ( l o h o ) &(space / consonant)
-LOhU <- &cmavo ( l o h u ) &(space / consonant)
-LU <- &cmavo ( l u ) &(space / consonant)
-LUhU <- &cmavo ( l u h u ) &(space / consonant)
-MAhO <- &cmavo ( m a h o ) &(space / consonant)
-MAI <- &cmavo ( m o h o / m a i ) &(space / consonant)
-ME <- &cmavo ( m e ) &(space / consonant)
-MEhU <- &cmavo ( m e h u ) &(space / consonant)
-MOhE <- &cmavo ( m o h e ) &(space / consonant)
-MOhI <- &cmavo ( m o h i ) &(space / consonant)
-MOI <- &cmavo ( m e i / m o i / s i h e / c u h o / v a h e ) &(space / consonant)
-NA <- &cmavo ( j a h a / n a ) &(space / consonant)
-NAI <- &cmavo ( n a i ) &(space / consonant)
-NAhE <- &cmavo ( t o h e / j e h a / n a h e / n o h e ) &(space / consonant)
-NAhU <- &cmavo ( n a h u ) &(space / consonant)
-NIhE <- &cmavo ( n i h e ) &(space / consonant)
-NIhO <- &cmavo ( n i h o / n o h i ) &(space / consonant)
-NOI <- &cmavo ( v o i / n o i / p o i ) &(space / consonant)
-NU <- &cmavo ( n i / d u h u / s i h o / n u / l i h i / k a / j e i / s u h u / z u h o / m u h e / p u h u / z a h i ) &(space / consonant)
-NUhA <- &cmavo ( n u h a ) &(space / consonant)
-NUhI <- &cmavo ( n u h i ) &(space / consonant)
-NUhU <- &cmavo ( n u h u ) &(space / consonant)
-PA <- &cmavo ( d a u / f e i / g a i / j a u / r e i / v a i / p i h e / p i /  f i h u / z a h u / m e h i / n i h u / k i h o / c e h i / m a h u / r a h e / d a h a / s o h a / j i h i / s u h o / s u h e / r o / r a u / s o h u / s o h i / s o h e / s o h o / m o h a / d u h e / t e h o / k a h o / c i h i / t u h o / x o / p a i / n o h o / n o / p a / r e / c i / v o / m u / x a / z e / b i / s o / digit ) &(space / consonant)
-PEhE <- &cmavo ( p e h e ) &(space / consonant)
-PEhO <- &cmavo ( p e h o ) &(space / consonant)
-PU <- &cmavo ( b a / p u / c a ) &(space / consonant)
-RAhO <- &cmavo ( r a h o ) &(space / consonant)
-ROI <- &cmavo ( r e h u / r o i ) &(space / consonant)
-SA <- &cmavo ( s a ) &(space / consonant)
-SE <- &cmavo ( s e / t e / v e / x e ) &(space / consonant)
-SEI <- &cmavo ( s e i / t i h o ) &(space / consonant)
-SEhU <- &cmavo ( s e h u ) &(space / consonant)
-SI <- &cmavo ( s i ) &(space / consonant)
-SOI <- &cmavo ( s o i ) &(space / consonant)
-SU <- &cmavo ( s u ) &(space / consonant)
-TAhE <- &cmavo ( r u h i / t a h e / d i h i / n a h o ) &(space / consonant)
-TEhU <- &cmavo ( t e h u ) &(space / consonant)
-TEI <- &cmavo ( t e i ) &(space / consonant)
-TO <- &cmavo ( t o h i / t o ) &(space / consonant)
-TOI <- &cmavo ( t o i ) &(space / consonant)
-TUhE <- &cmavo ( t u h e ) &(space / consonant)
-TUhU <- &cmavo ( t u h u ) &(space / consonant)
-UI <- &cmavo ( i h a / i e / a h e / u h i / i h o / i h e / a h a / i a / o h i / o h e / e h e / o i / u o / e h i / u h o / a u /  u a / a h i / i h u / i i / u h a / u i / a h o / a i / a h u / i u / e i / o h o / e h a / u u / o h a / o h u / u h u / e h o / i  o / e h u / u e / i h i / u h e / b a h a / j a h o / c a h e / s u h a / t i h e / k a h u / s e h o / z a h a / p e h i / r u h a  / j u h a / t a h o / r a h u / l i h a / b a h u / m u h a / d o h a / t o h u / v a h i / p a h e / z u h u / s a h e / l a h a /  k e h u / s a h u / d a h i / j e h u / s a h a / k a u / t a h u / n a h i / j o h a / b i h u / l i h o / p a u / m i h u / k u h  i / j i h a / s i h a / p o h o / p e h a / r o h i / r o h e / r o h o / r o h u / r o h a / r e h e / l e h o / j u h o / f u h i  / d a i / g a h i / z o h o / b e h u / r i h e / s e h i / s e h a / v u h e / k i h a / x u / g e h e / b u h o ) &(space / consonant)
-VA <- &cmavo ( v i / v a / v u ) &(space / consonant)
-VAU <- &cmavo ( v a u ) &(space / consonant)
-VEI <- &cmavo ( v e i ) &(space / consonant)
-VEhO <- &cmavo ( v e h o ) &(space / consonant)
-VUhU <- &cmavo ( g e h a / f u h u / p i h i / f e h i / v u h u / s u h i / j u h u / g e i / p a h i / f a h i / t e h a / c u h a  / v a h a / n e h o / d e h o / f e h a / s a h o / r e h a / r i h o / s a h i / p i h a / s i h i ) &(space / consonant)
-VEhA <- &cmavo ( v e h u / v e h a / v e h i / v e h e ) &(space / consonant)
-VIhA <- &cmavo ( v i h i / v i h a / v i h u / v i h e ) &(space / consonant)
-VUhO <- &cmavo ( v u h o ) &(space / consonant)
-XI <- &cmavo ( x i ) &(space / consonant)
-Y <- &cmavo ( y ) &(space / consonant)
-ZAhO <- &cmavo ( c o h i / p u h o / c o h u / m o h u / c a h o / c o h a / d e h a / b a h o / d i h a / z a h o ) &(space / consonant)
-ZEhA <- &cmavo ( z e h u / z e h a / z e h i / z e h e ) &(space / consonant)
-ZEI <- &cmavo ( z e i ) &(space / consonant)
-ZI <- &cmavo ( z u / z a / z i ) &(space / consonant)
-ZIhE <- &cmavo ( z i h e ) &(space / consonant)
-ZO <- &cmavo ( z o ) &(space / consonant)
-ZOI <- &cmavo ( z o i / l a h o ) &(space / consonant)
-ZOhU <- &cmavo ( z o h u ) &(space / consonant)
+A <- &cmavo ( a / e / j i / o / u ) &(spaces / consonant)
+BAI <- &cmavo ( d u h o / s i h u / z a u / k i h i / d u h i / c u h u / t u h i / t i h u / d i h o / j i h u / r i h a / n i h i / m u h i / k i h u / v a h u / k o i / c a h i / t a h i / p u h e / j a h i / k a i / b a i / f i h e / d e h i / c i h o / m a u / m u h u / r i h i / r a h i / k a h a / p a h u / p a h a / l e h a / k u h u / t a i / b a u / m a h i / c i h e / f a u / p o h i / c a u / m a h e / c i h u / r a h a / p u h a / l i h e / l a h u / b a h i / k a h i / s a u / f a h e / b e h i / t i h i / j a h e / g a h a / v a h o / j i h o / m e h a / d o h e / j i h e / p i h o / g a u / z u h e / m e h e / r a i ) &(spaces / consonant)
+BAhE <- &cmavo ( b a h e / z a h e ) &(spaces / consonant)
+BE <- &cmavo ( b e ) &(spaces / consonant)
+BEI <- &cmavo ( b e i ) &(spaces / consonant)
+BEhO <- &cmavo ( b e h o ) &(spaces / consonant)
+BIhE <- &cmavo ( b i h e ) &(spaces / consonant)
+BIhI <- &cmavo ( m i h i / b i h o / b i h i ) &(spaces / consonant)
+BO <- &cmavo ( b o ) &(spaces / consonant)
+BOI <- &cmavo ( b o i ) &(spaces / consonant)
+BU <- &cmavo ( b u ) &(spaces / consonant)
+BY <- Y spaces? BU / &cmavo ( j o h o / r u h o / g e h o / j e h o / l o h a / n a h a / s e h e / t o h a / g a h e / y h y /  b y / c y / d y / f y / g y / j y / k y / l y / m y / n y / p y / r y / s y / t y / v y / x y / z y ) &(spaces / consonant)
+CAhA <- &cmavo ( c a h a / p u h i / n u h o / k a h e ) &(spaces / consonant)
+CAI <- &cmavo ( p e i / c a i / c u h i / s a i / r u h e ) &(spaces / consonant)
+CEI <- &cmavo ( c e i ) &(spaces / consonant)
+CEhE <- &cmavo ( c e h e ) &(spaces / consonant)
+CO <- &cmavo ( c o ) &(spaces / consonant)
+COI <- &cmavo ( j u h i / c o i / f i h i / t a h a / m u h o / f e h o / c o h o / p e h u / k e h o / n u h e / r e h i / b e h e / j e h e / m i h e / k i h e / v i h o ) &(spaces / consonant)
+CU <- &cmavo ( c u ) &(spaces / consonant)
+CUhE <- &cmavo ( c u h e / n a u ) &(spaces / consonant)
+DAhO <- &cmavo ( d a h o ) &(spaces / consonant)
+DOI <- &cmavo ( d o i ) &(spaces / consonant)
+DOhU <- &cmavo ( d o h u ) &(spaces / consonant)
+FA <- &cmavo ( f a i / f a / f e / f o / f u / f i h a / f i ) &(spaces / consonant)
+FAhA <- &cmavo ( d u h a / b e h a / n e h u / v u h a / g a h u / t i h a / n i h a / c a h u / z u h a / r i h u / r u h u / r e h  o / t e h e / b u h u / n e h a / p a h o / n e h i / t o h o / z o h i / z e h o / z o h a / f a h a ) &(spaces / consonant)
+FAhO <- &cmavo ( f a h o ) &(spaces / consonant)
+FEhE <- &cmavo ( f e h e ) &(spaces / consonant)
+FEhU <- &cmavo ( f e h u ) &(spaces / consonant)
+FIhO <- &cmavo ( f i h o ) &(spaces / consonant)
+FOI <- &cmavo ( f o i ) &(spaces / consonant)
+FUhA <- &cmavo ( f u h a ) &(spaces / consonant)
+FUhE <- &cmavo ( f u h e ) &(spaces / consonant)
+FUhO <- &cmavo ( f u h o ) &(spaces / consonant)
+GA <- &cmavo ( g e h i / g e /  g o / g a / g u ) &(spaces / consonant)
+GAhO <- &cmavo ( k e h i / g a h o ) &(spaces / consonant)
+GEhU <- &cmavo ( g e h u ) &(spaces / consonant)
+GI <- &cmavo ( g i ) &(spaces / consonant)
+GIhA <- &cmavo ( g i h e / g i h i / g i h o / g i h a / g i h u ) &(spaces / consonant)
+GOI <- &cmavo ( n o h u / n e / g o i / p o h u / p e / p o h e / p o ) &(spaces / consonant)
+GOhA <- &cmavo ( m o / n e i / g o h u / g o h o / g o h i / n o h a / g o h e / g o h a / d u / b u h a / b u h e / b u h i / c o h  e ) &(spaces / consonant)
+GUhA <- &cmavo ( g u h e / g u h i / g u h o / g u h a / g u h u ) &(spaces / consonant)
+I <- &cmavo ( i ) &(spaces / consonant)
+JA <- &cmavo ( j e h i / j e /  j o / j a / j u ) &(spaces / consonant)
+JAI <- &cmavo ( j a i ) &(spaces / consonant)
+JOhI <- &cmavo ( j o h i ) &(spaces / consonant)
+JOI <- &cmavo ( f a h u / p i h u / j o i / c e h o / c e / j o h u / k u h a / j o h e / j u h e ) &(spaces / consonant)
+KE <- &cmavo ( k e ) &(spaces / consonant)
+KEhE <- &cmavo ( k e h e ) &(spaces / consonant)
+KEI <- &cmavo ( k e i ) &(spaces / consonant)
+KI <- &cmavo ( k i ) &(spaces / consonant)
+KOhA <- &cmavo ( d a h u / d a h e / d i h u / d i h e / d e h u / d e h e / d e i / d o h i / m i h o / m a h a / m i h a / d o h o  / k o h a / f o h u / k o h e / k o h i / k o h o / k o h u / f o h a / f o h e / f o h i / f o h o / v o h a / v o h e / v o h i /  v o h o / v o h u / r u / r i / r a / t a / t u / t i / z i h o / k e h a / m a / z u h i / z o h e / c e h u / d a / d e / d i / k  o / m i / d o ) &(spaces / consonant)
+KU <- &cmavo ( k u ) &(spaces / consonant)
+KUhE <- &cmavo ( k u h e ) &(spaces / consonant)
+KUhO <- &cmavo ( k u h o ) &(spaces / consonant)
+LA <- &cmavo ( l a i / l a h i / l a ) &(spaces / consonant)
+LAU <- &cmavo ( c e h a / l a u / z a i / t a u ) &(spaces / consonant)
+LAhE <- &cmavo ( t u h a / l u h a / l u h o / l a h e / v u h i / l u h i / l u h e ) &(spaces / consonant)
+LE <- &cmavo ( l e i / l o i / l e h i / l o h i / l e h e / l o h e / l o / l e ) &(spaces / consonant)
+LEhU <- &cmavo ( l e h u ) &(spaces / consonant)
+LI <- &cmavo ( m e h o / l i ) &(spaces / consonant)
+LIhU <- &cmavo ( l i h u ) &(spaces / consonant)
+LOhO <- &cmavo ( l o h o ) &(spaces / consonant)
+LOhU <- &cmavo ( l o h u ) &(spaces / consonant)
+LU <- &cmavo ( l u ) &(spaces / consonant)
+LUhU <- &cmavo ( l u h u ) &(spaces / consonant)
+MAhO <- &cmavo ( m a h o ) &(spaces / consonant)
+MAI <- &cmavo ( m o h o / m a i ) &(spaces / consonant)
+ME <- &cmavo ( m e ) &(spaces / consonant)
+MEhU <- &cmavo ( m e h u ) &(spaces / consonant)
+MOhE <- &cmavo ( m o h e ) &(spaces / consonant)
+MOhI <- &cmavo ( m o h i ) &(spaces / consonant)
+MOI <- &cmavo ( m e i / m o i / s i h e / c u h o / v a h e ) &(spaces / consonant)
+NA <- &cmavo ( j a h a / n a ) &(spaces / consonant)
+NAI <- &cmavo ( n a i ) &(spaces / consonant)
+NAhE <- &cmavo ( t o h e / j e h a / n a h e / n o h e ) &(spaces / consonant)
+NAhU <- &cmavo ( n a h u ) &(spaces / consonant)
+NIhE <- &cmavo ( n i h e ) &(spaces / consonant)
+NIhO <- &cmavo ( n i h o / n o h i ) &(spaces / consonant)
+NOI <- &cmavo ( v o i / n o i / p o i ) &(spaces / consonant)
+NU <- &cmavo ( n i / d u h u / s i h o / n u / l i h i / k a / j e i / s u h u / z u h o / m u h e / p u h u / z a h i ) &(spaces / consonant)
+NUhA <- &cmavo ( n u h a ) &(spaces / consonant)
+NUhI <- &cmavo ( n u h i ) &(spaces / consonant)
+NUhU <- &cmavo ( n u h u ) &(spaces / consonant)
+PA <- &cmavo ( d a u / f e i / g a i / j a u / r e i / v a i / p i h e / p i /  f i h u / z a h u / m e h i / n i h u / k i h o / c e h i / m a h u / r a h e / d a h a / s o h a / j i h i / s u h o / s u h e / r o / r a u / s o h u / s o h i / s o h e / s o h o / m o h a / d u h e / t e h o / k a h o / c i h i / t u h o / x o / p a i / n o h o / n o / p a / r e / c i / v o / m u / x a / z e / b i / s o / digit ) &(spaces / consonant)
+PEhE <- &cmavo ( p e h e ) &(spaces / consonant)
+PEhO <- &cmavo ( p e h o ) &(spaces / consonant)
+PU <- &cmavo ( b a / p u / c a ) &(spaces / consonant)
+RAhO <- &cmavo ( r a h o ) &(spaces / consonant)
+ROI <- &cmavo ( r e h u / r o i ) &(spaces / consonant)
+SA <- &cmavo ( s a ) &(spaces / consonant)
+SE <- &cmavo ( s e / t e / v e / x e ) &(spaces / consonant)
+SEI <- &cmavo ( s e i / t i h o ) &(spaces / consonant)
+SEhU <- &cmavo ( s e h u ) &(spaces / consonant)
+SI <- &cmavo ( s i ) &(spaces / consonant)
+SOI <- &cmavo ( s o i ) &(spaces / consonant)
+SU <- &cmavo ( s u ) &(spaces / consonant)
+TAhE <- &cmavo ( r u h i / t a h e / d i h i / n a h o ) &(spaces / consonant)
+TEhU <- &cmavo ( t e h u ) &(spaces / consonant)
+TEI <- &cmavo ( t e i ) &(spaces / consonant)
+TO <- &cmavo ( t o h i / t o ) &(spaces / consonant)
+TOI <- &cmavo ( t o i ) &(spaces / consonant)
+TUhE <- &cmavo ( t u h e ) &(spaces / consonant)
+TUhU <- &cmavo ( t u h u ) &(spaces / consonant)
+UI <- &cmavo ( i h a / i e / a h e / u h i / i h o / i h e / a h a / i a / o h i / o h e / e h e / o i / u o / e h i / u h o / a u /  u a / a h i / i h u / i i / u h a / u i / a h o / a i / a h u / i u / e i / o h o / e h a / u u / o h a / o h u / u h u / e h o / i  o / e h u / u e / i h i / u h e / b a h a / j a h o / c a h e / s u h a / t i h e / k a h u / s e h o / z a h a / p e h i / r u h a  / j u h a / t a h o / r a h u / l i h a / b a h u / m u h a / d o h a / t o h u / v a h i / p a h e / z u h u / s a h e / l a h a /  k e h u / s a h u / d a h i / j e h u / s a h a / k a u / t a h u / n a h i / j o h a / b i h u / l i h o / p a u / m i h u / k u h  i / j i h a / s i h a / p o h o / p e h a / r o h i / r o h e / r o h o / r o h u / r o h a / r e h e / l e h o / j u h o / f u h i  / d a i / g a h i / z o h o / b e h u / r i h e / s e h i / s e h a / v u h e / k i h a / x u / g e h e / b u h o ) &(spaces / consonant)
+VA <- &cmavo ( v i / v a / v u ) &(spaces / consonant)
+VAU <- &cmavo ( v a u ) &(spaces / consonant)
+VEI <- &cmavo ( v e i ) &(spaces / consonant)
+VEhO <- &cmavo ( v e h o ) &(spaces / consonant)
+VUhU <- &cmavo ( g e h a / f u h u / p i h i / f e h i / v u h u / s u h i / j u h u / g e i / p a h i / f a h i / t e h a / c u h a  / v a h a / n e h o / d e h o / f e h a / s a h o / r e h a / r i h o / s a h i / p i h a / s i h i ) &(spaces / consonant)
+VEhA <- &cmavo ( v e h u / v e h a / v e h i / v e h e ) &(spaces / consonant)
+VIhA <- &cmavo ( v i h i / v i h a / v i h u / v i h e ) &(spaces / consonant)
+VUhO <- &cmavo ( v u h o ) &(spaces / consonant)
+XI <- &cmavo ( x i ) &(spaces / consonant)
+Y <- &cmavo ( y ) &(spaces / consonant)
+ZAhO <- &cmavo ( c o h i / p u h o / c o h u / m o h u / c a h o / c o h a / d e h a / b a h o / d i h a / z a h o ) &(spaces / consonant)
+ZEhA <- &cmavo ( z e h u / z e h a / z e h i / z e h e ) &(spaces / consonant)
+ZEI <- &cmavo ( z e i ) &(spaces / consonant)
+ZI <- &cmavo ( z u / z a / z i ) &(spaces / consonant)
+ZIhE <- &cmavo ( z i h e ) &(spaces / consonant)
+ZO <- &cmavo ( z o ) &(spaces / consonant)
+ZOI <- &cmavo ( z o i / l a h o ) &(spaces / consonant)
+ZOhU <- &cmavo ( z o h u ) &(spaces / consonant)
