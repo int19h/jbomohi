@@ -1,0 +1,1618 @@
+       /* LOJBAN MACHINE GRAMMAR AS OF 23 SEPTEMBER 1989; NON-BASELINE */
+
+             /* COPYRIGHT 1989, THE LOGICAL LANGUAGE GROUP, INC. */
+     /* CONTACT THAT ORGANIZATION AT 2904 BEAU LANE, FAIRFAX VA 22031 USA*/
+ /* PERMISSION TO COPY GRANTED SUBJECT TO YOUR VERIFICATION THAT THIS IS THE */
+   /* LATEST VERSION OF THE LOJBAN GRAMMAR, THAT YOUR DISTRIBUTION BE FOR */
+  /* PROMOTION OF LOJBAN, THAT THERE IS NO CHARGE FOR THE PRODUCT, AND THAT */
+           /* THIS COPYRIGHT NOTICE IS INCLUDED INTACT IN THE COPY */
+/* WE PLAN TO PLACE THE GRAMMAR IN THE PUBLIC DOMAIN UPON BASELINE APPROVAL */
+
+/*grammar.l23 */
+
+%token A.501            /* A      = eks; basic afterthought logical operators */
+%token BAI.502          /* PA     = modal operators */
+%token BAhE.503         /*          next word intensifier */
+%token BE.504           /* JE     = sumti link to attach sumti to a bri.unit */
+%token BEI.505          /* JUE    = sumti link to attach >2nd sumti */
+%token BEhO.506         /*          terminates BE/BEI specified descriptors */
+%token BIhI.507         /*          interval component of JOI */
+%token BO.508           /* CI     = joins two units with shortest scope */
+%token BRIVLA.509       /* PREDA  = any brivla */
+%token BRODA.510        /* PREDA  = bridi free variable; assigned with CEI */
+%token BU.511           /*        = turns an EK into a BY vowel lerfu */
+%token BUhA.512         /* BUA    = bridi bound variable */
+%token BY.513           /* TAI    = individual lerfu */
+%token CAhA.514         /*          specifies actuality/potentiality of tense */
+%token CAI.515          /* new      afterthought intensifier */
+%token CEI.516          /* new      pro-bridi assignment operator */
+%token CMENE.517        /* DJAN   = names; require consonant end, then pause no
+                                     LA or DOI lexemes embedded, pause before if
+                                     vowel initial and preceded by a vowel */
+%token CO.518           /* GO     = tanru inversion operator */
+%token COI.519          /* HOI    = vocative marker permitted inside names must
+                                     always be followed by pause or DOI */
+%token CU.520           /* GA     = untensed bridi (tail?) marker */
+%token CUhE.521         /*          tense/modal question */
+%token DA.522           /* BA     = sumti bound variable */
+%token DAI.523          /*        = metalinguistic 'pro-utterance' sumti */
+%token DAhO.524         /*          cancel anaphora/cataphora assignments */
+%token DOI.525          /* HOI    = vocative marker */
+%token DOhU.526         /*          terminator for DOI-marked vocatives */
+%token FA.527           /*          modifier head generic case tag */
+%token FAU.528          /*          auxiliary lerfu shift */
+%token FAhO.529         /*          normally elided 'done pause' to indicate end
+                                     of utterance string */
+%token FEhU.531         /*          ends bridi to modal conversion */
+%token FIhO.532         /*          marks bridi to modal conversion */
+%token FOI.533          /*          lerfu operator shift */
+%token FUhA.534         /*          utterance referent for VOhA */
+%token FUhE.535         /*          open long scope for indicator */
+%token FUhO.536         /*          close long scope for indicator */
+%token GA.537           /* KA     = keks; forethought logical operators */
+%token GEhU.538         /*        = marker ending GOI relative clauses */
+%token GI.539           /* KI     = forethought medial marker */
+%token GIhA.541         /* A      = EK set for bridi */
+%token GOI.542          /* JI     = attaches a sumti modifier to a sumti */
+%token GOhA.543         /*          back-counting pro-bridi */
+%token GUhA.544         /*          GEK for tanru units, corresponds to JEKs */
+%token I.545            /* I      = sentence link */
+%token JA.546           /* CA     = Ceks; logical operators within metaphors */
+%token JAI.547          /*          tensor of time-space motion */
+%token JOI.548          /* ZE     = mixed connective */
+%token KEhE.550         /*          right terminator for KE groups */
+%token KE.551           /* GE     = left long scope marker */
+%token KEI.552          /* GUE    = right terminator, NU abstractions */
+%token KI.554           /*          multiple utterance scope for tenses */
+%token KOhA.555         /* DA     = sumti free variable */
+%token KU.556           /* GU     = right comma */
+%token KUhO.557         /*          right terminator, NOI relative clauses */
+%token LA.558           /* LA     = name descriptors */
+%token LAhE.561         /* LAE    = indirect/symbolic reference */
+%token LE.562           /* LE     = sumti descriptors */
+%token LEhA.563         /*          nonce borrowing marker */
+%token LEhAVLA.564      /*          borrowing brivla */
+%token LEhU.565         /* LU       possibly ungrammatical text right quote */
+%token LI.566           /* LIO    = convert number to sumti */
+%token LIhU.567         /* LU     = grammatical text right quote */
+%token LOhU.568         /* LI     = possibly ungrammatical text left quote */
+%token LU.571           /* LI     = grammatical text left quote */
+%token LUhI.572         /*          set membership descriptor */
+%token LUhU.573         /*          set membership close delimitor */
+%token ME.574           /* ME     = converts a sumti into a bri.unit */
+%token MEhU.575         /*          terminator for ME */
+%token MO.576           /* IE     = bridi question word */
+%token NA.577           /* NO     = negation operator */
+%token NAI.578          /* NOI    = -noi attached to words to negate them */
+%token NAU.581          /*          lerfu alphabet cancel shift */
+%token NEI.582          /*          lerfu alphabet shift */
+%token NIhO.583         /* NAU    = new paragraph; change of subject */
+%token NOI.584          /* JIA    = attaches a subordinate clause to a sumti */
+%token NU.585           /* PO     = abstraction operator */
+%token NUhI.586         /*          marks the start of a termset (for
+                                     compounding) */
+%token NUhU.587         /*          marks the end of a termset */
+%token POhA.588         /*          figurative speech closing marker */
+%token POhI.591         /*          figurative speech opening marker */
+%token POhO.592         /*          short terminator after partial sentences */
+%token PU.593           /* PA     = tenses and modal operators */
+%token ROI.594          /*          converts quantifier to intensional tense */
+%token SA.595           /*          metalinguistic eraser to the beginning of
+                                     the current utterance */
+%token SE.596           /* NU     = conversion operators */
+%token SEI.597          /*          metalinguistic bridi insert marker */
+%token SEhU.598         /*          metalinguistic bridi end marker */
+%token SI.599           /*          metalinguistic single word eraser */
+%token SIhE.601         /*          lerfu cancel operator shift */
+%token SOI.602          /*          reciprocal sumti marker */
+%token SU.603           /*          metalinguistic eraser of the entire text */
+%token TAhE.604         /*          tense interval property markers */
+%token TO.605           /* KIE    = left parens */
+%token TOI.606          /* KIU    = right parens */
+%token TUhE.607         /*          multiple utterance scope mark */
+%token TUhU.608         /*          multiple utterance end scope mark */
+%token UI.609           /* UI     = attitudinals, indicators, discursives; also
+                                     PEI and KI'A */
+%token VA.611           /* VA       distance in space-time */
+%token VAU.612          /*          end of terms; ..and so forth */
+%token VEhA.613         /*          space-time interval size */
+%token VIhA.614         /*          space-time dimensionality marker */
+%token VOhA.615         /*          pro-sumti for numbered places in a bridi */
+%token VOI.616          /*          lerfu case shift */
+%token XI.617           /* CI     = subscripting operator; separated from scope
+                                     operator since they do two incompatible
+                                     things */
+%token Y.618            /*          space filler, any number of schwas with
+                                     pauses */
+%token ZAI.621          /*          tensor showing a directional interval from
+                                     the prefixed tense towards or away from the
+                                     space-time reference */
+%token ZEhA.622         /*          indicates interval size in a tense */
+%token ZI.623           /*          indicates scalar magnitude of a tense */
+%token ZIhA.624         /* A      = EK set for sumti modifiers */
+%token ZO.625           /* LIU    = single word metalinguistic quote marker */
+%token ZOI.626          /* LIE    = delimited quote marker */
+%token ZOhU.627         /* GOI    = prenex fronting comma */
+%token BOI.651          /* MEX      between operand delimiter */
+%token DOhE.652         /*          converts a MEX operator into a MEX relation
+                                     (DU) */
+%token DU.653           /* BI     = MEX relation */
+%token GAhO.654         /*          open/closed interval suffix for brackets */
+%token KUhE.656         /*          MEX right comma delimiter: MEX KU */
+%token MAI.657          /*          converts various things to utterance
+                                     ordinals */
+%token MAhO.658         /*          converts BY to MEX operators */
+%token MOI.659          /* -RA    = converts number to a bridi */
+%token MOhE.661         /*          quantifies a sumti, inverse of LI lexeme */
+%token NEhU.662         /*          converts a bridi into a MEX operatior */
+%token NIhE.663         /*          quantifies a bridi; inverse of MOI lexeme */
+%token NUhE.664         /*          turns a MEX operator into a bridi; inverse
+                                     of MEhO */
+%token OP.665           /*          MEX operator */
+%token PA.666           /* NI     = numbers, also PI, RO, KIhO */
+%token REhO.668         /*          turns a MEX relation into an operator,
+                                     inverse of DOhE */
+%token TIhO.672         /*          MEX precedence operator */
+%token VEI.673          /*          left MEX bracket */
+%token VEhO.674         /*          right MEX bracket */
+
+%token words.697        /*          a string of lexable Lojban words */
+%token word.698         /*          any single lexable Lojban words */
+%token string.699       /*          a possibly unlexable phoneme string */
+
+/* The following tokens are the actual lexer tokens. The .900 series tokens are
+   duplicates that allow limited testing of lexer rules in the context of the
+   total grammar. They are used in the actual parser, where the 900 series rules
+   are found in the lexer. */
+
+%token lexer.A.701      /*        flags a MAI utterance ordinal */
+%token lexer.B.702      /*        flags an EK unless EK.BO, EK.KE */
+%token lexer.C.703      /*        flags an EK.BO */
+%token lexer.D.704      /*        flags an EK.KE */
+%token lexer.E.705      /*        flags a JEK */
+%token lexer.F.706      /*        flags a JOIK */
+%token lexer.G.707      /*        flags a GEK */
+%token lexer.H.708      /*        flags a GUhEK */
+%token lexer.I.709      /*        flags a NA.BO */
+%token lexer.J.710      /*        flags a NA.KU */
+%token lexer.K.711      /*        flags an I.BO (may have JOIK/JEK lexer tags)*/
+%token lexer.L.712      /*        flags a PA, unless MAI (then lexer A) */
+%token lexer.M.713      /*        flags a GIhEK.BO */
+%token lexer.N.714      /*        flags a GIhEK.KE */
+%token lexer.O.715      /*        flags a modal operator BAI or compound */
+%token lexer.P.716      /*        flags a tense PU or compound */
+
+/* lexer.O and lexer.P compounds are found within other lexer compound
+   definitions, it is not clear that the lexer.O or lexer.P is needed in these.
+   See lexer.C, .D, .M, .N compounds. */
+
+%token lexer.Q.717      /*        flags a BY.string unless MAI (then lexer.A) */
+%token lexer.R.718      /*        flags a GIhEK, not BO or KE */
+%token lexer.S.719      /*        flags an I, not BO */
+%token lexer.T.720      /*        flags a ZIhEK */
+/* %token lexer.U.721   /* null */
+/* %token lexer.V.722   /* null */
+/* %token lexer.W.723   /* null */
+/* %token lexer.X.724   /* null */
+%token lexer.Y.725      /*        flags a PA.MOI */
+
+
+/*%token lexer.A.905    /*        :  lexer.A.701  indicators.906 */
+/*%token lexer.B.910    /*        :  lexer.B.702  EKroot.911 */
+/*%token lexer.C.915    /*        :  lexer.C.703  EKroot.911  BO.508 */
+/*%token lexer.D.916    /*        :  lexer.D.704  EKroot.911  KE.551 */
+/*%token lexer.E.925    /*        :  lexer.E.705  JEKroot.926 */
+/*%token lexer.F.930    /*        :  lexer.F.706  JOIK.root.931 */
+/*%token lexer.G.935    /*        :  lexer.G.707  GA.537 */
+/*%token lexer.H.940    /*        :  lexer.H.708  GUhA.544 */
+/*%token lexer.I.945    /*        :  lexer.I.709  NA.577  BO.508 */
+/*%token lexer.J.950    /*        :  lexer.J.710  NA.577  KU.556 */
+/*%token lexer.K.955    /*        :  lexer.K.711  I.432  BO.508 */
+/*%token lexer.L.960    /*        :  lexer.L.712  PA.root.961 */
+/*%token lexer.M.965    /*        :  lexer.M.713  GIhEK.root.991  BO.508 */
+/*%token lexer.N.966    /*        :  lexer.N.714  GIhEK.root.991  KE.551 */
+/*%token lexer.O.970    /*        :  lexer.O.715  modal.A.972 */
+/*%token lexer.P.980    /*        :  lexer.P.716  GIK.root.981 */
+/*%token lexer.Q.985    /*        :  lexer.Q.717  BY.string.A.986 */
+/*%token lexer.R.990    /*        :  lexer.R.718  GIhEK.root.991 */
+/*%token lexer.S.995    /*        :  lexer.S.719  I.root.996 */
+/*%token lexer.T.1000   /*        :  lexer.T.720  ZiHEK.root.1001 */
+/*%token lexer.U.1005   /* null */
+/*%token lexer.V.1010   /* null */
+/*%token lexer.W.1015   /* null */
+/*%token lexer.X.1020   /* null */
+/*%token lexer.Y.1025   /*        :  lexer.Y.725  PA.root.961      MOI.659 */
+
+
+%start text.0
+
+%%
+
+text.0                  :  text.0.A
+                        |  indicator.801  text.0.A
+                        |  free.modifier.32  text.0.A
+                        |  cmene.A.404  text.0.A
+                        |  indicator.801  free.modifier.32  text.0.A
+                        ;
+
+text.0.A                :  JOIK.JEK.422  text.0.B
+                        /* incomplete JOIK.JEK  without preceding I */
+                        /* compare note on utt.string.A.10 */
+                        |  text.0.B
+                        ;
+
+text.0.B                :  I.819  text.1
+                        |  para.mark.410  text.1
+                        |  text.1
+                        ;
+
+text.1                  :  paragraphs.2
+                        |  donepause.462
+   /* only indicators which follow certain lexemes:
+    cmene, TOI.606, LU.571, and the lexer.K and lexer.S I.roots and compounds,
+    and at the start of text(.0), will survive the lexer; all other valid ones
+    will be absorbed; */
+                        ;
+
+
+paragraphs.2            :  utt.string.A.10  donepause.462
+                        |  utt.string.A.10  para.mark.410  paragraphs.2
+                        ;
+
+utt.string.A.10         :  utt.string.B.11
+                        |  utt.string.A.10  I.819  utt.string.B.11
+                        |  utt.string.A.10  I.819  POhO.gap.455
+                        /* this last fixes an erroneous start to a sentence,
+                           and permits incomplete JOIK.JEK after I, as well
+                           in answer to questions on those connectives  */
+                        ;
+
+utt.string.B.11         :  utt.string.C.12
+                        |  TUhE.607  paragraphs.2  TUhU.gap.454
+                        |  PU.mod.491  TUhE.607  paragraphs.2  TUhU.gap.454
+                        ;
+
+utt.string.C.12         :  utterance.20
+                        |  utterance.20  I.BO.811  utt.string.B.11
+                        |  utterance.20  I.BO.811  POhO.gap.455
+                        /* this last fixes an erroneous start to a sentence,
+                           and permits incomplete JOIK.JEK after I, as well
+                           in answer to questions on those connectives  */
+                        ;
+
+
+utterance.20            :  EK.802
+                        |  NA.577  POhO.gap.455
+                        |  GIhEK.818
+                        |  ZIhEK.820
+                        |  MEX.310  POhO.gap.455
+                        |  terms.80  VAU.gap.456        /* answer to ma */
+                        /* mod.head.490 requires both gap.450 and VAU.gap.456
+                           but needs no extra rule to accomplish this */
+                        |  relative.clause.110
+                        |  links.161
+                        |  linkargs.160
+                        |  sentence.40
+                        |  header.terms.30
+                        ;
+
+header.terms.30         :  terms.80  ZOhU.627
+                        |  terms.80  ZOhU.627  free.modifier.32
+                        ;
+
+free.modifier.32        :  free.modifier.32.A
+                        |  free.modifier.32  free.modifier.32.A
+                        ;
+
+free.modifier.32.A      :  vocative.35
+                        |  parenthetical.36
+                        |  discursive.bridi.34
+                        |  XI.PA.486
+                        ;
+
+discursive.bridi.34     :  SEI.440  bri.string.130  SEhU.gap.459
+                        |  SOI.602  anaphora.400  SEhU.gap.459
+                        |  SOI.602  anaphora.400  anaphora.400  SEhU.gap.459
+                        |  SEI.440  terms.80  front.gap.451
+                                  bri.string.130  SEhU.gap.459
+                        ;
+
+vocative.35             :  DOI.415  bri.string.130  DOhU.gap.457
+                        |  DOI.415  bri.string.130
+                                  relative.clause.110  DOhU.gap.457
+                        |  DOI.415  PU.mod.491  bri.string.130  DOhU.gap.457
+                        |  DOI.415  PU.mod.491  bri.string.130
+                                  relative.clause.110  DOhU.gap.457
+                        |  DOI.415  cmene.A.404  DOhU.gap.457
+                        |  DOI.415  cmene.A.404
+                                  relative.clause.110  DOhU.gap.457
+                        |  DOI.415  sumti.90  DOhU.gap.457
+                        |  DOI.415  DOhU.gap.457
+                        ;
+
+parenthetical.36        :  TO.605  text.0  TOI.gap.468
+                        ;
+
+
+sentence.40             :  bridi.tail.50  /* bare observative or mo answer */
+                        |  sentenceA.41
+                        ;
+
+sentenceA.41            :  GEK.807  sentenceA.41  GIK.816  sentenceA.41
+                        |  header.terms.30  sentence.40
+                        |  statement.42
+                        ;
+
+statement.42            :  terms.80  front.gap.451  bridi.tail.50
+                        |  terms.80  infl.bridi.tail.50A
+                        |  NA.577  KE.551  statement.42  KEhE.gap.466
+                        ;
+
+bridi.tail.50           :  bridi.tail.A.52
+                        |  MEX.relation.301  tail.terms.71
+                        |  gek.bridi.51
+                        |  infl.bridi.tail.50A
+                        ;
+
+infl.bridi.tail.50A     :  infl.gek.bridi.51A
+                        |  PU.mod.491  bridi.tail.A.52
+                        ;
+
+gek.bridi.51            :  GEK.807  bridi.tail.50
+                                  GIK.816  bridi.tail.50
+                        |  NA.577  gek.bridi.51
+                        |  NA.577  infl.gek.bridi.51A
+                        ;
+
+infl.gek.bridi.51A      :  PU.mod.491  KE.551  gek.bridi.51  KEhE.gap.466
+                        ;
+
+bridi.tail.A.52         :  front.bridi.60  GIhEK.KE.814
+                                  bridi.tail.A.52  KEhE.gap.466
+                        |  front.bridi.60  GIhEK.KE.814
+                                  PU.mod.491  bridi.tail.A.52  KEhE.gap.466
+                        |  front.bridi.60
+                        ;
+
+front.bridi.60          :  front.cpd.bridi.61  tail.terms.71
+                        |  bridi.base.63
+                        ;
+
+front.cpd.bridi.61      :  front.bridi.60
+                                  GIhEK.818  cpd.back.bridi.62
+                        |  front.bridi.60
+                                  GIhEK.818  PU.mod.491  cpd.back.bridi.62
+                        ;
+
+cpd.back.bridi.62       :  bridi.base.63  GIhEK.BO.813
+                                  cpd.back.bridi.62
+                        |  bridi.base.63  GIhEK.BO.813
+                                  PU.mod.491  cpd.back.bridi.62
+                        |  bridi.base.63
+                        ;
+
+bridi.base.63           :  bri.string.130  tail.terms.71
+                        ;
+
+
+tail.terms.71           :  terms.80  VAU.gap.456
+                        |  VAU.gap.456
+                        ;
+
+terms.80                :  term.81
+                        |  terms.80  term.81
+                        ;
+
+term.81                 :  sumti.90
+                        |  modifier.82
+                        |  term.set.83
+                        |  NA.KU.810
+                        ;
+
+modifier.82             :  mod.head.490  gap.450
+                        |  mod.head.490  sumti.90
+                        ;
+
+
+term.set.83             :  NUhI.586  GEK.807  terms.80  NUhU.gap.460
+                                GIK.816  terms.80  NUhU.gap.460
+                        |  NUhI.586  NA.577  GEK.807  terms.80  NUhU.gap.460
+                                GIK.816  terms.80  NUhU.gap.460
+                        |  NUhI.586  terms.80  NUhU.gap.460
+                                EK.802  terms.80  NUhU.gap.460
+                        ;
+
+
+sumti.90                :  sumti.A.91
+                        |  sumti.90  JOIK.EK.421  sumti.A.91
+                        ;
+
+sumti.A.91              :  sumti.B.92
+                        |  sumti.B.92  EK.BO.803  sumti.A.91
+                        ;
+
+sumti.B.92              :  sumti.C.93
+                        |  sumti.B.92  EK.KE.804  sumti.90  KEhE.gap.466
+                        ;
+
+sumti.C.93              :  sumti.D.95
+                        |  indefinite.sumti.94
+                        ;
+
+indefinite.sumti.94     :  MEX.310  sumti.tail.A.114  gap.450
+                        |  MEX.310  sumti.tail.A.114  gap.450
+                                relative.clause.110
+                        ;
+
+sumti.D.95              :  sumti.E.96
+                        |  MEX.310  sumti.E.96
+                        ;
+
+sumti.E.96              :  sumti.F.97
+                        |  LAhE.561  sumti.C.93
+                        |  NA.BO.809  sumti.C.93
+                        ;
+
+sumti.F.97              :  sumti.G.98
+                        |  GEK.807  sumti.90  GIK.816  sumti.C.93
+   /* negation of sumti GEK handled by negation of entire sumti in E.96 above */
+                        ;
+
+sumti.G.98              :  sumti.H.99
+                        |  sumti.H.99  relative.clause.110
+                        ;
+
+sumti.H.99              :  anaphora.400
+                        |  BY.string.817
+                        |  LA.558  cmene.A.404
+                        |  LI.566  BY.string.817
+                        |  LI.566  MEX.310
+                        |  description.112
+                        |  quote.arg.432
+                        ;
+
+relative.clause.110     :  relative.clause.A.111
+                        |  relative.clause.110  ZIhEK.820
+                                  relative.clause.A.111
+                        ;
+
+relative.clause.A.111   :  GOI.542  term.81  GEhU.gap.464
+                        |  NOI.584  sentence.40  KUhO.gap.469
+                        ;
+
+description.112         :  LA.558  sumti.tail.113  gap.450
+                        |  LE.562  sumti.tail.113  gap.450
+                        |  LUhI.572  sumti.90  LUhU.gap.463
+                        ;
+
+sumti.tail.113          :  sumti.tail.A.114
+                        |  sumti.E.96  sumti.tail.A.114
+                        |  MEX.310  sumti.90
+                        ;
+
+sumti.tail.A.114        :  bri.string.130
+                        |  PU.mod.491  bri.string.130
+                        |  MEX.310  bri.string.130
+                        ;
+
+bri.string.130          :  bri.string.A.131
+                        |  bri.string.A.131  CO.518  bri.string.130
+                        ;
+
+bri.string.A.131        :  bri.string.B.132
+                        |  bri.string.A.131  bri.string.B.132
+                        ;
+
+bri.string.B.132        :  bri.string.C.133
+                        |  bri.string.B.132  JOIK.JEK.422  bri.string.C.133
+                        ;
+
+bri.string.C.133        :  bri.unit.150
+                        |  bri.unit.150  BO.508  bri.string.C.133
+                        |  GUhEK.bri.unit.136
+                        |  NA.577  GUhEK.bri.unit.136
+                        ;
+
+GUhEK.bri.unit.136      :  GUhEK.808  bri.string.130
+                                  GIK.816  bri.string.C.133
+                        ;
+
+bri.unit.150            :  bri.unit.A.151
+                        |  bri.unit.150  CEI.516  bri.unit.A.151
+                        ;
+
+bri.unit.A.151          :  bri.unit.B.152
+                        |  NU.425  sentence.40  KEI.gap.453
+                        ;
+
+bri.unit.B.152          :  bri.unit.C.153
+                        |  NA.577  bri.unit.A.151
+                        ;
+
+bri.unit.C.153          :  bri.unit.D.154
+                        |  bri.unit.D.154  linkargs.160
+                        ;
+
+bri.unit.D.154          :  bridi.valsi.407
+                        |  KE.551  bri.string.A.131  KEhE.gap.466
+                        |  SE.480  bri.unit.D.154
+                        |  ME.574  sumti.90  MEhU.gap.465
+                        |  LEhA.563  LEhAVLA.564
+                        |  NUhE.664  MEX.operator.302
+                        ;
+
+
+linkargs.160            :  BE.504  term.81  BEhO.gap.467
+                        |  BE.504  term.81  links.161  BEhO.gap.467
+                        ;
+
+links.161               :  BEI.505  term.81
+                        |  BEI.505  term.81  links.161
+                        ;
+
+
+quantifier.300          :  PA.812
+                        |  NIhE.663  bri.unit.C.153  MEX.gap.452
+   /* quantifies a bridi - inverse of -MOI */
+                        |  MOhE.661  sumti.90  MEX.gap.452
+   /* quantifies a sumti - inverse of LI */
+                        ;
+
+MEX.relation.301        :  DU.653
+                        |  DOhE.652  MEX.operator.302
+                        ;
+
+MEX.operator.302        :  MEX.operator.A.303
+                        |  NEhU.662  bridi.tail.50  MEX.gap.452
+   /* converts a bridi into a MEX operator */
+                        |  REhO.668  MEX.relation.301
+                        ;
+
+MEX.operator.A.303      :  OP.665
+                        |  SE.480  MEX.operator.A.303
+                        |  NA.577  MEX.operator.A.303
+                        |  MAhO.658  BY.string.817
+                        ;
+
+MEX.310                 :  MEX.A.311
+                        |  MEX.A.311  right.bracket.471
+                        ;
+
+MEX.A.311               :  quantifier.300
+                        |  left.bracket.470  expression.320
+                        ;
+
+expression.320          :  op.string.330  tail.operands.340
+                        |  operands.350  op.string.330  tail.operands.340
+                        ;
+
+op.string.330           :  op.string.A.331
+                        |  op.string.330  JOIK.JEK.422  op.string.A.331
+                        ;
+
+op.string.A.331         :  operator.332
+                        |  GUhEK.808  op.string.330
+                                  GIK.816  operator.332
+                        |  NA.577  GUhEK.808  op.string.330
+                                  GIK.816  operator.332
+                        ;
+
+operator.332            :  operator.A.333
+                        |  KE.551  op.string.330  KEhE.gap.466
+                        ;
+
+operator.A.333          :  MEX.operator.302
+                        |  precedence.412  MEX.operator.302
+                        ;
+
+tail.operands.340       :  operands.350  MEX.gap.452  /* right paren */
+                        |  MEX.gap.452
+                        ;
+
+operands.350            :  operand.351
+                        |  operands.350  operand.351
+                        ;
+
+operand.351             :  operand.A.352
+                        |  operand.351  EK.802  operand.A.352
+                        ;
+
+operand.A.352           :  operand.B.353
+                        |  operand.B.353  EK.BO.803  operand.A.352
+                        ;
+
+operand.B.353           :  operand.C.354
+                        |  operand.C.354  EK.KE.804  operand.351  KEhE.gap.466
+                        ;
+
+operand.C.354           :  operand.D.355
+                        |  LAhE.561  operand.C.354
+                        ;
+
+operand.D.355           :  quantifier.300
+                        |  left.bracket.470  expression.320  right.bracket.471
+                        |  GEK.807  operand.351
+                                  GIK.816  operand.C.354
+                        |  NA.577  GEK.807  operand.351
+                                  GIK.816  operand.C.354
+                        ;
+
+
+/* .400 series lexemes are mostly specific strings, some of which may also be
+   used by the lexer; the lexer should not use any reference to terminals
+   numbered less than .400, as they have grammars composed on non-deterministic
+   strings of lexemes.  Some above .400 also are this way, so care should be
+   taken; this is especially true for those that reference free.modifier.32.  */
+
+
+anaphora.400            :  anaphora.401
+                        |  anaphora.401  free.modifier.32
+                        ;
+
+anaphora.401            :  KOhA.555
+                        |  DA.522
+                        |  DAI.523
+                        |  FUhA.484  VOhA.615
+                        |  VOhA.615
+                        ;
+
+
+cmene.A.404             :  cmene.A.405
+                        |  cmene.A.405  free.modifier.32
+                        ;
+
+cmene.A.405             :  CMENE.517  /* pause */
+                        |  cmene.A.405  CMENE.517  /* pause*/
+/* multiple CMENE are identified morphologically (by the lexer) -- separated by
+   consonant & pause */
+                        ;
+
+
+bridi.valsi.407         :  bridi.valsi.408
+                        |  bridi.valsi.408     free.modifier.32
+                        ;
+
+bridi.valsi.408         :  BRIVLA.509
+                        |  PA.MOI.823
+                        |  BRODA.510
+                        |  BUhA.512
+                        |  GOhA.543
+                        |  MO.576
+                        |  LEhAVLA.564
+                        ;
+
+
+para.mark.410           :  NIhO.583
+                        |  NIhO.583  free.modifier.32
+                        |  NIhO.583  para.mark.410
+                        ;
+
+precedence.412          :  TIhO.672  MEX.310
+                        ;
+
+DOI.415                 :  DOI.525
+                        |  COI.416
+                        |  COI.416  DOI.525
+                        ;
+
+COI.416                 :  COI.A.417
+                        |  COI.416  COI.A.417
+                        ;
+
+COI.A.417               :  COI.519
+                        |  COI.519  NAI.578
+                        ;
+
+
+JOIK.EK.421             :  EK.802
+                        |  JOIK.806
+                        |  JOIK.806  free.modifier.32
+                        ;
+
+JOIK.JEK.422            :  JOIK.806
+                        |  JOIK.806  free.modifier.32
+                        |  JEK.805
+                        |  JEK.805  free.modifier.32
+                        ;
+
+
+NU.425                  :  NU.A.426
+                        |  NU.425  JOIK.JEK.422  NU.A.426
+                        ;
+
+NU.A.426                :  NU.585
+                        |  NU.585  NAI.578
+                        ;
+
+quote.arg.432           :  quote.arg.A.433
+                        |  quote.arg.A.433  free.modifier.32
+                        ;
+
+quote.arg.A.433         :  ZOI.quote.434
+                        |  ZO.quote.435
+                        |  LOhU.quote.436
+                        |  LU.571  text.0  LIhU.gap.448
+                        ;
+
+
+/* The quoted material in the following three terminals must be identified by
+   the lexer, but no additional lexer processing is needed. */
+
+ZOI.quote.434           :  ZOI.626  word.698
+                                  /*pause*/  string.699  /*pause*/  word.698
+                        ;
+
+/* 'pause' is morphemic, represented by '.' The lexer assembles string.699 */
+/* The lexer identifying of ZOI.quotes takes precedence over all others.  Quoted
+   text should not be lexed. */
+
+
+ZO.quote.435            :  ZO.625  word.698
+                        ;
+
+/* 'word' may not be a compound; but it can be any valid Lojban lexeme value,
+   including ZO, ZOI, SI, SA, SU. The preparser will not lex the word per its
+   normal lexeme */
+/* The lexer flagging of ZO quotes takes precedence over all others except ZOI -
+   a word in a ZO quote is not taken for its grammatical token meaning, but
+   rather as a generic word. */
+
+LOhU.quote.436          :  LOhU.568  words.697  LEhU.gap.449
+                        ;
+
+/* 'words' may be any Lojban words, with no claim of grammaticality; the
+   preparser will not lex the individual words per their normal lexemes; used to
+   quote ungrammatical Lojban, equivalent to the * or ? writing convention for
+   such text */
+
+/* The preparser needs one bit of sophistication for lexer.W: A quoted string
+   should be able to contain other quoted strings - this is only a problem for a
+   LOhU quote itself, since the LEhU clossing this quote would otherwise close
+   the outer quotes, which is incorrect.  For this purpose, we will cheat on the
+   use of ZO in such a quote (since this is ungrammatical text, it is a sin
+   ignored by the parser). Use ZO to mark any nested quotation LOhU. The
+   preparser then will absorb it using lexer V, before testing for lexer W. This
+   is obviously not the standard usage for ZO, which would otherwise cause the
+   result to be a sumti.  But, since the result will be part of an unparsed
+   string anyway, it doesn't matter. */
+
+/* The lexer identification of LOhU quotes precedence over all others except ZOI
+   and ZO */
+
+/* Metalinguistic deletors SI, SA, and SU are discussed in the comment at the
+   end of this grammar. The processing of these deletors is next in precedence
+   after lexer U, V, and W.  Then any null grammar tokens can be marked or
+   deleted (these rules are not given in this grammar - see the final comment).
+   Finally, standard string matching can occur using longest match posssible
+   among the lexer lexeme rules */
+
+/* It may be seen that any of the ZO/ZOI/LOhU trio of quotation markers may
+   contain the powerful metalinguistic erasers.  Since these quotations are not
+   parsed internally, these operators are ignored within the quote. To erase a
+   ZO, then, two SI's are needed after giving a quoted word of any type. ZOI
+   takes four SI's, with the ENTIRE BODY OF THE QUOTE treated as a single 'word'
+   since it is one lexeme. Thus one for the quote body, two for the single word
+   delimiters, and one for the ZOI.  In LOhU, the entire body is treated as a
+   single word, so three SI's can erase it.
+
+   The order of lexer rule evaluation is ZOI then ZO, then LOhU/LIhU, then SI,
+   SA, SU in that order, and then remaining rules by longest matching string.
+   */
+
+
+SEI.440                 :  SEI.597
+                        |  SEI.597  free.modifier.32
+                        ;
+
+LIhU.gap.448            :  LIhU.567
+                        |  error
+                        ;
+
+LEhU.gap.449            :  LEhU.565
+                        |  error
+                        ;
+
+
+gap.450                 :  KU.556
+                        |  KU.556  free.modifier.32
+                        |  error
+                        ;
+
+front.gap.451           :  CU.520
+                        |  CU.520  free.modifier.32
+                        |  error
+                        ;
+
+MEX.gap.452             :  KUhE.656
+                        |  KUhE.656  free.modifier.32
+                        |  error
+                        ;
+
+KEI.gap.453             :  KEI.552
+                        |  KEI.552  free.modifier.32
+                        |  error
+                        ;
+
+TUhU.gap.454            :  TUhU.608
+                        |  TUhU.608  free.modifier.32
+                        |  error
+                        ;
+
+POhO.gap.455            :  POhO.592
+                        |  POhO.592  free.modifier.32
+                        |  error
+                        ;
+
+VAU.gap.456             :  VAU.612
+                        |  VAU.612  free.modifier.32
+                        |  error
+                        ;
+
+/* redundant to attach a free modifier on the following */
+
+DOhU.gap.457            :  DOhU.526
+                        |  error
+                        ;
+
+FEhU.gap.458            :  FEhU.531
+                        |  error
+                        ;
+
+SEhU.gap.459            :  SEhU.598
+                        |  error
+/* a free modifier on a discursive should be somewhere within the discursive.
+   See SEI.440 */
+                        ;
+
+NUhU.gap.460            :  NUhU.587
+                        |  NUhU.587  free.modifier.32
+                        |  error
+                        ;
+
+
+BOI.gap.461             :  BOI.651
+                        |  error
+                        ;
+
+
+donepause.462           :  FAhO.529
+                        |  error
+                        ;
+
+
+LUhU.gap.463            :  LUhU.573
+                        |  LUhU.573  free.modifier.32
+                        |  error
+                        ;
+
+
+GEhU.gap.464            :  GEhU.538
+                        |  GEhU.538  free.modifier.32
+                        |  error
+                        ;
+
+
+MEhU.gap.465            :  MEhU.575
+                        |  MEhU.575   free.modifier.32
+                        |  error
+                        ;
+
+
+KEhE.gap.466            :  KEhE.550
+                        |  KEhE.550  free.modifier.32
+                        |  error
+                        ;
+
+
+BEhO.gap.467            :  BEhO.506
+                        |  BEhO.506  free.modifier.32
+                        |  error
+                        ;
+
+
+TOI.gap.468             :  TOI.606
+                        |  error
+                        ;
+
+
+KUhO.gap.469            :  KUhO.557
+                        |  KUhO.557  free.modifier.32
+                        |  error
+                        ;
+
+
+left.bracket.470        :  VEI.673
+                        |  VEI.673  GAhO.654
+                        ;
+
+right.bracket.471       :  VEhO.674
+                        |  VEhO.674  GAhO.654
+                        |  VEhO.674  free.modifier.32
+                        |  VEhO.674  GAhO.654  free.modifier.32
+                        ;
+
+
+SE.480                  :  SE.596
+                        |  SE.596  free.modifier.32
+                        ;
+
+
+FA.481                  :  FA.527
+                        |  FA.527  free.modifier.32
+                        ;
+
+
+FUhA.484                :  FUhA.534
+                        |  FUhA.534  free.modifier.32
+                        ;
+
+
+XI.PA.486               :  XI.617  PA.812
+                        |  XI.617  BY.string.817
+                        ;
+
+
+mod.head.490            :  PU.mod.491
+                        |  FA.481
+                        ;
+
+
+PU.mod.491              :  PU.mod.A.492
+                        |  PU.mod.A.492  free.modifier.32
+                        ;
+
+PU.mod.A.492            :  tense.modal.815
+                        |  PU.mod.491  JOIK.JEK.422  tense.modal.815
+                        |  CUhE.521
+                        ;
+
+
+indicator.801           :  lexer.A.905
+                        ;
+
+EK.802                  :  lexer.B.910
+                        |  lexer.B.910  free.modifier.32
+                        ;
+
+EK.BO.803               :  lexer.C.915
+                        |  lexer.C.915  free.modifier.32
+                        ;
+
+EK.KE.804               :  lexer.D.916
+                        |  lexer.D.916  free.modifier.32
+                        ;
+
+JEK.805                 :  lexer.E.925
+                        ;
+
+JOIK.806                :  lexer.F.930
+                        ;
+
+GEK.807                 :  lexer.G.935
+                        |  lexer.G.935  free.modifier.32
+                        ;
+
+GUhEK.808               :  lexer.H.940
+                        |  lexer.H.940  free.modifier.32
+                        ;
+
+NA.BO.809               :  lexer.I.945
+                        |  lexer.I.945  free.modifier.32
+                        ;
+
+NA.KU.810               :  lexer.J.950
+                        |  lexer.J.950  free.modifier.32
+                        ;
+
+I.BO.811                :  lexer.K.955
+                        |  lexer.K.955  free.modifier.32
+                        ;
+
+PA.812                  :  lexer.L.960  BOI.gap.461
+                        |  lexer.L.960  free.modifier.32  BOI.gap.461
+/* BOI is the break between multiple numbers as in 50 five-gallon drums; it also
+   serves to break between operands in MEX */
+                        ;
+
+GIhEK.BO.813            :  lexer.M.965
+                        |  lexer.M.965  free.modifier.32
+                        ;
+
+GIhEK.KE.814            :  lexer.N.966
+                        |  lexer.N.966  free.modifier.32
+                        ;
+
+tense.modal.815         :  lexer.O.970
+                        |  FIhO.532  bri.unit.C.153  FEhU.gap.458
+                        ;
+
+GIK.816                 :  lexer.P.980
+                        |  lexer.P.980  free.modifier.32
+                        ;
+
+
+BY.string.817           :  lexer.Q.985  BOI.gap.461
+                        |  lexer.Q.985  free.modifier.32  BOI.gap.461
+                        ;
+
+GIhEK.818               :  lexer.R.990
+                        |  lexer.R.990  free.modifier.32
+                        ;
+
+I.819                   :  lexer.S.995
+                        |  lexer.S.995  free.modifier.32
+                        ;
+
+ZIhEK.820               :  lexer.T.1000
+                        |  lexer.T.1000  free.modifier.32
+                        ;
+
+PA.MOI.823              :  lexer.Y.1025
+                        ;
+
+
+
+/* The following rules are used only in lexer processing.  They have been tested
+   for ambiguity at various levels in the YACC grammar, but are in the recursive
+   descent lexer in the current parser.  The lexer inserts the lexer lexemes
+   before the processed strings, but leaves the original tokens. */
+
+lexer.A.905             :  lexer.A.701  indicators.906
+                        |  lexer.A.701  FUhE.535  indicators.906
+                        ;
+
+indicators.906          :  indicator.907
+                        |  indicators.906  indicator.907
+                        ;
+
+indicator.907           :  BY.string.A.986  MAI.657
+                        |  PA.root.961  MAI.657
+                        |  indicator.A.908
+                        ;
+
+indicator.A.908         :  UI.609
+                        |  CAI.515
+                        |  indicator.A.908  NAI.578
+                        ;
+
+
+lexer.B.910             :  lexer.B.702  EKroot.911
+                        ;
+
+EKroot.911              :  A.501
+                        |  SE.596  A.501
+                        |  NA.577  A.501
+                        |  A.501  NAI.578
+                        |  SE.596  A.501  NAI.578
+                        |  NA.577  A.501  NAI.578
+                        ;
+
+
+lexer.C.915             :  lexer.C.703  EKroot.911  BO.508
+                        |  lexer.C.703  EKroot.911  no.FIhO.PU.mod.971  BO.508
+                        ;
+
+
+lexer.D.916             :  lexer.D.704  EKroot.911  KE.551
+                        |  lexer.D.704  EKroot.911  no.FIhO.PU.mod.971  KE.551
+                        ;
+
+
+lexer.E.925             :  lexer.E.705  JEKroot.926
+                        ;
+
+JEKroot.926             :  JA.546
+                        |  JA.546  NAI.578
+                        |  NA.577  JA.546
+                        |  NA.577  JA.546  NAI.578
+                        |  SE.596  JA.546
+                        |  SE.596  JA.546  NAI.578
+                        ;
+
+
+lexer.F.930             :  lexer.F.706  JOIK.root.931
+                        ;
+
+JOIK.root.931           :  JOI.548
+                        |  JOI.548  NAI.578
+                        |  SE.596  JOI.548
+                        |  SE.596  JOI.548  NAI.578
+                        |  BIhI.507
+                        |  BIhI.507  GAhO.654  GAhO.654
+                        ;
+
+
+lexer.G.935             :  lexer.G.707  GA.537
+                        |  lexer.G.707  SE.596  GA.537
+                        |  lexer.G.707  GA.537  NAI.578
+                        |  lexer.G.707  no.FIhO.PU.mod.971  GIK.root.981
+                        ;
+
+
+lexer.H.940             :  lexer.H.708  GUhA.544
+                        |  lexer.H.708  SE.596  GUhA.544
+                        |  lexer.H.708  GUhA.544  NAI.578
+                        ;
+
+
+lexer.I.945             :  lexer.I.709  NA.577  BO.508
+                        ;
+
+
+lexer.J.950             :  lexer.J.710  NA.577  KU.556
+                        ;
+
+
+lexer.K.955             :  lexer.K.711  I.root.956  BO.508
+                        |  lexer.K.711  I.root.956  no.FIhO.PU.mod.971  BO.508
+                        ;
+
+I.root.956              :  I.545
+                        |  I.545  JOIK.JEK.957
+                        ;
+
+
+JOIK.JEK.957            :  JOIK.806
+                        |  JEK.805
+                        ;
+                        /* no freemod in this version; cf. JOIK.JEK.422 */
+
+
+lexer.L.960             :  lexer.L.712  PA.root.961
+                        ;
+
+
+PA.root.961             :  PA.666
+                        |  PA.root.961  PA.666
+                        |  PA.root.961  BY.513
+                        ;
+
+
+lexer.M.965             :  lexer.M.713  GIhEK.root.991 BO.508
+                        |  lexer.M.713  GIhEK.root.991 no.FIhO.PU.mod.971 BO.508
+                        ;
+
+
+lexer.N.966             :  lexer.N.714  GIhEK.root.991 KE.551
+                        |  lexer.N.714  GIhEK.root.991 no.FIhO.PU.mod.971 KE.551
+                        ;
+
+
+lexer.O.970             :  lexer.O.715  modal.972
+                        ;
+/* the following rule is a lexer version of non-terminal .815 for compounding
+   PU/modals; it disallows the lexer picking out FIhO clauses, which would
+   require it to have knowledge of the main parser grammar */
+
+no.FIhO.PU.mod.971      :  modal.972
+                        |  no.FIhO.PU.mod.971  JOIK.JEK.957  modal.972
+                        |  CUhE.521
+                        ;
+
+modal.972               :  modal.A.973
+                        |  modal.A.973  KI.554
+                        |  KI.554
+                        ;
+/* KI reassigns the space-time reference to the destination for future tense
+   usage or reverts to here/now if not attached to a specified time/space */
+
+modal.A.973             :  modal.B.974
+                        |  tense.A.975
+                        |  modal.A.973  NAI.578
+                        ;
+
+modal.B.974             :  BAI.502
+                        |  SE.596  BAI.502
+                        ;
+
+tense.A.975             :  tense.B.976
+                        |  CAhA.514
+                        |  tense.B.976  CAhA.514
+                        ;
+/* specifies actuality/potentiality of the bridi */
+
+/* puca'a = actually was */
+/* baca'a = actually will be */
+/* bapu'i = can and will have */
+/* banu'o = can, but won't have yet */
+/* canu'ojebapu'i = can, hasn't yet, but will */
+
+
+tense.B.976             :  time.1030
+   /* time-only */
+   /* space defaults to time-space reference space */
+
+                        |  space.time.1040
+   /* space-only unless specified with VIhA */
+   /* time defaults to the time-space reference time */
+
+                        |  time.1030  space.time.1040
+   /* time and space - specification of time if time.1030 leads, the
+   space.time.1040 specifies only space.  (if space.time.1040 is marked with
+   VIhA for space-time the tense may be self-contradictory) */
+   /* interval prop before space.time is for time distribution */
+
+                        |  ZAI.621  space.time.G.1047
+                        |  ZAI.621  ZEhA.622
+                        |  ZAI.621  ZEhA.622  interval.prop.1050
+   /* The last two are time tensors with unspecified starting point
+      Time tensor cannot include bare ZAI interval.prop.1050 or redundant
+      ambiguity, so are separately listed here.                          */
+                        ;
+/* this is the complete time-space destination specification */
+
+   /* puvi = was here (all the compound specificity is optional */
+   /* zai = to here and now from elsewhere */
+
+
+lexer.P.980             :  /* lexer.P.716 */ GIK.root.981
+                        ;
+
+GIK.root.981            :  GI.539
+                        |  GI.539  NAI.578
+                        ;
+
+
+lexer.Q.985             :  lexer.Q.717  BY.string.A.986
+                        ;
+
+BY.string.A.986         :  BY.513
+                        |  BY.string.A.986  BY.513
+                        |  BY.string.A.986  PA.666
+                        ;
+
+lexer.R.990             :  lexer.R.718  GIhEK.root.991
+                        ;
+
+
+GIhEK.root.991          :  GIhA.541
+                        |  SE.596  GIhA.541
+                        |  NA.577  GIhA.541
+                        |  GIhA.541  NAI.578
+                        |  SE.596  GIhA.541  NAI.578
+                        |  NA.577  GIhA.541  NAI.578
+                        ;
+
+
+lexer.S.995             :  lexer.S.719  I.root.956
+                        ;
+
+
+lexer.T.1000            :  lexer.T.720  ZIhEK.root.1001
+                        ;
+
+ZIhEK.root.1001         :  ZIhA.624
+                        |  SE.596  ZIhA.624
+                        |  NA.577  ZIhA.624
+                        |  ZIhA.624  NAI.578
+                        |  SE.596  ZIhA.624  NAI.578
+                        |  NA.577  ZIhA.624  NAI.578
+                        ;
+
+
+lexer.Y.1025            :  lexer.Y.725  PA.root.961  MOI.659
+                        |  lexer.Y.725  BY.string.A.986  MOI.659
+                        ;
+
+
+
+time.1030               :  time.interval.1039
+                        |  time.interval.1039  time.A.1031
+                        |  time.A.1031
+                        ;
+/* a prefixed ZEhA specifies the interval size of space-time reference in the
+   time dimension.  If there is no time.E.1035 this is also the size of the
+   destination interval, since the origin and destination are co-located. */
+
+   /* ze'ipu = before this point in time */
+   /* ze'upu = before this epoch */
+   /* ze'u = during this space-time epoch */
+
+/* Note that bare interval prop at the beginning describes the interval
+   properties of the space-time origin interval, not just time, unless
+   overridden by an origin interval.prop in the space-time-component.  This
+   is because a space-time component cannot start with an unmarked interval
+   prop due to conflict with a possible trailing interval in the time
+   component.                                                           */
+
+
+/* allows specification of a property of the interval */
+
+   /* bazairu'i = will continuously until */
+   /* puzaita'e = has habitually since */
+   /* bana'o = will (in the future) typically */
+   /* caze'uvi'o = intermittently during a long interval is */
+   /* puroroi = always in the past; nothing is specified about location when
+   PA+ROI is attached to PU, and when it is attached to VA per
+   space.time.1040, nothing is specified about time (unless VI is specified as
+   space-time with vi'e/VIhA) */
+
+time.A.1031             :  time.C.1033
+                        |  time.C.1033  time.B.1032
+                        ;
+/* attaches a tensor to a time-only tense */
+
+/* ZAI specifies until.../since... as a tensor towards or away from the
+   destination, if no interval is specified, the interval is to the time space
+   reference or to infinity. If interval is specified, this is a magnitude of
+   interval in the direction specified (or a fraction if towards the space-time
+   reference origin. */
+
+   /* bazai = will until */
+   /* puzai = has since */
+   /* baze'o = will everafter */
+   /* puze'o = ever before did */
+   /* cazai = only now */
+   /* caze'o = eternally */
+
+time.B.1032             :  ZAI.621
+                        |  ZAI.621  time.interval.1039
+                        ;
+/* attaches tensor of movement in space time.  A direction is always added,
+   and optionally an interval distance and parameters about that interval.
+   These only have value in time travel, except possibly in describing normal
+   progression through time as a motion, which isn't usual. */
+
+
+time.C.1033             :  time.F.1036
+                        |  time.F.1036  time.D.1034
+                        ;
+/* ZEhA specifies an interval size at the resulting time-tense */
+/* if a JAI is specified, this is a tensored interval towards or away from the
+   space-time origin.  Normally, if only a direction is specified without an
+   interval size, the result is the interval between the starting point and
+   either the origin or infinity past or future; i.e. 'since' or 'until' */
+
+   /* puze'i = was for a short time */
+   /* baze'u = will for a long time */
+   /* caze'u = during a long interval is */
+   /* puzajai = since a short time in the past */
+   /* puzuje'o = until a long time ago */
+   /* bazije'o = beyond/after a very short time in the future */
+   /* baje'o = until the indefinite future */
+
+
+time.D.1034             :  tensor.scalar.1051
+                        |  dir.time.interval.1038
+                        |  tensor.scalar.1051  dir.time.interval.1038
+                        ;
+/* The adjustment in time location is applied to the base location.  */
+
+/* This defines an adjustment in location in time as a direction relative to
+   the origin, plus a series of directions and/or distances.  Normally, these
+   will be paired as JAI+ZI to indicate a direction and distance.  See time.C
+   for a bare JAI.  If the JAI direction is omitted, it is merely undetermined.
+   This isn't very useful except in random time travel scenarios.  This is NOT
+   redundant to a series of PU+ZIs as below, since the ZI there specifies the
+   relative size of an interval within which the new base is found.  JAI + ZI
+   specifies a 'specific' relative distance.  Thus the following:          */
+
+   /* puza = some time in the relatively recent past
+   /* pupuza = did sometime within a period shortly before (within za before pu)
+   /* puje'oza = did sometime a specific relative time (za) before pu      */
+
+
+time.F.1036             :  time.region.1037
+                        |  time.F.1036  time.region.1037
+                        ;
+/* compound direction+distance time locator */
+
+/* each succeeding unit is distance directional from the previous unit */
+/* note that a bare ZI or compound with only ZIs in a tense is interpreted
+   as a space-time region VEhA around the origin, or ZEhA if it is bare in
+   a time portion of a time+space-time tense.  Bare 'ca+ZI' is also interpreted
+   as the latter.  The bare VEhA and ZEhA are interpreted as undefined
+   intervals in space-time and time, respectively, similarly overriding the
+   norm.                                                                 */
+
+   /* puzu = a long time ago was */
+   /* pubazi = was a little while later going to */
+   /* puzubazi = a while ago was a short time later going to */
+   /* zi = a short time/space away */
+   /* zuzi = no english equivalent */
+   /* pu = was */
+   /* puba = was going to */
+   /* bapu = will have been */
+   /* pubapu = was going to have */
+   /* bapuba = will have been going to */
+
+
+time.region.1037        :  PU.593
+                        |  PU.593  ZI.623
+                        ;
+/* Allows the specification of a direction in time from the space time origin
+   and the size of the region in that direction, within which the point or
+   interval will be found.                                               */
+
+
+dir.time.interval.1038  :  JAI.547
+                        |  JAI.547  time.interval.1039
+                        |  time.interval.1039
+                        ;
+
+time.interval.1039      :  interval.prop.1050
+                        |  ZEhA.622
+                        |  ZEhA.622  interval.prop.1050
+                        ;
+/* defines time intervals for use in definitions above */
+
+
+space.time.1040         :  space.time.A.1041
+                        |  space.time.G.1047
+                        |  space.time.G.1047  space.time.A.1041
+                        |  space.time.G.1047  space.time.B.1042
+                        ;
+/* This allows the properties of the space-time-origin to be specified */
+/* A bare interval.prop is added in time.1030 as noted.  Otherwise ambiguities
+   occur if after a time interval if the latter has no interval prop specified.
+                                                                            */
+
+space.time.A.1041       :  space.time.C.1043
+                        |  space.time.C.1043  space.time.B.1042
+                        ;
+/* This puts one or more tensors of motion onto a starting point or interval.
+   The motion can be specified without the interval, too. */
+
+   /* vazairu'i = continuously between there and here */
+   /* vuzaive'ita'e = habitually while moving nearer from yonder */
+   /* vana'o = there, typically (saying nothing about here) */
+   /* vuzaive'i = moving towards here a little ways from yonder ; old vuva */
+   /* vize'ove'u = moving yonder from nearby;                     old vivu */
+
+   /* vuzaive'ize'o = passing by here at medium distance then receding;
+                                                                old vuvavu */
+   /* vuzaive'uze'o = passing very close by here then receding; old vuvivu */
+
+
+space.time.B.1042       :  ZAI.621
+                        |  ZAI.621  space.time.G.1047
+                        ;
+/* attaches tensor of movement in space time.  A direction is always added,
+   and optionally an interval distance and parameters about that interval. */
+
+
+space.time.C.1043       :  VA.611
+                        |  VA.611  space.time.D.1044
+                        ;
+
+space.time.D.1044       :  space.time.E.1045
+                        |  tensor.scalar.1051  space.time.E.1045
+                        ;
+/* The bare VA is the root of a space-time tense component.  It refers to a
+   point (or can be seen above, an interval) in space-time or in some other
+   dimensionality.  That point or interval is within a range from the space-time
+   origin, with the vowel indicating a relative scale for this range.  A JAI
+   appended to this VA then a radial or tangential direction to move to a new
+   point.  A ZI appended similarly indicates a distance to move to a new point.
+   Normally both a JAI and a ZI together will be specified, but optional tenses
+   allow you to be vague in direction without ambiguity.  If no distance were
+   included, though, you wouldn't be able to tell a JAI in this rule from one
+   in space.time.C.                                                         */
+/* This attaches an interval/dimensionality to the located point.  If no JAI
+   direction is used, the interval is centered on the point.  If a JAI is
+   specified, the interval is from the point, in the given direction.    */
+
+   /* vive'uvi'o = intermittently (scattered) over a large area here */
+
+space.time.E.1045       :  space.time.F.1046
+                        |  JAI.547
+                        |  JAI.547  space.time.F.1046
+                        ;
+
+space.time.F.1046       :  space.time.G.1047
+                        |  interval.prop.1050
+                        ;
+
+space.time.G.1047       :  space.time.H.1048
+                        |  space.time.H.1048  interval.prop.1050
+                        ;
+/* This terminal allows the attachment of an interval property to the interval
+   defined below.  This may either be a count (using ROI) or a property (TAhE).
+                                                                           */
+
+space.time.H.1048       :  VEhA.613
+                        |  VIhA.614
+                        |  VEhA.613  VIhA.614
+                        ;
+/* This terminal gives an interval size in space-time (VEhA), and possibly a
+   dimensionality of the interval.  The dimensionality may also be used
+   with the interval size left unspecified.  When this terminal is used for the
+   space time origin, then barring any overriding VIhA, a VIhA here defines
+   the dimensionality of the space-time being discussed.                 */
+
+interval.prop.1050      :  PA.root.961  ROI.594
+                        |  BY.string.A.986  ROI.594
+                        |  TAhE.604
+                        ;
+/* extensional/intensional interval parameters */
+/* These may be appended to any defined interval, or may stand in place of
+   either time or space tenses.  If no other tense is present, this terminal
+   stands for the time-space interval parameter with an unspecified interval.*/
+
+   /* roroi = always and everywhere */
+   /* roroiku'avi = always here (ku'a = intersection) */
+   /* puroroi = always in the past
+   /* paroi = once upon a time (somewhere) */
+   /* paroiku'avi = once upon a time here */
+
+tensor.scalar.1051      :  JAI.547  ZI.623
+                        |  tensor.scalar.1051  ZI.623
+                        |  tensor.scalar.1051  JAI.547  ZI.623
+                        ;
+
+
+
+/* The following are "Lexer-only rules".  They don't fit in the current grammar
+   due to space problems.  In effect, the allow certain combinations of lexemes
+   to be absorbed into adjacent words anywhere in the text, with no effect on
+   the deep structure grammar.  The grammar of these lexemes is simplistic,
+   except for cases where they interact with each other.  Where it is believed
+   that conflicts could exist, the grammar of these constructs has been put in
+   the above grammar, even though the lexer/Preparser will actually prevent
+   these from being passed thru to the parse routine.  (Otherwise we have to put
+   unacceptably fancy code in the PreParser to determine just when these can be
+   passed thru, and when they can't.) Lexemes in this category include BAhE.503,
+   and indicators as defined above.  (The above grammar handles utterance scope
+   (free.modifier) and clause scope (gap) applications of the latter, however,
+   and indicators should be allowed to be absorbed into almost any word without
+   changing its grammar.
+
+SI.599, SA.595, and SU.603 are metalinguistic erasers.  Delimiters POhA, POhI,
+   DAhO, and FUhO can occur anywhere in text, though they may have no particular
+   meaning in some extreme circumstances.  Similarly, all of the shift lexemes
+   for BY.513 letterals can legally occur anywhere.  As they act like shift keys
+   or shift locks of various types, their meaningfulness is dependent on whether
+   any BY.513 lexemes appear within their scope.  Thus, no meaningful rules can
+   be given for any of these.  FOI, among the shift lexemes, has a minimal
+   grammar, and is listed separately below.  Any of these invisible lexemes
+   should be considered valid lexible members of word.698, and can thus be
+   erased with SI.
+
+token.1100              :  word.698
+                        |  BAhE.503  word.698
+                        ;
+
+null.1101               :  word.698  SI.599
+                        |  possibly unlexable word  (PAUSE)  SI.599
+                        |  utterance.20  SA.595
+                        |  possibly unlexable string  (PAUSE)  SA.595
+                           erases back to the last individual token I or NIhO or
+                           start of text, ignoring the insides of ZOI, ZO, and
+                           LOhU/LEhU quotes. Start of text is defined for SU
+                           below.
+                        |  text.1  SU.603
+                        |  possibly unparsible text  (PAUSE)  SU.603
+                           erases back to start of text which is the beginning
+                           of a speaker's statement, a parenthesis (TO/TOI), a
+                           LU/LIhU quote, or a TUhE/TUhU utterance string.
+                        |  FOI.533  PA.root.961  BOI.651
+                           non-elidable BOI
+                           operator set lerfu shift
+                        |  SIhE.601  /* operator set cancel shift
+                        |  VOI.616  /* lerfu shift
+                        |  NEI.582  /* lerfu shift
+                        |  NAU.581  /* lerfu shift
+                        |  FAU.528  /* lerfu shift
+                        |  POhA.588
+                        |  POhI.591
+                        |  DAhO.524
+                        |  FUhO.536
+                        |  Y.618
+                        ;
+
+indicatable.string.1102 :  any string defined as generating a lexer lexeme from
+                           lexer.B on
+                           (lexer A strings are implicitly handled two rules
+                           hence)
+                        |  any remaining token.1100
+                        |  indicatable.string  lexer.A.905
+                        ;
+
+The only strings for which indicators generate a potential ambiguity are those
+which contain either NAI or CAI.  An indicator cannot be inserted in between a
+token and its negating NAI or intensifying CAI, else you can't tell whether it
+is the indicator or the original token being intensified.
+
+*/
+%%
+
