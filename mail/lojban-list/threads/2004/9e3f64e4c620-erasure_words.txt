@@ -1,4 +1,4 @@
-# mail/lojban-list thread 9e3f64e4c620-erasure_words | root 20040513213804.gg16333@fysh.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 9e3f64e4c620-erasure_words | root 20040513213804.gg16333@fysh.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-05-13T21:38:04Z | Zefram <lojban-out@lojban.org> | 20040513213804.gg16333@fysh.org | mail/lojban-list/cur/1084484284.9e3f64e4c620f800.jbomohi:2,S
 Looking at the "sa" debate, it appears that people have come up with
@@ -143,6 +143,99 @@ http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
 "Many philosophical problems are caused by such things as the simple
 inability to shut up." -- David Stove, liberally paraphrased.
 http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+
+           
+
+
+
+=== 3 | 2004-05-13T22:26:37Z | Zefram <lojban-out@lojban.org> | 20040513222637.gi16333@fysh.org | mail/lojban-list/cur/1084487197.6acc79f2307bb557.jbomohi:2,S
+Robin Lee Powell wrote:
+>If you would like to produce a list of selma'o that can be considered
+>equivalent for this purpose, I'd be willing to consider immplementing
+>that.  I don't *think* there are any cases where LE and LA are not
+>interchangeable.
+
+This one is a low priority for me among the various competing projects.
+I encourage anyone else to look into it.
+
+>> Btw, this earmarking is a protocol engineering technique, and I highly
+>> recommend it.  
+>
+>Really?  So you think CIDR is bad, then?
+
+I don't see the connection.  Are you referring to the definition of
+classful address space?  I think, given that there are to be classes of
+network address and that those handling the addresses need to know the
+class, defining in advance which addresses have which class is useful.
+However, getting rid of the classes altogether, CIDR, is a better way.
+Most entities handling an IP address *don't* need to know the class.
+
+A good analogy is the DNS RRtype space.  Some RRtypes (A, MX,
+...) represent actual data, but others (ANY, TSIG) don't behave that way.
+A DNS server that receives data of an unrecognised RRtype *but knows
+that it is a normal data RRtype* can correctly process the data and
+pass it on to other parties.  An unrecognised non-data RRtype can't be
+processed at all, and the server must reject the transaction.
+
+Until recently no official categorisation of unassigned RRtypes into
+data and non-data types was made, but non-data RRtypes were segregated,
+counting down from 255 where data RRtypes counted up from 1.  Then someone
+put a non-data RRtype (OPT) in data RRtype space, and people started to
+notice that it wasn't safe to assume that an unrecognised RRtype was
+a data type.  Now data and non-data RRtype spaces have been allocated
+(OPT stands as a well-known exception to the zoning).  The current advice
+is to treat unrecognised RRtypes in a data zone as data, and to reject
+unrecognised RRtypes in the non-data zones.
+
+>> If a Lojban parser sees a cmavo that it doesn't know, being able to
+>> tell at least whether it is an erase operator would be *very* helpful.
+>
+>No, it wouldn't.  Not in the least.  The erase operators are all
+>different selma'o, and are all handled completely independantly.
+
+We're talking at cross-purposes here.  The issue is how an *unrecognised*
+cmavo is handled.  What do you do in your parser with, say, "cei'au"?
+Do you accept "le broda cei'au si brode"?
+
+>How is "lu broda SA_LIKE li'u da" == da better than "lu broda sa lu si
+>da" == da?
+
+That's not the kind of case I had in mind, but it raises some good
+points itself.  Consider the thought process behind using "lu": "I'm
+in a "lu" quotation; it ends with "li'u"".  During the quotation, when
+thinking about ending the quotation I should be thinking about "li'u",
+not "lu".  Also, this new operator would encourage thinking about the
+erasure as "end the quotation and ignore it", rather than "delete back
+to the beginning of the quotation".  I prefer to think forwards, and in
+terms of high-level constructs.
+
+What I really had in mind was things like "le le nanmu ku stizu
+ERASE_CONSTRUCT ku", where I want to skip over a nested construct.
+This example should erase everything, back to and including the first
+"le", rather than only going back to the second "le".  High-level
+constructs again.  I don't want to be forced to remember the exact
+sequence of words I've spoken in order to modify the sentence; I want
+to be able to remember just the semantic value and the stack of open
+grammatical constructs.  With this erase construct, in this example I
+wouldn't have to care whether I said "le nanmu ku" or "ta".  Obviously the
+value increases in longer sentences.
+
+This was intended as a rather fanciful suggestion; I was more a fan of the
+"erase current sumti" type operators that I suggested and that share all
+of the traits I discussed above.  ("le le nanmu ku stizu ERASE_SUMTI"
+*can't* be done with "sa".)  But I find the generalisation quite neat.
+I think it's at least a useful thought experiment in the realm of
+grammar-aware erase operators.
+
+You seem to be hostile to new erase operators because of the complexity
+of implementation.  Is that the case?  Perhaps further discussion
+should occur when, and if, I produce a parser that implements erasure
+more modularly.
+
+-zefram
 
 
 
