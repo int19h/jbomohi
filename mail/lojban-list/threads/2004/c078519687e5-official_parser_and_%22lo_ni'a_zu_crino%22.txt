@@ -1,4 +1,4 @@
-# mail/lojban-list thread c078519687e5-official_parser_and_%22lo_ni'a_zu_crino%22 | root 20040405073105.gp23652@digitalkingdom.org | 11 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread c078519687e5-official_parser_and_%22lo_ni'a_zu_crino%22 | root 20040405073105.gp23652@digitalkingdom.org | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-04-05T07:31:05Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20040405073105.gp23652@digitalkingdom.org | mail/lojban-list/cur/1081150265.c078519687e5d048.jbomohi:2,S
 The official parser can't handle
@@ -411,5 +411,75 @@ Yahoo! Groups Links
      http://docs.yahoo.com/info/terms/
  
 
+
+
+
+=== 12 | 2004-04-09T05:10:24Z | jcowan@reutershealth.com | 20040409051024.ga2886@skunk.reutershealth.com | mail/lojban-list/cur/1081487424.45860af8f8f46beb.jbomohi:2,S
+Bob LeChevalier scripsit:
+
+> I realized that, but wanted to point out what investigation showed if it 
+> helps in any attempts Cowan may be making to identify and fix bugs in the 
+> official parser (which unfortunately even with bugs has to remain a 
+> standard unless you can prove that your alternate parser has the same 
+> grammar and that it is unambiguous to the same or higher degree than the 
+> YACC grammar)
+
+I am not going to do any further actual work on the official parser;
+using Yacc is just too bug-prone and unreliable.
+
+Further, I am going to support the substitution of the PEG grammar as
+official; not yet, but when it's further debugged and I've convinced
+myself that it's equivalent.
+
+I will not support, however, any structural changes that *could* be made
+as a result of going to infinite-lookahead grammar: no A/JA merger, e.g.
+For one thing, human beings don't support infinite lookahead.  But I
+am okay with accepting things like "le broda joi le brodi", since that
+is not truly an ambiguity but just the result of smarter resolution of
+elidable terminators than Yacc allows.
+
+I'll also do whatever I'm able to make an actual PEG parser available,
+with the same kinds of features (at least) that the official parser
+supports.  I don't know what this will involve at present.
+
+> Given what we know, the bug must be the tense lexer which somehow is not 
+> accepting ni'a zu as a valid string.  I never looked at the lexer internals 
+> so I can't debug it.
+
+Checking the source of lexruleo.c shows that the space-before-time option
+was never put in.  Here's a patch for Robin's benefit:
+
+In the function tense_C_979, add the line "TRY(tense_C_979_4);" just after
+"TRY(tense_C_979_1);".  This makes the order time-space, time, space-time, space.
+
+Then add a new function tense_C_979_4, which is a copy of tense_C_979_3
+except that the two CALL lines are in reverse order.
+
+-- 
+Andrew Watt on Microsoft:                       John Cowan
+"Never in the field of human computing          jcowan@reutershealth.com
+has so much been paid by so many                http://www.ccil.org/~cowan
+to so few!" (pace Winston Churchill)            http://www.reutershealth.com
+
+
+------------------------ Yahoo! Groups Sponsor ---------------------~-->
+Buy Ink Cartridges or Refill Kits for your HP, Epson, Canon or Lexmark
+Printer at MyInks.com.  Free s/h on orders $50 or more to the US & Canada.
+http://www.c1tracking.com/l.asp?cid=5511
+http://us.click.yahoo.com/mOAaAA/3exGAA/qnsNAA/GSaulB/TM
+---------------------------------------------------------------------~->
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+Yahoo! Groups Links
+
+<*> To visit your group on the web, go to:
+     http://groups.yahoo.com/group/lojban/
+
+<*> To unsubscribe from this group, send an email to:
+     lojban-unsubscribe@yahoogroups.com
+
+<*> Your use of Yahoo! Groups is subject to:
+     http://docs.yahoo.com/info/terms/
+ 
 
 
