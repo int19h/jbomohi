@@ -1,0 +1,90 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_0_7_4); 10 Aug 2002 02:09:02 -0000
+Received: (qmail 21706 invoked from network); 10 Aug 2002 02:09:02 -0000
+Received: from unknown (66.218.66.216)
+  by m9.grp.scd.yahoo.com with QMQP; 10 Aug 2002 02:09:02 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (204.152.186.175)
+  by mta1.grp.scd.yahoo.com with SMTP; 10 Aug 2002 02:09:03 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.05)
+  id 17dLgd-0001d9-00
+  for lojban@yahoogroups.com; Fri, 09 Aug 2002 19:09:03 -0700
+Received: from digitalkingdom.org ([204.152.186.175] helo=chain)
+  by chain.digitalkingdom.org with esmtp (Exim 4.05)
+  id 17dLgS-0001cr-00; Fri, 09 Aug 2002 19:08:52 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 09 Aug 2002 19:08:49 -0700 (PDT)
+Received: from [65.246.141.151] (helo=mail2.reutershealth.com)
+  by chain.digitalkingdom.org with esmtp (Exim 4.05)
+  id 17dLgO-0001ch-00
+  for lojban-list@lojban.org; Fri, 09 Aug 2002 19:08:48 -0700
+Received: from skunk.reutershealth.com (IDENT:cowan@[10.65.117.21])
+  by mail2.reutershealth.com (Pro-8.9.3/Pro-8.9.3) with SMTP id WAA06084;
+  Fri, 9 Aug 2002 22:18:38 -0400 (EDT)
+Message-Id: <200208100218.WAA06084@mail2.reutershealth.com>
+Received: by skunk.reutershealth.com (sSMTP sendmail emulation); Fri, 9 Aug 2002 22:05:15 +4400
+Subject: Re: [lojban] Site Map generating tools?
+To: rlpowell@digitalkingdom.org
+Date: Fri, 9 Aug 2002 22:05:15 -0400 (EDT)
+Cc: lojban-list@lojban.org
+In-Reply-To: <20020809232942.GE21530@chain.digitalkingdom.org> from "Robin Lee Powell" at Aug 09, 2002 04:29:42 PM
+X-Mailer: ELM [version 2.5 PL3]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-archive-position: 526
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jcowan@reutershealth.com
+Precedence: bulk
+X-list: lojban-list
+From: John Cowan <jcowan@reutershealth.com>
+Reply-To: jcowan@reutershealth.com
+X-Yahoo-Group-Post: member; u=8122456
+X-Yahoo-Profile: john_w_cowan
+
+Robin Lee Powell scripsit:
+
+> I would really like a tool to automatically generate a site map for
+> lojban.org (or whatever). Basically, I want something to spider a few
+> levels of pages and make links to them based on their title tags. Or
+> something.
+
+In an empty directory, do this:
+
+wget -l3 -q -r -nd http://www.lojban.org	# does 3 levels including root
+mkdir scratch
+for i in *.html
+do	tr -s '[\r\n]' ' ' <$i >scratch/$i
+done
+mv scratch/* .
+sgrep -o '%f:%r\n' '"<title>".."</title>"' *.html
+
+The standard output of sgrep is a file like this:
+
+about.html:<title> About Lojban </title>
+advanced.html:<title>Lojban For Advanced Students</title>
+beginners.html:<title>Lojban For Beginners</title>
+index.html:<title> Official Lojban Home Page </title>
+learning.html:<title> Learning Lojban </title>
+llg.html:<title> About The Logical Language Group </title>
+reading.html:<title> Reading Lojban </title>
+resources.html:<title> Lojban Resources </title>
+whatis.html:<title> What Is Lojban? </title>
+where.html:<title>Where Is Lojban Spoken?</title>
+why_learn.html:<title> Why Learn Lojban? </title>
+
+which you can then bash into shape with your favorite text processing
+language (any of awk, sed, Perl, Python, ...).
+
+
+-- 
+John Cowan jcowan@reutershealth.com
+http://www.ccil.org/~cowan http://www.reutershealth.com
+Thor Heyerdahl recounts his attempt to prove Rudyard Kipling's theory
+that the mongoose first came to India on a raft from Polynesia.
+--blurb for _Rikki-Kon-Tiki-Tavi_
+
+
+
+

@@ -1,4 +1,4 @@
-# mail/lojban-list thread 5636af664c62-site_map_generating_tools%3F | root 20020809232942.ge21530@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 5636af664c62-site_map_generating_tools%3F | root 20020809232942.ge21530@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2002-08-09T23:29:42Z | Robin Lee Powell <lojban-out@lojban.org> | 20020809232942.ge21530@chain.digitalkingdom.org | mail/lojban-list/cur/1028935782.5636af664c62b58b.jbomohi:2,S
 I would really like a tool to automatically generate a site map for
@@ -19,5 +19,53 @@ je xlali -- RLP 				http://www.lojban.org/
 
 
            
+
+
+
+=== 2 | 2002-08-10T02:05:15Z | John Cowan <jcowan@reutershealth.com> | 200208100218.waa06084@mail2.reutershealth.com | mail/lojban-list/cur/1028945115.8bf03bdca384a9eb.jbomohi:2,S
+Robin Lee Powell scripsit:
+
+> I would really like a tool to automatically generate a site map for
+> lojban.org (or whatever). Basically, I want something to spider a few
+> levels of pages and make links to them based on their title tags. Or
+> something.
+
+In an empty directory, do this:
+
+wget -l3 -q -r -nd http://www.lojban.org	# does 3 levels including root
+mkdir scratch
+for i in *.html
+do	tr -s '[\r\n]' ' ' <$i >scratch/$i
+done
+mv scratch/* .
+sgrep -o '%f:%r\n' '"<title>".."</title>"' *.html
+
+The standard output of sgrep is a file like this:
+
+about.html:<title> About Lojban </title>
+advanced.html:<title>Lojban For Advanced Students</title>
+beginners.html:<title>Lojban For Beginners</title>
+index.html:<title> Official Lojban Home Page </title>
+learning.html:<title> Learning Lojban </title>
+llg.html:<title> About The Logical Language Group </title>
+reading.html:<title> Reading Lojban </title>
+resources.html:<title> Lojban Resources </title>
+whatis.html:<title> What Is Lojban? </title>
+where.html:<title>Where Is Lojban Spoken?</title>
+why_learn.html:<title> Why Learn Lojban? </title>
+
+which you can then bash into shape with your favorite text processing
+language (any of awk, sed, Perl, Python, ...).
+
+
+-- 
+John Cowan jcowan@reutershealth.com
+http://www.ccil.org/~cowan http://www.reutershealth.com
+Thor Heyerdahl recounts his attempt to prove Rudyard Kipling's theory
+that the mongoose first came to India on a raft from Polynesia.
+--blurb for _Rikki-Kon-Tiki-Tavi_
+
+
+
 
 
