@@ -1,0 +1,123 @@
+Return-Path: <sentto-44114-2740-mark=kli.org@returns.onelist.com>
+Delivered-To: shoulson-kli@meson.org
+Received: (qmail 6225 invoked from network); 15 May 2000 15:35:03 -0000
+Received: from zash.lupine.org (205.186.156.18)
+  by pi.meson.org with SMTP; 15 May 2000 15:35:03 -0000
+Received: (qmail 5130 invoked by uid 40001); 15 May 2000 15:35:38 -0000
+Delivered-To: kli-mark@kli.org
+Received: (qmail 5127 invoked from network); 15 May 2000 15:35:37 -0000
+Received: from hj.egroups.com (208.50.144.90)
+  by zash.lupine.org with SMTP; 15 May 2000 15:35:37 -0000
+X-eGroups-Return: sentto-44114-2740-mark=kli.org@returns.onelist.com
+Received: from [10.1.10.35] by hj.egroups.com with NNFMP; 15 May 2000 15:34:51 -0000
+Received: (qmail 20334 invoked from network); 15 May 2000 15:34:50 -0000
+Received: from unknown (10.1.10.26) by m1.onelist.org with QMQP; 15 May 2000 15:34:50 -0000
+Received: from unknown (HELO darius.concentric.net) (207.155.198.79) by mta1 with SMTP; 15 May 2000 15:34:50 -0000
+Received: from newman.concentric.net (newman.concentric.net [207.155.198.71]) by darius.concentric.net (8.9.1a/(98/12/15 5.12)) id LAA17367; Mon, 15 May 2000 11:34:49 -0400 (EDT) [1-800-745-2747 The Concentric Network]
+Errors-To: <nellardo@concentric.net>
+Received: from concentric.net ([216.112.226.144]) by newman.concentric.net (8.9.1a) id LAA09974; Mon, 15 May 2000 11:34:49 -0400 (EDT)
+Message-ID: <392018F4.798272A3@concentric.net>
+Organization: Herds of Wild Buffalo Girls
+X-Mailer: Mozilla 4.7 (Macintosh; I; PPC)
+X-Accept-Language: en
+To: lojban@egroups.com
+From: Brook Conner <nellardo@concentric.net>
+MIME-Version: 1.0
+Mailing-List: list lojban@egroups.com; contact lojban-owner@egroups.com
+Delivered-To: mailing list lojban@egroups.com
+Precedence: bulk
+List-Unsubscribe: <mailto:lojban-unsubscribe@egroups.com>
+Date: Mon, 15 May 2000 11:34:36 -0400
+Reply-To: nellardo@concentric.net
+Subject: [lojban] More on lojban programatic semantics: Strong typing and inferencing of  types
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Length: 4438
+Lines: 85
+
+In keeping with the spirit of lojban of letting vagueness be vague and
+letting specificity be specific, I've been thinking about the theory of
+types and how it relates to a semantics of lojban.
+
+A bit of background, first. In programming language theory, types
+represent sets of values (possibly very large sets, like 32-bit
+integers) with constraints upon the values, usually in the form of
+various operations you can and cannot perform on them. Programming
+languages like C and Pascal (the "Algol" family) have a few built in
+types like integers, characters, and floating point numbers. They also
+usually have ways of defining new types as aggregates of others, things
+like lists and arrays (which are usually a sequence of values of the
+same type) and things like structures or records (which are
+heterogeonous, and often have names for the different parts).
+Object-oriented languages extend this by allowing the programmer to
+explicitly specify what operations can be performed on the type (i.e.,
+the methods).  Many languages, like Lisp and Perl, have "run-time"
+typing - you don't need to specify the type of things when writing the
+program, but if you do something inappropriate (like using numerical add
+on a string), the system will barf. Obviously, the former "static"
+typing systems offer some nice rules that you can reason about your
+program with (and can help the compiler generate better code). The
+latter "dynamic" typing makes it much easier for programmers to develop
+stuff quickly.
+
+A third group of languages, including ML and Haskell, allows "type
+inferencing". These systems are statically typed, but instead of
+requiring the programmer to specify all types explicitly, the system
+figures out the type of things based on how they are used. For instance,
+it deduces that if you're using addition, you must be expecting some
+kind of number.
+
+This last approach is the one I think makes the most sense in the
+context of lojban. Constraints on values (i.e, on sumti) can be
+expressed if desired, but the semantics can determine that itself from
+how the sumti are used. If you put a name in a mekso, you must mean that
+the name should be a number of some kind. (this is in contrast to Perl,
+which "does its best", and often does things which are reasonable if you
+know about them but are otherwise opaque).
+
+So, for example, you can use "poi" to annotate sumti with type
+information, or simply an appropriate selbri for "declaring" variables:
+
+ko jarco la stokuot. poi mekso -- show the "stock-quote", which is a
+mathematical expression
+
+la stokuot. mekso -- "stock-quote" is a mathematical expr.
+
+la stokuot. namcu -- "stock-quote" is a number.
+
+la stokuot. saclu -- "stock-quote" is a rational number
+
+
+The diversity of "number" gismu that include units has a nice side
+effect of reducing the kinds of goofs that crashed  the recent Mars
+mission: if it's "minli", then it is miles. If it is "mitre", then it is
+meters. And if you just used "namcu", then you'd run into problems
+elsewhere - other gismu would be expecting a distance and would rightly
+complain that a namcu is not (necessarily) a distance.
+
+Now, of course, this implies a type hierarchy for lojban gismu. Which
+might be a whole kettle of worms (unless it has already been done).
+Determining that "grake" and "bunda" (grams and pounds) are in one
+category, while "snidu" and "jeftu" (seconds and weeks) are in another
+is straight-forward. But determining other class hierarchies might be
+more complex. I don't *think* lojban gismu were defined with a specific
+taxonomy in mind (lojbab? JWC?). And it may not be desirable to require
+a specific taxonomy - it might have too much potential for cultural
+bias. On the other hand, if the gismu are as culturally neutral as we
+think they are, this shouldn't be a problem. However, how orthoganal are
+various gismu? Will they all have unique places in the taxonomy or will
+it be difficult to build a suitable graph?
+
+As  always, I welcome thoughts and feedback.....
+
+Brook
+
+------------------------------------------------------------------------
+WRITERS WANTED! Themestream allows ALL writers to publish their 
+articles on the Web, reach thousands of interested readers, and get 
+paid in cash for their work. Click below:
+http://click.egroups.com/1/3840/3/_/17627/_/958404891/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
