@@ -1,0 +1,83 @@
+Return-Path: <cbmvax!uunet!math.ucla.edu!jimc>
+From: cbmvax!uunet!math.ucla.edu!jimc
+Return-Path: <jimc@math.ucla.edu>
+Message-Id: <9104231610.AA11318@luna.math.ucla.edu>
+To: lojban-list@snark.thyrsus.com
+Cc: cbmvax!snark.thyrsus.com!cowan (John Cowan)
+Subject: Re: anaphor means what? (was: oops! correction)
+In-Reply-To: Your message of "Mon, 22 Apr 91 12:17:31 EDT."
+             <m0jV3a2-00021hC@snark.thyrsus.com> 
+Date: Tue, 23 Apr 91 09:10:22 -0700
+X-From-Space-Date: Tue Apr 23 21:30:57 1991
+X-From-Space-Address: cbmvax!uunet!math.ucla.edu!jimc
+Content-Length: 3424
+
+> Date:  Mon, 22 Apr 91 12:17:31 EDT
+> To:  lojban-list@snark.thyrsus.com
+> From:  cbmvax!snark.thyrsus.com!cowan@uunet.UU.NET (John Cowan)
+> Subject:  Re: oops! correction
+   
+> Lojban's position on anaphora is that pro-sumti and pro-bridi generally
+> refer to the same referent as the selected sumti or bridi...
+> 
+> 	dei jitfa
+> 	This sentence is false.
+> 	.i go'i
+> 	The previous sentence is false.
+> 	.i go'e ra'o
+> 	This sentence is false too.
+> 
+> The first sentence uses the utterance pro-sumti "dei" to refer to itself,
+> and asserts of itself that it is false.  (Presumably, the guaspi version
+> of this would macroexpand to an infinitely long string.)  
+
+Gulp (red face...)  Fortunately my parser checks for being out of
+memory. This self-referential business came up before, when I was
+replicating a selbri into a subordinate clause that modifies it, and it
+was cut off by a special hack; I didn't think imaginatively enough to
+realize that legitimate user-supplied self-referential anaphora would
+have to be handled effectively.
+
+In the -gua!spi interpretation, by the time sentences 2 and 3 get hold
+of sentence 1, sentence 1's anaphora have already been replaced by
+their antecedents, and so (neglecting minor infinite loops) the same
+effect is achieved as in Lojban.  This relies on the fact that repeated
+sumti (without anaphora) will have the same referents.  
+
+Heading off an objection: -gua!spi selbri are assumed to have implicit
+anaphora for non-mentioned modal cases such as tense, which are
+substituted when the selbri is digested, and the result of which is
+copied when the subsequent anaphor is expanded. So the copied sumti /
+selbri is interpreted in its original context.
+
+The advantage of copying words and not referents is this:  When you get
+to the phase of semantic analysis you are going to compute selbri
+referent sets.  It is going to be a whole lot easier if the only thing
+presented to the semantic analyser is a bunch of selbri.  If
+additionally there are anaphora for about ten different grammatical
+categories (categories that ought to be transformed away by this
+point), it makes the semantic analyser much more complicated.  
+
+Also, when you define an anaphor by copying words, you define it in
+terms of grammatical structures being defined at or before that point.
+Whereas if you tell a student "this will represent a copy of the
+referents ultimately to be computed for this other structure", you are
+reaching a long way down the process.  The student will have just as
+much trouble understanding your teaching as the semantic analyser
+program will.
+
+Finally: the original motivation of this policy was to support modified
+anaphora.  You hang a modal phrase, or even a "specified description"
+(sumti on a sumti), on an anaphor and you expect it to replace or
+supplement the original -- obviously the original words, since it's
+outrageous to expect referents to be backmapped into symbols that
+represent them, the modifications to be tacked on, and the symbols
+reprocessed back into (certainly different) referents.  This insight
+then led me to recognize the general advantage of copying words, not
+referents.
+
+James F. Carter        (213) 825-2897
+UCLA-Mathnet;  6221 MSA; 405 Hilgard Ave.; Los Angeles, CA, USA  90024-1555
+Internet: jimc@math.ucla.edu            BITNET: jimc%math.ucla.edu@INTERBIT
+UUCP:...!{ucsd,ames,ncar,gatech,purdue,rutgers,decvax,uunet}!math.ucla.edu!jimc
+
