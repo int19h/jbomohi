@@ -1,4 +1,4 @@
-# mail/lojban-list thread 8db1bdd9941a-official_parser_problem%3F | root 20040317222428.gz11847@digitalkingdom.org | 29 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 8db1bdd9941a-official_parser_problem%3F | root 20040317222428.gz11847@digitalkingdom.org | 30 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-03-17T22:24:28Z | Robin Lee Powell <lojban-out@lojban.org> | 20040317222428.gz11847@digitalkingdom.org | mail/lojban-list/cur/1079562268.8db1bdd9941acfe2.jbomohi:2,S
 The official parser fails on:
@@ -1102,7 +1102,68 @@ http://www.lojban.org/             ***              .i cimo'o prali .ui
 
 
 
-=== 25 | 2004-03-18T08:08:41Z | GREGORY DYKE <lojban-out@lojban.org> | 14bf40148721.14872114bf40@imap.epfl.ch | mail/lojban-list/cur/1079597321.daefb70109c058a3.jbomohi:2,S
+=== 25 | 2004-03-18T19:54:55Z | Bob LeChevalier <lojbab@lojban.org> | 5.2.0.9.0.20040318144823.03d18cb0@pop.east.cox.net | mail/lojban-list/cur/1079639695.75b5681efe9d263b.jbomohi:2,S
+At 05:12 PM 3/17/04 -0800, Robin Lee Powell wrote:
+>On Wed, Mar 17, 2004 at 02:24:28PM -0800, Robin Lee Powell wrote:
+> > The official parser fails on:
+> >
+> >     lo'u mi le'u si lo'u mi le'u
+> >
+> > If I'm reading the pre-processing description correctly, and I'm
+> > pretty certain I am, that should work just fine.  "lo'u mi le'u" is
+> > turned into one token; si eats any one token.  No problem.
+> >
+> >     c. If the Lojban word "lo'u" (selma'o LOhU) is identified, search
+> >     for the closing delimiter "le'u" (selma'o LEhU), ignoring any such
+> >     closing delimiters absorbed by the previous two steps.  The text
+> >     between the delimiters should be treated as the single token
+> >     'any_words_697'.
+>
+>bancus just pointed out that that may not mean what I thought it
+>meant. I was taking "The text between the delimiters should be treated
+>as the single token 'any_words_697'." to mean "all the text between the
+>delimiters, including the delimiters themselves", but that's probably
+>not the most natural reading.
+>
+>Does anyone have strong evidence one way or the other?  I think bancus is
+>probably right, meaning that that sentence *should* fail.
+
+If you look at the YACC grammar itself for LohU_quote, it has 
+"any_words_697" as the contents between LOhU and LEhU.  The LOhU and LEhU 
+outer delimiters themselves should not be included.
+
+However, as noted, Cowan never implemented si/sa/su in the official parser, 
+probably because at the time, "officialness" was not the salient property, 
+but having a parser that worked was.
+
+lojbab
+
+-- 
+lojbab                                             lojbab@lojban.org
+Bob LeChevalier, Founder, The Logical Language Group
+(Opinions are my own; I do not speak for the organization.)
+Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+Yahoo! Groups Links
+
+<*> To visit your group on the web, go to:
+     http://groups.yahoo.com/group/lojban/
+
+<*> To unsubscribe from this group, send an email to:
+     lojban-unsubscribe@yahoogroups.com
+
+<*> Your use of Yahoo! Groups is subject to:
+     http://docs.yahoo.com/info/terms/
+ 
+
+
+
+
+=== 26 | 2004-03-18T08:08:41Z | GREGORY DYKE <lojban-out@lojban.org> | 14bf40148721.14872114bf40@imap.epfl.ch | mail/lojban-list/cur/1079597321.daefb70109c058a3.jbomohi:2,S
 john and Robin:
 
 > > > [2]: Actually, without an extension to PEGs, 'zoi' cannot be 
@@ -1145,7 +1206,7 @@ Greg
 
 
 
-=== 26 | 2004-03-18T08:12:51Z | Robin Lee Powell <lojban-out@lojban.org> | 20040318081251.gb11847@digitalkingdom.org | mail/lojban-list/cur/1079597571.a7380197e1af8e52.jbomohi:2,S
+=== 27 | 2004-03-18T08:12:51Z | Robin Lee Powell <lojban-out@lojban.org> | 20040318081251.gb11847@digitalkingdom.org | mail/lojban-list/cur/1079597571.a7380197e1af8e52.jbomohi:2,S
 On Thu, Mar 18, 2004 at 09:08:41AM +0100, GREGORY DYKE wrote:
 > john and Robin:
 > > > The definition of "sa" is straightforward: check the selma'o of
@@ -1193,7 +1254,7 @@ http://www.lojban.org/             ***              .i cimo'o prali .ui
 
 
 
-=== 27 | 2004-03-18T11:56:56Z | John Cowan <cowan@ccil.org> | 20040318115656.ge5444@ccil.org | mail/lojban-list/cur/1079611016.5b80dc47e11c485c.jbomohi:2,S
+=== 28 | 2004-03-18T11:56:56Z | John Cowan <cowan@ccil.org> | 20040318115656.ge5444@ccil.org | mail/lojban-list/cur/1079611016.5b80dc47e11c485c.jbomohi:2,S
 Robin Lee Powell scripsit:
 
 > That's how I, and others, have been using it.  The difference between
@@ -1238,7 +1299,7 @@ Yahoo! Groups Links
 
 
 
-=== 28 | 2004-03-18T17:50:30Z | Robin Lee Powell <lojban-out@lojban.org> | 20040318175030.gg11847@digitalkingdom.org | mail/lojban-list/cur/1079632230.f7554c7172968502.jbomohi:2,S
+=== 29 | 2004-03-18T17:50:30Z | Robin Lee Powell <lojban-out@lojban.org> | 20040318175030.gg11847@digitalkingdom.org | mail/lojban-list/cur/1079632230.f7554c7172968502.jbomohi:2,S
 On Thu, Mar 18, 2004 at 06:56:56AM -0500, John Cowan wrote:
 > Robin Lee Powell scripsit:
 > 
@@ -1280,7 +1341,7 @@ http://www.lojban.org/             ***              .i cimo'o prali .ui
 
 
 
-=== 29 | 2004-03-18T12:41:07Z | GREGORY DYKE <lojban-out@lojban.org> | 15349214f17c.14f17c153492@imap.epfl.ch | mail/lojban-list/cur/1079613667.68283144fb22f1be.jbomohi:2,S
+=== 30 | 2004-03-18T12:41:07Z | GREGORY DYKE <lojban-out@lojban.org> | 15349214f17c.14f17c153492@imap.epfl.ch | mail/lojban-list/cur/1079613667.68283144fb22f1be.jbomohi:2,S
 The speaker has an extra word to say. But for both, it's easier to reason in terms of strings than in terms of tokens. It's also comparable to how it's really done:
 
 I was going to school the other day err... going to the shop I mean.
