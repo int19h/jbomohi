@@ -1,0 +1,93 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 12 May 2004 23:49:51 -0700 (PDT)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.32)
+	id 1BOA2I-000084-Rn; Wed, 12 May 2004 23:49:42 -0700
+Date: Wed, 12 May 2004 23:49:42 -0700
+To: lojban-list@lojban.org
+Subject: [lojban] Re: "zo da bu" should not be valid (was Re: Re: My parser, SI, SA, and ZOI)
+Message-ID: <20040513064942.GV4461@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20040510191837.GK5570@digitalkingdom.org> <20040510193718.13449.qmail@web41902.mail.yahoo.com> <20040513063029.GU4461@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20040513063029.GU4461@digitalkingdom.org>
+User-Agent: Mutt/1.5.5.1+cvs20040105i
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+X-archive-position: 7787
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2697
+
+On Wed, May 12, 2004 at 11:30:29PM -0700, Robin Lee Powell wrote:
+> I've spent a good portion of my free time since you posted this
+> thinking about this issue.  It turns out that the answer is "Yes".
+> 
+> There's a simple reason for this: it's the only solution that fits the
+> current cmavo definitions.
+> 
+> zo takes a single Lojban word.  bu takes a single Lobjan word.  si
+> takes as single word, or an arbitrary string of non-Lojban text.
+> 
+> This is how they are defined.
+
+There's something else that's worth mentioning: I've made the general
+meta-decision that a string of si keeps eating text; it doesn't get
+re-evaluated until the string of si is done.  This is enshrined in canon
+in the form of the 4-si-for-zoi rule.
+
+That was probably incomprehensible.  Here's an example:
+
+zoi gy broda gy si si gy -- what happens to the second si?
+
+There are two possible answers: "It gets re-evaluated", so we are left
+with:
+
+zoi gy broda si gy
+
+because si has no meaning inside of a zoi clause, and by erasing the
+zoi closer we opened up a zoi clause, which then eats the si.
+
+The other answer is: "It keeps eating text", so we are left with:
+
+zoi gy gy
+
+I've taken the latter position.
+
+The reason is simple: the former position is untenable.  Completely.  It
+makes it totally impossible to use si to erase zo, zoi, and possibly
+lo'u.  Try it, you'll see.  "zo da si si si si ...", for example: if
+interpreted in the former fashion, every odd si erases the word before
+it (which except for the first means it's erasing a si that got caught
+by zo) and every even si gets caught by zo.
+
+I'm mentioning all this partly on general principles and partly because
+I just had to add a special case for "ZO SI SI" into the SI handling
+rules in my PEG grammar to thwart the grammar's default behaviour given
+how SI and ZO are defined which is (you guessed it) to re-evaluate in
+place, leading to the infinite repitition shown above.
+
+This amused me.[1]
+
+There were already such rules in places for the five cases of ZOI and
+SI; the lack of such a rule for ZO goes back to me mis-understanding ZO
+and having it and its argument turn into a single word from the POV of
+the rest of the grammar.
+
+-Robin
+
+[1]: The fact that my grammar trying to do silly things with infinite,
+non-escapable repitition was amusing enough to me to cause me to write
+this giant e-mail is almost without question a sign of deep mental
+pathology, or something.
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+

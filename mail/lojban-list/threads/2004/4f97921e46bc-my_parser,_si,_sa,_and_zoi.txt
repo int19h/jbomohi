@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4f97921e46bc-my_parser,_si,_sa,_and_zoi | root 20040506003409.gi7020@digitalkingdom.org | 48 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4f97921e46bc-my_parser,_si,_sa,_and_zoi | root 20040506003409.gi7020@digitalkingdom.org | 49 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-05-06T00:34:09Z | Robin Lee Powell <lojban-out@lojban.org> | 20040506003409.gi7020@digitalkingdom.org | mail/lojban-list/cur/1083803649.4f97921e46bc9660.jbomohi:2,S
 Now that I can parse ZOI, it was necessary to figure out what the
@@ -1935,7 +1935,78 @@ http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
 
 
 
-=== 43 | 2004-05-10T20:22:54Z | Bob LeChevalier <lojbab@lojban.org> | 5.2.0.9.0.20040510160725.0365a4c0@pop.east.cox.net | mail/lojban-list/cur/1084220574.7255a7136ab30636.jbomohi:2,S
+=== 43 | 2004-05-13T06:49:42Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20040513064942.gv4461@digitalkingdom.org | mail/lojban-list/cur/1084430982.d6265212bf0801e2.jbomohi:2,S
+On Wed, May 12, 2004 at 11:30:29PM -0700, Robin Lee Powell wrote:
+> I've spent a good portion of my free time since you posted this
+> thinking about this issue.  It turns out that the answer is "Yes".
+> 
+> There's a simple reason for this: it's the only solution that fits the
+> current cmavo definitions.
+> 
+> zo takes a single Lojban word.  bu takes a single Lobjan word.  si
+> takes as single word, or an arbitrary string of non-Lojban text.
+> 
+> This is how they are defined.
+
+There's something else that's worth mentioning: I've made the general
+meta-decision that a string of si keeps eating text; it doesn't get
+re-evaluated until the string of si is done.  This is enshrined in canon
+in the form of the 4-si-for-zoi rule.
+
+That was probably incomprehensible.  Here's an example:
+
+zoi gy broda gy si si gy -- what happens to the second si?
+
+There are two possible answers: "It gets re-evaluated", so we are left
+with:
+
+zoi gy broda si gy
+
+because si has no meaning inside of a zoi clause, and by erasing the
+zoi closer we opened up a zoi clause, which then eats the si.
+
+The other answer is: "It keeps eating text", so we are left with:
+
+zoi gy gy
+
+I've taken the latter position.
+
+The reason is simple: the former position is untenable.  Completely.  It
+makes it totally impossible to use si to erase zo, zoi, and possibly
+lo'u.  Try it, you'll see.  "zo da si si si si ...", for example: if
+interpreted in the former fashion, every odd si erases the word before
+it (which except for the first means it's erasing a si that got caught
+by zo) and every even si gets caught by zo.
+
+I'm mentioning all this partly on general principles and partly because
+I just had to add a special case for "ZO SI SI" into the SI handling
+rules in my PEG grammar to thwart the grammar's default behaviour given
+how SI and ZO are defined which is (you guessed it) to re-evaluate in
+place, leading to the infinite repitition shown above.
+
+This amused me.[1]
+
+There were already such rules in places for the five cases of ZOI and
+SI; the lack of such a rule for ZO goes back to me mis-understanding ZO
+and having it and its argument turn into a single word from the POV of
+the rest of the grammar.
+
+-Robin
+
+[1]: The fact that my grammar trying to do silly things with infinite,
+non-escapable repitition was amusing enough to me to cause me to write
+this giant e-mail is almost without question a sign of deep mental
+pathology, or something.
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+=== 44 | 2004-05-10T20:22:54Z | Bob LeChevalier <lojbab@lojban.org> | 5.2.0.9.0.20040510160725.0365a4c0@pop.east.cox.net | mail/lojban-list/cur/1084220574.7255a7136ab30636.jbomohi:2,S
 At 10:21 AM 5/10/04 -0700, you wrote:
 > > In answer to the question in this thread, I believe that the text
 > > comment in the body of the grammar after the rule defining LohU 436
@@ -2016,7 +2087,7 @@ Yahoo! Groups Links
 
 
 
-=== 44 | 2004-05-07T20:38:19Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040507203819.68997.qmail@web41901.mail.yahoo.com | mail/lojban-list/cur/1083962299.3dfde9e878222c29.jbomohi:2,S
+=== 45 | 2004-05-07T20:38:19Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040507203819.68997.qmail@web41901.mail.yahoo.com | mail/lojban-list/cur/1083962299.3dfde9e878222c29.jbomohi:2,S
 
 --- Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
 > > What does {da zo si si} do?
@@ -2096,7 +2167,7 @@ http://hotjobs.sweepstakes.yahoo.com/careermakeover
 
 
 
-=== 45 | 2004-05-07T20:47:25Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507204725.gb27947@digitalkingdom.org | mail/lojban-list/cur/1083962845.1b0e06c13a742501.jbomohi:2,S
+=== 46 | 2004-05-07T20:47:25Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507204725.gb27947@digitalkingdom.org | mail/lojban-list/cur/1083962845.1b0e06c13a742501.jbomohi:2,S
 On Fri, May 07, 2004 at 01:38:19PM -0700, Jorge Llamb?as wrote:
 > So both words turn what follows into special tokens, but remain
 > themselves as separate tokens.
@@ -2181,7 +2252,7 @@ http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
 
 
 
-=== 46 | 2004-05-07T21:12:43Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040507211243.95368.qmail@web41901.mail.yahoo.com | mail/lojban-list/cur/1083964363.b0438acce7b67323.jbomohi:2,S
+=== 47 | 2004-05-07T21:12:43Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040507211243.95368.qmail@web41901.mail.yahoo.com | mail/lojban-list/cur/1083964363.b0438acce7b67323.jbomohi:2,S
 
 --- Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
 > > I think that the Right Thing is to treat {zo <word>} and {zoi <word>
@@ -2215,7 +2286,7 @@ http://hotjobs.sweepstakes.yahoo.com/careermakeover
 
 
 
-=== 47 | 2004-05-07T22:22:31Z | Nora LeChevalier <noras@cox.net> | 5.1.0.14.0.20040507181537.034c7ec0@pop.east.cox.net | mail/lojban-list/cur/1083968551.53ff78e5d22dc969.jbomohi:2,S
+=== 48 | 2004-05-07T22:22:31Z | Nora LeChevalier <noras@cox.net> | 5.1.0.14.0.20040507181537.034c7ec0@pop.east.cox.net | mail/lojban-list/cur/1083968551.53ff78e5d22dc969.jbomohi:2,S
 At 05:51 PM 5/6/04 -0700, Robin wrote:
 >On Thu, May 06, 2004 at 06:20:33PM -0400, Nora LeChevalier wrote:
 >[long explanation of what my parser does snipped]
@@ -2249,7 +2320,7 @@ Nora LeChevalier
 
 
 
-=== 48 | 2004-05-07T22:24:32Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507222432.gp27947@digitalkingdom.org | mail/lojban-list/cur/1083968672.5c6457bd7b159e83.jbomohi:2,S
+=== 49 | 2004-05-07T22:24:32Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507222432.gp27947@digitalkingdom.org | mail/lojban-list/cur/1083968672.5c6457bd7b159e83.jbomohi:2,S
 On Fri, May 07, 2004 at 06:22:31PM -0400, Nora LeChevalier wrote:
 > At 05:51 PM 5/6/04 -0700, Robin wrote:
 > >On Thu, May 06, 2004 at 06:20:33PM -0400, Nora LeChevalier wrote:
