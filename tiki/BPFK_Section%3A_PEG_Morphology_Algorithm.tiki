@@ -90,33 +90,29 @@ r-hyphen <- r &consonant / n &r
 
 any-fuhivla-rafsi <- stressed-fuhivla-rafsi / fuhivla-rafsi / fuhivla
 
-stressed-fuhivla-rafsi <- !stressed-long-rafsi !stressed-lujvy !stressed-tosmabry !stressed-slinkujy !non-initial-cluster !h !y unstressed-syllable* stressed-syllable consonant+ y
+stressed-fuhivla-rafsi <- !non-fuhivla unstressed-syllable* stressed-syllable consonant+ y
 
-stressed-lujvy <- y-less-rafsi* stressed-y-rafsi
-
-stressed-tosmabry <- unstressed-cmavo-form (stressed-lujvy / stressed-fuhivla-rafsi) / stressed-cmavo-form consonant y
-
-stressed-slinkujy <- consonant stressed-lujvy
-
-stressed-y-rafsi <- (stressed-long-rafsi / stressed-CVC-rafsi) y
-
-fuhivla-rafsi <- !long-rafsi !lujvy !tosmabry !slinkujy !non-initial-cluster !h !y unstressed-syllable+ consonant+ y
-
-lujvy <- y-less-rafsi* y-rafsi
-
-tosmabry <- unstressed-cmavo-form (lujvy / fuhivla-rafsi) / cmavo-form consonant y
-
-slinkujy <- consonant lujvy
-
-y-rafsi <- (long-rafsi / CVC-rafsi) y
+fuhivla-rafsi <- !non-fuhivla unstressed-syllable+ consonant+ y
 
 ;-------------------------------------------------------------------
 
-fuhivla <- !gismu !lujvo !tosmabru !slinkuhi !non-initial-cluster !h !y unstressed-syllable* stressed-syllable !stressed syllable &post-word
+fuhivla <- !non-fuhivla unstressed-syllable* stressed-syllable !stressed syllable &post-word
 
-tosmabru <- unstressed-cmavo-form (lujvo / fuhivla) / cmavo-form (cmavo-form / spaces)
+non-fuhivla <- gismu / lujvo / lujvy / loose-cmavo / slinkuhi / slinkujy / non-initial-cluster / h
+
+loose-cmavo <- unstressed-cmavo-form (gismu / lujvo / lujvy / any-fuhivla-rafsi) / cmavo-form (cmavo-form / consonant y / spaces)
 
 slinkuhi <- consonant y-less-rafsi* !any-fuhivla-rafsi final-rafsi 
+
+slinkujy <- consonant lujvy
+
+lujvy <- y-less-rafsi* (y-rafsi / stressed-y-rafsi)
+
+stressed-y-rafsi <- (stressed-long-rafsi / stressed-CVC-rafsi / stressed-y-less-rafsi initial-pair) y
+
+y-rafsi <- (long-rafsi / CVC-rafsi / initial-pair) y
+
+stressed-y-less-rafsi <- stressed-CVC-rafsi !y / stressed-CCV-rafsi / stressed-CVV-rafsi
 
 y-less-rafsi <- CVC-rafsi !y / CCV-rafsi / CVV-rafsi
 
