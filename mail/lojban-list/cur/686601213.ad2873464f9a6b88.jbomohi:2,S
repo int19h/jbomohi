@@ -1,0 +1,102 @@
+Return-Path: <cbmvax!uunet!CUVMA.BITNET!LOJBAN>
+Message-Id: <9110042144.AA12338@relay1.UU.NET>
+Date: Fri Oct  4 18:33:33 1991
+Reply-To: cbmvax!uunet!MATH.UCLA.EDU!pucc.PRINCETON.EDU!jimc
+Sender: Lojban list <cbmvax!uunet!CUVMA.BITNET!pucc.PRINCETON.EDU!LOJBAN>
+From: cbmvax!uunet!MATH.UCLA.EDU!pucc.PRINCETON.EDU!jimc
+Subject:      Re: VSO order
+X-To:         lojban@cuvmb.columbia.edu
+To: John Cowan <cowan@SNARK.THYRSUS.COM>,
+        Eric Raymond <eric@SNARK.THYRSUS.COM>,
+        Eric Tiedemann <est@SNARK.THYRSUS.COM>
+In-Reply-To:  Your message of "Fri,
+              04 Oct 91 15:03:13 EDT." <9110041917.AA12524@julia.math.ucla.edu>
+X-From-Space-Date: Fri Oct  4 18:33:33 1991
+X-From-Space-Address: cbmvax!uunet!CUVMA.BITNET!LOJBAN
+Content-Length: 4374
+
+Lojbab writes, in response to Mark Shoulson responding to Dean Gahlon:
+> I'm going to interpolate what you are proposing as being that
+>
+>                      citka le nanmu le cripu
+> should be                  x1       x2
+> and not the current        x2       x3       with x1 unspecified
+>
+> in other words, you want an >unmarked< VSO order...
+
+Lojbab gives two reasons why Lojban needs the special pre-selbri x1
+treatment.  I thought it might be useful to outline how these problems
+are dealt with in -gua!spi, allowing the desired unmarked VSO.
+
+First, in an S-bridi (the bridi in a sumti), why should the first sub-
+sumti go in x2 rather than x1, which in Lojban is considered to be
+empty?  Because it's not empty!  A placeholder anaphor is there; the
+-gua!spi parser actually creates the word and sticks it in.  The reason
+it's there is to let users know what the sumti means, like this (in
+-gua!spi, remember):
+
+Let's take "lo se citka be loi mlatu" representing "cat food", perhaps
+not optimally but it makes a good example.  "citka" represents a
+relation between an eater and an eatee; such a relation is a list of
+pairs, the first member of each of which eats, and the second being
+eaten.  Now retain only members consistent with subphrases, if any; in
+this case x1 has to be the mass cat (whatever that means, but that's
+another thread).  One of the places will be occupied by the placeholder
+anaphor, either because the parser inserted it or the user said it
+explicitly (very rare).  Collect the relation members in that place
+into a set, and modify according to the determiner / article "lo" (i.e.
+keep them all and unroll in extension).  The result is the referent set
+of the sumti.  The placeholder anaphor has that set as its referent,
+and in semantic analysis whenever you need the sumti's referents you
+link to the anaphor.  Not to any other word in the sumti.
+
+Thus the placeholder anaphor has an essential role in semantic analysis.
+But being there, it makes natural the idea that any sub-sumti cannot
+occupy x1 (after conversion) because the placeholder is already in it.
+
+Lojbab's second justification for treating x1 specially is that very
+frequently in an abstraction there will be an "implicit" x1 which a
+common-sense listener will understand is the same as one of the main
+bridi arguments.  For example,
+
+        mi  fengu le mlatu   le nu citka  lemi sanmi
+        I'm angry at the cat for   eating my   food (meal)
+
+Clearly the eater is the cat, but in Lojban this sumti is invisible to
+the parser and so under an unmarked VSO policy, "lemi sanmi" would
+wrongly end up in citka x1.
+
+In -gua!spi the parser does know about the internal sumti because the
+dictionary entry for fengu (angry) tells it to replicate x2 into the x3
+abstraction.  Thus again, "lemi sanmi" goes into x2 because x1 isn't
+empty!
+
+This kind of replication instruction is very common, and even applies
+to x2 of the abstraction in a few cases, mainly comparisons. The
+speaker can, but rarely does, suppress replication by putting an
+explicit zo'e or other sumti in the target place.   It is my opinion
+that the kind of common-sense implicit replication contemplated in
+Lojban is not robust enough to allow solid logical analysis of the
+resulting bridi; clearly specified algorithmic rules are necessary.
+
+This is why -gua!spi never is bothered by the place-assignment
+objections Lojbab makes to the unmarked VSO idea.  Lojbab also points
+out, correctly, that the observative is a very basic kind of sentence
+and deserves low overhead support, perhaps more so than the unmarked
+VSO with explicit x1, which is what I am trying to make to work in
+Lojban.  Nick made a suggestion, which I agree with, that the only
+problem comes up when an explicit x2 is present; under an unmarked VSO
+policy it needs "fe" just as under present policy x1 needs "fa", like
+this:
+
+        Unmarked VSO            Present policy          English
+        carvi                   carvi (no change)       It's raining
+        carvi fe mi             carvi mi                I'm getting rained on
+        carvi le se baktu       carvi fa le se baktu    It's raining buckets
+
+So in the observative arena the burden is shifted from one
+not-so-common usage pattern to another similarly rare, while the burden
+is taken off of a pattern I use a lot in non-observative situations.
+
+                -- jimc
+
