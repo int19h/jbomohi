@@ -1,0 +1,154 @@
+# mail/lojban-list thread 0fcea56712bf-lojban_bnf_grammar_inconsistency_%28fwd%29 | root pine.lnx.3.91.960216101944.12838d-100000@xiron.pc.helsinki.fi | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1996-02-16T08:20:05Z | Veijo Vilva <veion@xiron.pc.helsinki.fi> | pine.lnx.3.91.960216101944.12838d-100000@xiron.pc.helsinki.fi | mail/lojban-list/cur/824458805.0fcea56712bf0c73.jbomohi:2,S
+---------- Forwarded message ----------
+Date: Thu, 15 Feb 96 11:43:00 PST
+From: Clark Nelson <Clark_Nelson@ccm.jf.intel.com>
+To: veion@xiron.pc.helsinki.fi
+Subject: Re[2]: Lojban BNF grammar inconsistency
+
+>   The latest unpublished version of the YACC grammar is 2.41 . 
+>   I don't know whether there are any plans of updating the BNF
+>   grammar - personally I'd hope so - but any help is welcome, of 
+>   course. I think, however, that it is a waste of time to do 
+>   anything much before the YACC grammar is baselined and made 
+>   public. I could correct the most glaring discrepancies between 
+>   the grammar versions on the Web server, though, if you send me 
+>   your notes.
+
+Is that version 2.41 six revisions past the grammar.235 on powered?
+
+There seems to be a sort of hierarchy of net repositories.  powered
+seems to be "officially current."  xiron seems to lag it by a bit -- I
+assume that's because of the effort involved in HTML translation.
+access.digex seems to be for stuff that's "preliminary, but ready for
+general review."  But there's no grammar stuff on access.digex.
+
+I may sound like I'm trying to butt in, but the cross-analysis (by hand)
+of the YACC and BNF was rather a time-consuming process.  It would be
+much easier, if the BNF is considered worthwhile, to *keep* it up to
+date, rather than having to *catch* it up to date.  I would be willing
+to work on the BNF, but significant lag times from YACC changes would
+make it a lot harder.  Is there any way I could get more current YACC
+than seems to be available on the servers I already know about?  Also,
+what are the prospects for correcting the "original" BNF, as opposed to
+just what's on xiron?
+
+I have attached the results of my analysis of what's on xiron, expressed
+as proposed changes to the BNF.  Each change is marked with the nature of
+the reason for change.  A couple of questions arose about whether the
+YACC grammar is really an accurate description of the language; see
+text:0 and paragraph_2:12.
+
+co'o mi'e klark.
+
+----------------------------------------
+        text:0
+DISCREPANCY: YACC allows any number of initial NAI.  I frankly don't know
+whether this is intentional, since the refgrammar doesn't suggest any
+semantics for "nai nai", and that string is valid only at the beginning
+of an utterance.  If it is intentional, then the simplest way to reflect
+it in BNF would be to insert "..." after "NAI".  That would not give the
+same parse tree as the YACC, but unless the semantics are resolved, I
+don't want to worry about that.  (Is this a YACC issue?)
+COMMENT: The parentheses around "CMENE ...  #" are redundant.  Actually,
+so are the parentheses around "indicators & free ...", given the
+explanation of precedence before the grammar proper.  However, this
+seems to be the only place where that precedence rule applies, so it
+might be just as well to leave in those parens.
+HTML COMMENT: There should probably not be a break in this rule.
+TYPO: "joik-jek" should be "joik_jek".
+
+        text_1:2
+DISCREPANCY: According to YACC, a paragraph mark is "(NIhO #)...", not
+"NIhO... #".  Also, "paragraphs" should be optional.
+
+        paragraphs:4
+DISCREPANCY: Again, "NIhO... #" should be "(NIhO #)...".
+
+        paragraph:10
+TYPO: There is a missing "]" after "paragraph_1".
+
+        paragraph_1:11
+DISCREPANCY: "paragraph_1" should be optional.
+
+        paragraph_2:12
+MAJOR DISCREPANCY: As far as I can tell, the grammar should be:
+        utterance
+        | TUhE # text_1 /TUhU #/
+        | (prenex | tag) TUhE paragraphs /TUhU #/
+This assumes that YACC should be taken as gospel, and must be rendered
+exactly.  But it seems excessively complex that the grammar of the text
+scope should depend on whether it has a prefix. (YACC issue?)
+
+        utterance:20
+DISCREPANCY: "#" should follow "NA".
+
+        bridi_tail:50
+DISCREPANCY: It would seem that there should be no "..." at the end of
+this rule.
+
+        sumti:90
+DISCREPANCY: Again, it would seem that there should be no "..." at the
+end of the rule.
+
+        sumti_5:96
+TYPO: There is a "|" missing before "ZOI".
+
+        selbri_1:131
+DISCREPANCY: Again, "NA" should be followed by "#".
+
+        selbri_4:134
+MAJOR DISCREPANCY: I think it should be:
+        selbri_5 [joik_jek selbri_5 | joik [stag] KE # selbri_3 /KEhE #/]...
+
+        selbri_5:135
+DISCREPANCY: It would appear that "[stag]" is missing before "BO".
+
+        tanru_unit_2:152
+HTML COMMENT: There should probably not be a break in the middle of
+"(number | lerfu_string) MOI #".
+
+        mex_2:312
+HTML COMMENT: For consistency, there should be a break after "operand".
+
+        operator:370
+MAJOR DISCREPANCY: The same comment as for selbri_4.  It should be:
+        operator_1 [joik_jek operator_1 | joik [stag] KE # operator /KEhE #/]...
+
+        operator_2:372
+MINOR DISCREPANCY: Although this may not result in an actual language
+difference, YACC has no "#" after "mex_operator".
+
+        mex_operator:374
+TYPO: There should be a break and "|" before "MAhO".
+MINOR DISCREPANCY: "VUhU" should be followed by "#".  Again, this change
+plus that to operator_2 may add up to no language change, but it better
+matches the YACC.
+
+        operand:381
+DISCREPANCY: For the third time, there should apparently be no "..." at
+the end of this rule.
+
+        gek:807
+TYPO: There is a garbage ")" in the name of the rule.
+MINOR DISCREPANCY: "gik" should not be followed by "#", since gik
+already terminates with #.
+
+        interval_modifier:1050
+DISCREPANCY: "ZAhO" should be followed by "[NAI]".
+COMMENT: The brackets around "(ZAhO [NAI] [interval_property])..." are
+redundant.
+
+        free:32
+HTML COMMENT: There should be a break before "| (number | lerfu_string)
+MAI".
+COMMENT: It would be more consistent with other parts of the grammar to
+collapse:
+        | XI number /BOI/
+        | XI lerfu_string /BOI/
+into:
+        | XI (number | lerfu_string) /BOI/
+
+
+
