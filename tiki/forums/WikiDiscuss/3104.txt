@@ -4515,3 +4515,78 @@ phma
 
 
 
+
+## 2004-12-22T02:56:41Z — klark (@klark) (post 3229)
+
+Title: PEG Morphology Algorithm
+Message-Id: 00a501c4e7c5$08afd090$2502a8c0@solo
+
+>> The grammar in its current state does four separable things:
+>
+> Just because they *can* be seperated, doesn't mean they should be.
+
+No, of course not.
+
+> In fact, these are not seperate actions, so far as I know, in either
+> jbofihe or the current official parser.
+
+And just because they have heretofore been unified, doesn't mean that they 
+should be, either.
+
+>> And it could be argued that categorizing brivla really belongs to
+>> semantic analysis, not parsing.
+>
+> Umm, what?
+
+Simple: for parsing purposes, a brivla is a brivla is a brivla. It's only 
+when you get around to trying to figure out the meaning of a sentence that 
+it begins to matter how it was formed, from which one can determine what it 
+means.
+
+>> For the sake of modularity and reducing point-complexity, I think
+>> it would be worth considering splitting the job into its
+>> components, and writing separate grammars:
+>
+> The problem with this is that we could argue for hours over where
+> the seperations lie.  I was vehemently opposed to seperating out the
+> morphology from the rest of the grammar in the first place, in fact.
+
+Well, of course if one (very influential) partipant is "vehemently opposed" 
+to any separation, then any proposal for separation would necessarily either 
+be rejected immediately, or result in hours of argument. :-)
+
+>> Of course this scheme depends on being able to combine multiple
+>> PEG-generated parsers into a single program.
+>
+> Already done.  What you're describing might result in a noticeable
+> slowdown in processing, but I can't be sure.
+
+It might also result in a noticeable speedup. Just for example, with the 
+current grammar for determining selma'o, validation would be done twice: 
+once when &cmavo is evaluated, and again when each of the letters is 
+scanned, because of all the lookahead involved in all the single-letter 
+rules.
+
+>> Or is there already a consensus that the requirement is for a
+>> single grand grammar covering every relevant aspect of the
+>> language?
+>
+> As I said, the grammar is already in two parts: morphology and
+> syntax.  The only reason I agreed to that, however, is that it was
+> pointed out that other, completely different, morphologies might
+> want to be used, and that that should be allowed for.
+
+Like I say, I believe that partitioning, validation and characterization are 
+probably simpler considered separately than together. It takes a genius of 
+Jorge's caliber to write or understand a parser that does all three 
+simultaneously. I strongly suspect that if separate grammars were used to 
+solve pieces of the whole problem, each would be simple enough that many, 
+many more people would be able to understand them. Ideally, they would be 
+simple enough that it would be feasible to see whether the grammar(s) do 
+what the prose description says.
+
+Clark 
+
+
+
+
