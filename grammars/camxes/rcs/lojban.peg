@@ -22,11 +22,11 @@
 
 ; --- GRAMMAR ---
 
-text <- spaces* su-clause* spaces* (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO .*)?
+text <- spaces-not-Y* su-clause* spaces-not-Y* (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO .*)?
 
-text-1 <- (I (jek / joik)? (stag? BO)? free* text-1)+ / NIhO+ free* paragraphs? / (paragraphs / joik-jek paragraphs / joik-jek / ())
+text-1 <- (I (jek / joik)? (stag? BO)? free* text-1)+ / NIhO+ free* su-clause* spaces-not-Y* paragraphs? / (paragraphs / joik-jek paragraphs / joik-jek / ())
 
-paragraphs <- paragraph (NIhO+ free* paragraphs)?
+paragraphs <- paragraph (NIhO+ free* su-clause* spaces-not-Y* paragraphs)?
 
 paragraph <- (statement / fragment) (I !jek !joik !joik-jek free* (statement / fragment)?)*
 
@@ -250,7 +250,7 @@ spaces <- space-chars+ 'y'+ / '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
 spaces-not-Y <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
 
 ; SU clauses
-su-clause <- (!SU !NIhO !LU !TUhE !TO any-word)+ SU
+su-clause <- (!SU !NIhO !LU !TUhE !TO any-word)+ SU / SU
 
 ; Handling of SI and interactions with zo and lo'u...le'u
 
@@ -396,7 +396,7 @@ BOI-words <- "boi"
 ;         turns any word into a BY lerfu word 
 BU <- BU-words post-cmavo-no-BU-handling
 BU-words <- "bu"
-BU-bare <- spaces-not-Y* !['] !( cmene-letter cmene-letter cmene-letter consonant consonant / cmene-letter cmene-letter consonant consonant / cmene-letter consonant consonant / consonant consonant ) "bu" !['] !vowel
+BU-bare <- spaces-not-Y* !['] !( cmene-letter cmene-letter cmene-letter consonant consonant / cmene-letter cmene-letter consonant consonant / cmene-letter consonant consonant / consonant consonant ) "bu" !['] !vowel spaces-not-Y*
 ;         individual lerfu words 
 BY <- pre-cmavo BY-sa-clause? BY-words post-cmavo
 BY-no-SA-handling <- pre-cmavo BY-words post-cmavo
