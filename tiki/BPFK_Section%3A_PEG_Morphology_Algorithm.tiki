@@ -54,7 +54,7 @@ gismu <- (stressed-CCV-rafsi / stressed-CVC-rafsi) consonant unstressed-vowel &p
 
 lujvo <- !cmene !tosmabru (stressed-initial-rafsi short-final-rafsi / initial-rafsi medial-rafsi* final-rafsi)
 
-tosmabru <- cmavo-form lujvo
+tosmabru <- unstressed-cmavo-form lujvo
 
 stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi r-hyphen !CCV-rafsi / stressed-CVV-rafsi &CCV-rafsi
 
@@ -147,19 +147,19 @@ unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 cmavo-form <- !cluster !h syllable (&h syllable)*
-syllable <- (consonant+ / i / u / h?) (diphthong / vowel) !vowel !y / digit 
+syllable <- (h / consonant*  (i / u)?) (diphthong / vowel) !vowel / digit 
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / o / (i / u) !vowel
 
 stress <- (cluster y)? syllable spaces
 stressed <- (!vowel .)* comma* [[AEIOU]
 
-a <- comma* [[aA]
-e <- comma* [[eE] 
+a <- comma* [[aA] !a !e !o !y
+e <- comma* [[eE] !a !e !o !u !y
 i <- comma* [[iI] 
-o <- comma* [[oO] 
+o <- comma* [[oO] !a !e !o !u !y
 u <- comma* [[uU] 
-y <- comma* [[yY] 
+y <- comma* [[yY] !a !e !i !o !u 
 
 ;-------------------------------------------------------------------
 
@@ -215,7 +215,7 @@ space-chars <- comma* [[.\t\n\r?!\u0020]
 
 comma <- [[,]
 
-non-lojban-word <- (!spaces .)+
+non-lojban-word <- !cmene !gismu !lujvo !fuhivla !cmavo (!spaces .)+
 
 ;-------------------------------------------------------------------
 
