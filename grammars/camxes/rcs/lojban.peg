@@ -128,7 +128,7 @@ tanru-unit <- tanru-unit-1 (CEI-clause free* tanru-unit-1)*
 
 tanru-unit-1 <- tanru-unit-2 linkargs?
 
-tanru-unit-2 <- any-word spacing-no-absorb-opt (ZEI-clause any-word spacing-no-absorb-opt)+ indicators* / BRIVLA !BU-clause free* / GOhA-clause RAhO-clause? free* / KE-clause free* selbri-3 KEhE-clause? free* / ME-clause free* (sumti / lerfu-string) MEhU-clause? free* MOI-clause? free* / (number / lerfu-string) MOI-clause free* / NUhA-clause free* mex-operator / SE-clause free* tanru-unit-2 / JAI-clause free* tag? tanru-unit-2 / NAhE-clause free* tanru-unit-2 / NU-clause NAI-clause? free* (joik-jek NU-clause NAI-clause? free*)* subsentence KEI-clause? free*
+tanru-unit-2 <- any-word spacing-no-absorb-opt (ZEI-clause any-word spacing-no-absorb-opt)+ indicators* / BRIVLA-clause !BU-clause free* / GOhA-clause RAhO-clause? free* / KE-clause free* selbri-3 KEhE-clause? free* / ME-clause free* (sumti / lerfu-string) MEhU-clause? free* MOI-clause? free* / (number / lerfu-string) MOI-clause free* / NUhA-clause free* mex-operator / SE-clause free* tanru-unit-2 / JAI-clause free* tag? tanru-unit-2 / NAhE-clause free* tanru-unit-2 / NU-clause NAI-clause? free* (joik-jek NU-clause NAI-clause? free*)* subsentence KEI-clause? free*
 
 linkargs <- BE-clause free* term links? BEhO-clause? free*
 
@@ -260,35 +260,118 @@ zoi-last-word <- zoi-spacing any-word-zoi &{ startString.equals(anyWordZoiSEP2) 
 ; Exactly the same as the above; the point here is to stop the inital *backwards* ZOI check (from the expansion of the initial SI clause) from making bad decisions that we are then forced to keep.
 zoi-last-word-no-SI-handling <- zoi-spacing any-word-zoi &{ startString2.equals(anyWordZoiSEP2) } zoi-spacing-opt
 
+zoi-spacing-opt <- space-chars*
 
-NORATS zoi-printable-word <- (!space-chars-real .)+
+zoi-spacing <- space-chars*
+
+zoi-printable-word <- ( known-cmavo-pre / CMAVO-pre / CMENE-pre / BRIVLA-pre / non-Lojban-word-pre ) inner-word close-paren
+NORATS non-Lojban-word-pre <- " nonLojbanWord=( " 
 
 
 ; Indicator absorbtion; grammar.300 4d and 4e
-spacing <- EOF / spaces si-clause indicators*
-spacing-no-absorb <- EOF / spaces si-clause
-spacing-no-absorb-opt <- EOF / spaces? si-clause
-spacing-opt <- spacing / si-clause indicators*
-spaces <- space-chars* (Y-clause !BU-clause)+ / space-chars+
-;spaces-not-Y <- space-chars+
+spacing <- spaces? si-clause indicators*
+spacing-no-absorb <- spaces? si-clause
+spacing-no-absorb-opt <- spaces? si-clause
+spacing-opt <- spaces? si-clause indicators*
+spaces <- space-chars* (Y-clause !BU-clause)+ / space-chars*
 
 ; For handling things of higher priority than SI (i.e. lo'u...le'u, zo)
-spacing-no-SI-handling <- spaces
+spacing-no-SI-handling <- spaces?
 spacing-no-SI-handling-opt <- spaces?
-si-spacing <- spaces
+si-spacing <- spaces?
 
 ; For handling BU issues
-spacing-no-BU-handling <- spaces
+spacing-no-BU-handling <- spaces?
 spacing-no-BU-handling-opt <- spaces?
 
 ; Handling of what can go after a cmavo
-post-cmavo <- !tick-char !vowel !BU-clause spacing-opt !ZEI-clause !BU-clause
-pre-cmavo-check <- !BRIVLA-no-SI-handling !CMENE-no-SI-handling
-post-cmavo-no-SA-handling <- !tick-char !vowel ( EOF / spaces / &SI-clause / &SA-clause )
-post-cmavo-no-SI-handling <- !tick-char !vowel ( EOF / spaces / &SI-clause )
-post-cmavo-no-BU-handling <- !tick-char !vowel ( spacing-no-BU-handling-opt / &BU-clause )
+post-cmavo <- !BU-clause spacing-opt !ZEI-clause !BU-clause
+post-cmavo-no-SA-handling <- spaces? / &SI-clause / &SA-clause
+post-cmavo-no-SI-handling <- spaces? / &SI-clause
+post-cmavo-no-BU-handling <- spacing-no-BU-handling-opt / &BU-clause
 
-pre-cmavo <- BAhE-clause? pre-cmavo-check
+pre-cmavo <- BAhE-clause?
+
+; This section handles things that are morphological, i.e. that break down on a per-character basis.
+
+; inner-word (the stuff inside BRIVLA=( ... ), for example) is an
+; evenly nested, arbitrary length sequence of foo=( ... ) tags with
+; stuff inside them.  Gotta snarf it all.
+NORATS inner-word <- space-char* (!equals-char !space-char .)+ equals-char open-paren inner-word close-paren inner-word? / (!space-char .)+
+NORATS space-char <- ' '
+NORATS equals-char <- '='
+NORATS open-paren <- "( "
+NORATS close-paren <- " ) "
+
+;         any single lexable Lojban words 
+any-word <- CMAVO-no-absorb / BRIVLA-no-absorb / CMENE-no-absorb
+any-word-zoi <- !SI-clause !SA-clause !SU-clause !ZEI-clause !Y-clause ( CMAVO-zoi / BRIVLA-zoi / CMENE-zoi )
+any-word-SA-handling <- CMAVO / BRIVLA-clause / CMENE
+any-word-no-SI-handling <- CMAVO-no-SI-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
+any-word-no-SA-handling <- CMAVO-no-SA-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
+any-word-no-BU-handling <- CMAVO-no-BU-handling / BRIVLA-no-BU-handling / CMENE-no-BU-handling
+
+;; -- General Morphology Issues
+;
+; 1.  Spaces (including '.y') and UI are eaten *after* a word.
+;
+; 2.  Morphology is checked *before* a word.
+;
+; 3.  BAhE is eaten *before* a word.
+;
+; 4.  <selma'o>-words should be used only in those situations where
+;	we are Really Sure that we don't need to worry about morphology.  In other words, basically never.
+
+NORATS dot-star <- .*
+NORATS EOF <- !.
+
+; Characters we recognize as spaces.
+SPACE space-chars <- dot / space-input / newline / tab / carriage-return / question / exclamation
+
+; Characters we recognize as spaces.
+NORATS dot <- " dot=( . ) "
+NORATS space-input <- " space=(   ) "
+NORATS newline <- " newline=( \n ) "
+NORATS tab <- " tab=( \t ) "
+NORATS carriage-return <- " carriageReturn=( \r ) "
+NORATS question <- " question=( ? ) "
+NORATS exclamation <- " exclamation=( ! ) "
+
+CMAVO <- BAhE-clause? (known-cmavo-pre / CMAVO-pre) inner-word close-paren spacing !BU-bare
+
+known-cmavo-pre <- A-word-pre / BAI-word-pre / BAhE-word-pre / BE-word-pre / BEI-word-pre / BEhO-word-pre / BIhE-word-pre / BIhI-word-pre / BO-word-pre / BOI-word-pre / BU-word-pre / BY-word-pre / CAI-word-pre / CAhA-word-pre / CEI-word-pre / CEhE-word-pre / CO-word-pre / COI-word-pre / CU-word-pre / CUhE-word-pre / DAhO-word-pre / DOI-word-pre / DOhU-word-pre / FA-word-pre / FAhA-word-pre / FAhO-word-pre / FEhE-word-pre / FEhU-word-pre / FIhO-word-pre / FOI-word-pre / FUhA-word-pre / FUhE-word-pre / FUhO-word-pre / GA-word-pre / GAhO-word-pre / GEhU-word-pre / GI-word-pre / GIhA-word-pre / GOI-word-pre / GOhA-word-pre / GUhA-word-pre / I-word-pre / JA-word-pre / JAI-word-pre / JOI-word-pre / JOhI-word-pre / KE-word-pre / KEI-word-pre / KEhE-word-pre / KI-word-pre / KOhA-word-pre / KU-word-pre / KUhE-word-pre / KUhO-word-pre / LA-word-pre / LAU-word-pre / LAhE-word-pre / LE-word-pre / LEhU-word-pre / LI-word-pre / LIhU-word-pre / LOhO-word-pre / LOhU-word-pre / LU-word-pre / LUhU-word-pre / MAI-word-pre / MAhO-word-pre / ME-word-pre / MEhU-word-pre / MOI-word-pre / MOhE-word-pre / MOhI-word-pre / NA-word-pre / NAI-word-pre / NAhE-word-pre / NAhU-word-pre / NIhE-word-pre / NIhO-word-pre / NOI-word-pre / NU-word-pre / NUhA-word-pre / NUhI-word-pre / NUhU-word-pre / PA-word-pre / PEhE-word-pre / PEhO-word-pre / PU-word-pre / RAhO-word-pre / ROI-word-pre / SA-word-pre / SE-word-pre / SEI-word-pre / SEhU-word-pre / SI-word-pre / SOI-word-pre / SU-word-pre / TAhE-word-pre / TEI-word-pre / TEhU-word-pre / TO-word-pre / TOI-word-pre / TUhE-word-pre / TUhU-word-pre / UI-word-pre / VA-word-pre / VAU-word-pre / VEI-word-pre / VEhA-word-pre / VEhO-word-pre / VIhA-word-pre / VUhO-word-pre / VUhU-word-pre / XI-word-pre / Y-word-pre / ZAhO-word-pre / ZEI-word-pre / ZEhA-word-pre / ZI-word-pre / ZIhE-word-pre / ZO-word-pre / ZOI-word-pre / ZOhU-word-pre
+NORATS CMAVO-pre <- " CMAVO=( " 
+
+CMAVO-zoi <- (known-cmavo-pre / CMAVO-pre) inner-word close-paren
+CMAVO-no-absorb <- (known-cmavo-pre / CMAVO-pre) inner-word close-paren spacing !BU-bare / BU-clause
+CMAVO-no-SI-handling <- (known-cmavo-pre / CMAVO-pre) inner-word close-paren post-cmavo-no-SI-handling
+CMAVO-no-SA-handling <- (known-cmavo-pre / CMAVO-pre) inner-word close-paren post-cmavo-no-SA-handling
+CMAVO-no-BU-handling <- (known-cmavo-pre / CMAVO-pre) inner-word close-paren post-cmavo-no-BU-handling
+
+all-sa-clauses <- A-sa-clause / BAI-sa-clause / BE-sa-clause / BEI-sa-clause / BEhO-sa-clause / BIhE-sa-clause / BIhI-sa-clause / BO-sa-clause / BOI-sa-clause / BY-sa-clause / CAhA-sa-clause / CAI-sa-clause / CEI-sa-clause / CEhE-sa-clause / CO-sa-clause / COI-sa-clause / CU-sa-clause / CUhE-sa-clause / DAhO-sa-clause / DOI-sa-clause / DOhU-sa-clause / FA-sa-clause / FAhA-sa-clause / FAhO-sa-clause / FEhE-sa-clause / FEhU-sa-clause / FIhO-sa-clause / FOI-sa-clause / FUhA-sa-clause / FUhE-sa-clause / FUhO-sa-clause / GA-sa-clause / GAhO-sa-clause / GEhU-sa-clause / GI-sa-clause / GIhA-sa-clause / GOI-sa-clause / GOhA-sa-clause / GUhA-sa-clause / I-sa-clause / JA-sa-clause / JAI-sa-clause / JOhI-sa-clause / JOI-sa-clause / KE-sa-clause / KEhE-sa-clause / KEI-sa-clause / KI-sa-clause / KOhA-sa-clause / KU-sa-clause / KUhE-sa-clause / KUhO-sa-clause / LA-sa-clause / LAU-sa-clause / LAhE-sa-clause / LE-sa-clause / LEhU-sa-clause / LI-sa-clause / LIhU-sa-clause / LOhO-sa-clause / LU-sa-clause / LUhU-sa-clause / MAhO-sa-clause / MAI-sa-clause / ME-sa-clause / MEhU-sa-clause / MOhE-sa-clause / MOhI-sa-clause / MOI-sa-clause / NA-sa-clause / NAI-sa-clause / NAhE-sa-clause / NAhU-sa-clause / NIhE-sa-clause / NIhO-sa-clause / NOI-sa-clause / NU-sa-clause / NUhA-sa-clause / NUhI-sa-clause / NUhU-sa-clause / PA-sa-clause / PEhE-sa-clause / PEhO-sa-clause / PU-sa-clause / RAhO-sa-clause / ROI-sa-clause / SE-sa-clause / SEI-sa-clause / SEhU-sa-clause / SOI-sa-clause / SU-sa-clause / TAhE-sa-clause / TEhU-sa-clause / TEI-sa-clause / TO-sa-clause / TOI-sa-clause / TUhE-sa-clause / TUhU-sa-clause / UI-sa-clause / VA-sa-clause / VAU-sa-clause / VEI-sa-clause / VEhO-sa-clause / VUhU-sa-clause / VEhA-sa-clause / VIhA-sa-clause / VUhO-sa-clause / XI-sa-clause / Y-sa-clause / ZAhO-sa-clause / ZEhA-sa-clause / ZEI-sa-clause / ZI-sa-clause / ZIhE-sa-clause /ZOI-sa-clause / ZOhU-sa-clause
+
+BRIVLA-clause <- BAhE-clause? BRIVLA-pre inner-word close-paren spacing !BU-bare
+NORATS BRIVLA-pre <- " BRIVLA=( " 
+
+BRIVLA-no-absorb <- BAhE-clause? BRIVLA-pre inner-word close-paren spacing-no-absorb !BU-bare
+
+BRIVLA-zoi <- BRIVLA-pre inner-word close-paren
+
+BRIVLA-no-SI-handling <- BRIVLA-pre inner-word close-paren spacing-no-SI-handling
+
+BRIVLA-no-BU-handling <- BRIVLA-pre inner-word close-paren spacing-no-BU-handling
+
+; CMENE <- /\.?[,'a-pr-z]+[bcdfgjklmnprstvxz]/
+CMENE <- BAhE-clause? CMENE-pre inner-word close-paren spacing !BU-bare
+NORATS CMENE-pre <- " CMENE=( " 
+
+CMENE-zoi <- CMENE-pre inner-word close-paren
+
+CMENE-no-absorb <- BAhE-clause? CMENE-pre inner-word close-paren !BU-bare
+
+CMENE-no-SI-handling <- CMENE-pre inner-word close-paren spacing-no-SI-handling
+
+CMENE-no-BU-handling <- CMENE-pre inner-word close-paren spacing-no-BU-handling
 
 ; Handling of spaces and things like spaces.
 ; --- SPACE ---
@@ -299,17 +382,13 @@ su-clause <- (!SU-clause !NIhO-clause !LU-clause !TUhE-clause !TO-clause any-wor
 
 ; Handling of SI and interactions with zo and lo'u...le'u
 
-si-clause <- (Y BU-clause SI-clause SI-clause / ZO-no-SI-handling SI-clause SI-clause SI-clause / zo-clause-no-SI-handling SI-clause SI-clause / LOhU-clause lohu-tail-si-clause SI-clause / ZOI-clause SI-clause / zoi-clause-no-SI-handling SI-clause SI-clause SI-clause SI-clause / !SI-clause !SA-clause all-sa-clauses CMAVO-no-SA-handling SI-clause / !SA-clause !ZOI-clause !LOhU-clause !SI-clause !ZO-clause any-word-no-SI-handling SI-clause / !SA-clause !ZOI-clause !LOhU-clause !SI-clause !ZO-clause any-word-no-SI-handling si-clause SI-clause )*
+SPACE si-clause <- (Y BU-clause SI-clause SI-clause / ZO-no-SI-handling SI-clause SI-clause SI-clause / zo-clause-no-SI-handling SI-clause SI-clause / LOhU-clause lohu-tail-si-clause SI-clause / ZOI-clause SI-clause / zoi-clause-no-SI-handling SI-clause SI-clause SI-clause SI-clause / !SI-clause !SA-clause all-sa-clauses CMAVO-no-SA-handling SI-clause / !SA-clause !ZOI-clause !LOhU-clause !SI-clause !ZO-clause any-word-no-SI-handling SI-clause / !SA-clause !ZOI-clause !LOhU-clause !SI-clause !ZO-clause any-word-no-SI-handling si-clause SI-clause )*
 
 lohu-tail-si-clause <- LEhU-no-SI-handling si-clause SI-clause / !SI-clause any-word-no-SI-handling lohu-tail-si-clause SI-clause
 
 zo-si-clause <- Y-clause BU-clause+ SI-clause zo-si-clause / any-word-no-SI-handling SI-clause !SI-clause / any-word-no-SI-handling zo-si-clause SI-clause !SI-clause
 
 zo-clause-no-SI-handling <- ZO-clause !SI-clause any-word spacing-no-absorb-opt
-
-zoi-spacing-opt <- spaces?
-
-zoi-spacing <- EOF / space-chars+
 
 ; The SI behaviour we want with ZOI is that SI does not work inside the delimiters
 ; (obviously), the delimiters take one SI each to remove, and the stuff inside the
@@ -329,127 +408,6 @@ zoi-si-end <- zoi-last-word si-clause SI-clause
 
 ; *** END ZOI SI clause section
 
-; --- MORPHOLOGY ---
-; Do *NOT* delete the line above!
-
-; This section handles things that are morphological, i.e. that break down on a per-character basis.
-
-
-;         any single lexable Lojban words 
-any-word <- CMAVO-no-absorb / BRIVLA-no-absorb / CMENE-no-absorb
-any-word-zoi <- !SI-clause !SA-clause !SU-clause !ZEI-clause !Y-clause ( CMAVO-zoi / BRIVLA-zoi / CMENE-zoi )
-any-word-SA-handling <- CMAVO / BRIVLA / CMENE
-any-word-no-SI-handling <- CMAVO-no-SI-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
-any-word-no-SA-handling <- CMAVO-no-SA-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
-any-word-no-BU-handling <- CMAVO-no-BU-handling / BRIVLA-no-BU-handling / CMENE-no-BU-handling
-
-;; -- General Morphology Issues
-;
-; 1.  Spaces (including '.y') and UI are eaten *after* a word.
-;
-; 2.  Morphology is checked *before* a word.
-;
-; 3.  BAhE is eaten *before* a word.
-;
-; 4.  <selma'o>-words should be used only in those situations where
-;	we are Really Sure that we don't need to worry about morphology.  In other words, basically never.
-
-;; -- Letter Groups
-NORATS consonant <- [bcdfgjklmnprstvxz]
-NORATS initial-pair <- "bl" /  "br" /  "cf" /  "ck" /  "cl" /  "cm" /  "cn" /  "cp" /  "cr" /  "ct" /  "dj" /  "dr" /  "dz" /  "fl" /  "fr" /  "gl" /  "gr" /  "jb" /  "jd" /  "jg" /  "jm" /  "jv" /  "kl" /  "kr" /  "ml" /  "mr" /  "pl" /  "pr" /  "sf" /  "sk" /  "sl" /  "sm" /  "sn" /  "sp" /  "sr" /  "st" /  "tc" /  "tr" /  "ts" /  "vl" /  "vr" /  "xl" /  "xr" /  "zb" /  "zd" /  "zg" /  "zm" /  "zv"
-NORATS cmene-consonant <- [bcdfgjklmnprstvxz] / [BCDFGJKLMNPRSTVXZ]
-NORATS vowel <- [aeiouy]
-NORATS vowel-not-y <- [aeiou]
-NORATS y-char <- 'y'
-NORATS tick-char <- [']
-NORATS other-letter <- [',]
-NORATS dot-star <- .*
-NORATS other-cmene-letters <- [BCDFGJKLMNPRSTVXZ] / [AEIOU] / [hY]
-NORATS number-char <- [0123456789]
-NORATS EOF <- !.
-
-any-letter <- cmene-letter / number-char
-lojban-letter <- consonant / vowel / otherLetter
-cmene-letter <- lojban-letter / other-cmene-letters
-
-; Characters we recognize as spaces.
-SPACE space-chars <- space-chars-real
-NORATS space-chars-real <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
-
-;; CMAVO morphology
-CMAVO-post-morphology <- &spaces / CMAVO-cmene-check (CMAVO-brivla-check / CMAVO-consonant-check)
-CMAVO-brivla-check <- &(consonant? vowel (tick-char vowel / vowel)* initial-pair vowel lojban-letter lojban-letter) 
-
-CMAVO-cmene-check <- !( cmene-letter CMAVO-cmene-check-tail )
-CMAVO-cmene-check-tail <- consonant &spaces / cmene-letter CMAVO-cmene-check-tail
-
-CMAVO-consonant-check <- !tick-char !( consonant consonant / cmene-letter consonant consonant / cmene-letter cmene-letter consonant consonant / cmene-letter cmene-letter consonant y-char consonant (consonant / vowel-not-y) / cmene-letter cmene-letter cmene-letter consonant consonant )
-; The "CMAVO-post" productions only occur after another cmavo as a
-; test for whether another cmavo immediately follows, with  no
-; intervening spaces; hence must start with consonant.
-CMAVO-post <- EOF / (spaces / !vowel) CMAVO-post-morphology known-cmavo / !vowel CMAVO-post-morphology consonant vowel (tick-char vowel / vowel)+
-CMAVO-post-no-SI-handling <- EOF / !vowel CMAVO-post-morphology consonant vowel (tick-char vowel / vowel)*
-CMAVO-post-no-BU-handling <- EOF / !vowel CMAVO-post-morphology consonant vowel (tick-char vowel / vowel)*
-
-; The basic 'CMAVO' production is a bit special, in that all single-vowel cmavo are handled by the first section.
-CMAVO <- pre-cmavo-check known-cmavo / pre-cmavo-check consonant? vowel (tick-char vowel / vowel)+ spacing !BU-bare
-
-CMAVO-letters <- number-char+ / consonant? vowel (tick-char vowel / vowel)*
-CMAVO-zoi <- pre-cmavo-check CMAVO-letters &zoi-spacing-opt
-CMAVO-no-absorb <- pre-cmavo-check CMAVO-letters &spacing-no-absorb-opt !BU-bare / BU-clause
-CMAVO-no-SI-handling <- pre-cmavo-check CMAVO-letters post-cmavo-no-SI-handling
-CMAVO-no-SA-handling <- pre-cmavo-check CMAVO-letters post-cmavo-no-SA-handling
-CMAVO-no-BU-handling <- pre-cmavo-check CMAVO-letters post-cmavo-no-BU-handling
-
-known-cmavo <- A-clause / BAI-clause / BAhE-clause / BE-clause / BEI-clause / BEhO-clause / BIhE-clause / BIhI-clause / BO-clause / BOI-clause / BU-clause / BY-clause / CAI-clause / CAhA-clause / CEI-clause / CEhE-clause / CO-clause / COI-clause / CU-clause / CUhE-clause / DAhO-clause / DOI-clause / DOhU-clause / FA-clause / FAhA-clause / FAhO-clause / FEhE-clause / FEhU-clause / FIhO-clause / FOI-clause / FUhA-clause / FUhE-clause / FUhO-clause / GA-clause / GAhO-clause / GEhU-clause / GI-clause / GIhA-clause / GOI-clause / GOhA-clause / GUhA-clause / I-clause / JA-clause / JAI-clause / JOI-clause / JOhI-clause / KE-clause / KEI-clause / KEhE-clause / KI-clause / KOhA-clause / KU-clause / KUhE-clause / KUhO-clause / LA-clause / LAU-clause / LAhE-clause / LE-clause / LEhU-clause / LI-clause / LIhU-clause / LOhO-clause / LOhU-clause / LU-clause / LUhU-clause / MAI-clause / MAhO-clause / ME-clause / MEhU-clause / MOI-clause / MOhE-clause / MOhI-clause / NA-clause / NAI-clause / NAhE-clause / NAhU-clause / NIhE-clause / NIhO-clause / NOI-clause / NU-clause / NUhA-clause / NUhI-clause / NUhU-clause / PA-clause / PEhE-clause / PEhO-clause / PU-clause / RAhO-clause / ROI-clause / SA-clause / SE-clause / SEI-clause / SEhU-clause / SI-clause / SOI-clause / SU-clause / TAhE-clause / TEI-clause / TEhU-clause / TO-clause / TOI-clause / TUhE-clause / TUhU-clause / UI-clause / VA-clause / VAU-clause / VEI-clause / VEhA-clause / VEhO-clause / VIhA-clause / VUhO-clause / VUhU-clause / XI-clause / Y-clause / ZAhO-clause / ZEI-clause / ZEhA-clause / ZI-clause / ZIhE-clause / ZO-clause / ZOI-clause / ZOhU-clause
-
-all-sa-clauses <- A-sa-clause / BAI-sa-clause / BE-sa-clause / BEI-sa-clause / BEhO-sa-clause / BIhE-sa-clause / BIhI-sa-clause / BO-sa-clause / BOI-sa-clause / BY-sa-clause / CAhA-sa-clause / CAI-sa-clause / CEI-sa-clause / CEhE-sa-clause / CO-sa-clause / COI-sa-clause / CU-sa-clause / CUhE-sa-clause / DAhO-sa-clause / DOI-sa-clause / DOhU-sa-clause / FA-sa-clause / FAhA-sa-clause / FAhO-sa-clause / FEhE-sa-clause / FEhU-sa-clause / FIhO-sa-clause / FOI-sa-clause / FUhA-sa-clause / FUhE-sa-clause / FUhO-sa-clause / GA-sa-clause / GAhO-sa-clause / GEhU-sa-clause / GI-sa-clause / GIhA-sa-clause / GOI-sa-clause / GOhA-sa-clause / GUhA-sa-clause / I-sa-clause / JA-sa-clause / JAI-sa-clause / JOhI-sa-clause / JOI-sa-clause / KE-sa-clause / KEhE-sa-clause / KEI-sa-clause / KI-sa-clause / KOhA-sa-clause / KU-sa-clause / KUhE-sa-clause / KUhO-sa-clause / LA-sa-clause / LAU-sa-clause / LAhE-sa-clause / LE-sa-clause / LEhU-sa-clause / LI-sa-clause / LIhU-sa-clause / LOhO-sa-clause / LU-sa-clause / LUhU-sa-clause / MAhO-sa-clause / MAI-sa-clause / ME-sa-clause / MEhU-sa-clause / MOhE-sa-clause / MOhI-sa-clause / MOI-sa-clause / NA-sa-clause / NAI-sa-clause / NAhE-sa-clause / NAhU-sa-clause / NIhE-sa-clause / NIhO-sa-clause / NOI-sa-clause / NU-sa-clause / NUhA-sa-clause / NUhI-sa-clause / NUhU-sa-clause / PA-sa-clause / PEhE-sa-clause / PEhO-sa-clause / PU-sa-clause / RAhO-sa-clause / ROI-sa-clause / SE-sa-clause / SEI-sa-clause / SEhU-sa-clause / SOI-sa-clause / SU-sa-clause / TAhE-sa-clause / TEhU-sa-clause / TEI-sa-clause / TO-sa-clause / TOI-sa-clause / TUhE-sa-clause / TUhU-sa-clause / UI-sa-clause / VA-sa-clause / VAU-sa-clause / VEI-sa-clause / VEhO-sa-clause / VUhU-sa-clause / VEhA-sa-clause / VIhA-sa-clause / VUhO-sa-clause / XI-sa-clause / Y-sa-clause / ZAhO-sa-clause / ZEhA-sa-clause / ZEI-sa-clause / ZI-sa-clause / ZIhE-sa-clause /ZOI-sa-clause / ZOhU-sa-clause
-
-;         any brivla 
-; For now: gismu pattern.
-; BRIVLA	: /[bcdfgjklmnprstvxz]{2}['a-z]{2,}[aeiou]/
-;		/ /[bcdfgjklmnprstvxz][aeiou][bcdfgjklmnprstvxz]y?[bcdfgjklmnprstvxz]['a-z]*[aeiou]/
-;		/ /[bcdfgjklmnprstvxz][aeiou]'?[aeiou][bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
-;		/ /[aeiou]('?[aeiou]){,2}[bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
-
-BRIVLA <- BAhE-clause? initial-pair lojban-letter lojban-letter brivla-tail / BAhE-clause? consonant !y-char vowel consonant y-char? consonant brivla-tail / BAhE-clause? consonant !y-char vowel tick-char? !y-char vowel consonant consonant brivla-tail
-;/ FUHIVLA
-
-BRIVLA-no-absorb <- BAhE-clause? initial-pair lojban-letter lojban-letter brivla-tail-no-absorb / BAhE-clause? consonant !y-char vowel consonant y-char? consonant brivla-tail-no-absorb / BAhE-clause? consonant !y-char vowel tick-char? !y-char vowel consonant consonant brivla-tail-no-absorb
-brivla-tail-no-absorb <- vowel-not-y &spacing-no-absorb / lojban-letter brivla-tail-no-absorb
-
-BRIVLA-zoi <- initial-pair lojban-letter lojban-letter brivla-tail-no-absorb / consonant !y-char vowel consonant y-char? consonant brivla-tail-no-absorb / consonant !y-char vowel tick-char? !y-char vowel consonant consonant brivla-tail-no-absorb
-
-; FUHIVLA <- !tick-char consonant consonant brivla-tail / !CMAVO cmene-letter consonant consonant brivla-tail / !CMAVO cmene-letter cmene-letter consonant consonant brivla-tail / cmene-letter cmene-letter consonant y-char consonant (consonant / vowel-not-y) brivla-tail / cmene-letter cmene-letter cmene-letter consonant consonant brivla-tail
-
-brivla-tail <- vowel-not-y spacing / lojban-letter brivla-tail
-
-BRIVLA-no-SI-handling <- initial-pair lojban-letter lojban-letter brivla-tail-no-SI-handling / consonant !y-char vowel consonant y-char? consonant brivla-tail-no-SI-handling / consonant !y-char vowel tick-char? !y-char vowel consonant consonant brivla-tail-no-SI-handling
-
-brivla-tail-no-SI-handling <- vowel-not-y spacing-no-SI-handling / lojban-letter brivla-tail-no-SI-handling
-
-BRIVLA-no-BU-handling <- initial-pair lojban-letter lojban-letter brivla-tail-no-BU-handling / consonant !y-char vowel consonant y-char? consonant brivla-tail-no-BU-handling / consonant !y-char vowel tick-char? !y-char vowel consonant consonant brivla-tail-no-BU-handling
-
-brivla-tail-no-BU-handling <- vowel-not-y spacing-no-BU-handling / lojban-letter brivla-tail-no-BU-handling
-
-; CMENE <- /\.?[,'a-pr-z]+[bcdfgjklmnprstvxz]/
-CMENE <- BAhE-clause? cmene-letter cmene-tail
-
-cmene-tail <- cmene-consonant !y-char spacing / cmene-letter cmene-tail
-
-CMENE-zoi <- cmene-letter cmene-tail-no-absorb
-
-CMENE-no-absorb <- BAhE-clause? cmene-letter cmene-tail-no-absorb
-cmene-tail-no-absorb <- cmene-consonant !y-char &spacing-no-absorb / cmene-letter cmene-tail-no-absorb
-
-CMENE-no-SI-handling <- cmene-letter cmene-tail-no-SI-handling
-
-cmene-tail-no-SI-handling <- cmene-consonant !y-char spacing-no-SI-handling / cmene-letter cmene-tail-no-SI-handling
-
-CMENE-no-BU-handling <- cmene-letter cmene-tail-no-BU-handling
-cmene-tail-no-BU-handling <- cmene-consonant !y-char spacing-no-BU-handling / cmene-letter cmene-tail-no-BU-handling
-
-
 
 ; --- SELMAHO ---
 ; Do *NOT* delete the line above!
@@ -466,7 +424,8 @@ SPACE A-no-SA-handling <- pre-cmavo A post-cmavo
 SPACE A-sa-clause <- A-no-SA-handling A-sa-tail
 SPACE A-sa-tail <- SA-clause &A-no-SA-handling / !A-no-SA-handling !SA-clause any-word-no-SA-handling A-sa-tail / A-no-SA-handling A-sa-tail2 A-sa-tail
 SPACE A-sa-tail2 <- SA-clause / !A-no-SA-handling !SA-clause any-word-no-SA-handling A-sa-tail2 / A-no-SA-handling A-sa-tail2 A-sa-tail2
-NORATS A <- "a" / "e" / "ji" / "o" / "u"
+NORATS A <- A-word-pre inner-word close-paren
+NORATS A-word-pre <- " A=( "
 
 
 ;         modal operators 
@@ -477,11 +436,13 @@ SPACE BAI-no-SA-handling <- pre-cmavo BAI post-cmavo
 SPACE BAI-sa-clause <- BAI-no-SA-handling BAI-sa-tail
 SPACE BAI-sa-tail <- SA-clause &BAI-no-SA-handling / !BAI-no-SA-handling !SA-clause any-word-no-SA-handling BAI-sa-tail / BAI-no-SA-handling BAI-sa-tail2 BAI-sa-tail
 SPACE BAI-sa-tail2 <- SA-clause / !BAI-no-SA-handling !SA-clause any-word-no-SA-handling BAI-sa-tail2 / BAI-no-SA-handling BAI-sa-tail2 BAI-sa-tail2
-NORATS BAI <- "du'o" / "si'u" / "zau" / "ki'i" / "du'i" / "cu'u" / "tu'i" / "ti'u" / "di'o" / "ji'u" / "ri'a" / "ni'i" / "mu'i" / "ki'u" / "va'u" / "koi" / "ca'i" / "ta'i" / "pu'e" / "ja'i" / "kai" / "bai" / "fi'e" / "de'i" / "ci'o" / "mau" / "mu'u" / "ri'i" / "ra'i" / "ka'a" / "pa'u" / "pa'a" / "le'a" / "ku'u" / "tai" / "bau" / "ma'i" / "ci'e" / "fau" / "po'i" / "cau" / "ma'e" / "ci'u" / "ra'a" / "pu'a" / "li'e" / "la'u" / "ba'i" / "ka'i" / "sau" / "fa'e" / "be'i" / "ti'i" / "ja'e" / "ga'a" / "va'o" / "ji'o" / "me'a" / "do'e" / "ji'e" / "pi'o" / "gau" / "zu'e" / "me'e" / "rai"
+NORATS BAI <- BAI-word-pre inner-word close-paren
+NORATS BAI-word-pre <- " BAI=( "
 
 ;         next word intensifier 
-BAhE-clause <- (pre-cmavo-check BAhE spaces?)+
-NORATS BAhE <- "ba'e" / "za'e"
+BAhE-clause <- (BAhE spaces?)+
+NORATS BAhE <- BAhE-word-pre inner-word close-paren
+NORATS BAhE-word-pre <- " BAhE=( "
 
 ;         sumti link to attach sumti to a selbri 
 BE-clause <- BE-pre BE BE-post
@@ -491,7 +452,8 @@ SPACE BE-no-SA-handling <- pre-cmavo BE post-cmavo
 SPACE BE-sa-clause <- BE-no-SA-handling BE-sa-tail
 SPACE BE-sa-tail <- SA-clause &BE-no-SA-handling / !BE-no-SA-handling !SA-clause any-word-no-SA-handling BE-sa-tail / BE-no-SA-handling BE-sa-tail2 BE-sa-tail
 SPACE BE-sa-tail2 <- SA-clause / !BE-no-SA-handling !SA-clause any-word-no-SA-handling BE-sa-tail2 / BE-no-SA-handling BE-sa-tail2 BE-sa-tail2
-NORATS BE <- "be"
+NORATS BE <- BE-word-pre inner-word close-paren
+NORATS BE-word-pre <- " BE=( "
 
 ;         multiple sumti separator between BE, BEI 
 BEI-clause <- BEI-pre BEI BEI-post
@@ -501,7 +463,8 @@ SPACE BEI-no-SA-handling <- pre-cmavo BEI post-cmavo
 SPACE BEI-sa-clause <- BEI-no-SA-handling BEI-sa-tail
 SPACE BEI-sa-tail <- SA-clause &BEI-no-SA-handling / !BEI-no-SA-handling !SA-clause any-word-no-SA-handling BEI-sa-tail / BEI-no-SA-handling BEI-sa-tail2 BEI-sa-tail
 SPACE BEI-sa-tail2 <- SA-clause / !BEI-no-SA-handling !SA-clause any-word-no-SA-handling BEI-sa-tail2 / BEI-no-SA-handling BEI-sa-tail2 BEI-sa-tail2
-NORATS BEI <- "bei"
+NORATS BEI <- BEI-word-pre inner-word close-paren
+NORATS BEI-word-pre <- " BEI=( "
 
 ;         terminates BEBEI specified descriptors 
 BEhO-clause <- BEhO-pre BEhO BEhO-post
@@ -511,7 +474,8 @@ SPACE BEhO-no-SA-handling <- pre-cmavo BEhO post-cmavo
 SPACE BEhO-sa-clause <- BEhO-no-SA-handling BEhO-sa-tail
 SPACE BEhO-sa-tail <- SA-clause &BEhO-no-SA-handling / !BEhO-no-SA-handling !SA-clause any-word-no-SA-handling BEhO-sa-tail / BEhO-no-SA-handling BEhO-sa-tail2 BEhO-sa-tail
 SPACE BEhO-sa-tail2 <- SA-clause / !BEhO-no-SA-handling !SA-clause any-word-no-SA-handling BEhO-sa-tail2 / BEhO-no-SA-handling BEhO-sa-tail2 BEhO-sa-tail2
-NORATS BEhO <- "be'o"
+NORATS BEhO <- BEhO-word-pre inner-word close-paren
+NORATS BEhO-word-pre <- " BEhO=( "
 
 ;         prefix for high-priority MEX operator 
 BIhE-clause <- BIhE-pre BIhE BIhE-post
@@ -521,7 +485,8 @@ SPACE BIhE-no-SA-handling <- pre-cmavo BIhE post-cmavo
 SPACE BIhE-sa-clause <- BIhE-no-SA-handling BIhE-sa-tail
 SPACE BIhE-sa-tail <- SA-clause &BIhE-no-SA-handling / !BIhE-no-SA-handling !SA-clause any-word-no-SA-handling BIhE-sa-tail / BIhE-no-SA-handling BIhE-sa-tail2 BIhE-sa-tail
 SPACE BIhE-sa-tail2 <- SA-clause / !BIhE-no-SA-handling !SA-clause any-word-no-SA-handling BIhE-sa-tail2 / BIhE-no-SA-handling BIhE-sa-tail2 BIhE-sa-tail2
-NORATS BIhE <- "bi'e"
+NORATS BIhE <- BIhE-word-pre inner-word close-paren
+NORATS BIhE-word-pre <- " BIhE=( "
 
 ;         interval component of JOI 
 BIhI-clause <- BIhI-pre BIhI BIhI-post
@@ -531,7 +496,8 @@ SPACE BIhI-no-SA-handling <- pre-cmavo BIhI post-cmavo
 SPACE BIhI-sa-clause <- BIhI-no-SA-handling BIhI-sa-tail
 SPACE BIhI-sa-tail <- SA-clause &BIhI-no-SA-handling / !BIhI-no-SA-handling !SA-clause any-word-no-SA-handling BIhI-sa-tail / BIhI-no-SA-handling BIhI-sa-tail2 BIhI-sa-tail
 SPACE BIhI-sa-tail2 <- SA-clause / !BIhI-no-SA-handling !SA-clause any-word-no-SA-handling BIhI-sa-tail2 / BIhI-no-SA-handling BIhI-sa-tail2 BIhI-sa-tail2
-NORATS BIhI <- "mi'i" / "bi'o" / "bi'i"
+NORATS BIhI <- BIhI-word-pre inner-word close-paren
+NORATS BIhI-word-pre <- " BIhI=( "
 
 ;         joins two units with shortest scope 
 BO-clause <- BO-pre BO BO-post
@@ -541,7 +507,8 @@ SPACE BO-no-SA-handling <- pre-cmavo BO post-cmavo
 SPACE BO-sa-clause <- BO-no-SA-handling BO-sa-tail
 SPACE BO-sa-tail <- SA-clause &BO-no-SA-handling / !BO-no-SA-handling !SA-clause any-word-no-SA-handling BO-sa-tail / BO-no-SA-handling BO-sa-tail2 BO-sa-tail
 SPACE BO-sa-tail2 <- SA-clause / !BO-no-SA-handling !SA-clause any-word-no-SA-handling BO-sa-tail2 / BO-no-SA-handling BO-sa-tail2 BO-sa-tail2
-NORATS BO <- "bo"
+NORATS BO <- BO-word-pre inner-word close-paren
+NORATS BO-word-pre <- " BO=( "
 
 ;         number or lerfu-string terminator 
 BOI-clause <- BOI-pre BOI BOI-post
@@ -551,14 +518,16 @@ SPACE BOI-no-SA-handling <- pre-cmavo BOI post-cmavo
 SPACE BOI-sa-clause <- BOI-no-SA-handling BOI-sa-tail
 SPACE BOI-sa-tail <- SA-clause &BOI-no-SA-handling / !BOI-no-SA-handling !SA-clause any-word-no-SA-handling BOI-sa-tail / BOI-no-SA-handling BOI-sa-tail2 BOI-sa-tail
 SPACE BOI-sa-tail2 <- SA-clause / !BOI-no-SA-handling !SA-clause any-word-no-SA-handling BOI-sa-tail2 / BOI-no-SA-handling BOI-sa-tail2 BOI-sa-tail2
-NORATS BOI <- "boi"
+NORATS BOI <- BOI-word-pre inner-word close-paren
+NORATS BOI-word-pre <- " BOI=( "
 
 ;         turns any word into a BY lerfu word 
-BU-clause <- BU-pre BU BU-post
-BU-pre <- pre-cmavo-check
+BU-clause <- BU BU-post
+;BU-pre <- pre-cmavo-check
 BU-post <- post-cmavo-no-BU-handling
-NORATS BU <- "bu"
-BU-bare <- pre-cmavo-check BU !tick-char !vowel spacing-opt
+NORATS BU <- BU-word-pre inner-word close-paren
+NORATS BU-word-pre <- " BU=( "
+BU-bare <- BU spacing-opt
 
 ;         individual lerfu words 
 BY-clause <- BY-pre BY BY-post
@@ -568,7 +537,8 @@ SPACE BY-no-SA-handling <- pre-cmavo BY post-cmavo
 SPACE BY-sa-clause <- BY-no-SA-handling BY-sa-tail
 SPACE BY-sa-tail <- SA-clause &BY-no-SA-handling / !BY-no-SA-handling !SA-clause any-word-no-SA-handling BY-sa-tail / BY-no-SA-handling BY-sa-tail2 BY-sa-tail
 SPACE BY-sa-tail2 <- SA-clause / !BY-no-SA-handling !SA-clause any-word-no-SA-handling BY-sa-tail2 / BY-no-SA-handling BY-sa-tail2 BY-sa-tail2
-NORATS BY <- "jo'o" / "ru'o" / "ge'o" / "je'o" / "lo'a" / "na'a" / "se'e" / "to'a" / "ga'e" / "y'y" / "by" / "cy" / "dy" / "fy" / "gy" / "jy" / "ky" / "ly" / "my" / "ny" / "py" / "ry" / "sy" / "ty" / "vy" / "xy" / "zy"
+NORATS BY <- BY-word-pre inner-word close-paren
+NORATS BY-word-pre <- " BY=( "
 
 
 ;         specifies actualitypotentiality of tense 
@@ -579,7 +549,8 @@ SPACE CAhA-no-SA-handling <- pre-cmavo CAhA post-cmavo
 SPACE CAhA-sa-clause <- CAhA-no-SA-handling CAhA-sa-tail
 SPACE CAhA-sa-tail <- SA-clause &CAhA-no-SA-handling / !CAhA-no-SA-handling !SA-clause any-word-no-SA-handling CAhA-sa-tail / CAhA-no-SA-handling CAhA-sa-tail2 CAhA-sa-tail
 SPACE CAhA-sa-tail2 <- SA-clause / !CAhA-no-SA-handling !SA-clause any-word-no-SA-handling CAhA-sa-tail2 / CAhA-no-SA-handling CAhA-sa-tail2 CAhA-sa-tail2
-NORATS CAhA <- "ca'a" / "pu'i" / "nu'o" / "ka'e"
+NORATS CAhA <- CAhA-word-pre inner-word close-paren
+NORATS CAhA-word-pre <- " CAhA=( "
 
 ;         afterthought intensity marker 
 CAI-clause <- CAI-pre CAI CAI-post
@@ -589,7 +560,8 @@ SPACE CAI-no-SA-handling <- pre-cmavo CAI post-cmavo
 SPACE CAI-sa-clause <- CAI-no-SA-handling CAI-sa-tail
 SPACE CAI-sa-tail <- SA-clause &CAI-no-SA-handling / !CAI-no-SA-handling !SA-clause any-word-no-SA-handling CAI-sa-tail / CAI-no-SA-handling CAI-sa-tail2 CAI-sa-tail
 SPACE CAI-sa-tail2 <- SA-clause / !CAI-no-SA-handling !SA-clause any-word-no-SA-handling CAI-sa-tail2 / CAI-no-SA-handling CAI-sa-tail2 CAI-sa-tail2
-NORATS CAI <- "pei" / "cai" / "cu'i" / "sai" / "ru'e"
+NORATS CAI <- CAI-word-pre inner-word close-paren
+NORATS CAI-word-pre <- " CAI=( "
 
 ;         pro-bridi assignment operator 
 CEI-clause <- CEI-pre CEI CEI-post
@@ -599,7 +571,8 @@ SPACE CEI-no-SA-handling <- pre-cmavo CEI post-cmavo
 SPACE CEI-sa-clause <- CEI-no-SA-handling CEI-sa-tail
 SPACE CEI-sa-tail <- SA-clause &CEI-no-SA-handling / !CEI-no-SA-handling !SA-clause any-word-no-SA-handling CEI-sa-tail / CEI-no-SA-handling CEI-sa-tail2 CEI-sa-tail
 SPACE CEI-sa-tail2 <- SA-clause / !CEI-no-SA-handling !SA-clause any-word-no-SA-handling CEI-sa-tail2 / CEI-no-SA-handling CEI-sa-tail2 CEI-sa-tail2
-NORATS CEI <- "cei"
+NORATS CEI <- CEI-word-pre inner-word close-paren
+NORATS CEI-word-pre <- " CEI=( "
 
 ;         afterthought term list connective 
 CEhE-clause <- CEhE-pre CEhE CEhE-post
@@ -609,7 +582,8 @@ SPACE CEhE-no-SA-handling <- pre-cmavo CEhE post-cmavo
 SPACE CEhE-sa-clause <- CEhE-no-SA-handling CEhE-sa-tail
 SPACE CEhE-sa-tail <- SA-clause &CEhE-no-SA-handling / !CEhE-no-SA-handling !SA-clause any-word-no-SA-handling CEhE-sa-tail / CEhE-no-SA-handling CEhE-sa-tail2 CEhE-sa-tail
 SPACE CEhE-sa-tail2 <- SA-clause / !CEhE-no-SA-handling !SA-clause any-word-no-SA-handling CEhE-sa-tail2 / CEhE-no-SA-handling CEhE-sa-tail2 CEhE-sa-tail2
-NORATS CEhE <- "ce'e"
+NORATS CEhE <- CEhE-word-pre inner-word close-paren
+NORATS CEhE-word-pre <- " CEhE=( "
 
 ;         names; require consonant end, then pause no
 
@@ -625,7 +599,8 @@ SPACE CO-no-SA-handling <- pre-cmavo CO post-cmavo
 SPACE CO-sa-clause <- CO-no-SA-handling CO-sa-tail
 SPACE CO-sa-tail <- SA-clause &CO-no-SA-handling / !CO-no-SA-handling !SA-clause any-word-no-SA-handling CO-sa-tail / CO-no-SA-handling CO-sa-tail2 CO-sa-tail
 SPACE CO-sa-tail2 <- SA-clause / !CO-no-SA-handling !SA-clause any-word-no-SA-handling CO-sa-tail2 / CO-no-SA-handling CO-sa-tail2 CO-sa-tail2
-NORATS CO <- "co"
+NORATS CO <- CO-word-pre inner-word close-paren
+NORATS CO-word-pre <- " CO=( "
 COI-clause <- COI-pre COI COI-post
 COI-pre <- pre-cmavo COI-sa-clause?
 COI-post <- post-cmavo
@@ -633,7 +608,8 @@ SPACE COI-no-SA-handling <- pre-cmavo COI post-cmavo
 SPACE COI-sa-clause <- COI-no-SA-handling COI-sa-tail
 SPACE COI-sa-tail <- SA-clause &COI-no-SA-handling / !COI-no-SA-handling !SA-clause any-word-no-SA-handling COI-sa-tail / COI-no-SA-handling COI-sa-tail2 COI-sa-tail
 SPACE COI-sa-tail2 <- SA-clause / !COI-no-SA-handling !SA-clause any-word-no-SA-handling COI-sa-tail2 / COI-no-SA-handling COI-sa-tail2 COI-sa-tail2
-NORATS COI <- "ju'i" / "coi" / "fi'i" / "ta'a" / "mu'o" / "fe'o" / "co'o" / "pe'u" / "ke'o" / "nu'e" / "re'i" / "be'e" / "je'e" / "mi'e" / "ki'e" / "vi'o"
+NORATS COI <- COI-word-pre inner-word close-paren
+NORATS COI-word-pre <- " COI=( "
 
 ;         vocative marker permitted inside names; must
 
@@ -647,7 +623,8 @@ SPACE CU-no-SA-handling <- pre-cmavo CU post-cmavo
 SPACE CU-sa-clause <- CU-no-SA-handling CU-sa-tail
 SPACE CU-sa-tail <- SA-clause &CU-no-SA-handling / !CU-no-SA-handling !SA-clause any-word-no-SA-handling CU-sa-tail / CU-no-SA-handling CU-sa-tail2 CU-sa-tail
 SPACE CU-sa-tail2 <- SA-clause / !CU-no-SA-handling !SA-clause any-word-no-SA-handling CU-sa-tail2 / CU-no-SA-handling CU-sa-tail2 CU-sa-tail2
-NORATS CU <- "cu"
+NORATS CU <- CU-word-pre inner-word close-paren
+NORATS CU-word-pre <- " CU=( "
 
 ;         tensemodal question 
 CUhE-clause <- CUhE-pre CUhE CUhE-post
@@ -657,7 +634,8 @@ SPACE CUhE-no-SA-handling <- pre-cmavo CUhE post-cmavo
 SPACE CUhE-sa-clause <- CUhE-no-SA-handling CUhE-sa-tail
 SPACE CUhE-sa-tail <- SA-clause &CUhE-no-SA-handling / !CUhE-no-SA-handling !SA-clause any-word-no-SA-handling CUhE-sa-tail / CUhE-no-SA-handling CUhE-sa-tail2 CUhE-sa-tail
 SPACE CUhE-sa-tail2 <- SA-clause / !CUhE-no-SA-handling !SA-clause any-word-no-SA-handling CUhE-sa-tail2 / CUhE-no-SA-handling CUhE-sa-tail2 CUhE-sa-tail2
-NORATS CUhE <- "cu'e" / "nau"
+NORATS CUhE <- CUhE-word-pre inner-word close-paren
+NORATS CUhE-word-pre <- " CUhE=( "
 
 
 ;         cancel anaphoracataphora assignments 
@@ -668,7 +646,8 @@ SPACE DAhO-no-SA-handling <- pre-cmavo DAhO post-cmavo
 SPACE DAhO-sa-clause <- DAhO-no-SA-handling DAhO-sa-tail
 SPACE DAhO-sa-tail <- SA-clause &DAhO-no-SA-handling / !DAhO-no-SA-handling !SA-clause any-word-no-SA-handling DAhO-sa-tail / DAhO-no-SA-handling DAhO-sa-tail2 DAhO-sa-tail
 SPACE DAhO-sa-tail2 <- SA-clause / !DAhO-no-SA-handling !SA-clause any-word-no-SA-handling DAhO-sa-tail2 / DAhO-no-SA-handling DAhO-sa-tail2 DAhO-sa-tail2
-NORATS DAhO <- "da'o"
+NORATS DAhO <- DAhO-word-pre inner-word close-paren
+NORATS DAhO-word-pre <- " DAhO=( "
 
 ;         vocative marker 
 DOI-clause <- DOI-pre DOI DOI-post
@@ -678,7 +657,8 @@ SPACE DOI-no-SA-handling <- pre-cmavo DOI post-cmavo
 SPACE DOI-sa-clause <- DOI-no-SA-handling DOI-sa-tail
 SPACE DOI-sa-tail <- SA-clause &DOI-no-SA-handling / !DOI-no-SA-handling !SA-clause any-word-no-SA-handling DOI-sa-tail / DOI-no-SA-handling DOI-sa-tail2 DOI-sa-tail
 SPACE DOI-sa-tail2 <- SA-clause / !DOI-no-SA-handling !SA-clause any-word-no-SA-handling DOI-sa-tail2 / DOI-no-SA-handling DOI-sa-tail2 DOI-sa-tail2
-NORATS DOI <- "doi"
+NORATS DOI <- DOI-word-pre inner-word close-paren
+NORATS DOI-word-pre <- " DOI=( "
 
 ;         terminator for DOI-marked vocatives 
 DOhU-clause <- DOhU-pre DOhU DOhU-post
@@ -688,7 +668,8 @@ SPACE DOhU-no-SA-handling <- pre-cmavo DOhU post-cmavo
 SPACE DOhU-sa-clause <- DOhU-no-SA-handling DOhU-sa-tail
 SPACE DOhU-sa-tail <- SA-clause &DOhU-no-SA-handling / !DOhU-no-SA-handling !SA-clause any-word-no-SA-handling DOhU-sa-tail / DOhU-no-SA-handling DOhU-sa-tail2 DOhU-sa-tail
 SPACE DOhU-sa-tail2 <- SA-clause / !DOhU-no-SA-handling !SA-clause any-word-no-SA-handling DOhU-sa-tail2 / DOhU-no-SA-handling DOhU-sa-tail2 DOhU-sa-tail2
-NORATS DOhU <- "do'u"
+NORATS DOhU <- DOhU-word-pre inner-word close-paren
+NORATS DOhU-word-pre <- " DOhU=( "
 
 
 ;         modifier head generic case tag 
@@ -699,7 +680,8 @@ SPACE FA-no-SA-handling <- pre-cmavo FA post-cmavo
 SPACE FA-sa-clause <- FA-no-SA-handling FA-sa-tail
 SPACE FA-sa-tail <- SA-clause &FA-no-SA-handling / !FA-no-SA-handling !SA-clause any-word-no-SA-handling FA-sa-tail / FA-no-SA-handling FA-sa-tail2 FA-sa-tail
 SPACE FA-sa-tail2 <- SA-clause / !FA-no-SA-handling !SA-clause any-word-no-SA-handling FA-sa-tail2 / FA-no-SA-handling FA-sa-tail2 FA-sa-tail2
-NORATS FA <- "fai" / "fa" / "fe" / "fo" / "fu" / "fi'a" / "fi"
+NORATS FA <- FA-word-pre inner-word close-paren
+NORATS FA-word-pre <- " FA=( "
 
 ;         superdirections in space 
 FAhA-clause <- FAhA-pre FAhA FAhA-post
@@ -709,7 +691,8 @@ SPACE FAhA-no-SA-handling <- pre-cmavo FAhA post-cmavo
 SPACE FAhA-sa-clause <- FAhA-no-SA-handling FAhA-sa-tail
 SPACE FAhA-sa-tail <- SA-clause &FAhA-no-SA-handling / !FAhA-no-SA-handling !SA-clause any-word-no-SA-handling FAhA-sa-tail / FAhA-no-SA-handling FAhA-sa-tail2 FAhA-sa-tail
 SPACE FAhA-sa-tail2 <- SA-clause / !FAhA-no-SA-handling !SA-clause any-word-no-SA-handling FAhA-sa-tail2 / FAhA-no-SA-handling FAhA-sa-tail2 FAhA-sa-tail2
-NORATS FAhA <- "du'a" / "be'a" / "ne'u" / "vu'a" / "ga'u" / "ti'a" / "ni'a" / "ca'u" / "zu'a" / "ri'u" / "ru'u" / "re'o" / "te'e" / "bu'u" / "ne'a" / "pa'o" / "ne'i" / "to'o" / "zo'i" / "ze'o" / "zo'a" / "fa'a"
+NORATS FAhA <- FAhA-word-pre inner-word close-paren
+NORATS FAhA-word-pre <- " FAhA=( "
 FAhO-clause <- FAhO-pre FAhO FAhO-post
 FAhO-pre <- pre-cmavo FAhO-sa-clause?
 FAhO-post <- post-cmavo
@@ -717,7 +700,8 @@ SPACE FAhO-no-SA-handling <- pre-cmavo FAhO post-cmavo
 SPACE FAhO-sa-clause <- FAhO-no-SA-handling FAhO-sa-tail
 SPACE FAhO-sa-tail <- SA-clause &FAhO-no-SA-handling / !FAhO-no-SA-handling !SA-clause any-word-no-SA-handling FAhO-sa-tail / FAhO-no-SA-handling FAhO-sa-tail2 FAhO-sa-tail
 SPACE FAhO-sa-tail2 <- SA-clause / !FAhO-no-SA-handling !SA-clause any-word-no-SA-handling FAhO-sa-tail2 / FAhO-no-SA-handling FAhO-sa-tail2 FAhO-sa-tail2
-NORATS FAhO <- "fa'o"
+NORATS FAhO <- FAhO-word-pre inner-word close-paren
+NORATS FAhO-word-pre <- " FAhO=( "
 
 ;         normally elided 'done pause' to indicate end
 
@@ -731,7 +715,8 @@ SPACE FEhE-no-SA-handling <- pre-cmavo FEhE post-cmavo
 SPACE FEhE-sa-clause <- FEhE-no-SA-handling FEhE-sa-tail
 SPACE FEhE-sa-tail <- SA-clause &FEhE-no-SA-handling / !FEhE-no-SA-handling !SA-clause any-word-no-SA-handling FEhE-sa-tail / FEhE-no-SA-handling FEhE-sa-tail2 FEhE-sa-tail
 SPACE FEhE-sa-tail2 <- SA-clause / !FEhE-no-SA-handling !SA-clause any-word-no-SA-handling FEhE-sa-tail2 / FEhE-no-SA-handling FEhE-sa-tail2 FEhE-sa-tail2
-NORATS FEhE <- "fe'e"
+NORATS FEhE <- FEhE-word-pre inner-word close-paren
+NORATS FEhE-word-pre <- " FEhE=( "
 
 ;         ends bridi to modal conversion 
 FEhU-clause <- FEhU-pre FEhU FEhU-post
@@ -741,7 +726,8 @@ SPACE FEhU-no-SA-handling <- pre-cmavo FEhU post-cmavo
 SPACE FEhU-sa-clause <- FEhU-no-SA-handling FEhU-sa-tail
 SPACE FEhU-sa-tail <- SA-clause &FEhU-no-SA-handling / !FEhU-no-SA-handling !SA-clause any-word-no-SA-handling FEhU-sa-tail / FEhU-no-SA-handling FEhU-sa-tail2 FEhU-sa-tail
 SPACE FEhU-sa-tail2 <- SA-clause / !FEhU-no-SA-handling !SA-clause any-word-no-SA-handling FEhU-sa-tail2 / FEhU-no-SA-handling FEhU-sa-tail2 FEhU-sa-tail2
-NORATS FEhU <- "fe'u"
+NORATS FEhU <- FEhU-word-pre inner-word close-paren
+NORATS FEhU-word-pre <- " FEhU=( "
 
 ;         marks bridi to modal conversion 
 FIhO-clause <- FIhO-pre FIhO FIhO-post
@@ -751,7 +737,8 @@ SPACE FIhO-no-SA-handling <- pre-cmavo FIhO post-cmavo
 SPACE FIhO-sa-clause <- FIhO-no-SA-handling FIhO-sa-tail
 SPACE FIhO-sa-tail <- SA-clause &FIhO-no-SA-handling / !FIhO-no-SA-handling !SA-clause any-word-no-SA-handling FIhO-sa-tail / FIhO-no-SA-handling FIhO-sa-tail2 FIhO-sa-tail
 SPACE FIhO-sa-tail2 <- SA-clause / !FIhO-no-SA-handling !SA-clause any-word-no-SA-handling FIhO-sa-tail2 / FIhO-no-SA-handling FIhO-sa-tail2 FIhO-sa-tail2
-NORATS FIhO <- "fi'o"
+NORATS FIhO <- FIhO-word-pre inner-word close-paren
+NORATS FIhO-word-pre <- " FIhO=( "
 
 ;         end compound lerfu 
 FOI-clause <- FOI-pre FOI FOI-post
@@ -761,7 +748,8 @@ SPACE FOI-no-SA-handling <- pre-cmavo FOI post-cmavo
 SPACE FOI-sa-clause <- FOI-no-SA-handling FOI-sa-tail
 SPACE FOI-sa-tail <- SA-clause &FOI-no-SA-handling / !FOI-no-SA-handling !SA-clause any-word-no-SA-handling FOI-sa-tail / FOI-no-SA-handling FOI-sa-tail2 FOI-sa-tail
 SPACE FOI-sa-tail2 <- SA-clause / !FOI-no-SA-handling !SA-clause any-word-no-SA-handling FOI-sa-tail2 / FOI-no-SA-handling FOI-sa-tail2 FOI-sa-tail2
-NORATS FOI <- "foi"
+NORATS FOI <- FOI-word-pre inner-word close-paren
+NORATS FOI-word-pre <- " FOI=( "
 
 ;         reverse Polish flag 
 FUhA-clause <- FUhA-pre FUhA FUhA-post
@@ -771,17 +759,19 @@ SPACE FUhA-no-SA-handling <- pre-cmavo FUhA post-cmavo
 SPACE FUhA-sa-clause <- FUhA-no-SA-handling FUhA-sa-tail
 SPACE FUhA-sa-tail <- SA-clause &FUhA-no-SA-handling / !FUhA-no-SA-handling !SA-clause any-word-no-SA-handling FUhA-sa-tail / FUhA-no-SA-handling FUhA-sa-tail2 FUhA-sa-tail
 SPACE FUhA-sa-tail2 <- SA-clause / !FUhA-no-SA-handling !SA-clause any-word-no-SA-handling FUhA-sa-tail2 / FUhA-no-SA-handling FUhA-sa-tail2 FUhA-sa-tail2
-NORATS FUhA <- "fu'a"
+NORATS FUhA <- FUhA-word-pre inner-word close-paren
+NORATS FUhA-word-pre <- " FUhA=( "
 
 ;         open long scope for indicator 
 FUhE-clause <- FUhE-pre FUhE FUhE-post
 FUhE-pre <- pre-cmavo FUhE-sa-clause?
-FUhE-post <- !tick-char !vowel !BU-clause spacing-no-absorb-opt !ZEI-clause !BU-clause
+FUhE-post <- !BU-clause spacing-no-absorb-opt !ZEI-clause !BU-clause
 SPACE FUhE-no-SA-handling <- pre-cmavo FUhE post-cmavo
 SPACE FUhE-sa-clause <- FUhE-no-SA-handling FUhE-sa-tail
 SPACE FUhE-sa-tail <- SA-clause &FUhE-no-SA-handling / !FUhE-no-SA-handling !SA-clause any-word-no-SA-handling FUhE-sa-tail / FUhE-no-SA-handling FUhE-sa-tail2 FUhE-sa-tail
 SPACE FUhE-sa-tail2 <- SA-clause / !FUhE-no-SA-handling !SA-clause any-word-no-SA-handling FUhE-sa-tail2 / FUhE-no-SA-handling FUhE-sa-tail2 FUhE-sa-tail2
-NORATS FUhE <- "fu'e"
+NORATS FUhE <- FUhE-word-pre inner-word close-paren
+NORATS FUhE-word-pre <- " FUhE=( "
 
 ;         close long scope for indicator 
 FUhO-clause <- FUhO-pre FUhO FUhO-post
@@ -791,7 +781,8 @@ SPACE FUhO-no-SA-handling <- pre-cmavo FUhO post-cmavo
 SPACE FUhO-sa-clause <- FUhO-no-SA-handling FUhO-sa-tail
 SPACE FUhO-sa-tail <- SA-clause &FUhO-no-SA-handling / !FUhO-no-SA-handling !SA-clause any-word-no-SA-handling FUhO-sa-tail / FUhO-no-SA-handling FUhO-sa-tail2 FUhO-sa-tail
 SPACE FUhO-sa-tail2 <- SA-clause / !FUhO-no-SA-handling !SA-clause any-word-no-SA-handling FUhO-sa-tail2 / FUhO-no-SA-handling FUhO-sa-tail2 FUhO-sa-tail2
-NORATS FUhO <- "fu'o"
+NORATS FUhO <- FUhO-word-pre inner-word close-paren
+NORATS FUhO-word-pre <- " FUhO=( "
 
 
 ;         geks; forethought logical connectives 
@@ -802,7 +793,8 @@ SPACE GA-no-SA-handling <- pre-cmavo GA post-cmavo
 SPACE GA-sa-clause <- GA-no-SA-handling GA-sa-tail
 SPACE GA-sa-tail <- SA-clause &GA-no-SA-handling / !GA-no-SA-handling !SA-clause any-word-no-SA-handling GA-sa-tail / GA-no-SA-handling GA-sa-tail2 GA-sa-tail
 SPACE GA-sa-tail2 <- SA-clause / !GA-no-SA-handling !SA-clause any-word-no-SA-handling GA-sa-tail2 / GA-no-SA-handling GA-sa-tail2 GA-sa-tail2
-NORATS GA <- "ge'i" / "ge" /  "go" / "ga" / "gu"
+NORATS GA <- GA-word-pre inner-word close-paren
+NORATS GA-word-pre <- " GA=( "
 
 ;         openclosed interval markers for BIhI 
 GAhO-clause <- GAhO-pre GAhO GAhO-post
@@ -812,7 +804,8 @@ SPACE GAhO-no-SA-handling <- pre-cmavo GAhO post-cmavo
 SPACE GAhO-sa-clause <- GAhO-no-SA-handling GAhO-sa-tail
 SPACE GAhO-sa-tail <- SA-clause &GAhO-no-SA-handling / !GAhO-no-SA-handling !SA-clause any-word-no-SA-handling GAhO-sa-tail / GAhO-no-SA-handling GAhO-sa-tail2 GAhO-sa-tail
 SPACE GAhO-sa-tail2 <- SA-clause / !GAhO-no-SA-handling !SA-clause any-word-no-SA-handling GAhO-sa-tail2 / GAhO-no-SA-handling GAhO-sa-tail2 GAhO-sa-tail2
-NORATS GAhO <- "ke'i" / "ga'o"
+NORATS GAhO <- GAhO-word-pre inner-word close-paren
+NORATS GAhO-word-pre <- " GAhO=( "
 
 ;         marker ending GOI relative clauses 
 GEhU-clause <- GEhU-pre GEhU GEhU-post
@@ -822,7 +815,8 @@ SPACE GEhU-no-SA-handling <- pre-cmavo GEhU post-cmavo
 SPACE GEhU-sa-clause <- GEhU-no-SA-handling GEhU-sa-tail
 SPACE GEhU-sa-tail <- SA-clause &GEhU-no-SA-handling / !GEhU-no-SA-handling !SA-clause any-word-no-SA-handling GEhU-sa-tail / GEhU-no-SA-handling GEhU-sa-tail2 GEhU-sa-tail
 SPACE GEhU-sa-tail2 <- SA-clause / !GEhU-no-SA-handling !SA-clause any-word-no-SA-handling GEhU-sa-tail2 / GEhU-no-SA-handling GEhU-sa-tail2 GEhU-sa-tail2
-NORATS GEhU <- "ge'u"
+NORATS GEhU <- GEhU-word-pre inner-word close-paren
+NORATS GEhU-word-pre <- " GEhU=( "
 
 ;         forethought medial marker 
 GI-clause <- GI-pre GI GI-post
@@ -832,7 +826,8 @@ SPACE GI-no-SA-handling <- pre-cmavo GI post-cmavo
 SPACE GI-sa-clause <- GI-no-SA-handling GI-sa-tail
 SPACE GI-sa-tail <- SA-clause &GI-no-SA-handling / !GI-no-SA-handling !SA-clause any-word-no-SA-handling GI-sa-tail / GI-no-SA-handling GI-sa-tail2 GI-sa-tail
 SPACE GI-sa-tail2 <- SA-clause / !GI-no-SA-handling !SA-clause any-word-no-SA-handling GI-sa-tail2 / GI-no-SA-handling GI-sa-tail2 GI-sa-tail2
-NORATS GI <- "gi"
+NORATS GI <- GI-word-pre inner-word close-paren
+NORATS GI-word-pre <- " GI=( "
 
 ;         logical connectives for bridi-tails 
 GIhA-clause <- GIhA-pre GIhA GIhA-post
@@ -842,7 +837,8 @@ SPACE GIhA-no-SA-handling <- pre-cmavo GIhA post-cmavo
 SPACE GIhA-sa-clause <- GIhA-no-SA-handling GIhA-sa-tail
 SPACE GIhA-sa-tail <- SA-clause &GIhA-no-SA-handling / !GIhA-no-SA-handling !SA-clause any-word-no-SA-handling GIhA-sa-tail / GIhA-no-SA-handling GIhA-sa-tail2 GIhA-sa-tail
 SPACE GIhA-sa-tail2 <- SA-clause / !GIhA-no-SA-handling !SA-clause any-word-no-SA-handling GIhA-sa-tail2 / GIhA-no-SA-handling GIhA-sa-tail2 GIhA-sa-tail2
-NORATS GIhA <- "gi'e" / "gi'i" / "gi'o" / "gi'a" / "gi'u"
+NORATS GIhA <- GIhA-word-pre inner-word close-paren
+NORATS GIhA-word-pre <- " GIhA=( "
 
 ;         attaches a sumti modifier to a sumti 
 GOI-clause <- GOI-pre GOI GOI-post
@@ -852,7 +848,8 @@ SPACE GOI-no-SA-handling <- pre-cmavo GOI post-cmavo
 SPACE GOI-sa-clause <- GOI-no-SA-handling GOI-sa-tail
 SPACE GOI-sa-tail <- SA-clause &GOI-no-SA-handling / !GOI-no-SA-handling !SA-clause any-word-no-SA-handling GOI-sa-tail / GOI-no-SA-handling GOI-sa-tail2 GOI-sa-tail
 SPACE GOI-sa-tail2 <- SA-clause / !GOI-no-SA-handling !SA-clause any-word-no-SA-handling GOI-sa-tail2 / GOI-no-SA-handling GOI-sa-tail2 GOI-sa-tail2
-NORATS GOI <- "no'u" / "ne" / "goi" / "po'u" / "pe" / "po'e" / "po"
+NORATS GOI <- GOI-word-pre inner-word close-paren
+NORATS GOI-word-pre <- " GOI=( "
 
 ;         pro-bridi 
 GOhA-clause <- GOhA-pre GOhA GOhA-post
@@ -862,7 +859,8 @@ SPACE GOhA-no-SA-handling <- pre-cmavo GOhA post-cmavo
 SPACE GOhA-sa-clause <- GOhA-no-SA-handling GOhA-sa-tail
 SPACE GOhA-sa-tail <- SA-clause &GOhA-no-SA-handling / !GOhA-no-SA-handling !SA-clause any-word-no-SA-handling GOhA-sa-tail / GOhA-no-SA-handling GOhA-sa-tail2 GOhA-sa-tail
 SPACE GOhA-sa-tail2 <- SA-clause / !GOhA-no-SA-handling !SA-clause any-word-no-SA-handling GOhA-sa-tail2 / GOhA-no-SA-handling GOhA-sa-tail2 GOhA-sa-tail2
-NORATS GOhA <- "mo" / "nei" / "go'u" / "go'o" / "go'i" / "no'a" / "go'e" / "go'a" / "du" / "bu'a" / "bu'e" / "bu'i" / "co'e"
+NORATS GOhA <- GOhA-word-pre inner-word close-paren
+NORATS GOhA-word-pre <- " GOhA=( "
 
 ;         GEK for tanru units, corresponds to JEKs 
 GUhA-clause <- GUhA-pre GUhA GUhA-post
@@ -872,7 +870,8 @@ SPACE GUhA-no-SA-handling <- pre-cmavo GUhA post-cmavo
 SPACE GUhA-sa-clause <- GUhA-no-SA-handling GUhA-sa-tail
 SPACE GUhA-sa-tail <- SA-clause &GUhA-no-SA-handling / !GUhA-no-SA-handling !SA-clause any-word-no-SA-handling GUhA-sa-tail / GUhA-no-SA-handling GUhA-sa-tail2 GUhA-sa-tail
 SPACE GUhA-sa-tail2 <- SA-clause / !GUhA-no-SA-handling !SA-clause any-word-no-SA-handling GUhA-sa-tail2 / GUhA-no-SA-handling GUhA-sa-tail2 GUhA-sa-tail2
-NORATS GUhA <- "gu'e" / "gu'i" / "gu'o" / "gu'a" / "gu'u"
+NORATS GUhA <- GUhA-word-pre inner-word close-paren
+NORATS GUhA-word-pre <- " GUhA=( "
 
 
 ;         sentence link 
@@ -883,7 +882,8 @@ SPACE I-no-SA-handling <- pre-cmavo I post-cmavo
 SPACE I-sa-clause <- I-no-SA-handling I-sa-tail
 SPACE I-sa-tail <- SA-clause &I-no-SA-handling / !I-no-SA-handling !SA-clause any-word-no-SA-handling I-sa-tail / I-no-SA-handling I-sa-tail2 I-sa-tail
 SPACE I-sa-tail2 <- SA-clause / !I-no-SA-handling !SA-clause any-word-no-SA-handling I-sa-tail2 / I-no-SA-handling I-sa-tail2 I-sa-tail2
-NORATS I <- "i"
+NORATS I <- I-word-pre inner-word close-paren
+NORATS I-word-pre <- " I=( "
 
 
 ;         jeks; logical connectives within tanru 
@@ -894,7 +894,8 @@ SPACE JA-no-SA-handling <- pre-cmavo JA post-cmavo
 SPACE JA-sa-clause <- JA-no-SA-handling JA-sa-tail
 SPACE JA-sa-tail <- SA-clause &JA-no-SA-handling / !JA-no-SA-handling !SA-clause any-word-no-SA-handling JA-sa-tail / JA-no-SA-handling JA-sa-tail2 JA-sa-tail
 SPACE JA-sa-tail2 <- SA-clause / !JA-no-SA-handling !SA-clause any-word-no-SA-handling JA-sa-tail2 / JA-no-SA-handling JA-sa-tail2 JA-sa-tail2
-NORATS JA <- "je'i" / "je" /  "jo" / "ja" / "ju"
+NORATS JA <- JA-word-pre inner-word close-paren
+NORATS JA-word-pre <- " JA=( "
 
 ;         modal conversion flag 
 JAI-clause <- JAI-pre JAI JAI-post
@@ -904,7 +905,8 @@ SPACE JAI-no-SA-handling <- pre-cmavo JAI post-cmavo
 SPACE JAI-sa-clause <- JAI-no-SA-handling JAI-sa-tail
 SPACE JAI-sa-tail <- SA-clause &JAI-no-SA-handling / !JAI-no-SA-handling !SA-clause any-word-no-SA-handling JAI-sa-tail / JAI-no-SA-handling JAI-sa-tail2 JAI-sa-tail
 SPACE JAI-sa-tail2 <- SA-clause / !JAI-no-SA-handling !SA-clause any-word-no-SA-handling JAI-sa-tail2 / JAI-no-SA-handling JAI-sa-tail2 JAI-sa-tail2
-NORATS JAI <- "jai"
+NORATS JAI <- JAI-word-pre inner-word close-paren
+NORATS JAI-word-pre <- " JAI=( "
 
 ;         flags an array operand 
 JOhI-clause <- JOhI-pre JOhI JOhI-post
@@ -914,7 +916,8 @@ SPACE JOhI-no-SA-handling <- pre-cmavo JOhI post-cmavo
 SPACE JOhI-sa-clause <- JOhI-no-SA-handling JOhI-sa-tail
 SPACE JOhI-sa-tail <- SA-clause &JOhI-no-SA-handling / !JOhI-no-SA-handling !SA-clause any-word-no-SA-handling JOhI-sa-tail / JOhI-no-SA-handling JOhI-sa-tail2 JOhI-sa-tail
 SPACE JOhI-sa-tail2 <- SA-clause / !JOhI-no-SA-handling !SA-clause any-word-no-SA-handling JOhI-sa-tail2 / JOhI-no-SA-handling JOhI-sa-tail2 JOhI-sa-tail2
-NORATS JOhI <- "jo'i"
+NORATS JOhI <- JOhI-word-pre inner-word close-paren
+NORATS JOhI-word-pre <- " JOhI=( "
 
 ;         non-logical connectives 
 JOI-clause <- JOI-pre JOI JOI-post
@@ -924,7 +927,8 @@ SPACE JOI-no-SA-handling <- pre-cmavo JOI post-cmavo
 SPACE JOI-sa-clause <- JOI-no-SA-handling JOI-sa-tail
 SPACE JOI-sa-tail <- SA-clause &JOI-no-SA-handling / !JOI-no-SA-handling !SA-clause any-word-no-SA-handling JOI-sa-tail / JOI-no-SA-handling JOI-sa-tail2 JOI-sa-tail
 SPACE JOI-sa-tail2 <- SA-clause / !JOI-no-SA-handling !SA-clause any-word-no-SA-handling JOI-sa-tail2 / JOI-no-SA-handling JOI-sa-tail2 JOI-sa-tail2
-NORATS JOI <- "fa'u" / "pi'u" / "joi" / "ce'o" / "ce" / "jo'u" / "ku'a" / "jo'e" / "ju'e"
+NORATS JOI <- JOI-word-pre inner-word close-paren
+NORATS JOI-word-pre <- " JOI=( "
 
 
 ;         left long scope marker 
@@ -935,7 +939,8 @@ SPACE KE-no-SA-handling <- pre-cmavo KE post-cmavo
 SPACE KE-sa-clause <- KE-no-SA-handling KE-sa-tail
 SPACE KE-sa-tail <- SA-clause &KE-no-SA-handling / !KE-no-SA-handling !SA-clause any-word-no-SA-handling KE-sa-tail / KE-no-SA-handling KE-sa-tail2 KE-sa-tail
 SPACE KE-sa-tail2 <- SA-clause / !KE-no-SA-handling !SA-clause any-word-no-SA-handling KE-sa-tail2 / KE-no-SA-handling KE-sa-tail2 KE-sa-tail2
-NORATS KE <- "ke"
+NORATS KE <- KE-word-pre inner-word close-paren
+NORATS KE-word-pre <- " KE=( "
 
 ;         right terminator for KE groups 
 KEhE-clause <- KEhE-pre KEhE KEhE-post
@@ -945,7 +950,8 @@ SPACE KEhE-no-SA-handling <- pre-cmavo KEhE post-cmavo
 SPACE KEhE-sa-clause <- KEhE-no-SA-handling KEhE-sa-tail
 SPACE KEhE-sa-tail <- SA-clause &KEhE-no-SA-handling / !KEhE-no-SA-handling !SA-clause any-word-no-SA-handling KEhE-sa-tail / KEhE-no-SA-handling KEhE-sa-tail2 KEhE-sa-tail
 SPACE KEhE-sa-tail2 <- SA-clause / !KEhE-no-SA-handling !SA-clause any-word-no-SA-handling KEhE-sa-tail2 / KEhE-no-SA-handling KEhE-sa-tail2 KEhE-sa-tail2
-NORATS KEhE <- "ke'e"
+NORATS KEhE <- KEhE-word-pre inner-word close-paren
+NORATS KEhE-word-pre <- " KEhE=( "
 
 ;         right terminator, NU abstractions 
 KEI-clause <- KEI-pre KEI KEI-post
@@ -955,7 +961,8 @@ SPACE KEI-no-SA-handling <- pre-cmavo KEI post-cmavo
 SPACE KEI-sa-clause <- KEI-no-SA-handling KEI-sa-tail
 SPACE KEI-sa-tail <- SA-clause &KEI-no-SA-handling / !KEI-no-SA-handling !SA-clause any-word-no-SA-handling KEI-sa-tail / KEI-no-SA-handling KEI-sa-tail2 KEI-sa-tail
 SPACE KEI-sa-tail2 <- SA-clause / !KEI-no-SA-handling !SA-clause any-word-no-SA-handling KEI-sa-tail2 / KEI-no-SA-handling KEI-sa-tail2 KEI-sa-tail2
-NORATS KEI <- "kei"
+NORATS KEI <- KEI-word-pre inner-word close-paren
+NORATS KEI-word-pre <- " KEI=( "
 
 ;         multiple utterance scope for tenses 
 KI-clause <- KI-pre KI KI-post
@@ -965,7 +972,8 @@ SPACE KI-no-SA-handling <- pre-cmavo KI post-cmavo
 SPACE KI-sa-clause <- KI-no-SA-handling KI-sa-tail
 SPACE KI-sa-tail <- SA-clause &KI-no-SA-handling / !KI-no-SA-handling !SA-clause any-word-no-SA-handling KI-sa-tail / KI-no-SA-handling KI-sa-tail2 KI-sa-tail
 SPACE KI-sa-tail2 <- SA-clause / !KI-no-SA-handling !SA-clause any-word-no-SA-handling KI-sa-tail2 / KI-no-SA-handling KI-sa-tail2 KI-sa-tail2
-NORATS KI <- "ki"
+NORATS KI <- KI-word-pre inner-word close-paren
+NORATS KI-word-pre <- " KI=( "
 
 ;         sumti anaphora 
 KOhA-clause <- KOhA-pre KOhA KOhA-post
@@ -975,7 +983,8 @@ SPACE KOhA-no-SA-handling <- pre-cmavo KOhA post-cmavo
 SPACE KOhA-sa-clause <- KOhA-no-SA-handling KOhA-sa-tail
 SPACE KOhA-sa-tail <- SA-clause &KOhA-no-SA-handling / !KOhA-no-SA-handling !SA-clause any-word-no-SA-handling KOhA-sa-tail / KOhA-no-SA-handling KOhA-sa-tail2 KOhA-sa-tail
 SPACE KOhA-sa-tail2 <- SA-clause / !KOhA-no-SA-handling !SA-clause any-word-no-SA-handling KOhA-sa-tail2 / KOhA-no-SA-handling KOhA-sa-tail2 KOhA-sa-tail2
-NORATS KOhA <- "da'u" / "da'e" / "di'u" / "di'e" / "de'u" / "de'e" / "dei" / "do'i" / "mi'o" / "ma'a" / "mi'a" / "do'o" / "ko'a" / "fo'u" / "ko'e" / "ko'i" / "ko'o" / "ko'u" / "fo'a" / "fo'e" / "fo'i" / "fo'o" / "vo'a" / "vo'e" / "vo'i" / "vo'o" / "vo'u" / "ru" / "ri" / "ra" / "ta" / "tu" / "ti" / "zi'o" / "ke'a" / "ma" / "zu'i" / "zo'e" / "ce'u" / "da" / "de" / "di" / "ko" / "mi" / "do"
+NORATS KOhA <- KOhA-word-pre inner-word close-paren
+NORATS KOhA-word-pre <- " KOhA=( "
 
 ;         right terminator for descriptions, etc. 
 KU-clause <- KU-pre KU KU-post
@@ -985,7 +994,8 @@ SPACE KU-no-SA-handling <- pre-cmavo KU post-cmavo
 SPACE KU-sa-clause <- KU-no-SA-handling KU-sa-tail
 SPACE KU-sa-tail <- SA-clause &KU-no-SA-handling / !KU-no-SA-handling !SA-clause any-word-no-SA-handling KU-sa-tail / KU-no-SA-handling KU-sa-tail2 KU-sa-tail
 SPACE KU-sa-tail2 <- SA-clause / !KU-no-SA-handling !SA-clause any-word-no-SA-handling KU-sa-tail2 / KU-no-SA-handling KU-sa-tail2 KU-sa-tail2
-NORATS KU <- "ku"
+NORATS KU <- KU-word-pre inner-word close-paren
+NORATS KU-word-pre <- " KU=( "
 
 ;         MEX forethought delimiter 
 KUhE-clause <- KUhE-pre KUhE KUhE-post
@@ -995,7 +1005,8 @@ SPACE KUhE-no-SA-handling <- pre-cmavo KUhE post-cmavo
 SPACE KUhE-sa-clause <- KUhE-no-SA-handling KUhE-sa-tail
 SPACE KUhE-sa-tail <- SA-clause &KUhE-no-SA-handling / !KUhE-no-SA-handling !SA-clause any-word-no-SA-handling KUhE-sa-tail / KUhE-no-SA-handling KUhE-sa-tail2 KUhE-sa-tail
 SPACE KUhE-sa-tail2 <- SA-clause / !KUhE-no-SA-handling !SA-clause any-word-no-SA-handling KUhE-sa-tail2 / KUhE-no-SA-handling KUhE-sa-tail2 KUhE-sa-tail2
-NORATS KUhE <- "ku'e"
+NORATS KUhE <- KUhE-word-pre inner-word close-paren
+NORATS KUhE-word-pre <- " KUhE=( "
 
 ;         right terminator, NOI relative clauses 
 KUhO-clause <- KUhO-pre KUhO KUhO-post
@@ -1005,7 +1016,8 @@ SPACE KUhO-no-SA-handling <- pre-cmavo KUhO post-cmavo
 SPACE KUhO-sa-clause <- KUhO-no-SA-handling KUhO-sa-tail
 SPACE KUhO-sa-tail <- SA-clause &KUhO-no-SA-handling / !KUhO-no-SA-handling !SA-clause any-word-no-SA-handling KUhO-sa-tail / KUhO-no-SA-handling KUhO-sa-tail2 KUhO-sa-tail
 SPACE KUhO-sa-tail2 <- SA-clause / !KUhO-no-SA-handling !SA-clause any-word-no-SA-handling KUhO-sa-tail2 / KUhO-no-SA-handling KUhO-sa-tail2 KUhO-sa-tail2
-NORATS KUhO <- "ku'o"
+NORATS KUhO <- KUhO-word-pre inner-word close-paren
+NORATS KUhO-word-pre <- " KUhO=( "
 
 
 ;         name descriptors 
@@ -1016,7 +1028,8 @@ SPACE LA-no-SA-handling <- pre-cmavo LA post-cmavo
 SPACE LA-sa-clause <- LA-no-SA-handling LA-sa-tail
 SPACE LA-sa-tail <- SA-clause &LA-no-SA-handling / !LA-no-SA-handling !SA-clause any-word-no-SA-handling LA-sa-tail / LA-no-SA-handling LA-sa-tail2 LA-sa-tail
 SPACE LA-sa-tail2 <- SA-clause / !LA-no-SA-handling !SA-clause any-word-no-SA-handling LA-sa-tail2 / LA-no-SA-handling LA-sa-tail2 LA-sa-tail2
-NORATS LA <- "lai" / "la'i" / "la"
+NORATS LA <- LA-word-pre inner-word close-paren
+NORATS LA-word-pre <- " LA=( "
 
 ;         lerfu prefixes 
 LAU-clause <- LAU-pre LAU LAU-post
@@ -1026,7 +1039,8 @@ SPACE LAU-no-SA-handling <- pre-cmavo LAU post-cmavo
 SPACE LAU-sa-clause <- LAU-no-SA-handling LAU-sa-tail
 SPACE LAU-sa-tail <- SA-clause &LAU-no-SA-handling / !LAU-no-SA-handling !SA-clause any-word-no-SA-handling LAU-sa-tail / LAU-no-SA-handling LAU-sa-tail2 LAU-sa-tail
 SPACE LAU-sa-tail2 <- SA-clause / !LAU-no-SA-handling !SA-clause any-word-no-SA-handling LAU-sa-tail2 / LAU-no-SA-handling LAU-sa-tail2 LAU-sa-tail2
-NORATS LAU <- "ce'a" / "lau" / "zai" / "tau"
+NORATS LAU <- LAU-word-pre inner-word close-paren
+NORATS LAU-word-pre <- " LAU=( "
 
 ;         sumti qualifiers 
 LAhE-clause <- LAhE-pre LAhE LAhE-post
@@ -1036,7 +1050,8 @@ SPACE LAhE-no-SA-handling <- pre-cmavo LAhE post-cmavo
 SPACE LAhE-sa-clause <- LAhE-no-SA-handling LAhE-sa-tail
 SPACE LAhE-sa-tail <- SA-clause &LAhE-no-SA-handling / !LAhE-no-SA-handling !SA-clause any-word-no-SA-handling LAhE-sa-tail / LAhE-no-SA-handling LAhE-sa-tail2 LAhE-sa-tail
 SPACE LAhE-sa-tail2 <- SA-clause / !LAhE-no-SA-handling !SA-clause any-word-no-SA-handling LAhE-sa-tail2 / LAhE-no-SA-handling LAhE-sa-tail2 LAhE-sa-tail2
-NORATS LAhE <- "tu'a" / "lu'a" / "lu'o" / "la'e" / "vu'i" / "lu'i" / "lu'e"
+NORATS LAhE <- LAhE-word-pre inner-word close-paren
+NORATS LAhE-word-pre <- " LAhE=( "
 
 ;         sumti descriptors 
 LE-clause <- LE-pre LE LE-post
@@ -1046,7 +1061,8 @@ SPACE LE-no-SA-handling <- pre-cmavo LE post-cmavo
 SPACE LE-sa-clause <- LE-no-SA-handling LE-sa-tail
 SPACE LE-sa-tail <- SA-clause &LE-no-SA-handling / !LE-no-SA-handling !SA-clause any-word-no-SA-handling LE-sa-tail / LE-no-SA-handling LE-sa-tail2 LE-sa-tail
 SPACE LE-sa-tail2 <- SA-clause / !LE-no-SA-handling !SA-clause any-word-no-SA-handling LE-sa-tail2 / LE-no-SA-handling LE-sa-tail2 LE-sa-tail2
-NORATS LE <- "lei" / "loi" / "le'i" / "lo'i" / "le'e" / "lo'e" / "lo" / "le"
+NORATS LE <- LE-word-pre inner-word close-paren
+NORATS LE-word-pre <- " LE=( "
 
 
 ;         possibly ungrammatical text right quote 
@@ -1058,7 +1074,8 @@ SPACE LEhU-sa-clause <- LEhU-no-SA-handling LEhU-sa-tail
 SPACE LEhU-sa-tail <- SA-clause &LEhU-no-SA-handling / !LEhU-no-SA-handling !SA-clause any-word-no-SA-handling LEhU-sa-tail / LEhU-no-SA-handling LEhU-sa-tail2 LEhU-sa-tail
 SPACE LEhU-sa-tail2 <- SA-clause / !LEhU-no-SA-handling !SA-clause any-word-no-SA-handling LEhU-sa-tail2 / LEhU-no-SA-handling LEhU-sa-tail2 LEhU-sa-tail2
 LEhU-no-SI-handling <- pre-cmavo LEhU post-cmavo-no-SI-handling
-NORATS LEhU <- "le'u"
+NORATS LEhU <- LEhU-word-pre inner-word close-paren
+NORATS LEhU-word-pre <- " LEhU=( "
 
 ;         convert number to sumti 
 LI-clause <- LI-pre LI LI-post
@@ -1068,7 +1085,8 @@ SPACE LI-no-SA-handling <- pre-cmavo LI post-cmavo
 SPACE LI-sa-clause <- LI-no-SA-handling LI-sa-tail
 SPACE LI-sa-tail <- SA-clause &LI-no-SA-handling / !LI-no-SA-handling !SA-clause any-word-no-SA-handling LI-sa-tail / LI-no-SA-handling LI-sa-tail2 LI-sa-tail
 SPACE LI-sa-tail2 <- SA-clause / !LI-no-SA-handling !SA-clause any-word-no-SA-handling LI-sa-tail2 / LI-no-SA-handling LI-sa-tail2 LI-sa-tail2
-NORATS LI <- "me'o" / "li"
+NORATS LI <- LI-word-pre inner-word close-paren
+NORATS LI-word-pre <- " LI=( "
 
 ;         grammatical text right quote 
 LIhU-clause <- LIhU-pre LIhU LIhU-post
@@ -1078,7 +1096,8 @@ SPACE LIhU-no-SA-handling <- pre-cmavo LIhU post-cmavo
 SPACE LIhU-sa-clause <- LIhU-no-SA-handling LIhU-sa-tail
 SPACE LIhU-sa-tail <- SA-clause &LIhU-no-SA-handling / !LIhU-no-SA-handling !SA-clause any-word-no-SA-handling LIhU-sa-tail / LIhU-no-SA-handling LIhU-sa-tail2 LIhU-sa-tail
 SPACE LIhU-sa-tail2 <- SA-clause / !LIhU-no-SA-handling !SA-clause any-word-no-SA-handling LIhU-sa-tail2 / LIhU-no-SA-handling LIhU-sa-tail2 LIhU-sa-tail2
-NORATS LIhU <- "li'u"
+NORATS LIhU <- LIhU-word-pre inner-word close-paren
+NORATS LIhU-word-pre <- " LIhU=( "
 
 ;         elidable terminator for LI 
 LOhO-clause <- LOhO-pre LOhO LOhO-post
@@ -1088,13 +1107,15 @@ SPACE LOhO-no-SA-handling <- pre-cmavo LOhO post-cmavo
 SPACE LOhO-sa-clause <- LOhO-no-SA-handling LOhO-sa-tail
 SPACE LOhO-sa-tail <- SA-clause &LOhO-no-SA-handling / !LOhO-no-SA-handling !SA-clause any-word-no-SA-handling LOhO-sa-tail / LOhO-no-SA-handling LOhO-sa-tail2 LOhO-sa-tail
 SPACE LOhO-sa-tail2 <- SA-clause / !LOhO-no-SA-handling !SA-clause any-word-no-SA-handling LOhO-sa-tail2 / LOhO-no-SA-handling LOhO-sa-tail2 LOhO-sa-tail2
-NORATS LOhO <- "lo'o"
+NORATS LOhO <- LOhO-word-pre inner-word close-paren
+NORATS LOhO-word-pre <- " LOhO=( "
 
 ;         possibly ungrammatical text left quote 
 LOhU-clause <- LOhU-pre LOhU LOhU-post
 LOhU-pre <- pre-cmavo
 LOhU-post <- post-cmavo-no-SI-handling
-NORATS LOhU <- "lo'u"
+NORATS LOhU <- LOhU-word-pre inner-word close-paren
+NORATS LOhU-word-pre <- " LOhU=( "
 
 ;         grammatical text left quote 
 LU-clause <- LU-pre LU LU-post
@@ -1104,7 +1125,8 @@ SPACE LU-no-SA-handling <- pre-cmavo LU post-cmavo
 SPACE LU-sa-clause <- LU-no-SA-handling LU-sa-tail
 SPACE LU-sa-tail <- SA-clause &LU-no-SA-handling / !LU-no-SA-handling !SA-clause any-word-no-SA-handling LU-sa-tail / LU-no-SA-handling LU-sa-tail2 LU-sa-tail
 SPACE LU-sa-tail2 <- SA-clause / !LU-no-SA-handling !SA-clause any-word-no-SA-handling LU-sa-tail2 / LU-no-SA-handling LU-sa-tail2 LU-sa-tail2
-NORATS LU <- "lu"
+NORATS LU <- LU-word-pre inner-word close-paren
+NORATS LU-word-pre <- " LU=( "
 
 ;         LAhE close delimiter 
 LUhU-clause <- LUhU-pre LUhU LUhU-post
@@ -1114,7 +1136,8 @@ SPACE LUhU-no-SA-handling <- pre-cmavo LUhU post-cmavo
 SPACE LUhU-sa-clause <- LUhU-no-SA-handling LUhU-sa-tail
 SPACE LUhU-sa-tail <- SA-clause &LUhU-no-SA-handling / !LUhU-no-SA-handling !SA-clause any-word-no-SA-handling LUhU-sa-tail / LUhU-no-SA-handling LUhU-sa-tail2 LUhU-sa-tail
 SPACE LUhU-sa-tail2 <- SA-clause / !LUhU-no-SA-handling !SA-clause any-word-no-SA-handling LUhU-sa-tail2 / LUhU-no-SA-handling LUhU-sa-tail2 LUhU-sa-tail2
-NORATS LUhU <- "lu'u"
+NORATS LUhU <- LUhU-word-pre inner-word close-paren
+NORATS LUhU-word-pre <- " LUhU=( "
 
 
 ;         change MEX expressions to MEX operators 
@@ -1125,7 +1148,8 @@ SPACE MAhO-no-SA-handling <- pre-cmavo MAhO post-cmavo
 SPACE MAhO-sa-clause <- MAhO-no-SA-handling MAhO-sa-tail
 SPACE MAhO-sa-tail <- SA-clause &MAhO-no-SA-handling / !MAhO-no-SA-handling !SA-clause any-word-no-SA-handling MAhO-sa-tail / MAhO-no-SA-handling MAhO-sa-tail2 MAhO-sa-tail
 SPACE MAhO-sa-tail2 <- SA-clause / !MAhO-no-SA-handling !SA-clause any-word-no-SA-handling MAhO-sa-tail2 / MAhO-no-SA-handling MAhO-sa-tail2 MAhO-sa-tail2
-NORATS MAhO <- "ma'o"
+NORATS MAhO <- MAhO-word-pre inner-word close-paren
+NORATS MAhO-word-pre <- " MAhO=( "
 
 ;         change numbers to utterance ordinals 
 MAI-clause <- MAI-pre MAI MAI-post
@@ -1135,7 +1159,8 @@ SPACE MAI-no-SA-handling <- pre-cmavo MAI post-cmavo
 SPACE MAI-sa-clause <- MAI-no-SA-handling MAI-sa-tail
 SPACE MAI-sa-tail <- SA-clause &MAI-no-SA-handling / !MAI-no-SA-handling !SA-clause any-word-no-SA-handling MAI-sa-tail / MAI-no-SA-handling MAI-sa-tail2 MAI-sa-tail
 SPACE MAI-sa-tail2 <- SA-clause / !MAI-no-SA-handling !SA-clause any-word-no-SA-handling MAI-sa-tail2 / MAI-no-SA-handling MAI-sa-tail2 MAI-sa-tail2
-NORATS MAI <- "mo'o" / "mai"
+NORATS MAI <- MAI-word-pre inner-word close-paren
+NORATS MAI-word-pre <- " MAI=( "
 
 ;         converts a sumti into a tanru_unit 
 ME-clause <- ME-pre ME ME-post
@@ -1145,7 +1170,8 @@ SPACE ME-no-SA-handling <- pre-cmavo ME post-cmavo
 SPACE ME-sa-clause <- ME-no-SA-handling ME-sa-tail
 SPACE ME-sa-tail <- SA-clause &ME-no-SA-handling / !ME-no-SA-handling !SA-clause any-word-no-SA-handling ME-sa-tail / ME-no-SA-handling ME-sa-tail2 ME-sa-tail
 SPACE ME-sa-tail2 <- SA-clause / !ME-no-SA-handling !SA-clause any-word-no-SA-handling ME-sa-tail2 / ME-no-SA-handling ME-sa-tail2 ME-sa-tail2
-NORATS ME <- "me"
+NORATS ME <- ME-word-pre inner-word close-paren
+NORATS ME-word-pre <- " ME=( "
 
 ;         terminator for ME 
 MEhU-clause <- MEhU-pre MEhU MEhU-post
@@ -1155,7 +1181,8 @@ SPACE MEhU-no-SA-handling <- pre-cmavo MEhU post-cmavo
 SPACE MEhU-sa-clause <- MEhU-no-SA-handling MEhU-sa-tail
 SPACE MEhU-sa-tail <- SA-clause &MEhU-no-SA-handling / !MEhU-no-SA-handling !SA-clause any-word-no-SA-handling MEhU-sa-tail / MEhU-no-SA-handling MEhU-sa-tail2 MEhU-sa-tail
 SPACE MEhU-sa-tail2 <- SA-clause / !MEhU-no-SA-handling !SA-clause any-word-no-SA-handling MEhU-sa-tail2 / MEhU-no-SA-handling MEhU-sa-tail2 MEhU-sa-tail2
-NORATS MEhU <- "me'u"
+NORATS MEhU <- MEhU-word-pre inner-word close-paren
+NORATS MEhU-word-pre <- " MEhU=( "
 
 ;         change sumti to operand, inverse of LI 
 MOhE-clause <- MOhE-pre MOhE MOhE-post
@@ -1165,7 +1192,8 @@ SPACE MOhE-no-SA-handling <- pre-cmavo MOhE post-cmavo
 SPACE MOhE-sa-clause <- MOhE-no-SA-handling MOhE-sa-tail
 SPACE MOhE-sa-tail <- SA-clause &MOhE-no-SA-handling / !MOhE-no-SA-handling !SA-clause any-word-no-SA-handling MOhE-sa-tail / MOhE-no-SA-handling MOhE-sa-tail2 MOhE-sa-tail
 SPACE MOhE-sa-tail2 <- SA-clause / !MOhE-no-SA-handling !SA-clause any-word-no-SA-handling MOhE-sa-tail2 / MOhE-no-SA-handling MOhE-sa-tail2 MOhE-sa-tail2
-NORATS MOhE <- "mo'e"
+NORATS MOhE <- MOhE-word-pre inner-word close-paren
+NORATS MOhE-word-pre <- " MOhE=( "
 
 ;         motion tense marker 
 MOhI-clause <- MOhI-pre MOhI MOhI-post
@@ -1175,7 +1203,8 @@ SPACE MOhI-no-SA-handling <- pre-cmavo MOhI post-cmavo
 SPACE MOhI-sa-clause <- MOhI-no-SA-handling MOhI-sa-tail
 SPACE MOhI-sa-tail <- SA-clause &MOhI-no-SA-handling / !MOhI-no-SA-handling !SA-clause any-word-no-SA-handling MOhI-sa-tail / MOhI-no-SA-handling MOhI-sa-tail2 MOhI-sa-tail
 SPACE MOhI-sa-tail2 <- SA-clause / !MOhI-no-SA-handling !SA-clause any-word-no-SA-handling MOhI-sa-tail2 / MOhI-no-SA-handling MOhI-sa-tail2 MOhI-sa-tail2
-NORATS MOhI <- "mo'i"
+NORATS MOhI <- MOhI-word-pre inner-word close-paren
+NORATS MOhI-word-pre <- " MOhI=( "
 
 ;         change number to selbri 
 MOI-clause <- MOI-pre MOI MOI-post
@@ -1185,7 +1214,8 @@ SPACE MOI-no-SA-handling <- pre-cmavo MOI post-cmavo
 SPACE MOI-sa-clause <- MOI-no-SA-handling MOI-sa-tail
 SPACE MOI-sa-tail <- SA-clause &MOI-no-SA-handling / !MOI-no-SA-handling !SA-clause any-word-no-SA-handling MOI-sa-tail / MOI-no-SA-handling MOI-sa-tail2 MOI-sa-tail
 SPACE MOI-sa-tail2 <- SA-clause / !MOI-no-SA-handling !SA-clause any-word-no-SA-handling MOI-sa-tail2 / MOI-no-SA-handling MOI-sa-tail2 MOI-sa-tail2
-NORATS MOI <- "mei" / "moi" / "si'e" / "cu'o" / "va'e"
+NORATS MOI <- MOI-word-pre inner-word close-paren
+NORATS MOI-word-pre <- " MOI=( "
 
 
 ;         bridi negation  
@@ -1196,7 +1226,8 @@ SPACE NA-no-SA-handling <- pre-cmavo NA post-cmavo
 SPACE NA-sa-clause <- NA-no-SA-handling NA-sa-tail
 SPACE NA-sa-tail <- SA-clause &NA-no-SA-handling / !NA-no-SA-handling !SA-clause any-word-no-SA-handling NA-sa-tail / NA-no-SA-handling NA-sa-tail2 NA-sa-tail
 SPACE NA-sa-tail2 <- SA-clause / !NA-no-SA-handling !SA-clause any-word-no-SA-handling NA-sa-tail2 / NA-no-SA-handling NA-sa-tail2 NA-sa-tail2
-NORATS NA <- "ja'a" / "na"
+NORATS NA <- NA-word-pre inner-word close-paren
+NORATS NA-word-pre <- " NA=( "
 
 ;         attached to words to negate them 
 NAI-clause <- NAI-pre NAI NAI-post
@@ -1206,7 +1237,8 @@ SPACE NAI-no-SA-handling <- pre-cmavo NAI post-cmavo
 SPACE NAI-sa-clause <- NAI-no-SA-handling NAI-sa-tail
 SPACE NAI-sa-tail <- SA-clause &NAI-no-SA-handling / !NAI-no-SA-handling !SA-clause any-word-no-SA-handling NAI-sa-tail / NAI-no-SA-handling NAI-sa-tail2 NAI-sa-tail
 SPACE NAI-sa-tail2 <- SA-clause / !NAI-no-SA-handling !SA-clause any-word-no-SA-handling NAI-sa-tail2 / NAI-no-SA-handling NAI-sa-tail2 NAI-sa-tail2
-NORATS NAI <- "nai"
+NORATS NAI <- NAI-word-pre inner-word close-paren
+NORATS NAI-word-pre <- " NAI=( "
 
 ;         scalar negation  
 NAhE-clause <- NAhE-pre NAhE NAhE-post
@@ -1216,7 +1248,8 @@ SPACE NAhE-no-SA-handling <- pre-cmavo NAhE post-cmavo
 SPACE NAhE-sa-clause <- NAhE-no-SA-handling NAhE-sa-tail
 SPACE NAhE-sa-tail <- SA-clause &NAhE-no-SA-handling / !NAhE-no-SA-handling !SA-clause any-word-no-SA-handling NAhE-sa-tail / NAhE-no-SA-handling NAhE-sa-tail2 NAhE-sa-tail
 SPACE NAhE-sa-tail2 <- SA-clause / !NAhE-no-SA-handling !SA-clause any-word-no-SA-handling NAhE-sa-tail2 / NAhE-no-SA-handling NAhE-sa-tail2 NAhE-sa-tail2
-NORATS NAhE <- "to'e" / "je'a" / "na'e" / "no'e"
+NORATS NAhE <- NAhE-word-pre inner-word close-paren
+NORATS NAhE-word-pre <- " NAhE=( "
 
 ;         change a selbri into an operator 
 NAhU-clause <- NAhU-pre NAhU NAhU-post
@@ -1226,7 +1259,8 @@ SPACE NAhU-no-SA-handling <- pre-cmavo NAhU post-cmavo
 SPACE NAhU-sa-clause <- NAhU-no-SA-handling NAhU-sa-tail
 SPACE NAhU-sa-tail <- SA-clause &NAhU-no-SA-handling / !NAhU-no-SA-handling !SA-clause any-word-no-SA-handling NAhU-sa-tail / NAhU-no-SA-handling NAhU-sa-tail2 NAhU-sa-tail
 SPACE NAhU-sa-tail2 <- SA-clause / !NAhU-no-SA-handling !SA-clause any-word-no-SA-handling NAhU-sa-tail2 / NAhU-no-SA-handling NAhU-sa-tail2 NAhU-sa-tail2
-NORATS NAhU <- "na'u"
+NORATS NAhU <- NAhU-word-pre inner-word close-paren
+NORATS NAhU-word-pre <- " NAhU=( "
 
 ;         change selbri to operand; inverse of MOI 
 NIhE-clause <- NIhE-pre NIhE NIhE-post
@@ -1236,7 +1270,8 @@ SPACE NIhE-no-SA-handling <- pre-cmavo NIhE post-cmavo
 SPACE NIhE-sa-clause <- NIhE-no-SA-handling NIhE-sa-tail
 SPACE NIhE-sa-tail <- SA-clause &NIhE-no-SA-handling / !NIhE-no-SA-handling !SA-clause any-word-no-SA-handling NIhE-sa-tail / NIhE-no-SA-handling NIhE-sa-tail2 NIhE-sa-tail
 SPACE NIhE-sa-tail2 <- SA-clause / !NIhE-no-SA-handling !SA-clause any-word-no-SA-handling NIhE-sa-tail2 / NIhE-no-SA-handling NIhE-sa-tail2 NIhE-sa-tail2
-NORATS NIhE <- "ni'e"
+NORATS NIhE <- NIhE-word-pre inner-word close-paren
+NORATS NIhE-word-pre <- " NIhE=( "
 
 ;         new paragraph; change of subject 
 NIhO-clause <- NIhO-pre NIhO NIhO-post
@@ -1246,7 +1281,8 @@ SPACE NIhO-no-SA-handling <- pre-cmavo NIhO su-clause* post-cmavo
 SPACE NIhO-sa-clause <- NIhO-no-SA-handling NIhO-sa-tail
 SPACE NIhO-sa-tail <- SA-clause &NIhO-no-SA-handling / !NIhO-no-SA-handling !SA-clause any-word-no-SA-handling NIhO-sa-tail / NIhO-no-SA-handling NIhO-sa-tail2 NIhO-sa-tail
 SPACE NIhO-sa-tail2 <- SA-clause / !NIhO-no-SA-handling !SA-clause any-word-no-SA-handling NIhO-sa-tail2 / NIhO-no-SA-handling NIhO-sa-tail2 NIhO-sa-tail2
-NORATS NIhO <- "ni'o" / "no'i"
+NORATS NIhO <- NIhO-word-pre inner-word close-paren
+NORATS NIhO-word-pre <- " NIhO=( "
 
 ;         attaches a subordinate clause to a sumti 
 NOI-clause <- NOI-pre NOI NOI-post
@@ -1256,7 +1292,8 @@ SPACE NOI-no-SA-handling <- pre-cmavo NOI post-cmavo
 SPACE NOI-sa-clause <- NOI-no-SA-handling NOI-sa-tail
 SPACE NOI-sa-tail <- SA-clause &NOI-no-SA-handling / !NOI-no-SA-handling !SA-clause any-word-no-SA-handling NOI-sa-tail / NOI-no-SA-handling NOI-sa-tail2 NOI-sa-tail
 SPACE NOI-sa-tail2 <- SA-clause / !NOI-no-SA-handling !SA-clause any-word-no-SA-handling NOI-sa-tail2 / NOI-no-SA-handling NOI-sa-tail2 NOI-sa-tail2
-NORATS NOI <- "voi" / "noi" / "poi"
+NORATS NOI <- NOI-word-pre inner-word close-paren
+NORATS NOI-word-pre <- " NOI=( "
 
 ;         abstraction  
 NU-clause <- NU-pre NU NU-post
@@ -1266,7 +1303,8 @@ SPACE NU-no-SA-handling <- pre-cmavo NU post-cmavo
 SPACE NU-sa-clause <- NU-no-SA-handling NU-sa-tail
 SPACE NU-sa-tail <- SA-clause &NU-no-SA-handling / !NU-no-SA-handling !SA-clause any-word-no-SA-handling NU-sa-tail / NU-no-SA-handling NU-sa-tail2 NU-sa-tail
 SPACE NU-sa-tail2 <- SA-clause / !NU-no-SA-handling !SA-clause any-word-no-SA-handling NU-sa-tail2 / NU-no-SA-handling NU-sa-tail2 NU-sa-tail2
-NORATS NU <- "ni" / "du'u" / "si'o" / "nu" / "li'i" / "ka" / "jei" / "su'u" / "zu'o" / "mu'e" / "pu'u" / "za'i"
+NORATS NU <- NU-word-pre inner-word close-paren
+NORATS NU-word-pre <- " NU=( "
 
 ;         change operator to selbri; inverse of MOhE 
 NUhA-clause <- NUhA-pre NUhA NUhA-post
@@ -1276,7 +1314,8 @@ SPACE NUhA-no-SA-handling <- pre-cmavo NUhA post-cmavo
 SPACE NUhA-sa-clause <- NUhA-no-SA-handling NUhA-sa-tail
 SPACE NUhA-sa-tail <- SA-clause &NUhA-no-SA-handling / !NUhA-no-SA-handling !SA-clause any-word-no-SA-handling NUhA-sa-tail / NUhA-no-SA-handling NUhA-sa-tail2 NUhA-sa-tail
 SPACE NUhA-sa-tail2 <- SA-clause / !NUhA-no-SA-handling !SA-clause any-word-no-SA-handling NUhA-sa-tail2 / NUhA-no-SA-handling NUhA-sa-tail2 NUhA-sa-tail2
-NORATS NUhA <- "nu'a"
+NORATS NUhA <- NUhA-word-pre inner-word close-paren
+NORATS NUhA-word-pre <- " NUhA=( "
 
 ;         marks the start of a termset 
 NUhI-clause <- NUhI-pre NUhI NUhI-post
@@ -1286,7 +1325,8 @@ SPACE NUhI-no-SA-handling <- pre-cmavo NUhI post-cmavo
 SPACE NUhI-sa-clause <- NUhI-no-SA-handling NUhI-sa-tail
 SPACE NUhI-sa-tail <- SA-clause &NUhI-no-SA-handling / !NUhI-no-SA-handling !SA-clause any-word-no-SA-handling NUhI-sa-tail / NUhI-no-SA-handling NUhI-sa-tail2 NUhI-sa-tail
 SPACE NUhI-sa-tail2 <- SA-clause / !NUhI-no-SA-handling !SA-clause any-word-no-SA-handling NUhI-sa-tail2 / NUhI-no-SA-handling NUhI-sa-tail2 NUhI-sa-tail2
-NORATS NUhI <- "nu'i"
+NORATS NUhI <- NUhI-word-pre inner-word close-paren
+NORATS NUhI-word-pre <- " NUhI=( "
 
 ;         marks the middle and end of a termset 
 NUhU-clause <- NUhU-pre NUhU NUhU-post
@@ -1296,7 +1336,8 @@ SPACE NUhU-no-SA-handling <- pre-cmavo NUhU post-cmavo
 SPACE NUhU-sa-clause <- NUhU-no-SA-handling NUhU-sa-tail
 SPACE NUhU-sa-tail <- SA-clause &NUhU-no-SA-handling / !NUhU-no-SA-handling !SA-clause any-word-no-SA-handling NUhU-sa-tail / NUhU-no-SA-handling NUhU-sa-tail2 NUhU-sa-tail
 SPACE NUhU-sa-tail2 <- SA-clause / !NUhU-no-SA-handling !SA-clause any-word-no-SA-handling NUhU-sa-tail2 / NUhU-no-SA-handling NUhU-sa-tail2 NUhU-sa-tail2
-NORATS NUhU <- "nu'u"
+NORATS NUhU <- NUhU-word-pre inner-word close-paren
+NORATS NUhU-word-pre <- " NUhU=( "
 
 
 ;         numbers and numeric punctuation 
@@ -1307,7 +1348,8 @@ SPACE PA-no-SA-handling <- pre-cmavo PA post-cmavo
 SPACE PA-sa-clause <- PA-no-SA-handling PA-sa-tail
 SPACE PA-sa-tail <- SA-clause &PA-no-SA-handling / !PA-no-SA-handling !SA-clause any-word-no-SA-handling PA-sa-tail / PA-no-SA-handling PA-sa-tail2 PA-sa-tail
 SPACE PA-sa-tail2 <- SA-clause / !PA-no-SA-handling !SA-clause any-word-no-SA-handling PA-sa-tail2 / PA-no-SA-handling PA-sa-tail2 PA-sa-tail2
-NORATS PA <- "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "pi'e" / "pi" /  "fi'u" / "za'u" / "me'i" / "ni'u" / "ki'o" / "ce'i" / "ma'u" / "ra'e" / "da'a" / "so'a" / "ji'i" / "su'o" / "su'e" / "ro" / "rau" / "so'u" / "so'i" / "so'e" / "so'o" / "mo'a" / "du'e" / "te'o" / "ka'o" / "ci'i" / "tu'o" / "xo" / "pai" / "no'o" / "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9"
+NORATS PA <- PA-word-pre inner-word close-paren
+NORATS PA-word-pre <- " PA=( "
 
 ;         afterthought termset connective prefix 
 PEhE-clause <- PEhE-pre PEhE PEhE-post
@@ -1317,7 +1359,8 @@ SPACE PEhE-no-SA-handling <- pre-cmavo PEhE post-cmavo
 SPACE PEhE-sa-clause <- PEhE-no-SA-handling PEhE-sa-tail
 SPACE PEhE-sa-tail <- SA-clause &PEhE-no-SA-handling / !PEhE-no-SA-handling !SA-clause any-word-no-SA-handling PEhE-sa-tail / PEhE-no-SA-handling PEhE-sa-tail2 PEhE-sa-tail
 SPACE PEhE-sa-tail2 <- SA-clause / !PEhE-no-SA-handling !SA-clause any-word-no-SA-handling PEhE-sa-tail2 / PEhE-no-SA-handling PEhE-sa-tail2 PEhE-sa-tail2
-NORATS PEhE <- "pe'e"
+NORATS PEhE <- PEhE-word-pre inner-word close-paren
+NORATS PEhE-word-pre <- " PEhE=( "
 
 ;         forethought (Polish) flag 
 PEhO-clause <- PEhO-pre PEhO PEhO-post
@@ -1327,7 +1370,8 @@ SPACE PEhO-no-SA-handling <- pre-cmavo PEhO post-cmavo
 SPACE PEhO-sa-clause <- PEhO-no-SA-handling PEhO-sa-tail
 SPACE PEhO-sa-tail <- SA-clause &PEhO-no-SA-handling / !PEhO-no-SA-handling !SA-clause any-word-no-SA-handling PEhO-sa-tail / PEhO-no-SA-handling PEhO-sa-tail2 PEhO-sa-tail
 SPACE PEhO-sa-tail2 <- SA-clause / !PEhO-no-SA-handling !SA-clause any-word-no-SA-handling PEhO-sa-tail2 / PEhO-no-SA-handling PEhO-sa-tail2 PEhO-sa-tail2
-NORATS PEhO <- "pe'o"
+NORATS PEhO <- PEhO-word-pre inner-word close-paren
+NORATS PEhO-word-pre <- " PEhO=( "
 
 ;         directions in time 
 PU-clause <- PU-pre PU PU-post
@@ -1337,7 +1381,8 @@ SPACE PU-no-SA-handling <- pre-cmavo PU post-cmavo
 SPACE PU-sa-clause <- PU-no-SA-handling PU-sa-tail
 SPACE PU-sa-tail <- SA-clause &PU-no-SA-handling / !PU-no-SA-handling !SA-clause any-word-no-SA-handling PU-sa-tail / PU-no-SA-handling PU-sa-tail2 PU-sa-tail
 SPACE PU-sa-tail2 <- SA-clause / !PU-no-SA-handling !SA-clause any-word-no-SA-handling PU-sa-tail2 / PU-no-SA-handling PU-sa-tail2 PU-sa-tail2
-NORATS PU <- "ba" / "pu" / "ca"
+NORATS PU <- PU-word-pre inner-word close-paren
+NORATS PU-word-pre <- " PU=( "
 
 
 ;         flag for modified interpretation of GOhI 
@@ -1348,7 +1393,8 @@ SPACE RAhO-no-SA-handling <- pre-cmavo RAhO post-cmavo
 SPACE RAhO-sa-clause <- RAhO-no-SA-handling RAhO-sa-tail
 SPACE RAhO-sa-tail <- SA-clause &RAhO-no-SA-handling / !RAhO-no-SA-handling !SA-clause any-word-no-SA-handling RAhO-sa-tail / RAhO-no-SA-handling RAhO-sa-tail2 RAhO-sa-tail
 SPACE RAhO-sa-tail2 <- SA-clause / !RAhO-no-SA-handling !SA-clause any-word-no-SA-handling RAhO-sa-tail2 / RAhO-no-SA-handling RAhO-sa-tail2 RAhO-sa-tail2
-NORATS RAhO <- "ra'o"
+NORATS RAhO <- RAhO-word-pre inner-word close-paren
+NORATS RAhO-word-pre <- " RAhO=( "
 
 ;         converts number to extensional tense 
 ROI-clause <- ROI-pre ROI ROI-post
@@ -1358,12 +1404,14 @@ SPACE ROI-no-SA-handling <- pre-cmavo ROI post-cmavo
 SPACE ROI-sa-clause <- ROI-no-SA-handling ROI-sa-tail
 SPACE ROI-sa-tail <- SA-clause &ROI-no-SA-handling / !ROI-no-SA-handling !SA-clause any-word-no-SA-handling ROI-sa-tail / ROI-no-SA-handling ROI-sa-tail2 ROI-sa-tail
 SPACE ROI-sa-tail2 <- SA-clause / !ROI-no-SA-handling !SA-clause any-word-no-SA-handling ROI-sa-tail2 / ROI-no-SA-handling ROI-sa-tail2 ROI-sa-tail2
-NORATS ROI <- "re'u" / "roi"
+NORATS ROI <- ROI-word-pre inner-word close-paren
+NORATS ROI-word-pre <- " ROI=( "
 
 SA-clause <- SA-pre SA SA-post
 SA-pre <- pre-cmavo
-SA-post <- !BU-bare !tick-char !vowel spaces? !ZEI-clause
-NORATS SA <- "sa"
+SA-post <- !BU-bare spaces? !ZEI-clause
+NORATS SA <- SA-word-pre inner-word close-paren
+NORATS SA-word-pre <- " SA=( "
 
 ;         metalinguistic eraser to the beginning of
 
@@ -1377,7 +1425,8 @@ SPACE SE-no-SA-handling <- pre-cmavo SE post-cmavo
 SPACE SE-sa-clause <- SE-no-SA-handling SE-sa-tail
 SPACE SE-sa-tail <- SA-clause &SE-no-SA-handling / !SE-no-SA-handling !SA-clause any-word-no-SA-handling SE-sa-tail / SE-no-SA-handling SE-sa-tail2 SE-sa-tail
 SPACE SE-sa-tail2 <- SA-clause / !SE-no-SA-handling !SA-clause any-word-no-SA-handling SE-sa-tail2 / SE-no-SA-handling SE-sa-tail2 SE-sa-tail2
-NORATS SE <- "se" / "te" / "ve" / "xe"
+NORATS SE <- SE-word-pre inner-word close-paren
+NORATS SE-word-pre <- " SE=( "
 
 ;         metalinguistic bridi insert marker 
 SEI-clause <- SEI-pre SEI SEI-post
@@ -1387,7 +1436,8 @@ SPACE SEI-no-SA-handling <- pre-cmavo SEI post-cmavo
 SPACE SEI-sa-clause <- SEI-no-SA-handling SEI-sa-tail
 SPACE SEI-sa-tail <- SA-clause &SEI-no-SA-handling / !SEI-no-SA-handling !SA-clause any-word-no-SA-handling SEI-sa-tail / SEI-no-SA-handling SEI-sa-tail2 SEI-sa-tail
 SPACE SEI-sa-tail2 <- SA-clause / !SEI-no-SA-handling !SA-clause any-word-no-SA-handling SEI-sa-tail2 / SEI-no-SA-handling SEI-sa-tail2 SEI-sa-tail2
-NORATS SEI <- "sei" / "ti'o"
+NORATS SEI <- SEI-word-pre inner-word close-paren
+NORATS SEI-word-pre <- " SEI=( "
 
 ;         metalinguistic bridi end marker 
 SEhU-clause <- SEhU-pre SEhU SEhU-post
@@ -1397,11 +1447,13 @@ SPACE SEhU-no-SA-handling <- pre-cmavo SEhU post-cmavo
 SPACE SEhU-sa-clause <- SEhU-no-SA-handling SEhU-sa-tail
 SPACE SEhU-sa-tail <- SA-clause &SEhU-no-SA-handling / !SEhU-no-SA-handling !SA-clause any-word-no-SA-handling SEhU-sa-tail / SEhU-no-SA-handling SEhU-sa-tail2 SEhU-sa-tail
 SPACE SEhU-sa-tail2 <- SA-clause / !SEhU-no-SA-handling !SA-clause any-word-no-SA-handling SEhU-sa-tail2 / SEhU-no-SA-handling SEhU-sa-tail2 SEhU-sa-tail2
-NORATS SEhU <- "se'u"
+NORATS SEhU <- SEhU-word-pre inner-word close-paren
+NORATS SEhU-word-pre <- " SEhU=( "
 
 ;         metalinguistic single word eraser 
 SI-clause <- SI post-cmavo-no-SI-handling
-NORATS SI <- "si"
+NORATS SI <- SI-word-pre inner-word close-paren
+NORATS SI-word-pre <- " SI=( "
 
 ;         reciprocal sumti marker 
 SOI-clause <- SOI-pre SOI SOI-post
@@ -1411,7 +1463,8 @@ SPACE SOI-no-SA-handling <- pre-cmavo SOI post-cmavo
 SPACE SOI-sa-clause <- SOI-no-SA-handling SOI-sa-tail
 SPACE SOI-sa-tail <- SA-clause &SOI-no-SA-handling / !SOI-no-SA-handling !SA-clause any-word-no-SA-handling SOI-sa-tail / SOI-no-SA-handling SOI-sa-tail2 SOI-sa-tail
 SPACE SOI-sa-tail2 <- SA-clause / !SOI-no-SA-handling !SA-clause any-word-no-SA-handling SOI-sa-tail2 / SOI-no-SA-handling SOI-sa-tail2 SOI-sa-tail2
-NORATS SOI <- "soi"
+NORATS SOI <- SOI-word-pre inner-word close-paren
+NORATS SOI-word-pre <- " SOI=( "
 
 ;         metalinguistic eraser of the entire text 
 SU-clause <- SU-pre SU SU-post
@@ -1421,7 +1474,8 @@ SPACE SU-no-SA-handling <- pre-cmavo SU post-cmavo
 SPACE SU-sa-clause <- SU-no-SA-handling SU-sa-tail
 SPACE SU-sa-tail <- SA-clause &SU-no-SA-handling / !SU-no-SA-handling !SA-clause any-word-no-SA-handling SU-sa-tail / SU-no-SA-handling SU-sa-tail2 SU-sa-tail
 SPACE SU-sa-tail2 <- SA-clause / !SU-no-SA-handling !SA-clause any-word-no-SA-handling SU-sa-tail2 / SU-no-SA-handling SU-sa-tail2 SU-sa-tail2
-NORATS SU <- "su"
+NORATS SU <- SU-word-pre inner-word close-paren
+NORATS SU-word-pre <- " SU=( "
 
 
 ;         tense interval properties 
@@ -1432,7 +1486,8 @@ SPACE TAhE-no-SA-handling <- pre-cmavo TAhE post-cmavo
 SPACE TAhE-sa-clause <- TAhE-no-SA-handling TAhE-sa-tail
 SPACE TAhE-sa-tail <- SA-clause &TAhE-no-SA-handling / !TAhE-no-SA-handling !SA-clause any-word-no-SA-handling TAhE-sa-tail / TAhE-no-SA-handling TAhE-sa-tail2 TAhE-sa-tail
 SPACE TAhE-sa-tail2 <- SA-clause / !TAhE-no-SA-handling !SA-clause any-word-no-SA-handling TAhE-sa-tail2 / TAhE-no-SA-handling TAhE-sa-tail2 TAhE-sa-tail2
-NORATS TAhE <- "ru'i" / "ta'e" / "di'i" / "na'o"
+NORATS TAhE <- TAhE-word-pre inner-word close-paren
+NORATS TAhE-word-pre <- " TAhE=( "
 
 ;         closing gap for MEX constructs 
 TEhU-clause <- TEhU-pre TEhU TEhU-post
@@ -1442,7 +1497,8 @@ SPACE TEhU-no-SA-handling <- pre-cmavo TEhU post-cmavo
 SPACE TEhU-sa-clause <- TEhU-no-SA-handling TEhU-sa-tail
 SPACE TEhU-sa-tail <- SA-clause &TEhU-no-SA-handling / !TEhU-no-SA-handling !SA-clause any-word-no-SA-handling TEhU-sa-tail / TEhU-no-SA-handling TEhU-sa-tail2 TEhU-sa-tail
 SPACE TEhU-sa-tail2 <- SA-clause / !TEhU-no-SA-handling !SA-clause any-word-no-SA-handling TEhU-sa-tail2 / TEhU-no-SA-handling TEhU-sa-tail2 TEhU-sa-tail2
-NORATS TEhU <- "te'u"
+NORATS TEhU <- TEhU-word-pre inner-word close-paren
+NORATS TEhU-word-pre <- " TEhU=( "
 
 ;         start compound lerfu 
 TEI-clause <- TEI-pre TEI TEI-post
@@ -1452,7 +1508,8 @@ SPACE TEI-no-SA-handling <- pre-cmavo TEI post-cmavo
 SPACE TEI-sa-clause <- TEI-no-SA-handling TEI-sa-tail
 SPACE TEI-sa-tail <- SA-clause &TEI-no-SA-handling / !TEI-no-SA-handling !SA-clause any-word-no-SA-handling TEI-sa-tail / TEI-no-SA-handling TEI-sa-tail2 TEI-sa-tail
 SPACE TEI-sa-tail2 <- SA-clause / !TEI-no-SA-handling !SA-clause any-word-no-SA-handling TEI-sa-tail2 / TEI-no-SA-handling TEI-sa-tail2 TEI-sa-tail2
-NORATS TEI <- "tei"
+NORATS TEI <- TEI-word-pre inner-word close-paren
+NORATS TEI-word-pre <- " TEI=( "
 
 ;         left discursive parenthesis 
 TO-clause <- TO-pre TO TO-post
@@ -1462,7 +1519,8 @@ SPACE TO-no-SA-handling <- pre-cmavo TO post-cmavo
 SPACE TO-sa-clause <- TO-no-SA-handling TO-sa-tail
 SPACE TO-sa-tail <- SA-clause &TO-no-SA-handling / !TO-no-SA-handling !SA-clause any-word-no-SA-handling TO-sa-tail / TO-no-SA-handling TO-sa-tail2 TO-sa-tail
 SPACE TO-sa-tail2 <- SA-clause / !TO-no-SA-handling !SA-clause any-word-no-SA-handling TO-sa-tail2 / TO-no-SA-handling TO-sa-tail2 TO-sa-tail2
-NORATS TO <- "to'i" / "to"
+NORATS TO <- TO-word-pre inner-word close-paren
+NORATS TO-word-pre <- " TO=( "
 
 ;         right discursive parenthesis 
 TOI-clause <- TOI-pre TOI TOI-post
@@ -1472,7 +1530,8 @@ SPACE TOI-no-SA-handling <- pre-cmavo TOI post-cmavo
 SPACE TOI-sa-clause <- TOI-no-SA-handling TOI-sa-tail
 SPACE TOI-sa-tail <- SA-clause &TOI-no-SA-handling / !TOI-no-SA-handling !SA-clause any-word-no-SA-handling TOI-sa-tail / TOI-no-SA-handling TOI-sa-tail2 TOI-sa-tail
 SPACE TOI-sa-tail2 <- SA-clause / !TOI-no-SA-handling !SA-clause any-word-no-SA-handling TOI-sa-tail2 / TOI-no-SA-handling TOI-sa-tail2 TOI-sa-tail2
-NORATS TOI <- "toi"
+NORATS TOI <- TOI-word-pre inner-word close-paren
+NORATS TOI-word-pre <- " TOI=( "
 
 ;         multiple utterance scope mark 
 TUhE-clause <- TUhE-pre TUhE TUhE-post
@@ -1482,7 +1541,8 @@ SPACE TUhE-no-SA-handling <- pre-cmavo TUhE su-clause* post-cmavo
 SPACE TUhE-sa-clause <- TUhE-no-SA-handling TUhE-sa-tail
 SPACE TUhE-sa-tail <- SA-clause &TUhE-no-SA-handling / !TUhE-no-SA-handling !SA-clause any-word-no-SA-handling TUhE-sa-tail / TUhE-no-SA-handling TUhE-sa-tail2 TUhE-sa-tail
 SPACE TUhE-sa-tail2 <- SA-clause / !TUhE-no-SA-handling !SA-clause any-word-no-SA-handling TUhE-sa-tail2 / TUhE-no-SA-handling TUhE-sa-tail2 TUhE-sa-tail2
-NORATS TUhE <- "tu'e"
+NORATS TUhE <- TUhE-word-pre inner-word close-paren
+NORATS TUhE-word-pre <- " TUhE=( "
 
 ;         multiple utterance end scope mark 
 TUhU-clause <- TUhU-pre TUhU TUhU-post
@@ -1492,7 +1552,8 @@ SPACE TUhU-no-SA-handling <- pre-cmavo TUhU post-cmavo
 SPACE TUhU-sa-clause <- TUhU-no-SA-handling TUhU-sa-tail
 SPACE TUhU-sa-tail <- SA-clause &TUhU-no-SA-handling / !TUhU-no-SA-handling !SA-clause any-word-no-SA-handling TUhU-sa-tail / TUhU-no-SA-handling TUhU-sa-tail2 TUhU-sa-tail
 SPACE TUhU-sa-tail2 <- SA-clause / !TUhU-no-SA-handling !SA-clause any-word-no-SA-handling TUhU-sa-tail2 / TUhU-no-SA-handling TUhU-sa-tail2 TUhU-sa-tail2
-NORATS TUhU <- "tu'u"
+NORATS TUhU <- TUhU-word-pre inner-word close-paren
+NORATS TUhU-word-pre <- " TUhU=( "
 
 
 ;         attitudinals, observationals, discursives 
@@ -1503,7 +1564,8 @@ SPACE UI-no-SA-handling <- pre-cmavo UI post-cmavo
 SPACE UI-sa-clause <- UI-no-SA-handling UI-sa-tail
 SPACE UI-sa-tail <- SA-clause &UI-no-SA-handling / !UI-no-SA-handling !SA-clause any-word-no-SA-handling UI-sa-tail / UI-no-SA-handling UI-sa-tail2 UI-sa-tail
 SPACE UI-sa-tail2 <- SA-clause / !UI-no-SA-handling !SA-clause any-word-no-SA-handling UI-sa-tail2 / UI-no-SA-handling UI-sa-tail2 UI-sa-tail2
-NORATS UI <- "i'a" / "ie" / "a'e" / "u'i" / "i'o" / "i'e" / "a'a" / "ia" / "o'i" / "o'e" / "e'e" / "oi" / "uo" / "e'i" / "u'o" / "au" / "ua" / "a'i" / "i'u" / "ii" / "u'a" / "ui" / "a'o" / "ai" / "a'u" / "iu" / "ei" / "o'o" / "e'a" / "uu" / "o'a" / "o'u" / "u'u" / "e'o" / "io" / "e'u" / "ue" / "i'i" / "u'e" / "ba'a" / "ja'o" / "ca'e" / "su'a" / "ti'e" / "ka'u" / "se'o" / "za'a" / "pe'i" / "ru'a" / "ju'a" / "ta'o" / "ra'u" / "li'a" / "ba'u" / "mu'a" / "do'a" / "to'u" / "va'i" / "pa'e" / "zu'u" / "sa'e" / "la'a" / "ke'u" / "sa'u" / "da'i" / "je'u" / "sa'a" / "kau" / "ta'u" / "na'i" / "jo'a" / "bi'u" / "li'o" / "pau" / "mi'u" / "ku'i" / "ji'a" / "si'a" / "po'o" / "pe'a" / "ro'i" / "ro'e" / "ro'o" / "ro'u" / "ro'a" / "re'e" / "le'o" / "ju'o" / "fu'i" / "dai" / "ga'i" / "zo'o" / "be'u" / "ri'e" / "se'i" / "se'a" / "vu'e" / "ki'a" / "xu" / "ge'e" / "bu'o"
+NORATS UI <- UI-word-pre inner-word close-paren
+NORATS UI-word-pre <- " UI=( "
 
 
 ;         distance in space-time 
@@ -1514,7 +1576,8 @@ SPACE VA-no-SA-handling <- pre-cmavo VA post-cmavo
 SPACE VA-sa-clause <- VA-no-SA-handling VA-sa-tail
 SPACE VA-sa-tail <- SA-clause &VA-no-SA-handling / !VA-no-SA-handling !SA-clause any-word-no-SA-handling VA-sa-tail / VA-no-SA-handling VA-sa-tail2 VA-sa-tail
 SPACE VA-sa-tail2 <- SA-clause / !VA-no-SA-handling !SA-clause any-word-no-SA-handling VA-sa-tail2 / VA-no-SA-handling VA-sa-tail2 VA-sa-tail2
-NORATS VA <- "vi" / "va" / "vu"
+NORATS VA <- VA-word-pre inner-word close-paren
+NORATS VA-word-pre <- " VA=( "
 
 ;         end simple bridi or bridi-tail 
 VAU-clause <- VAU-pre VAU VAU-post
@@ -1524,7 +1587,8 @@ SPACE VAU-no-SA-handling <- pre-cmavo VAU post-cmavo
 SPACE VAU-sa-clause <- VAU-no-SA-handling VAU-sa-tail
 SPACE VAU-sa-tail <- SA-clause &VAU-no-SA-handling / !VAU-no-SA-handling !SA-clause any-word-no-SA-handling VAU-sa-tail / VAU-no-SA-handling VAU-sa-tail2 VAU-sa-tail
 SPACE VAU-sa-tail2 <- SA-clause / !VAU-no-SA-handling !SA-clause any-word-no-SA-handling VAU-sa-tail2 / VAU-no-SA-handling VAU-sa-tail2 VAU-sa-tail2
-NORATS VAU <- "vau"
+NORATS VAU <- VAU-word-pre inner-word close-paren
+NORATS VAU-word-pre <- " VAU=( "
 
 ;         left MEX bracket 
 VEI-clause <- VEI-pre VEI VEI-post
@@ -1534,7 +1598,8 @@ SPACE VEI-no-SA-handling <- pre-cmavo VEI post-cmavo
 SPACE VEI-sa-clause <- VEI-no-SA-handling VEI-sa-tail
 SPACE VEI-sa-tail <- SA-clause &VEI-no-SA-handling / !VEI-no-SA-handling !SA-clause any-word-no-SA-handling VEI-sa-tail / VEI-no-SA-handling VEI-sa-tail2 VEI-sa-tail
 SPACE VEI-sa-tail2 <- SA-clause / !VEI-no-SA-handling !SA-clause any-word-no-SA-handling VEI-sa-tail2 / VEI-no-SA-handling VEI-sa-tail2 VEI-sa-tail2
-NORATS VEI <- "vei"
+NORATS VEI <- VEI-word-pre inner-word close-paren
+NORATS VEI-word-pre <- " VEI=( "
 
 ;         right MEX bracket 
 VEhO-clause <- VEhO-pre VEhO VEhO-post
@@ -1544,7 +1609,8 @@ SPACE VEhO-no-SA-handling <- pre-cmavo VEhO post-cmavo
 SPACE VEhO-sa-clause <- VEhO-no-SA-handling VEhO-sa-tail
 SPACE VEhO-sa-tail <- SA-clause &VEhO-no-SA-handling / !VEhO-no-SA-handling !SA-clause any-word-no-SA-handling VEhO-sa-tail / VEhO-no-SA-handling VEhO-sa-tail2 VEhO-sa-tail
 SPACE VEhO-sa-tail2 <- SA-clause / !VEhO-no-SA-handling !SA-clause any-word-no-SA-handling VEhO-sa-tail2 / VEhO-no-SA-handling VEhO-sa-tail2 VEhO-sa-tail2
-NORATS VEhO <- "ve'o"
+NORATS VEhO <- VEhO-word-pre inner-word close-paren
+NORATS VEhO-word-pre <- " VEhO=( "
 
 ;         MEX operator 
 VUhU-clause <- VUhU-pre VUhU VUhU-post
@@ -1554,7 +1620,8 @@ SPACE VUhU-no-SA-handling <- pre-cmavo VUhU post-cmavo
 SPACE VUhU-sa-clause <- VUhU-no-SA-handling VUhU-sa-tail
 SPACE VUhU-sa-tail <- SA-clause &VUhU-no-SA-handling / !VUhU-no-SA-handling !SA-clause any-word-no-SA-handling VUhU-sa-tail / VUhU-no-SA-handling VUhU-sa-tail2 VUhU-sa-tail
 SPACE VUhU-sa-tail2 <- SA-clause / !VUhU-no-SA-handling !SA-clause any-word-no-SA-handling VUhU-sa-tail2 / VUhU-no-SA-handling VUhU-sa-tail2 VUhU-sa-tail2
-NORATS VUhU <- "ge'a" / "fu'u" / "pi'i" / "fe'i" / "vu'u" / "su'i" / "ju'u" / "gei" / "pa'i" / "fa'i" / "te'a" / "cu'a" / "va'a" / "ne'o" / "de'o" / "fe'a" / "sa'o" / "re'a" / "ri'o" / "sa'i" / "pi'a" / "si'i"
+NORATS VUhU <- VUhU-word-pre inner-word close-paren
+NORATS VUhU-word-pre <- " VUhU=( "
 
 ;         space-time interval size 
 VEhA-clause <- VEhA-pre VEhA VEhA-post
@@ -1564,7 +1631,8 @@ SPACE VEhA-no-SA-handling <- pre-cmavo VEhA post-cmavo
 SPACE VEhA-sa-clause <- VEhA-no-SA-handling VEhA-sa-tail
 SPACE VEhA-sa-tail <- SA-clause &VEhA-no-SA-handling / !VEhA-no-SA-handling !SA-clause any-word-no-SA-handling VEhA-sa-tail / VEhA-no-SA-handling VEhA-sa-tail2 VEhA-sa-tail
 SPACE VEhA-sa-tail2 <- SA-clause / !VEhA-no-SA-handling !SA-clause any-word-no-SA-handling VEhA-sa-tail2 / VEhA-no-SA-handling VEhA-sa-tail2 VEhA-sa-tail2
-NORATS VEhA <- "ve'u" / "ve'a" / "ve'i" / "ve'e"
+NORATS VEhA <- VEhA-word-pre inner-word close-paren
+NORATS VEhA-word-pre <- " VEhA=( "
 
 ;         space-time dimensionality marker 
 VIhA-clause <- VIhA-pre VIhA VIhA-post
@@ -1574,7 +1642,8 @@ SPACE VIhA-no-SA-handling <- pre-cmavo VIhA post-cmavo
 SPACE VIhA-sa-clause <- VIhA-no-SA-handling VIhA-sa-tail
 SPACE VIhA-sa-tail <- SA-clause &VIhA-no-SA-handling / !VIhA-no-SA-handling !SA-clause any-word-no-SA-handling VIhA-sa-tail / VIhA-no-SA-handling VIhA-sa-tail2 VIhA-sa-tail
 SPACE VIhA-sa-tail2 <- SA-clause / !VIhA-no-SA-handling !SA-clause any-word-no-SA-handling VIhA-sa-tail2 / VIhA-no-SA-handling VIhA-sa-tail2 VIhA-sa-tail2
-NORATS VIhA <- "vi'i" / "vi'a" / "vi'u" / "vi'e"
+NORATS VIhA <- VIhA-word-pre inner-word close-paren
+NORATS VIhA-word-pre <- " VIhA=( "
 VUhO-clause <- VUhO-pre VUhO VUhO-post
 VUhO-pre <- pre-cmavo VUhO-sa-clause?
 VUhO-post <- post-cmavo
@@ -1582,7 +1651,8 @@ SPACE VUhO-no-SA-handling <- pre-cmavo VUhO post-cmavo
 SPACE VUhO-sa-clause <- VUhO-no-SA-handling VUhO-sa-tail
 SPACE VUhO-sa-tail <- SA-clause &VUhO-no-SA-handling / !VUhO-no-SA-handling !SA-clause any-word-no-SA-handling VUhO-sa-tail / VUhO-no-SA-handling VUhO-sa-tail2 VUhO-sa-tail
 SPACE VUhO-sa-tail2 <- SA-clause / !VUhO-no-SA-handling !SA-clause any-word-no-SA-handling VUhO-sa-tail2 / VUhO-no-SA-handling VUhO-sa-tail2 VUhO-sa-tail2
-NORATS VUhO <- "vu'o"
+NORATS VUhO <- VUhO-word-pre inner-word close-paren
+NORATS VUhO-word-pre <- " VUhO=( "
 
 ; glue between logically connected sumti and relative clauses 
 
@@ -1595,21 +1665,23 @@ SPACE XI-no-SA-handling <- pre-cmavo XI post-cmavo
 SPACE XI-sa-clause <- XI-no-SA-handling XI-sa-tail
 SPACE XI-sa-tail <- SA-clause &XI-no-SA-handling / !XI-no-SA-handling !SA-clause any-word-no-SA-handling XI-sa-tail / XI-no-SA-handling XI-sa-tail2 XI-sa-tail
 SPACE XI-sa-tail2 <- SA-clause / !XI-no-SA-handling !SA-clause any-word-no-SA-handling XI-sa-tail2 / XI-no-SA-handling XI-sa-tail2 XI-sa-tail2
-NORATS XI <- "xi"
+NORATS XI <- XI-word-pre inner-word close-paren
+NORATS XI-word-pre <- " XI=( "
 
 
 ;         hesitation 
 Y-clause <- Y-pre Y Y-post
 Y-pre <- pre-cmavo Y-sa-clause?
 Y-post <- Y-post-cmavo
-Y-post-cmavo <- si-clause (space-chars+ / !tick-char !vowel) !ZEI-clause
+Y-post-cmavo <- si-clause space-chars* !ZEI-clause
 SPACE Y-no-SA-handling <- pre-cmavo Y post-cmavo
 ; Y+SA-clause clause makes no sense
 SPACE Y-sa-clause <- EOF
 ;Y-sa-clause <- Y-no-SA-handling Y-sa-tail
 ;Y-sa-tail <- SA-clause &Y-no-SA-handling / !Y-no-SA-handling !SA-clause any-word-no-SA-handling Y-sa-tail / Y-no-SA-handling Y-sa-tail2 Y-sa-tail
 ;Y-sa-tail2 <- SA-clause / !Y-no-SA-handling !SA-clause any-word-no-SA-handling Y-sa-tail2 / Y-no-SA-handling Y-sa-tail2 Y-sa-tail2
-NORATS Y <- "y"+
+NORATS Y <- Y-word-pre inner-word close-paren
+NORATS Y-word-pre <- " Y=( "
 
 
 ;         event properties - inchoative, etc. 
@@ -1620,7 +1692,8 @@ SPACE ZAhO-no-SA-handling <- pre-cmavo ZAhO post-cmavo
 SPACE ZAhO-sa-clause <- ZAhO-no-SA-handling ZAhO-sa-tail
 SPACE ZAhO-sa-tail <- SA-clause &ZAhO-no-SA-handling / !ZAhO-no-SA-handling !SA-clause any-word-no-SA-handling ZAhO-sa-tail / ZAhO-no-SA-handling ZAhO-sa-tail2 ZAhO-sa-tail
 SPACE ZAhO-sa-tail2 <- SA-clause / !ZAhO-no-SA-handling !SA-clause any-word-no-SA-handling ZAhO-sa-tail2 / ZAhO-no-SA-handling ZAhO-sa-tail2 ZAhO-sa-tail2
-NORATS ZAhO <- "co'i" / "pu'o" / "co'u" / "mo'u" / "ca'o" / "co'a" / "de'a" / "ba'o" / "di'a" / "za'o"
+NORATS ZAhO <- ZAhO-word-pre inner-word close-paren
+NORATS ZAhO-word-pre <- " ZAhO=( "
 
 ;         time interval size tense 
 ZEhA-clause <- ZEhA-pre ZEhA ZEhA-post
@@ -1630,17 +1703,19 @@ SPACE ZEhA-no-SA-handling <- pre-cmavo ZEhA post-cmavo
 SPACE ZEhA-sa-clause <- ZEhA-no-SA-handling ZEhA-sa-tail
 SPACE ZEhA-sa-tail <- SA-clause &ZEhA-no-SA-handling / !ZEhA-no-SA-handling !SA-clause any-word-no-SA-handling ZEhA-sa-tail / ZEhA-no-SA-handling ZEhA-sa-tail2 ZEhA-sa-tail
 SPACE ZEhA-sa-tail2 <- SA-clause / !ZEhA-no-SA-handling !SA-clause any-word-no-SA-handling ZEhA-sa-tail2 / ZEhA-no-SA-handling ZEhA-sa-tail2 ZEhA-sa-tail2
-NORATS ZEhA <- "ze'u" / "ze'a" / "ze'i" / "ze'e"
+NORATS ZEhA <- ZEhA-word-pre inner-word close-paren
+NORATS ZEhA-word-pre <- " ZEhA=( "
 
 ;         lujvo glue 
 ZEI-clause <- ZEI-pre ZEI ZEI-post
 ZEI-pre <- pre-cmavo ZEI-sa-clause?
-ZEI-post <- !tick-char !vowel !BU-clause spacing-no-absorb-opt !ZEI !BU-clause
+ZEI-post <- !BU-clause spacing-no-absorb-opt !ZEI !BU-clause
 SPACE ZEI-no-SA-handling <- pre-cmavo ZEI post-cmavo
 SPACE ZEI-sa-clause <- ZEI-no-SA-handling ZEI-sa-tail
 SPACE ZEI-sa-tail <- SA-clause &ZEI-no-SA-handling / !ZEI-no-SA-handling !SA-clause any-word-no-SA-handling ZEI-sa-tail / ZEI-no-SA-handling ZEI-sa-tail2 ZEI-sa-tail
 SPACE ZEI-sa-tail2 <- SA-clause / !ZEI-no-SA-handling !SA-clause any-word-no-SA-handling ZEI-sa-tail2 / ZEI-no-SA-handling ZEI-sa-tail2 ZEI-sa-tail2
-NORATS ZEI <- "zei"
+NORATS ZEI <- ZEI-word-pre inner-word close-paren
+NORATS ZEI-word-pre <- " ZEI=( "
 
 ;         time distance tense 
 ZI-clause <- ZI-pre ZI ZI-post
@@ -1650,7 +1725,8 @@ SPACE ZI-no-SA-handling <- pre-cmavo ZI post-cmavo
 SPACE ZI-sa-clause <- ZI-no-SA-handling ZI-sa-tail
 SPACE ZI-sa-tail <- SA-clause &ZI-no-SA-handling / !ZI-no-SA-handling !SA-clause any-word-no-SA-handling ZI-sa-tail / ZI-no-SA-handling ZI-sa-tail2 ZI-sa-tail
 SPACE ZI-sa-tail2 <- SA-clause / !ZI-no-SA-handling !SA-clause any-word-no-SA-handling ZI-sa-tail2 / ZI-no-SA-handling ZI-sa-tail2 ZI-sa-tail2
-NORATS ZI <- "zu" / "za" / "zi"
+NORATS ZI <- ZI-word-pre inner-word close-paren
+NORATS ZI-word-pre <- " ZI=( "
 
 ;         conjoins relative clauses 
 ZIhE-clause <- ZIhE-pre ZIhE ZIhE-post
@@ -1660,29 +1736,32 @@ SPACE ZIhE-no-SA-handling <- pre-cmavo ZIhE post-cmavo
 SPACE ZIhE-sa-clause <- ZIhE-no-SA-handling ZIhE-sa-tail
 SPACE ZIhE-sa-tail <- SA-clause &ZIhE-no-SA-handling / !ZIhE-no-SA-handling !SA-clause any-word-no-SA-handling ZIhE-sa-tail / ZIhE-no-SA-handling ZIhE-sa-tail2 ZIhE-sa-tail
 SPACE ZIhE-sa-tail2 <- SA-clause / !ZIhE-no-SA-handling !SA-clause any-word-no-SA-handling ZIhE-sa-tail2 / ZIhE-no-SA-handling ZIhE-sa-tail2 ZIhE-sa-tail2
-NORATS ZIhE <- "zi'e"
+NORATS ZIhE <- ZIhE-word-pre inner-word close-paren
+NORATS ZIhE-word-pre <- " ZIhE=( "
 
 ;         single word metalinguistic quote marker 
 ZO-clause <- ZO-pre ZO ZO-post
 ZO-pre <- pre-cmavo ZO-sa-clause?
 ZO-post <- ZO-post-cmavo
-ZO-post-cmavo <- !tick-char !vowel si-clause spaces
-ZO-no-SI-handling <- pre-cmavo ZO-sa-clause? ZO !BU-bare !tick-char !vowel zoi-spacing-opt !ZEI-clause
+ZO-post-cmavo <- si-clause spaces
+ZO-no-SI-handling <- pre-cmavo ZO-sa-clause? ZO !BU-bare zoi-spacing-opt !ZEI-clause
 SPACE ZO-no-SA-handling <- pre-cmavo ZO post-cmavo
 SPACE ZO-sa-clause <- ZO-no-SA-handling zo-clause ZO-sa-tail
 SPACE ZO-sa-tail <- SA-clause &ZO-no-SA-handling / !ZO-no-SA-handling !SA-clause any-word-no-SA-handling ZO-sa-tail / ZO-no-SA-handling ZO-sa-tail2 ZO-sa-tail
 SPACE ZO-sa-tail2 <- SA-clause / !ZO-no-SA-handling !SA-clause any-word-no-SA-handling ZO-sa-tail2 / ZO-no-SA-handling ZO-sa-tail2 ZO-sa-tail2
-NORATS ZO <- "zo"
+NORATS ZO <- ZO-word-pre inner-word close-paren
+NORATS ZO-word-pre <- " ZO=( "
 
 ;         delimited quote marker 
 ZOI-clause <- ZOI-pre ZOI ZOI-post
 ZOI-pre <- pre-cmavo ZOI-sa-clause?
-ZOI-post <- !BU-bare !tick-char !vowel zoi-spacing-opt !ZEI-clause
-SPACE ZOI-no-SA-handling <- pre-cmavo ZOI !BU-bare !tick-char !vowel zoi-spacing-opt !ZEI-clause
+ZOI-post <- !BU-bare zoi-spacing-opt !ZEI-clause
+SPACE ZOI-no-SA-handling <- pre-cmavo ZOI !BU-bare zoi-spacing-opt !ZEI-clause
 SPACE ZOI-sa-clause <- zoi-clause-no-SI-handling ZOI-sa-tail
 SPACE ZOI-sa-tail <- SA-clause &ZOI-no-SA-handling / !ZOI-no-SA-handling !SA-clause any-word-no-SA-handling ZOI-sa-tail / ZOI-no-SA-handling ZOI-sa-tail2 ZOI-sa-tail / !ZOI-no-SA-handling !SA-clause zoi-printable-word zoi-spacing ZOI-sa-tail
 SPACE ZOI-sa-tail2 <- SA-clause / !ZOI-no-SA-handling !SA-clause any-word-no-SA-handling ZOI-sa-tail2 / ZOI-no-SA-handling ZOI-sa-tail2 ZOI-sa-tail2 / !ZOI-no-SA-handling !SA-clause zoi-printable-word zoi-spacing ZOI-sa-tail2
-NORATS ZOI <- "zoi" / "la'o"
+NORATS ZOI <- ZOI-word-pre inner-word close-paren
+NORATS ZOI-word-pre <- " ZOI=( "
 
 ;         prenex terminator (not elidable) 
 ZOhU-clause <- ZOhU-pre ZOhU ZOhU-post
@@ -1692,5 +1771,6 @@ SPACE ZOhU-no-SA-handling <- pre-cmavo ZOhU post-cmavo
 SPACE ZOhU-sa-clause <- ZOhU-no-SA-handling ZOhU-sa-tail
 SPACE ZOhU-sa-tail <- SA-clause &ZOhU-no-SA-handling / !ZOhU-no-SA-handling !SA-clause any-word-no-SA-handling ZOhU-sa-tail / ZOhU-no-SA-handling ZOhU-sa-tail2 ZOhU-sa-tail
 SPACE ZOhU-sa-tail2 <- SA-clause / !ZOhU-no-SA-handling !SA-clause any-word-no-SA-handling ZOhU-sa-tail2 / ZOhU-no-SA-handling ZOhU-sa-tail2 ZOhU-sa-tail2
-NORATS ZOhU <- "zo'u"
+NORATS ZOhU <- ZOhU-word-pre inner-word close-paren
+NORATS ZOhU-word-pre <- " ZOhU=( "
 
