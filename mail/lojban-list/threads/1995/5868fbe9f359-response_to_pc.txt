@@ -1,4 +1,4 @@
-# mail/lojban-list thread 5868fbe9f359-response_to_pc | root m0spxn9-0000ypc@xiron.pc.helsinki.fi | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 5868fbe9f359-response_to_pc | root m0spxn9-0000ypc@xiron.pc.helsinki.fi | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1995-06-24T15:54:24Z | Logical Language Group <lojbab@access.digex.net> | 9506241655.aa24897@punt2.demon.co.uk | mail/lojban-list/cur/804009264.ea8e4da555693602.jbomohi:2,S
 Some of this stuff (e.g. complaints about su'o/so'u) have apparently
@@ -366,5 +366,373 @@ and moving on.
 
 lojbab
 
+
+
+
+=== 2 | 1995-06-24T15:54:24Z | Logical Language Group <lojbab@ACCESS.DIGEX.NET> | m0spxn9-0000ypc@xiron.pc.helsinki.fi | mail/lojban-list/cur/804009264.5868fbe9f359fb12.jbomohi:2,S
+Some of this stuff (e.g. complaints about su'o/so'u) have apparently
+been raised by others, but I think other stuff here is worth reading
+(and rereading, in the case of Change 20).
+
+> But now I am told that
+>it is built into Lojban that each descriptor *means* some quantifier
+>expression.  As a logician, I hope that this is not true, since it would
+>mean that the "logical language" was ultimately not only illogical but
+>unusable.  If all descriptors are just quantifiers, then we have no way
+>to refer to objects in their absence.
+
+I think we are using "quantifier-expression" as a tanru that does not
+mean "expression type of quantifier", but rather as "expression
+containing a quantifier".  Perhaps "quantified expression" would be less
+jarring to your logical ears %^).  Or does that lead to the same kind of
+misunderstanding?
+
+>But the quantifier=descriptor system as it is laid out is also
+>incoherent.  We are told that _ci_gerku_ just is _ci_lo_gerku_, which
+>just is _ci_lo_so'u_gerku_.  From which we can infer that that just is
+>_ci_lo_so'u_lo_gerku_ which just is _ci_lo_so'u_lo_so'u_gerku_.  And so
+>on.
+
+I think you wanted a "su'o" instead of a "so'u" there (i.e. at least
+some).  But that isn't right since the expansion of "ci lo gerku" is "ci
+lo ro gerku", and the ro gerku therein is a grammatically different
+construct than the original "ci gerku"
+
+ci gerku is the third rule in the following
+
+sumti_D_94              :  sumti_E_95
+                        |  sumti_E_95  relative_clauses_121
+                           /* indefinite sumti */
+                        |  quantifier_300  selbri_130  gap_450
+                        |  quantifier_300  selbri_130
+                                gap_450  relative_clauses_121
+                        ;
+
+and we have defined this structure as being a semantically equivalent
+(per JCB's SE SORME definition) to a different grammatical structure:
+
+ci lo gerku, which is the second rules of sumti_E and of description,
+expanding out to the first rule of sumti_tail_A.
+
+But ci lo ro gerku is identical in structure to the latter, expanding to
+the third rule of sumti_tail_A.
+
+There is no rule that permits the semantic expansion of the latter any
+further, since it doesn't bounce back to the shorthand "indefinite"
+sumti_E.
+
+sumti_E_95              :  sumti_F_96
+                           /* outer-quantified sumti */
+                        |  quantifier_300  sumti_F_96
+                        ;
+
+description_110         :  LA_558  sumti_tail_111  gap_450
+                        |  LE_562  sumti_tail_111  gap_450
+                        ;
+
+sumti_tail_111          :  sumti_tail_A_112
+                           /* inner-quantified sumti relative clause */
+                        |  relative_clauses_121  sumti_tail_A_112
+                           /* pseudo-possessive
+                              (an abbreviated inner restriction);
+                              note that sumti cannot be quantified */
+                        |  sumti_F_96  sumti_tail_A_112
+                           /* pseudo-possessive with outer restriction */
+                        |  sumti_F_96  relative_clauses_121  sumti_tail_A_112
+                        ;
+
+sumti_tail_A_112        :  selbri_130
+                        |  selbri_130  relative_clauses_121
+                           /* explicit inner quantifier */
+                        |  quantifier_300  selbri_130
+                           /* quantifier both internal to a description,
+                              and external to a sumti thereby made specific */
+                        |  quantifier_300  selbri_130  relative_clauses_121
+                        |  quantifier_300  sumti_90
+                        ;
+
+> And, in the other direction, _ro_lo_ci_lo_nanmu_ just is ultimately
+>_ro_ci_nanmu_, which, if not ungrammatical, is at least not very
+>sensible.
+
+au contraire.  It is not ungrammatical.  The number "roci" is a single
+quantifier.  There has been some debate as to whether it has a
+conventional meaning, but I have used it precisely to mean "all 3",
+which could also be expressed as "ro lo ci".
+
+On the other hand, we used to allow "roboi ci[boi] nanmu" as a shorthand
+for "ro lo ci lo nanmu" but this was explicitly eliminated in Change 20
+- see the next to the last paragraph below.
+
+(I figure it is worth reposting the whole change, partly to remind pc
+where we stand on inner and outer quantifiers which I think is closely
+related to pc's discussion here, and partly because the thorough
+analysis of the issue presented is the standard for a change proposal
+affecting grammar and/or semantics such that significant amounts of
+existing text could be invalidated.)
+
+>I take it that those special cases where quantifiers and descriptors can
+>be used to describe the same situation in fairly obviously related ways
+>have been generalized to the claim that correspondingly parallel
+>sentences involving the two types of expressions will always describe
+>the same situations.
+
+No.  The only two transformations defined as equivalent involving
+quantifiers and descriptors in this way is the definition of JCB's SE
+SORME indefinites allowed per sumti_D, and the insertion of default
+quantifiers per sumti_E (outer) and sumti_tail_A (inner).
+
+>And this is now thought not to be a lucky break
+>but a part of the *meaning* of the expressions.  It is not even obvious
+>that it works at all (part of the reason for the investigation of which
+>this is a digression) and, if it does, it really is a lucky break,
+>since, as noted, it is not a part of meaning.  Of course, if it does
+>work, it will not be a lucky break at all but rather the result of a
+>fiat by the creators of the language and, hopefully, one that will be
+>made with full awareness of what is being done.
+
+Well, the fiat was by the creator of the language, and debated by you
+guys long before I even got involved in Loglan.  I had hoped that
+both default quantifiers and indefinite sumti had mulled over for logical
+consequences so thoroughly that further mulling would be useless.
+
+Of course the interaction of quantifiers, descriptors, and relative
+clauses that led to Change 20 was missed.  It is the fear that we have a
+potential change as nasty to resolve as Change 20 that has contributed
+to my near-paralysis in language work pending something finally getting
+resolved.  My mind revolts against leaving such a major issue unresolved
+and moving on.
+
+
+| CHANGE 20
+|
+| CURRENT LANGUAGE:
+|
+| Relative clauses on descriptions are grouped by the parser so as to
+| attach to sumti before outside quantifiers are put on.  The actual
+| semantics of what is being attached has been pragmatically determined,
+| and analysis has now shown that this can theoretically be
+| vague/ambiguous or even limiting to expression in the language, though
+| workarounds probably exist for all problems raised.
+|
+| PROPOSED CHANGE:
+|
+| Allow the distinction between a relative clause attaching to the "inside
+| set", excluding external quantifiers, of a description.  A relative
+| clause outside the KU will refer to the entire sumti.  A relative clause
+| inside the KU will generally be preposed so as to parallel the
+| historical pseudo-possessive which is recognized as a transformation of an
+| inside-set relative clause. However, postposed relative clauses
+| will be inside by default, matching the way in which the parser inserts
+| elidable terminators (i.e. only if needed).
+|
+| Comparable expansion of the relative clause possibilities inside vocatives
+| is incorporated in this proposal.
+|
+| RATIONALE:
+|
+| The current grammar appears to group relative clauses with the "inside
+| set" of a description sumti, that portion of a sumti including from the
+| LE to the KU which includes the inside quantifier and not the outside
+| quantifier.  In the case of non-restrictive "lo" descriptions, and
+| possibly some others, this is not what is intended.
+|
+| Example:  "pa lo sipna noi melbi" groups as "pa <lo sipna noi melbi>"
+| apparently claiming that all sleepers are beautiful.
+|
+| The problem manifests itself in various forms more completely documented
+| in a long paper by Colin Fine, but the bottom line is that the existing
+| grammar is vague as to what a relative clause attaches to, and there are
+| definable cases where this vagueness can lead to unacceptable ambiguity.
+|
+| The proposed solution has the secondary virtues of 1) making
+| pseudo-possessives visibly match the parallel inside-set relative
+| clauses, but without overt relative clause marking; 2) making it obvious
+| how to to express a pseudo-possessive with a quantifier ("le ci mi
+| broda" is a complete sentence and not a sumti, since "le ci mi" is a
+| complete sumti.  With preposed inside-set relative clauses, "le pecimi
+| broda" is unambiguously a sumti.); and 3) the problematical [quantifier]
+| [quantifier] [description] is eliminated from the language (analysis can
+| give a meaning for this expression of [quantifier] lo [quantifier] lo
+| [description], and it has even been used once or twice, but experience
+| has shown that the analysis is counterintuitive to many people, who see
+| also [quantifier1] lo [description] [quantifier2]-mei as plausible).
+|
+| Postposed inside relatives are allowed in all descriptions, so
+| the preposed/postposed distinction becomes a forethought/afterthought
+| distinction, which can be valuable.  Existing texts retain
+| their currently official inside-relative interpretation (unless the KU
+| is explicitly present, a rarity), which is arguably desirable as the
+| default (though it must be recognized that there are text examples where
+| the speaker obviously wanted to apply the relative clause to the
+| externally quantified sumti.)  The negative tradeoff of this is that KU
+| becomes ALWAYS required when you want an external relative clause.
+|
+| Preposed relative clauses (but not relative phrases) will almost always
+ require
+| a terminator, though monosyllabic "vau" is usually as applicable as "ku'o".
+|
+| The following analyzes all definite and indefinite cases,
+| giving English translations of the examples to show that the Lojban
+| interpretation is natural at least for English speakers (recognizing
+| that it may not be so for others).
+|
+| Descriptor      External        internal        noi/poi
+|                 quantifier      quantifier
+|                 present         present
+| le            no              no              poi
+|         le sipna poi melbi
+|         [ro (le su'o sipna poi melbi ku)]
+|         The sleepers who are beautiful...
+| le            no              no              noi
+|         le sipna noi melbi
+|         [ro (le su'o sipna noi melbi ku)]
+|         The sleepers, who are beautiful...
+| le            no              yes             poi
+|         le ci sipna poi melbi
+|         ro (le ci sipna poi melbi ku)
+|         The 3 sleepers who are beautiful...
+| le            no              yes             noi
+|         le ci sipna noi melbi
+|         ro (le ci sipna noi melbi ku)
+|         The 3 sleepers, who are beautiful...
+| le            yes             no              poi
+|         ci le sipna poi melbi
+|         [ci (le su'oci sipna poi melbi ku)]
+|         3 of the sleepers who are beautiful...
+|         (the English is ambiguous as to whether all of the sleepers
+|         are beautiful or just the 3.  The Lojban is unambiguously talking
+|         about all of them)
+| le            yes             no              noi
+|         ci le sipna noi melbi
+|         [ci (le su'oci sipna noi melbi ku)]
+|         3 of the sleepers, who are beautiful...
+|         (The English is again ambiguous but more plausibly suggests
+|         merely the 3).
+| le            yes             yes             poi
+|         re le ci sipna poi melbi
+|         re (le ci sipna poi melbi ku)
+|         re le ci sipna ku poi melbi
+|         [re (le ci sipna ku)] poi melbi
+|         Two of the 3 sleepers who are beautiful...
+|         (The English is totally ambiguous as to what is being restricted,
+|         and the Lojban in this case makes the distinction based on
+|         presence of the ku, forcing the speaker to think about the
+|         distinction when important.)
+| le            yes             yes             noi
+|         re le ci sipna noi melbi
+|         re (le ci sipna noi melbi ku)
+|         re le ci sipna ku noi melbi
+|         [re (le ci sipna ku)] noi melbi
+|         Two of the 3 sleepers, who are beautiful...
+|         (The English is totally ambiguous as to which sleepers are beautiful,
+|         and the Lojban in this case makes the distinction based on
+|         presence of the ku, forcing the speaker to think about the
+|         distinction when important.)
+| lo            no              no              poi
+|         lo sipna poi melbi
+|         [su'o (lo ro sipna poi melbi ku)]
+|         Sleepers who are beautiful...
+| lo            no              no              noi
+|         lo sipna noi melbi
+|         [su'o (lo ro sipna noi melbi ku)]
+|         Sleepers, who are beautiful...
+| lo            no              yes             poi
+|         lo ci sipna poi melbi
+|         su'o (lo ci sipna poi melbi ku)
+|         At least one of the 3 in the universe that sleep who are beautiful...
+|         (Unusual in English, but unambiguous because of "are" agreement;
+|         the following gives a more likely example:)
+|         lomi ci cukta poi melbi
+|         su'o (lomi ci cukta poi melbi ku)
+|         At least one of my 3 books that are beautiful...
+|         (The essential point is that quantifying the inside set emphasizes
+|         it so that the restriction applying to it seems natural - natural
+|         enough that English requires forcing an indefinite description if
+|         there is an inside quantifier.)
+| lo            no              yes             noi
+|         lo ci sipna noi melbi
+|         su'o (lo ci sipna noi melbi ku)
+|         At least one of the 3 in the universe that sleep, who are beautiful...
+|         (Extremely rare in English since it makes a universal claim about
+|         about number and incidental property, but unambiguous because
+|         of "are" agreement.)
+| lo            yes             no              poi
+|         ci lo sipna poi melbi
+|         [ci (lo rosu'oci sipna poi melbi ku)]
+|         3 sleepers who are beautiful...
+|         (With no inside quantifier, the English becomes an indefinite,
+|         and there is no suggestion that there is an inside-set, much less
+|         that the relative clause relates to it.  Likewise in the Lojban
+|         which reduces to the indefinite
+|         ci sipna poi melbi
+|         (which under this change will have the ku after the melbi to separate
+|         from other sumti)
+|         *** but it doesn't ***
+|         The Lojban is unambiguously talking only about the 3, since there
+|         is no internal quantifier to put secondary focus on the inside set)
+|         There is a stilted English form that can force the theoretical
+|         ambiguity to the fore:
+|         ?Three of sleepers who are beautiful...
+|         which does ambiguously suggest the inside-set is the restricted one,
+|         but we would normally expect this to be expressed:
+|         Three of those sleepers who are beautiful...
+|         which clearly has an internal restriction and could not be easily
+|         modelled under 3) in Lojban, requiring preposed relatives or
+|         explicit internal quantification to force the relative clause inside
+|         ci lo ro sipna poi melbi
+|         ci (lo ro sipna poi melbi)
+|         which I would contend is a better reflection of the English "those"
+|         anyway.
+| lo            yes             no              noi
+|         ci lo sipna noi melbi
+|         [ci (lo rosu'oci sipna noi melbi ku)]
+|         3 sleepers, who are beautiful...
+|         (The English again becomes an indefinite and the incidental clause
+|         goes outside.  This time, even the English "those" form remains
+|         ambiguous and odd-sounding
+|         ?3 of sleepers, who are beautiful...
+|         ?3 of those sleepers, who are beautiful...
+|         unless you go to
+|         3 who sleep, who are beautiful...
+|         which is better reflected in Lojban as
+|         ci da poi sipna zi'e noi melbi
+|         which accurately puts the relative clause outside
+|         or
+|         3 of those who sleep, who are beautiful
+|         which only forces the English back into ambiguity as to which are
+|         beautiful
+| lo            yes             yes             poi
+|         re lo ci sipna poi melbi
+|         re (lo ci sipna poi melbi ku)
+|         re lo ci sipna ku poi melbi
+|         [re (lo ci sipna ku)] poi melbi
+|         Two of 3 sleepers who are beautiful...
+|         (The English is totally ambiguous as to what is being restricted,
+|         and the Lojban in this case makes the distinction based on
+|         presence of the ku, forcing the speaker to think about the
+|         distinction when important.)
+| lo            yes             yes             noi
+|         re lo ci sipna noi melbi
+|         re (lo ci sipna noi melbi ku)
+|         re lo ci sipna ku noi melbi
+|         [re (lo ci sipna ku)] noi melbi
+|         Two of 3 sleepers, who are beautiful...
+|         (The unlikely English is totally ambiguous as to which sleepers are
+|         beautiful, and the Lojban in this case makes the distinction based on
+|         presence of the ku, forcing the speaker to think about the
+|         distinction when important.)
+|
+| IMPORTANT NOTE:  Change 20 is sufficiently major, affecting nearly all
+| of the sumti grammar rules, that there may be unforeseen side effects.
+| This seems unlikely, as analysis so far has shown that the only
+| reduction in expression is the confusing [quantifier] [quantifier]
+| [description] which has a much clearer equivalent.
+|
+| However, the introduction of such a major change at this late stage of
+| the project makes it highly controversial, as any problems may show up
+| too late to be easily fixed (i.e. after books are published).
+
+lojbab
 
 
