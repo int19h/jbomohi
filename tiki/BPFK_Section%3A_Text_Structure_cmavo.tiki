@@ -1,9 +1,3 @@
-!This is a work in progress
-
-Remaining issues:
-* the meaning of multiple consecutive ni'o.
-* usage survey of no'i.
-
 !Prior usage and discussion
 MAI is postfix, this was probably decided to make it analogous to mei, moi, roi, and re'u. However, this serves to make the grammar of Lojban non-LALR(1), because the parser may have to look through an arbitrarily large numeral string to decvide that it actually belongs in a free modifier. This should not be a problem if Robin's PEG parser is made official. If Robin's PEG parser is ''not'' made official, however, extensive pre-processing will be required.
 
@@ -13,11 +7,23 @@ Described as unconditional end of parsing. Evidently intended only for machine i
 !!ni'o
 Seems to be used mostly parallel to paragraph breaks in natural languages. See [http://www.lojban.org/], [http://www.wiw.org/~jkominek/lojban/9312/msg00394.html], and [http://www.wiw.org/~jkominek/lojban/9107/msg00052.html]. On IRC, which is indicative of spoken language,  this appears to have more of a meaning of changing the subject. Examples: [http://www.digitalkingdom.org/lojban/irclog/lojban/2004_06_02-02_21.txt], [http://www.digitalkingdom.org/lojban/irclog/lojban/2002_05_12--2002_11_28.txt].
 
+ni'o implicitly cancels some assignments, depending on the number of consecutive ni'o and whether the text is spoken or written. The following table is due to CLL pp. 446--447.
+
+||__Number of consecutive ni'o__|__Written__|__Spoken__
+ni'o|no effect|cancel KOhA and GOhA
+ni'oni'o|cancel KOhA and GOhA|cancel KOhA and GOhA and tenses
+ni'oni'oni'o|cancel KOhA and GOhA and tenses|cancel KOhA and GOhA and tenses||
+
 !!i
 Ubiquitous. This is used mostly in front of sentences that are not the first sentence in the text. Sometimes also the first sentence in the text is prefixed with .i.
 
 !!no'i
-Does not appear to have had __any__ usage.
+Examples:
+* no'i la xrist. ba cpacu loi vanju mu'i lenu pinxe kei gi'e te preti fo ko'a felenu ko'a djica lenu la xrist. dunda dakau ko'a
+** ''"Christ then took wine to drink, and asked the man what he wanted Christ to
+give him."'' From the translation of "Cardplayer", by Nick Nicholas. [http://www.lojban.org/files/texts/cardplayer|2]
+* no'i mi pu co'a mutce kurji lo nu jmina la jbovlaste
+** ''"Anyway, I take great care about additions to Jbovlaste."'' [http://www.livejournal.com/users/camgusmis/2435.html|3]
 
 !!tu'e - tu'u
 ''tu'e'' - ''tu'u'' seems to be used mainly to be used to set off a large block of text and refer to it metalinguisticially. For instance, there is a (very large) mailing list thread called [http://www.lojban.org/lists/lojban-list/msg03769.html|loi preti be fi lo nincli zo'u tu'e]. Also lots of poetry are prefixed with titles that uses ''di'e'' to refer to the body of the poem, set of with ''tu'e''.
@@ -32,8 +38,8 @@ Marks the end of a prenex. A prenex can have one or more terms, which may constr
 ;__i__ (I):Starts a new sentence.
 ;__mai__ (MAI):Enumerates a point in the text. Combines with the preceding numeral to make a free modifier.
 ;__mo'o__ (MAI):Enumerates a higher-level section or chapter in the text. Combines with the preceding numeral to make a free modifier.
-;__ni'o__ (NIhO):Marks the start of a parapgraph and a change of subject. Multiple "ni'o" in a row means higher-level section breaks.
-;__no'i__ (NIhO):Marks the start of a paragraph and change back to the previous subject.
+;__ni'o__ (NIhO):Marks the start of a parapgraph and a change of subject. Multiple "ni'o" in a row means higher-level section breaks. In written contexts, two or more consecutive "ni'o" cancels the assignment of pro-sumti and pro-bridi in the selma'o KOhA and GOhA, respectively, and three or more consecutive "ni'o" additionally cancels all current tenses. In spoken contexts, a single or severeal consecutive "ni'o" cancels the assignment of pro-sumti and pro-bridi in the selma'o KOhA and GOhA, respectively, while two or more consecutive "ni'o" additionally cancels all current tenses.
+;__no'i__ (NIhO):Marks the start of a paragraph and change back to a previous subject. If no'i has a positive or zero subscript, it indicates the continuation of an earlier topic that was introduced with the word ni'o with the same subscript. If no'i has a negative subscript, it is a resumption of the topic of the paragraph found by counting backwards, starting with the paragraph before the one introduced with ni'o.
 ;__tu'e__ (TUhE):Starts a text scope, which is a group of sentences. The text scope acts as a single sentence externally, for purposes such as logical operators.
 ;__tu'u__ (TUhU):Ends a text scope. Elidable terminator for tu'e.
 ;__zo'u__ (ZOhU):Marks the end of a prenex. A prenex can consist of one or more terms.
@@ -48,9 +54,12 @@ Marks the end of a prenex. A prenex can have one or more terms, which may constr
 ;zo'u:so that. such that.
 
 !Interaction with other sections
-The word fa'o, as defined here, currently __~~#FF0000:contradicts ~~__ an example described as valid in ((BPFK Section: Nonce Connectives))
+* Requires either preprocessing prior to YACC, or a PEG grammar.
+* The word fa'o, as defined here, currently __~~#FF0000:contradicts ~~__ an example described as valid in ((BPFK Section: Nonce Connectives))
 
 !Impact
-* Requires either preprocessing prior to YACC, or a PEG grammar.
+It is my belief that this section does not invalidate actual usages that were previously valid, nor does it contradict current prescription of the language.
+* Clarification: topic resumption by label applies if no'i has a positive __or zero__ subscript.
+* Clarification: topic resumption by back-counting __starts at section before the one currently being introduced__.
 
 {POLL(pollId=>16)}Text Structure cmavo Poll{POLL}
