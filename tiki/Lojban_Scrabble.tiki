@@ -1,0 +1,143 @@
+''kelcrskrabli''
+
+I've recently tried to play Lojban Scrabble (using ((Chris Double))'s program) and found, not surprisingly, that it doesn't work extremely well. (The game itself, not the program.) Here's a few problems:
+
+* The board is always ''closed'' from a Scrabble perspective. In Scrabble, a __Z__ or __V__ or some such letter on the free end of a word serves to block off expansion parallel to that word, because there are no two-letter words containing those letters. In Lojban, there are no words ending with a consonant, period. They block off parallel __and__ perpendicular words on one side. Unfortunately-placed consonants can block off large areas of the board.
+* On the other hand, __every__ CV two-letter word is a playable word, and so it takes no knowledge whatsoever to make a two-letter hook with a vowel alongside a consonant. However, it is nearly impossible to make a hook which uses two two-letter words (a common play in Scrabble) - it requires a cmavo ending in a dipthong, with the dipthong along the first two letters of a gismu, such that the second two-letter word formed is a UI cmavo.
+* The Y, though almost necessary to make a bingo (a play involving all your tiles), is patently useless otherwise. The best you can do is play a lerfu word and get the consonant on a double or triple letter score.
+* All consonants are equally playable as lerfu, so even the high-scoring __zy__ is as easy to form as __ry__.
+* Lerfu tend to be the high-scoring plays in the game and serve strategically to close up the board, while gismu, which are much harder to formulate, don't often score many points and give your opponent lots of openings.
+* The selection of compound cmavo ends up being entirely arbitrary, being based on the ((ma'oste)); __reno__ is playable while __repa__ is not. Lujvo are not much better.
+
+--------
+
+!!!Fixing Lojban Scrabble
+
+This came out of a discussion on IRC. Scrabble in Lojban should work well with the following rules:
+* Playable words are gismu, lujvo, cmavo, cmavo compounds, and rafsi. (rafsi are allowed to create words that end in consonants.)
+* cmavo and cmavo compounds are worth no points (but could still be useful to form other words).
+* The player has to be able to use a lujvo or a cmavo compound in a sentence when they play it.
+
+This is simple enough that it supercedes the weird version I was coming up with below, with two letters on some tiles.
+
+((rab.spir))
+
+* Shouldn't rafsi be worth no points too? They are fairly trivial to create. CVV are already worth nothing because they are (almost?) always cmavo, CVC are extremely easy and CCV only slightly harder. (Should the player be able to tell which gismu the rafsi is for?)Lujvo are very easy too. It won't be very difficult to use all your letters if any lujvo is allowed. ((xorxes))
+** CVV should be considered cmavo. I believe CVV rafsi space is full, anyway. I don't know about CVC and CCV - there's still a trick to remembering which ones are and aren't, and the situation is much like what we have with three-letter words in English.
+
+--------
+
+So here's the idea I got for a playable version of Lojban Scrabble.
+
+(Actually, now I've made a program which generates racks of 8 tiles, and I've refined the tile counts according to the problems I saw.)
+
+!!The Tiles
+
+A Lojban Scrabble set should contain the following tiles (which should eventually be adjusted for playability):
+* 4 R's, 3 N's, and 3 L's (10 tiles)
+* 2 each of the other consonants, except only one of F, V, X, and Z (24 tiles)
+* 2 A's, 2 E's, 4 I's, 1 O, 3 U's, 1 Y (13 tiles)
+* 1 each of every CV combination, including Cy, but not __xo__ or __zo__ (17*6-2 = 100 tiles)
+* 2 each of all 'V tiles except 'y (10 tiles)
+* 3 blanks (which can be any CV, 'V, or single letter)
+* total = 160 tiles
+
+__xo__ and __zo__ are omitted because they occur in only 7 words each (excluding cmavo compounds), and by the same reasoning we omit __'y__ (which, of course, occurs in only ''one'' word). You think Z is hard to play in Scrabble...
+
+!!The rules
+
+*Players have 8 tiles on their rack (except in the end game).
+*The board would be arranged similarly to a Scrabble board (but not exactly the same, or else Hasbro's lawyers ''cu fevbygau joi zalvi mi'a'').
+*A play would consist of putting down tiles as in Scrabble, such that the letter combinations form any valid compound of cmavo, gismu, or lujvo, or a standalone rafsi. Checking for valid compounds is not done with a dictionary, but with a tool such as ''vlatai''. So the first play might be to put down the three tiles __ci__ __z__ __ra__.
+**Possible restriction: a "valid compound" of cmavo is one that would parse in the context of some utterance in which all cmavo involved stay within their ((selma'o)). So ''ginai'' would be allowed because there are many plausible utterances which include it and which would parse, but ''faboi'' is not (even though ''zo faboi bu'' parses), because ''zo'' and ''bu'' change the selma'o of words. The responsibility is on the person who played the compound to give an example of where it would parse, if challenged.
+*It doesn't matter where the letters come from; playing the __ju__ tile would be the same as playing the __j__ and __u__ in order.
+*Cmavo (including in compounds) only 1 point per tile.
+*As hooks (extensions to existing words) would not be hard to come across, you only score points for the tiles you play.
+*Gismu score a 10 point bonus for whoever forms them. (So if you play __b__ __la__ __nu__ next to __ro__ __da__, you get 20 points for making __blanu__ and __broda__ simultaneously.)
+*Lujvo which are in the ((lujvo list)) score a 25 point bonus (this may be adjusted). There is no bonus for putting down all your tiles (as that would only encourage making ludicrous compounds).
+*You must define the words (or rafsi) you play. This can lead to some silly definitions for ad-hoc lujvo. (This would not apply if playing against a computer.)
+
+!!Point values
+
+Grepping the word list from Chris's Scrabble program gives these as the frequency of CV combinations:
+
+     A   E   I   O   U   Y
+ B 290  90 136  95  56  38
+ C 267 136 379  32 164  96
+ D 263 110 158  36 101  77
+ F 178  73  86  34  51  43
+ G 259  84  71  14 136  48
+ J 164  79 248  28 133  62
+ K 356 147 107  61 215  62
+ L 463 149 326  74 136  52
+ M 394  92 225  81 138  45
+ N 416 113 281 114 257  70
+ P 202 161 110  70  87  39
+ R 429 288 516 166 224  82
+ S 254 589 207  66 108  66
+ T 271 272 228 167 164  67
+ V 136  70 107  47  14  32
+ X 200  59  46   7  44  25
+ Z  90  28  22   7  76  60
+ ' 556 350 358 237 289   1
+
+So let those combinations which occur 300 or more times be 2 points, 200-299 be 3 points, 100-199 be 4 points, below 100 be 5 points, below 50 be 6 points, below 33 be 7 points, below 25 be 8 points, and below 20 be 10 points. This gives the following point values for the CV tiles:
+
+     A   E   I   O   U   Y
+ B   3   5   4   5   5   6
+ C   3   4   2   6   4   5
+ D   3   4   4   6   4   5
+ F   4   5   5   6   5   6
+ G   3   5   5  10   4   6
+ J   4   5   3   7   4   5
+ K   2   4   4   5   3   5
+ L   2   4   2   5   4   6
+ M   2   5   3   5   4   6
+ N   2   4   3   4   3   5
+ P   3   4   4   5   5   6
+ R   2   3   2   4   3   5
+ S   3   2   3   5   4   5
+ T   3   3   3   4   4   5
+ V   4   5   4   6  10   6
+ X   3   5   6       6   8
+ Z   5   7   8       5   5
+
+The apostrophe is relatively easy to play, so it gets 1 less point than it would if scored as a consonant:
+     A   E   I   O   U
+ '   1   1   1   2   2
+
+Standalone letters get 1 point if they occur 1300 or more times, 2 points for 700-1300, and 3 points for less than 700.
+
+   Occur  Pts
+ A  3919    1
+ B   904    2
+ C  1548    1
+ D   994    2
+ E  2491    1
+ F   634    3
+ G   778    2
+ I  3404    1
+ J   981    2
+ K  1271    2
+ L  2072    1
+ M  1368    1
+ N  1923    1
+ O  1260    2
+ P  1004    2
+ R  2281    1
+ S  1857    1
+ T  1544    1
+ U  2425    1
+ V   608    3
+ X   474    3
+ Y   936    2
+ Z   484    3
+
+If I learn some sort of cross-platform GUI toolkit I may even program this someday.
+
+Any ideas or suggestions?
+
+mi'e ((rab.spir))
+
+li gets one point as a single tile, two points as two tiles. Are we allowed to form CVs with two tiles?
+* Yes. And now I realize that the single letters will generally be easier to play than the double letters, and I've changed the points accordingly.
