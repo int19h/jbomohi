@@ -1,0 +1,114 @@
+Received: from YALEVM.YCC.YALE.EDU by MINERVA.CIS.YALE.EDU via SMTP; Wed, 27 Jan 1993 20:06:30 -0500
+Received: from CUVMB.CC.COLUMBIA.EDU by YaleVM.YCC.Yale.Edu (IBM VM SMTP V2R2)    with BSMTP id 5943; Wed, 27 Jan 93 20:05:06 EST
+Received: from CUVMB.BITNET by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with BSMTP  id 9848; Wed, 27 Jan 93 20:05:10 EST
+Date:         Wed, 27 Jan 1993 20:01:45 EST
+Reply-To: bob@gnu.ai.mit.edu
+Sender: Lojban list <LOJBAN%CUVMB.bitnet@YaleVM.YCC.YALE.EDU>
+Comments:     Warning -- original Sender: tag was bob@GRACKLE.STOCKBRIDGE.MA.US
+From: bob@GNU.AI.MIT.EDU
+Subject:      sample KWIC index for Lojban dictionary
+X-To:         lojban@cuvmb.cc.columbia.edu, bob@grackle.stockbridge.ma.us
+To: Erik Rauch <erikr@MINERVA.CIS.YALE.EDU>
+In-Reply-To:  John Cowan's message of Wed,               27 Jan 1993 15:13:36 -0500               <9301272213.AA25971@albert.gnu.ai.mit.edu>
+Message-ID: <Ql7pcTe1OaI.A.5MC.c70kLB@chain.digitalkingdom.org>
+Content-Length: 3879
+
+Chris Handley made good suggestions for a KWIC index for the Lojban
+dictionary.  Different separators are especially helpful since they
+make it trivial to write formatting functions that format in many
+different ways.
+
+Here is a sample of what Chris suggests:
+
+abdomen = betfu (bef, be'u) = x1 is a/the abdomen/belly/lower trunk of x2
+
+Using Chris's suggestion, it is easy to devise several different
+formatting strategies for different media or different preferences:
+for example, you could format keywords so they are justified in a
+column in the middle of the page or with keywords on the left.  Also,
+Chris's suggestion makes it easy to format for typesetting for hard
+copy printing.  Indeed, it would be easy to write an automatic line
+breaking algorithm that would handle most narrow columns.  Manual
+editing would be minimal.
+
+Actually, what I am really saying is that the electronic master for
+the dictionary should be written is a manner such that it is really
+easy to create different output formats.
+
+One additional suggestion: list the rafsi in order cvc, ccv, cv'v
+with an empty slot marked by a comma so that a person who wants to put
+rafsi with the same morphology in the same column can do so easily.
+(Of course a regexp lets you do the same thing, but this would make it
+easier.)
+
+Then you could produce output like any of these:
+
+
+abdomen = betfu (bef, be'u) = x1 is a/the abdomen/belly/lower trunk of x2
+
+abdomen         betfu   bef     be'u x1 is a/the abdomen/belly/
+                                lower trunk of x2
+
+betfu   bef     be'u    x1 is a/the   abdomen  /belly/lower trunk of x2
+
+
+and so on, with or without embedded typesetting commands.
+
+
+
+As for my preferred layout (ignoring fonts, etc), here it is:
+
+
+accessing    klaji  laj           x1 is a street/avenue/lane/drive/
+                                   cul-de-sac/way/alley/ at x2 accessing x3
+
+accident     snuti  nut     nu'i  x1 is an accident/unintentional
+                                   on the part of x2; x1 is an accident
+
+             snuti  nut     nu'i  x1 is an accident/unintentional
+                                   on the part of x2; x1 is an accident
+
+accomodates  vasru  vas vau       x1 contains/holds/encloses/accomodates/
+                                   includes contents x2 within;
+                                   x1 is a vessel containing x2
+
+accomplishes snada                x1 succeeds in/achieves/completes/
+                                   accomplishes x2
+
+according    cimde                x1 is a dimension of space/object x2
+                                   according to rules/model x3
+
+             lanzu  laz           x1 is a family/clan/tribe
+                                   with members x2 bonded/tied/joined
+                                   according to standard x3
+
+
+Key words that are repeated are left out of the beginning of the
+second and subsequent entries.  This makes this format easier to read,
+like a two level index.  Rafsi are lined up by morphology.
+
+Also, in this format, the second entry for `accident' is unnecessary
+and should be removed.  It would not be hard to go through a final
+list and remove such entries manually.  Nor would it take much time to
+go through an automatically formatted list to manually edit line
+breaks, etc.
+
+With suitable fonts, you could make printed entries that look like this:
+
+accomodates  vasru  vas vau
+    x1 contains/holds/encloses/accomodates/
+    includes contents x2 within;
+    x1 is a vessel containing x2
+
+according    cimde
+    x1 is a dimension of space/object x2
+    according to rules/model x3
+
+
+This sort of entry might even even fit in two columns, as in most
+dictionaries.
+
+    Robert J. Chassell               bob@gnu.ai.mit.edu
+    Rattlesnake Mountain Road        (413) 298-4725 or (617) 253-8568 or
+    Stockbridge, MA 01262-0693 USA   (617) 876-3296 (for messages)
+
