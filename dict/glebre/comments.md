@@ -33,3 +33,21 @@ Since I can't add "ka glebre" to the Lojban words, and someone looking for
 "glebre" or "heat" won't find it if the entry is "ka glebre" or "be in
 heat", I'll leave the gloss words as they are and add a note.
 
+
+## 2004-12-12T14:55:03Z — arj (comment 184, on definition 15373, in reply to 183)
+
+Re: Inappropriately abstracted gloss words
+
+phma wrote:
+> Since I can't add "ka glebre" to the Lojban words, and someone looking
+for
+> "glebre" or "heat" won't find it if the entry is "ka glebre" or "be in
+> heat", I'll leave the gloss words as they are and add a note.
+
+That's okay.
+
+Another issue:
+If I'm not mistaken, the "notes" field will end up in the English part of
+the dictionary, together with the definition. Therefore, it should be in
+English, not in Lojban.
+
