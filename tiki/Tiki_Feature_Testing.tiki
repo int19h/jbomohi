@@ -1,0 +1,221 @@
+Different testing entirely:
+
+{SNARF(url=>http://www.livejournal.com/users/rlpowell/2418.html,regex=>/.*<!-- Content -->.*?<td>(.*?)<\/td>.*?<\/div>(.*?)<hr.*?<!-- \/Content -->.*/s,regexres=><p>$1</p>$2)}[http://www.livejournal.com/users/rlpowell/2418.html]{SNARF}End of SNARF
+
+The above created with:
+~np~
+{SNARF(url=>http://www.livejournal.com/users/rlpowell/2418.html,regex=>/.*<!-- Content -->.*?<td>(.*?)<\/td>.*?<\/div>(.*?)<hr.*?<!-- \/Content -->.*/s,regexres=><p>$1</p>$2)}[http://www.livejournal.com/users/rlpowell/2418.html]{SNARF}End of SNARF
+~/np~
+
+Still other testing:
+
+!Release 1.9
+__Codename Sirius__
+
+The 1.9 version is the one after 1.8. As we begin to separate stable from devel versions, that 1.9 is intended to become a development branch.
+Here is a tarball with latest CVS code updated every 6 hours: [http://tikiwiki.org/tikiball.tar.bz2]
+!!Important
+CVS branching has occured here. Note the new cvs checkout requirements!
+{CODE()}
+export CVS_RSH=ssh
+export CVSROOT=:ext:sfname@cvs.sf.net:/cvsroot/tikiwiki
+cvs -z5 co -d tiki19 -r BRANCH-1-9 tikiwiki
+{CODE}
+__If you commit on your current checkout you will commit to Tiki 1.10!__
+Update through cvs with {CODE()}cvs -z5 up -dP -r BRANCH-1-9{CODE}
+!!Priorities 
+* Documentation of linked pages : RestoreHelp project
+* Translation of tikiwiki and of documentation 
+** new multilingual feature is what we need !
+++ tw.o is upgraded, now we can translate some important pages in different languages, and the ,naming cnvention is to use a ,xx suffix where xx is the lang code. For exampl ((Home)) is linked to ((Home,fr))
+* Setup of new bug trackers to handle support -visit [http://dev.tikiwiki.org] )
+* Page History randomly looses all stored versions.
+* Edit page warning sometimes stays active even when you cancel.
+---
+!Release 1.9 rc3
+
+!!Must-fix bugs
+* Resolve licensing issues: LibLicense
+** Wikigraph plugin should be moved to mods
+** need rewriting : lib/pear/Date.php
+** need replacement : lib/pear/NNTP.php
+** lib/pear/Net/Socket.php
+** TikiSheet licence cleaning (lib/sheet/ole*)
+** lib/webmail/mimeDecode.php is replaced by lib/mail/mimelib.php
+** lib/webmail/htmlMimeMail.php has to be rewritten
+* Built it TPL editor removed Javascript from the Templates
+* Undefined variables notices when saving an edited forum (''can't reproduce - Terence'')
+* Reply to a reply in the forum, makes the post your replying to seem like a top level topic post
+* When replying to a forum post, form is no longer pre-filled (feature? annoyance? make optional?)
+* ticketlib confirmation screens are messed up: the table doesn't take up 100% of the page width
+
+half way fixed:
+* Security
+** RSS feeds: only those data visible to a user (wiki, forums etc.) can be seen in rss feeds, others are excluded now (ohertel): [http://sourceforge.net/tracker/index.php?func=detail&aid=993129&group_id=64258&atid=506846|993129: Forums RSS provides access to "restricted" forums], [http://sourceforge.net/tracker/index.php?func=detail&aid=852382&group_id=64258&atid=506846|852382: RSS feeds bypass all ACLs]
+
+!!Bugs Fixed
+* Wiki page edit warning is not reset after user saves page (terence)
+* Cancel edit no longer functioned (terence)
+* score_event caused error when anonymous viewed scored features ((Damian))
+* Live Support
+** Fixed live support JS file ((Damian))
+** Fixed live support chat request window ((Damian))
+** Fixed bugs in LS transcripts ((Damian))
+** Fixed bugs in transcript display ((Damian))
+* categories : fixed display bug in tree on admin page ((mose))
+* who_is_there module no longer showed idle time and was not xhtml compliant (terence)
+* bug [http://sourceforge.net/tracker/?group_id=64258&atid=506846&func=detail&aid=986208|#986208]: the wiki undo function was broken (terence)
+* All newer modules/ code now has path disclosure protection ((Damian))
+* tiki tabs - now IE friendly ((Damian))
+* calendar/jscalendar - sits better in middle column ((Damian))
+* maps upload dir navigation fixed ((mose))
+* maps display fixed ((mose))
+* CODE plugin no longer spews errors when no caption is defined (terence)
+* Kill the CookieMonster ! about the problem of cookie management and navigation memory (lphuberdeau, sylvie)
+* Forums have avatar, userlevel, posting, online and email details back
+* tiki-admin_categories.php's category browser is fixed for adding many levels of subcategories
+* access to image in gallery only if permission to its gallery is available, too ((ohertel))
+* fixed postgresql install and probably other platforms install by enhancing the convertscript ''((mose)) and UserPagesylvie ''
+* RSSModules
+** bug [http://sourceforge.net/tracker/index.php?func=detail&aid=993129&group_id=64258&atid=506846|#993129]: Forums RSS provides access to "restricted" forums - ((ohertel))
+** display of rss 1.0, 2.0 and atom 0.3 working now (ohertel)
+** most rss feeds should work now (ohertel)
+** [http://sourceforge.net/tracker/index.php?func=detail&aid=983908&group_id=64258&atid=506846|983908: Single-blog RSS feed broken 1.9rc2+] (ohertel)
+** objects remained categorized even if all parent categories were removed (terence)
+* Multi-tiki install fixed in case of upgrade of existing multitiki ((mose))
+* Killed the HashBug (replaced by hashes) ((mose))
+* use of / in agentinfo ((damian))
+* themes fixes in geo, tiki and trollparty styles ((mose))
+
+!!New Features
+* changes in score and friendship new feature, please remind batawata to list them
+* new wikiplugin Versions mandatory for building up the doc ((mose))
+* ''no new features in this RC please. Add them to HEAD TikiWiki 1.10''
+
+!!Enhancements
+* Code Wiki Plugin : added caption param ((mose))
+* Calendar last modif events modules ''ModuleLastModifEvents'' ((Damian))
+* ''no new enhancements in this RC please. Add them to HEAD TikiWiki 1.10''
+* RSSModules
+** tiki-admin_rssmodules.php: displays size of cached rss data (ohertel)
+** tiki-admin_rssmodules.php: "display feed title" is complete and working now (ohertel)
+** publish date is shown in preview, too (ohertel)
+* Redesign of the forum styles 'threaded', 'plain' and 'headers only' (ohertel)
+* New usermap feature to add users on tikimap (franck)
+* tiki-install can be deactivated automatically by adding location and die; ((Damian))
+* Multiple users can be removed at the same time (terence)
+* Multiple users can be assigned to and removed from multiple groups at the same time (terence)
+* Default group of multiple users can be set at the same time (terence)
+
+---
+! ReleaseProcess19rc2
+''released on monday 28th june''
+---
+! ReleaseProcess19rc1
+''released on monday 21st june''
+
+!!Known Issues
+* ~~#FF0000:tiki-install.php spits out many "variable undefined" errors (they are not critical; Tiki will install and work fine).~~
+* ~~#FF0000:tiki-admin_categories.php's category browser is bugged when adding many levels of subcategories.~~
+* ~~#FF0000:Tiki's search engine does not respect permissions.~~
+* ~~#FF0000:Tiki uses too many cookies; problems arise when one exceeds the browser's limit on number of cookies per domain.~~
+* ~~#FF0000:The lib/webmail/pop3.php library is GPL'ed. Should replace with an LGPL library like [http://pear.php.net/package/Net_POP3|Net_POP3] or [http://pear.php.net/package/Net_IMAP|Net_IMAP].~~
+* ~~#FF0000:Replies to __replies__ to forum topics are hidden when viewing forum topics (avoid using the forum).~~
+
+---
+!Under Development in CVS now.
+''please contact these people before a RC is made so they can commit any last minute modifications/updates''
+* New ((Jukebox)) - ''((UserPageDamian|Damian))''
+* New ((Homework)) ''((UserPagegeorge.geller|george.geller))''
+* Enhanced ((Quizzes)) ''((UserPagegeorge.geller|george.geller))''
+* New "My Workflow" tab in "My Tiki". Shows the processes a user started + user activities. Needs sorting + pagination to be added ((UserPagehalon|halon))
+* Charset/encoding + language in the mail sent to the user are function of his preferences ((UserPagesylvie|sylvie)) + correct utf8 mail header encoding
+* multilingual page and article - Help page: ((TranslationDoc)) , technical description ((MultilingualStep1)) ((UserPagesylvie|sylvie))
+
+Different testing:
+
+! Code Wiki Plugin
+Code can be used to display lines of preformatted code in wiki pages. 
+
+!! Using CODE tag
+!!!Wthout parameters
+{CODE(caption=>~np~{CODE()} <?php function foo($foo) { print($foo); }?> {CODE}~/np~ )} <?php function foo($foo) { print($foo); }?> {CODE}
+!!! Line numbering : ln
+{CODE(ln=>1,caption=>~np~{CODE(ln=>1)}some code
+line numbered
+{CODE}~/np~)}
+some code
+line numbered
+{CODE}
+!!! (1.8) Syntax coloring : colors
+Only php color is available for now. more are expected.
+{CODE(colors=>php,caption=>~np~{CODE(colors=>php)}<?php function foo($foo) { print($foo); }?>{CODE}~/np~)}<?php function foo($foo) { print($foo); }?>{CODE}
+!!! (1.9) caption insert : caption
+{CODE(caption=>~np~{CODE(caption=>Caption)}some text{CODE}~/np~)}some text{CODE}
+
+__(1.7.1.1)__ If you see confusing output like "&amp;quot;" or so (actually double-processed html special characters), try to check "Allow HTML" option. 
+
+!! Source
+You can edit the plugin if you need to change the look and feel of the output. There is only one file to deal with.
+{CVS()}lib/wiki-plugins/wikiplugin_code.php{CVS}
+
+
+- - - Done with different testing.
+
+More testing.
+
+{CODE()}~np~[~/np~{CODE}
+
+{CODE()}~np~moo~/np{CODE}
+
+~np~{CODE()}help{CODE}~/np~
+
+<pRe>~np~foo</PrE>
+
+~ np~foo
+
+The above was generated from:
+
+~pp~
+{CODE()}~np~[~/np~{CODE}
+
+{CODE()}~np~moo~/np{CODE}
+
+~np~{CODE()}help{CODE}~/np~
+
+<pRe>~np~foo</PrE>
+
+~ np~foo
+~/pp~
+
+-Robin
+
+- - - Done with wierd testing.
+
+mi ji'a cipra
+
+((Silly reasons to learn Lojban))
+
+[http://www.cadazz.com|CAD software history] just went online and welcomes any corrections and additions.
+
+Maybe a Wiki will help offset the workload of correcting/extending the history.
+
+Wow! This is incredible and I love this interface.  I am going to get my hands on a copy of Tiki and give it a spin!
+
+
+All my computer environment speaks UTF-8, except my terminal, but including my web browser and its form editor.
+
+This should render properly if UTF-8 support in Tiki works OK :
+
+« (<<) » (>>) œ (oelig) ß (beta) æ (aelig) — (ndash) ≈ (about equal) … (three dots) 
+
+- Preview OK
+
+Some words in Cyrillic: Шла Маша по шоссе и сосала сушку
+
+Some lines in Hebrew (pointed!)
+שִׁמְרוּ שַׁבּתוֹתַי לְמַעַן תִּינְקוּ וּשְׂבַעְתֶם
+מִזִּיו בִּרְכוֹתַי אֶל־הַמְּנוּחַָה כִּי בָאתֶם
+וּלְווּ עָלַי בָּנַי וְעִדְנוּ מַעֲדָנַי שַׁבָּת הַיּוֹם לַה׳
+
+Points don't look right, but I think it's a font thing.  Looked okay in editing anonymously, but not when logged in.
