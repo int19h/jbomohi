@@ -1,0 +1,92 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 29384 invoked from network); 13 Apr 2004 17:24:28 -0000
+Received: from unknown (66.218.66.217)
+  by m17.grp.scd.yahoo.com with QMQP; 13 Apr 2004 17:24:28 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta2.grp.scd.yahoo.com with SMTP; 13 Apr 2004 17:24:28 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1BDRdN-0001Io-Qw
+	for lojban@yahoogroups.com; Tue, 13 Apr 2004 10:23:41 -0700
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1BDRcZ-0001Hk-ND; Tue, 13 Apr 2004 10:22:51 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 13 Apr 2004 10:22:48 -0700 (PDT)
+Received: from web41904.mail.yahoo.com ([66.218.93.155])
+	by chain.digitalkingdom.org with smtp (Exim 4.30)
+	id 1BDRcQ-0001HE-Vd
+	for lojban-list@lojban.org; Tue, 13 Apr 2004 10:22:43 -0700
+Message-ID: <20040413172212.75258.qmail@web41904.mail.yahoo.com>
+Received: from [200.69.6.60] by web41904.mail.yahoo.com via HTTP; Tue, 13 Apr 2004 10:22:12 PDT
+Date: Tue, 13 Apr 2004 10:22:12 -0700 (PDT)
+In-Reply-To: <20040413164011.GK21966@digitalkingdom.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-archive-position: 7539
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias2000@yahoo.com.ar
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+From: Jorge "Llambías" <jjllambias2000@yahoo.com.ar>
+Reply-To: jjllambias2000@yahoo.com.ar
+Subject: [lojban] Re: On parser extensions.
+X-Yahoo-Group-Post: member; u=142311107
+X-Yahoo-Profile: jjllambias2000
+X-Yahoo-Message-Num: 22013
+Content-Length: 1314
+
+
+--- Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+> xorxes pointed out that "pabi'ipazeva'e" is currently not grammatical,
+> whether you shove all the words together or not.  :-)  The reason seems
+> to be that the current parsers don't wait long enough, and try to
+> interpret things as "le pa bi'i <something>".
+
+The EBNF grammar has:
+
+tanru-unit-2 = (number | lerfu-string) MOI #
+number = PA [PA | lerfu-word] ... 
+lerfu-string = lerfu-word [PA | lerfu-word] ... 
+
+Your PEG grammar seems to agree:
+
+tanru-unit-2 <- (number / lerfu-string) MOI free* 
+number <- PA (PA / lerfu-word)*
+lerfu-string <- lerfu-word (PA / lerfu-word)*
+
+So I don't see how it manages to get a {bi'i} in there.
+
+> My questions are:
+> 
+> 1.  Did any of you have that kind of trouble parsing this sentence by
+> hand?
+
+Unlikely. The intention is quite obvious. But according to the grammar,
+MOI takes only a pure number.
+
+> 2.  Does this count as a change to the language, or merely cleaning up
+> LR(1) issues?[1]
+
+Do you mean allowing {quantifier MOI}? If it can be done, I think 
+I'd be in favour, but it would count as a change, wouldn't it?
+
+mu'o mi'e xorxes
+ 
+
+
+	
+		
+__________________________________
+Do you Yahoo!?
+Yahoo! Small Business $15K Web Design Giveaway 
+http://promotions.yahoo.com/design_giveaway/
+
+
+
+
+           
+

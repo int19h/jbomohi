@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0994262022a4-on_parser_extensions%2E | root 20040413164011.gk21966@digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0994262022a4-on_parser_extensions%2E | root 20040413164011.gk21966@digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-04-13T16:40:11Z | Robin Lee Powell <lojban-out@lojban.org> | 20040413164011.gk21966@digitalkingdom.org | mail/lojban-list/cur/1081874411.0994262022a4a930.jbomohi:2,S
 In the wiki page for "The 17 tallest men", bancus noted that
@@ -36,6 +36,60 @@ http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
 "Many philosophical problems are caused by such things as the simple
 inability to shut up." -- David Stove, liberally paraphrased.
 http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+
+           
+
+
+
+=== 2 | 2004-04-13T17:22:12Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040413172212.75258.qmail@web41904.mail.yahoo.com | mail/lojban-list/cur/1081876932.6ffcbf81bb717460.jbomohi:2,S
+
+--- Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+> xorxes pointed out that "pabi'ipazeva'e" is currently not grammatical,
+> whether you shove all the words together or not.  :-)  The reason seems
+> to be that the current parsers don't wait long enough, and try to
+> interpret things as "le pa bi'i <something>".
+
+The EBNF grammar has:
+
+tanru-unit-2 = (number | lerfu-string) MOI #
+number = PA [PA | lerfu-word] ... 
+lerfu-string = lerfu-word [PA | lerfu-word] ... 
+
+Your PEG grammar seems to agree:
+
+tanru-unit-2 <- (number / lerfu-string) MOI free* 
+number <- PA (PA / lerfu-word)*
+lerfu-string <- lerfu-word (PA / lerfu-word)*
+
+So I don't see how it manages to get a {bi'i} in there.
+
+> My questions are:
+> 
+> 1.  Did any of you have that kind of trouble parsing this sentence by
+> hand?
+
+Unlikely. The intention is quite obvious. But according to the grammar,
+MOI takes only a pure number.
+
+> 2.  Does this count as a change to the language, or merely cleaning up
+> LR(1) issues?[1]
+
+Do you mean allowing {quantifier MOI}? If it can be done, I think 
+I'd be in favour, but it would count as a change, wouldn't it?
+
+mu'o mi'e xorxes
+ 
+
+
+	
+		
+__________________________________
+Do you Yahoo!?
+Yahoo! Small Business $15K Web Design Giveaway 
+http://promotions.yahoo.com/design_giveaway/
 
 
 
