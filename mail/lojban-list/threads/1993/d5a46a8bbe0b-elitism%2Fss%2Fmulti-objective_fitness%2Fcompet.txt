@@ -1,0 +1,88 @@
+# mail/lojban-list thread d5a46a8bbe0b-elitism%2Fss%2Fmulti-objective_fitness%2Fcompet | root 9303010420.aa06353@vortex.sps.mot.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1993-03-01T13:20:17Z | billa@vortex.sps.mot.com | 9303010420.aa06353@vortex.sps.mot.com | mail/lojban-list/cur/730992017.d5a46a8bbe0b62df.jbomohi:2,S
+
+Hi,
+
+A bit off any of the current threads, there are some points/questions
+with respect to GP strategies I'd like to bounce off the list and
+see what kind of feedback I can generate. Hopefully this won't turn
+into too much of a rambling mess....
+
+Steady State Populations as a way to avoid Elitism:
+I've run GP where it came quite close to finding the "right" (or at
+least a very good) answer early on in the run, only to let the
+individual die at the roll of a die. Hmmmm. When elitism is not
+used, the score of the best individual from generation to generation
+looks like a roller coaster ride. Of course the average score of
+the population grows steadily, but elitism really seems to pull
+things along. Unfortunately, I don't like elitism. The only alternative
+I've found is a steady state population where the "bums" with the
+lowest fitness score get pushed off the bottom of the list by 
+new-comers w/ better fitnesses. Detractors state that I'm losing
+genetic diversity - and I agree. On the other hand, I'm still 
+getting good results. Do others have experience to indicate the
+loss of genetic diversity and its subsequent (possibly premature)
+convergence are a problem in some domains? Comments on Elitism?
+I've had quite a bit of luck w/ Steady State Populations in general.
+Although I don't want to make any wild claims, the populations
+converged to a "good" answer in quite a bit less time (individuals
+evaluated) than a batch/generational approach. 
+
+Multi-objective optomization (fitness):
+The approach people (and The Book) seem to take here are
+either penalty methods or a weight applied to each element of
+the fitness vector and the weighted elements summed to get
+a single scalar fitness value. The example in the book is:
+     fitness = 0.75*(correctness) + 0.25*(efficiency)
+In the field of machine control, what we generally want to do
+is put the machine in some state. This is often done by
+maintaining an error variable (E) which indicates distance from
+an objective, and by extension dE/dt, and ddE. The objective could
+be to minimize the Error and dError over some time interval. Thus we
+get something like:
+    fitness = A * Error + B * dError (where lower values of fitness are better)
+If A is to large with respect to B we get overshoot and a fair amount
+of ringing around the target state. If B is to large, it takes forever
+to converge. In other words, we've got a PD controller in the fitness
+computation. Now we're reduced to "twiddling the knobs" to find a
+"good" ration for A and B. Very problem specific. Very messy. Comments?
+
+Multiple Element Output Vectors ("Lists" in Ch. 19 of the Book):
+As populations of these "vectors" evolve, it would seem that the trees
+associated with each element of the list are aquireing "good" structures
+appropriate to their particular list elements. This being the case,
+would we be wise to constrain ourselves to crossover between like
+list elements - or to madly swap genetic material in and out of
+any tree belonging to any list element as the die dictates. The
+former would limit genetic diversity, but the latter could easily
+scramble a good solution. The results I've gotten to date have been
+very mixed and I'm curious to hear what others think or have done
+WRT this problem.
+
+Competitive Environments:
+In a control problem where we are trying to, say, a solve toy problem like
+the inverted pendulum, it is pretty easy to get GP to come up w/ a controller.
+To be fair, it is pretty easy to come up w/ a fuzzy or neural controller
+via GA or temporal difference techniques [with or without a critic]. Most
+of these train in a pretty nice, noise free simulated environment where a
+potential controller can sit and bang things around a bit. It is a bit
+more difficult to make a controller that will work in a robust manner in
+a varying environment. Competitive Co-Evolution where two groups of controllers
+are evolved - one that tries to stand up the pendulum, and another that
+tries to knock it over is a technique that comes to mind. Unfortunately,
+the problem is extra-ordinarily biased towards the critters that want
+to knock the controller down - and they usually find ways to take advantage
+of that bias. Is there an obvious way to even up the odds in a general
+way for problems with a built-in imbalance? Comments?
+
+Regards,
+
+William C. Archibald			Nippon Motorola, Ltd.
+billa@tdo.sps.mot.com			    Tokyo, Japan
+-
+
+
+
+
+
