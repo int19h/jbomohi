@@ -1,0 +1,122 @@
+# mail/lojban-list thread cd49ddcb54e0-valfendi_algorithm | root 200301222303.45852.phma@webjockey.net | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2003-01-23T04:03:45Z | Pierre Abbat <phma@webjockey.net> | 200301222303.45852.phma@webjockey.net | mail/lojban-list/cur/1043294625.cd49ddcb54e044e2.jbomohi:2,S
+This is hopefully complete and correct, except for handling ZOI and FAhO, but
+has not been tested or proven. I have some partially written proofs but have
+to finish writing them.
+
+phma
+---
+Morphology Algorithm
+Revision 5.0pre1, 22 January 2003
+
+The following will become the official baseline algorithm for resolution of
+Lojban text into individual words from sounds, stress, and pause.  As such,
+it is the ultimate standard of Lojban's unambiguous resolvability, which
+may make Lojban speech recognition by computers more possible than for
+other languages.  While the algorithm looks very complicated, almost all of
+it is resolving special cases, and performing what error detection and
+correction may be possible.
+
+
+We have a string representing the speech stream, marked with stress and
+pauses.  We want to break it up into words.
+
+1.  Scan the line from left to right. Convert all spaces to pauses
+    unless preceded by comma; convert space to comma if preceded by comma.
+2.  Break at all pauses (cannot pause in the middle of a word).
+3.  Pick the first piece that has not been resolved.
+  A.  If the piece ends in a consonant:
+    I.  Make a decapitalized copy of the string with commas removed.
+    II. Search backward in the string for a place in the string that is
+        preceded by "la", "lai", "la'i", or "doi" where the 'l' or 'd' is not
+	immediately preceded by a consonant. (ala'um option off)
+    II. Search backward in the string for a place in the string that is
+        preceded by "la", "lai", "la'i", or "doi" where the 'l' or 'd' is not
+        immediately preceded by a consonant and such that the character at
+        that place is a consonant. (ala'um option on)
+    III.If you found such a place:
+      a.  Split before the place and call the second part a cmene.
+      b.  If the second part does not begin with a consonant, resolve it as an
+          error. (not necessary if ala'um option is on)
+      c.  Search backward in the first part for a consonant. If it is not
+          the first character, split before it and resolve the second part as
+          a cmavo.
+    IV. If you did not find such a place, resolve the piece as a cmene.
+  B.  If the piece ends in 'y':
+    I.  Search backward for a consonant.
+    II. If you find one:
+      a.  If it is preceded by a consonant, resolve the piece as an error.
+      b.  If it is not preceded by a consonant, break before the consonant
+          and resolve the second piece as a cmavo.
+    III.If you do not find one, resolve the piece as a cmavo.
+  C.  If the piece does not end in 'y' or a consonant and has no consonant
+      that is adjacent to a consonant when 'y' is removed:
+    I.  Number the consonants starting with 1 and find the last one whose
+        number is a power of 2.
+    II. If this consonant is the first letter in the piece or there are no
+        consonants, resolve the string as a cmavo.
+    III.If this consonant is not the first letter, split before it.
+  D.  If the piece contains 'y' and no consonant following the last 'y' is
+      followed two letters later, not counting apostrophes and commas, by a
+      vowel, split it after 'y'. (e.g. ly.Ebucy.Obukybu.DENpabu)
+  E.  If the piece contains a consonant followed two letters later, not
+      counting apostrophes and commas, by a vowel, and there is no 'y' after
+      the letter between the consonant and the vowel, then there is a (possibly
+      invalid) brivla in the piece.
+    I.  Make a copy of the string, decapitalize all consonants, remove all
+        commas adjacent to consonants, and insert commas before consonant
+        clusters, between adjacent nondiphthong vowels, and after each pair
+        of vowels without a comma between them.
+    II. If the stress option is set and no vowel in the piece is stressed,
+        stress the vowel in the next-to-last syllable not counting syllables
+        which have 'y' in them.
+    III.Capitalize all letters in all syllables which have at least one capital
+        letter in them.
+    IV. Scan forward for a stressed vowel after or at the first CC or CyC
+        consonant cluster, then scan forward to the end of the next syllable,
+        ignoring syllables with 'y' in them. If the next syllable is itself
+        stressed, reset the count.
+    V.  If you reached the end of the word looking for a stressed vowel or the
+        next syllable, resolve the piece as an error. If the next syllable
+        begins with a non-initial consonant cluster, a vowel, or an apostrophe,
+        go back to IV and keep looking. If the next syllable begins with a
+        valid consonant cluster or single consonant, break before it and
+        consider the first part, which is a brivlavau. If there is no next
+        syllable, the whole piece is a brivlavau.
+    VI. Find the first CC or CyC consonant cluster and check whether it is
+        a valid initial cluster (if it contains 'y' it is not) and whether the
+        part beginning there is a slinku'i (see below).
+      a.  If the brivlavau begins with a consonant cluster, it is a valid
+          initial cluster, and the brivlavau is not a slinku'i, resolve it as
+          a brivla.
+      b.  If the brivlavau begins with a consonant cluster but the cluster is
+          not a valid initial cluster or the brivlavau is a slinku'i, resolve
+          it as an error.
+      c.  If the brivlavau does not begin with a consonant cluster, the cluster
+          is a valid initial cluster, and the part beginning there is not a
+          slinku'i, break before the consonant cluster and resolve the second
+          part as a brivla.
+      d.  If the brivlavau does not begin with a consonant cluster and the
+          cluster is not a valid initial cluster or the part beginning there
+          is a slinku'i, resolve the brivlavau as a brivla.
+4.  If there are any more pieces unresolved, return to step 3.
+
+A slinku'i, as far as word breaking is concerned, is anything that matches
+the following regex:
+^C[raf3]*([gim]?$|[raf4]?y)
+where
+C matches any consonant
+[raf3] matches any 3-letter rafsi
+[raf4] matches any 4-letter rafsi
+[gim] matches any gismu.
+Anything after the first 'y' is ignored. It has no effect on where to break the
+word, only on whether the word is valid.
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
+
