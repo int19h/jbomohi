@@ -38,7 +38,11 @@
 
 words <- (spaces* word)* spaces*
 
-word <- cmene / gismu / lujvo / fuhivla / cmavo / non-lojban-word
+word <- lojban-word / non-lojban-word
+
+lojban-word <- cmene / gismu / lujvo / fuhivla / cmavo
+
+non-lojban-word <- !lojban-word (!spaces .)+
 
 ;-------------------------------------------------------------------
 
@@ -58,13 +62,13 @@ gismu <- stressed-long-rafsi !stressed vowel &post-word
 
 ;-------------------------------------------------------------------
 
-lujvo <- !tosmabru (short-lujvo / initial-rafsi medial-rafsi* final-rafsi)
+lujvo <- !tosmabru (initial-rafsi medial-rafsi* final-rafsi / short-lujvo)
 
 short-lujvo <- stressed-initial-rafsi short-final-rafsi 
 
-stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi y / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi
+stressed-initial-rafsi <- cmene-rafsi / stressed-cmavo-rafsi / stressed-fuhivla-rafsi / stressed-long-rafsi y / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi
 
-initial-rafsi <- (fuhivla-rafsi / long-rafsi y / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) !vowel
+initial-rafsi <- (cmene-rafsi / cmavo-rafsi / fuhivla-rafsi / long-rafsi y / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) !vowel
 
 medial-rafsi <- h? !fuhivla !gismu !stressed-fuhivla-rafsi initial-rafsi
 
@@ -140,17 +144,15 @@ CVC-lujvo <- CVC-rafsi y medial-rafsi* final-rafsi / stressed-CVC-rafsi y short-
 
 post-cmavo <- spaces / cmene / &stressed lojban-word / !cluster lojban-word
 
+stressed-cmavo-rafsi <- stressed-cmavo-form h y
+
+cmavo-rafsi <- !y cmavo-form h y
+
 stressed-cmavo-form <- !cluster !h (syllable &h)* stressed-syllable
 
 unstressed-cmavo-form <- !cluster !h (syllable &h)* unstressed-syllable / consonant y / y h y / y+
 
 cmavo-form <- !cluster !h syllable (&h syllable)* / consonant y / y h y / y+
-
-lojban-word <- cmene / gismu / lujvo / fuhivla / cmavo
-
-;-------------------------------------------------------------------
-
-non-lojban-word <- !cmene !gismu !lujvo !fuhivla !cmavo (!spaces .)+
 
 ;-------------------------------------------------------------------
 
