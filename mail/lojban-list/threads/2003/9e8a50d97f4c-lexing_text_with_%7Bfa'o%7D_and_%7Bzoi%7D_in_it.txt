@@ -1,4 +1,4 @@
-# mail/lojban-list thread 9e8a50d97f4c-lexing_text_with_%7Bfa'o%7D_and_%7Bzoi%7D_in_it | root 200302020059.24435.phma@webjockey.net | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 9e8a50d97f4c-lexing_text_with_%7Bfa'o%7D_and_%7Bzoi%7D_in_it | root 200302020059.24435.phma@webjockey.net | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2003-02-02T05:59:24Z | Pierre Abbat <phma@webjockey.net> | 200302020059.24435.phma@webjockey.net | mail/lojban-list/cur/1044165564.9e8a50d97f4c645c.jbomohi:2,S
 Is this a correct way of lexing zoi-quotes?:
@@ -143,6 +143,89 @@ http://www.digitalkingdom.org/~rlpowell/    ***    I'm a *male* Robin.
 .i le pamoi velru'e zo'u crepu le plibu taxfu
 .i le remoi velru'e zo'u mo .i le cimoi velru'e zo'u ba'e prali .uisai
 http://www.lojban.org/   ***   to sa'a cu'u lei pibyta'u cridrnoma toi
+
+
+
+
+           
+
+
+
+=== 3 | 2003-02-03T23:04:36Z | Pierre Abbat <phma@webjockey.net> | 200302031804.36643.phma@webjockey.net | mail/lojban-list/cur/1044313476.6de121ab54462071.jbomohi:2,S
+On Monday 03 February 2003 15:46, Robin Lee Powell wrote:
+> On Sun, Feb 02, 2003 at 12:59:24AM -0500, Pierre Abbat wrote:
+li'o
+> >   E.  If the piece contains a consonant followed two letters later,
+> >   not...
+>
+> Followed by what two letters later?
+
+By a vowel. If a piece that got this far contains a consonant followed two 
+letters later by a vowel, and there is no 'y' after that, either it contains 
+what looks like a brivla, or someone erroneously pronounced a word of selma'o 
+BY followed by a CVV cmavo without inserting the required pause (such as 
+/kybusO'e/).
+
+> I assume all the ellipses are resolved elsewhere?
+
+The tarball, which includes the lexing algorithm (which I have some slight 
+changes to make to) and the program, is at 
+http://phma.hn.org/Language/valfendi-0.1.0.tar.gz.
+
+> > 6. If the piece is a cmavo of selma'o ZOI and the ZO flag is clear,
+> > resolve the next piece as the starting delimiter and set the ZOI flag
+> > to a copy of it.
+> >
+> > 7. If the piece is a cmavo of selma'o FAhO and the ZO flag is clear,
+> > set the FAhO flag.
+> >
+> > 8. If the piece is a cmavo of selma'o ZO and the ZO flag is clear, set
+> > the ZO flag; otherwise clear the ZO flag.
+>
+> Seems like it would be simpler if Step 3 was:
+>
+> "If the ZO flag is set, lex the piece and clear the ZO flag", or
+> something like that.
+>
+> Then you'd only have to say it once.
+
+I think that wouldn't work, because step 5 doesn't always produce a fully 
+resolved piece at the left; e.g. /zo.AisecUskuladjAn/ becomes /zo Aisecusku 
+la djAn/ after two steps.
+
+> > 9.  If there are any more pieces unresolved, return to step 3.
+> >
+> > According to 19:10, if {le'u} appears in a {zoi} quotation which is
+> > inside a {lo'u} quotation, the {lo'u} quotation is prematurely
+> > terminated. If the {le'u} is not surrounded by pauses, I don't see how
+> > that can work. For instance:
+> > /lo'ugA'ocUskuzoixy.vaiic.alE'umal`asOt.xy.axacuEroc.le'u/ The {le'u}
+> > inside the {zoi} quotation is embedded in the Hebrew word
+> > "wayish'alehu", which, being inside a {zoi} quotation, is not
+> > attempted to lex (and if it did, it would choke on the `ayin of "mah
+> > l`asot").
+>
+> Wow.  Yeah, there's no way that can work.
+>
+> > Chapter 21, step 2, says that the word following {zoi} *should* be
+> > delimited with a pause, not that it *must*. If it is not delimited
+> > with a pause, this can cause text to be lexed that is part of the
+> > quotation. For instance: /zoiladjAn.bagram.ladjAn/ is lexed as {zoi la
+> > djan. bagram. la djan.}.
+>
+> I'm sory; what is the delimiter in that case?  la?
+
+Yes. It's ungrammatical, but the lexer doesn't know that.
+
+> > Conversely, two words could be taken as the delimiter, as in
+> > /zoi.flAlukAvbu.../ that I mentioned before. Should the word be
+> > changed to "must"?
+>
+> Seems like it to me.
+
+Likewise, must {fa'o} be followed by a pause?
+
+phma
 
 
 
