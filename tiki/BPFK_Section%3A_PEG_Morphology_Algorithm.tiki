@@ -50,7 +50,7 @@ cmene <- !h cmene-rafsi* cmene-part &spaces
 
 cmene-rafsi <- cmene-part (i / u) y
 
-cmene-part <- (!doi-la-lai-lahi syllable / y-syllable)* consonant+ 
+cmene-part <- (!doi-la-lai-lahi consonant* syllable / consonant* y-syllable)* consonant+ 
 
 doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !vowel
 
@@ -72,17 +72,17 @@ final-rafsi <- fuhivla / gismu / CVV-final-rafsi / short-lujvo
 
 ;-------------------------------------------------------------------
 
-fuhivla <- (fuhivla-head stressed-syllable / stressed-type-III) !stressed syllable &post-word 
+fuhivla <- (stressed-type-III / fuhivla-head stressed-syllable) !stressed syllable &post-word 
 
-stressed-fuhivla-rafsi <- (fuhivla-head stressed-syllable / stressed-type-III) consonant+ y
+stressed-fuhivla-rafsi <- (stressed-type-III / fuhivla-head stressed-syllable) &consonant y-syllable
 
-fuhivla-rafsi <- (fuhivla-head unstressed-syllable / type-III) consonant+ y
+fuhivla-rafsi <- &syllable fuhivla-head &consonant y-syllable
 
-fuhivla-head <- (!cmavo !rafsi-string !slinkuhi !non-initial-cluster !h / type-III) (unstressed-syllable &syllable)*
+fuhivla-head <- (type-III / !cmavo !rafsi-string !slinkuhi !non-initial-cluster !h) unstressed-syllable*
 
-stressed-type-III <- (stressed-long-rafsi / stressed-CVC-rafsi) (r / n / l) &consonant
+stressed-type-III <- stressed-long-rafsi (r / n / l) &consonant / stressed-CVC-rafsi (r / n / l) &consonant
 
-type-III <- (long-rafsi / CVC-rafsi) (r / n / l) &consonant 
+type-III <- long-rafsi (r / n / l) &consonant / CVC-rafsi (r / n / l) &consonant 
 
 slinkuhi <- consonant rafsi-string
 
