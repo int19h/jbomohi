@@ -15,3 +15,14 @@ arj wrote:
 According to the OED and all I know about that form of word, "meninx" is
 the singular, but it's usually used in the plural.
 
+
+## 2005-03-08T13:23:39Z — arj (comment 213, in reply to 212)
+
+Re: Synonyms
+
+phma wrote:
+> According to the OED and all I know about that form of word, "meninx" is
+> the singular, but it's usually used in the plural.
+
+Okay. "meninx" it is, then.
+
