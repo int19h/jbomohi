@@ -1,0 +1,89 @@
+X-Digest-Num: 381
+Message-ID: <44114.381.2146.959273826@eGroups.com>
+Date: 03 Mar 2000 14:13:19 +1100
+From: Peter Moulder <reiter@netspace.net.au>
+Subject: Re: Sets etc.
+X-Yahoo-Message-Num: 2146
+Content-Length: 2721
+Lines: 79
+
+John Cowan <jcowan@reutershealth.com> writes:
+
+> Which leads me to the following challenge, due to Quine.  A student at Yale
+> may belong to zero or more clubs.  Some clubs are final clubs.  A final
+> club is defined as "a club such that membership in it precludes membership in
+> any other final club".
+  ^^^
+Does `any' above mean `all' or `some'?  I've taken it to mean `all'.
+
+Consider the case where there are two or more clubs, and no club
+precludes membership in any other club.  What answer would you want
+the "definition" to give in this case?
+
+Let's split the problem in two: decide on an answer in predicate logic
+notation first, then translate to Lojban once we're satisfied with a
+predicate logic answer.
+
+Define a predicate final(C, E, F) such that if C is the set of clubs
+at Yale, and E is the set of pairs of clubs (C1, C2) such that
+membership of C1 precludes membership of C2, then final(C, E, F) is
+true iff F is a valid set of final clubs for C, E.
+
+Notation of the below is a mixture of LaTeX and Mercury/Prolog;
+more detail is at end of message.
+
+Domain of `final' is the set of (C, E, F) such that:
+ C is a set of clubs,
+ F \subseteq C,
+ E is a set of pairs of clubs such that
+  all[C1, C2]
+   ((pair(C1, C2) \in E)
+    => ((pair(C2, C1) \in E),
+        (C1 \in C),
+        (C2 \in C))).
+
+For all values of (C, E, F) within the above domain:
+
+ final(C, E, F) <=>
+   (all[C1]
+     ((C1 \in C)
+      => ((C1 \in F)
+          <=> (all[F1]
+                ((F1 \in F)
+                 => ((C1 = F1)
+                     ; (pair(C1, F1) \in E)))))).
+
+
+For any (C, E, F) within the domain, the above definition allows
+deciding whether or not F is a valid set of final clubs for C, E.
+
+pjm.
+
+
+Notation (mixture of LaTeX and Mercury/Prolog):
+  P1 => P2              ganai P1 gi P2
+  P1 <=> P2             iff: go P1 gi P2
+  P1, P2                and: ge P1 gi P2
+  P1 ; P2               or:  ga P1 gi P2
+  E1 \in S1             E1 is an element of S1: E1 cmima S1
+  S1 \subseteq S2       S1 is a subset of (or equal to) S2:
+                         ga S1 gripau S2 gi S1 du S2
+     [I'm not sure whether {gripau} means a proper/strict subset or
+      whether it means the same as \subseteq.]
+  some[V1] P1           existential quantification: su'o V1 zo'u P1
+  all[V1] P1            universal quantification: ro V1 zo'u P1
+  all[V1, V2] P1        abbreviation of `all[V1] all[V2] P1'
+  pair(E1, E2)          E1 ce'o E2
+
+Notation used in the above notation explanations:
+ V1, V2: any variable names
+ P1, P2: any predicate expressions; can be any item of the Notation
+          list other than the last (viz. pair(E1, E2)).
+ S1, S2: any sets
+ E1, E2: elements: pretty much any expressions.
+
+
+
+
+           
+
