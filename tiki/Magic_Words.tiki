@@ -14,11 +14,12 @@ It is worth noting that these two documents contradict each other on many points
 ** No.  If you need to quote a broken zoi, use another zoi.
 * What does BAhE+BU do?
 ** Just empasizes the BU.
-* Does SU go back to the last NIhO, LU, TUhE, or TO (as grammar.300 claims) or the beginning of input (as the Red Book claims)?
-* grammer.300 claims that ZEI works on ZOI, ZO and LOhU...LEhU clauses.  I'm pretty sure this is just a YACC side effect; it certainly seems amazingly ridiculous to me.  If anyone disagrees, let me know.
 * The red book claims that UI cmavo can't mark BU.  What's up with that?
 ** I have no idea, but I'm ignoring it.  UI can mark anything that doesn't grab it.
 * What do we do about ZOI, SI and SA interactions?  Is SI allowed as a ZOI delimiter?  Does SI after a ZOI clause erase the whole thing?
+** SI, SA and SU are not allowed ZOI delimiters.  4 SI for ZOI erasure from outside.  SA+ZOI+SI works.  ZOI+SI == nothing.
+* Does SU go back to the last NIhO, LU, TUhE, or TO (as grammar.300 claims) or the beginning of input (as the Red Book claims)?
+* grammer.300 claims that ZEI works on ZOI, ZO and LOhU...LEhU clauses.  I'm pretty sure this is just a YACC side effect; it certainly seems amazingly ridiculous to me.  If anyone disagrees, let me know.
 
 ! Meta-Rules
 
@@ -40,7 +41,7 @@ In order of precedence.  selma'o names used throughout.  + means "a member of th
 # SI erases the preceding word unless it is a ZO.  Y is ignored.
 # SA erases the preceding word and other words, unless the preceding word is a ZO.  SA erases back until it sees a word of the same selma'o as the word that follows SA.  The previous same-selma'o word is itself erased.  Y is ignored for selma'o matching purposes. 
 # SU erases itself and all words back to the beginning of the current conversation for the speaker that says it.  If spoken twice, it also erases the other speaker's words.  In computer input cases SU, in general, erases itself and all words to the beginning of the input (as most computer input cases cannot distinguish between speakers).
-# ZOI cmavo use the following word as a delimiting word, no matter what it is (except Y), but using LEhU may create difficulties (IF ZOI IS ALLOWED TO FUNCTION IN LEhU, which is still under discussion).
+# ZOI cmavo use the following word as a delimiting word, no matter what it is, execept Y (which is ignored); and SI, SA and SU (which erase it).
 # ZEI combines the preceding and the following word into a lujvo, but does not affect SI, SA, and SU (which erase it); ZO  LOhU (which quote it); ZOI (which uses it as a delimiter); Y (which it skips); ZEI (which would lead to grouping issues, and hence is an error to attempt); and FAhO (which results in an error).
 # BU makes the preceding word into a lerfu word, except for ZO, ZEI and LOhU (which quote it), ZOI (which uses it as a delimiter); LEhU (which would result in bizarrely re-opening the LOhU...LEhU, and hence is an error);  SI, SA and SU (it affects whatever is to the left after the erasing is done; if nothing is left an error results); BAhE (which it skips); BU (which would lead to grouping issues, and hence is an error to attempt); and FAhO (after which anything, including BU, is ignored).  Note that Y is specifically included.  BAhE effects BU as usual, so BU skips over any preceeding BAhE cmavo to affect the word before them.  Multiple BU may be used in succession, in which case a new letteral is formed for each additional BU (i.e. "broda bu" is a different letteral from "broda bu bu").  However, "bu bu" by itself is illegal.
 
@@ -61,7 +62,7 @@ SI gets very complicated in a few cases, so here we go.  Some SA notes here too.
 * SI is valid at the beginning of input, but only to deal with the fact computer parsing is often done line by line, and two lines can be from the same speaker (e.g. "mi broda co" followed later by "si do").
 * SA+SI == nothing.
 * SU+SI == nothing.
-* SA+any word+SI == nothing (assuming that the SA is valid, i.e. that there is a word of the same selma'o as the word after SA to erase back to).
+* SA+any word (except ZO)+SI == nothing (assuming that the SA is valid, i.e. that there is a word of the same selma'o as the word after SA to erase back to).  For ZO you need two SI.
 ** Not quite true; doesn't work for ZO or (probably) ZOI.
 * ZO+any word+SI == ZO
 * ZO+any word+SI+SI == nothing
@@ -74,9 +75,8 @@ SI gets very complicated in a few cases, so here we go.  Some SA notes here too.
 ** ZOI+delimiter+text+delimiter+SI+SI+SI == ZOI
 ** ZOI+delimiter+text+delimiter+SI+SI+SI+SI == nothing
 * As a result of the above, if you really want to destroy a whole ZOI quote, SA+ZOI+SI is strongly reccomended.
-** Doesn't work if SI is allowed as a ZOI delimiter.
 * ZOI+SI == nothing (i.e. if you haven't presented a delimiter yet, SI can still operate).
-** Doesn't work if SI is allowed as a ZOI delimiter.
+* ZOI + SA + ZOI + SI still == nothing.
 
 ! Error Cases
 
