@@ -1,0 +1,94 @@
+Received: from YaleVM.CIS.Yale.Edu (YALEVM.YCC.YALE.EDU) by MINERVA.CIS.YALE.EDU via SMTP; Mon, 3 May 1993 01:06:26 -0400
+Received: from CUVMB.CC.COLUMBIA.EDU by YaleVM.CIS.Yale.Edu (IBM VM SMTP V2R2)    with BSMTP id 7324; Mon, 03 May 93 01:05:58 EDT
+Received: from CUVMB.COLUMBIA.EDU by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with  BSMTP id 2663; Mon, 03 May 93 01:06:53 EST
+Date:         Mon, 3 May 1993 15:05:03 +1000
+Reply-To: Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU>
+Sender: Lojban list <LOJBAN%CUVMB.bitnet@YALEVM.YCC.YALE.EDU>
+From: Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU>
+Subject:      Prolog semantic analyser
+X-To:         Lojban Mailing List <lojban@cuvmb.cc.columbia.edu>
+To: Erik Rauch <erikr@MINERVA.CIS.YALE.EDU>
+X-From-Space-Date: Tue May  4 01:05:03 1993
+X-From-Space-Address: @YALEVM.YCC.YALE.EDU:LOJBAN@CUVMB.BITNET
+Message-ID: <T1kbZDDEiJI.A.78H.R00kLB@chain.digitalkingdom.org>
+Content-Length: 2812
+
+Haven't been working on this for a while, as other stuff has come up. I've
+just started implementing question answering on text currently being
+processed. As you can see, the processor can reorder prenexes in acceptable
+ways; it cannot yet handle conjunctions in question answering, nor inferences
+based on quantifiers.
+
+Note that questions are treated as parenthetical comments: {.i broda .i xu
+broda .ije brode} is parsed as: {.i broda to .i xu broda toi .ije brode}
+
+1)
+
+i mi nelci lo gerku ku vau i xu koha nelci lo gerku ku
+vau i je mi gerku vau
+
+***
+
+c(e, q(suho(1), _FJKGQ, gerku(_FJKGQ, _FJKLO, _FJKLP, _FJKLQ, _FJKLR), [],
+nelci(mi, _FJKGQ, _FJKGR, _FJKGS, _FJKGT)), gerku(mi, _FJLGM, _FJLGN, _FJLGO,
+_FJLGP))
+Answers to the questions: [no_answer]
+true.
+
+2)
+
+i mi nelci lo gerku ku vau i xu mi nelci lo gerku ku
+vau i je mi gerku vau
+
+***
+
+c(e, q(suho(1), _FJKGQ, gerku(_FJKGQ, _FJKLO, _FJKLP, _FJKLQ, _FJKLR), [],
+nelci(mi, _FJKGQ, _FJKGR, _FJKGS, _FJKGT)), gerku(mi, _FJLHM, _FJLHN, _FJLHO,
+_FJLHP))
+Answers to the questions: [yes]
+true.
+
+3)
+
+lo prenu ku lo gerku ku lo dakfu ku ro boi lo xamsi ku
+ ro boi lo dertu ku cu klama vau i xu fi lo dakfu ku
+ fe lo gerku ku fa lo prenu ku fu ro boi lo dertu ku
+fo ro boi lo xamsi ku cu klama vau
+
+***
+
+c(seq, q(suho(1), _FJKTN, prenu(_FJKTN, _FJKYB, _FJKYC, _FJKYD, _FJKYE), [],
+q(suho(1), _FJKYK, gerku(_FJKYK, _FJLCY, _FJLCZ, _FJLDA, _FJLDB), [],
+q(suho(1), _FJLDH, dakfu(_FJLDH, _FJLHV, _FJLHW, _FJLHX, _FJLHY), [], q(ro,
+_FJLIE, xamsi(_FJLIE, _FJLMS, _FJLMT, _FJLMU, _FJLMV), [], q(ro, _FJLNB,
+dertu(_FJLNB, _FJLRP, _FJLRQ, _FJLRR, _FJLRS), [], klama(_FJKTN, _FJKYK,
+_FJLDH, _FJLIE, _FJLNB)))))), [])
+Answers to the questions: [yes]
+true.
+
+4)
+
+lo prenu ku lo gerku ku lo dakfu ku ro boi lo xamsi ku
+ ro boi lo dertu ku cu klama vau i xu fu ro boi lo dertu ku
+ fe lo gerku ku fa lo prenu ku fi lo dakfu ku
+fo ro boi lo xamsi ku cu klama vau
+
+***
+
+c(seq, q(suho(1), _FJKTN, prenu(_FJKTN, _FJKYB, _FJKYC, _FJKYD, _FJKYE), [],
+q(suho(1), _FJKYK, gerku(_FJKYK, _FJLCY, _FJLCZ, _FJLDA, _FJLDB), [],
+q(suho(1), _FJLDH, dakfu(_FJLDH, _FJLHV, _FJLHW, _FJLHX, _FJLHY), [], q(ro,
+_FJLIE, xamsi(_FJLIE, _FJLMS, _FJLMT, _FJLMU, _FJLMV), [], q(ro, _FJLNB,
+dertu(_FJLNB, _FJLRP, _FJLRQ, _FJLRR, _FJLRS), [], klama(_FJKTN, _FJKYK,
+_FJLDH, _FJLIE, _FJLNB)))))), [])
+Answers to the questions: [no_answer]
+true.
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nick S. Nicholas,                      "Rode like foam on the river of pity
+CogSci & CompSci student,               Turned its tide to strength
+University of Melbourne, Australia.     Healed the hole that ripped in living"
+nsn@{munagin.ee|mundil.cs}.mu.oz.au           - Suzanne Vega, Book Of Dreams
+______________________________________________________________________________
+
