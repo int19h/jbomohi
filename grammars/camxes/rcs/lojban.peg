@@ -167,7 +167,7 @@ number <- PA (PA / lerfu-word)*
 
 lerfu-string <- lerfu-word (PA / lerfu-word)*
 
-lerfu-word <- bu-clause / BY / LAU lerfu-word / TEI lerfu-string FOI
+lerfu-word <- bu-clause indicators* / BY / LAU lerfu-word / TEI lerfu-string FOI
 
 bu-clause <- Y BU+ / !(space-chars* bu-pre-check space-chars*) any-word-no-BU-handling BU+
 bu-pre-check <- BU / ZEI / SI / SA / SU / BAhE / FAhO / ZO / ZOI / LOhU / LEhU
@@ -768,7 +768,7 @@ NORATS FUhA-words <- "fu'a"
 ;         open long scope for indicator 
 MORPHOLOGY FUhE <- FUhE-pre FUhE-words FUhE-post
 FUhE-pre <- pre-cmavo FUhE-sa-clause?
-FUhE-post <- post-cmavo
+FUhE-post <- !tick-char !vowel !BU spacing-no-absorb-opt !ZEI !BU
 SPACE FUhE-no-SA-handling <- pre-cmavo FUhE-words post-cmavo
 SPACE FUhE-sa-clause <- FUhE-no-SA-handling FUhE-sa-tail
 SPACE FUhE-sa-tail <- SA &FUhE-no-SA-handling / !FUhE-no-SA-handling !SA any-word-no-SA-handling FUhE-sa-tail / FUhE-no-SA-handling FUhE-sa-tail2 FUhE-sa-tail
