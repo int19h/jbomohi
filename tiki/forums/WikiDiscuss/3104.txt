@@ -13630,3 +13630,111 @@ lojbab
 
 
 
+
+## 2005-02-16T14:04:37Z — xorxes (@xorxes) (post 3989)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20050216140114.81768.qmail@web41905.mail.yahoo.com
+In-Reply-To: 42133D37.7080306@lojban.org
+
+
+--- Bob LeChevalier wrote:
+> And that is why I pushed Nora to get involved, because she does 
+> understand the issues, even if she is entirely opposed to the philosophy 
+> of how the problem has been tackled (which I can summarize best as 
+> designing without agreeing on the requirements, and which she mentioned 
+> in her criticism of the algorithm as a computer program without clear 
+> expectations on the result.)
+
+It's hard to satisfy everybody about everything.
+Some people want a formal specification of the morphology
+that leaves no doubt as to what is allowed and what is 
+not, others prefer an informal one that is easier to read. 
+Ideally we will have both at the end of this process.
+
+This is the design requirement I'm working with: "Given 
+any string of sounds/characters, the morphology should 
+return a unique correct break of the string into words, 
+including non-lojban words." 
+
+These are the constraints I'm taking as fixed
+(I may be forgetting some):
+
+1- Any string with no spaces/pauses that contains at least one
+non-lojban character/sound is taken to be a non-lojban word.
+
+2- Any string with no spaces/pauses that contains at least one
+impermissible consonant pair (per list in CLL) is taken to be 
+a non-lojban word.
+
+3- The apostrophe can only occur between two vowels in lojban 
+words.
+
+4- A space/pause is required in front of a word that begins with
+a vowel (beginning and end of text count as space/pause).
+
+5- cmene must end with a consonant followed by a space/pause.
+
+6- cmavo must be of the form zero or one consonant followed 
+by one or more vowels, with or without intervening apostrophes.
+
+7- gismu must be either CVC/CV or CCVCV, where CC is a
+permissible initial pair as listed in CLL.
+
+8- gismu rafsi are of the form CVC/Cy, CCVCy, CVC(y), CCV, CV(')V(r/n).
+
+9- lujvo consist of any string of rafsi that doesn't fail the
+tosmabru test, i.e. such that a cmavo can't be taken from the front
+leaving something that breaks as lojban words.
+
+10- A fu'ivla is a string that starts with a permissible initial
+cluster, a consonant or a vowel, ends with a vowel, it is not a 
+cmavo, gismu or lujvo, does not contain y, and passes the tosmabru 
+and slinku'i tests.
+
+In addition to those constraints which I take as fixed, there 
+are some issues to sort out:
+
+Issue1: Vowel clusters. What is allowed and what isn't?
+Are there any universal constraints for all lojban words?
+Are there specific constraints for specific types of words?
+
+Issue2: Consonant clusters. Do we want a somewhat more restrictive
+set of initial clusters for brivla than those allowed by CLL?
+(The proposed restrictiuon is that affricates (tc, ts, dj, dz)
+should not be combinable with anything else in initial clusters.)
+Should there be a restriction on medial clusters? (The proposed
+restriction is that vocalic syllables should be at most of the 
+form initial-cluster vowel/diphthong single-consonant, and 
+consonantal syllables of the form single-consonant syllabic-consonant.) 
+
+Issue3: fu'ivla rafsi, general brivla rafsi, general cmavo rafsi, 
+cmene rafsi. Should we allow them?
+
+Issue4: CVC(y) and CVV(r/n) hyphens. Should they be allowed in any
+position?
+
+Issue5: doi/la/lai/la'i restriction. Should we remove it?
+
+Issue6: Should the pause after Cy cmavo be obligatory, or required
+only when needed for unambiguity? Should the pause after cmavo
+with final-stress be obligatory, or required only when needed
+for unambiguity?
+
+Issue7: (Relatively minor) Should we allow stress in syllables
+that shouldn't be stressed but such that no ambiguity results?
+
+Issue8: Maybe something else I'm forgetting.
+
+mu'o mi'e xorxes
+
+
+
+		
+__________________________________ 
+Do you Yahoo!? 
+Yahoo! Mail - Helps protect you from nasty viruses. 
+http://promotions.yahoo.com/new_mail
+
+
+
