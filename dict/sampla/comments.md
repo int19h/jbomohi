@@ -29,3 +29,25 @@ Grrr.
 You may have a point there. However, I was merely sanitising the data
 imported from Noralujv.
 
+
+## 2003-10-13T20:11:08Z — rlpowell (comment 113, on definition 14297, in reply to 112)
+
+Re: Missing stuff.
+
+arj wrote:
+> rlpowell wrote:
+> > Please use things like x_1=p_1,
+> 
+> Then why didn't you say so on
+> http://www.lojban.org/jbovlaste/help/definitions.html, particularly
+before
+> I wrote hundreds of definitions without x_1 in them?
+> 
+> Grrr.
+
+Huh.
+
+OK, I take it back.  Sorry.  Do it either way, as you like.
+
+-Robin
+
