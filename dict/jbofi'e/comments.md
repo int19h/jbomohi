@@ -5,3 +5,21 @@ la not lo
 The program is la jbofi'e, not lo jbofi'e. Lo jbofi'e is a fish of some
 kind.
 
+
+## 2003-03-08T18:53:43Z — arj (comment 4, in reply to 3)
+
+Re: la not lo
+
+phma wrote:
+> The program is la jbofi'e, not lo jbofi'e. Lo jbofi'e is a fish of some
+> kind.
+
+That is correct. But:
+1. A dictionary entry doesn't specify any article.
+2. "jbofi'e" is never used to mean Lojbanic fish, only for mr. Curnow's
+program. Search through the mailing list(s) if you don't believe me.
+
+Another question would be if there should in general be a separate
+category for cmene-like names. I don't know, it might create more problems
+than it solves.
+
