@@ -1,0 +1,65 @@
+See the ((BPFK))'s [http://www.lojban.org/phpbb/viewforum.php?f=72|Morphology Forum]
+
+I think I could not spent one day more without creating a wiki page for this issue.
+
+__While Lojban has a very precise, strict, easy-to-parse, thus unambiguous ''grammar'', it has ''not'' (emphasized) been proved ''syntactically'' unambiguous.__
+
+Let me rephrase this statement.
+
+If we consider the Lojban language in a purely formal sense, involving an __alphabet__ composed of its __words__, supposedly classified into __lexemes__, then __any finite ''string''__ of lojban (stream of __words__) can be proven either grammatically correct or not in a finite amount of time using a turing machine.
+
+This is what the Lojban grammar is for : it defines axioms and inference rules between its words (more precisely its __lexemes__) in a form that can be fed into a ((LALR))(1) parser. And because the ((LALR))(1) parsing algorithm can be implemented using a ((Turing Machine)), and that it can tell, within a finite amount of time, whether a (finite) string of lexemes follow its grammar or not, we have the result stated above.
+
+Now, what does that mean ?
+
+It means that given any stream of Lojban text, if we are able to distinguish its words and categorize them into lexemes, then (roughly) we can parse the text using a computer; however it actually ''presupposes'' that we know a way to distinguish the words and categorize them.
+
+And so ?
+
+Two facts :
+
+* To this day, the way to distinguish the words in a lojban stream of text is very, very poorly documented (from a computer programmer's point of view). The only rules are given in the ((refgram)), are vague, and __were never proven unambiguous__.
+
+* The most precise lojban lexer to this day, the morph algorithm of ((jbofi'e)), has not been proved complete nor unambiguous, while already beginning to be hugely complex. IIRC, the more a system is complex, the less it is credible to the human mind.
+
+!Epilog
+
+As far as I can understand in the morphology of lojban, a complete lexer simply cannot be written using a ((LR))(k) nor ((LL))(k) grammar, for various reasons related to backtracking and the relation between semantics and morphology.
+
+''What does anything have to do with semantics? brkwords.txt will correctly break up ''djan.polake'ebrIvlaboinoigIsmumu'' just as well as something grammatical. -- ''However, we still have a hard time with "su" and "sa", even "si" when it is used to erase a morphologically wrong piece of text. Not to mention that it is possible that the morphology in itself is possible, while altogether being unambiguous when considered together with the grammar (like an ambiguity that cannot happen because the ambiguous lexemes are not allowed in such or such place by the grammar).
+
+The attempt in ((jbofi'e)) to solve the problem using ((NFA))'s is interesting, but leads to a huge graph of automata, which is very difficult to prove right.
+
+While continuing to search for an elegant algorithmic solution to this issue, I nonetheless believe that real parsing of Lojban using computers (one which involves a real lexer) is a very difficult task unlikely to be done right soon.
+
+--((Elrond))
+
+----
+
+One should see the file [http://www.lojban.org/files/software/BRKWORDS.TXT|brkwords.txt] for the official LLG morphology algorithm.
+* Definitely __not__ official!
+** It is what the official LLG parser uses, isn't it?
+*** No.  As noted elsewhere, the official parser can only segment compound cmavo, and otherwise relies on spaces/dots (which it considers the same).
+
+''It seems to work quite well, but it could probably be polished up a little on type 4 fu'ivla.''
+
+----
+
+At one point I put some thought into trying to write a ((Context Free Grammars|context free grammar)) describing the morphology. (Not a context-free one, however. I was intending to use the grammar in conjunction with a generalized parser, like ((General Parsing|Tomita))'s or ((General Parsing|Early))'s). Didn't get anywhere. I think that if an ((NFA)) can parse it, there should definitely be a ((CFG)) which can describe it, however. (((CFG))s being more powerful language-recognition mechanisms than automata.) --((Jay Kominek|jay))
+
+Btw, parsing, even with an ((NFA)) is Really Really fast. So even if the process is ugly, then just as long as it works unambiguously, you're all set. -((Jay Kominek|j))
+
+----
+
+Okay. I read thoroughly the brkwords.txt file. The algorithm described there can be coded with a "classic" programming language, which means (according to Church's law) that a Turing machine, or a possibly infinite-state automaton, can morphologically parse (using this algorithm) any lojban text.
+
+However, there still remain two problems :
+
+* First, we are still not sure that brkwords.txt describes the reverse of the word formation rules described in the refgram. In other words, it is not sure that is is exactly the reverse of the WordFormationAlgorithm. If it is, all is well (we have an algorithm which given a finite-sized word can classify it into a unique lexeme). If it is not (proving it or not), it won't mean anything, because it is not yet proven impossible to invert the formation algorithm by some other way.
+
+* In the case where brkwords.txt describes the opposite of the formation algorithm (which I doubt, but...), it is very unsatisfying. In particular, running this algorithm requires parsing the text in both directions from any "important" point. More practically, it requires the reader (be it computer or human) to memorize the whole of the text (when it is not cmavo-prefixed) upto the first pause (which may occur at an arbitrary point of time) before starting to parse. Although this is allowable for computers, I find this constraint very cumbersome as a human listener.
+
+At any rate, I would far prefer to invert the word formation algorithm.
+* All very well, except that there is no WFA for ((Type 4 fu'ivla)). -- ''Well, we have a general rule to recognize brivla, and morphology rules for every other type of brivla. Therefore a parser which can recognize a brivla will recognize type 4 fu'ivla using its "default" brivla rule.''
+
+It does not mean that a listener has to remember the string all the way up until the first pause. Humans are capable of performing lexical, syntactic and semantic processing of language simultaneously. As the lexical part of your mind tries to split up words, the syntactic part is looking to see if the series of words is valid, while the semantic part is looking to see if it makes sense. You'll discard parses which aren't syntactically or semantically valid. Further, there are parsing algorithms which won't be tripped up by bidirectionality of processing, so a computer isn't going to have a very big problem with it, ''just as long as it isn't ambiguous''. --jay
