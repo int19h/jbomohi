@@ -1,4 +1,4 @@
-# mail/lojban-list thread e2168a688110-c_question%3A_how_to_or_strings_and_get_a_strin | root 200301222226.16684.phma@webjockey.net | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread e2168a688110-c_question%3A_how_to_or_strings_and_get_a_strin | root 200301222226.16684.phma@webjockey.net | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2003-01-23T03:26:16Z | Pierre Abbat <phma@webjockey.net> | 200301222226.16684.phma@webjockey.net | mail/lojban-list/cur/1043292376.e2168a688110b62f.jbomohi:2,S
 I am very close to having a tolpo'u a'o ke valfendi mutmi'i. There are a few 
@@ -52,5 +52,45 @@ To unsubscribe, send mail to lojban-unsubscribe@onelist.com
 Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
 
 
+
+
+
+=== 3 | 2003-01-23T17:39:21Z | Robin Lee Powell <lojban-out@lojban.org> | 20030123173921.gi12363@digitalkingdom.org | mail/lojban-list/cur/1043343561.de31f0aa379fffce.jbomohi:2,S
+On Wed, Jan 22, 2003 at 10:26:16PM -0500, Pierre Abbat wrote:
+> I am very close to having a tolpo'u a'o ke valfendi mutmi'i. There are
+> a few lines in the program that I'm not sure how to fix:
+> 
+> #define is3rafsi(str) (monmapti("ICV",str) || monmapti("CVC",str) || monmapti("CUV",str))
+> #define is4rafsi(str) (monmapti("CVCC",str) || monmapti("ICVC",str))
+> #define isgismu(str) (monmapti("CVCCV",str) || monmapti("ICVCV",str))
+> 
+> monmapti returns NULL if it didn't match or a pointer to the first
+> character after the matching string if it does. is3rafsi is supposed
+> to do the same, but instead it returns 1, 
+
+Of course it does.  You're asking for a boolean OR.  Any non-zero in C
+is boolean TRUE.  A boolean operator that returns true returns 1, IIRC.
+
+I'm not sure what the problem is.
+
+If you want to return one or the other of a couple of options depending
+on whether the first is true, you want:
+
+#define is4rafsi(str) (monmapti("CVCC",str) ? monmapti("CVCC",str): monmapti("ICVC",str))
+
+IIRC.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/    ***    I'm a *male* Robin.
+.i le pamoi velru'e zo'u crepu le plibu taxfu
+.i le remoi velru'e zo'u mo .i le cimoi velru'e zo'u ba'e prali .uisai
+http://www.lojban.org/   ***   to sa'a cu'u lei pibyta'u cridrnoma toi
+
+
+
+
+           
 
 

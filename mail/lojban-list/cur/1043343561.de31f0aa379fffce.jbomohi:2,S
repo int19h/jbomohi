@@ -1,0 +1,82 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_3_0); 23 Jan 2003 17:39:39 -0000
+Received: (qmail 94373 invoked from network); 23 Jan 2003 17:39:39 -0000
+Received: from unknown (66.218.66.216)
+  by m12.grp.scd.yahoo.com with QMQP; 23 Jan 2003 17:39:39 -0000
+Received: from unknown (HELO digitalkingdom.org) (204.152.186.175)
+  by mta1.grp.scd.yahoo.com with SMTP; 23 Jan 2003 17:39:39 -0000
+Received: from lojban-out by digitalkingdom.org with local (Exim 4.05)
+	id 18blKF-0000Qy-00
+	for lojban@yahoogroups.com; Thu, 23 Jan 2003 09:39:39 -0800
+Received: from digitalkingdom.org ([204.152.186.175] helo=chain)
+	by digitalkingdom.org with esmtp (Exim 4.05)
+	id 18blK4-0000Qf-00; Thu, 23 Jan 2003 09:39:28 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 23 Jan 2003 09:39:27 -0800 (PST)
+Received: from rlpowell by digitalkingdom.org with local (Exim 4.05)
+	id 18blJx-0000QW-00
+	for lojban-list@lojban.org; Thu, 23 Jan 2003 09:39:21 -0800
+Date: Thu, 23 Jan 2003 09:39:21 -0800
+To: lojban-list@lojban.org
+Subject: [lojban] Re: C question: How to or strings and get a string?
+Message-ID: <20030123173921.GI12363@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <200301222226.16684.phma@webjockey.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <200301222226.16684.phma@webjockey.net>
+User-Agent: Mutt/1.5.3i
+X-archive-position: 3864
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+Precedence: bulk
+X-list: lojban-list
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 18329
+Content-Length: 1299
+
+On Wed, Jan 22, 2003 at 10:26:16PM -0500, Pierre Abbat wrote:
+> I am very close to having a tolpo'u a'o ke valfendi mutmi'i. There are
+> a few lines in the program that I'm not sure how to fix:
+> 
+> #define is3rafsi(str) (monmapti("ICV",str) || monmapti("CVC",str) || monmapti("CUV",str))
+> #define is4rafsi(str) (monmapti("CVCC",str) || monmapti("ICVC",str))
+> #define isgismu(str) (monmapti("CVCCV",str) || monmapti("ICVCV",str))
+> 
+> monmapti returns NULL if it didn't match or a pointer to the first
+> character after the matching string if it does. is3rafsi is supposed
+> to do the same, but instead it returns 1, 
+
+Of course it does.  You're asking for a boolean OR.  Any non-zero in C
+is boolean TRUE.  A boolean operator that returns true returns 1, IIRC.
+
+I'm not sure what the problem is.
+
+If you want to return one or the other of a couple of options depending
+on whether the first is true, you want:
+
+#define is4rafsi(str) (monmapti("CVCC",str) ? monmapti("CVCC",str): monmapti("ICVC",str))
+
+IIRC.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/    ***    I'm a *male* Robin.
+.i le pamoi velru'e zo'u crepu le plibu taxfu
+.i le remoi velru'e zo'u mo .i le cimoi velru'e zo'u ba'e prali .uisai
+http://www.lojban.org/   ***   to sa'a cu'u lei pibyta'u cridrnoma toi
+
+
+
+
+           
+
