@@ -1,0 +1,44 @@
+Received: from YALEVM.YCC.YALE.EDU by MINERVA.CIS.YALE.EDU via SMTP; Fri, 19 Mar 1993 17:55:34 -0500
+Received: from CUVMB.CC.COLUMBIA.EDU by YaleVM.YCC.Yale.Edu (IBM VM SMTP V2R2)    with BSMTP id 2526; Fri, 19 Mar 93 17:54:26 EST
+Received: from CUVMB.BITNET by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with BSMTP  id 4018; Fri, 19 Mar 93 17:55:28 EST
+Date:         Fri, 19 Mar 1993 17:50:44 EST
+Reply-To: bob@gnu.ai.mit.edu
+Sender: Lojban list <LOJBAN%CUVMB.bitnet@YaleVM.YCC.YALE.EDU>
+Comments:     Warning -- original Sender: tag was bob@GRACKLE.STOCKBRIDGE.MA.US
+From: bob@GNU.AI.MIT.EDU
+Subject:      Double Oops! 2 nd fix for lojban-lookup
+X-To:         lojban@cuvmb.cc.columbia.edu
+To: Erik Rauch <erikr@MINERVA.CIS.YALE.EDU>
+In-Reply-To:  bob@gnu.ai.mit.edu's message of Fri,               19 Mar 93 17:25:12 EST               <9303192225.AA02768@grackle.stockbridge.ma.us>
+Status: O
+
+The so called `fixed' copy of `lojban-reformat-lookup-buffer' I just
+sent was the wrong one.  :-( :-(
+
+It had the spelling error corrected but not the missing `forward-line'
+nor the replacement for `looking-at-backward', which is part of my
+personal environment but not a standard function.
+
+Sorry about that.  This should work; I tried it with a completely
+bland, standard, out of the box Emacs 18.57.
+
+(defun lojban-reformat-lookup-buffer ()
+  "Reformat the lookup buffer.  You may have to modify this."
+  (forward-line 1)
+  (while (not (eobp))
+    (let ((here (point)))
+      (delete-region (+ 30 here)  (+ 61 here)))
+    ;; Fold long line
+    (end-of-line)
+    (while (> (current-column) 78)
+      (move-to-column 72)
+      (forward-word -1)
+      ;; Replace missing `looking-at-backward' function.
+      (if (let* ((begin (point))
+                 (found (re-search-backward "\(" nil t)))
+            (goto-char begin)
+            (and found (= begin (match-end 0))))
+          (forward-char -1))
+      (insert "\n                                    "))
+    (forward-line 1)))
+
