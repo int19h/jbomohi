@@ -311,3 +311,35 @@ to write the ma'oste definition in Lojban.
 
 mi'e xorxes
 
+
+## 2004-11-22T21:48:09Z — rlpowell (comment 178, on definition 2647, in reply to 177)
+
+Re: Fourth place.
+
+> > > But why make it so complicated? 
+> > 
+> > Because this is how the ma'oste currently defines it!
+> > 
+> > Jesus, is a little backwards compatibility worth *this* much of a
+fight?
+> 
+> I don't care all that much how {tamsmi} ends up being
+> defined. As I said, it is unlikely that the word will 
+> ever be actually used. But I won't write definitions 
+> that I think are wrong just because they appear in 
+> the ma'oste. Since we can have two competing 
+> definitions here, there is no need to fight. People 
+> who want to keep the ma'oste definition can vote for 
+> it, and those who don't think it makes much sense can 
+> vote for something else. 
+
+That's a lovely idea, except that the ma'oste defines "te tai" and "ve
+tai", and I'm doing the section that has them.
+
+> I wouldn't even be sure how 
+> to write the ma'oste definition in Lojban.
+
+x1 cu simsa x2 fi'o tarmi x3 x4
+
+-Robin
+
