@@ -1,4 +1,4 @@
-# mail/lojban-list thread 5c7d845f3d90-tech%2Erev%3A_semantic_analyser_proposal | root vm2s8ts5ojl.a.hy.r20klb@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 5c7d845f3d90-tech%2Erev%3A_semantic_analyser_proposal | root vm2s8ts5ojl.a.hy.r20klb@chain.digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 1993-03-17T07:47:05Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | 4cc3cee3b094acbfc87c8b557a7e98047a5a88ea@jbomohi.invalid | mail/lojban-list/cur/732354425.41ad79e4a4b7221f.jbomohi:2,S
 This is the final draft of my project proposal; my thanks to all those, and
@@ -216,6 +216,155 @@ how seirxagmaupai swallows up that place, but it certainly isn't wrong.
 tanru. I'd extend the famyma'o lujvo.
 >lidne rolo sumti li'u>>
 
+
+Momenton senpretende paseman mi retenis kaj # [Victor Sadler, _Memkritiko_ 90]
+   kultis kvazaux                           &  (NICK NICHOLAS. Melbourne.
+      senhorlogxan elizeon                  #   Australia. IRC: nicxjo.
+         (Dume:                             &   nsn@munagin.ee.mu.oz.au .)
+
+
+
+=== 3 | 1993-03-17T07:47:05Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | hmq1kaq-txk.a.z2.520klb@chain.digitalkingdom.org | mail/lojban-list/cur/732354425.feec588a34d7a328.jbomohi:2,S
+This is the final draft of my project proposal; my thanks to all those, and
+particularly Jim Carter, who mailed me with suggestions.
+---
+
+Project Proposal for 433-603: A Lojban-to-Prolog semantic analyser.
+
+In this project, we propose developing a semantic analyser such that, given
+a text in a subset of the artificial language Lojban, the analyser will
+extract information from the text, store it as Prolog clauses, and be asked
+simple questions on the text content (the questions and answers will both
+be in Lojban, rather than explicit Prolog queries/clauses). To make the
+analyser useful for non-Lojban speakers, output will also be provided in a
+pidgin English, and phrase markers to the text syntactic structure may also
+be displayed, time allowing.
+
+Lojban is an artificial language intended for human use, of the type exempli-
+fied by Esperanto and Interlingua. It differs from most such languages, in
+that it has been explicitly based on predicate logic. Predicates serve the
+role of verbs, predicates with preposed determiners serve the role of nouns,
+and predications serve as sentences.
+
+There is a number of reasons why this project is of interest. Lojban is a
+simplified model of a natural language (NL), using predicate logic as its
+modelling mechanism. Predicate logic also underlies the Prolog into which
+Lojban text will be transformed by the analyser. Therefore the task of
+transferring such information across from Lojban to Prolog will be
+considerably simpler than doing so for an NL. Lojban has already been shoe-
+horned into a context-free grammar using YACC (this has involved some
+imaginative use of error recovery, but LALR(1) nature retained). Thus the
+task of parsing Lojban text into identifiable grammatical constituencies has
+already been dealt with: problems in resolving syntactic ambiguity need not
+distract the analyser programmer from the more important semantic issues.
+
+Most of the semantic issues complicating logic-based knowledge
+representation of NL remain in Lojban: higher-order predicates;
+metalinguistic comments and attitudinals; the ambiguous semantic
+relationship between head and modifier in word compounds; the
+representation of numbers, prepositional phrases, relative clauses, non-
+logical connectives, negation, tense and modality; the distinction between
+"the" and "a" (echoed in the language's veridical and non-veridical
+determiners); the distinction between individual and collective plurals; sub-
+ject-raising; and so forth.
+
+In effect, a Lojban-to-Prolog semantic analyser would be addressing many
+of the current issues in NLP knowledge representation, though biased
+towards predicate logic in the way it does so. The use of a simplified model
+of NL, and the way the model falls short of capturing NL nuances, will help
+the analyser cover much ground quickly, and provide insights in similar
+analysis of NL proper. (It is claimed that the subset of Lojban implemented
+would fall short; the author believes the language itself, if it acquires a
+speech community, will match NL adequately in most usages of language).
+Less attention would need to be paid to syntactic issues than would be the
+case with NL. Given how Lojban grammar is structured, modular subsets of
+Lojban grammar can be implemented in stages in the analyser. This means
+that results for simple phrases will become available a very short time into
+the project.
+
+To keep the project manageable, a subset of the language will have to be
+considered; this is in line with the Lojban Canonicaliser proposed by John
+Cowan (see Enclosures. The Canonicaliser will need to be implemented as a
+preprocessor to what text the analyser actually sees). Lexically, the subset
+of Lojban to be implemented will include roughly 500 predicates.
+
+Grammatically, the subset is described as follows, to be implemented in
+incremental, independent stages:
+
+1. Simple predications with a known predicate, and with arguments without
+internal structure (Proper names, logical variables). No quantification other
+than existential. eg. mi prami da --- EXISTS X: LOVES(i, X).
+
+2. Non-veridical arguments (cf. English "the") based on predicates, with in-
+ternal arguments. eg. mi catra le prami be le pulji --- KILLS(i, x) & LOVES(x,
+y) & POLICE(y): I kill the lover of the policeman. Note: strictly speaking, the
+non-veridical determiner indicates that the entity the speaker has "in mind"
+is described by the predicate it precedes, but not uniquely specified by it
+(cf. veridical determiners). Given the absence of pragmatic content at this
+early stage of the analyser, making this distinction will be problematic (it
+is, after all, inherently ambiguous); it will be dealt with here exactly as
+NLP deals with the "the"/"an" distinction.
+
+3. Veridical arguments (cf. English "an") based on predicates, with internal
+arguments. eg. mi catra lo prami be lo pulji --- EXISTS X EXISTS Y: KILLS(i, X)
+& LOVES(X, Y) & POLICE(Y): I kill a lover of a policeman.
+
+4. Resolution of logical connectives. eg. mi nelci do .e ko'a --> mi nelci do
+.ije mi nelci ko'a --- LIKES(i, you) & LIKES(i, x1): I like you and him.
+
+5. Anaphora and cross-indexing. eg. {le prenu}\i cu prami ri\i --- PERSON(x) &
+LOVES(x, x): The person loves him/herself.
+
+6. Restrictive and non-restrictive relative clauses. eg. mi nelci le prenu poi
+do xebni ke'a --- (EXISTS x: HATES(you, x)) & LIKES(i, x) & PERSON(x): I like
+the person you hate.
+
+7. Higher order predicates. eg. lenu mi cadzu cu nandu --- DIFFICULT(event:
+WALKS(i)): My walking is difficult.
+
+8. Prepositional phrases (other than tense and location). eg. mi naumau do
+nelci ko'a --> mi zmadu do leni da nelci ko'a --- EXCEEDS(i, you, quantity:
+LIKES(X, x1)): I like him more than you do. eg. lo catra nesepi'o lo mrudakfu
+--> lo catra poi pilno lo mrudakfu --- EXISTS X EXISTS Y: KILLS(X, _) & USES(X,
+Y, event: KILLS(X, _)) & HAMMER_KNIFE(Y): an axe-murderer.
+
+9. Attitudinals. eg. mi .ui sidju do --> mi sidju do .ije mi gleki mi va'o
+lenu mi sidju do: HELP(i, you) & HAPPY(i, i) & CONTEXT((state: HAPPY(i, i),
+event: HELP(i, you)): I *smile* will help you; I am happy to help you.
+
+10. Tense (including location), and prepositions of tense (including location).
+Also includes modality and event contours. eg. mi ba'o tavla --> lenu mi tavla
+cu ba'o zei balvi zo'e: AFTERMATH(event: talk(i, _, _, _), _): I have spoken.
+
+11. Masses and sets as arguments. eg. loi remna cu sipna: the mass of
+humans sleep (Though it is not true at any given moment that: FORALL X:
+HUMAN(X) => SLEEPS(X))
+
+12. Non-logical connectors. eg. la gilbrt. joi la salivn. cu finti la mikadon.
+--- INVENT(X, mikado) & JOINT_MASS(X, gilbert, sullivan): G & S (as a joint
+unit) wrote The Mikado.
+
+13. Quantification (including numerical, as well as subjective quantifiers
+such as "enough" and "most"): eg. mu le ze mensi cu cucycau: five of the
+seven sisters are barefoot.
+
+14. Negation. Contradictory and scalar. Use of prenexes. eg. mi naku ro prenu
+cu prami: NOT(FORALL X:PERSON(X), LOVES(i,X)); mi ro prenu na prami:
+FORALL X:PERSON(X), NOT(LOVES(i,X))
+
+15. Vocatives, imperatives, interrogatives, and speech protocol words: eg.
+doi skami la sinderelan. mensi ma fe'o: O Computer: Cinderella is sister to
+whom? (End of transmission).
+
+Sections of Lojban Grammar not anticipated to be included in the model:
+
+1. The mathematical subgrammar of Lojban.
+2. Any analysis of word compounds.
+3. Metalinguistic comments.
+
+The detail of coverage of some sections, particularly tense, will probably
+have to be curtailed due to time constraints. It is anticipated to have this
+project take at most 80 hours of work.
 
 Momenton senpretende paseman mi retenis kaj # [Victor Sadler, _Memkritiko_ 90]
    kultis kvazaux                           &  (NICK NICHOLAS. Melbourne.
