@@ -1,0 +1,23 @@
+# mail/lojban-list thread a606eed8263b-oops%21_fix_for_lojban-lookup | root ugos9agcgsp.a.pz.u20klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1993-03-19T22:25:12Z | bob@GNU.AI.MIT.EDU | 7f3caae7971fc0148df264dcd79019db9f62a1a9@jbomohi.invalid | mail/lojban-list/cur/732579912.1f7ca4c437ae4e44.jbomohi:2,S
+Ha! found the first bug just after irretrievably mailing off the first
+version. :-(
+
+Use this for `lojban-reformat-lookup-buffer'.
+
+(defun lojban-reformat-lookup-buffer ()
+  "Reformat the lookup buffer.  You may have to modify this."
+          (while (not (eobp))
+            (let ((here (point)))
+              (delete-region (+ 30 here)  (+ 61 here)))
+            ;; Fold long line
+            (end-of-line)
+            (while (> (current-column) 78)
+              (move-to-column 72)
+              (forward-word -1)
+              (if (looking-at-backward "\(") (forward-char -1))
+              (insert "\n                                    "))
+            (forward-line 1)))
+
+
