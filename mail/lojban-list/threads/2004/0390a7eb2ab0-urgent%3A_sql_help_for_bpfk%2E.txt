@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0390a7eb2ab0-urgent%3A_sql_help_for_bpfk%2E | root 20040604012056.ge26987@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0390a7eb2ab0-urgent%3A_sql_help_for_bpfk%2E | root 20040604012056.ge26987@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-06-04T01:20:56Z | Robin Lee Powell <lojban-out@lojban.org> | 20040604012056.ge26987@chain.digitalkingdom.org | mail/lojban-list/cur/1086312056.0390a7eb2ab00d60.jbomohi:2,S
 I have a table with message_id and in_reply_to.
@@ -17,6 +17,35 @@ http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
 "Many philosophical problems are caused by such things as the simple
 inability to shut up." -- David Stove, liberally paraphrased.
 http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+
+           
+
+
+
+=== 2 | 2004-06-04T02:03:04Z | Pierre Abbat <lojban-out@lojban.org> | 200406032203.04635.phma@phma.hn.org | mail/lojban-list/cur/1086314584.d67da364d5103fcd.jbomohi:2,S
+On Thursday 03 June 2004 21:20, Robin Lee Powell wrote:
+> I have a table with message_id and in_reply_to.
+>
+> I need to select all rows that have an in_reply_to that is not equal to
+> *any* message_id anywhere in the same table.
+>
+> This is MySQL, so I don't *think* I can use sub-selects.
+>
+> This is rather urgent, as it's breaking the BPFK boards.
+>
+> -Robin, who can never remember how to do this.
+
+Never done this in one table, and most of my SQL experience is in Postgres, 
+but it should be something like this:
+select * from cartu as zunle left outer join cartu as pritu on 
+zunle.in_reply_to=pritu.message_id where pritu.in_reply_to is null;
+
+phma
+-- 
+li fi'u vu'u fi'u fi'u du li pa
 
 
 

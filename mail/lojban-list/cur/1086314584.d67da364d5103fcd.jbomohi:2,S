@@ -1,0 +1,73 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 63828 invoked from network); 4 Jun 2004 02:10:27 -0000
+Received: from unknown (66.218.66.218)
+  by m23.grp.scd.yahoo.com with QMQP; 4 Jun 2004 02:10:27 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 4 Jun 2004 02:10:27 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.32)
+	id 1BW4A3-0002yq-0a
+	for lojban@yahoogroups.com; Thu, 03 Jun 2004 19:10:23 -0700
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.32)
+	id 1BW49G-0002xw-Hb; Thu, 03 Jun 2004 19:09:34 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 03 Jun 2004 19:09:31 -0700 (PDT)
+Received: from [208.150.110.21] (helo=blackcat.ixazon.lan)
+	by chain.digitalkingdom.org with esmtp (Exim 4.32)
+	id 1BW493-0002xB-QZ
+	for lojban-list@lojban.org; Thu, 03 Jun 2004 19:09:22 -0700
+Received: by blackcat.ixazon.lan (Postfix, from userid 1001)
+	id 93C2D4959; Fri,  4 Jun 2004 02:03:06 +0000 (UTC)
+Organization: dis
+Date: Thu, 3 Jun 2004 22:03:04 -0400
+User-Agent: KMail/1.5
+References: <20040604012056.GE26987@chain.digitalkingdom.org>
+In-Reply-To: <20040604012056.GE26987@chain.digitalkingdom.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Message-Id: <200406032203.04635.phma@phma.hn.org>
+X-archive-position: 8043
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: phma@phma.hn.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Pierre Abbat <phma@phma.hn.org>
+From: Pierre Abbat <lojban-out@lojban.org>
+Reply-To: phma@phma.hn.org
+Subject: [lojban] Re: Urgent: SQL help for BPFK.
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 22494
+Content-Length: 709
+
+On Thursday 03 June 2004 21:20, Robin Lee Powell wrote:
+> I have a table with message_id and in_reply_to.
+>
+> I need to select all rows that have an in_reply_to that is not equal to
+> *any* message_id anywhere in the same table.
+>
+> This is MySQL, so I don't *think* I can use sub-selects.
+>
+> This is rather urgent, as it's breaking the BPFK boards.
+>
+> -Robin, who can never remember how to do this.
+
+Never done this in one table, and most of my SQL experience is in Postgres, 
+but it should be something like this:
+select * from cartu as zunle left outer join cartu as pritu on 
+zunle.in_reply_to=pritu.message_id where pritu.in_reply_to is null;
+
+phma
+-- 
+li fi'u vu'u fi'u fi'u du li pa
+
+
+
+
+           
+
