@@ -179,3 +179,46 @@ and x4=s3.
 
 -Robin
 
+
+## 2004-11-22T20:52:09Z — xorxes (comment 175, on definition 2647, in reply to 174)
+
+Re: Fourth place.
+
+rlpowell wrote: 
+> da tamsmi de lo bolci tu'a lo nenri .i ku'i da tamsmi de lo bliku tu'a
+lo
+> bartu
+
+Well, that would be:
+
+da e de tamsmi lo bolci tu'a lo nenri i ku'i da e de 
+tamsmi lo bliku tu'a lo bartu
+
+so that doesn't really make it more clear.
+
+> Certainly in the first case you wouldn't say that da and de both
+resemble
+> an (idealized) ball?
+
+Why not? They both look like balls in their outsides. 
+What else could it mean to say that they resemble each
+other in that they have the outer shape of a ball?
+
+> Besidse, the point is that the x3 is a platonic ideal; nothing *really*
+> resembles it, it's more of a concept.
+
+But why make it so complicated? Why can't we just say
+that x resembles a ball and y resembles a ball? What
+do we gain by separating it into three places, x1, x2 
+and x3, so that x3 is only for platonic ideals?
+
+> Where this place structure comes from, I have no idea, but clearly
+x3=t1,
+> and x4=s3.
+
+But x4 has to be {lo ka tarmi} too. If they are dissociated,
+then we have "x1 and x2 both have shape x3 and are 
+similar in property x4". 
+
+mi'e xorxes
+
