@@ -64,9 +64,9 @@ lujvo <- !cmavo (initial-rafsi medial-rafsi* final-rafsi / short-lujvo)
 
 short-lujvo <- stressed-initial-rafsi short-final-rafsi 
 
-stressed-initial-rafsi <- cmene-rafsi / stressed-cmavo-rafsi / stressed-fuhivla-rafsi / stressed-long-rafsi y / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi
+stressed-initial-rafsi <- cmene-rafsi / stressed-cmavo-rafsi / stressed-fuhivla-rafsi / stressed-y-rafsi / stressed-y-less-rafsi
 
-initial-rafsi <- (cmene-rafsi / cmavo-rafsi / fuhivla-rafsi / long-rafsi y / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) !vowel
+initial-rafsi <- (cmene-rafsi / cmavo-rafsi / fuhivla-rafsi / y-rafsi / y-less-rafsi) !vowel
 
 medial-rafsi <- h? !fuhivla !gismu !stressed-fuhivla-rafsi initial-rafsi
 
@@ -76,6 +76,10 @@ CVV-final-rafsi <- consonant stressed-vowel h !stressed vowel &post-word
 
 short-final-rafsi <- !stressed (consonant diphthong / initial-pair vowel) &post-word
 
+stressed-y-rafsi <- (stressed-long-rafsi / stressed-CVC-rafsi) y
+
+stressed-y-less-rafsi <- stressed-CVC-rafsi !y / stressed-CCV-rafsi / stressed-CVV-rafsi
+
 stressed-long-rafsi <- (stressed-CCV-rafsi / stressed-CVC-rafsi) consonant 
 
 stressed-CVC-rafsi <- consonant stressed-vowel consonant 
@@ -83,6 +87,10 @@ stressed-CVC-rafsi <- consonant stressed-vowel consonant
 stressed-CCV-rafsi <- initial-pair stressed-vowel 
 
 stressed-CVV-rafsi <- consonant (unstressed-vowel h stressed-vowel / stressed-diphthong) r-hyphen? 
+
+y-rafsi <- (long-rafsi / CVC-rafsi) y
+
+y-less-rafsi <- CVC-rafsi !y / CCV-rafsi / CVV-rafsi
 
 long-rafsi <- (CCV-rafsi / CVC-rafsi) consonant 
 
@@ -106,10 +114,6 @@ slinkujy <- consonant lujvy
 
 lujvy <- (!y-rafsi y-less-rafsi)* (y-rafsi / stressed-y-rafsi / stressed-y-less-rafsi? initial-pair)
 
-stressed-y-rafsi <- (stressed-long-rafsi / stressed-CVC-rafsi) y
-
-y-rafsi <- (long-rafsi / CVC-rafsi) y
-
 ;-------------------------------------------------------------------
 
 fuhivla <- !non-fuhivla unstressed-syllable* stressed-syllable !stressed syllable &post-word
@@ -117,10 +121,6 @@ fuhivla <- !non-fuhivla unstressed-syllable* stressed-syllable !stressed syllabl
 non-fuhivla <- cmavo / gismu / lujvo / slinkuhi / non-initial-cluster / h 
 
 slinkuhi <- consonant y-less-rafsi* !any-fuhivla-rafsi final-rafsi 
-
-stressed-y-less-rafsi <- stressed-CVC-rafsi !y / stressed-CCV-rafsi / stressed-CVV-rafsi
-
-y-less-rafsi <- CVC-rafsi !y / CCV-rafsi / CVV-rafsi
 
 ;-------------------------------------------------------------------
 
