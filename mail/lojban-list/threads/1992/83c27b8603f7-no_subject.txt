@@ -1,0 +1,417 @@
+# mail/lojban-list thread 83c27b8603f7-no_subject | root 9208030640.aa22085@daily.grebyn.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1992-08-03T06:40:56Z | lojbab@grebyn.com | 9208030640.aa22085@daily.grebyn.com | mail/lojban-list/cur/712824056.83c27b8603f7bce8.jbomohi:2,S
+
+
+Proposed Changes 1-21 to 2nd Baseline Lojban Grammar (Part 1 - Summary, 1-19)
+
+Executive Summary:
+
+1)      Change EK+KE and GIhEK+KE to lowest precedence
+2)      Add JEK+BO construction
+3)      Add various new freemod locations
+4)      Add ZEI compoundss
+5)      Allow observative after GI in forethought connected sentences
+6)      Regularize BOI with free modifiers
+7)      Simplify relative-clause connection to "zi'e" only
+8)      Allow I+BO at the beginning of text
+9)      Allow bare NAI at the beginning of text
+10)     Allow any kind of joik in forethought
+11)     Remove POhO
+12)     Allow full selbri after NIhE
+13)     Disallow NAhE in forethought termsets
+14)     Allow multiple I or I+BO at the beginning of text
+15)     Allow conversion of abstract and negated selbri
+16)     Allow ZAhO+NAI for contradictory negation of event contours
+17)     Merge LUhI into LAhE; make NAhE+BO equivalent to LAhE
+18)     Merge BRODA and LEhAVLA into BRIVLA
+19)     Regularize rule names in YACC and BNF versions and update comments
+20)     Revise grammar of relative clause incorporation in sumti
+21)     Allow nested relative clauses in addition to current ZIhEK joining
+
+
+CHANGE 1
+
+CURRENT LANGUAGE:
+
+Currently, EK+KE (and GIhEK+KE) constructs have higher precedence (bind more
+tightly) than either EK+BO (GIhEK+BO) or EK (GIhEK) constructs.
+
+PROPOSED CHANGE:
+
+Give EK+KE (GIhEK+KE) the lowest precedence among EKs (GIhEKs).
+
+RATIONALE:
+
+In NB3 Loglan, the equivalent of EK+KE and GIhEK+KE had high precedence.
+In the first Lojban baseline, EK+KEs had been changed to low precedence,
+and in the second baseline, GIhEK+KEs were changed to follow.  Consideration,
+while writing the logical connective paper, of constructs like
+
+        A .e B .ake C .e D
+
+suggest that the most reasonable interpretation is:
+
+        (A .e B) .ake (C .e D)
+
+Therefore, this change restores the original Loglan situation.
+
+
+CHANGE 2
+
+CURRENT LANGUAGE:
+
+Currently, there is no way to group tanru components logically in pure
+afterthought.  The only alternatives are:
+
+        X je Y je Z
+
+which groups left to right, and
+
+        X je ke Y ja Z [ke'e]
+
+which groups right to left but is a hybrid of forethought and afterthought.
+
+PROPOSED CHANGE:
+
+Allow
+
+        X je Y je bo Z
+
+analogously to
+
+        A .e B .abo C
+
+in sumti.
+
+RATIONALE:
+
+Uniformity and flexibility.
+
+
+CHANGE 3
+
+PROPOSED CHANGE:
+
+Allow freemods in the following new places:
+
+        after LUhI
+        after LOhO when not elided
+        after LAhE for both sumti and operands
+        after CO
+        after CEI
+        after NU[NAI]
+        after NA preceding a selbri or a gek-bridi-tail
+        after NAhE BO
+        after NAhE, except in tenses and within NAhE BO
+        after TUhE
+        after TEhU when not elided
+
+RATIONALE:
+
+Increased flexibility.
+
+
+CHANGE 4
+
+CURRENT LANGUAGE:
+
+There is no way to construct lujvo that involve le'avla or cmavo, unless the
+cmavo have been assigned rafsi.
+
+PROPOSED CHANGE:
+
+Add the metalinguistic cmavo "zei" (selma'o ZEI) which will join the word
+before it and the word after it into a construct treated by the parser as
+of selma'o BRIVLA.  More than two words can be joined by using multiple "zei"s.
+The words "zo", "zoi", "la'o", "lo'u", "le'u", and "fa'o" cannot participate.
+(Implementation note: place glue() between fabsorb() and termin().)
+
+RATIONALE:
+
+Other methods of incorporating le'avla into lujvo are extremely error-prone
+and subject to a multitude of special-case tests.  No method of incorporating
+cmavo has ever existed.  (NB3 Loglan allows incorporating lerfu into compounds
+using a magic compounding method.)
+
+
+CHANGE 5
+
+CURRENT LANGUAGE:
+
+It is not currently grammatical to say:
+
+        ge mi klama le zarci gi klama fa mi le zdani
+
+PROPOSED CHANGE:
+
+Allow logically connected sentences wherein the first sentence has terms
+before the selbri but the second one does not.  (The reverse situation is
+still forbidden, because it looks like bridi-tail connection to a LALR(1)
+parser.)
+
+RATIONALE:
+
+The previous restriction was arbitrary and unnecessary.
+
+
+CHANGE 6
+
+CURRENT LANGUAGE:
+
+"boi" gets special treatment unlike that of all other elidables.  In all
+other cases, free modifiers may optionally appear after the elidable
+terminator (in which case it can't be elided).  Free modifiers must be
+placed >before< "boi", however, because "boi" is used to terminate subscripts,
+and subscripts are a species of free modifier.
+
+PROPOSED CHANGE:
+
+Regularize the rules for "boi" so that it takes free modifiers after it,
+except that no free modifiers at all are permitted on a "boi" that terminates
+a subscript.  Provision is made for assigning a separate cmavo for the
+a subscript.  ("ve'o" already has this split personality: no freemods if
+it is terminating a subscript, but allowed otherwise.)
+
+RATIONALE:
+
+Simplicity and regularity.  A new convention is needed for subscripts on
+subscripts, however; one possibility is to simply declare that consecutive
+subscripts are taken to be nested.
+
+
+CHANGE 7
+
+CURRENT LANGUAGE:
+
+Multiple relative clauses can only be placed on a single sumti by connecting
+them with logical connectives, namely ziheks.
+
+PROPOSED CHANGE:
+
+Eliminate ziheks except for a single cmavo, "zi'e" of selma'o ZIhE, which
+places two relative clauses on the same sumti but does not count as a logical
+connection.
+
+RATIONALE:
+
+There is some doubt whether any of the ziheks make sense other than "zi'e",
+which puts both relative clauses into effect.  Unlike other
+logical connectives, ziheks cannot be split up into multiple sentences.
+
+
+CHANGE 8
+
+CURRENT LANGUAGE:
+
+Currently, a text can begin with a bare ".i" or an ijek, but not with an
+".ibabo".
+
+PROPOSED CHANGE:
+
+Allow i+bo, ijek+bo, i+tense+bo, and ijek+tense+bo at the beginning of text.
+
+RATIONALE:
+
+Allows people to complete each other's expressions by adding causals,
+presuppositions, and the like.
+
+
+CHANGE 9
+
+CURRENT LANGUAGE:
+
+Theoretically a text may begin with "nai", and this bare "nai" is taken as
+attitudinal.  However, the parser does not currently handle bare initial "nai"
+in embedded texts within quotes or parentheses.
+
+PROPOSED CHANGE:
+
+Allow bare initial "nai" explicitly within the grammar rather than as a
+preparser hack.
+
+RATIONALE:
+
+Uniformity and consistency.
+
+
+CHANGE 10
+
+CURRENT LANGUAGE:
+
+Forethought joiks (also known as joigiks) are restricted in their syntax.
+In particular, GAhO brackets are not permitted in forethought.
+
+PROPOSED CHANGE:
+
+Permit any sort of joik, so that joigiks are any joik + "gi".
+
+RATIONALE:
+
+Simplicity and uniformity, plus the ability to specify GAhO brackets
+on forethought intervals.
+
+
+CHANGE 11
+
+CURRENT LANGUAGE:
+
+Three kinds of fragmentary utterances (bare I with or without jek or modal,
+bare number, bare NA) currently have a special terminator "po'o" (of
+selma'o POhO).  This terminator is always elidable.
+
+PROPOSED CHANGE:
+
+Remove POhO.
+
+RATIONALE:
+
+It is never necessary because it can always be elided, so it serves no
+purpose except to clutter the grammar.
+
+
+CHANGE 12
+
+CURRENT LANGUAGE:
+
+Only a restricted form of selbri (simple selbri plus optional linked arguments)
+are currently allowed after NIhE.
+
+PROPOSED CHANGE:
+
+Allow any kind of selbri.
+
+RATIONALE:
+
+The former restriction was meant to remove ambiguity, but now that the TEhU
+delimiter has been introduced, it does the necessary job, and so a full
+selbri is permissible.  This grammar is also parallel to that of MOhE,
+which allows a full sumti.
+
+
+CHANGE 13
+
+CURRENT LANGUAGE:
+
+In forethought termsets, a NAhE is allowed just after the NUhI.
+
+PROPOSED CHANGE:
+
+Disallow this NAhE.
+
+RATIONALE:
+
+Nobody can figure out what it might mean to have a scalar negation of a termset,
+a construct which exists solely to implement a certain kind of logical
+connective.  What does it mean to scalar-negate two terms at once, still less
+their logical connection?
+
+
+CHANGE 14
+
+CURRENT LANGUAGE:
+
+Only a single I or I+BO is allowed at the beginning of text.
+
+PROPOSED CHANGE:
+
+Allow multiple Is or I+BOs consecutively.
+
+RATIONALE:
+
+Symmetry and simplicity.  With the elimination of POhO, multiple Is are now
+allowed at the end of texts and between sentences.
+
+
+CHANGE 15
+
+CURRENT LANGUAGE:
+
+It is not possible to convert an abstract selbri or one that has been
+(scalar) negated.
+
+PROPOSED CHANGE:
+
+Allow these forms.
+
+RATIONALE:
+
+Simplicity and uniformity.
+
+
+CHANGE 16
+
+CURRENT LANGUAGE:
+
+PU and FAhA allow -NAI for contradictory negation.   This is not very useful
+on tenses, (punai = na pu) but very useful for sumti tcita to deny that
+the relationship holds.  ZAhO cannot take -NAI, although it is also useful
+as a sumti tcita.
+
+PROPOSED CHANGE:
+
+Allow ZAhO+NAI.
+
+RATIONALE:
+
+Consistency and general usefulness:  "mi morsi ca'onai le nu mi jmive" = "I
+am dead, but not during my life."
+
+
+CHANGE 17
+
+CURRENT LANGUAGE:
+
+ for indirect reference, indirect discourse, and sumti
+raising; LUhI changes sumti between individuals, sets, and masses; NAhE+BO
+provides sumti scalar negation.  LUhI has terminator LUhU; the others have
+no terminators.  LAhE is also allowed on mekso operands.
+
+PROPOSED CHANGE:
+
+Merge LAhE and LUhI into a single selma'o, with the current grammar of
+LUhI but named LAhE (for compatibility with the past).  Allow the same
+grammar for sumti and for operands.  Change NAhE+BO grammar to be the same
+as LAhE, thus allowing it on operands as well.
+
+RATIONALE:
+
+Proposed changes to the sumti grammar make LAhE and NAhE+BO messy without
+terminators.  Merging them with LUhI allows greater generality and simplicity,
+without needing to add a new terminator.  NAhE+BO is a compound and cannot
+be merged directly, but can be made grammatically equivalent.
+
+
+CHANGE 18
+
+CURRENT LANGUAGE:
+
+Technically, brivla fall into three selma'o:  LEhAVLA (for le'avla), BRODA
+(for broda/brode/brodi/brodo/brodu), and BRIVLA (for everything else).
+
+PROPOSED CHANGE:
+
+Merge LEhAVLA and BRODA into BRIVLA.
+
+RATIONALE:
+
+The grammar is identical and the machine parser has never bothered to make
+the distinction anyway.  It is a relic of long-ago pre-baseline versions.
+
+
+CHANGE 19
+
+PROPOSED CHANGE:
+
+Various rule names:  bri_string -> selbri, bri_unit -> tanru_unit,
+header_terms -> prenex, utt_string -> paragraph, cmene_A_404 -> cmene_404,
+EKroot -> EK_root, no_FIhO_PU_mod -> simple_tag, sentenceA -> sentence_A,
+indicators_412 -> indicators_A_412, bridi_valsi_408 -> bridi_valsi_A_408,
+JOIK_JEK_957 -> simple_JOIK_JEK_957.
+
+RATIONALE:
+
+Consistency with the BNF version and other documents.  Also, no two rules
+differ only in number.  (Some rules have the same names as selma'o, though.)
+
+
