@@ -1,0 +1,195 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 74124 invoked from network); 7 Jan 2004 22:34:06 -0000
+Received: from unknown (66.218.66.217)
+  by m15.grp.scd.yahoo.com with QMQP; 7 Jan 2004 22:34:06 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta2.grp.scd.yahoo.com with SMTP; 7 Jan 2004 22:34:06 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1AeMFY-0001ae-S5
+	for lojban@yahoogroups.com; Wed, 07 Jan 2004 14:34:04 -0800
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1AeMF2-0001ZV-06; Wed, 07 Jan 2004 14:33:32 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 07 Jan 2004 14:33:29 -0800 (PST)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1AeMEd-0001YK-4c; Wed, 07 Jan 2004 14:33:07 -0800
+Date: Wed, 7 Jan 2004 14:33:07 -0800
+Message-ID: <20040107223306.GA1878@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.4i
+X-archive-position: 6930
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] MUST READ! lojban.org/chain.digitalkingdom.org COMPROMISED!
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 21412
+Content-Length: 7201
+
+My apologies for those of you receiving this more than once.
+
+Short, non-technical version:
+
+Every account password on lojban.org (aka chain.digitalkingdom.org,
+teddyb.org, and a few others) should be considered compromised.  If
+you use that password elsewhere, change it.
+
+I can't actually prove that the shadow file was copied, or anything
+else, but I wouldn't risk it if I were you.
+
+The machine is fine now, and I will be re-installing the OS to be
+extra sure this evening.
+
+
+
+
+Long, technical version:
+
+At some point, a friend's server or his password was compromised.
+As a result, his password on my machine was compromised.  We don't
+know how, at this point.
+
+At 04:22, PST, this account was used, not by the friend in question,
+to log in to my machine:
+
+Jan  7 04:22:56 chain sshd[26716]: Accepted password for jkominek from 24.8.110.164 port 42467 ssh2
+Jan  7 04:22:56 chain ssh(pam_unix)[26726]: session opened for user jkominek by (uid=1020)
+Jan  7 04:24:21 chain ssh(pam_unix)[26726]: session closed for user jkominek
+Jan  7 04:25:52 chain sshd[29755]: Accepted password for jkominek from 24.8.110.164 port 42470 ssh2
+Jan  7 04:25:52 chain ssh(pam_unix)[30790]: session opened for user jkominek by (uid=1020)
+Jan  7 04:25:59 chain ssh(pam_unix)[30790]: session closed for user jkominek
+Jan  7 04:26:13 chain sshd[3288]: Accepted password for jkominek from 24.8.110.164 port 42471 ssh2
+Jan  7 04:26:13 chain ssh(pam_unix)[5240]: session opened for user jkominek by (uid=1020)
+Jan  7 04:26:17 chain ssh(pam_unix)[5240]: session closed for user jkominek
+Jan  7 04:26:25 chain sshd[8765]: Accepted password for jkominek from 24.8.110.164 port 42472 ssh2
+Jan  7 04:26:25 chain ssh(pam_unix)[9680]: session opened for user jkominek by (uid=1020)
+Jan  7 04:26:29 chain ssh(pam_unix)[9680]: session closed for user jkominek
+
+As you can see, all the activity took place over about five minutes.
+
+During this time, samhain, a file status checker, reported:
+
+
+-----BEGIN MESSAGE-----
+[2004-01-07T04:31:18-0800] chain.digitalkingdom.org
+CRIT   :  [2004-01-07T04:30:22-0800] msg=<POLICY [ReadOnly]>, path=</sbin>, ctime_old=<[2004-01-02T23:18:31]>, ctime_new=<[2004-01-07T12:24:10]>, mtime_old=<[2004-01-02T23:18:31]>, mtime_new=<[2004-01-07T12:24:10]>, 
+CRIT   :  [2004-01-07T04:30:23-0800] msg=<POLICY [ReadOnly]>, path=</sbin/telinit>, mode_old=<lrwxrwxrwx>, mode_new=<-rwxr-xr-x>, attr_old=<------------>, attr_new=<------------>, inode_old=<339429>, inode_new=<339380>, size_old=<4> size_new=<27228> ctime_old=<[2003-09-19T00:51:08]>, ctime_new=<[2004-01-07T12:24:10]>, mtime_old=<[2003-09-19T00:51:08]>, mtime_new=<[2004-01-07T12:24:10]>, chksum_old=<000000000000000000000000000000000000000000000000>, chksum_new=<47CBB98D5F0412D501497F65CE11A7D5BF71707E3B250C44>, 
+CRIT   :  [2004-01-07T04:30:23-0800] msg=<POLICY [ReadOnly]>, path=</sbin/init>, inode_old=<339392>, inode_new=<339380>, ctime_old=<[2003-09-19T00:51:08]>, ctime_new=<[2004-01-07T12:24:10]>, mtime_old=<[2003-07-23T17:13:52]>, mtime_new=<[2004-01-07T12:24:10]>, 
+-----BEGIN SIGNATURE-----
+4712AACAC0E5D9F1B64779BDBB02C08B2D46EEC33DA387ED
+000163 1073325637::chain.digitalkingdom.org
+-----END MESSAGE-----
+
+-----BEGIN MESSAGE-----
+[2004-01-07T04:48:17-0800] chain.digitalkingdom.org
+CRIT   :  [2004-01-07T04:47:00-0800] msg=<POLICY [GrowingLogs]>, path=</var/log/syslog>, inode_old=<276357>, inode_new=<276364>, 
+-----BEGIN SIGNATURE-----
+C27FDFAD1C1A875FA88E8947D2FB723D3C68C51E245D3F52
+000164 1073325637::chain.digitalkingdom.org
+-----END MESSAGE-----
+
+
+At around 08:45, PST, I was leaving my house for work when I noticed
+that my DSL modem's blinkenlights were way, *way* more active then
+they should have been.  I sat down to check it out.  The traffic was
+coming from my work account, which disturbed me badly as I wasn't at
+wok at the time.
+
+I also noticed that many, many commands (df, ls -l, date, etc.) were
+seg faulting.
+
+At first I thought my work account had been compromised.  It turns
+out, to save you the suspense, that the traffic was being caused by
+a script I run at work that logs in and does 'date' and 'sleep 30'
+in an infinite loop.  Both of these were core dumping, meaning the
+messages like this:
+
+bin/keepalive: line 7: 30528 Segmentation fault      date
+bin/keepalive: line 7: 30529 Segmentation fault      sleep 30
+bin/keepalive: line 7: 30530 Segmentation fault      date
+bin/keepalive: line 7: 30531 Segmentation fault      sleep 30
+
+Several hundred times per *second*.
+
+Heh.
+
+Anwyways, by that time I had seen the samhain logs, but didn't know
+what the signified.  I eventually figured out that the segfaulting
+commands were also causing a kernel panic, like this:
+
+Jan  7 04:24:13 chain kernel:  <1>Unable to handle kernel paging request at virtual address 08e8c358
+Jan  7 04:24:13 chain kernel:  printing eip:
+Jan  7 04:24:13 chain kernel: 08e8c358
+Jan  7 04:24:13 chain kernel: Oops: 0000
+Jan  7 04:24:13 chain kernel: CPU:    1
+Jan  7 04:24:13 chain kernel: EIP:    0010:[<08e8c358>]    Not tainted
+Jan  7 04:24:13 chain kernel: EFLAGS: 00010293
+Jan  7 04:24:13 chain kernel: eax: 00000109   ebx: c79f2000   ecx: bffffc18   edx: 00000018
+Jan  7 04:24:13 chain kernel: esi: 00000016   edi: ffffffff   ebp: bffffba8   esp: c79f3fc0
+Jan  7 04:24:13 chain kernel: ds: 0018   es: 0018   ss: 0018
+Jan  7 04:24:13 chain kernel: Process date (pid: 26887, stackpage=c79f3000)
+Jan  7 04:24:13 chain kernel: Stack: c01091ef 00000000 bffffc18 40027214 00000016 ffffffff bffffba8 00000109
+Jan  7 04:24:13 chain kernel:        0000002b 0000002b 00000109 40024e46 00000023 00000246 bffffb8c 0000002b
+Jan  7 04:24:13 chain kernel: Call Trace:    [system_call+51/56]
+Jan  7 04:24:13 chain kernel:
+Jan  7 04:24:13 chain kernel: Code:  Bad EIP value.
+
+Did a number on /var, lemme tell you, with the date and sleep 30
+running hundreds of times per second.  I have backups of messages
+and syslog which are over a gig, and they're only that small because
+/var ran out of space.
+
+So, I tried reboot.
+
+No good; machine comes back up doing the same crap.  So I un-install
+the Debian kernel package, with a view to re-installing it.  Oh,
+shit.  The network didn't come back up.  That's OK, I have a local
+kernel package.  Oh *shit*, tar segfaults!
+
+At this point, after a few moments panic, I remembered that I always
+keep copies of old kernels, and praised myself for doing so.
+
+Rebooted to 2.4.21 (instead of 22).  At this point, I think I've
+found a bug in the Debian 2.4.22 kernel.  It wasn't until later that
+I tried re-running chkrootkit and found that I had been infected
+with the 'suckit' root kit.
+
+Opps.
+
+Re-installed init and telinit.  Found a sniffer file with my
+password in it (doh!), but no-one else's.  Well, OK, my password and
+the root password.
+
+I don't think I've forgotten anything, but questions are welcome.
+
+That's the state we're currently in.  I'm pretty sure the machine is
+clean, but tonight most of the machine gets re-installed anyways
+(<sigh>).
+
+My current plan is to destroy (possibly even reformat) /, /usr and
+/var.  A subset of each of those (/etc, /var/mail and /usr/local in
+particular) will be restored.
+
+Suggestions welcome.
+
+Not looking forward to my evening.
+
+-Robin
+
+
+
+
+           
+
