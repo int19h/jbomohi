@@ -1,0 +1,71 @@
+Return-Path: <richard@rrbcurnow.freeuk.com>
+X-Sender: richard@rrbcurnow.freeuk.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_1_2); 2 May 2001 01:28:15 -0000
+Received: (qmail 21331 invoked from network); 1 May 2001 21:36:52 -0000
+Received: from unknown (10.1.10.142) by m8.onelist.org with QMQP; 1 May 2001 21:36:52 -0000
+Received: from unknown (HELO latimer.mail.uk.easynet.net) (195.40.1.40) by mta3 with SMTP; 1 May 2001 21:36:51 -0000
+Received: from rrbcurnow.freeuk.com (tnt-5-106.easynet.co.uk [195.40.200.106]) by latimer.mail.uk.easynet.net (Postfix) with ESMTP id 03A5F53ED8 for <lojban@yahoogroups.com>; Tue,  1 May 2001 22:36:47 +0100 (BST)
+Received: from richard by rrbcurnow.freeuk.com with local (Exim 2.02 #2) id 14uhm3-00002N-00 for lojban@yahoogroups.com; Tue, 1 May 2001 22:33:35 +0100
+Date: Tue, 1 May 2001 22:33:35 +0100
+To: lojban@yahoogroups.com
+Subject: fu'ivla correctness algorithm (was Re: [lojban] djataurte)
+Message-ID: <20010501223335.A110@rrbcurnow.freeuk.com>
+Mail-Followup-To: lojban@yahoogroups.com
+References: <4.3.2.7.2.20010426021004.00c31d90@127.0.0.1> <01042523234609.02780@neofelis> <4.3.2.7.2.20010426021004.00c31d90@127.0.0.1> <20010426095910.U8953@digitalkingdom.org> <4.3.2.7.2.20010426152559.00c8bc10@127.0.0.1>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.2i-nntp
+In-Reply-To: <4.3.2.7.2.20010426152559.00c8bc10@127.0.0.1>; from lojbab@lojban.org on Thu, Apr 26, 2001 at 03:42:40PM -0400
+From: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-Yahoo-Message-Num: 7026
+Content-Length: 2276
+
+On Thu, Apr 26, 2001 at 03:42:40PM -0400, Bob LeChevalier (lojbab) wrote:
+> 
+> specific conditions.  I don't see a reason it would break up, but this is 
+> still an art - we have no formal algorithm to test fu'ivla (something 
+> someone programmically inclined might be able to develop, but the algorithm 
+> will be tricky to develop and even harder to prove correct).  So you either 
+> have to make them with CVCr[lojbanized form] or take your chances.
+> 
+
+I have an algorithm within the front end of jbofi'e, and which is also
+available stand-alone as the program vlatai, which hopefully comes
+pretty close.  I think the breaking-up analysis is sound.   The area
+that I'm not confident of is the rules about consonant clusters in
+fu'ivla, particularly when there are syllabic consonants present.
+
+For example, the discussed words for 'tart' are validated thus:
+
+djataurte  : [EV=10] fu'ivla (stage-4) :  djataurte
+cidjrtarte : [EV= 8] fu'ivla (stage-3) :  cidjrtarte
+tisrtarte  : [EV= 9] fu'ivla (stage-3 short rafsi) : tisrtarte
+titrtarte  : [EV= 9] fu'ivla (stage-3 short rafsi) : titrtarte
+rutrtarte  : [EV= 9] fu'ivla (stage-3 short rafsi) : rutrtarte
+
+and prefixed cmavo are correctly detected :
+ledjataurte  : [EV=10] fu'ivla (stage-4) :  le djataurte
+lecidjrtarte : [EV= 8] fu'ivla (stage-3) :  le cidjrtarte
+letisrtarte  : [EV= 9] fu'ivla (stage-3 short rafsi) :  le tisrtarte
+letitrtarte  : [EV= 9] fu'ivla (stage-3 short rafsi) :  le titrtarte
+lerutrtarte  : [EV= 9] fu'ivla (stage-3 short rafsi) :  le rutrtarte
+
+The 'algorithm' involves some lookup-tables which categorise adjacent
+groups of letters (e.g. valid initial consonant pair, vowel after
+consonant etc).  These categorisations provide the input to a
+state-machine. The state the machine is in at the end of the word
+indicates the word type (with a tweak or two.)  The generation of the
+state machine is quite involved.  It's done by a custom utility I wrote,
+based on a file which defines separate state machines for all the word
+types.  Anyone who's interested can look up the techniques in the
+jbofi'e source code (in the files morf*.* and n2d/*.*).
+
+-- 
+Richard P. Curnow, Weston-super-Mare, UK
+http://www.rrbcurnow.freeuk.com/
+email:richard@rrbcurnow.freeuk.com  email:rpc@myself.com
+
+           
+
