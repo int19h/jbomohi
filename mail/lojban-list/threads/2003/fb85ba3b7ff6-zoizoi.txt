@@ -1,4 +1,4 @@
-# mail/lojban-list thread fb85ba3b7ff6-zoizoi | root 200301080754.53132.phma@webjockey.net | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread fb85ba3b7ff6-zoizoi | root 200301080754.53132.phma@webjockey.net | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2003-01-08T12:54:52Z | Pierre Abbat <phma@webjockey.net> | 200301080754.53132.phma@webjockey.net | mail/lojban-list/cur/1042030492.fb85ba3b7ff611d0.jbomohi:2,S
 How should the word breaking program handle such strings as:
@@ -175,7 +175,40 @@ collect_data ();
 
 
 
-=== 7 | 2003-01-08T14:19:51Z | Jorge Llambias <jjllambias@hotmail.com> | f108cr4zdgc81tbdksm00000112@hotmail.com | mail/lojban-list/cur/1042035591.ea6536d498872e8f.jbomohi:2,S
+=== 7 | 2003-01-12T21:05:30Z | Pierre Abbat <phma@webjockey.net> | 200301121605.30573.phma@webjockey.net | mail/lojban-list/cur/1042405530.d768a689f8b547b6.jbomohi:2,S
+On Wednesday 08 January 2003 19:02, Pierre Abbat wrote:
+> I am currently starting the brivla-end-breaking routine, which is simpler
+> than the brivla-start-breaking routine. This case, or actually a slight
+> variant of it, tells me that the cmavo preceding a brivla have to be broken
+> off before the brivla is broken from what follows it. Consider
+> /zoiFLAluKAVbu.blableblibloblu.FLAluKAVbu./. If the part after the brivla
+> is broken off before or at the same time as the part before it, this will
+> be /zoi/ /FLAlu/ /KAVbu/ /blableblibloblu/ /FLAluKAVbu/ when the {zoi} is
+> detected, and the lexer will erroneously call {kavbu blableblibloblu} the
+> quote.
+
+On further thought, it's going to be difficult to catch all errors of this 
+sort. Consider /zoikybuladjAn/. This is lexed as follows:
+It ends in a consonant. Look backward for a cmegadri and break before and 
+after:
+/zoikybu/ /la/ /djAn/
+Look backward for [yC] or [C*V]. The first it finds is /yb/, so break there:
+/zoiky/ /bu/ /la/ /djAn/
+The first part consists entirely of cmavo. Split it:
+/zoi/ /ky/ /bu/ /la/ /djAn/
+At this point it recognizes {zoi} and takes {ky} to be the delimiter, not 
+noticing that it was originally not followed by a pause.
+
+phma
+
+
+
+
+           
+
+
+
+=== 8 | 2003-01-08T14:19:51Z | Jorge Llambias <jjllambias@hotmail.com> | f108cr4zdgc81tbdksm00000112@hotmail.com | mail/lojban-list/cur/1042035591.ea6536d498872e8f.jbomohi:2,S
 
 la pier cusku di'e
 
@@ -217,7 +250,7 @@ Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/
 
 
 
-=== 8 | 2003-01-08T18:16:58Z | Jorge Llambias <jjllambias@hotmail.com> | f271z9keqvdzhs1eajt000019ce@hotmail.com | mail/lojban-list/cur/1042049818.1419a7aa74cabb86.jbomohi:2,S
+=== 9 | 2003-01-08T18:16:58Z | Jorge Llambias <jjllambias@hotmail.com> | f271z9keqvdzhs1eajt000019ce@hotmail.com | mail/lojban-list/cur/1042049818.1419a7aa74cabb86.jbomohi:2,S
 
 la camgusmis cusku di'e
 
