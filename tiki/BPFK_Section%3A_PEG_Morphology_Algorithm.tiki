@@ -97,7 +97,7 @@ stressed-fuhivla-rafsi-C <- unstressed-cmavo-form stressed-slinkujy
 stressed-fuhivla-rafsi-D <- !stressed-slinkujy initial-cluster unstressed-syllable* stressed-syllable consonant+ y 
 
 stressed-lujvy <- (CVV-rafsi r-hyphen)? y-less-rafsi* stressed-y-rafsi
-stressed-slinkujy <- consonant y-less-rafsi* stressed-y-rafsi
+stressed-slinkujy <- !stressed-lujvy consonant y-less-rafsi* stressed-y-rafsi
 stressed-y-rafsi <- stressed-long-rafsi / stressed-CVC-rafsi y
 
 fuhivla-rafsi <- !lujvy (fuhivla-rafsi-A / fuhivla-rafsi-B / fuhivla-rafsi-C / fuhivla-rafsi-D) 
@@ -111,7 +111,7 @@ fuhivla-rafsi-C <- unstressed-cmavo-form slinkujy
 fuhivla-rafsi-D <- !slinkujy initial-cluster unstressed-syllable+ consonant+ y 
 
 lujvy <- (CVV-rafsi r-hyphen)? y-less-rafsi* y-rafsi
-slinkujy <- consonant y-less-rafsi* y-rafsi
+slinkujy <- !lujvy consonant y-less-rafsi* y-rafsi
 y-rafsi <- long-rafsi / CVC-rafsi y 
 
 y-less-rafsi <- CVC-rafsi / CCV-rafsi / CVV-rafsi
@@ -132,9 +132,9 @@ y-less-rafsi <- CVC-rafsi / CCV-rafsi / CVV-rafsi
 
 fuhivla <- !gismu !lujvo brivla-form
 
-brivla-form <- !cmene !(cmavo-form cmavo-form) !tosmabru !slinkuhi !non-initial-cluster unstressed-syllable* stressed-syllable syllable &post-word !cmene
+brivla-form <- !cmene !(cmavo-form spaces) !(cmavo-form cmavo-form) !tosmabru !slinkuhi !non-initial-cluster unstressed-syllable* stressed-syllable syllable &post-word !cmene
 
-slinkuhi <- consonant !any-fuhivla-rafsi medial-rafsi* final-rafsi 
+slinkuhi <- !lujvo consonant !any-fuhivla-rafsi medial-rafsi* final-rafsi 
 
 ;-------------------------------------------------------------------
 
@@ -153,17 +153,17 @@ unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 cmavo-form <- !cluster !h syllable (&h syllable)*
-syllable <- (h / consonant*) (diphthong / (i / u) vowel / vowel) !vowel / digit 
+syllable <- (h / consonant*) (diphthong / (i / u) vowel / vowel) / digit 
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / o / (i / u) !vowel
 
 stress <- (consonant+ y)? syllable spaces
 stressed <- (!vowel .)* comma* [[AEIOU]
 
-a <- comma* [[aA] !a !e !o !y
-e <- comma* [[eE] !a !e !o !u !y
+a <- comma* [[aA] !y
+e <- comma* [[eE] !y
 i <- comma* [[iI] 
-o <- comma* [[oO] !a !e !o !u !y
+o <- comma* [[oO] !y
 u <- comma* [[uU] 
 y <- comma* [[yY] !a !e !i !o !u 
 
