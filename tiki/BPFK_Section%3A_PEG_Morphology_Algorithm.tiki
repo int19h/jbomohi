@@ -28,10 +28,9 @@
 ;
 ; --- GRAMMAR ---
 ; This grammar classifies words by their morphological class (cmene,
-; gismu, lujvo, fuhivla, cmavo, and non-lojban-word). It does not sort
-; them into grammatical classes (CMENE, BRIVLA, A, BAI, BAhE, ..., ZOhU).
-;
-; (Not properly tested yet.)
+; gismu, lujvo, fuhivla, cmavo, and non-lojban-word). 
+; 
+;The final section sorts cmavo into grammatical classes (A, BAI, BAhE, ..., ZOhU).
 ;
 ; mi'e ((xorxes))
 
@@ -47,7 +46,7 @@ cmene <- cmene-syllaboid* consonant+ &spaces
 
 cmene-syllaboid <- !doi-la-lai-lahi consonant* vowels / digit
 
-doi-la-lai-lahi <- (d o i / l a (h? i)?) &consonant
+doi-la-lai-lahi <- (d o i / l a (h? i)?) &post-word
 
 ;-------------------------------------------------------------------
 
@@ -145,8 +144,6 @@ vowels <- vowel-y (h? vowel-y)*
 
 vowel-y <- a / e / i / o / u / y
 
-vowel-not-y <- a / e / i / o / u
-
 stressed <- comma* [[AEIOUY]
 
 a <- comma* [[aA] !a !e !o !y
@@ -166,7 +163,7 @@ initial-cluster <- initial-consonant+ consonant !consonant
 
 initial-pair <- initial-consonant consonant !consonant
 
-initial-consonant <- c / s / j !n / z !n / d-t &sibilant / !l !n consonant &r / !r !n !d-t consonant &l
+initial-consonant <- (c / s / j !n / z !n) &consonant / d-t &sibilant / !l !n consonant &r / !r !n !d-t consonant &l
 
 consonant <- voiced-consonant / unvoiced-consonant / l / m / n / r
 
@@ -202,6 +199,8 @@ h <- comma* [['h] &vowel-y
 
 post-word <- spaces / consonant / digit
 
+digit <- comma* [[0123456789] !h !vowel-y
+
 spaces <- (space-chars / Y !(space-chars* BU) )+ / comma* !.
 
 space-chars <- comma* [[.\t\n\r?!\u0020]
@@ -209,8 +208,6 @@ space-chars <- comma* [[.\t\n\r?!\u0020]
 comma <- [[,]
 
 non-lojban-word <- (!spaces .)+
-
-digit <- comma* [[0123456789]
 
 ;-------------------------------------------------------------------
 
