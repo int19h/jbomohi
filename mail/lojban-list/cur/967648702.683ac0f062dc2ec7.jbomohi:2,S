@@ -1,0 +1,76 @@
+Return-Path: <alkaline@bigfoot.com>
+Received: (qmail 2626 invoked from network); 30 Aug 2000 15:18:53 -0000
+Received: from unknown (10.1.10.142) by m4.onelist.org with QMQP; 30 Aug 2000 15:18:53 -0000
+Received: from unknown (HELO mo.egroups.com) (10.1.1.34) by mta3 with SMTP; 30 Aug 2000 15:18:53 -0000
+X-eGroups-Return: alkaline@bigfoot.com
+Received: from [10.1.10.123] by mo.egroups.com with NNFMP; 30 Aug 2000 15:18:53 -0000
+Date: Wed, 30 Aug 2000 15:18:22 -0000
+To: lojban@egroups.com
+Subject: Re: learning lojban
+Message-ID: <8oj8ju+2rpv@eGroups.com>
+In-Reply-To: <F247MmXKCnzNwRC6Hix00000c11@hotmail.com>
+User-Agent: eGroups-EW/0.82
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+X-Mailer: eGroups Message Poster
+X-Originating-IP: 192.35.17.26
+From: "Garrett Jones" <alkaline@bigfoot.com>
+X-Yahoo-Message-Num: 4125
+Content-Length: 1320
+
+--- In lojban@egroups.com, "michael helsem" <graywyvern@h...> wrote:
+> i compiled a lojban rhyming dictionary (unfortunately it's not
+computerized, 
+> so i can't upload it). somehow for me knowing associations like:
+> 
+> BLANU blue
+> SLANU cylinder
+> JGANU angle
+> SNANU south
+> 
+> &
+> 
+> SPANO Spanish
+> CNANO norm
+> TRANO nitrogen
+> 
+> keep them distinct in my memory.
+> 
+
+Inspired by you, I just wrote a perl script in about 15 minutes that
+will list these automatically using the gismu wordlist:
+
+#!/usr/bin/perl
+open (GISMU, 'gismu');
+while (<GISMU>) {
+  $line = $_;
+  $word = substr($line,0,5);
+  $meaning = substr($line,19,20);
+  if ($word =~ /\w{5}/ && $meaning =~ /\w/) {
+    $meaning =~ s/\s*$//g;
+    if (substr($word,1,1) =~ /[aeiou]/) {
+      $key = substr($word,1,4);
+      $hash->{0}{$key}{$word} = $meaning;
+    } else {
+      $key = substr($word,2,3);
+      $hash->{1}{$key}{$word} = $meaning;
+    }
+  }
+}
+
+foreach $hashname (sort keys %$hash) {
+  $thehash = $hash->{$hashname};
+  foreach $key (sort keys %$thehash) {
+    foreach $word (sort keys %{$thehash->{$key}}) {
+      $meaning = $thehash->{$key}{$word};
+      print "$word: $meaning\n";
+    }
+  }
+}
+
+it lists them neatly in "gismu: meaning" pairs. If you think this list
+would be useful, i could upload it into the files section.
+
+
+           
+

@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4a4fdf8048c6-learning_lojban | root 8oicsd+3is8@egroups.com | 5 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4a4fdf8048c6-learning_lojban | root 8oicsd+3is8@egroups.com | 6 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-08-30T07:25:01Z | Garrett Jones <alkaline@bigfoot.com> | 8oicsd+3is8@egroups.com | mail/lojban-list/cur/967620301.4a4fdf8048c64276.jbomohi:2,S
 I have just recently begun learning lojban (last friday). I have
@@ -149,7 +149,66 @@ http://profiles.msn.com.
 
 
 
-=== 5 | 2000-08-30T14:28:28Z | pycyn@aol.com | c3.8c0bae2.26de740c@aol.com | mail/lojban-list/cur/967645708.8f70e6cb80683b4b.jbomohi:2,S
+=== 5 | 2000-08-30T15:18:22Z | Garrett Jones <alkaline@bigfoot.com> | 8oj8ju+2rpv@egroups.com | mail/lojban-list/cur/967648702.683ac0f062dc2ec7.jbomohi:2,S
+--- In lojban@egroups.com, "michael helsem" <graywyvern@h...> wrote:
+> i compiled a lojban rhyming dictionary (unfortunately it's not
+computerized, 
+> so i can't upload it). somehow for me knowing associations like:
+> 
+> BLANU blue
+> SLANU cylinder
+> JGANU angle
+> SNANU south
+> 
+> &
+> 
+> SPANO Spanish
+> CNANO norm
+> TRANO nitrogen
+> 
+> keep them distinct in my memory.
+> 
+
+Inspired by you, I just wrote a perl script in about 15 minutes that
+will list these automatically using the gismu wordlist:
+
+#!/usr/bin/perl
+open (GISMU, 'gismu');
+while (<GISMU>) {
+  $line = $_;
+  $word = substr($line,0,5);
+  $meaning = substr($line,19,20);
+  if ($word =~ /\w{5}/ && $meaning =~ /\w/) {
+    $meaning =~ s/\s*$//g;
+    if (substr($word,1,1) =~ /[aeiou]/) {
+      $key = substr($word,1,4);
+      $hash->{0}{$key}{$word} = $meaning;
+    } else {
+      $key = substr($word,2,3);
+      $hash->{1}{$key}{$word} = $meaning;
+    }
+  }
+}
+
+foreach $hashname (sort keys %$hash) {
+  $thehash = $hash->{$hashname};
+  foreach $key (sort keys %$thehash) {
+    foreach $word (sort keys %{$thehash->{$key}}) {
+      $meaning = $thehash->{$key}{$word};
+      print "$word: $meaning\n";
+    }
+  }
+}
+
+it lists them neatly in "gismu: meaning" pairs. If you think this list
+would be useful, i could upload it into the files section.
+
+
+           
+
+
+
+=== 6 | 2000-08-30T14:28:28Z | pycyn@aol.com | c3.8c0bae2.26de740c@aol.com | mail/lojban-list/cur/967645708.8f70e6cb80683b4b.jbomohi:2,S
 In a message dated 00-08-30 06:31:46 EDT, garrett writes:
 
 << Is that
