@@ -1,0 +1,116 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_3_0); 13 Jan 2003 15:12:49 -0000
+Received: (qmail 92610 invoked from network); 13 Jan 2003 15:12:46 -0000
+Received: from unknown (66.218.66.217)
+  by m10.grp.scd.yahoo.com with QMQP; 13 Jan 2003 15:12:46 -0000
+Received: from unknown (HELO digitalkingdom.org) (204.152.186.175)
+  by mta2.grp.scd.yahoo.com with SMTP; 13 Jan 2003 15:12:46 -0000
+Received: from lojban-out by digitalkingdom.org with local (Exim 4.05)
+	id 18Y6Gc-00052O-00
+	for lojban@yahoogroups.com; Mon, 13 Jan 2003 07:12:46 -0800
+Received: from digitalkingdom.org ([204.152.186.175] helo=chain)
+	by digitalkingdom.org with esmtp (Exim 4.05)
+	id 18Y6GP-00051N-00; Mon, 13 Jan 2003 07:12:33 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 13 Jan 2003 07:12:32 -0800 (PST)
+Received: from 208-150-110-21-adsl.precisionet.net ([208.150.110.21] helo=blackcat.ixazon.lan)
+	by digitalkingdom.org with esmtp (Exim 4.05)
+	id 18Y6G7-0004yU-00
+	for lojban-list@lojban.org; Mon, 13 Jan 2003 07:12:16 -0800
+Received: by blackcat.ixazon.lan (Postfix, from userid 1001)
+	id 51C148487; Mon, 13 Jan 2003 15:11:38 +0000 (UTC)
+Organization: dis
+To: lojban-list@lojban.org
+Subject: [lojban] Word break algorithm so far
+Date: Mon, 13 Jan 2003 10:11:37 -0500
+User-Agent: KMail/1.5
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+Message-Id: <200301131011.37496.phma@webjockey.net>
+X-archive-position: 3790
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: phma@webjockey.net
+Precedence: bulk
+X-list: lojban-list
+From: Pierre Abbat <phma@webjockey.net>
+Reply-To: phma@webjockey.net
+X-Yahoo-Group-Post: member; u=92712300
+X-Yahoo-Message-Num: 18256
+Content-Length: 4079
+
+1.  Scan the line from left to right. Convert all spaces to pauses
+    unless preceded by comma; convert space to comma if preceded by comma.
+2.  Break at all pauses (cannot pause in the middle of a word).
+3.  Pick the first piece that has not been resolved.
+  A.  If the piece ends in a consonant:
+    I.  Make a decapitalized copy of the string with commas removed.
+    II. Search backward in the string for a place in the string that is
+        preceded by "la", "lai", "la'i", or "doi" where the 'l' or 'd' is not
+	immediately preceded by a consonant. (ala'um option off)
+    II. Search backward in the string for a place in the string that is
+        preceded by "la", "lai", "la'i", or "doi" where the 'l' or 'd' is not
+        immediately preceded by a consonant and such that the character at
+        that place is a consonant. (ala'um option on)
+    III.If you found such a place:
+      a.  Split before the place and call the second part a cmene.
+      b.  If the second part does not begin with a consonant, resolve it as an
+          error. (not necessary if ala'um option is on)
+      c.  Search backward in the first part for a consonant. If it is not
+          the first character, split before it and resolve the second part as
+          a cmavo.
+    IV. If you did not find such a place, resolve the piece as a cmene.
+  B.  If the piece ends in 'y':
+    I.  Search backward for a consonant.
+    II. If you find one:
+      a.  If it is preceded by a consonant, resolve the piece as an error.
+      b.  If it is not preceded by a consonant, break before the consonant
+          and resolve the second piece as a cmavo.
+    III.If you do not find one, resolve the piece as a cmavo.
+  C.  If the piece does not end in 'y' or a consonant and has no consonant
+      that is adjacent to a consonant when 'y' is removed:
+    I.  Number the consonants starting with 1 and find the last one whose
+        number is a power of 2.
+    II. If this consonant is the first letter in the piece or there are no
+        consonants, resolve the string as a cmavo.
+    III.If this consonant is not the first letter, split before it.
+  D.  If the piece contains 'y' and no consonant following the last 'y' is
+      followed two letters later, not counting apostrophes and commas, by a
+      vowel, split it after 'y'. (e.g. ly.Ebucy.Obukybu.DENpabu)
+  E.  If the piece contains a consonant followed two letters later, not
+      counting apostrophes and commas, by a vowel, and there is no 'y' after
+      the letter between the consonant and the vowel, then there is a (possibly
+      invalid) brivla in the piece.
+    I.  Make a copy of the string, decapitalize all consonants, remove all
+        commas adjacent to consonants, and insert commas before consonant
+        clusters, between adjacent nondiphthong vowels, and after each pair
+        of vowels without a comma between them.
+    II. If the stress option is set and no vowel in the piece is stressed,
+        stress the vowel in the next-to-last syllable not counting syllables
+        which have 'y' in them.
+    III.Capitalize all letters in all syllables which have at least one capital
+        letter in them.
+    IV. Scan forward for a stressed vowel after or at the first CC or CyC
+        consonant cluster, then scan forward to the end of the next syllable,
+        ignoring syllables with 'y' in them. If the next syllable is itself
+        stressed, reset the count.
+    V.  If you reached the end of the word looking for a stressed vowel or the
+        next syllable, resolve the piece as an error. If the next syllable
+        begins with a non-initial consonant cluster, a vowel, or an apostrophe,
+        go back to IV and keep looking. If the next syllable begins with a
+        valid consonant cluster or single consonant, break before it and
+        resolve the first part as a brivlavau. If there is no next syllable,
+        resolve the whole piece as a brivlavau.
+  Z.  Resolve any other kind of piece as an error.
+999.If there are any more pieces unresolved, return to step 3.
+
+phma
+
+
+
+
+           
+
