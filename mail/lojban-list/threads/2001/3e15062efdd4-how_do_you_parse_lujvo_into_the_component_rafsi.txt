@@ -1,4 +1,4 @@
-# mail/lojban-list thread 3e15062efdd4-how_do_you_parse_lujvo_into_the_component_rafsi | root 002d01c0a920$b720c680$825681ce@wlink.net | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 3e15062efdd4-how_do_you_parse_lujvo_into_the_component_rafsi | root 002d01c0a920$b720c680$825681ce@wlink.net | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2001-03-10T05:12:33Z | seidensticker <seidensticker@msn.com> | 002d01c0a920$b720c680$825681ce@wlink.net | mail/lojban-list/cur/984201153.3e15062efdd44e09.jbomohi:2,S
 I'm working on an algorithm for breaking a lujvo into its component parts.  (My goal: given an unknown lujvo, break it up into parts and display the definitions of each of those parts.)  Chapter 4, section 11 of the grammar book ("The lujvo-making algorithm") talks about creating lujvo, but my question is about the reverse.  Is there a place where this is simply described?
@@ -97,6 +97,50 @@ lojbab                                             lojbab@lojban.org
 Bob LeChevalier, President, The Logical Language Group, Inc.
 2904 Beau Lane, Fairfax VA 22031-1303 USA                    703-385-0273
 Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+           
+
+
+
+=== 4 | 2001-03-10T18:11:52Z | Jorge Llambias <jjllambias@hotmail.com> | f278cm9t0ci76rojhkp00005529@hotmail.com | mail/lojban-list/cur/984247912.92af12df8051341f.jbomohi:2,S
+
+la seidensticker cusku di'e
+
+>lujvo  =  InitialRafsi  TermainlRafsi
+>InitialRafsi  =  Rafsi  InitialRafsi  |  <null>
+>Rafsi  =  4Rafsi  |  3Rafsi
+>
+>TerminalRafsi  =  CCV | CVV | CVCCV | CCVCV
+>4Rafsi  =  CVCCy | CCVCy
+>3Rafsi  =  CVV | CCV | CVVr | CVVn | CVC | CVCy
+
+I think this will generate all valid lujvo, but it
+will of course also generate many invalid ones.
+
+You should add:
+
+Allow CVVr and CVVn only as the first component (CVVn must
+be followed by "r" and CVVr must not), and only when
+there are at least two vowel groups following, or a
+terminal CVV.
+
+Do not allow CVV as the first component unless folowed by
+a single CCV.
+
+Check the consonant that follows CVC or CVCy.
+
+When CVC or CVCy is the first component, check whether
+what is left by removing CV is a valid lujvo.
+
+I think that with those filters you end up with valid
+lujvo only.
+
+co'o mi'e xorxes
+
+
+_________________________________________________________________________
+Get Your Private, Free E-mail from MSN Hotmail at http://www.hotmail.com.
 
 
            
