@@ -1,0 +1,64 @@
+Received: from punt4.demon.co.uk by stryx.demon.co.uk with SMTP
+	id AA10819 ; Wed, 13 Mar 96 23:32:30 GMT
+Received: from punt-4.mail.demon.net by mailstore for ia@stryx.demon.co.uk
+          id 826693352:14137:0; Wed, 13 Mar 96 05:02:32 GMT
+Received: from cunyvm.cuny.edu ([128.228.1.2]) by punt-4.mail.demon.net
+          id aa13962; 13 Mar 96 5:01 GMT
+Received: from CUVMB.CC.COLUMBIA.EDU by CUNYVM.CUNY.EDU (IBM VM SMTP V2R3)
+   with BSMTP id 4586; Wed, 13 Mar 96 00:01:30 EST
+Received: from CUVMB.COLUMBIA.EDU by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with
+ BSMTP id 1799; Wed, 13 Mar 96 00:01:57 EDT
+Date:         Wed, 13 Mar 1996 00:00:33 -0500
+Reply-To:     Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Sender:       Lojban list <LOJBAN%CUVMB.bitnet@CUNYVM.CUNY.EDU>
+From:         Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Subject:      *response to old posting by Paulo on formal unambiguity
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Multiple recipients of list LOJBAN <LOJBAN%CUVMB.bitnet@CUNYVM.CUNY.EDU>
+Message-ID: <826693313.13962.0@cunyvm.cuny.edu>
+Content-Length: 2203
+
+
+Paulo:
+>But speaking of usefulness, the starting point of this discussion was to
+>show in formal language theoretical terms that Lojban is unambiguous (up
+>to now, I only know that by faith :-) As you perhaps know, John Cowan
+>recently discovered a structural ambiguity (something like a "dangling
+>bo") that was hidden by the complex preprocessing performed by the
+>Lojban parser, so my faith in Lojban's unambiguity is a bit disturbed
+>:-)
+
+Let me clarify that what Cowan discovered was NOT a structural
+ambiguity, but an implementation error (not the first we have found) in
+which the unambiguous YACC grammar would generate a parse different from
+what we had intended, and different from, for example, the E-BNF
+abbreviated form.  In other words, the grammar was not ambiguous, just
+different from what we thought it was, and from what we would want it to
+be.
+
+Now, I don't know how Cowan generates his parser.  It might be possible
+that since he doesn't use YACC to generate the lexer/preparser, there
+might be stuff introduced into the parser that is not in strict accord
+with the YACC grammar.
+
+The E-BNF is of course NOT verified unambiguous, and indeed someone
+recently pointed out to Cowan a raft of minor errors and inconsistencies
+with the YACC grammar (I am not sure how all these have been resolved,
+but am sure that Cowan will post on it eventually).
+
+Someone who looked at this a few years ago - it might have been Doug
+Landauer - said that he thought that if we wrote the Lojban grammar and
+parser either using an LALR(3) or LALR(4) process, the number of hacks
+that would be still be needed would be very few, and the grammar could
+be significantly simplified.  He was toying with the idea of writing a
+special purpose LR(4) YACC-equivalent as a tool for such an effort.
+Never went anywhere, perhaps at least partially because we were sure it
+would take longer to write and debug the programs and the grammar than
+we thought it would take before we would finish the books.  On that we
+were probably wrong, but we did have a baseline commitment to keep as
+well, and it is useful that there are versions of YACC all over
+everywhere so we aren't locked into one person's work.
+
+lojbab
+
+
