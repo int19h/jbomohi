@@ -1,0 +1,87 @@
+# mail/lojban-list thread e67d2c8d9cb1-tech%3A_query_on_zi_%26_zeha | root 9308251854.aa28865@relay1.uu.net | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1993-08-26T14:36:06Z | John Cowan <snark!cowan@GVLS1.VFL.PARAMAX.COM> | 199308261724.aa07080@eli.cs.yale.edu | mail/lojban-list/cur/746375766.d0c8f2bce2e90a6a.jbomohi:2,S
+la lojbab. pu cusku di'e
+
+> > I just called up the parser to check this one, and that is indeed what it
+> > parsed as:
+> > mi ba'o ze'u klama
+> > is
+> > mi ba'oku ze'u klama
+> >
+> > This should be a bit easier to interpret:  I go for a long time, in the
+> > aftermath of some event.
+
+Actually, the question of what ZAhO+KU means is vexed, and I deliberately
+didn't discuss the construction in the tense paper.  The difficulty, of
+cours, stems from the semantic difference between ZAhO as tense and ZAhO
+as sumti tcita.
+
+Consider PU.  PU as a tense has a clear relationship to PU as a sumti
+tcita: the PU tense can be converted to the sumti tcita by supplying an
+event which is at the speaker's time reference: "le cabna" is the traditional
+one.  So
+
+1)      mi pu klama le zarci
+
+can be interpreted as:
+
+2)      mi klama le zarci pu le cabna
+
+and this is the tack taken by the Lojban textbook, although I didn't use
+this explanation in Imaginary Journeys.
+
+Therefore, the form
+
+3)      puku mi klama le zarci
+
+can be seen either as a version of Example 1 with the tense moved from its
+usual position (and a "ku" appended for unambiguity), or else as a version
+of Example 2 with the sumti elided (and replaced by a "ku").
+Imaginary Journeys used the first explanation, the textbook used the second,
+but it didn't really matter semantically.
+
+With "ba'o", however, there simply is no sumti which can be tagged with
+"ba'o" such that the meaning is the same as when the selbri is tagged:
+
+4)      mi ba'o klama le zarci
+
+doesn't equate to:
+
+5)      mi klama le zarci ba'o zo'e
+
+for any interpretation of "zo'e".  So whether
+
+6)      ba'oku mi klama le zarci
+
+is equivalent to Example 4 or Example 5 is simply not determined.
+I agree that this result is bogus, but it represents where we currently stand.
+
+la xorxes. cusku di'e
+
+> Then my interpretation of "mi pu'o co'u citka" as "I'm about to finish
+> eating" is wrong. It means something like "I finish eating, in the
+> 'beforemath' of some event".
+
+Well, no.  Multiple ZAhOs do fuse (no "ku" implied) and represent sub-events,
+just as you thought.  You can't generalize from one case to the other without
+checking the grammar.
+
+This is a good place to point out that there is a bug in the current BNF
+(but not YACC) version of the grammar related to interval modifiers:
+the line:
+
+interval-modifier<1050> = interval-property & ZAhO
+
+should read:
+
+interval-modifier<1050> = interval-property & [(ZAhO [interval-property]) ...]
+
+as in the first baseline BNF (file bnf.28).  I don't know how this error
+slipped in.
+
+--
+John Cowan      cowan@snark.thyrsus.com         ...!uunet!lock60!snark!cowan
+                        e'osai ko sarji la lojban.
+
+
