@@ -1,0 +1,142 @@
+Date: Mon, 29 May 1995 21:32:27 EDT
+From: Bob LeChevalier <lojbab@access.digex.net>
+Subject:      Re: Quantifiers (was Re: A modest proposal #2: verdicality)
+To: "Dylan P. Thurston" <DPT@HUMA1.BITNET>
+X-From-Space-Date: 
+X-From-Space-Address: lojbab@access.digex.net
+Message-ID: <Pn2grjog4zL.A.E7E.-t0kLB@chain.digitalkingdom.org>
+Content-Length: 6283
+
+You guys are probably way past me on this discussion, but I'll keep
+playing:
+
+>Hold on, let's back up.  I was intending to give alternatives for "There
+>are _exactly_ three men in the room", but I think most of my
+>alternatives fell short, saying, at most, "there are _at least_ three
+>men in the room".  Which of the following work?  What the best way to
+>say this?
+>
+>        lo ci nanmu pe ne'i le kumfa cu ce'o
+>        .i le ni lo nanmu cu nenri le kumfa cu du ci
+>        .i piro loi nanmu pe ne'i le kumfa cu cimei
+
+How about 
+         lo'i nanmu poi nenri le kumfa cu se cimei
+         The set of men which are in the room are a set with 3 members.
+
+
+>(This leads me to wonder what the consequences of changing
+>sumti-tail-1<112> = [quantifier] selbri [relative-clauses] | quantifier sumti
+>to
+>sumti-tail-1<112> = [quantifier] selbri | quantifier sumti
+>in the BNF would be, other than making {le se cusku pe mi ku}
+>ungrammatical.)
+
+I hate to try to figure consequence of changes in the BNF as opposed to
+the YACC grammar.  The latter is the 'real thing', while the BNF is
+derived. 
+
+
+<description_110         :  LA_558  sumti_tail_111  gap_450
+<                        |  LE_562  sumti_tail_111  gap_450
+<                        ;
+<
+<sumti_tail_111          :  sumti_tail_A_112
+<                           /* inner-quantified sumti relative clause */
+<                        |  relative_clauses_121  sumti_tail_A_112
+<                           /* pseudo-possessive
+<                              (an abbreviated inner restriction);
+<                              note that sumti cannot be quantified */
+<                        |  sumti_F_96  sumti_tail_A_112
+<                           /* pseudo-possessive with outer restriction */
+<                        |  sumti_F_96  relative_clauses_121  sumti_tail_A_112
+<                        ;
+<
+<sumti_tail_A_112        :  selbri_130
+<                        |  selbri_130  relative_clauses_121
+<                           /* explicit inner quantifier */
+<                        |  quantifier_300  selbri_130
+<                           /* quantifier both internal to a description,
+<                              and external to a sumti thereby made specific */
+<                        |  quantifier_300  selbri_130  relative_clauses_121
+<                        |  quantifier_300  sumti_90
+<                        ;
+
+Among other things, it would appear that it eliminates all postposed and
+afterthought relative clauses - not just "pe", but "goi", and "poi" and
+"noi" - *within* a description.  Note that you can still put them on
+"outside" the descriptive sumti per the rules in sumti_94 thru _96.
+
+This distinction between outer and inner restrictive clauses is subtle
+and a bit too much to repeat here.  You can almost certainly find an
+extensive discussion of it in the List archives (and if Cowan has the
+appropriate reference grammar paper on relative clauses done, it will be
+in there).  It was far enough back that it probably is in the WWW index
+archives.
+
+>As you see from the list, I backed off from much of what I said.  But in
+>any case, I wasn't proposing anything as drastic as what you seem to
+>think:  I wanted to rewrite the grammar, preserving all (or almost all)
+>observed behaviour.
+
+That sounds like quite a challenge; I won't say it is impossible, but
+you probably need to have a lot of practice doing computer language
+grammars with YACC to have a shot - the people who have gone before you
+put in lots of hours to get it where it is today, and the sumti grammar
+was among the hardest to get right.  You need a version of YACC that
+will handle the full grammar (not all versions will necessarily do so).
+And you need a LOT of patience and practice to get any given Lojban
+grammar to be unambiguous (no s/r or r/r errors).  Don't waste time with
+trying to rewrite the E-BNF.  It isn't clean unless YACC says it is
+clean, and the EBNF tells us nothing about what YACC will say.
+
+And, of course, as Cowan noted, if there are any differences between
+what you come up with and what is current, in terms of either what is a
+valid expression, and how that expression groups/parses, you need to be
+able to assert that the old form is in some way invalid (not generally
+useful is probably insufficient - it must NEVER be useful, and must be
+somehow invalid).  This takes considerable mastery of the subtleties of
+the language.
+
+On ke'a in abstractions:
+>{pe'i} The only issue is then a pragmatic one:  whether this will
+>conflict with the relative clause use of {ke'a} too often.  
+
+I would rather assign a new cmavo.  Better safe (and unambiguous) than
+sorry.  This is an example of one of those subtleties of the language.
+ke'a might rarely be ambiguous, but it could be in some cases, and if
+the frequency of occurance of the problems is rare enough and the
+solution not intuitively obvious, my instincts tell me that it is not
+right for the language.  If there needs to be a pronoun to serve the
+role Jorge wants for ke'a in abstract sumti, the justification is
+logical precision, and a use of ke'a which could have two meanings is 
+logically imprecise.
+
+For the same reason, I do not think people will use subscripted ri/ra/ru
+in contexts of logical precision, because the counting back is not
+defined in a logical precise manner.  Likewise tanru are not suitable
+for logical precision.
+
+>The position of an event can be obtained with jai, if I read the
+>intention OK.  The place I thought at is lo jai bu'u mi pensi.  If
+>that's what you meant by position abstract.
+
+That isn't grammatical, and since you gave no translation, I am not sure
+what was intended. lomi jaibu'u pensi does work. jaibu'u has the grammar
+of SE in a description, and so what you had was grammatically something
+like *le se mi pensi.
+
+ni'o
+>Sometime I'm going to try doing some serious mathematics in Lojban; then
+>we'll see how well the principle holds up...
+
+Actually, you need to compare TALKING ABOUT mathematics in English vs.
+in Lojban.  Writing the equations symbolically will always be preferable
+in print.  Any mathematical text you attempt to write in Lojban should
+be matched by the same effort in English text (and then read your text
+aloud to someone and see if they can reconstruct the symbolics).
+
+
+lojbab
+
+
