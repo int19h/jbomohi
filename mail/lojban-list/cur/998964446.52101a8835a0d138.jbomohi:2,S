@@ -1,0 +1,108 @@
+Return-Path: <a.rosta@dtn.ntl.com>
+X-Sender: a.rosta@dtn.ntl.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_3_2); 28 Aug 2001 02:09:39 -0000
+Received: (qmail 25088 invoked from network); 28 Aug 2001 02:08:45 -0000
+Received: from unknown (10.1.10.27)
+  by l7.egroups.com with QMQP; 28 Aug 2001 02:08:45 -0000
+Received: from unknown (HELO mta07-svc.ntlworld.com) (62.253.162.47)
+  by mta2 with SMTP; 28 Aug 2001 02:08:39 -0000
+Received: from andrew ([62.255.40.122]) by mta07-svc.ntlworld.com
+          (InterMail vM.4.01.03.00 201-229-121) with SMTP
+          id <20010828020837.TQHO710.mta07-svc.ntlworld.com@andrew>
+          for <lojban@yahoogroups.com>; Tue, 28 Aug 2001 03:08:37 +0100
+Reply-To: <a.rosta@ntlworld.com>
+To: <lojban@yahoogroups.com>
+Subject: RE: [lojban] LALR1 question
+Date: Tue, 28 Aug 2001 03:07:26 +0100
+Message-ID: <LPBBJKMNINKHACNDIIGMAEBJEKAA.a.rosta@dtn.ntl.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook IMO, Build 9.0.2416 (9.0.2910.0)
+Importance: Normal
+In-Reply-To: <Pine.GSO.4.33.0108271059530.15411-100000@ucsub.colorado.edu>
+X-MimeOLE: Produced By Microsoft MimeOLE V5.00.2615.200
+From: "And Rosta" <a.rosta@dtn.ntl.com>
+X-Yahoo-Message-Num: 10203
+Content-Length: 3219
+
+Jay:
+> On Mon, 27 Aug 2001, And Rosta wrote:
+>=20
+> > Take the notorious example:
+> >
+> > le broda joi le brode
+> > 1  2     3   4
+> >
+> > If "1-token lookahead" means that the decision about how to parse
+> > word n can be made on the basis of knowing what word n+1 is, then
+> > how come it won't work in this case? You get to word 3 & think
+> > "selbri linkage or sumti linkage?", so you take a look at word 4,
+> > see it's a sumti and so parse word 3 as sumti linkage.
+> >
+> > What actually happens, apparently, is that when you hit word 3
+> > you're not allowed to see word 4. Can someone explain this to me,
+> > please? That is, explain what lookahead is.
+>=20
+> When the parser hits word 3, it is in the middle of building a selbri, an=
+d
+> is thinking only about a selbri (in this case). It has two choices, shift
+> or reduce. Shifting joi onto the stack is what is causing the current
+> problem, you get (le (broda joi)), then the parser looks at word 4, and
+> the contents of the stack it has built so far, and goes 'oh shit, i
+> shifted the wrong thing.', so it explodes.
+>=20
+> The action that you want, in this case, is for the parser to reduce
+> (instead of shift), and turn the current stack contents (le (broda)) into
+> a sumti. Then it will reexamine joi and decide that it will be connecting
+> two sumti instead of two selbri. (However, YACC always shifts instead of
+> reducing if there is a conflict.)
+
+So "shifting" means "adding to the innermost incomplete phrase" and
+"reducing" means "terminating the innermost incomplete phrase"? So
+presumably on reaching a given word it is possible to reduce several
+times and then shift?
+
+If I understand this right, then, what I still don't understand is this.
+As you say, at word 3, the parser has two choices, shift or reduce.
+Now it seems to me that at this point it's not allowed to look at word
+4. Instead it has to shift, if the grammar allows it, and otherwise
+to reduce repeatedly until it is allowed to shift. Am I getting this=20
+right? (This is how the natural language parser in the brain *prefers*=20
+to work, too, though natlang grammars don't.)=20
+
+But the question is, how come it can't look at word 4, if it's allowed
+one-word lookahead? If it could look at word 4, it would see that word
+4 begins a sumti and then could see from the grammar that [[broda joi
+[le brode]] is not valid, but [[le broda (ku)] joi [le brode]] is. And
+hence it shouldn't need the ku.
+
+So I still don't understand what lookahead makes possible for the parsing
+process.=20
+
+> Without back-tracking or more look ahead, an *LR parser can't do that,
+> though.
+>=20
+> Hrm. A parser with back tracking or more look ahead (or basically any
+> parser which can parse a larger class of languages) could take the same
+> YACC grammar and be able to parse "le broda joi le brode" correctly... I
+> think...
+
+Surely. But apparently what seems to me 1-word lookahead counts in
+acctuality as 2-word lookahead, and I don't grasp why.
+=20
+> (You seem to have the idea of lookahead right, in that you look at tokens
+> up to n+1 to decide what n is, you're just missing out on the way the
+> parsing represents the partially-parsed data.)
+
+Yes. And still am, alas.
+
+--And.
+
+
+           
+
