@@ -1,0 +1,66 @@
+Received: from punt2.demon.co.uk by stryx.demon.co.uk with SMTP
+	id AA3564 ; Thu, 22 Jun 95 23:30:20 BST
+Received: from punt2.demon.co.uk via puntmail for ia@stryx.demon.co.uk;
+          Thu, 22 Jun 95 16:46:08 GMT
+Received: from gate.demon.co.uk by punt2.demon.co.uk id aa06918;
+          22 Jun 95 17:45 +0100
+Received: from uga.cc.uga.edu by gate.demon.co.uk id ab07810;
+          22 Jun 95 17:45 GMT-60:00
+Received: from UGA.CC.UGA.EDU by uga.cc.uga.edu (IBM VM SMTP V2R2)
+   with BSMTP id 7498; Thu, 22 Jun 95 12:43:30 EDT
+Received: from UGA.CC.UGA.EDU (NJE origin LISTSERV@UGA) by UGA.CC.UGA.EDU (LMail V1.2a/1.8a) with BSMTP id 3537; Thu, 22 Jun 1995 12:42:20 -0400
+Date:         Thu, 22 Jun 1995 12:42:49 -0400
+Reply-To:     John Cowan <cowan@locke.ccil.org>
+Sender:       Lojban list <LOJBAN%CUVMB.BITNET@uga.cc.uga.edu>
+From:         John Cowan <cowan@locke.ccil.org>
+Subject:      Re: Another question about imperatives
+X-To:         Lojban List <lojban@cuvmb.cc.columbia.edu>
+To:           Iain Alexander <ia@stryx.demon.co.uk>
+In-Reply-To:  <199506220747.DAA16699@locke.ccil.org> from
+              "jorge@PHYAST.PITT.EDU" at Jun 21, 95 09:49:55 pm
+Message-ID:  <9506221745.ab07810@gate.demon.co.uk>
+Content-Length: 1722
+
+> la kris cusku di'e
+>
+> > I wasn't sure about that -- I thought .e connected two sumti within the
+> > context of a particular place, rather than conjoining the places themselves.
+> >  I.e. you could say "ne'i le botpi .e le tanxe" for "in the bottle and also
+> > in the box" but not "ne'i le botpi .e ne'i le tanxe".  Or can you do both?
+
+la xorxes. cusku di'e
+
+> The first is definitely right. I think you can't do the second (although
+> the parser accepts it, but comes up with some strange stuff) so my translation
+> was wrong. {ne'i le botpi e ne'ibo le tanxe} is right too, but I have
+> no idea what it means.
+
+It means "within the bottle and the cup (where the bottle is inside the cup)"
+and so refers to a nested state of affairs.  :-)
+
+The parser accepts "ne'i le botpi .e ne'i le tanxe" because of a long-standing
+and apparently ineradicable misfeature.  Because we are using yacc, which is
+designed for programming languages, we get into trouble.  Inserting
+elided terminators is done using yacc's error recovery, which sometimes has
+a habit of skipping three tokens in an attempt to avoid too many closely
+nested errors.  This is fine for error recovery, but bad for a language
+feature.  To take an unambiguous example:
+
+        bai le botpi .e bau le tanxe cu co'e
+
+parses as:
+
+        ({<bai KU> <bau [le tanxe KU]>} cu {co'e VAU})
+
+because the error at ".e bau" is referred back three tokens earlier to
+the recovery step of inserting "KU" after "bai", and then the three
+tokens get tossed.
+
+I really must put in a check to see to it that the parser outputs every
+word it inputs.
+
+--
+John Cowan                                              cowan@ccil.org
+                        e'osai ko sarji la lojban.
+
+

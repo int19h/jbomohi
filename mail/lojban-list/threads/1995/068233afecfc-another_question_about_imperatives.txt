@@ -1,0 +1,47 @@
+# mail/lojban-list thread 068233afecfc-another_question_about_imperatives | root 199506220747.daa16699@locke.ccil.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1995-06-22T16:42:49Z | John Cowan <cowan@locke.ccil.org> | 9506221745.ab07810@gate.demon.co.uk | mail/lojban-list/cur/803839369.8135e7acb00a6411.jbomohi:2,S
+> la kris cusku di'e
+>
+> > I wasn't sure about that -- I thought .e connected two sumti within the
+> > context of a particular place, rather than conjoining the places themselves.
+> >  I.e. you could say "ne'i le botpi .e le tanxe" for "in the bottle and also
+> > in the box" but not "ne'i le botpi .e ne'i le tanxe".  Or can you do both?
+
+la xorxes. cusku di'e
+
+> The first is definitely right. I think you can't do the second (although
+> the parser accepts it, but comes up with some strange stuff) so my translation
+> was wrong. {ne'i le botpi e ne'ibo le tanxe} is right too, but I have
+> no idea what it means.
+
+It means "within the bottle and the cup (where the bottle is inside the cup)"
+and so refers to a nested state of affairs.  :-)
+
+The parser accepts "ne'i le botpi .e ne'i le tanxe" because of a long-standing
+and apparently ineradicable misfeature.  Because we are using yacc, which is
+designed for programming languages, we get into trouble.  Inserting
+elided terminators is done using yacc's error recovery, which sometimes has
+a habit of skipping three tokens in an attempt to avoid too many closely
+nested errors.  This is fine for error recovery, but bad for a language
+feature.  To take an unambiguous example:
+
+        bai le botpi .e bau le tanxe cu co'e
+
+parses as:
+
+        ({<bai KU> <bau [le tanxe KU]>} cu {co'e VAU})
+
+because the error at ".e bau" is referred back three tokens earlier to
+the recovery step of inserting "KU" after "bai", and then the three
+tokens get tossed.
+
+I really must put in a check to see to it that the parser outputs every
+word it inputs.
+
+--
+John Cowan                                              cowan@ccil.org
+                        e'osai ko sarji la lojban.
+
+
+
