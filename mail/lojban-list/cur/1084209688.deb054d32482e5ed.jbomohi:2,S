@@ -1,0 +1,129 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 75847 invoked from network); 10 May 2004 17:22:39 -0000
+Received: from unknown (66.218.66.218)
+  by m23.grp.scd.yahoo.com with QMQP; 10 May 2004 17:22:39 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 10 May 2004 17:22:39 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.31)
+	id 1BNETo-0004hZ-8V
+	for lojban@yahoogroups.com; Mon, 10 May 2004 10:22:16 -0700
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.31)
+	id 1BNETD-0004gr-Kb; Mon, 10 May 2004 10:21:39 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 10 May 2004 10:21:36 -0700 (PDT)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.31)
+	id 1BNET2-0004gc-NA
+	for lojban-list@lojban.org; Mon, 10 May 2004 10:21:28 -0700
+Date: Mon, 10 May 2004 10:21:28 -0700
+Message-ID: <20040510172128.GY5570@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20040507193128.20639.qmail@web41903.mail.yahoo.com> <20040507185509.GN7020@digitalkingdom.org> <20040507193128.20639.qmail@web41903.mail.yahoo.com> <5.2.0.9.0.20040510074646.03350bd0@pop.east.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5.2.0.9.0.20040510074646.03350bd0@pop.east.cox.net>
+User-Agent: Mutt/1.5.5.1+cvs20040105i
+X-archive-position: 7743
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Re: My parser, SI, SA, and ZOI
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 22206
+Content-Length: 3250
+
+On Mon, May 10, 2004 at 07:50:27AM -0400, Bob LeChevalier wrote:
+> Lojban grammar was DESIGNED to be a slave to YACC restrictions, that
+> being a working definition of LALR1 for purposes of language design.
+> That it isn't a correct definition is irrelevant.
+
+We know, Bob.  The discussion is about what follows from the definitions
+of the words, not what follows from the YACC, which we all pretty much
+understand.  Or at least we thought we did; I turn out to have been
+wrong about ZO handling, as previously stated in this thread.
+
+> In answer to the question in this thread, I believe that the text
+> comment in the body of the grammar after the rule defining LohU 436
+> addresses the intent for interactions between si and zo and zoi.
+
+Thanks for finding that, Bob.  The next comment is general bitchiness
+and not specifically directed at you.
+
+<bitchy>
+
+<sarcasm>
+
+Oh, my gosh, why didn't *I* think to look there?
+
+</sarcasm>
+
+Apparently, pre-parser instructions are scattered about the landside in
+that file, instead of being confined to the section labelled as such.
+Oh well.
+
+</bitchy>
+
+Here's the text in question:
+
+    It may be seen that any of the ZO/ZOI/LOhU trio of quotation markers
+    may contain the powerful metalinguistic erasers.  Since these
+    quotations are not parsed internally, these operators are ignored
+    within the quote. To erase a ZO, then, two SI's are needed after
+    giving a quoted word of any type.  ZOI takes four SI's, with the
+    ENTIRE BODY OF THE QUOTE treated as a single 'word' since it is one
+    selma'o.  Thus one for the quote body, two for the single word
+    delimiters, and one for the ZOI. In LOhU, the entire body is treated
+    as a single word, so three SI's can erase it.
+
+At first I thought this was merely descriptive of the YACC grammar's way
+of handling things, and that is partly true, but not entirely, and it
+does answer at least some of our questions.
+
+In particular, it is *absolutely* clear that that SI is supposed to
+erase exactly one token, period.  So having SI erase both terms of a ZO
+quote, for example, is not OK; that behaviour in my parser was due to my
+misreading the preparser instructions for ZO.
+
+It's also very clear that quote delimiters of various types are
+considered one word for this purpose.
+
+This is all perfectly fine, because it fits with the definition of SI,
+which is:
+
+    erase the last Lojban word, treating non-Lojban text as a single
+    word
+
+I am ashamed to say that I hadn't noticed the second half of the
+definition.  I'd say that pretty much clears things up: deleting a ZOI
+clause completely with SI takes 4 SI.
+
+Unfortunately, this doesn't help with things like "zo broda zei broda",
+but I'm inclined to say that that's illegal because ZO acts first,
+leaving "<zo-quote> zei broda", and a quote is not a single word.
+
+Opinions on that issue welcome, but it seems pretty clear that ZEI only
+acts on single words, and quotes are not single words.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+
+           
+

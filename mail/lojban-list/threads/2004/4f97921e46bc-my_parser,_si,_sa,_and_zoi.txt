@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4f97921e46bc-my_parser,_si,_sa,_and_zoi | root 20040506003409.gi7020@digitalkingdom.org | 30 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4f97921e46bc-my_parser,_si,_sa,_and_zoi | root 20040506003409.gi7020@digitalkingdom.org | 31 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-05-06T00:34:09Z | Robin Lee Powell <lojban-out@lojban.org> | 20040506003409.gi7020@digitalkingdom.org | mail/lojban-list/cur/1083803649.4f97921e46bc9660.jbomohi:2,S
 Now that I can parse ZOI, it was necessary to figure out what the
@@ -1115,7 +1115,95 @@ Yahoo! Groups Links
 
 
 
-=== 26 | 2004-05-07T20:38:19Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040507203819.68997.qmail@web41901.mail.yahoo.com | mail/lojban-list/cur/1083962299.3dfde9e878222c29.jbomohi:2,S
+=== 26 | 2004-05-10T17:21:28Z | Robin Lee Powell <lojban-out@lojban.org> | 20040510172128.gy5570@digitalkingdom.org | mail/lojban-list/cur/1084209688.deb054d32482e5ed.jbomohi:2,S
+On Mon, May 10, 2004 at 07:50:27AM -0400, Bob LeChevalier wrote:
+> Lojban grammar was DESIGNED to be a slave to YACC restrictions, that
+> being a working definition of LALR1 for purposes of language design.
+> That it isn't a correct definition is irrelevant.
+
+We know, Bob.  The discussion is about what follows from the definitions
+of the words, not what follows from the YACC, which we all pretty much
+understand.  Or at least we thought we did; I turn out to have been
+wrong about ZO handling, as previously stated in this thread.
+
+> In answer to the question in this thread, I believe that the text
+> comment in the body of the grammar after the rule defining LohU 436
+> addresses the intent for interactions between si and zo and zoi.
+
+Thanks for finding that, Bob.  The next comment is general bitchiness
+and not specifically directed at you.
+
+<bitchy>
+
+<sarcasm>
+
+Oh, my gosh, why didn't *I* think to look there?
+
+</sarcasm>
+
+Apparently, pre-parser instructions are scattered about the landside in
+that file, instead of being confined to the section labelled as such.
+Oh well.
+
+</bitchy>
+
+Here's the text in question:
+
+    It may be seen that any of the ZO/ZOI/LOhU trio of quotation markers
+    may contain the powerful metalinguistic erasers.  Since these
+    quotations are not parsed internally, these operators are ignored
+    within the quote. To erase a ZO, then, two SI's are needed after
+    giving a quoted word of any type.  ZOI takes four SI's, with the
+    ENTIRE BODY OF THE QUOTE treated as a single 'word' since it is one
+    selma'o.  Thus one for the quote body, two for the single word
+    delimiters, and one for the ZOI. In LOhU, the entire body is treated
+    as a single word, so three SI's can erase it.
+
+At first I thought this was merely descriptive of the YACC grammar's way
+of handling things, and that is partly true, but not entirely, and it
+does answer at least some of our questions.
+
+In particular, it is *absolutely* clear that that SI is supposed to
+erase exactly one token, period.  So having SI erase both terms of a ZO
+quote, for example, is not OK; that behaviour in my parser was due to my
+misreading the preparser instructions for ZO.
+
+It's also very clear that quote delimiters of various types are
+considered one word for this purpose.
+
+This is all perfectly fine, because it fits with the definition of SI,
+which is:
+
+    erase the last Lojban word, treating non-Lojban text as a single
+    word
+
+I am ashamed to say that I hadn't noticed the second half of the
+definition.  I'd say that pretty much clears things up: deleting a ZOI
+clause completely with SI takes 4 SI.
+
+Unfortunately, this doesn't help with things like "zo broda zei broda",
+but I'm inclined to say that that's illegal because ZO acts first,
+leaving "<zo-quote> zei broda", and a quote is not a single word.
+
+Opinions on that issue welcome, but it seems pretty clear that ZEI only
+acts on single words, and quotes are not single words.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+
+           
+
+
+
+=== 27 | 2004-05-07T20:38:19Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040507203819.68997.qmail@web41901.mail.yahoo.com | mail/lojban-list/cur/1083962299.3dfde9e878222c29.jbomohi:2,S
 
 --- Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
 > > What does {da zo si si} do?
@@ -1195,7 +1283,7 @@ http://hotjobs.sweepstakes.yahoo.com/careermakeover
 
 
 
-=== 27 | 2004-05-07T20:47:25Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507204725.gb27947@digitalkingdom.org | mail/lojban-list/cur/1083962845.1b0e06c13a742501.jbomohi:2,S
+=== 28 | 2004-05-07T20:47:25Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507204725.gb27947@digitalkingdom.org | mail/lojban-list/cur/1083962845.1b0e06c13a742501.jbomohi:2,S
 On Fri, May 07, 2004 at 01:38:19PM -0700, Jorge Llamb?as wrote:
 > So both words turn what follows into special tokens, but remain
 > themselves as separate tokens.
@@ -1280,7 +1368,7 @@ http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
 
 
 
-=== 28 | 2004-05-07T21:12:43Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040507211243.95368.qmail@web41901.mail.yahoo.com | mail/lojban-list/cur/1083964363.b0438acce7b67323.jbomohi:2,S
+=== 29 | 2004-05-07T21:12:43Z | Jorge "Llambías" <jjllambias2000@yahoo.com.ar> | 20040507211243.95368.qmail@web41901.mail.yahoo.com | mail/lojban-list/cur/1083964363.b0438acce7b67323.jbomohi:2,S
 
 --- Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
 > > I think that the Right Thing is to treat {zo <word>} and {zoi <word>
@@ -1314,7 +1402,7 @@ http://hotjobs.sweepstakes.yahoo.com/careermakeover
 
 
 
-=== 29 | 2004-05-07T22:22:31Z | Nora LeChevalier <noras@cox.net> | 5.1.0.14.0.20040507181537.034c7ec0@pop.east.cox.net | mail/lojban-list/cur/1083968551.53ff78e5d22dc969.jbomohi:2,S
+=== 30 | 2004-05-07T22:22:31Z | Nora LeChevalier <noras@cox.net> | 5.1.0.14.0.20040507181537.034c7ec0@pop.east.cox.net | mail/lojban-list/cur/1083968551.53ff78e5d22dc969.jbomohi:2,S
 At 05:51 PM 5/6/04 -0700, Robin wrote:
 >On Thu, May 06, 2004 at 06:20:33PM -0400, Nora LeChevalier wrote:
 >[long explanation of what my parser does snipped]
@@ -1348,7 +1436,7 @@ Nora LeChevalier
 
 
 
-=== 30 | 2004-05-07T22:24:32Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507222432.gp27947@digitalkingdom.org | mail/lojban-list/cur/1083968672.5c6457bd7b159e83.jbomohi:2,S
+=== 31 | 2004-05-07T22:24:32Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507222432.gp27947@digitalkingdom.org | mail/lojban-list/cur/1083968672.5c6457bd7b159e83.jbomohi:2,S
 On Fri, May 07, 2004 at 06:22:31PM -0400, Nora LeChevalier wrote:
 > At 05:51 PM 5/6/04 -0700, Robin wrote:
 > >On Thu, May 06, 2004 at 06:20:33PM -0400, Nora LeChevalier wrote:
