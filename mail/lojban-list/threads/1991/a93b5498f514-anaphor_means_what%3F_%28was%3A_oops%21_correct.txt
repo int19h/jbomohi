@@ -1,4 +1,4 @@
-# mail/lojban-list thread a93b5498f514-anaphor_means_what%3F_%28was%3A_oops%21_correct | root 9104261654.aa02259@euphemia.math.ucla.edu | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a93b5498f514-anaphor_means_what%3F_%28was%3A_oops%21_correct | root 9104261654.aa02259@euphemia.math.ucla.edu | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 1991-04-29T15:43:05Z | cowan | m0jxany-0003qhc@snark.thyrsus.com | mail/lojban-list/cur/672939785.f9568f8063210931.jbomohi:2,S
 kartr. jim. writes:
@@ -135,5 +135,81 @@ This binding environment is exactly like the one used by Common Lisp,
 except that it is possible to decide from outside, as it were, whether to
 use it or ignore it (causing dynamic binding instead, where the anaphor-to-
 equivalent mapping is made again in the local binding environment).
+
+
+
+=== 4 | 1991-05-01T16:22:07Z | cbmvax!uunet!math.ucla.edu!jimc | 9105020022.aa25429@euphemia.math.ucla.edu | mail/lojban-list/cur/673114927.d84449702bff57f0.jbomohi:2,S
+> Date:  Wed, 1 May 91 11:16:43 EDT
+> To:  lojban-list@snark.thyrsus.com
+> From:  cbmvax!snark.thyrsus.com!cowan@uunet.UU.NET (John Cowan)
+> Subject:  real vs. nominal anaphora
+   
+> I also think the word "referent" is being used in two different ways:
+> is the "referent" of an anaphor the words to which it is equivalent, or 
+> the non-verbal things to which those words supposedly refer?  Henceforth,
+> I will use "referent" only in the latter sense, and introduce the term
+> "equivalent" for the former sense.  E.g., in this message "I" is equivalent
+> to "John Cowan", and both "I" and "John Cowan" have as referent John Cowan,
+> the person.
+
+In school-taught English the term "antecedent" means the "thing" that the
+anaphor represents.  Of course they don't get into whether the antecedent
+is a phrase, a real-world object (referent), or something in between.
+
+> In Carter's scheme of things, all anaphora are immediately replaced by their
+> equivalents, and the actual anaphora are thereafter unrecoverable.
+
+Well, that depends on whether you have a commitment to support ra'o.  
+-gua!spi doesn't have it, but I don't mind if a Lojban parser keeps 
+the original anaphor around.
+
+> Now the Lojban interpretation is not that anaphora are replaced by their
+> referents: that would be impossible.  A referent is extra-linguistic,
+> and cannot be placed in a sentence.  * * *
+> Sentences are composed only of words, not of words and other objects.
+
+Hmmm, is this true?  On the surface it is true, but my introspection is
+that when I process a sentence the words get chucked quite early and the
+whole thing is represented by internal symbols.  Certainly in a computer
+parser the very first step is to transform the words to dictionary 
+pointers, and the second is to de-linearize the text into a parse tree.
+When the program tries to map words (or dictionary pointers) to referents,
+it (or a meat person) will certainly insert pointers in the parse tree
+nodes (formerly words or phrases) which point to *something* which is
+not a word -- although this "internal referent" could not be the city
+of Boston which won't fit in memory :-)  
+
+Thus it makes a lot of sense to say that anaphora are replaced by 
+"referents" distinct from the words that represent them, although one 
+must keep in mind that these are not real-world objects -- and are
+not guaranteed to match the real world accurately.  
+
+> Instead, the interpretation is that anaphora are left alone but supplemented
+> by a "binding environment" which maps the anaphor onto its equivalent.
+> Then, if the sentence containing the anaphor is "called up" by another
+> anaphor, the binding environment may be used (normally) or ignored (if
+> "ra'o" is suffixed).
+
+This design is reasonable.  However, as I said before, in the final step
+of linguistic processing where the internal referent pointers are set up,
+you very much want to avoid extraneous considerations such as picking 
+which phrase an anaphor really represents, and this is why I am so fixated
+on nailing down the antecedent early, and copying the words so the final
+step doesn't even see the anaphora.  Of course with ra'o I would copy
+different words than without it.  
+
+It sounds like you intend to include with the anaphor an indirect 
+reference to another phrase.  I don't mind this design.  In fact, in my
+parser I cheat and do this -- and curse and fume every time it trips me
+up.  But when you try to explain it to someone, it sounds much like the
+open-ended semantic based antecedent resolution you have to do in English.
+
+Perhaps the right way to phrase a unified Lojban and -gua!spi policy is:
+An anaphor shall be understood *as if* its antecedent had been copied out
+in full at that place.  It is understood that under the influence of ra'o
+if the antecedent was copied in via an anaphor, the original anaphor
+shall be restored and rebound.  
+
+		-- jimc
 
 
