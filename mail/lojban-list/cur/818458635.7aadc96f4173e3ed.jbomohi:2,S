@@ -1,144 +1,12 @@
-# mail/lojban-list thread 7aadc96f4173-tech%3A_proposed_grammar_change_x6%3A_simplific | root ddd81e0418430f811bdce0cf85e8dadb1f00ff68@jbomohi.invalid | 3 messages | rendered by jbomohi mail-v1
+Reply-To: Jorge Llambias <jorge@PHYAST.PITT.EDU>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Jorge Llambias <jorge@PHYAST.PITT.EDU>
+Subject:      Re: TECH: PROPOSED GRAMMAR CHANGE X6: Simplification of compound
+              tenses
+X-To:         lojban@cuvmb.cc.columbia.edu, jorge@minerva.phyast.pitt.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+Status: OR
 
-=== 1 | 1995-12-08T21:37:15Z | Logical Language Group <lojbab@ACCESS.DIGEX.NET> | 401ffce154345fa986579a98acf2584cf0ae749a@jbomohi.invalid | mail/lojban-list/cur/818458635.a17a8cf1845e0cbb.jbomohi:2,S
-Well, I;ll start by noting that half of your discussion deals with using
-tenses inside selbri (NOTE 2) which is NOT part of your X6 change.
-
-Second, you have mostly been making proposals that deal with things in the
-preparser/lexer, and these changes are VERY difficult to check out with
-any certainty.  The risk factor is high, even if we were sure the change is
-virtuous.  We cannot afford high risk changes at this point.
-
-Third, this is now the 6th proposal you have made in less tha a month, when
-we managed to go almost 2 years with only a couple of proposals.  If indeed
-the language was in such bad shape that it needed 6 change proposals in a
-month, then I would again retreat from having a baseline, and forego yet
-again the idea of getting a stable language.  Do you REALLY think things
-are so broken as to warrant the volume of changes you are proposing?  Even if
- they are"only" extensions, they are still changes.
-
-fourth.  Whta it appears you are doing in X6 is freeing up the grammar
-of tense as much as is possible, and doing so suppoosedly in the interest of
-"ease of teaching".  Yet you have also proposed that we ADD structure to
-MEX quantifiers (PA-strings) for the same reason.  Sow hich is easier to
-teach, more structure or less?  In the case of tense we were able to
-devise a YACCABLe grammar for tenses that allowed saying everything that pc
-said needed to be said with tense, and then some.  In the cas eof  MEX, there
-is no one person we could use as a standard for "all the things that need
-to be said".
-
-Fifth - you persist in proposing changes to the EBNF.  The language is
-defined by the YACC grammar and not the EBNF.  I do not really understand the
-EBNF (or rather I distrust it so that I have made little effort to understand
-it), and it is impossible to evaluate your changes unless they are phrased as
-YACC rules, so we can see if they will fly.
-
-lojbab
-
-
-
-=== 2 | 1995-12-08T21:37:15Z | Jorge Llambias <jorge@PHYAST.PITT.EDU> | dbd8c9d98981af6a5d04aed07378191996bde736@jbomohi.invalid | mail/lojban-list/cur/818458635.2deea5e1b23a16e4.jbomohi:2,S
-CHANGE X6
-
-
-PRESENT LANGUAGE:
-
-> time<1030> = ZI & time-offset ... & ZEhA [PU [NAI]] & interval-modifier
->
-> time-offset<1033> = PU [NAI] [ZI]
->
-> interval-modifier<1050> = interval-property & [(ZAhO [interval-property]) ...]
->
-> interval-property<1051> = number ROI [NAI] | TAhE [NAI]
-
-
-PROPOSED CHANGE:
-
-> time = ZI & time-offset ... & aspect ...
->
-> time-offset = PU [NAI] [ZI]
->
-> aspect = ZEhA [PU [NAI]] | ZAhO | number ROI [NAI] | TAhE [NAI]
-
-
-RATIONALE:
-
-There is no apparent reason to restrict the compounding of the aspectuals
-to only those combinations allowed in the current grammar. The remaining
-combinations make just as much sense.
-
-Besides, those other combinations are already possible using the tense
-glue "nana". For example:
-
-        mi ta'e ze'a bajra
-        I usually run for long times.
-
-is not allowed, or rather {ta'e ze'a} parses as {ta'e ku ze'a} instead
-of as a single tag. But this more complex form is allowed:
-
-        mi ta'e nana ze'a bajra
-
-where {ta'e nana ze'a} is a compound tag. The two {na}s cancel each
-other out in meaning, but they can't be removed syntactically, so they
-are effectively functioning as glue. (That's a very weird feature, that
-should in my opinion be removed, but it shows that all the proposed new
-combinations already exist under a complicated guise.)
-
-
-NOTE1: This change is an extension. It does not affect any existing
-grammatical text.
-
-
-NOTE2: I agree with And that aspectuals should really be like NAhEs,
-that attach to brivla rather than to a whole selbri. This applies
-to all of them, not just the ZAhOs. For example, we could have:
-
-        ko'a citno ba'o ralju
-        He is a young ex-president.
-
-        ko'a ba'o citno ralju
-        He is an ex-young president.
-
-        ko'a ba'o ke citno ralju
-        He is an ex young-president.
-
-        ko'a ta'e gleki reroi ralju
-        He is a usually-happy two-times-president.
-
-        ko'a roroi gleki ze'u citno co'a ralju
-        He is an always-happy long-time-young starting-president.
-
-etc, etc. But this is left for another proposal. For the moment I would
-just like to set ZEhAs, ZAhOs and TAhEs on an equal footing. I don't
-see why the current grammar for compound tenses takes such pains to be
-complicated.
-
-A bonus of this proposal is that it simplifies teaching, which is one of
-the criteria that Lojbab gave for good changes.
-
-NOTE3: A similar change would of course apply to space tenses. The
-current grammar:
-
-> space<1040> = VA & space-offset ... & space-interval & (MOhI space-offset)
->
-> space-offset<1045> = FAhA [NAI] [VA]
->
-> space-interval<1046> = ((VEhA & VIhA) [FAhA [NAI]]) & FEhE interval-modifier
-
-would go to something like:
-
-> space = VA & space-offset ... & space-aspect & (MOhI space-offset)
->
-> space-offset = FAhA [NAI] [VA]
->
-> space-aspect = ((VEhA & VIhA) [FAhA [NAI]]) & FEhE aspect ...
-
-
-Jorge
-
-
-
-=== 3 | 1995-12-08T21:37:15Z | Jorge Llambias <jorge@PHYAST.PITT.EDU> | ddd81e0418430f811bdce0cf85e8dadb1f00ff68@jbomohi.invalid | mail/lojban-list/cur/818458635.7aadc96f4173e3ed.jbomohi:2,S
 la lojbab cusku di'e
 
 > Well, I;ll start by noting that half of your discussion deals with using
@@ -265,5 +133,4 @@ Ok, I will try to do that. I never really bothered to study the YACC rules
 because the EBNF seems so much clear, but if that's what it takes...
 
 Jorge
-
 
