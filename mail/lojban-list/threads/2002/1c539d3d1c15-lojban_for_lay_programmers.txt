@@ -1,4 +1,4 @@
-# mail/lojban-list thread 1c539d3d1c15-lojban_for_lay_programmers | root m16tvwj-000ieoc@localhost | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 1c539d3d1c15-lojban_for_lay_programmers | root m16tvwj-000ieoc@localhost | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2002-01-23T22:32:19Z | "Robert J. Chassell" <bob@RATTLESNAKE.COM> | m16tvwj-000ieoc@localhost | mail/lojban-list/cur/1011825139.1c539d3d1c150476.jbomohi:2,S
 Next week I am going to a workshop sponsored by the Institute for
@@ -311,6 +311,103 @@ Yes, you are right!
 -- 
     Robert J. Chassell                  bob@rattlesnake.com
     Rattlesnake Enterprises             http://www.rattlesnake.com
+
+           
+
+
+
+=== 4 | 2002-01-24T19:39:58Z | Brook Conner <me@nellardo.com> | 267b5602-1102-11d6-9015-003065b787d6@nellardo.com | mail/lojban-list/cur/1011901198.953068c85cde3db5.jbomohi:2,S
+In the spirit of "No thread here ever really dies...."
+
+On Wednesday, January 23, 2002, at 05:32  pm, Robert J. Chassell wrote:
+[snip on Knowledge Home]
+> Next week I am going to a workshop sponsored by the Institute for
+> ScientificI think of Lojban as potentially more sophisticated for a 
+> `scripting'
+> or `verbing' language for the the `Knowledge Home' project than Emacs
+> Lisp or Python.  Those are two programming languages that have been
+> mentioned so far as possible `scripting' or `verbing' languages for
+> educated, non-programmers for this project.
+
+Okay, quickie - if they're considering Emacs Lisp, they should look at 
+Scheme instead. Guile (guile.org) is a nicely embeddable scheme 
+interpreter.
+
+Now, back to lojban. This was something I brought up a couple years 
+back - lojban used as a programming language. It especially shines as a 
+spoken programming language, because its phonemic structure matches 
+lexical structure - much easier (in theory) for the computer to catch 
+lexical or grammatical errors and then recover from them.
+
+No, the tricky part is not parsing lojban - as you point out, the yacc 
+grammar does that. The tricky part is the *semantics*. Any single word 
+in lojban has only one definition (but be careful - this doesn't apply 
+to names - see below), but what that definition means when applied to 
+actual operating semantics is something else.
+
+For example, when evaluating a lojban sentence, do you use strict 
+evaluation or lazy evaluation? I'm talking machine semantics here, not 
+parsing syntax. The canonical example from programming literature for 
+the difference between strict and lazy is something like the following:
+
+if: true Then: 0 Else: (1/0) -- smalltalk syntax if statement
+
+A strict language evaluates every argument before dealing with the 
+function call while a lazy one does not. The above statement causes a 
+run-time error with a strict language (divide by zero in integers - very 
+bad), but happily returns 0 in a lazy language (it doesn't bother to do 
+the divide by zero because the answer is never needed).
+
+This kind of example is even easier in lojban:
+
+la flubar. mekso li no te'a ni'u pa
+
+"foobar" is the-expression the-number zero raised to the -1. A lazy 
+language will happily pass around la flubar. but a strict one will throw 
+a divide-by-zero error.
+
+"But wait!" you cry! lojban has the answer! ci'i is the word for 
+infinity!
+
+Two problems with that.
+
+1. this is only one example - infinite loops run into the same kinds of 
+problems.
+
+2. Strictly speaking, ci'i is not a number. Oh sure, it may be a 
+transfinite number (ci'i no, ci'i pa, etc.), but a transfinite number is 
+definitely not in the set of integers, rationals, or even real numbers 
+(mathematically speaking, IEEE floating point numbers are none of these, 
+are not even a group (I don't think NaN has an additive inverse, and Inf 
+has very peculiar behavior)).
+
+[snip]
+>  (2) able to be used (with a subset of the
+> vocabulary, but the same grammar) as a computer scripting language,
+
+Another problem of semantics is choosing the subset of the vocabulary 
+and making sure the user knows what it is. Are you going for an 
+imperative model? Lots of "ko" running around. Or a declarative model? 
+This suits lojban better, but has its own issues to deal with. For 
+example, some lojban statements are inherently stateful, e.g., the word 
+to reset the counted pronouns.
+
+Both of these have issues of name space and scope that are not an issue 
+in a human language - two identical names can be clarified with 
+additional clauses. Computers tend to simply barf.
+
+[snip]
+
+Don't get me wrong - another parser for lojban is great, but designing 
+the semantics, even for mekso, to a level where a computer can 
+predictably deal with it (and deal with it in a manner comparable to a 
+human) is not as simple as it might first seem.
+
+
+
+--
+Klactovedestene!
+
 
            
 
