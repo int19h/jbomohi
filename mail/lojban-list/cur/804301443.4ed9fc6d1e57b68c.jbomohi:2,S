@@ -1,0 +1,128 @@
+Received: from punt3.demon.co.uk by stryx.demon.co.uk with SMTP
+	id AA3651 ; Wed, 28 Jun 95 22:55:37 BST
+Received: from punt3.demon.co.uk via puntmail for ia@stryx.demon.co.uk;
+          Wed, 28 Jun 95 01:05:03 GMT
+Received: from uga.cc.uga.edu by punt3.demon.co.uk id aa10527;
+          28 Jun 95 2:04 +0100
+Received: from UGA.CC.UGA.EDU by uga.cc.uga.edu (IBM VM SMTP V2R2)
+   with BSMTP id 7136; Tue, 27 Jun 95 21:02:00 EDT
+Received: from UGA.CC.UGA.EDU (NJE origin LISTSERV@UGA) by UGA.CC.UGA.EDU (LMail V1.2a/1.8a) with BSMTP id 1011; Tue, 27 Jun 1995 21:02:00 -0400
+Date:         Tue, 27 Jun 1995 21:04:03 EDT
+Reply-To:     jorge@phyast.pitt.edu
+Sender:       Lojban list <LOJBAN%CUVMB.BITNET@uga.cc.uga.edu>
+From:         jorge@phyast.pitt.edu
+Subject:      Re: TECH: AFTERTHOUGHT SCOPE
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Iain Alexander <ia@stryx.demon.co.uk>
+Message-ID:  <9506280204.aa10527@punt3.demon.co.uk>
+Content-Length: 4534
+
+> 1. SCOPE-SENSITIVITY
+> SCOPE-SENSITIVE terms comprise all sumti whose innermost descriptor
+> is (implicitly or explicitly) {lo}.
+> SCOPE-INSENSITIVE terms comprise all sumti whose innermost descriptor
+> is {le}.
+
+I'm not sure this is right. {ci le reno gerku} is just as scope-sensitive
+as {ci gerku}.
+
+I think the way you use them, the scope-insensitive are all sumti whose
+outermost quantifier is {ro}. But this is an arbitrary choice, you
+could have said that the scope-insensitive are all sumti whose
+outermost quantifier is {su'o}, and all your rules would apply
+equally, i.e. in {lo nanmu cu batci lo gerku} scope is not an
+issue, and for {lo nanmu} with {ci gerku} there are two possibilities.
+
+> At this stage I'm ignoring {la}, {lai}, {lahi}, {loi}, {lohi}, {lei}
+> and {lehi}. I'm also ignoring {na} and coordinators.
+
+Yes, we should start with the simple cases, but those should not
+present difficulties since they are mostly singular terms which don't
+care about scopes. ({loi} is the only exception.)
+
+> Relative scope between two terms matters if at least one of them is
+> scope-sensitive. (An exception to this is <{suo lo},{suo lo}>
+> and <{ro lo},{ro lo}> pairs: the relative scope of these makes no
+> difference to the meaning. I shall ignore this exception.)
+
+Also, if one of the quantifiers is {su'o} or {ro}, then there are
+only two possibilities, not three as in the general case. A more
+general classification would be:
+
+<{ro},{ro}> or <{su'o},{su'o}> gives only one possibility.
+<{ro},non-{ro}> or <{su'o},non-{su'o}> gives only two possibilities.
+All other pairs give three possibilities.
+
+But I don't think it is necessary to have rules that depend
+on this scope-sensitivity. The cases with {ro} and {su'o} can simply
+be left as degenerate cases of the general one, where it just so happens
+that some of the three possibilities coincide in meaning. {ro nanmu}
+subordinate to {ro gerku} happens to give the same meaning as {ro gerku}
+subordinate to {ro nanmu} and also to {ro gerku} coordinate with
+{ro nanmu}. No need to have special rules for that.
+
+> 3 KINDS OF AFTERTHOUGHT SCOPE
+> The 5 kinds of scope (defined above) are:
+>    * X and Y have coordinate scope
+>      [X and Y are scope-sensitive]
+>    * X has scope over Y
+>      [Y is scope-sensitive]
+>    * Y has scope over X
+>      [X is scope-sensitive]
+>    * X doesn't have scope over Y
+>      [X is scope-insensitive, Y is scope-sensitive]
+>    * Y doesn't have scope over X
+>      [X is scope-sensitive, Y is scope-insensitive]
+> For the parsimoniously minded, the last two aren't strictly necessary.
+
+Then let's parsimoniously ignore them. Forget about scope sensitivity,
+and we are left with:
+
+    * X and Y have coordinate scope
+    * X has scope over Y
+    * Y has scope over X
+
+> 4 SUGGESTIONS FOR IMPLEMENTATION
+> 4.1 Scope relative to another sumti specified by an anaphor
+> Add 5 new cmavo in GOI, one cmavo for each of the 5 kinds of scope.
+> {SUMTI-X GOI SUMTI-Y} means "X is in the specified scope relationship
+> with Y".
+
+This would only work in the prenex, I suppose? Or do you mean to use
+VOhAs?
+
+> 4.2 Scope relative to the first/last term in a specified prenex
+> Define the following anaphoric possibilities:
+>   X is the { first | last } term in the prenex of Y
+> where Y, working recursively, is either
+>   the { outermost | localmost } bridi
+> or
+>   the bridi one level of embedding toward the middle of the bridi
+>   hierarchy away from Y
+> Thus we need the following cmavo:
+>   * the outermost bridi - GOhA
+
+Isn't that {no'a}? I never know exactly which bridi this is supposed to be.
+
+>   * the localmost bridi - GOhA [this exists, as {nei}]
+>   * the bridi one level of embedding toward the middle of the bridi
+>     hierarchy away from ... - LAhE (1)
+>   * the first term in the prenex of - LAhE (2)
+>   * the last term in the prenex of - LAhE (2)
+> [i.e. in total, 3 new cmavo in LAhE, and 1 new cmavo in GOhA]
+> These can then be used with GOI as in 4.1.
+> The structure would be: SUMTI-1 GOI LAhE (2) (LAhE (1))* GOhA
+
+I really don't understand this part. LAhEs act on sumti. Is that
+what you want? Could you write an example?
+
+I think that the coordinate case can be taken care of by adding
+a {ro lo} in front of the second sumti. One of the subordinate cases
+is taken care of by the standard order, so the only case we are left
+with would be solved with something like pc's leaper. Wouldn't that
+be enough? This is only considering two sumti, but you didn't look
+into the more-than-two sumti case either.
+
+Jorge
+
+
