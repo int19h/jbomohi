@@ -22,7 +22,7 @@
 
 ; --- GRAMMAR ---
 
-text <- spaces-not-Y* (Y !BU)? si-clause NAI* (CMENE+ free* / (indicators / free+ / indicators free+))? joik-jek? text-1 (FAhO .*)?
+text <- spaces-not-Y* su-clause* spaces-not-Y* (Y !BU)? si-clause NAI* (CMENE+ free* / (indicators / free+ / indicators free+))? joik-jek? text-1 (FAhO .*)?
 
 text-1 <- ((I (jek / joik)? (stag? BO)? free*)+ / NIhO+ free*)? paragraphs?
 
@@ -219,9 +219,9 @@ indicator <-  ((UI / CAI) NAI? / Y / DAhO / FUhO) !BU-bare
 ; null<1101> <- any-word SI / utterance SA / text SU
 
 ;         any single lexable Lojban words 
-any-word <- BRIVLA / CMENE / CMAVO 
-any-word-no-SI-handling <- BRIVLA-no-SI-handling / CMENE-no-SI-handling / CMAVO-no-SI-handling
-any-word-no-BU-handling <- BRIVLA-no-BU-handling / CMENE-no-BU-handling / CMAVO-no-BU-handling
+any-word <- CMAVO / BRIVLA / CMENE
+any-word-no-SI-handling <- CMAVO-no-SI-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
+any-word-no-BU-handling <- CMAVO-no-BU-handling / BRIVLA-no-BU-handling / CMENE-no-BU-handling
 
 ;         a possibly unlexable phoneme string 
 ; anything <- "AnyThing" 
@@ -242,6 +242,9 @@ absorb-indicators <- UI NAI? / CAI NAI? / Y / DAhO / FUhO / FUhE
 spacing <- spaces+ si-clause absorb-indicators*
 spaces <- '.' / ' ' / '\n' / '\t' / '\r' / Y
 spaces-not-Y <- '.' / ' ' / '\n' / '\t' / '\r'
+
+; SU clauses
+su-clause <- (!SU !NIhO !LU !TUhE !TO any-word)+ SU
 
 ; Handling of SI and interactions with zo and lo'u...le'u
 
@@ -515,7 +518,7 @@ LOhO-words <- "lo'o"
 LOhU <- pre-cmavo LOhU-words post-cmavo-no-SI-handling
 LOhU-words <- "lo'u"
 ;         grammatical text left quote 
-LU <- pre-cmavo LU-words post-cmavo
+LU <- pre-cmavo LU-words su-clause post-cmavo
 LU-words <- "lu"
 ;         LAhE close delimiter 
 LUhU <- pre-cmavo LUhU-words post-cmavo
@@ -559,7 +562,7 @@ NAhU-words <- "na'u"
 NIhE <- pre-cmavo NIhE-words post-cmavo
 NIhE-words <- "ni'e"
 ;         new paragraph; change of subject 
-NIhO <- pre-cmavo NIhO-words post-cmavo
+NIhO <- pre-cmavo NIhO-words su-clause post-cmavo
 NIhO-words <- "ni'o" / "no'i"
 ;         attaches a subordinate clause to a sumti 
 NOI <- pre-cmavo NOI-words post-cmavo
