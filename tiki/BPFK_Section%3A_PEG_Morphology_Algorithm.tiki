@@ -74,15 +74,11 @@ final-rafsi <- fuhivla / gismu / CVV-final-rafsi / short-lujvo
 
 ;-------------------------------------------------------------------
 
-fuhivla <- (stressed-type-III / fuhivla-head stressed-syllable) !stressed syllable &post-word 
+fuhivla <- fuhivla-head stressed-syllable !stressed syllable &post-word 
 
 fuhivla-head <- !rafsi-string brivla-head
 
-brivla-head <- (type-III / !cmavo !slinkuhi !non-initial-cluster !h) unstressed-syllable*
-
-stressed-type-III <- stressed-long-rafsi (r / n / l) &consonant / stressed-CVC-rafsi (r / n / l) &consonant
-
-type-III <- long-rafsi (r / n / l) &consonant / CVC-rafsi (r / n / l) &consonant 
+brivla-head <- !cmavo !slinkuhi &initial unstressed-syllable*
 
 slinkuhi <- consonant rafsi-string
 
@@ -128,7 +124,7 @@ stressed-extended-rafsi <- cmene-rafsi / stressed-cmavo-rafsi / stressed-brivla-
 
 extended-rafsi <- cmene-rafsi / cmavo-rafsi / brivla-rafsi / fuhivla-rafsi
 
-stressed-fuhivla-rafsi <- (stressed-type-III / fuhivla-head stressed-syllable) &consonant y-syllable
+stressed-fuhivla-rafsi <- fuhivla-head stressed-syllable &consonant y-syllable
 
 fuhivla-rafsi <- &syllable fuhivla-head &consonant y-syllable
 
@@ -184,17 +180,13 @@ y <- comma* [[yY]
 
 ;-------------------------------------------------------------------
 
-non-initial-cluster <- !initial cluster
-
-cluster <- &consonant+ coda? consonantal-syllable? initial
+cluster <- &(consonant consonant+) coda? consonantal-syllable? initial
 
 coda <- !initial !consonantal-syllable consonant
 
 consonantal-syllable <- consonant (l / m / n / r) &initial
 
 initial-pair <- &initial consonant consonant !consonant
-
-initial-cluster <- &initial consonant consonant+
 
 initial <- (affricate / sibilant? other? liquid?) &vowel
 
