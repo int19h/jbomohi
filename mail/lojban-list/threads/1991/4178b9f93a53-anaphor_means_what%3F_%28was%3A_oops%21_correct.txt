@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4178b9f93a53-anaphor_means_what%3F_%28was%3A_oops%21_correct | root "swan.cl.ca.187:25.03.91.09.23.53"@cl.cam.ac.uk | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4178b9f93a53-anaphor_means_what%3F_%28was%3A_oops%21_correct | root "swan.cl.ca.187:25.03.91.09.23.53"@cl.cam.ac.uk | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 1991-04-25T09:23:38Z | David Elworthy <cbmvax!uunet!computer-lab.cambridge.ac.uk!David.Elworthy> | "swan.cl.ca.187:25.03.91.09.23.53"@cl.cam.ac.uk | mail/lojban-list/cur/672571418.4178b9f93a5345b3.jbomohi:2,S
 
@@ -512,7 +512,175 @@ of generalized quantifiers.  What is it?
 
 
 
-=== 7 | 1991-04-29T16:14:03Z | cowan | m0jxarv-0000fdc@snark.thyrsus.com | mail/lojban-list/cur/672941643.a5af2be837a372ce.jbomohi:2,S
+=== 7 | 1991-05-01T14:32:11Z | cbmvax!uunet!gnu.ai.mit.edu!grackle!bob | 9105011432.aa06562@grackle.uucp | mail/lojban-list/cur/673108331.f6be4e5a9e48971c.jbomohi:2,S
+   I don't know if I've explained this terribly clearly. I haven't
+   found any reference which states the problem with "most" (and some
+   other quantifiers) in an intuitive way...
+
+It appears to me that the mathematics you were trying to express are
+based on the metaphor of a container, with your only permitted test
+being whether something is in or is not in the container.  Using this
+metaphor, it is easy to demonstrate what you are trying to show; it is
+also easy to show how to handle "most".
+
+By `container', I mean `box', `room', `body' or sand castle; the sorts
+of things that children learn have an inside and an outside.
+
+In this case, we have more than one container, and entities are in
+more than one container at the same time.  (I am in a chair now, and
+in a room, at the same time; however, the one container does not have
+to be inside the other.)
+
+   we can translate "Two
+   men walk" as "two x.(man(x) & walk(x))", i.e.  "Ex.Ey.(x /= y &
+   man(x) & man(y) & walk(x) & walk(y))".
+
+There exist x and y 
+such that x and y are not identical 
+and x is located in the container `man' 
+and y is located in the container `man'
+and x is located in the container `walk' 
+and y is located in the container `walk'.
+
+It is easy to imagine walking as an attribute of `man' so you can
+visualize this metaphor as two dolls in a box marked `walk' which is
+in a bigger box marked `man'. 
+
+   Secondly, I should make it clear what I mean by "most". A
+   paraphrase is "more than half of", i.e. "Most men walk" is
+   equivalent to (1) "more than half of the individuals who are men
+   are individuals who walk."
+
+   Now, look at how we translate sentences into first order logic and
+   interpret the resulting formulae: English	A man walks.
+   FOL	Ex.(man(x) & walk(x)) Interp	Examine the universe U, and
+   see if you can find at least one individual i from U for which
+   man(i) and walk(i) both hold.
+
+Examine the boxes: do you find at least one doll in both the `walk'
+box and the `man' box?
+
+   English	Every man walk.
+   FOL	Ax.(man(x) => walk(x)) Interp	Examine the universe U, and
+   check that for every individual i from U, if man(i) holds, then
+   walk(i) holds. (And if man(i) does not hold, we don't care if
+   walk(i) does or not.)
+
+Check the boxes:  is every doll that is in a `man' box also in a
+`walk' box?
+
+Now to a problem:
+
+   English	Two men walk.
+   FOL	2x.(man(x) & walk(x)) Interp	Examine the universe U, and
+   see if you can find at least two different individuals i from U for
+   which man(i) and walk(i) both hold.
+
+This sneaks in a new idea, which is counting; you cannot `find at
+least two different individuals' unless you can count.  (You can find
+that you have different individuals because they are not identical.
+But you don't have numbers, which means you won't know that the
+existance of non-identical entities implies at least two entities.)
+
+My understanding is that the problem with `most' occurs if you are
+restricted to determining membership and equality.  If you can count
+and do other related operations, you can handle `most'.
+
+   And if we try it for "most":
+   English	Most men walk.  
+   ??FOL	Most x.(man(x) c walk(x)),
+   where c is a logical connective.  Interp	Examine the universe
+   U, and see if more than half the individuals i in U are such that
+   the fact of i being a man is related by c to the fact of walking.
+
+You cannot "Examine the universe U, and see if more than half"  unless
+you have a test for determining halfness.  If your only tests are
+whether a doll is in a box and whether it is different from another
+doll, you cannot determine halfness.  
+
+   One solution which is widely used is to adopt what are called
+   "generalized quantifiers". Now, instead of translating a sentence
+   into a quantifier over a variable, and a formula which uses that
+   variable, we express the quantifier as a relation between two sets.
+
+   Thus English	A man walks.  GQ	The set of men has a non-empty
+   intersection with the set of walkers.
+
+New container image!  Sitting on the beach you construct sand
+enclosures:  walls of sand around a small area.  You can see whether
+someone has put dolls into the courtyard of your sandcastle.
+
+In the `non-intersection' case, the `man' castle and the `walk' castle
+enclose different areas of the beach.  In the `intersection' case, one
+castle is inside the other, or, at least, some of the territory is
+shared by both.
+
+Thus:
+
+   English	Every man walks.  GQ	The set of men is a subset of
+   the set of walkers.
+
+And:
+
+   English	Two men walk.  GQ	The intersection of the set of
+   men and the set of walkers contains at least two individuals.
+
+
+But now we have trouble again:
+
+   English	Most men walk.
+   GQ	The intersection of the set of men and the set of walkers
+   contains at least half as many members as the set of men.
+
+How do you say "at least half" unless you count?
+
+
+But now, suppose you are able to count...
+
+Two ways to determine more than half.  
+
+Without counting , you can pair off the dolls, creating two equal sets
+and possibly a third set of one doll left over.  Then you can pair off
+the set of dolls that are both in the set of men and the set of
+walkers and see whether you have left over dolls.  If so, you have got
+`at least half'.  (This is the usual technique for comparing
+infinities.)
+
+Alternatively, you can count the dolls in each set and do arithmetic.
+`At least half' becomes the name of a test procedure involving
+counting, adding, division, and comparing:
+
+  `At least half' is true if the number of dolls that are both in the
+  set of men and the set of walkers is greater than the number of
+  dolls in the set of all the dolls divided by two.
+
+Looking at it this way, it appears to me rather obvious that you
+cannot handle "most" with a logic in which you cannot count (or pair
+and compare). 
+
+Of course, a mathematician could argue that if you can determine that
+you have different individuals because they are not identical, this
+makes introducing the notion of `more than one' so simple that you can
+use the idea in your thinking; and if you can go this far, you
+can compare sets pair by pair.....which suggests that you can handle
+`most'....  (I think that this was all done a century ago.)
+
+Anyhow, Lojban does have numbers and counting predicates.  What this
+tells me is that if you want a lojban computer to handle most, you
+will need to program the computer to compute (or at least, give it the
+ability to pair and compare).
+
+The usual statement about the logical languages is that their grammar
+is "based on logic", not that it is limited to a small set of logical
+operations.
+
+    Robert J. Chassell               bob@gnu.ai.mit.edu
+    Rattlesnake Mountain Road        (413) 298-4725 or (617) 253-8568 or
+    Stockbridge, MA 01262-0693 USA   (617) 876-3296 (for messages)
+
+
+
+=== 8 | 1991-04-29T16:14:03Z | cowan | m0jxarv-0000fdc@snark.thyrsus.com | mail/lojban-list/cur/672941643.a5af2be837a372ce.jbomohi:2,S
 kartr. jim. writes:
 > And similarly for other articles in extension (le, le'e).  In Lojban an
 > easy way to insure this is to define a sumti with <LE> to be 
@@ -532,7 +700,7 @@ cowan@snark.thyrsus.com		...!uunet!cbmvax!snark!cowan
 
 
 
-=== 8 | 1991-04-30T07:52:41Z | cbmvax!uunet!math.ucla.edu!jimc | 9104301552.aa14152@euphemia.math.ucla.edu | mail/lojban-list/cur/672997961.da33f54df9ff8d68.jbomohi:2,S
+=== 9 | 1991-04-30T07:52:41Z | cbmvax!uunet!math.ucla.edu!jimc | 9104301552.aa14152@euphemia.math.ucla.edu | mail/lojban-list/cur/672997961.da33f54df9ff8d68.jbomohi:2,S
 > Date:  Mon, 29 Apr 91 12:14:03 EDT
 > To:  lojban-list@snark.thyrsus.com
 > From:  cbmvax!snark.thyrsus.com!cowan@uunet.UU.NET (John Cowan)
