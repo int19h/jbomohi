@@ -1,0 +1,47 @@
+# mail/lojban-list thread 891a488686ee-my_parser_and_zoi | root 20040430233919.ge14939@digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2004-04-30T23:39:19Z | Robin Lee Powell <lojban-out@lojban.org> | 20040430233919.ge14939@digitalkingdom.org | mail/lojban-list/cur/1083368359.891a488686eefcb1.jbomohi:2,S
+I've decided that having a pre-processor just to handle ZOI wasn't
+compromising my principles too badly.  The entire pre-processor is as
+follows:
+
+
+- cut -
+
+#!/bin/sh
+
+cd /home/rlpowell/www/hobbies/lojban/grammar/rats
+
+cat - | \
+perl -p -e "s/(zoi[\s.]+|la'o[\s.]+)([a-zA-Z']+)([\s.]+.*[\s.]+)(\2)([\s.]+|\z)/\1QZOIMARKER\2\3\4\5QZOIMARKER/" | \
+/usr/local/java/bin/java xtc/parser/PParser /dev/stdin
+
+- cut -
+
+The perl isn't nearly as bad as it looks; there's nothing there that
+egrep can't do, except for the replacement and \z.
+
+What this does is replace[1] the zoi boundary word (i.e. gy in "zoi gy
+whee! gy") with the string QZOIMARKER.  That string was chosen to be
+descriptive.  The Q is there to make sure it's not valid Lojban, so that
+the pre-processor's efforts can never be mis-construed as valid for some
+reason other than processing ZOI correctly.
+
+-Robin
+
+[1]:  Technically, it prepends it in front of the first boundary word
+and postpends it after the second; this is so that the entire original
+text is recoverable.
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
+
+
+
+
+           
+
+
