@@ -1,0 +1,39 @@
+Currently there is no way to specify multiple sentences in the construction ''subsentence'', such as inside a NU or a NOI. For example, you have to use various rephrasings to say something like ''"He said that he went to the store and (that) John ate the meal."''
+
+The proposal is to change BNF line which reads:
+   ''subsentence<41> = sentence | prenex subsentence''
+to
+   ''subsentence<41> = sentence | prenex subsentence | (Was Footnote: tag) TUhE # text-1 /TUhU#/''
+and change the yacc rule which reads:
+ subsentence_41          :  sentence_40
+                         |  prenex_30  subsentence_41
+                         ;
+to
+ subsentence_41          :  sentence_40
+                         |  prenex_30  subsentence_41
+                         |  TUhE_447  text_B_2  TUhU_gap_454
+                         |  tag_491  TUhE_447  text_B_2  TUhU_gap_454
+                         ;
+
+That way the above sentence could be translated ''.i cusku le se du'u tu'e vo'a klama le zarci .ije la djan. citka le sanmi tu'u''
+
+This was born of an actual, spontaneous use of just such a construction by ((Michael Helsem)), uber-naturalist, at [http://groups.yahoo.com/group/lojban/message/857|857] (at [http://groups.yahoo.com/group/lojban/message/859|859] ((xorxes)) points out that it's not grammatical).
+
+--((Adam))
+----
+
+So "Either he said he went to the store or he ate the meal" would be ''.i cusku le se du'u tu'e vo'a klama le zarci kei .ija la djan. citka le sanmi tu'u'', with ''kei'' obligatory? Seems a good change. --((And))
+;: I don't see how the ''kei'' is obligatory here? What's it closing? If it's closing the ''se du'u'', then there's only one sentence in the subsentence, and ''tu'e'' is completely unnecessary. --((Adam))
+;: You are right. Ignore what I said. I was missing the very point that you were making, about ''tu'e'' overriding ''i''.
+*** Could you delete it so as not to confuse people who read this in the future?
+*** Feel free to delete it. I haven't, because Jordan refers to it below. But edit it as you see fit.
+----
+I object to the claim that "currently there is no way ...".  You can use forthought connectives to do this currently, when this should be done, but it sounds like the above examples are doing the connection at the wrong level.  For Adam's example, the connective should be put at the sumti level: ''cusku lesedu'u vo'a klama le zarci kei .e lesedu'u la djan. citka le sanmi''.  The translation he gave (including the grammar change) suggests that only one thing was said.  A better translation of And's example should be ''gonai cusku lesedu'u klama le zarci kei gi citka le sanmi'', as in the english the fact that the "Either" is outside of what "he" said makes the assertion that one of two things happened: (i) he said something or (ii) he ate the meal, rather than either saying one thing which contained a "or" (as "and" in the lojban version of adam's example), or saying one of two things (as saying both of two things, like the english version of adam's example).  --mi'e ((.djorden.))
+* I think Adam had in mind something more like English "He said that either he would go to the store or he would eat the meal", but without forethought. But I take your point (in extended form) that "afterthought is a privilege not a right" -- when afterthought works, then good, but it's to forethought that we look to have our guaranteed ways of saying what we want. --((And))
+''In my example, if indeed there were two different utterances, then ''le se du'u ... kei .e le se du'u ... '' would be better, but I was thinking of a case when only one utterance is being relayed, in which case joining two ''se du'u'' is not quite accurate. Forethought or maybe some other methods may work to join two sentences, but beyond that it gets to be extremely unwieldy. If you are relaying an utterance of say 5 sentences, would you happy saying ''le se du'u gegegege ... gi ... gi ... gi ... gi ...''? -- ((Adam))''
+* OTOH, where you would have ''tu'e ... i ... i ... i ... i ... tu'u'', one could have ''ge ... gige ... gige ... gige ... gi ...'', which if anything seems slightly simpler... --((And))
+** That it's simpler is debatable. It introduces two different ways of separating sentences: for sentences at the main sentence level, use ''.i''; for subsentences, start with ''ge'' before the first sentence, and separate each sentence with ''gige'', except for the separation between the last and the next-to-last, which are separated by ''gi''. I prefer the consistency and simplicity of ''.i'' -- ((Adam))
+
+I see; So then, what is wrong with ko'a cusku lesedu'u vo'a ba klama le zarci gi'onai ba citka le sanmi?  Additionally there's always using real quotes.  Or if you feel like cheating la'e lu ... li'u (the la'e making it essentially the same as a lesedu'u, but with a full text node, so you can do whatever .ija type stuff you want.  Actually now that I think about this more I don't think it neccesarily deserves the label "cheating").  But GIhA covers the example And gave, and I would imagine many others.  For "He said that he went to the store and John ate the meal", "ko'a cusku lesedu'u ko'a klama le zarci gi'e citka fa la djan. le sanmi" works, though it is less pretty than the forethought version (or that la'e lu ... li'u version). -mi'e ((.djorden.))
+
+;: Some of those may work, with diverse stylistic baggage, but your last example is semantically anomalous. ''ko'a klama le zarci gi'e citka fa la djan. le sanmi'' claims that ''ko'a fa la djan. citka le sanmi''; it puts two (apparently different) sumti into one slot. You could still use ''giheks'' to achieve the desired effect, but you would have to be sure that no sumti appear before the selbri. -- ((Adam))
