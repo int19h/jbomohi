@@ -1,0 +1,45 @@
+# mail/lojban-list thread 994276ba9779-logflash_on_linux_up_and_running | root 3b78484c.2080605@reutershealth.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2001-08-13T21:36:12Z | John Cowan <jcowan@reutershealth.com> | 3b78484c.2080605@reutershealth.com | mail/lojban-list/cur/997738572.994276ba97792716.jbomohi:2,S
+I have successfully built Logflash on Linux using FPC,
+the Free Pascal Compiler (http://www.freepascal.org).
+A tarball with the modified source code and rebuilt index,
+plus executables for Linux (ELF, glibc) is at
+http://www.ccil.org/~cowan/lflinux.tar.gz.
+
+The gory details:
+
+I grabbed the rpm for FPC from a mirror site and installed
+it on my RH 7.1 box.  (Tarballs are also available.)  I
+grabbed http://www.lojban.org/files/software/lfsrc.ZIP
+and unpacked it.  All source files were run through d2u just to make
+life easy (removes stupid DOS CR characters).  All files were
+also renamed to lower case.
+
+Then "fpc lf.pas" compiled a runnable version of LogFlash!
+
+Unfortunately, the *.LF1 files in logflash.zip (from
+lojban.org as well) weren't in the proper format.
+So I tried to compile lf1bldwd.pas, the word file builder.
+Fatal compile-time error.
+
+I modified lf1bldwd.pas so that 4 lines of the form
+{$I foo} (a Turbo Pascal include directive) took the
+form {$I foo.pas}.  Recompiled without errors.
+I grabbed the gismu list at
+http://www.lojban.org/files/wordlists/gismu ,
+renamed it "logdata.raw", and ran lf1bldwd.
+This created new *.LF1 files.
+
+Logflash then worked perfectly!!
+
+-- 
+There is / one art             || John Cowan <jcowan@reutershealth.com>
+no more / no less              || http://www.reutershealth.com
+to do / all things             || http://www.ccil.org/~cowan
+with art- / lessness           \\ -- Piet Hein
+
+
+           
+
+
