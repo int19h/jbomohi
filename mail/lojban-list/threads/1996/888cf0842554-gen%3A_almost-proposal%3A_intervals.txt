@@ -1,4 +1,4 @@
-# mail/lojban-list thread 888cf0842554-gen%3A_almost-proposal%3A_intervals | root 199602121648.laa01061@locke.ccil.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 888cf0842554-gen%3A_almost-proposal%3A_intervals | root 199602121648.laa01061@locke.ccil.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 1996-02-12T04:36:58Z | Veijo Vilva <veion@XIRON.PC.HELSINKI.FI> | 199602120439.gaa03348@xiron.pc.helsinki.fi | mail/lojban-list/cur/824099818.261d51e1970cdc8f.jbomohi:2,S
 ERROR: the YACC modification I previously sent works at the YACC
@@ -31,5 +31,28 @@ ERROR: the YACC modification I previously sent works at the YACC
 ---------------------------------
 .i mi du la'o sy. Veijo Vilva sy.
 ---------------------------------
+
+
+
+=== 3 | 1996-02-14T19:18:32Z | John Cowan <cowan@locke.ccil.org> | 31223588.1de8@ccil.org | mail/lojban-list/cur/824325512.e09605e2b32e7e03.jbomohi:2,S
+la veion. cusku di'e
+
+> ERROR: the YACC modification I previously sent works at the YACC
+>        level but isn't feasible in practice as the modification
+>        ended up on the lexer side - I'm not yet sure whether it
+>        can be done on the parser side, probably not without a
+>        major modification.
+
+Regrettably, it can't.  Whatever is done in the preparser rules (900-end) 
+can't refer to things in the earlier rules, on pain of implementing the 
+entire parser within the preparser.  So "NOI sentence" within a tense is 
+impossible, even though it YACCs, it doesn't fit the schema of the 
+parser, which is to keep the compounded forms simple.  Of these, tense 
+(lexer_O) is already the worst offender, and further complications are 
+truly intolerable.
+
+I am still thinking about the other possibilities.  I weakly favor 
+messing with "ve'i <sumti>", although I recognize the annoying doubled 
+semantics of the i/a/u vowel plus what the sumti actually says.
 
 
