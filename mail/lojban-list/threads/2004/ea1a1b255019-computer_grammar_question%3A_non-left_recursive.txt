@@ -1,4 +1,4 @@
-# mail/lojban-list thread ea1a1b255019-computer_grammar_question%3A_non-left_recursive | root 20041107081848.gw18082@chain.digitalkingdom.org | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread ea1a1b255019-computer_grammar_question%3A_non-left_recursive | root 20041107081848.gw18082@chain.digitalkingdom.org | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-11-07T08:18:48Z | Robin Lee Powell <lojban-out@lojban.org> | 20041107081848.gw18082@chain.digitalkingdom.org | mail/lojban-list/cur/1099815528.ea1a1b255019e51a.jbomohi:2,S
 Lojban has a reverse polish (i.e. postfix math) mode built in.
@@ -37,7 +37,48 @@ Proud Supporter of the Singularity Institute - http://singinst.org/
 
 
 
-=== 2 | 2004-11-07T11:52:43Z | GREGORY DYKE <gregory.dyke@epfl.ch> | 1dfa220e1a.20e1a1dfa2@imap.epfl.ch | mail/lojban-list/cur/1099828363.8f6087b120aa850d.jbomohi:2,S
+=== 2 | 2004-11-09T05:49:14Z | Raphaël Poss <lojban-out@lojban.org> | 1624c623-3213-11d9-9684-000d9329c984@online.fr | mail/lojban-list/cur/1099979354.5f15c2c6bd18d107.jbomohi:2,S
+
+Le 7 nov. 04, à 09:18, Robin Lee Powell a écrit :
+
+> Lojban has a reverse polish (i.e. postfix math) mode built in.
+>
+> The ABNF form of this rule is:
+>
+> rp-expression = rp-operand rp-operand operator
+>
+> rp-operand = operand / rp-expression
+>
+> which does exactly what you'd expect.
+>
+> I can't figure out a way to convert this into a version without left
+> recursion.  I've got:
+>
+> rp-expression = operand rp-expression-tail
+> rp-expression-tail = rp-expression operator rp-expression-tail / ()
+>
+> (where () is the empty production), but I'm not at all certain it's
+> equivalent, and the parse trees it produces look very wrong (i.e.
+> not left recursive at all).
+>
+> Help?
+>
+
+(I assume from the ABNF grammar above that a RP expression has at least 
+2 operands and 1 operator)
+
+What about :
+
+rp-expression = operand operand rp-tail
+rp-tail = operand rp-tail / operator
+
+?
+
+-- 
+Raphaël
+           
+
+=== 3 | 2004-11-07T11:52:43Z | GREGORY DYKE <gregory.dyke@epfl.ch> | 1dfa220e1a.20e1a1dfa2@imap.epfl.ch | mail/lojban-list/cur/1099828363.8f6087b120aa850d.jbomohi:2,S
 I did a compiler construction course last year. I can no longer remember how to check whether your solution is correct, I also can no longer remember how to eliminate left-recursion (but I've got notes hanging around somewhere, I'll find them for you).
 
 What I do seem to remember, though is that once we had eliminated left-recursion, we had to do some trick to retain right-grouping in the returned abstract tree.
@@ -49,7 +90,7 @@ Greg
 
 
 
-=== 3 | 2004-11-07T18:45:22Z | Robin Lee Powell <lojban-out@lojban.org> | 20041107184522.gb18082@chain.digitalkingdom.org | mail/lojban-list/cur/1099853122.055be93377c91442.jbomohi:2,S
+=== 4 | 2004-11-07T18:45:22Z | Robin Lee Powell <lojban-out@lojban.org> | 20041107184522.gb18082@chain.digitalkingdom.org | mail/lojban-list/cur/1099853122.055be93377c91442.jbomohi:2,S
 On Sun, Nov 07, 2004 at 12:52:43PM +0100, GREGORY DYKE wrote:
 > I did a compiler construction course last year. I can no longer
 > remember how to check whether your solution is correct, I also can
@@ -80,7 +121,7 @@ Proud Supporter of the Singularity Institute - http://singinst.org/
 
 
 
-=== 4 | 2004-11-07T16:38:29Z | GREGORY DYKE <lojban-out@lojban.org> | 258b0215cb.215cb258b0@imap.epfl.ch | mail/lojban-list/cur/1099845509.f396916dfe7fb87d.jbomohi:2,S
+=== 5 | 2004-11-07T16:38:29Z | GREGORY DYKE <lojban-out@lojban.org> | 258b0215cb.215cb258b0@imap.epfl.ch | mail/lojban-list/cur/1099845509.f396916dfe7fb87d.jbomohi:2,S
 As per promise, first a piece of code to illustrate how to make the tree from the new grammar.
 
 
@@ -131,7 +172,7 @@ Greg
 
 
 
-=== 5 | 2004-11-07T19:16:18Z | Robin Lee Powell <lojban-out@lojban.org> | 20041107191618.gc18082@chain.digitalkingdom.org | mail/lojban-list/cur/1099854978.c0eb76673d3c14ad.jbomohi:2,S
+=== 6 | 2004-11-07T19:16:18Z | Robin Lee Powell <lojban-out@lojban.org> | 20041107191618.gc18082@chain.digitalkingdom.org | mail/lojban-list/cur/1099854978.c0eb76673d3c14ad.jbomohi:2,S
 On Sun, Nov 07, 2004 at 05:38:29PM +0100, GREGORY DYKE wrote:
 > As per promise, first a piece of code to illustrate how to make
 > the tree from the new grammar.
@@ -202,7 +243,7 @@ Proud Supporter of the Singularity Institute - http://singinst.org/
 
 
 
-=== 6 | 2004-11-08T13:21:23Z | GREGORY DYKE <lojban-out@lojban.org> | 2756b2b539.2b5392756b@imap.epfl.ch | mail/lojban-list/cur/1099920083.80c4ac7b75935adc.jbomohi:2,S
+=== 7 | 2004-11-08T13:21:23Z | GREGORY DYKE <lojban-out@lojban.org> | 2756b2b539.2b5392756b@imap.epfl.ch | mail/lojban-list/cur/1099920083.80c4ac7b75935adc.jbomohi:2,S
 I have talked to the kind folks who are post-grads in the lab where the compiler course was given. They have never heard of PEG parsers and don't understand the problem:
 
 rp-notation is not LL(1). This is clear. (well, it is LL1, but you can't easily generate the tree from it). 
@@ -261,7 +302,7 @@ Greg
 
 
 
-=== 7 | 2004-11-08T20:07:51Z | Robin Lee Powell <lojban-out@lojban.org> | 20041108200751.gc20718@chain.digitalkingdom.org | mail/lojban-list/cur/1099944471.681d231036e84860.jbomohi:2,S
+=== 8 | 2004-11-08T20:07:51Z | Robin Lee Powell <lojban-out@lojban.org> | 20041108200751.gc20718@chain.digitalkingdom.org | mail/lojban-list/cur/1099944471.681d231036e84860.jbomohi:2,S
 On Mon, Nov 08, 2004 at 02:21:23PM +0100, GREGORY DYKE wrote:
 > I have talked to the kind folks who are post-grads in the lab
 > where the compiler course was given. They have never heard of PEG

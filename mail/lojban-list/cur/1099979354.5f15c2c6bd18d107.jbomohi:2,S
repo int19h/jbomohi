@@ -1,0 +1,100 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 86713 invoked from network); 9 Nov 2004 05:53:44 -0000
+Received: from unknown (66.218.66.166)
+  by m19.grp.scd.yahoo.com with QMQP; 9 Nov 2004 05:53:44 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta5.grp.scd.yahoo.com with SMTP; 9 Nov 2004 05:53:43 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CROwW-0000So-Kt
+	for lojban@yahoogroups.com; Mon, 08 Nov 2004 21:53:24 -0800
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.34)
+	id 1CROs5-0000JS-KS; Mon, 08 Nov 2004 21:48:49 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 08 Nov 2004 21:48:43 -0800 (PST)
+Received: from smtp-102-tuesday.noc.nerim.net ([62.4.17.102] helo=mallaury.noc.nerim.net)
+	by chain.digitalkingdom.org with esmtp (Exim 4.34)
+	id 1CROrp-0000Ix-B3
+	for lojban-list@lojban.org; Mon, 08 Nov 2004 21:48:33 -0800
+Received: from [192.168.1.3] (pilot.net2.nerim.net [213.41.129.7])
+	by mallaury.noc.nerim.net (Postfix) with ESMTP
+	id EB20462E3F; Tue,  9 Nov 2004 06:48:23 +0100 (CET)
+In-Reply-To: <20041107081848.GW18082@chain.digitalkingdom.org>
+References: <20041107081848.GW18082@chain.digitalkingdom.org>
+Mime-Version: 1.0 (Apple Message framework v619)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-19--734413724"
+Message-Id: <1624C623-3213-11D9-9684-000D9329C984@online.fr>
+Date: Tue, 9 Nov 2004 06:49:14 +0100
+X-Pgp-Agent: GPGMail 1.0.2
+X-Mailer: Apple Mail (2.619)
+X-archive-position: 8965
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: grey.havens@online.fr
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: =?ISO-8859-1?Q?Rapha=EBl_Poss?= <grey.havens@online.fr>
+From: =?ISO-8859-1?Q?Rapha=EBl_Poss?= <lojban-out@lojban.org>
+Reply-To: grey.havens@online.fr
+Subject: [lojban] Re: Computer grammar question: non-left recursive RPN?
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 23369
+Content-Length: 1409
+
+           
+--Apple-Mail-19--734413724 
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+
+
+Le 7 nov. 04, =E0 09:18, Robin Lee Powell a =E9crit :
+
+> Lojban has a reverse polish (i.e. postfix math) mode built in.
+>
+> The ABNF form of this rule is:
+>
+> rp-expression =3D rp-operand rp-operand operator
+>
+> rp-operand =3D operand / rp-expression
+>
+> which does exactly what you'd expect.
+>
+> I can't figure out a way to convert this into a version without left
+> recursion.  I've got:
+>
+> rp-expression =3D operand rp-expression-tail
+> rp-expression-tail =3D rp-expression operator rp-expression-tail / ()
+>
+> (where () is the empty production), but I'm not at all certain it's
+> equivalent, and the parse trees it produces look very wrong (i.e.
+> not left recursive at all).
+>
+> Help?
+>
+
+(I assume from the ABNF grammar above that a RP expression has at least=20
+2 operands and 1 operator)
+
+What about :
+
+rp-expression =3D operand operand rp-tail
+rp-tail =3D operand rp-tail / operator
+
+?
+
+--=20
+Rapha=EBl
+           
+--Apple-Mail-19--734413724 
+Content-Type: application/pgp-signature; x-mac-type=70674453;	name=PGP.sig
+content-description: =?ISO-8859-1?Q?Ceci_est_une_signature_=E9lectronique_PGP?=
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+[Attachment content not displayed.]           
+--Apple-Mail-19--734413724--
+
