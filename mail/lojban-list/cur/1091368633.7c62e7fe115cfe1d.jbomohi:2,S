@@ -1,0 +1,82 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 86275 invoked from network); 1 Aug 2004 13:58:17 -0000
+Received: from unknown (66.218.66.218)
+  by m25.grp.scd.yahoo.com with QMQP; 1 Aug 2004 13:58:17 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 1 Aug 2004 13:58:17 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.32)
+	id 1BrGqs-00037A-Oh
+	for lojban@yahoogroups.com; Sun, 01 Aug 2004 06:58:14 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.32)
+	id 1BrGqB-00036J-C1; Sun, 01 Aug 2004 06:57:31 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 01 Aug 2004 06:57:25 -0700 (PDT)
+Received: from rproxy.gmail.com ([64.233.170.197] helo=mproxy.gmail.com)
+	by chain.digitalkingdom.org with esmtp (Exim 4.32)
+	id 1BrGpu-00035y-HX
+	for lojban-list@lojban.org; Sun, 01 Aug 2004 06:57:15 -0700
+Received: by mproxy.gmail.com with SMTP id 77so31296rnl
+        for <lojban-list@lojban.org>; Sun, 01 Aug 2004 06:57:13 -0700 (PDT)
+Received: by 10.38.164.39 with SMTP id m39mr9586rne;
+        Sun, 01 Aug 2004 06:57:13 -0700 (PDT)
+Message-ID: <537d06d0040801065766539b23@mail.gmail.com>
+Date: Sun, 1 Aug 2004 15:57:13 +0200
+In-Reply-To: <20040730160437.GB3982@mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+References: <20040729215411.GA11429@nerd-xing.mit.edu> <Pine.LNX.4.58.0407300933250.25556@hagbart.nvg.ntnu.no> <20040730160437.GB3982@mit.edu>
+X-archive-position: 8367
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: philip.newton@gmail.com
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Philip Newton <philip.newton@gmail.com>
+From: Philip Newton <lojban-out@lojban.org>
+Reply-To: philip.newton@gmail.com
+Subject: [lojban] Re: jimpe: Language Processing in Lojban
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 22788
+Content-Length: 973
+Lines: 34
+
+On Fri, 30 Jul 2004 12:04:37 -0400, Rob Speer <rspeer@mit.edu> wrote:
+> But if anyone has suggestions on how to determine which terminators are
+> elidable (for example, how does Nora's random sentence generator do it?) that
+> would be really helpful for the project.
+
+You could have a look at jbofihe; its source code is available, and it
+has a mode called "show elidable terminators" which will tell you
+which terminators in a given text are elidable - if several
+combinations are possible, it will tell you all of them.
+
+For example:
+
+$ jbofihe.exe -se
+broda le nu brode le brodi ku kei ku le brodo vau
+^Z
+The words 'ku kei ku'
+ (from line 1 col 28 to line 1 col 35)
+could be safely reduced to any of these minimal patterns:
+  Pattern 1 :  kei
+  Pattern 2 :  ku ku
+
+You could omit the word 'vau' (at line 1 col 47)
+
+(0[broda {<(1le [nu {brode <le brodi ku>} kei] ku)1 (1le brodo)1> vau}])0
+
+
+mu'o mi'e .filip.
+-- 
+Philip Newton <philip.newton@gmail.com>
+
+
+
+
+           
+

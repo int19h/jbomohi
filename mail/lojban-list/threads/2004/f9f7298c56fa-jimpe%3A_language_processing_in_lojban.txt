@@ -1,4 +1,4 @@
-# mail/lojban-list thread f9f7298c56fa-jimpe%3A_language_processing_in_lojban | root 20040729215411.ga11429@nerd-xing.mit.edu | 6 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread f9f7298c56fa-jimpe%3A_language_processing_in_lojban | root 20040729215411.ga11429@nerd-xing.mit.edu | 7 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-07-29T21:54:11Z | Rob Speer <lojban-out@lojban.org> | 20040729215411.ga11429@nerd-xing.mit.edu | mail/lojban-list/cur/1091138051.f9f7298c56fa7001.jbomohi:2,S
 Time for me to announce something I've been working on all summer.
@@ -174,6 +174,44 @@ would be really helpful for the project.
 -- 
 Rob Speer
 
+
+
+
+
+           
+
+
+
+=== 7 | 2004-08-01T13:57:13Z | Philip Newton <lojban-out@lojban.org> | 537d06d0040801065766539b23@mail.gmail.com | mail/lojban-list/cur/1091368633.7c62e7fe115cfe1d.jbomohi:2,S
+On Fri, 30 Jul 2004 12:04:37 -0400, Rob Speer <rspeer@mit.edu> wrote:
+> But if anyone has suggestions on how to determine which terminators are
+> elidable (for example, how does Nora's random sentence generator do it?) that
+> would be really helpful for the project.
+
+You could have a look at jbofihe; its source code is available, and it
+has a mode called "show elidable terminators" which will tell you
+which terminators in a given text are elidable - if several
+combinations are possible, it will tell you all of them.
+
+For example:
+
+$ jbofihe.exe -se
+broda le nu brode le brodi ku kei ku le brodo vau
+^Z
+The words 'ku kei ku'
+ (from line 1 col 28 to line 1 col 35)
+could be safely reduced to any of these minimal patterns:
+  Pattern 1 :  kei
+  Pattern 2 :  ku ku
+
+You could omit the word 'vau' (at line 1 col 47)
+
+(0[broda {<(1le [nu {brode <le brodi ku>} kei] ku)1 (1le brodo)1> vau}])0
+
+
+mu'o mi'e .filip.
+-- 
+Philip Newton <philip.newton@gmail.com>
 
 
 
