@@ -1,0 +1,133 @@
+Received: from ELI.CS.YALE.EDU by NEBULA.SYSTEMSZ.CS.YALE.EDU via SMTP; Tue, 17 Aug 1993 09:16:21 -0400
+Received: from YALEVM.YCC.YALE.EDU by eli.CS.YALE.EDU via SMTP; Tue, 17 Aug 1993 09:16:16 -0400
+Message-Id: <199308171316.AA02248@eli.CS.YALE.EDU>
+Received: from YALEVM.CIS.YALE.EDU by YaleVM.YCC.Yale.Edu (IBM VM SMTP V2R2)
+   with BSMTP id 3363; Tue, 17 Aug 93 09:15:01 EDT
+Received: from YALEVM.CIS.YALE.EDU (NJE origin LISTSERV@YALEVM) by YALEVM.CIS.YALE.EDU (LMail V1.1d/1.7f) with BSMTP id 2083; Tue, 17 Aug 1993 09:15:01 -0400
+Date:         Tue, 17 Aug 1993 09:12:50 EDT
+Reply-To: "Robert J. Chassell" <bob@GRACKLE.STOCKBRIDGE.MA.US>
+Sender: Lojban list <LOJBAN%CUVMB.bitnet@YaleVM.YCC.YALE.EDU>
+From: "Robert J. Chassell" <bob@GRACKLE.STOCKBRIDGE.MA.US>
+Subject:      Reading EBNF
+X-To:         lojban@cuvmb.cc.columbia.edu
+To: Erik Rauch <rauch>
+In-Reply-To:  <9308170325.AA13743@albert.gnu.ai.mit.edu> (message from Logical
+              Language Group on Mon, 16 Aug 1993 23:24:27 EDT)
+X-From-Space-Date: Tue Aug 17 05:12:50 1993
+X-From-Space-Address: @YaleVM.YCC.YALE.EDU:LOJBAN@CUVMB.BITNET
+Content-Length: 3908
+
+    It sounds like Rob has roughly the same problem I do with the BNF
+    grammar.  I can read it, but it's a struggle to use it, because
+    the YACC grammar is so much clearer on what is legal, and uses no
+    shortcuts.
+
+It helps to edit the distributed EBNF to line up `=', to list some of
+the multiple options on separate lines, to re-order options on the
+right hand side, and to insert page breaks in front of section
+headings to avoid page breaks in the middle of a rule.
+
+The editing adds nearly 50% more lines to
+the EBNF, lengthening it from 196 lines to 287 lines.
+
+Here is a listing of the sections:
+
+     Lines per page : Section Title
+
+                  58: John Cowan's BNF:         26 Feb 91
+                  63: Lojban Machine Grammar, BNF Version,
+                  63: sumti
+                  49: MEX
+                  61: Connectors
+                  29: Free
+
+Here is an illustration of re-ordering options:
+
+    utterance<20>       = sentence | prenex | relative-clauses
+                            | links | linkargs | term ... /VAU#/
+                            | (ek | gihek | zihek) #
+                            | quantifier /POhO#/ | NA /POhO#/
+
+which replaces the original:
+
+    utterance<20> = (ek | gihek | zihek) # | quantifier /POhO#/ | NA /POhO#/ |
+            term ... /VAU#/ | prenex | relative-clauses | links | linkargs |
+            sentence
+
+with more easily comprehended terms, such as {sentence}, {prenex}, and
+{relative-clauses} in the first line.
+
+Here is an extract from the obsolete version of 20 July 1990,
+incorporating fixes 1-19, of 24 February 1991:
+
+
+text<0>             = [(CMENE ... #) | (indicators & free ...)] [joik-jek]
+                        [I | NIhO ... # ] paragraphs /FAhO/
+
+paragraphs<4>       = utt-string [NIhO ... # paragraphs]
+
+utt-string<10>      = utt-string-1
+                        [I [jek | joik] # (utt-string-1 | /POhO#/)] ...
+
+utt-string-1<11>    = utt-string-2 [I [jek | joik] [stag] BO #
+                        (utt-string-1 | /POhO#/)]
+
+utt-string-2<12>    = utterance | [prenex | tag] TUhE paragraphs /TUhU#/
+
+utterance<20>       = sentence | prenex | relative-clauses
+                        | links | linkargs | term ... /VAU#/
+                        | (ek | gihek | zihek) #
+                        | quantifier /POhO#/ | NA /POhO#/
+
+                Sentences
+                =========
+
+prenex<30>          = term ... ZOhU #
+
+sentence<40>        = [prenex] sentence-1 | bridi-tail
+
+sentence-1<41>      = term ... [/CU#/] bridi-tail
+                        | gek sentence-1 gik sentence-1
+
+bridi-tail<50>      = bridi-tail-1 | gek-tail | tagged-tail
+
+bridi-tail-1<53>    = bridi-base [gihek bridi-tail-2 tail-terms] ...
+
+bridi-tail-2<62>    = bridi-base [gihek [stag] BO # bridi-tail-2]
+
+bridi-base<63>      = selbri tail-terms
+                        [gihek [stag] KE # bridi-tail /KEhE#/] ...
+
+tail-terms<71>      = [term ...] /VAU#/
+
+gek-tail<51>        = gek bridi-tail gik bridi-tail
+                        | NA gek-tail
+                        | NA tagged-tail
+
+tagged-tail<52>     = tag KE gek-tail /KEhE#/
+
+term<81>            = sumti
+                        | (tag | FA #) (sumti | /KU#/)
+                        | termset
+                        | NA KU #
+
+termset<83>         = NUhI [NAhE] gek term ... /NUhU#/ gik term ... /NUhU#/
+                        | NUhI term ... /NUhU#/ ek # term ... /NUhU#/
+
+
+                sumti
+                =====
+
+sumti<90>           = sumti-1 [(joik # | ek #) sumti-1] ...
+
+sumti-1<91>         = sumti-2 [ek [stag] BO # sumti-1]
+
+sumti-2<92>         = sumti-3 [ek [stag] KE # sumti /KEhE#/] ...
+
+sumti-3<93>         = [quantifier] sumti-4 |
+                        quantifier [quantifier] selbri /KU#/ [relative-clauses]
+
+sumti-4<96>         = (LAhE | NAhE BO #) sumti-3
+                        | sumti-5 [relative-clauses]
+                        | gek sumti gik sumti-3
+
