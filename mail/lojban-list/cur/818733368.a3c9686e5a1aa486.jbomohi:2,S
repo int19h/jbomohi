@@ -1,0 +1,72 @@
+Return-Path: LOJBAN%CUVMB.BITNET@vms.dc.LSOFT.COM
+Received: from SEGATE.SUNET.SE (segate.sunet.se [192.36.125.6]) by xiron.pc.helsinki.fi (8.6.12/8.6.9) with ESMTP id DAA18969 for <veion@XIRON.PC.HELSINKI.FI>; Tue, 12 Dec 1995 03:56:24 +0200
+Message-Id: <199512120156.DAA18969@xiron.pc.helsinki.fi>
+Received: from listmail.sunet.se by SEGATE.SUNET.SE (LSMTP for OpenVMS v1.0a) with SMTP id E30AE060 ; Tue, 12 Dec 1995 2:56:24 +0100
+Date:         Mon, 11 Dec 1995 20:56:08 -0500
+Reply-To: Jorge Llambias <jorge@PHYAST.PITT.EDU>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Jorge Llambias <jorge@PHYAST.PITT.EDU>
+Subject:      TECH: YACC version of proposed change X6
+X-To:         lojban@cuvmb.cc.columbia.edu, jorge@minerva.phyast.pitt.edu
+To: Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Content-Length: 1942
+Lines: 57
+
+CHANGE X6 - YACC version.
+
+PRESENT LANGUAGE:
+
+> time_interval_1034      :  ZEhA_622
+>                         |  ZEhA_622  time_direction_1035
+>                         |  interval_modifier_1050
+>                         |  ZEhA_622  interval_modifier_1050
+>                         |  ZEhA_622  time_direction_1035
+ interval_modifier_1050
+>                         ;
+>
+>
+> interval_modifier_1050  :  interval_property_1051
+>                         |  interval_property_1051  event_mod_1052
+>                         |  event_mod_1052
+>                         ;
+>
+> interval_property_1051  :  number_root_961  ROI_594
+>                         |  number_root_961  ROI_594  NAI_581
+>                         |  TAhE_604
+>                         |  TAhE_604  NAI_581
+>                         ;
+>
+> event_mod_1052          :  event_mod_A_1053
+>                         |  event_mod_1052  event_mod_A_1053
+>                         ;
+>
+> event_mod_A_1053        :  ZAhO_621
+>                         |  ZAhO_621  NAI_581
+>                         |  ZAhO_621  interval_property_1051
+>                         |  ZAhO_621  NAI_581  interval_property_1051
+>                         ;
+
+PROPPOSED CHANGE:
+
+All of the above is replaced by:
+
+> time_interval_1034      :  ZEhA_622
+>                         |  ZEhA_622  time_direction_1035
+>                         |  number_root_961  ROI_594
+>                         |  number_root_961  ROI_594  NAI_581
+>                         |  TAhE_604
+>                         |  TAhE_604  NAI_581
+>                         |  ZAhO_621
+>                         |  ZAhO_621  NAI_581
+>                         |  time_interval_1034 time_interval_1034
+>                         ;
+
+
+I notice that YACC permits ZAhO NAI, but (at least my version of) EBNF
+does not. This is good, then ZAhO and TAhE would effectively be blended
+into one.
+
+(I can post the corresponding one for space tenses if needed.)
+
+Jorge
+
