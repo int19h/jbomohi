@@ -1,13 +1,58 @@
 The lerfu shifts (BY1) consist of these cmavo: __ga'e__, __ge'o__, __je'o__, __jo'o__, __lo'a__, __na'a__, __ru'o__, __se'e__, __to'a__.
 
-! Usage observations (not proposals yet)
+! Usage observations
 
-For past usage, I am searching through the corpus I have collected of 900 kilobytes of pure-Lojban text. The corpus includes all texts published at lojban.org/files/texts, many large texts from the Wiki, and texts from the CVS server such as Alice.
+For past usage, I am searching through the corpus I have collected of 900 kilobytes of pure-Lojban text. The corpus includes all texts published at lojban.org/files/texts, many large texts from the Wiki, IRC logs, and texts from the CVS server such as Alice.
 
-!! ga'e (upper-case shift, "caps lock")
+!! ga'e, to'a (case shifts)
 
-This word is only used in [http://www.lojban.org/files/texts/algebra|algebra], to mark variables named with capital letters. It occurs one lerfu from the end of a lerfu string, so that it has the same effect as ''tau''.
+''ga'e'' is only used correctly in [http://www.lojban.org/files/texts/algebra|algebra], to mark variables named with capital letters. It occurs one lerfu from the end of a lerfu string, so that it seems to have the same effect as ''tau''.
+
+''to'a'' is never used correctly.
+
+''lapoi pelxu ku'o trajynobli'' contains the sentence ".itu'e ga'e ca cpedu fi do to'a". ''ga'e'' and ''to'a'' here both act as pro-sumti, which was probably not intended. Here, ''ga'e'' and ''to'a'' were probably intended to "capitalize" (emphasize) the words between them, but as lerfu modifiers they cannot modify the emphasis of words.
 
 !! ge'o, je'o, jo'o, lo'a, ru'o (alphabet shifts)
 
-None of these are used anywhere in the corpus.
+None of these are used anywhere in the corpus, except that the utterance "zo ru'o" appeared on IRC in response to someone typing a line of Russian text.
+
+!! na'a (cancel shifts)
+
+This word is not used in the corpus.
+
+!! se'e (character code)
+
+This word is not used in the corpus.
+
+! Usage clarifications
+
+The scope of a letteral shift needs to be defined. I will elaborate on Arnt's specification in ((BPFK Section: lerfu Forming cmavo)):
+
+A letteral shift lasts until another shift of the same type replaces it, it is cancelled by ''na'a'', or the end of the lerfu string is reached.
+
+(The sole usage of ''ga'e'' assumed that it would end at the end of a lerfu string, which seems reasonable.)
+
+It is not specified where a ''se'e'' construct should end; I propose that it should be able to be terminated with ''na'a''.
+
+! Definitions
+
+;ga'e: Converts future letterals in this letteral sequence to uppercase. The change applies until it is shifted back with ''to'a'' or cancelled with ''na'a''.
+;na'a: Cancels all shifts (font, case, etc.) currently applied to letterals.
+;se'e: Convert the next sequence of digits to a character code in ASCII, Unicode, or some other agreed-upon character set. The code includes all digits until the next non-digit, the end of the letteral string, or ''na'a''.
+;to'a: Converts future letterals in this letteral sequence to lowercase.
+
+! Proposals
+
+!! Proposal 1: Deprecate alphabet shifts
+
+The cmavo __ge'o__, __je'o__, __jo'o__, __lo'a__, __ru'o__ should not appear in the dictionary.
+
+!!! Rationale
+
+The alphabet shifts have not seen any usage, and in fact to use them requires there to exist a mapping from Lojban lerfu to the letters in that alphabet that is known to the listener.
+
+There is already a mechanism for naming arbitrary characters: ''bu''. The Greek letter alpha can be referred to much more clearly with ''alfas bu'' than with ''ge'o abu (na'a)''. There do not exist mappings to other alphabets, nor is there a demand for such mappings.
+
+Given that Lojban does not seem to be intended for holding multilingual spelling bees, and that a dictionary containing many unused cmavo with bizarre functions could confuse learners of the language, I propose that alphabet shifts (including ''zai'' as well) should not appear in the dictionary.
+
+''se'e'' is a different sort of cmavo, and it has a conceivable purpose, so it should remain in the dictionary. Specifically, if Lojban is used in the future to communicate with computers, a computer would not necessarily understand either ''alfas bu'' or ''ge'o abu'', but if an "alpha" character needed to be conveyed to it, it could be told the Unicode character code for "alpha" instead. Of course, I expect ''se'e'' never to be used by one human talking to another.
