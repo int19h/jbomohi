@@ -1,0 +1,91 @@
+Return-Path: <cbmvax!uunet!milton.u.washington.edu!jsp>
+Date: Wed, 17 Apr 91 16:37:28 -0700
+From: Jeff Prothero <cbmvax!uunet!milton.u.washington.edu!jsp>
+Message-Id: <9104172337.AA11527@milton.u.washington.edu>
+To: dmb@bigd.cray.com
+Cc: lojban-list@snark.thyrsus.com
+In-Reply-To: dmb@bigd.cray.com's message of Wed, 17 Apr 91 08:31:45 -0500 <9104171331.AA13189@bigd.cray.com>
+Subject: Elidable terminators 
+X-From-Space-Date: Wed Apr 17 21:34:11 1991
+X-From-Space-Address: cbmvax!uunet!milton.u.washington.edu!jsp
+Content-Length: 4300
+
+jp> = Jeff Prothero
+gs> = Guy Steele Jr.
+db> = Dave Bowen
+
+gs>Indeed.  Moreover, it may even be the case that the language actually
+gs>is LR(1), that is, there does exist an LR(1) grammar that specifies
+gs>it but such a grammar has not been found yet.  Part of my point is
+gs>that the attempt to find an unambiguous LR(1) grammar may yield new
+gs>insights about the grammatical structure of the language.
+     <C example deleted>
+gs>om a contained statement to its container did not
+gs>become clear to me until it was forced upon me by the exercise of
+gs>constructing the grammar.  We might find lojban constructs also
+gs>falling into two general categories: those after which (before
+gs>which?) elision is permissible, and all others.  The nature of that
+gs>dichotomy is worth exploring.
+
+I don't understand this comment at all.  (If it were someone less
+illustrious than Guy, I'd say something stronger. :) Without dragging
+out my attempt to make this formal, if it is even still around, the
+elidability of a particular ET in a particular utterance depends
+entirely on the particular sentential construct following the ET --
+can it be mistaken for a continuation of the current construct, or
+not?  (To make it formal, you have to decide things like how much
+lookahead you are going to allow in making this decision...)
+
+This is a purely contextual computation, and trying to perform it with
+context-free-grammars is an abuse of the formalism.  Yes, you can do
+it -- if construct M in the grammar can be followed by constructs X, Y
+and Z, you can split M into three variants M-followed-byX,
+M-followed-by-Y, and M-followed-by-Z, and you may be able to show that
+in all of these cases, the "elidable" terminator is either clearly
+required or clearly forbidden.  But the exercise serves no particular
+purpose that I can see, and leads to an exponential increase in the
+size of the grammar. Maybe Guy would like to compute the approximate
+number of rules the final grammar would have? ;-)
+
+DB> That's certainly one way of dealing with the issue of elibable
+DB> terminators.  Guy's comments raised the question, at least for me, of
+DB> whether it is the best way.  Is it possible to create a grammar for
+DB> Lojban which has the terminator as an optional production in those places
+DB> and only those places where it can safely be elided?  Or are we stuck
+DB> with the <error> kludge, even if it is safe?  If the answer to this first
+DB> question is, "We don't know.", then my question is what would be a
+DB> reasonable way to investigate this question, given the lack of tools
+DB> for hacking on grammars?  Sorry for all the quotes, but I wanted to
+DB> ensure people understood the basis for my questions.
+
+A reasonable question, Dave, but I think you have a false dichotomy
+here.  After a decade, things will be clearer... :)
+
+The first approach I tried was the error kludge.
+
+The second and third (PLoP) were variants on topdown backtracking parsing,
+which got beat to death by the exponential explosions. 
+
+The fourth (FLoP) was a bottom-up backtracker -- i.e., a regular
+LALR(1) engine, but with the ambiguities left in the parser tables,
+and the stackmachine hacked to backtrack at ambiguities.  This gets
+most of the speed of a regular LALR(1) parser (since most tokens are
+unambiguous, and the shift/reduce can be done with no backtracking
+needed) while allowing the non-LALR(1) (and non-ET) parts of the
+grammar to be handled without special preparsing hacks.  
+
+Elidable terminators are handled by establishing a budget for ETs --
+first, try to parse with no ETs inserted, then with only 1, then with
+only two, etc.  A fair amount of backtracking, but not intolerable,
+given that you only have to parse one connected sentence at a time.
+Last time I seriously thought this through, this seemed the only
+approach that is simple and clearly gives you the parse you want.
+
+Again, I urge you: If you want to tackle this, start by forgetting
+YACC, sit down and formally specify what elidable terminators are
+supposed to do -- what strings are you adding to the language and what
+are their parses?  This is not as obvious as it may seem!  When you
+have this crystal clear, *then* start thinking about implementations
+which will produce the result you have specified, or an acceptable
+approximation.
+
