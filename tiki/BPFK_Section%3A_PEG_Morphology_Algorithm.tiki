@@ -1,0 +1,112 @@
+; This is a Parsing Expression Grammar for the morphology of Lojban.
+; See http://www.pdos.lcs.mit.edu/~baford/packrat/
+; 
+; All rules have the form:
+; 
+; 	name <- peg-expression
+; 
+; which means that the grammatical construct "name" is parsed using
+; "peg-expression".  
+; 
+; 1)  Concatenation is expressed by juxtaposition with no operator symbol.
+; 2)  / represents *ORDERED* alternation (choice).  If the first
+;     option succeeds, the others will never be checked.
+; 3)  ? indicates that the element to the left is optional.
+; 4)  * represents optional repetition of the construct to the left.
+; 5)  + represents one-or-more repetition of the construct to the left.
+; 6)  () serves to indicate the grouping of the other operators.
+; 7)  & indicates that the element to the right must follow (but the
+;     marked element itself does not absorb anything).
+; 8)  ! indicates that the element to the right must not follow (the
+;     marked element itself does not absorb anything).
+; 9)  . represents any character.
+; 10) ' ' or " " represents a literal string.
+; 11) [] represents a character class.    
+;
+; Repetitions grab as much as they can.
+;
+;
+; --- GRAMMAR ---
+; This grammar classifies words by their morphological class (cmene,
+; gismu, lujvo, fuhivla, cmavo, and non-lojban-word). It does not sort
+; them into grammatical classes (CMENE, BRIVLA, A, BAI, BAhE, ..., ZOhU).
+;
+; (Not properly tested yet. For the moment it does not handle 
+; stress marked with capital letters. Commas are absorbed and 
+; otherwise ignored. For syllable counting purposes, any pair 
+; of adjacent vowels is considered a single syllable.)
+;
+; mi'e ((xorxes))
+
+words <- (space* word)* space* EOF
+
+word <- cmene / gismu / lujvo / fuhivla / cmavo / non-lojban-word
+
+cmene <- cmene-syllaboid* consonant+ &space
+
+cmene-syllaboid <- !doi-la-lai-lahi consonant* vowel-y (h? vowel-y)*
+doi-la-lai-lahi <- (d o i / l a (h? i)?) &consonant 
+
+cmavo <- consonant? vowel-y (h? vowel-y)*
+
+gismu <- (initial-pair vowel / consonant vowel consonant) consonant vowel &space
+
+fuhivla <- fuhivla-head non-initial-cluster syllable+ &space / fuhivla-head initial-cluster syllable &space / !(consonant lujvo) !(consonant final-rafsi) initial-cluster syllable syllable+ &space 
+
+fuhivla-head <- consonant? vowel (h? vowel)? / vowel (h? vowel)? (h? vowel)?
+syllable <- (consonant+ / h?) vowel vowel?
+
+lujvo <- CVV-rafsi CCV-rafsi &space / !(cmavo lujvo) initial-rafsi medial-rafsi* final-rafsi
+
+initial-rafsi <- long-rafsi / CVC-rafsi / CCV-rafsi / CVV-rafsi r / CVV-rafsi n &r
+medial-rafsi <- !gismu (long-rafsi / CVC-rafsi / CCV-rafsi / CVV-rafsi) &consonant
+final-rafsi <- (gismu / CVV-rafsi / CCV-rafsi) &space
+CVV-rafsi <- consonant (vowel h vowel / a i / a u / e i / o i)
+CCV-rafsi <- initial-pair vowel
+CVC-rafsi <- consonant vowel !(n t c) !(n t s) !(n d j) !(n d z) consonant y?
+long-rafsi <- (initial-pair vowel / consonant vowel consonant) consonant y
+
+vowel-y <- vowel / y
+vowel <- a / e / i / o / u
+
+a <- 'a' comma*
+e <- 'e' comma*
+i <- 'i' comma*
+o <- 'o' comma*
+u <- 'u' comma*
+y <- 'y' comma*
+
+non-initial-cluster <- !initial-cluster consonant consonant+
+initial-cluster <- initial-consonant+ consonant !consonant
+initial-pair <- initial-consonant consonant !consonant
+initial-consonant <- c / s / j !n / z !n / d-t &sibilant / !l !n consonant &r / !r !n !d-t consonant &l 
+consonant <- voiced-consonant / unvoiced-consonant / l / m / n / r
+voiced-consonant <- b / d / g / j / v / z
+unvoiced-consonant <- c / f / k / p / s / t / x 
+sibilant <- c / j / s / z 
+d-t <- d / t
+
+l <- 'l' comma* !h !l
+m <- 'm' comma* !h !m !z
+n <- 'n' comma* !h !n 
+r <- 'r' comma* !h !r 
+b <- 'b' comma* !h !b !unvoiced-consonant
+d <- 'd' comma* !h !d !unvoiced-consonant
+g <- 'g' comma* !h !g !unvoiced-consonant
+v <- 'v' comma* !h !v !unvoiced-consonant
+j <- 'j' comma* !h !sibilant !unvoiced-consonant
+z <- 'z' comma* !h !sibilant !unvoiced-consonant
+s <- 's' comma* !h !sibilant !voiced-consonant
+c <- 'c' comma* !h !sibilant !voiced-consonant !x
+x <- 'x' comma* !h !x !voiced-consonant !c !k
+k <- 'k' comma* !h !k !voiced-consonant !x
+f <- 'f' comma* !h !f !voiced-consonant
+p <- 'p' comma* !h !p !voiced-consonant
+t <- 't' comma* !h !t !voiced-consonant
+h <- [['] comma* !h &vowel
+
+comma <- ','
+space <- ' ' / '.'
+non-lojban-word <- (!space .)*
+EOF <- !.
+
