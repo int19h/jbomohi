@@ -44,11 +44,13 @@ lojban-word <- cmene / cmavo / brivla
 
 ;-------------------------------------------------------------------
 
-cmene <- !h cmene-syllable* &consonant coda? consonantal-syllable* onset &pause
+cmene <- !h &consonant-final any-syllable* onset? &pause
 
-cmene-syllable <- !doi-la-lai-lahi coda? consonantal-syllable* onset nucleus / digit
+consonant-final <- (non-space &non-space)* consonant &pause
 
-doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !nucleus
+;cmene <- !h cmene-syllable* &consonant coda? consonantal-syllable* onset &pause
+;cmene-syllable <- !doi-la-lai-lahi coda? consonantal-syllable* onset nucleus / digit
+;doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !nucleus
 
 ;-------------------------------------------------------------------
 
@@ -62,9 +64,7 @@ cmavo-form <- !h !cluster onset (nucleus h)* (!stressed nucleus / nucleus !clust
 
 brivla <- !cmavo initial-rafsi* brivla-core
 
-brivla-core <- fuhivla / gismu / CVV-final-rafsi / short-lujvo
-
-short-lujvo <- stressed-initial-rafsi short-final-rafsi 
+brivla-core <- fuhivla / gismu / CVV-final-rafsi / stressed-initial-rafsi short-final-rafsi 
 
 stressed-initial-rafsi <- stressed-extended-rafsi / stressed-y-rafsi / stressed-y-less-rafsi
 
@@ -80,9 +80,9 @@ stressed-extended-rafsi <- stressed-brivla-rafsi / stressed-fuhivla-rafsi
 
 extended-rafsi <- brivla-rafsi / fuhivla-rafsi
 
-stressed-brivla-rafsi <- &unstressed-syllable brivla-head stressed-syllable y
+stressed-brivla-rafsi <- &unstressed-syllable brivla-head stressed-syllable h y
 
-brivla-rafsi <- &(unstressed-syllable unstressed-syllable) brivla-head y h?
+brivla-rafsi <- &(syllable consonantal-syllable* syllable) brivla-head h y h?
 
 stressed-fuhivla-rafsi <- fuhivla-head stressed-syllable &consonant onset y 
 
@@ -145,13 +145,15 @@ unstressed-vowel <- !stressed vowel !stress
 stress <- consonant* y? syllable pause
 stressed <- onset comma* [[AEIOU]
 
+any-syllable <- onset nucleus coda? / consonantal-syllable 
+
 syllable <- onset !y nucleus coda?
 
-consonantal-syllable <- consonant syllabic &(consonantal-syllable / initial) &consonant
+consonantal-syllable <- consonant syllabic &(consonantal-syllable / onset)
 
 coda <- !initial !consonantal-syllable consonant 
 
-onset <-  h / initial glide?
+onset <-  h / consonant? glide / initial
 
 nucleus <- vowel / diphthong / y !nucleus
 
@@ -176,7 +178,7 @@ cluster <- consonant consonant+
 
 initial-pair <- &initial consonant consonant !consonant
 
-initial <- (affricate / sibilant? other? liquid?) !consonant
+initial <- (affricate / sibilant? other? liquid?) !consonant !glide
 
 affricate <- t c / t s / d j / d z
 
