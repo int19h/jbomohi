@@ -3496,3 +3496,95 @@ want to look at fixing it).
 
 
 
+
+## 2004-12-21T20:28:55Z — rlpowell (@rlpowell) (post 3199)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041221175154.GY20429@chain.digitalkingdom.org
+In-Reply-To: 20041221133255.66511.qmail@web41902.mail.yahoo.com
+
+On Tue, Dec 21, 2004 at 05:32:55AM -0800, Jorge Llamb?as wrote:
+> 
+> --- Robin Lee Powell wrote:
+> 
+> > Everybody (i.e. the other two parsers) but us likes:
+> > 
+> >     tci'ile
+> 
+> I don't understand why this is not accepted.
+> 
+>  fuhivla <- !cmene !gismu !lujvo (stressed-fuhivla-head cluster
+>  fuhivla-tail / fuhivla-head cluster stressed-fuhivla-tail)
+> 
+> !cmene !gismu !lujvo should be satisfied. stressed-fuhivla-head
+> starts with &cmavo-form, so that is not satisfied.
+> 
+>  fuhivla-head <- !slinkuhi &initial-cluster / &cmavo-form syllable
+>  (!consonant syllable)* &non-initial-cluster
+> 
+>  slinkuhi <- consonant medial-rafsi* final-rafsi
+> 
+> !slinkuhi is satisfied, because {ci'i} is a medial-rafsi but {le}
+> is not a final-rafsi.
+
+I have checked thus far and believe I agree.
+
+> &initial-cluster is satisfied.
+
+Heh.  No, it's not.  
+
+nitial-cluster <- initial-consonant+ consonant !consonant
+
+{t} and {c} are both eaten by initial-consonant, leaving nothing for
+consonant.
+
+You just got bitten by greedy absorption.  Welcome to my world.  :-)
+
+Fixed:
+
+text
+   BRIVLA
+      fuhivla
+      |- cluster
+      |  |- consonant
+      |  |     unvoicedConsonant
+      |  |        t
+      |  |           t
+      |  |- consonant
+      |        unvoicedConsonant
+      |           c
+      |              c
+      |- stressedFuhivlaTail
+         |- syllable
+         |     syllableCore
+         |        vowel
+         |           vowelY
+         |              i
+         |                 i
+         |- syllable
+         |  |- h: '
+         |  |- syllableCore
+         |        vowel
+         |           vowelY
+         |              i
+         |                 i
+         |- syllable
+            |- consonant
+            |     l
+            |        l
+            |- syllableCore
+                  vowel
+                     vowelY
+                        e
+                           e
+
+Isn't it pretty?
+
+The solution is:
+
+initial-cluster <- (initial-consonant &consonant)+ consonant !consonant
+
+-Robin
+
+
+
