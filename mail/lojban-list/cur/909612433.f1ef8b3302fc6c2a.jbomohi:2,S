@@ -1,0 +1,92 @@
+Received: from spooler by stryx.demon.co.uk (Mercury/32 v2.01); 29 Oct 98 22:57:17 +0000
+Return-path: <LOJBAN@cuvmb.cc.columbia.edu>
+Received: from punt-11.mail.demon.net (194.217.242.34) by stryx.demon.co.uk (Mercury/32 v2.01);
+   29 Oct 98 22:57:06 +0000
+Received: from punt-1.mail.demon.net by mailstore for ia@stryx.demon.co.uk
+          id 909699213:10:06475:1; Thu, 29 Oct 98 22:13:33 GMT
+Received: from listserv.cuny.edu ([128.228.100.10]) by punt-1.mail.demon.net
+           id aa1006088; 29 Oct 98 22:13 GMT
+Received: from listserv (listserv.cuny.edu) by listserv.cuny.edu (LSMTP for Windows NT v1.1b) with SMTP id <3.FFA7EF9B@listserv.cuny.edu>; Thu, 29 Oct 1998 17:14:53 -0500
+Date:         Wed, 28 Oct 1998 22:07:13 +0000
+Reply-To:     C.D.Wright@SOLIPSYS.COMPULINK.CO.UK
+Sender:       Lojban list <LOJBAN@CUVMB.BITNET>
+Comments:     Authenticated sender is <solipsys@mail.compulink.co.uk>
+From:         "C.D. Wright" <C.D.Wright@SOLIPSYS.COMPULINK.CO.UK>
+Subject:      Re: Lojban dictionnary program ?
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Multiple recipients of list LOJBAN <LOJBAN@CUVMB.BITNET>
+Message-ID: <909699200.106088.0@listserv.cuny.edu>
+X-PMFLAGS: 33554560 7 1 Y06EDE.CNM
+Content-Length: 2336
+Lines: 74
+
+
+
+> I am looking for a program which would contain the
+> cmavo and gismu list, and would tell, for any lojban
+> word, if it is a cmavo (giving the corresponding line
+> in the cmavo list), or a gismu (idem), or a lujvo, in
+> which case it would give the definition(s) of its rafsi
+> from the gismu list.
+
+I've been working on and off on a pair of programmes to help
+me both read and write lojban.  The cobbled together glosser
+that I have works well enough to help me read text, albeit
+slowly.
+
+Here's an example.  You create a file with the text ...
+
+        uisai mi tavla do fo la lojban
+
+That then produces ...
+
+=============================================
+({ui sai} {mi <tavla [do (fo {la lojban})]>})
+    ui         happiness
+    sai        strong emotion
+    mi         me
+      tavla      talk
+        do         you
+          fo         4th sumti place
+            la         that named
+            lojban     ?
+=============================================
+
+It's accomplished the grouping of the sections of the
+sentence/utterance, and looked up each word in a file.
+That file can have as much or as little detail as you
+like.  I'm also working on a postprocessor to produce
+the following ...
+
+=============================================
+({      } {                                })
+ {ui sai} {mi <                           >}
+              <tavla [                   ]>
+                     [do (              )]
+                         (fo {         })
+                             {la lojban}
+=============================================
+
+... which I find helpful to see the structure of the
+sentence.
+
+This rather convoluted collection of programmes runs on at
+least two platforms and is written in C and AWK, and uses
+command line processors such as sed, grep, and a few others.
+I'm not really willing to release the system as it is, but
+I just thought I'd let you know of its existence.
+
+The other program I'm working on uses a simplified grammar
+and lets you make choice where choices exist, and look up
+words to help construct sentences.  It's intended to run
+on any platform and work in a pure text mode, and is in an
+advanced stage of planning. It is, however, rather difficult
+to describe in an email how it's intended to work.
+
+If more people ask then I'll try to write a more complete
+description.
+
+
+cdw.
+
+
