@@ -1,0 +1,81 @@
+Return-Path: <sentto-44114-2805-958953688-mark=kli.org@returns.onelist.com>
+Delivered-To: shoulson-kli@meson.org
+Received: (qmail 15508 invoked from network); 22 May 2000 00:00:29 -0000
+Received: from zash.lupine.org (205.186.156.18)
+  by pi.meson.org with SMTP; 22 May 2000 00:00:29 -0000
+Received: (qmail 23790 invoked by uid 40001); 22 May 2000 00:01:31 -0000
+Delivered-To: kli-mark@kli.org
+Received: (qmail 23787 invoked from network); 22 May 2000 00:01:31 -0000
+Received: from ho.egroups.com (208.50.144.85)
+  by zash.lupine.org with SMTP; 22 May 2000 00:01:31 -0000
+X-eGroups-Return: sentto-44114-2805-958953688-mark=kli.org@returns.onelist.com
+Received: from [10.1.10.38] by ho.egroups.com with NNFMP; 22 May 2000 00:01:30 -0000
+Received: (qmail 29278 invoked from network); 22 May 2000 00:01:28 -0000
+Received: from unknown (10.1.10.142) by m4.onelist.org with QMQP; 22 May 2000 00:01:28 -0000
+Received: from unknown (HELO calum.csclub.uwaterloo.ca) (129.97.134.11) by mta3 with SMTP; 22 May 2000 00:01:27 -0000
+Received: from calum.csclub.uwaterloo.ca (localhost [127.0.0.1]) by calum.csclub.uwaterloo.ca (8.9.3+Sun/8.9.3) with ESMTP id UAA05836 for <lojban@egroups.com>; Sun, 21 May 2000 20:01:15 -0400 (EDT)
+Message-Id: <200005220001.UAA05836@calum.csclub.uwaterloo.ca>
+Cc: lojban@egroups.com
+In-Reply-To: Message from Robin Lee Powell <rlpowell@calum.csclub.uwaterloo.ca>  of "Sun, 21 May 2000 19:24:29 EDT." <200005212324.TAA04851@calum.csclub.uwaterloo.ca> 
+X-eGroups-From: Robin Lee Powell <rlpowell@calum.csclub.uwaterloo.ca>
+From: Robin Lee Powell <rlpowell@csclub.uwaterloo.ca>
+MIME-Version: 1.0
+Mailing-List: list lojban@egroups.com; contact lojban-owner@egroups.com
+Delivered-To: mailing list lojban@egroups.com
+Precedence: bulk
+List-Unsubscribe: <mailto:lojban-unsubscribe@egroups.com>
+Date: Sun, 21 May 2000 20:01:14 -0400
+Subject: Oops... Re: [lojban] [LONG] UNIX shell script for word lookup 
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Length: 1225
+Lines: 47
+
+
+This:
+
+>num=`cat $TEMP | wc -l`
+>if [ $num -gt 10 ]
+>then
+>    less $TEMP
+>else
+>    cat $TEMP
+>fi
+>rm $TEMP
+
+should look like this:
+
+num=`cat $TEMP | wc -l`
+eval `stty | grep rows | tr -d ' '`
+if [ $num -gt `/usr/bin/expr $rows - 5` ]
+then
+    less $TEMP
+else
+    cat $TEMP
+fi
+rm $TEMP
+rm $TEMP.2
+
+- -----------------
+
+BTW, less is just like more, except almost infinitely better, hence the
+expression, "less is more than more".  If you don't have it, I very
+strongly recommend you fix that.
+
+-Robin
+
+-- 
+http://www.csclub.uwaterloo.ca/~rlpowell/ 	BTW, I'm male, honest.
+... stripped of our uniqueness as human beings by Darwin, exposed to our
+own inadequacies by Freud, ... Power -- "the ability to bring about our
+desires" -- is all that we have left.  --- Michael Korda, _Power!_
+
+------------------------------------------------------------------------
+WRITERS WANTED! Themestream allows ALL writers to publish their 
+articles on the Web, reach thousands of interested readers, and get 
+paid in cash for their work. Click below:
+http://click.egroups.com/1/3840/3/_/17627/_/958953688/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
