@@ -5938,3 +5938,81 @@ http://my.yahoo.com
 
 
 
+
+## 2004-12-22T21:23:44Z — rlpowell (@rlpowell) (post 3262)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041222202452.GW20429@chain.digitalkingdom.org
+In-Reply-To: 20041222201648.GV20429@chain.digitalkingdom.org
+
+> > > *** Sentence: muSTE.laVIson  1
+> > > MISMATCH!
+> > > valfendi: >muSTE< -la VIson.
+> > > pegbased: -mu (STEla) VIson.
+> > 
+> > Oh dear, does PEG really do that?
+> 
+> As it turns out, no:
+[snip]
+> Let me figure out where my test script is borked.
+
+Fixed:
+
+*** Sentence: muSTE.laVIson
+*** Sentence: muSTE.laVIson  ESC[033m1ESC[000m
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu >STE.< -la VIson.
+
+The new mismatch list for these words is:
+
+*** Sentence: muSTElaVIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu (STEla) VIson.
+
+*** Sentence: MUstela.VIson  1
+MISMATCH!
+valfendi: (MUste) -la VIson.
+pegbased: (MUste) -la. VIson.
+
+*** Sentence: muSTEla.VIson  1
+MISMATCH!
+valfendi: -mu (STEla) VIson.
+pegbased: -mu (STEla.) VIson.
+
+*** Sentence: MUste.laVIson  1
+MISMATCH!
+valfendi: (MUste) -la VIson.
+pegbased: (MUste.) -la VIson.
+
+*** Sentence: muSTE.laVIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu >STE.< -la VIson.
+
+*** Sentence: MUste.la.VIson  1
+MISMATCH!
+valfendi: (MUste) -la VIson.
+pegbased: (MUste.) -la. VIson.
+
+*** Sentence: muSTE.la.VIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu >STE.< -la. VIson.
+
+*** Sentence: muSTEl,aVIson  1
+MISMATCH!
+valfendi: >muSTE< -l,a VIson.
+pegbased: -mu (STEl,a) VIson.
+
+Unfortunately, valfendi drops . and my parser doesn't, so these
+don't compare properly in several cases.  I'll have to hack my test
+script more.
+
+<sigh>
+
+-Robin
+
+
+
