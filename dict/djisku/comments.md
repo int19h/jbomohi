@@ -11,3 +11,10 @@ Also, I think the English glosses should always be in present tense, so
 
 mi'e xorxes
 
+
+## 2003-11-26T23:10:09Z — rizen (comment 129)
+
+zo'o.u'i
+
+.i xu do djisku zo do
+
