@@ -15,7 +15,7 @@ It is worth noting that these two documents contradict each other on many points
 
 (based on C16 S19 of the RefGram)
 
-In order of precedence.  selma'o names used throughout.  + means "a member of the selma'o to the left of the + followed immediately by a member of the selma'o to the right of the + (ignoring words taken out of the equation by previous steps)".  For example, "ZO+LEhU" means a string like "zo le'u" (since both of these are currently (6 Nov 2004) single member selma'o).
+In order of precedence.  selma'o names used throughout.  + means "a member of the selma'o to the left of the + followed immediately by a member of the selma'o to the right of the + (ignoring words taken out of the equation by previous steps)".  For example, "ZO+LEhU" means a string like "zo le'u" (since both of these are currently (6 Nov 2004) single member selma'o).  Just to be pedantic, "any word" and similar refer only to valid Lojban words unless the text explicitely states otherwise.
 
 # Y is completely ignored (i.e. considered whitespace) except before BU.
 # ZO quotes the following word, no matter what it is, except Y.  Words quoted with ZO lose their grammatical functions.
@@ -37,7 +37,11 @@ In order of precedence.  selma'o names used throughout.  + means "a member of th
 SI gets very complicated in a few cases, so here we go.  Some SA notes here too.
 
 * SI has no effect inside LOhU...LEhU or after ZO (or inside a ZOI quote, of course).
-* SA+any word+SI == nothing
+* Multiple SI erase back through more words, rather than operating on themselves or something.  Duh.
+* SI is valid at the beginning of input, but only to deal with the fact computer parsing is often done line by line, and two lines can be from the same speaker (e.g. "mi broda co" followed later by "si do").
+* SA+SI == nothing.
+* SU+SI == nothing.
+* SA+any word+SI == nothing (assuming that the SA is valid, i.e. that there is a word of the same selma'o as the word after SA to erase back to).
 * ZO+any word+SI == ZO
 * ZO+any word+SI+SI == nothing
 * SI has no effect in a LOhU...LEhU even though ZO+LEhU does, so you can't do ZO+LEhU+SI+SI inside a LOhU...LEhU quote to get nothing.
@@ -49,6 +53,28 @@ SI gets very complicated in a few cases, so here we go.  Some SA notes here too.
 ** ZOI+delimiter+text+delimiter+SI+SI+SI == ZOI
 ** ZOI+delimiter+text+delimiter+SI+SI+SI+SI == nothing
 * As a result of the above, if you really want to destroy a whole ZOI quote, SA+ZOI+SI is strongly reccomended.
+* ZOI+SI == nothing (i.e. if you haven't presented a delimiter yet, SI can still operate).
+
+! Error Cases
+
+The following cases are explicitely defined as bad, i.e. error cases.
+
+* ZO + any word + BU
+* ZEI + ZEI
+* BAhE + end of text (along with BAhE+Y+end of text)
+* BAhE + BU -- I don't know why this is invalid, exactly.
+* ZOI+delimiter+text+delimiter + BU
+* ZOI+delimiter+text+delimiter + ZEI
+* any word + ZEI + ZOI+delimiter+text+delimiter
+
+! Non-Error Cases
+
+Cases that are degenerate and strange, but not errors.
+
+* BU + ZEI + BU
+* BAhE + ZOI -- ZOI retains its usual meaning
+* BAhE + ZO -- ZO retains its usual meaning
+* DAhO (and friends) + NAI + ZEI + any word
 
 ! grammar.300 stuff
 
@@ -69,15 +95,6 @@ Deleting bits as I integrate them into the list above.
 
 Please not that since this is the very first rule, grammar.300 allows ZOI quotes in LOhU...LEhU, which the Red Book seems to disagree with.
 
-   e. If the word "si" (selma'o SI) is identified, erase it and the
-   previous word (or token, if the previous text has been condensed into a
-   single token by one of the above rules).
-
-   f. If the word "sa" (selma'o SA) is identified, erase it and all
-   preceding text as far back as necessary to make what follows attach to
-   what precedes.  (This rule is hard to formalize and may receive further
-   definition later.)
-
    g. If the word 'su' (selma'o SU) is identified, erase it and all
    preceding text back to and including the first preceding token word
    which is in one of the selma'o:  NIhO, LU, TUhE, and TO.  However, if
@@ -86,12 +103,7 @@ Please not that since this is the very first rule, grammar.300 allows ZOI quotes
    a speaker's discourse.  (Thus, if the speaker has said something, two
    "su"'s are required to erase the entire conversation.
 
-
-   Step 3 - Termination
-
-   If the text contains a FAhO, treat that as the end-of-text and ignore
-   everything that follows it.
-
+This section directly and drastically contradicts the Red Book's understanding of SU.
 
    Step 4 - Absorption of Grammar-Free Tokens
 
