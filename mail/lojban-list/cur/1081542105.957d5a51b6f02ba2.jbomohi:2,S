@@ -1,0 +1,96 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 20194 invoked from network); 9 Apr 2004 20:24:10 -0000
+Received: from unknown (66.218.66.218)
+  by m24.grp.scd.yahoo.com with QMQP; 9 Apr 2004 20:24:10 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 9 Apr 2004 20:24:10 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1BC2WG-0002V4-OB
+	for lojban@yahoogroups.com; Fri, 09 Apr 2004 13:22:32 -0700
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1BC2Vd-0002UL-Vr; Fri, 09 Apr 2004 13:21:54 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 09 Apr 2004 13:21:50 -0700 (PDT)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1BC2VV-0002U9-8T
+	for lojban-list@lojban.org; Fri, 09 Apr 2004 13:21:45 -0700
+Date: Fri, 9 Apr 2004 13:21:45 -0700
+Message-ID: <20040409202145.GT14789@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20040407124110.46977.qmail@web41903.mail.yahoo.com> <5.2.0.9.0.20040407062416.03375890@pop.east.cox.net> <20040407124110.46977.qmail@web41903.mail.yahoo.com> <5.2.0.9.0.20040408203833.037595d0@pop.east.cox.net> <20040409051024.GA2886@skunk.reutershealth.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20040409051024.GA2886@skunk.reutershealth.com>
+User-Agent: Mutt/1.5.5.1+cvs20040105i
+X-archive-position: 7519
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Re: Official parser and "lo ni'a zu crino"
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 21993
+Content-Length: 2052
+
+On Fri, Apr 09, 2004 at 01:10:24AM -0400, jcowan@reutershealth.com wrote:
+> But I am okay with accepting things like "le broda joi le brodi",
+> since that is not truly an ambiguity but just the result of smarter
+> resolution of elidable terminators than Yacc allows.
+
+To clarify this statement: as the elidable terminators have *never* been
+formalized, arguing that a change that consists only of smarter
+"insertion"[1] of elidable terminators is a change makes no sense.  A
+change to what, exactly?  The official parser?  Sure, but the official
+parser was never the baseline: grammar.300 is the baseline, and
+grammar.300 doesn't even come *close* to formalizing the elidable
+terminators.
+
+> I'll also do whatever I'm able to make an actual PEG parser available,
+> with the same kinds of features (at least) that the official parser
+> supports.
+
+*YAY*!  (Seriously, the more work someone else can do, the better).
+
+> > Given what we know, the bug must be the tense lexer which somehow is
+> > not accepting ni'a zu as a valid string.  I never looked at the
+> > lexer internals so I can't debug it.
+> 
+> Checking the source of lexruleo.c shows that the space-before-time
+> option was never put in.  Here's a patch for Robin's benefit:
+> 
+> In the function tense_C_979, add the line "TRY(tense_C_979_4);" just
+> after "TRY(tense_C_979_1);".  This makes the order time-space, time,
+> space-time, space.
+> 
+> Then add a new function tense_C_979_4, which is a copy of
+> tense_C_979_3 except that the two CALL lines are in reverse order.
+
+Excellent.  Thanks.  (and a line to lexrules.h)
+
+-Robin
+
+[1]: My grammar doesn't "insert" anything, as it has no pre-processor;
+it simply treats elidable terminators as optional.  Longest-match and
+preferrential ordering do the rest.
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rocki morsi
+
+
+
+
+           
+

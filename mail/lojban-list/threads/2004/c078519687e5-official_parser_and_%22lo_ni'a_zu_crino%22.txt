@@ -1,4 +1,4 @@
-# mail/lojban-list thread c078519687e5-official_parser_and_%22lo_ni'a_zu_crino%22 | root 20040405073105.gp23652@digitalkingdom.org | 15 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread c078519687e5-official_parser_and_%22lo_ni'a_zu_crino%22 | root 20040405073105.gp23652@digitalkingdom.org | 16 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-04-05T07:31:05Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20040405073105.gp23652@digitalkingdom.org | mail/lojban-list/cur/1081150265.c078519687e5d048.jbomohi:2,S
 The official parser can't handle
@@ -550,7 +550,62 @@ http://www.lojban.org/  ***  loi pimlu na srana .i ti rocki morsi
 
 
 
-=== 15 | 2004-04-09T20:15:38Z | Robin Lee Powell <lojban-out@lojban.org> | 20040409201538.gs14789@digitalkingdom.org | mail/lojban-list/cur/1081541738.ffa11a4a796fb59e.jbomohi:2,S
+=== 15 | 2004-04-09T20:21:45Z | Robin Lee Powell <lojban-out@lojban.org> | 20040409202145.gt14789@digitalkingdom.org | mail/lojban-list/cur/1081542105.957d5a51b6f02ba2.jbomohi:2,S
+On Fri, Apr 09, 2004 at 01:10:24AM -0400, jcowan@reutershealth.com wrote:
+> But I am okay with accepting things like "le broda joi le brodi",
+> since that is not truly an ambiguity but just the result of smarter
+> resolution of elidable terminators than Yacc allows.
+
+To clarify this statement: as the elidable terminators have *never* been
+formalized, arguing that a change that consists only of smarter
+"insertion"[1] of elidable terminators is a change makes no sense.  A
+change to what, exactly?  The official parser?  Sure, but the official
+parser was never the baseline: grammar.300 is the baseline, and
+grammar.300 doesn't even come *close* to formalizing the elidable
+terminators.
+
+> I'll also do whatever I'm able to make an actual PEG parser available,
+> with the same kinds of features (at least) that the official parser
+> supports.
+
+*YAY*!  (Seriously, the more work someone else can do, the better).
+
+> > Given what we know, the bug must be the tense lexer which somehow is
+> > not accepting ni'a zu as a valid string.  I never looked at the
+> > lexer internals so I can't debug it.
+> 
+> Checking the source of lexruleo.c shows that the space-before-time
+> option was never put in.  Here's a patch for Robin's benefit:
+> 
+> In the function tense_C_979, add the line "TRY(tense_C_979_4);" just
+> after "TRY(tense_C_979_1);".  This makes the order time-space, time,
+> space-time, space.
+> 
+> Then add a new function tense_C_979_4, which is a copy of
+> tense_C_979_3 except that the two CALL lines are in reverse order.
+
+Excellent.  Thanks.  (and a line to lexrules.h)
+
+-Robin
+
+[1]: My grammar doesn't "insert" anything, as it has no pre-processor;
+it simply treats elidable terminators as optional.  Longest-match and
+preferrential ordering do the rest.
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rocki morsi
+
+
+
+
+           
+
+
+
+=== 16 | 2004-04-09T20:15:38Z | Robin Lee Powell <lojban-out@lojban.org> | 20040409201538.gs14789@digitalkingdom.org | mail/lojban-list/cur/1081541738.ffa11a4a796fb59e.jbomohi:2,S
 On Thu, Apr 08, 2004 at 08:45:14PM -0400, Bob LeChevalier wrote:
 [the official parser]
 > (which unfortunately even with bugs has to remain a standard unless
