@@ -1620,3 +1620,79 @@ Now I need a magnifier to find my eyeglasses!
 
 
 
+
+## 2004-12-18T18:03:34Z — xorxes (@xorxes) (post 3148)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041218133907.90431.qmail@web41903.mail.yahoo.com
+In-Reply-To: 200412172212.48996.phma@phma.hn.org
+
+
+--- Pierre Abbat wrote:
+
+> Here's the comment of one of valfendi's functions, isslinkuhi, which is used 
+> in finding the beginning of a brivla (or rejecting a string as not containing
+
+> a valid brivla) and in checking for a valid fu'ivla rafsi (according to my 
+> rule, which allows many arbitrarily long fu'ivla to have rafsi).
+
+I have not incorporated the concept of fu'ivla rafsi yet in my PEG, but 
+I will try to do so once I understand it well. The idea is that a 
+fu'ivla rafsi can be inserted into a lujvo as long as it can be
+separated with y hyphens: {other-rafsi y fu'ivla-rafsi y other-rafsi}
+without ambiguities, right?
+
+> Below is my 
+> attempt at a PEG translation. How is the translation?
+> 
+> phma
+> ---
+> /* A slinku'i, as far as word breaking is concerned, is anything that matches
+>    the regex
+>    ^C[raf3]*([gim]?$|[raf4]?y)
+>    but does not match the regex
+>    ^[raf3]*([gim]?$|[raf4]?y)
+>    where
+>    C matches any consonant
+>    [raf3] matches any 3-letter rafsi
+>    [raf4] matches any 4-letter rafsi
+>    [gim] matches any gismu.
+>    Anything after the first 'y' is ignored. It has no effect on where to
+> break 
+> the
+>    word, only on whether the word is valid. */
+> 
+> slinkuhi <- !(3-letter-rafsi* (gismu? space / long-rafsi? y)) consonant 
+> 3-letter-rafsi* (gismu? space / long-rafsi? y)
+> 
+> 3-letter-rafsi <- CVV-rafsi / CVC-rafsi / CCV-rafsi
+
+I can't really tell if they are equivalent because I'm not very
+familiar with C, but it sounds basically right. This is how I handle
+slinku'i in my PEG:
+
+fuhivla <- !(consonant lujvo) !(consonant final-rafsi) initial-cluster syllable
+fuhivla-tail
+
+Any lujvo have already been absorbed, otherwise you can just add !lujvo
+at the beginning.
+
+"!(consonant lujvo) !(consonant final-rafsi)" will reject any string 
+that consists of a consonant+lujvo or a consonant+final-rafsi 
+(e.g. slinku'i, spe'a or zbroda}. 
+
+mu'o mi'e xorxes
+
+ 
+
+
+		
+__________________________________ 
+Do you Yahoo!? 
+Meet the all-new My Yahoo! - Try it today! 
+http://my.yahoo.com 
+ 
+
+
+
+
