@@ -1,4 +1,4 @@
-# mail/lojban-list thread a6ebaeb1f418-logflash | root 199610211002.faa02881@cs.wustl.edu | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a6ebaeb1f418-logflash | root 199610211002.faa02881@cs.wustl.edu | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 1996-10-07T17:24:43Z | Logical Language Group <lojbab@ACCESS.DIGEX.NET> | 3c78490b52d23863a03377f240be9d017ea3e0d7@jbomohi.invalid | mail/lojban-list/cur/844709083.4a538e3d6b6a84f2.jbomohi:2,S
 The version of LogFlash on the ftp and WWW servers is indeed the current
@@ -178,5 +178,80 @@ the word you are looking up turns out to be a rafsi, it also looks up
 the corresponding gismu.
 
 I'll make the program available if anyone wants it.
+
+
+
+=== 8 | 1997-01-14T09:18:53Z | kwfjndpw@mail.netural.com | 19970114091853.10995.qmail@mail.netural.com | mail/lojban-list/cur/853233533.ede99f25b9a9ce63.jbomohi:2,S
+
+                         Lojban - The Logigal Language
+                         la lojban po'u le logji bangu
+                                       
+     _________________________________________________________________
+                                      
+     * How to learn Lojban
+     _________________________________________________________________
+                                      
+   We distribute flash cards and
+   have developed flash card techniques that are extremely efficient in
+   learning vocabulary. These techniques have been automated into
+   computer-aided-teaching programs sold under the name "LogFlash", with
+                                    ^^^^
+   MS-DOS and MacIntosh versions currently available.
+........................................................................
+
+I regret that you are selling a flash card application
+for profit.  Included below is a Perl program that
+reads the rafsi vocabulary list into 2 arrays, and then
+presents a flash card test for the student of Lojban.
+
+You are welcome to distribute this Perl program free of
+charge.
+
+Since I don't know how to speak Lojban, I may be mis-
+interpreting the vocabulary list.  You may want to
+test with column 2 instead of column 1, or with both
+columns.  You may also want to adapt the program to work
+with other vocabulary lists.
+
+........................................................................
+#!/usr/bin/perl
+$FL = 100;
+open($FL, "rafsi");
+die "Error opening rafsi\n" if ($FL != 100);
+$SIZ = 0;
+while ($LN = <$FL>)
+   {
+   chop($LN);
+   $LN =~ s/\s+/ /g;
+   @FLD = split(/ /,$LN);
+   next if ($FLD[0] eq "");
+   $LB[$SIZ]  = $FLD[0];
+   $ENG[$SIZ] = $FLD[2];
+   $SIZ++;
+   } # read loop
+
+print "Press Return to quit\n";
+srand;
+$ANS = "zzz";
+while (1)
+   {
+   $NUM = rand;
+   $I = int($NUM * $SIZ);
+   $NUM = rand;
+   if ($NUM < 0.5)
+      {
+      print "What is English for $LB[$I]\n";
+      $ANS = <STDIN>;
+      last if ($ANS eq "\n");
+      print "$ENG[$I]\n";
+      }
+   else
+      {
+      print "What is Lojban for $ENG[$I]\n";
+      $ANS = <STDIN>;
+      last if ($ANS eq "\n");
+      print "$LB[$I]\n";
+      }
+   } # test loop
 
 

@@ -1,0 +1,86 @@
+Return-Path: <kwfjndpw@mail.netural.com>
+Delivered-To: veion@xiron.pc.helsinki.fi
+Received: (qmail 2653 invoked from network); 14 Jan 1997 09:19:03 -0000
+Received: from mournblade.netural.com (HELO mail.netural.com) (qmailr@206.54.248.2)
+  by xiron.pc.helsinki.fi with SMTP; 14 Jan 1997 09:19:03 -0000
+Received: (qmail 10996 invoked by uid 1163); 14 Jan 1997 09:18:53 -0000
+Date: 14 Jan 1997 09:18:53 -0000
+Message-ID: <19970114091853.10995.qmail@mail.netural.com>
+From: kwfjndpw@mail.netural.com
+To: veion@xiron.pc.helsinki.fi
+Subject: LogFlash
+Content-Length: 2154
+Lines: 71
+
+
+                         Lojban - The Logigal Language
+                         la lojban po'u le logji bangu
+                                       
+     _________________________________________________________________
+                                      
+     * How to learn Lojban
+     _________________________________________________________________
+                                      
+   We distribute flash cards and
+   have developed flash card techniques that are extremely efficient in
+   learning vocabulary. These techniques have been automated into
+   computer-aided-teaching programs sold under the name "LogFlash", with
+                                    ^^^^
+   MS-DOS and MacIntosh versions currently available.
+........................................................................
+
+I regret that you are selling a flash card application
+for profit.  Included below is a Perl program that
+reads the rafsi vocabulary list into 2 arrays, and then
+presents a flash card test for the student of Lojban.
+
+You are welcome to distribute this Perl program free of
+charge.
+
+Since I don't know how to speak Lojban, I may be mis-
+interpreting the vocabulary list.  You may want to
+test with column 2 instead of column 1, or with both
+columns.  You may also want to adapt the program to work
+with other vocabulary lists.
+
+........................................................................
+#!/usr/bin/perl
+$FL = 100;
+open($FL, "rafsi");
+die "Error opening rafsi\n" if ($FL != 100);
+$SIZ = 0;
+while ($LN = <$FL>)
+   {
+   chop($LN);
+   $LN =~ s/\s+/ /g;
+   @FLD = split(/ /,$LN);
+   next if ($FLD[0] eq "");
+   $LB[$SIZ]  = $FLD[0];
+   $ENG[$SIZ] = $FLD[2];
+   $SIZ++;
+   } # read loop
+
+print "Press Return to quit\n";
+srand;
+$ANS = "zzz";
+while (1)
+   {
+   $NUM = rand;
+   $I = int($NUM * $SIZ);
+   $NUM = rand;
+   if ($NUM < 0.5)
+      {
+      print "What is English for $LB[$I]\n";
+      $ANS = <STDIN>;
+      last if ($ANS eq "\n");
+      print "$ENG[$I]\n";
+      }
+   else
+      {
+      print "What is Lojban for $ENG[$I]\n";
+      $ANS = <STDIN>;
+      last if ($ANS eq "\n");
+      print "$LB[$I]\n";
+      }
+   } # test loop
+
