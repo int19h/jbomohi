@@ -1,0 +1,105 @@
+Return-Path: <LOJBAN%CUVMB.BITNET@BITMAIL.LSOFT.COM>
+Received: from SEGATE.SUNET.SE by xiron.pc.helsinki.fi  with smtp
+	(Linux Smail3.1.28.1 #1) id m0tI547-0000ZUC; Wed, 22 Nov 95 04:37 EET
+Message-Id: <m0tI547-0000ZUC@xiron.pc.helsinki.fi>
+Received: from listmail.sunet.se by SEGATE.SUNET.SE (LSMTP for OpenVMS v1.0a) with SMTP id 563EFF47 ; Wed, 22 Nov 1995 3:37:39 +0100
+Date:         Tue, 21 Nov 1995 21:37:23 -0500
+Reply-To:     Jorge Llambias <jorge@PHYAST.PITT.EDU>
+Sender:       Lojban list <LOJBAN@CUVMB.BITNET>
+From:         Jorge Llambias <jorge@PHYAST.PITT.EDU>
+Subject:      Re: Colourless green ideas
+X-To:         lojban@cuvmb.cc.columbia.edu, jorge@minerva.phyast.pitt.edu
+To:           Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Content-Length: 3133
+Lines: 89
+
+la dilyn cusku di'e
+
+> But I'm not sure I really understand And's argument.  I'd like to see some
+> explicit examples of meaningless statements using PA.
+
+Any statement involving {li pipaipi} for example.
+
+> I'd also like to
+> see a proposal for the substructure of PA, preferably one that doesn't
+> rule out any current texts.
+
+This is not a full proposal, but I posted this in March:
+
+The parser accepts any string of PAs as a number, but not all
+combinations are meaningful (at least to me). Here is an attempt
+to describe which are the meaningful combinations, written in
+bnf-ish notation. (I believe this mostly agrees with the grammar
+paper, with the exception of my treatment of {ji'i}.)
+
+(The parser also accepts letterals as parts of numbers. I've
+ignored them here.)
+
+
+<digit> = no|pa|re|ci|vo|mu|xa|ze|bi|so|dau|fei|gai|jau|rei|vai|ki'o
+
+<natural> = <digit> ... | xo | no'o
+
+<sign> = (su'o|su'e|me'i|za'u) & (ma'u|ni'u)
+
+<real0> = <natural> & (pi [<natural>] & (ra'e <natural>)) | pai | te'o | ci'i
+
+<real> = <sign> & <real0> & (ji'i <real0>)
+
+<complex> = <real> & (ka'o <real>)
+
+<fraction> = <complex> & (fi'u <complex>)
+
+<quantifier0> = (su'o|su'e|me'i|za'u|da'a) &
+                (ro|so'a|so'e|so'i|so'o|so'u|rau|mo'a|du'e|ci'i|<natural>)
+
+<quantifier> = <quantifier0> ...
+
+<fractionator> = pi <quantifier>
+
+<percentage> = (<real> | <quantifier>) ce'i
+
+<general> = <fraction>|<quantifier>|<fractionator>|<percentage>|tu'o
+
+<number> = <general> & (pi'e [<general>]) ...
+
+
+Notes:
+
+1- {ki'o} is a special digit. There has to be a number of digits
+   multiple of three between {ki'o}s or between {ki'o} and {pi}.
+   If there aren't three explicit digits then 0s are assumed
+   implicitly as the higher order digits.
+   If ki'o is the first digit, a 1 is assumed in front.
+   e.g.  ki'ore = 1002  ; piciki'o = 0.003
+
+2- Either {fi'u} or {ka'o} has to have higher scope than the other,
+   otherwise {1fi'u2ka'o3} would be ambiguous between .5+3i and
+   1/(2+3i).
+   I prefer to give fi'u higher scope, because that allows
+   {fi'u <complex>} to be the inverse of <complex>. The other
+   possibility would not allow an easy way to express inverses,
+   and things like "2/3 + i4/5" are not really as important as
+   inverses.
+
+3- My interpretation of {ji'i} allows to say everything that you can
+   say with the one proposed in the grammar paper, and more.
+   With my interpretation <number>ji'i<number> means a number
+   between those two, or approximately that. So 20ji'i30 would
+   be a number between 20 and 30, but could eventually be 19 or 31,
+   it is approximate, and the difference between the numbers gives
+   an idea of the uncertainty.
+
+   With the interpretation of the paper, 20ji'i30 would be a number
+   between 2010 and 2099, or something like that. To say that with
+   my interpretation, I would say 2050ji'i or ji'i2050. The
+   uncertainty is given by the last significant (non-zero) digit.
+   {ji'i} would only say that the total number is not exact, not
+   a particular digit. (The ji'i+ and ji'i- convention for rounding
+   still works.)
+
+
+Comments about all this are most welcome and solicited.
+
+Jorge
+
