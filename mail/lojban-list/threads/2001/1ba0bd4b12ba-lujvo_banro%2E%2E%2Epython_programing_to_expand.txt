@@ -1,0 +1,61 @@
+# mail/lojban-list thread 1ba0bd4b12ba-lujvo_banro%2E%2E%2Epython_programing_to_expand | root 9o6f2o+a270@egroups.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2001-09-18T03:29:28Z | thinkit8@lycos.com | 9o6f2o+a270@egroups.com | mail/lojban-list/cur/1000783768.1ba0bd4b12ba9133.jbomohi:2,S
+ok, i went ahead and hacked 2 python programs to expand all lujvo 
+into compenent cmavo/gismu, using vlatai from jbofi'e.
+
+first, the batch file, %1 is infile, %2 is outfile:
+
+python space.py < %1 > temp1.txt
+vlatai -el < temp1.txt > temp2.txt
+python sub.py < %1 > %2
+
+note that sub.py expects "temp2.txt" to have the vlatai output.
+
+next space.py:
+
+import re
+while 1:
+ try:
+  s=raw_input()
+  a=re.split("[^a-zA-Z\',]+",s);
+  for x in a:
+   print x
+ except EOFError:
+  break
+
+next sub.py:
+
+import re,string
+qb=[]
+qa=[]
+f=open("temp2.txt")
+s=f.readline()
+while s!="":
+ if re.search(": lujvo :",s) is not None:
+  res=re.match("[a-z\',]+",s)
+  qb.append(res.group(0))
+  res=re.search("\[[a-z\',\+\?]+",s)
+  s2=res.group(0)
+  qa.append(string.replace(s2,"[",""))
+ s=f.readline()
+s2=""
+while 1:
+ try:
+  s2+=raw_input()
+  s2+="\n"
+ except EOFError:
+  break
+for x in range(len(qa)):
+  s2=re.sub(qb[x],qa[x],s2)
+print s2
+
+much thanks to richard curnow for providing vlatai.  it's a bit 
+roundabout because all i have is a binary.  hopefully i'll get 
+working with the source and can do something more elegant, and/or 
+(gi'a) make it web accessible.
+
+
+           
+
+
