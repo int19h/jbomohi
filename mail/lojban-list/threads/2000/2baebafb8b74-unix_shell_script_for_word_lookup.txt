@@ -1,0 +1,142 @@
+# mail/lojban-list thread 2baebafb8b74-unix_shell_script_for_word_lookup | root 200005212324.taa04851@calum.csclub.uwaterloo.ca | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2000-05-21T23:24:29Z | Robin Lee Powell <rlpowell@csclub.uwaterloo.ca> | 200005212324.taa04851@calum.csclub.uwaterloo.ca | mail/lojban-list/cur/958951469.2baebafb8b743948.jbomohi:2,S
+
+Here's a little script I wrote that looks up lojban words in the cmavo
+and gismu files, and makes the output nice and pretty and readable.  I'm
+quite proud of it; feedback welcomed.  :-)
+
+Note that it assumes that the wordlists are gzip'd: the first call to
+grep is actually to zgrep.  If you have the space available to keep them
+in plain text, remove the 'z' at the beginning of both lines that start
+with 'z$GREP'.
+
+Edit the defines at the top as appropriate.  If you don't have any of
+the programs used, fmt in particular, you're on your own.  I call it
+'ll', but you can call it whatever you want.  Just don't call me
+Shirley.  It's a ksh script, but is probably sh compatible; most of my
+scripts are.
+
+-Robin
+
+
+#!/usr/bin/ksh
+##############
+# ll = Lojban Lookup
+##############
+
+GISMU=~/lojban/gismu
+CMAVO=~/lojban/cmavo
+TEMP=/tmp/ll.1
+WORD="[] 	.,'\"()[]"	#Word boundary pattern
+GREP="grep"
+
+USAGE="
+$0 [-a] [-n] [-i] [-g] [-c] <word>
+
+    $0 looks through the gismu and cmavo word files for the given word,
+in that order, as described below.  The gismu and cmavo entries can be
+told apart by the (always uppercase) selma'o name in the rafsi columns
+(in effect, column 2),
+
+    By default, $0 looks for <word> as either the exact word in the
+first column (i.e. the exact lojbanic word) or an exact word in the
+rafsi, gloss or mnemonic columns.  IOW, $0 by default only looks in the
+first line of the paragraphs it outputs (this was made a reasonable
+proposition by the discover that neither file contains the character
+'$'.)
+
+    -a:	Find the word anywhere, but still an exact word match. 
+
+    -n: No space checking, find anywhere at all.  'mil' finds 'milti'.
+Note that, keeping shell quoting issues in mind, an arbitrary grep
+expression can be passed to -n with the expected results.
+    
+    -i: Case insensitive.
+
+    -c: cmavo only.
+    
+    -g: gismu only.
+
+    -n overrides -a.  Using both -g and -c is a NOP. The difference
+between the arguments is well exemplified by running '$0 coi', '$0 -a
+coi', '$0 -ai coi', '$0 -n coi'.
+"
+
+while getopts anigc c
+do
+    case $c in
+	a)	ANY="ANY";;
+	n)	NS="NS";;
+	i)	GREP="$GREP -i";;
+	g)	GONLY="g";;
+	c)	CONLY="c";;
+	\?)     echo "$USAGE"
+		exit 2;;
+    esac
+done
+shift `expr $OPTIND - 1`
+
+if [ $# != 1 ]
+then
+    echo "$USAGE"
+    exit 2
+fi
+
+pat=$1
+
+touch $TEMP
+
+if [ -n "$GONLY" -o -z "$CONLY" ]
+then
+    z$GREP "$pat" $GISMU >> $TEMP
+fi
+if [ -n "$CONLY" -o -z "$GONLY" ]
+then
+    z$GREP "$pat" $CMAVO >> $TEMP
+fi
+
+cat $TEMP | $GREP -v '^ [0-9]* Lojban' | \
+nawk '{ printf("$%s$%20s%s$$%20s%s\n", \
+substr($0, 1, 62), "", substr($0, 63, 96), "", substr( $0, 170)); }' | \
+cat >$TEMP.2
+
+if [ "$NS" ]
+then
+    ANY=""
+    cat $TEMP.2 | \
+    tr '$' '\n' | fmt > $TEMP
+fi
+
+if [ "$ANY" ]
+then
+    cat $TEMP.2 | \
+    $GREP "$WORD$pat$WORD" | \
+    tr '$' '\n' | fmt > $TEMP
+fi
+
+if [ -z "$ANY" -a -z "$NS" ]
+then
+    cat $TEMP.2 | \
+    $GREP "^\\$[^\$]*$WORD$pat$WORD[^\$]*\\$" | \
+    tr '$' '\n' | fmt > $TEMP
+fi
+
+num=`cat $TEMP | wc -l`
+if [ $num -gt 10 ]
+then
+    less $TEMP
+else
+    cat $TEMP
+fi
+rm $TEMP
+
+------------------------------------------------------------------------
+Save 75% on Products!
+Find incredible deals on overstocked items with Free shipping!
+http://click.egroups.com/1/4013/3/_/17627/_/958951482/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
+
