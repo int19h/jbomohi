@@ -1,0 +1,129 @@
+Subject: TECH: PROPOSED GRAMMAR CHANGE 2$i
+From: John Cowan <cowan@ccil.org>
+To: lojban@cuvmb.cc.columbia.edu
+Date: Sun, 10 Mar 1996 20:44:51 -0500 (EST)
+X-Mailer: ELM [version 2.4 PL24]
+Content-Type: text
+X-Mozilla-Status: 0001
+Message-ID: <h4KcRE-sQXP.A.qsG.9v0kLB@chain.digitalkingdom.org>
+Content-Length: 4164
+
+
+CHANGE 45
+
+CURRENT LANGUAGE:
+
+Grammatically, I and ijek are treated identically, although in the
+semantics, I constitutes a stronger boundary.
+
+Prenexes can be attached only to sentences or to TUhE...TUhU groups, although
+logically a prenex can persist across several sentences connected by
+ijeks.
+
+PROPOSED CHANGE:
+
+Treat I as a higher-priority break than ijek (which is higher than
+I+BO or ijek+BO; no distinction is made between I+BO and ijek+BO).
+
+Shift all the sentence fragments (the forms of utterance_20 which are not
+sentence_40) to a higher level; they can only be connected by I, not by any
+lower-level form.
+
+Attach prenexes to the new level "statement_11"; statements contain ijeks
+and I+BOs, but not bare Is.
+
+RATIONALE:
+
+1) It has always been a rule that I and ijek have different semantic
+implications: I is a pure separator, whereas ijek connects as well as
+separating.  In particular, logical variables persist across ijek
+boundaries always, but (by default) not across I boundaries.  This change
+makes the grammar reflect the semantics.
+
+2) Logically connecting sentence fragments never did make very much sense,
+but was allowed because of the lack of distinction between I and ijek.
+
+
+3c3
+<      THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-44 DATED 6 JANUARY 1996
+---
+>      THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-43 DATED 6 JANUARY 1996
+19c19
+<   grammar.244
+---
+>   grammar.245
+164c164
+<    J, K, M ,N, G, O, V, W, F, P, R, S, Y, L, Q. This ensures that the longest
+---
+>    J, K, M ,N, G, O, V, W, F, P, R, T, S, Y, L, Q. This ensures that the longest
+342,343c342,343
+< %token lexer_S_719      /*        flags an I, not BO */
+< /* %token lexer_T_720   /* null */
+---
+> %token lexer_S_719      /*        flags simple I */
+> %token lexer_T_720      /*        flags I_JEK */
+369,370c369,370
+< /*%token lexer_S_995    /*        :  lexer_S_719  I_root_996 */
+< /*%token lexer_T_1000   /* null */
+---
+> /*%token lexer_S_995    /*        :  lexer_S_719  I_545 */
+> /*%token  lexer_T_1000  /*        :  lexer_T_720  I_545  simple_JOIK_JEK_957 */
+396a397
+>                         |  I_JEK_820  text_B_2
+420,421c421,423
+< paragraph_10          :  paragraph_A_11
+<                         |  paragraph_10  I_819  paragraph_A_11
+---
+> paragraph_10            :  statement_11
+>                         |  paragraph_10  I_819  statement_11
+>                         |  paragraph_10  I_819  fragment_20
+428,433c430,431
+< paragraph_A_11          :  paragraph_B_12
+<                         |  paragraph_B_12  I_BO_811  paragraph_A_11
+<                         |  paragraph_B_12  I_BO_811
+<                         /* this last fixes an erroneous start to a sentence,
+<                            and permits incomplete JOIK_JEK after I, as well
+<                            in answer to questions on those connectives  */
+---
+> statement_11            :  statement_A_12
+>                         |  prenex_30  statement_11
+436c434,444
+< paragraph_B_12          :  utterance_20
+---
+> statement_A_12          :  statement_B_13
+>                         |  statement_A_12  I_JEK_820  statement_B_13
+>                         |  statement_A_12  I_JEK_820 
+>                         ;
+> 
+> statement_B_13          :  statement_C_14
+>                         |  statement_C_14  I_BO_811  statement_B_13
+>                         |  statement_C_14  I_BO_811 
+>                         ;
+> 
+> statement_C_14          :  sentence_40
+438d445
+<                         |  prenex_30  TUhE_610  text_B_2  TUhU_gap_454
+443c450
+< utterance_20            :  EK_802
+---
+> fragment_20             :  EK_802
+453d459
+<                         |  sentence_40
+459d464
+<                         |  terms_80  ZOhU_628  free_modifier_32
+506d510
+<                         |  prenex_30  sentence_40
+1240a1245,1248
+> I_JEK_820               :  lexer_T_1000
+>                         |  lexer_T_1000  free_modifier_32
+>                         ;
+> 
+1492c1500,1503
+< lexer_S_995             :  lexer_S_719  I_root_956
+---
+> lexer_S_995             :  lexer_S_719  I_545
+>                         ;
+> 
+> lexer_T_1000            :  lexer_T_720  I_545  simple_JOIK_JEK_957
+
+
