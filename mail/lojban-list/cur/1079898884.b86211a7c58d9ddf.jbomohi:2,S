@@ -1,0 +1,132 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 50680 invoked from network); 21 Mar 2004 19:56:17 -0000
+Received: from unknown (66.218.66.166)
+  by m18.grp.scd.yahoo.com with QMQP; 21 Mar 2004 19:56:17 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta5.grp.scd.yahoo.com with SMTP; 21 Mar 2004 19:56:17 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1B593P-0000ta-T3
+	for lojban@yahoogroups.com; Sun, 21 Mar 2004 11:56:15 -0800
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1B5924-0008S4-Vw; Sun, 21 Mar 2004 11:54:53 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 21 Mar 2004 11:54:49 -0800 (PST)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1B591w-0008Rt-C2
+	for lojban-list@lojban.org; Sun, 21 Mar 2004 11:54:44 -0800
+Date: Sun, 21 Mar 2004 11:54:44 -0800
+Message-ID: <20040321195444.GA30473@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20040321184454.GA32271@digitalkingdom.org> <20040321191809.GB32271@digitalkingdom.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20040321191809.GB32271@digitalkingdom.org>
+User-Agent: Mutt/1.5.5.1+cvs20040105i
+X-archive-position: 7282
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Re: Error in bnf.300
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 21757
+Content-Length: 3111
+
+On Sun, Mar 21, 2004 at 11:18:09AM -0800, Robin Lee Powell wrote:
+> On Sun, Mar 21, 2004 at 10:44:54AM -0800, Robin Lee Powell wrote:
+> > There's a contradiction between grammar.300 and bnf.300 and,
+> > regardless of baselining issues, bnf.300 is *clearly* wrong:
+> > 
+> >     text-1<2> = [(I [jek | joik] [[stag] BO] #) ... | NIhO ... #] [paragraphs]
+> > 
+> > The problem is that there's supposed to be a "text-1" betweev "BO]"
+> > and "#)".
+> 
+> Also, "NIhO ..." should be "(NIhO [paragraph]) ...".
+> 
+> BUT WAIT!
+> 
+> There's MORE!
+> 
+> If you act now, you'll also receive "This doesn't actually fix the
+> problem", absolutely free!
+> 
+> This only fixes *leading" ijek statements.   The problem with "mi broda
+> .i je no da zo'u broda" still exists.
+
+[snip]
+
+> So, the reason that the example works in the official parser is
+> because lexer_S_995 erroneously accepts an I followed by a JEK/JOIK,
+> rather than just an I.
+> 
+> Even with that, "mi broda .i je bo no da zo'u broda" fails in the
+> official parser because lexer_S will not erroneously accept a BO.
+
+But wait, Frank!  That's not all they can get!
+
+That's right, Mark!  If they buy the complete set, including the lexer
+problem, they'll also receive an ambiguous grammar ABSOLUTELY FREE!
+
+The obvious fix to the second problem (besides fixing the lexer issue)
+is to turn
+
+    paragraph<10> = (statement | fragment) [I # [statement | fragment]] ...
+
+into
+
+    paragraph<10> = (statement | fragment) [I [jek | joik] [[stag] BO] # [statement | fragment]] ...
+
+and taking the following productions into account:
+
+    statement<11> = statement-1 | prenex statement
+
+    statement-1<12> = statement-2 [I joik-jek [statement-2]] ...
+
+    statement-2<13> = statement-3 [I [jek | joik] [stag] BO # [statement-2]]
+
+    statement-3<14> = sentence | [tag] TUhE # text-1 /TUhU#/
+
+a truly ambiguous grammar is generated, because there are (at least) two
+ways to get to "I jek statement-2" (or statement-3).  Better still, any
+bottom-up form of parsing is guaranteed to break on the example
+sentence.
+
+The YACC won't have this problem, but that's *only* because of the order
+it parses in.  I'm fairly certain an LL(k) version of the YACC grammar
+(which can be created in about an hour; trust me, I've done it) will
+never succeed on the example sentence because statement-1 will eat the
+"I joik-jek", then look for statement-2, which will fail because of the
+prenex, but that's OK because it's optional (WHY?!).
+
+But the "I jek" has already been eaten, so the appropriate parte of
+paragraph can't match.  Oops, nowhere to go.  Oh well.
+
+(I know this occurs because I just watched my PEG parser do it several
+times until I changed the ordering; it's fixed now, and is the only
+Lojban parser I'm aware of that can parse "mi broda .i je bo no da zo'u
+broda").
+
+-Robin
+
+-- 
+Me: http://www.digitalkingdom.org/~rlpowell/  ***   I'm a *male* Robin.
+"Constant neocortex override is the only thing that stops us all
+from running out and eating all the cookies."  -- Eliezer Yudkowsky
+http://www.lojban.org/             ***              .i cimo'o prali .ui
+
+
+
+
+           
+

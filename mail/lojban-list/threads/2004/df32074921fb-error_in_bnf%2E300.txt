@@ -1,4 +1,4 @@
-# mail/lojban-list thread df32074921fb-error_in_bnf%2E300 | root 20040321184454.ga32271@digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread df32074921fb-error_in_bnf%2E300 | root 20040321184454.ga32271@digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-03-21T18:44:54Z | Robin Lee Powell <lojban-out@lojban.org> | 20040321184454.ga32271@digitalkingdom.org | mail/lojban-list/cur/1079894694.df32074921fb4381.jbomohi:2,S
 There's a contradiction between grammar.300 and bnf.300 and, regardless
@@ -125,6 +125,97 @@ an I.
 
 Even with that, "mi broda .i je bo no da zo'u broda" fails in the official
 parser because lexer_S will not erroneously accept a BO.
+
+-Robin
+
+-- 
+Me: http://www.digitalkingdom.org/~rlpowell/  ***   I'm a *male* Robin.
+"Constant neocortex override is the only thing that stops us all
+from running out and eating all the cookies."  -- Eliezer Yudkowsky
+http://www.lojban.org/             ***              .i cimo'o prali .ui
+
+
+
+
+           
+
+
+
+=== 3 | 2004-03-21T19:54:44Z | Robin Lee Powell <lojban-out@lojban.org> | 20040321195444.ga30473@digitalkingdom.org | mail/lojban-list/cur/1079898884.b86211a7c58d9ddf.jbomohi:2,S
+On Sun, Mar 21, 2004 at 11:18:09AM -0800, Robin Lee Powell wrote:
+> On Sun, Mar 21, 2004 at 10:44:54AM -0800, Robin Lee Powell wrote:
+> > There's a contradiction between grammar.300 and bnf.300 and,
+> > regardless of baselining issues, bnf.300 is *clearly* wrong:
+> > 
+> >     text-1<2> = [(I [jek | joik] [[stag] BO] #) ... | NIhO ... #] [paragraphs]
+> > 
+> > The problem is that there's supposed to be a "text-1" betweev "BO]"
+> > and "#)".
+> 
+> Also, "NIhO ..." should be "(NIhO [paragraph]) ...".
+> 
+> BUT WAIT!
+> 
+> There's MORE!
+> 
+> If you act now, you'll also receive "This doesn't actually fix the
+> problem", absolutely free!
+> 
+> This only fixes *leading" ijek statements.   The problem with "mi broda
+> .i je no da zo'u broda" still exists.
+
+[snip]
+
+> So, the reason that the example works in the official parser is
+> because lexer_S_995 erroneously accepts an I followed by a JEK/JOIK,
+> rather than just an I.
+> 
+> Even with that, "mi broda .i je bo no da zo'u broda" fails in the
+> official parser because lexer_S will not erroneously accept a BO.
+
+But wait, Frank!  That's not all they can get!
+
+That's right, Mark!  If they buy the complete set, including the lexer
+problem, they'll also receive an ambiguous grammar ABSOLUTELY FREE!
+
+The obvious fix to the second problem (besides fixing the lexer issue)
+is to turn
+
+    paragraph<10> = (statement | fragment) [I # [statement | fragment]] ...
+
+into
+
+    paragraph<10> = (statement | fragment) [I [jek | joik] [[stag] BO] # [statement | fragment]] ...
+
+and taking the following productions into account:
+
+    statement<11> = statement-1 | prenex statement
+
+    statement-1<12> = statement-2 [I joik-jek [statement-2]] ...
+
+    statement-2<13> = statement-3 [I [jek | joik] [stag] BO # [statement-2]]
+
+    statement-3<14> = sentence | [tag] TUhE # text-1 /TUhU#/
+
+a truly ambiguous grammar is generated, because there are (at least) two
+ways to get to "I jek statement-2" (or statement-3).  Better still, any
+bottom-up form of parsing is guaranteed to break on the example
+sentence.
+
+The YACC won't have this problem, but that's *only* because of the order
+it parses in.  I'm fairly certain an LL(k) version of the YACC grammar
+(which can be created in about an hour; trust me, I've done it) will
+never succeed on the example sentence because statement-1 will eat the
+"I joik-jek", then look for statement-2, which will fail because of the
+prenex, but that's OK because it's optional (WHY?!).
+
+But the "I jek" has already been eaten, so the appropriate parte of
+paragraph can't match.  Oops, nowhere to go.  Oh well.
+
+(I know this occurs because I just watched my PEG parser do it several
+times until I changed the ordering; it's fixed now, and is the only
+Lojban parser I'm aware of that can parse "mi broda .i je bo no da zo'u
+broda").
 
 -Robin
 
