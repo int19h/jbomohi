@@ -1,0 +1,81 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 9174 invoked from network); 9 Nov 2004 19:04:32 -0000
+Received: from unknown (66.218.66.216)
+  by m21.grp.scd.yahoo.com with QMQP; 9 Nov 2004 19:04:32 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta1.grp.scd.yahoo.com with SMTP; 9 Nov 2004 19:04:32 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CRbI5-00044J-3z
+	for lojban@yahoogroups.com; Tue, 09 Nov 2004 11:04:29 -0800
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.34)
+	id 1CRbH8-00043A-8o; Tue, 09 Nov 2004 11:03:30 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 09 Nov 2004 11:03:26 -0800 (PST)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CRbGZ-00042F-Bz
+	for lojban-list@lojban.org; Tue, 09 Nov 2004 11:02:55 -0800
+Date: Tue, 9 Nov 2004 11:02:55 -0800
+Message-ID: <20041109190255.GW20718@chain.digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20041107081848.GW18082@chain.digitalkingdom.org> <1099989949.419083bdf00a0@imp3-q.free.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1099989949.419083bdf00a0@imp3-q.free.fr>
+User-Agent: Mutt/1.5.6+20040722i
+X-archive-position: 8969
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Re: Computer grammar question: non-left recursive RPN?
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 23373
+Content-Length: 814
+
+On Tue, Nov 09, 2004 at 09:45:49AM +0100, Jo l'apache wrote:
+> 
+> rp-expression = rp-operand rp-operand operator
+> rp-operand = operand / rp-expression
+> 
+> here is the version without left-recursion
+> 
+> rp-expression = rp-operand rp-operand operator
+> rp-operand    = rp-operand' rp-operand
+> rp-operand'   = () | rp-operand operator
+
+Nope.
+
+rp-operand    = rp-operand' rp-operand
+
+which can be expanded to:
+
+rp-operand    = ( () | rp-operand operator) rp-operand
+
+which can be expanded to:
+
+rp-operand    = rp-operand | rp-operand operator rp-operand
+
+which is left recursive in both cases.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
+
+
+           
+
