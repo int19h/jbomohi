@@ -1,4 +1,4 @@
-# mail/lojban-list thread d7c74b5c841b-%28technical%29_problem_area_in_v3_grammar | root 20000519233955.a3843@rrbcurnow.freeuk.com | 11 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread d7c74b5c841b-%28technical%29_problem_area_in_v3_grammar | root 20000519233955.a3843@rrbcurnow.freeuk.com | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-05-19T22:39:55Z | Richard Curnow <richard@rrbcurnow.freeuk.com> | 20000519233955.a3843@rrbcurnow.freeuk.com | mail/lojban-list/cur/958775995.d7c74b5c841b07d3.jbomohi:2,S
 coi rodo 
@@ -512,6 +512,94 @@ WRITERS WANTED! Themestream allows ALL writers to publish their
 articles on the Web, reach thousands of interested readers, and get 
 paid in cash for their work. Click below:
 http://click.egroups.com/1/3840/3/_/17627/_/960265931/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
+
+
+=== 12 | 2000-06-06T20:07:26Z | Richard Curnow <richard@rrbcurnow.freeuk.com> | 20000606210726.a126@rrbcurnow.freeuk.com | mail/lojban-list/cur/960322046.0f4c7c765bd028db.jbomohi:2,S
+On Tue, Jun 06, 2000 at 12:33:51AM -0400, Bob LeChevalier (lojbab) wrote:
+> 
+> I figure it is about time to step in and say something, because this 
+> problem has put us on new and uncertain ground and I have passed it to the 
+> LLG Board to decide the baseline policy issue pertaining to this problem.
+> 
+> Note that, even if it is the "right solution", there is likely to be 
+> considerable debate amongst the Board as to whether we should break the 
+> baseline to make the fix official, indeed especially since the change is so 
+> incidental that it sounds like people are on the point of classifying it 
+> like one of several other unfortunate inconsistencies in the 
+> Book.  (Erroneous parses, on the other hand are a significantly undesirable 
+> situation, so nothing is cut and dried).
+> 
+> It is possible that the change may be left as an unofficial 
+> possible-solution to be tried out until the baseline period is over.  Or it 
+> may remain in limbo until/unless we can publish a 2nd edition of the 
+> Book.  (There may have to be consideration for the perhaps 20% of our 
+> purchasers who have bought copies through bookstores or otherwise 
+> indirectly, who we could not contact with a correction/errata on the 
+> necessary change to the book baseline, which some might feel an essential 
+> requirement for us if we change the baseline officially.)
+> 
+> People are welcome to continue to explore ramifications of the problem and 
+> its possible solutions, but the impact of this problem and its potential 
+> solution on the baseline policy, if any, will be dealt with separately from 
+> the technical issue itself.
+
+Fortunately the situation does not seem to be so bad.  The "la frank.
+sanli..." example from the Book *DOES* actually make it through a parser
+based on the BNF grammar definition (albeit in a slightly unexpected
+way).  As John has pointed out, the construct exhibited by this example
+can also be used as a workaround to the original "pu zi gi <sumti> gi
+<sumti>" wart I found.  So at a fundamental level, the Book and the
+machine grammar *CAN* be considered mutually consistent, *AND* a
+workaround to my problem exists (i.e. use 'tag termset' where
+termset="nu'i sumti", instead of 'tag sumti' where the original problem
+exists) within the scope of the existing grammar and the Book.  The 'tag
+sumti' variant can be considered an optional rule (since it can always
+be expressed with the 'tag termset' method), which removes the remaining
+shift/reduce conflict that I found in the grammar.
+
+Thus, the good news is that there isn't a fundamental need to change the
+Book or the grammar.  This will be something of a relief, I am sure,
+considering the issues Bob highlights in the quote above.
+
+>From the practical viewpoint of building a language processing tool
+though, it does seem desirable to add a rule for "term = tag termset" to
+the grammar.  As I said yesterday, the "la frank. sanli..." example
+parses the zu'a and the termset as two independent terms in a sequence,
+the zu'a looking like a floating tense with the whole bridi as its
+scope.  The idiom envisaged in the Book is clear - in this case the zu'a
+has to be considered bound to the following termset as a tense ranging
+over that termset, not as a floating tense.
+
+Based on this, the intent of the Book is that whenever 2 terms occur in
+sequence with the 1st being a tag and the 2nd a termset, they are
+considered bound together in this way.  Hence my assertion that adding a
+"term = tag termset" to the grammar doesn't contradict the existing
+materials (the Book and grammar definition) - it merely codifies this
+idiom into the grammar definition directly.
+
+Anyway, I'm including this extra 'term' rule into v0.33 of jbofi'e when
+it appears, since it gives practical benefits for analysing texts using
+this construct.  The casualties are texts that intentionally use a
+floating tense without a terminating ku immediately before a termset.
+These are inconsistent with the "la frank. sanli..." example and
+supporting text from the Book anyway.
+
+-- 
+----------------------------------------------------------------------
+Richard P. Curnow                                       rpc@myself.com
+Weston-super-Mare
+United Kingdom                        http://www.rrbcurnow.freeuk.com/
+
+
+------------------------------------------------------------------------
+WRITERS WANTED! Themestream allows ALL writers to publish their 
+articles on the Web, reach thousands of interested readers, and get 
+paid in cash for their work. Click below:
+http://click.egroups.com/1/3840/3/_/17627/_/960323299/
 ------------------------------------------------------------------------
 
 To unsubscribe, send mail to lojban-unsubscribe@onelist.com
