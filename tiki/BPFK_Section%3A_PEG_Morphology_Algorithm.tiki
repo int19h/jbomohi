@@ -46,8 +46,6 @@ non-lojban-word <- !lojban-word (!spaces .)+
 
 ;-------------------------------------------------------------------
 
-;cmene <- !h (!doi-la-lai-lahi syllable)* consonant+ ((i / u)? y h? cmene)? &spaces
-
 cmene <- !h cmene-rafsi* cmene-part &spaces
 
 cmene-rafsi <- cmene-part (i / u) y
@@ -100,33 +98,23 @@ r-hyphen <- r &consonant / n &r
 
 any-fuhivla-rafsi <- stressed-fuhivla-rafsi / fuhivla-rafsi / fuhivla
 
-stressed-fuhivla-rafsi <- !stressed-lujvy !cmavo !stressed-slinkujy !non-initial-cluster !h unstressed-syllable* stressed-syllable consonant+ y
-
-stressed-lujvy <- y-less-rafsi* stressed-y-rafsi
-
-stressed-tosmabry <- unstressed-cmavo-form (stressed-lujvy / stressed-fuhivla-rafsi) / cmavo-form cmavo-form / stressed-cmavo-form consonant y
-
-stressed-slinkujy <- consonant stressed-lujvy
-
-stressed-y-rafsi <- (stressed-long-rafsi / stressed-CVC-rafsi / stressed-y-less-rafsi initial-pair) y
+stressed-fuhivla-rafsi <- !lujvy !cmavo !slinkujy !non-initial-cluster !h unstressed-syllable* stressed-syllable consonant+ y
 
 fuhivla-rafsi <- !lujvy !cmavo !slinkujy !non-initial-cluster !h unstressed-syllable+ consonant+ y
 
-lujvy <- (!y-rafsi y-less-rafsi)* y-rafsi
-
-tosmabry <- unstressed-cmavo-form (lujvy / fuhivla-rafsi) / cmavo-form (cmavo-form / consonant y)
-
 slinkujy <- consonant lujvy
 
-y-rafsi <- (long-rafsi / CVC-rafsi / initial-pair) y
+lujvy <- (!y-rafsi y-less-rafsi)* (y-rafsi / stressed-y-rafsi / stressed-y-less-rafsi? initial-pair)
+
+stressed-y-rafsi <- (stressed-long-rafsi / stressed-CVC-rafsi) y
+
+y-rafsi <- (long-rafsi / CVC-rafsi) y
 
 ;-------------------------------------------------------------------
 
 fuhivla <- !non-fuhivla unstressed-syllable* stressed-syllable !stressed syllable &post-word
 
-non-fuhivla <- gismu / lujvo / cmavo / slinkuhi / non-initial-cluster / h 
-
-tosmabru <- unstressed-cmavo-form (gismu / lujvo / fuhivla) / cmavo-form (cmavo-form / spaces)
+non-fuhivla <- cmavo / gismu / lujvo / slinkuhi / non-initial-cluster / h 
 
 slinkuhi <- consonant y-less-rafsi* !any-fuhivla-rafsi final-rafsi 
 
@@ -136,9 +124,7 @@ y-less-rafsi <- CVC-rafsi !y / CCV-rafsi / CVV-rafsi
 
 ;-------------------------------------------------------------------
 
-;cmavo <- !cmene !gismu !lujvo !fuhivla (cmavo-form / consonant y / y h y / y+) &(post-word / cmene)
-
-cmavo <- !cmene !CVC-lujvo (cmavo-form &post-cmavo / unstressed-cmavo-form &lojban-word)
+cmavo <- !cmene !CVC-lujvo (cmavo-form &post-cmavo / unstressed-cmavo-form &lojban-word) !vowel
 
 CVC-lujvo <- CVC-rafsi y medial-rafsi* final-rafsi / stressed-CVC-rafsi y short-final-rafsi
 
