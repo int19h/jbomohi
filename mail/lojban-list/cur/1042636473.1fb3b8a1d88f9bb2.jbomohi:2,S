@@ -1,0 +1,74 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 15 Jan 2003 05:15:11 -0800 (PST)
+Received: from n32.grp.scd.yahoo.com ([66.218.66.100])
+	by digitalkingdom.org with smtp (Exim 4.05)
+	id 18YnNq-0000B6-01
+	for lojban-in@lojban.org; Wed, 15 Jan 2003 05:15:06 -0800
+X-eGroups-Return: sentto-44114-18295-1042636475-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.66.94] by n32.grp.scd.yahoo.com with NNFMP; 15 Jan 2003 13:14:35 -0000
+X-Sender: phma@ixazon.dynip.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_3_0); 15 Jan 2003 13:14:34 -0000
+Received: (qmail 9364 invoked from network); 15 Jan 2003 13:14:34 -0000
+Received: from unknown (66.218.66.216)
+  by m1.grp.scd.yahoo.com with QMQP; 15 Jan 2003 13:14:34 -0000
+Received: from unknown (HELO blackcat.ixazon.lan) (208.150.110.21)
+  by mta1.grp.scd.yahoo.com with SMTP; 15 Jan 2003 13:14:34 -0000
+Received: by blackcat.ixazon.lan (Postfix, from userid 1001)
+	id E851886DD; Wed, 15 Jan 2003 13:14:33 +0000 (UTC)
+Organization: dis
+To: lojban@yahoogroups.com
+User-Agent: KMail/1.5
+References: <F24b3yJmCSZb5HOcfBz00012c78@hotmail.com>
+In-Reply-To: <F24b3yJmCSZb5HOcfBz00012c78@hotmail.com>
+Message-Id: <200301150814.33387.phma@webjockey.net>
+From: Pierre Abbat <phma@webjockey.net>
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Wed, 15 Jan 2003 08:14:33 -0500
+Subject: [lojban] Re: Word break algorithm so far
+Content-Type: text/plain; charset=US-ASCII
+X-archive-position: 3807
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: phma@webjockey.net
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1360
+
+On Monday 13 January 2003 11:06, Jorge Llambias wrote:
+> la pier cusku di'e
+>
+> >3.  Pick the first piece that has not been resolved.
+> >   C.  If the piece does not end in 'y' or a consonant and has no
+> > consonant that is adjacent to a consonant when 'y' is removed:
+> >     I.  Number the consonants starting with 1 and find the last one whose
+> >         number is a power of 2.
+> >     II. If this consonant is the first letter in the piece or there are
+> > no consonants, resolve the string as a cmavo.
+> >     III.If this consonant is not the first letter, split before it.
+>
+> Why do you need I, II and III? Shouldn't you just split before
+> every consonant at this point?
+
+I wrote the program to split once each time it examines a piece, or at most 
+twice, doing two different kinds of split. Given that constraint, this is the 
+most efficient way to break a piece that consists entirely of cmavo. If a 
+piece ends in a long string of BY, it hits another part of the algorithm that 
+takes quadratic time, so taking nlogn time on this is moot.
+
+I have to check whether the consonant is the first letter, otherwise I would 
+break off a null piece, which is an error (though currently marked as a 
+cmavo).
+
+phma
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
