@@ -64,42 +64,43 @@ FIhU-words <- "fi'u"
 
 -----
 
-I have reformulated my grammar somewhat in light of Rob's grammar and some further thought:
+!!!Grammar proposed by ((xorxes)) (work in progress):
 
-^number = quantifier | tuple
-quantifier = real CEhI | PI quantity | quantity [[quantity] & FIhU quantity [[quantity]
-quantity = SUhO ... & (RO | digits)
-tuple = complex & PIhE [[tuple]
-complex = fraction & KAhO [[complex]
-fraction = real & FIhU [[fraction]
-real = [[SUhO] ... decimal | PAI | RO
-decimal = digits & PI (digits & RAhE digits)
-digits = NO... | TUhO
-
-New selma'o:
-
-NO = no | pa | re | ci | vo | mu | xa | ze | bi | so | dau | fei | gai | jau | rei | vai | ki'o
-RO = ro | so'a | so'e | so'i | so'o | so'u | no'o | rau | du'e | mo'a | ci'i
-SUhO = su'o | su'e | me'i | za'u | ji'i | da'a | ma'u | ni'u
-TUhO = tu'o | xo
-PAI = pai | te'o
-FIhU = fi'u
-KAhO = ka'o
-PIhE = pi'e
-PI = pi
-RAhE = ra'e
-CEhI = ce'i
+^number <- quantifier / complex
+quantifier <- quantity* FIhU quantity* / quantity+ / PI quantity / real CEhI
+quantity <- SUhO* RO / SUhO+ digits? / digits
+complex <- real? KAhO real? / real
+real <- SUhO* MAhU? (decimal / fraction / aleph / digits / PAI)
+decimal <- digits? PI digits? (RAhE digits)?
+fraction <- digits? FIhU digits?
+aleph <- CIhI digits*
+digits <- NO+ / TUhO
 ^
+
+!!!New selma'o
+
+||
+NO | no, pa, re, ci, vo, mu, xa, ze, bi, so, dau, fei, gai, jau, rei, vai, ki'o, pi'e
+RO | ro, so'a, so'e, so'i, so'o, so'u, rau, du'e, mo'a, no'o
+SUhO | su'o, su'e, me'i, za'u, ji'i, da'a 
+MAhU | ma'u, ni'u
+TUhO | tu'o, xo
+CIhI | ci'i
+PAI | pai, te'o
+FIhU | fi'u
+KAhO | ka'o
+PI | pi
+RAhE | ra'e
+CEhI | ce'i
+||
 
 !!!Notes:
 
-#I collapsed SUhO, DAhA and MAhU into one selma'o for the sake of simplification. This introduces two unknowns: da'a in front of a number, and ma'u/ni'u in front of a quantifier. For the former, I propose the following interpretation: {ta mitre li da'a cipimu}, "that is all but 3.5 meters long", i.e. "that is 3.5 meters short of what it ought to be" or something like that. For the latter (ma'u/ni'u in front of a quantifier), I am tempted to suggest that ni'u indicate negation, so {ni'u vo} as a quantifier would be "not four", "other than four". This needs more investigation, but in any case it seems that some useful meaning could be found for it. In the proposed case, {ma'u} would not change the meaning of the quantifier. 
-# I made ki'o a NO because it can mix with the digits in any combination. {ki'o} by itself means 1000, {ki'opa} is 1001, {reki'o} is {2000}, {ki'oreki'o} is {1002000}, etc. 
-# I'm not completely sure how ki'o works with pi. {pipareciki'omu} is {.123,4}, but what happens when less than three digits are given before ki'o? I would guess {piki'ore} = .000,2 {piki'o} = .001 and {pireki'o} = .002 rather than .201 so that {ki'o} acts before {pi} to fill in zeroes.   
-# I put {ji'i} with the SUhOs because it is also used to indicate a range. This means that I don't use the position of ji'i as an indicator of the magnitude of fuzziness.  
-# I made ''fi'u'' bind closer than ''ka'o''. Either choice was possible. So ''cika'ovofi'umu'' is 3+i(4/5) and not (3+i4)/5.
-# 3/4/5 is 3/(4/5), and 3 + i4 + i5 is 3 + i(4+i5).
-# I allow fractions such as 3.5/2.7
+#I made {da'a} a SUhO. For da'a in front of a number I propose the following interpretation: {ta mitre li da'a cipimu}, "that is all but 3.5 meters long", i.e. "that is 3.5 meters short of what it ought to be" or something like that. 
+# I made {ji'i} a SUhO because it is also used to indicate a range. This means that I don't use the position of ji'i as an indicator of the magnitude of fuzziness.  
+# Any SUhO in front of a quantity returns another quantity, so they can be added indefinitely, even though in usage they probably won't be. For example, {za'u za'u za'u pa}, "more than more than more than one" is equivalent to {su'o vo}, "at least four" (when dealing with integers/quantifiers).
+# {pi'e} and {ki'o} can mingle freely with digits, collapsing digits between {pi'e} or {ki'o}s, or between these and {pi} into a single macro-digit. {ki'o} is the special case of {pi'e} for base 1000. Digits after {pi} are decimal unless there is at least one {ki'o} or {pi'e} after {pi}. 
+# Two quantities in a row give the intersection if it exists, else the union. They group from left to right.
 
 ''mi'e ((xorxes))''
 
