@@ -74,7 +74,7 @@ final-rafsi <- fuhivla / gismu / CVV-final-rafsi / short-lujvo
 
 ;-------------------------------------------------------------------
 
-fuhivla <- fuhivla-head stressed-syllable !stressed syllable &post-word 
+fuhivla <- fuhivla-head stressed-syllable final-syllable
 
 fuhivla-head <- !rafsi-string brivla-head
 
@@ -144,26 +144,30 @@ CVC-lujvo <- CVC-rafsi y initial-rafsi* final-rafsi / stressed-CVC-rafsi y short
 
 post-cmavo <- spaces / cmene / &stressed lojban-word / !cluster lojban-word / &cluster-syllable-non-word lojban-word
 
-cluster-syllable-non-word <- &cluster syllable !lojban-word
+cluster-syllable-non-word <- cluster nucleus !lojban-word
 
-stressed-cmavo-form <- !cluster !h (syllable &h)* stressed-syllable
+stressed-cmavo-form <- consonant? (nucleus h)* stressed-nucleus
 
-unstressed-cmavo-form <- !cluster !h (syllable &h)* unstressed-syllable / consonant y / y h y / y+
+unstressed-cmavo-form <- consonant? (nucleus h)* unstressed-nucleus / consonant y / y h y / y+
 
-cmavo-form <- !cluster !h syllable (&h syllable)* / consonant y / y h y / y+
+cmavo-form <- consonant? (nucleus h)* nucleus / consonant y / y h y / y+
 
 ;-------------------------------------------------------------------
 
 stressed-syllable <- &stressed syllable / syllable &stress
+stressed-nucleus <- &stressed nucleus / nucleus &stress
 stressed-diphthong <- &stressed diphthong / diphthong &stress
 stressed-vowel <- &stressed vowel / vowel &stress
 
 unstressed-syllable <- !stressed syllable !stress
+unstressed-nucleus <- !stressed nucleus !stress
 unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
 y-syllable <- (h / coda? consonantal-syllable? initial) y !y
-syllable <- (h / coda? consonantal-syllable? initial) (diphthong / semi-consonant? vowel) !y / digit 
+final-syllable <- !stressed onset? nucleus &post-word
+syllable <- (h / coda? consonantal-syllable? initial) nucleus !y / digit 
+nucleus <- diphthong / semi-consonant? vowel
 semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / i / o / u
@@ -182,9 +186,11 @@ y <- comma* [[yY]
 
 cluster <- consonant consonant+
 
+onset <- h / consonantal-syllable? initial
+
 coda <- !initial !consonantal-syllable consonant
 
-consonantal-syllable <- consonant (l / m / n / r) &initial
+consonantal-syllable <- consonant syllabic-consonant &initial
 
 initial-pair <- &initial consonant consonant !consonant
 
@@ -196,9 +202,11 @@ liquid <- l / r
 
 other <- p / t !l / k / f / x / b / d !l / g / v / m / n !liquid 
 
-sibilant <- c / s !x / j !n / z !n
+sibilant <- c / s !x / (j / z) !n !liquid
 
-consonant <- voiced-consonant / unvoiced-consonant / l / m / n / r
+consonant <- voiced-consonant / unvoiced-consonant / syllabic-consonant
+
+syllabic-consonant <- l / m / n / r
 
 voiced-consonant <- b / d / g / j / v / z
 
@@ -212,12 +220,12 @@ b <- comma* [[bB] !h !b !unvoiced-consonant
 d <- comma* [[dD] !h !d !unvoiced-consonant
 g <- comma* [[gG] !h !g !unvoiced-consonant
 v <- comma* [[vV] !h !v !unvoiced-consonant
-j <- comma* [[jJ] !h !sibilant !unvoiced-consonant
-z <- comma* [[zZ] !h !sibilant !unvoiced-consonant
-s <- comma* [[sS] !h !sibilant !voiced-consonant
-c <- comma* [[cC] !h !sibilant !voiced-consonant !x
-x <- comma* [[xX] !h !x !voiced-consonant !c !k
-k <- comma* [[kK] !h !k !voiced-consonant !x
+j <- comma* [[jJ] !h !j !z !unvoiced-consonant
+z <- comma* [[zZ] !h !z !j !unvoiced-consonant
+s <- comma* [[sS] !h !s !c !voiced-consonant
+c <- comma* [[cC] !h !c !s !x !voiced-consonant 
+x <- comma* [[xX] !h !x !c !k !voiced-consonant 
+k <- comma* [[kK] !h !k !x !voiced-consonant
 f <- comma* [[fF] !h !f !voiced-consonant
 p <- comma* [[pP] !h !p !voiced-consonant
 t <- comma* [[tT] !h !t !voiced-consonant
