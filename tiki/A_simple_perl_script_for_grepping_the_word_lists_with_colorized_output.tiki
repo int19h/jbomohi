@@ -1,0 +1,160 @@
+
+This script is in the public domain.
+
+Beware, to prevent transforming code pieces into hyperlinks some additional "[" charactere were inserted in the source code of this page. Do not go to "Edit" and cut-and-paste from there blindly.
+
+----
+
+ #!/usr/bin/env perl -w
+ #
+ # ko facki fi le jbovla
+ #
+
+ # le kajde cu xamgu mi
+ use strict;
+
+ # ko galfi ti
+ my $gihuste = "/home/fracture/misc/lojban/gismu.txt";
+ my $mahoste = "/home/fracture/misc/lojban/cmavo.txt";
+ my $jvoste = "/home/fracture/misc/lojban/lujvo.txt";
+ my $rafsyste = "/home/fracture/misc/lojban/rafsi.txt";
+
+ # ko cpacu le sumti
+ use vars qw($opt_g $opt_p $opt_a $opt_c $opt_C $opt_l $opt_L
+ 	$opt_r $opt_R $opt_A);
+ use Getopt::Std;
+ getopts("gcClLaRrp");
+ if ($#ARGV < 0) {
+ 	print "pilno: viska (Was Footnote: -aAg) (Was Footnote: -lrc | -C | -L | -R) valsi\n";
+ 	exit 1;
+ }
+ if ($opt_a) {
+ 	$opt_c = 1;
+ 	$opt_l = 1;
+ 	$opt_r = 1;
+ }
+
+ # xxx
+ $opt_c = 1;
+
+ while ($#ARGV >= 0) {
+ my $valsi="$ARGV(Was Footnote: 0)";
+ shift;
+
+ $valsi =~ s/h/\'/g if !$opt_g;
+
+ sub viska_valsi {
+ 	my ($wha, $v, $fullstart, $rafstart, $raflen, $smallstart) = @_;
+ 	my ($val, $fulldef, $smalldef, $rafsi);
+
+ 	# ji'a zo rafsi pilno fi le selma'o
+ 	$fulldef = substr($v, $fullstart);
+ 	$rafsi = substr($v, $rafstart, $raflen);
+ 	$smalldef = substr($v, $smallstart, $fullstart - $smallstart);
+ 	$v =~ /((Was Footnote: a-z\')+)/;
+ 	$val = $1;
+
+ 	print "\33[1m" . $val . "\33[0m";
+ 	if ($wha != 2) {
+ 		print "\r\t\t" if $wha;
+ 		print " \33[36m";
+ 		print "|" if !$wha;
+ 		print $rafsi;
+ 		print "|" if !$wha;
+ 		print "\33[0m";
+ 		print "\t\33[31m" . $smalldef . "\33[0m";
+ 	}
+
+ 	if (!$opt_p) {
+  		$| = 1;
+ 		print "\n\33[33m";
+ 		$fulldef =~ s/\'/\'\\\'\'/g;
+ 		system "echo \'$fulldef\' | fmt";
+ 		print "\33[0m";
+ 		$| = 0;
+ 	} else {
+ 		print "\n";
+ 	}
+ }
+
+ sub viska_gismu {
+ 	my ($gis) = @_;
+ 	viska_valsi 0, $gis, 61, 6, 12, 19;
+ }
+
+ sub viska_cmavo {
+ 	my ($cma) = @_;
+ 	viska_valsi 1, $cma, 61, 10, 9, 19;
+ }
+
+ sub viska_lujvo {
+ 	my ($luj) = @_;
+ 	viska_valsi 2, $luj, 31, 0, 0, 0;
+ }
+
+ # caku ko troci fi le gismu
+ if (!$opt_C && !$opt_L && !$opt_R) {
+ 	open GISMU, "< $gihuste" or die "open($gihuste): $!";
+ 	while (<GISMU>) {
+ 		if ($opt_g) {
+ 			# le glibau
+ 			my $str = substr($_, 19);
+ 			viska_gismu $_ if $str =~ /^$valsi/;
+ 		} else {
+ 			# la lojban
+ 			viska_gismu $_ if /^$valsi/;
+ 		}
+ 	}
+ 	close GISMU;
+ }
+
+ # caku ko troci fi le cmavo
+ if (($opt_c || $opt_C) && !$opt_L && !$opt_R) {
+ 	open CMAVO, "< $mahoste" or die "open($mahoste): $!";
+ 	while (<CMAVO>) {
+ 		if ($opt_g) {
+ 			# le glibau
+ 			viska_cmavo $_ if /$valsi/;
+	 	} else {
+ 			# la lojban
+ 			viska_cmavo $_ if /^\.?$valsi/;
+	 	}
+ 	}
+  	close CMAVO;
+ }
+
+ # ko ca troci fi le lujvo
+ if (($opt_l || $opt_L) && !$opt_R) {
+ 	open LUJVO, "< $jvoste" or die "open($jvoste): $!";
+ 	while (<LUJVO>) {
+ 		if ($opt_g) {
+ 			# le glibau
+ 			my $str = substr($_, 42);
+ 			viska_lujvo $_ if $str =~ /$valsi/;
+ 		} else {
+ 			# la lojban
+ 			viska_lujvo $_ if /^$valsi/;
+ 		}
+ 	}
+ 	close LUJVO;
+ }
+
+ # ko ca troci fi le rafsi
+ if ($opt_r || $opt_R) {
+ 	open RAFSI, "< $rafsyste" or die "open($rafsyste): $!";
+ 	while (<RAFSI>) {
+ 		if ($opt_g) {
+ 			# le glibau
+ 			my $str = substr($_, 12);
+ 			print if $str =~ /$valsi/;
+ 		} else {
+ 			# la lojban
+ 			print if /^$valsi/;
+ 		}
+ 	}
+ 	close RAFSI;
+ }
+
+ }
+
+ exit 0;
