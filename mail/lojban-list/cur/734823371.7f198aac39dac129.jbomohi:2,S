@@ -1,0 +1,41 @@
+Return-Path: <jimc@math.ucla.edu>
+	(Sendmail 5.61/1.07) id AA12209; Wed, 14 Apr 93 14:36:13 -0700
+Message-Id: <9304142136.AA12209@julia.math.ucla.edu>
+Subject: Re: A (Lame) Joke in Loglan 
+Date: Wed, 14 Apr 93 14:36:11 -0700
+From: jimc@math.ucla.edu
+X-Mozilla-Status: 0011
+Content-Length: 1333
+
+> Nick, wondering whether his Lojban analyser should implement database
+> queries...
+
+Yes, without question!  The meaning sets represented by predicate
+languages are ideally represented by means of a relational database.
+Specific areas where the database approach gives an advantage:
+
+1.  It takes forever to load the dictionary.  If you can load it once
+and leave it in a database, you can speed up processing a great deal,
+assuming your database software is reasonably fast.
+
+2.  Parse trees tend to proliferate like fungus, and soon run you out
+of memory and swap space.  This is particularly true if you plan to
+feed running text into the program, and if you expect it to deal with
+all parts of the text in one query.  The database software at least
+gets the stored info onto disc.  
+
+3.  A little optimization can be helpful.  Example: run through the
+input file once and pick out all the words.  Sort (unless the database
+software does this automatically).  Extract only the immediately needed
+definitions.  
+
+4.  Many operations are like inner joins between two or more
+predicates. The database software may be able to do an inner join a lot
+more efficiently than Prolog can, particularly when a lot of text is
+involved.  Then again, maybe your database program is a slug and you
+have a good Prolog.  
+
+Good luck!
+
+		-- jimc
+

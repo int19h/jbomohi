@@ -1,4 +1,4 @@
-# mail/lojban-list thread 04361d5cb05c-a_%28lame%29_joke_in_loglan | root 9304141432.19392@mullian.ee.mu.oz.au | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 04361d5cb05c-a_%28lame%29_joke_in_loglan | root 9304141432.19392@mullian.ee.mu.oz.au | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 1993-04-14T15:27:28Z | John Cowan <cowan@SNARK.THYRSUS.COM> | 93bb854b01a989e21161ae802c7623a0efa306a5@jbomohi.invalid | mail/lojban-list/cur/734801248.1387362eaafaea33.jbomohi:2,S
 la nitcion. cusku di'e
@@ -90,5 +90,40 @@ ki'oroi go'i
 --
 John Cowan      cowan@snark.thyrsus.com         ...!uunet!lock60!snark!cowan
                         e'osai ko sarji la lojban.
+
+
+
+=== 4 | 1993-04-14T21:36:11Z | jimc@math.ucla.edu | 9304142136.aa12209@julia.math.ucla.edu | mail/lojban-list/cur/734823371.7f198aac39dac129.jbomohi:2,S
+> Nick, wondering whether his Lojban analyser should implement database
+> queries...
+
+Yes, without question!  The meaning sets represented by predicate
+languages are ideally represented by means of a relational database.
+Specific areas where the database approach gives an advantage:
+
+1.  It takes forever to load the dictionary.  If you can load it once
+and leave it in a database, you can speed up processing a great deal,
+assuming your database software is reasonably fast.
+
+2.  Parse trees tend to proliferate like fungus, and soon run you out
+of memory and swap space.  This is particularly true if you plan to
+feed running text into the program, and if you expect it to deal with
+all parts of the text in one query.  The database software at least
+gets the stored info onto disc.  
+
+3.  A little optimization can be helpful.  Example: run through the
+input file once and pick out all the words.  Sort (unless the database
+software does this automatically).  Extract only the immediately needed
+definitions.  
+
+4.  Many operations are like inner joins between two or more
+predicates. The database software may be able to do an inner join a lot
+more efficiently than Prolog can, particularly when a lot of text is
+involved.  Then again, maybe your database program is a slug and you
+have a good Prolog.  
+
+Good luck!
+
+		-- jimc
 
 
