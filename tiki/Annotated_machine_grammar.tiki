@@ -1,0 +1,57 @@
+According to a new ((BPFK)) policy proposal, which is likely to be
+adopted, the BPFK has to review ''ALL'' the machine grammar rules.
+
+This is where we begin. ((tsali|I))'m going to take the easy ones first; I
+don't expect there to be any issues with them. I'm working from
+[http://www.lojban.org/files/machine-grammars/grammar.300|grammar.300], which is the same as the one in the ((CLL)), barring typos.
+
+When I started this, I was unaware of the [http://www.lojban.org/files/machine-grammars/techfix.300|techfix comments]. These might be of help in understanding the rationale of the rules.
+
+!Non-terminals (phrases)
+* ((free_modifier_32))
+* ((free_modifier_A_33))
+* ((description_110))
+* ((space_direction_1046))
+
+!Specific kinds of non-terminals
+These are non-terminals that are so similar that it makes sense
+discussing them collectively.
+* ((Machine grammar slots for elidable terminators))
+
+!Terminals (tokens)
+* ((FAhA_528))
+* ((NAI_581))
+* ((error)) (sic)
+
+The machine grammar of Lojban is not purely LALR(1). Some constructs need to be modified by a program before passing it on to the actual YACC parser. This program is referred to as the ((lexer)) in literature about the machine grammar, but it does a lot more than simply lexing. There are two kinds of modifications the lexer can do to its input:
+* Replace it with a pseudo-token ("lexer token")
+* Insert a lexer token ''in front of'' it
+An example where this is done, is with utterance ordinals, that consists of a letteral or number string, followed by ((mai)). The lexer detects that such a string is followed by mai, and inserts ((lexer_A_701)) in front of it. Thus, the "real" parser sees the resulting construct about the same way as it sees a parenthesis, with an introducing particle, a contained phrase, and a terminator. Needless to say, the conceptual "terminator" of the utterance ordinal, mai, is not elidable, because that is the word that the lexer has to detect to insert the lexer token in the first place.
+
+The lexer tokens and the preparsing process is not as well understood as the rest of the YACC grammar. In particular, it is not certain if they interact with each other. This project is trying to remedy this.
+
+*((token lexer_A_701)) - flags a MAI utterance ordinal
+*((token lexer_B_702)) - flags an EK unless EK_BO, EK_KE
+*((token lexer_C_703)) - flags an EK_BO
+*((token lexer_D_704)) - flags an EK_KE
+*((token lexer_E_705)) - flags a JEK
+*((token lexer_F_706)) - flags a JOIK
+*((token lexer_G_707)) - flags a GEK
+*((token lexer_H_708)) - flags a GUhEK
+*((token lexer_I_709)) - flags a NAhE_BO
+*((token lexer_J_710)) - flags a NA_KU
+*((token lexer_K_711)) - flags an I_BO (option. JOIK/JEK lexer tags)
+*((token lexer_L_712)) - flags a PA, unless MAI (then lexer A)
+*((token lexer_M_713)) - flags a GIhEK_BO
+*((token lexer_N_714)) - flags a GIhEK_KE
+*((token lexer_O_715)) - flags a modal operator BAI or compound
+*((token lexer_P_716)) - flags a GIK
+*((token lexer_Q_717)) - flags a lerfu_string unless MAI (then lexer_A)
+*((token lexer_R_718)) - flags a GIhEK, not BO or KE
+*((token lexer_S_719)) - flags simple I
+*((token lexer_T_720)) - flags I_JEK
+*((token lexer_U_721)) - flags a JEK_BO
+*((token lexer_V_722)) - flags a JOIK_BO
+*((token lexer_W_723)) - flags a JOIK_KE
+*((token lexer_X_724)) - "null" - commented out in [http://www.lojban.org/files/machine-grammars/grammar.300|grammar.300], possibly because it is only in the informal grammar
+*((token lexer_Y_725)) - flags a PA_MOI
