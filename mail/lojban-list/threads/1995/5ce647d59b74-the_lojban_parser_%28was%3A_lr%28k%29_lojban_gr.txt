@@ -1,0 +1,51 @@
+# mail/lojban-list thread 5ce647d59b74-the_lojban_parser_%28was%3A_lr%28k%29_lojban_gr | root 199512041239.haa05204@locke.ccil.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1995-12-04T16:30:15Z | unknown | 7033ba1080c4726d3ab2e103ca332982832d9c02@jbomohi.invalid | mail/lojban-list/cur/818094615.1439d18943151680.jbomohi:2,S
+> I wish to point out en passant that there *is* at least one context-
+> sensitive construct in Lojban, one that is strictly syntactical in
+> nature: the ZOI quote, that requires the chosen opening delimiter to be
+> identical to the closing one. This is of course dealt with very simply
+> by the preparser. (.oisai I wish it wasn't necessary...)
+
+Since the subject of the preparser has come up, and since I'm the one
+that understands the thing, I probably ought to outline what it does.
+It is a "phased" implementation built as a series of nested routines
+each of which calls the previous phase:
+
+1.  Isolate words from the input stream: folds case, maps digits to
+digit cmavo, removes punctuation.  Whitespace and "." are word separators.
+
+2.  Break up compound cmavo; recognize cmene.  Anything not a cmavo or
+a cmene is assumed to be a brivla (no check is made for cmavo clinging to
+the front of a brivla, or for brivla validity).
+
+3.  Process constructs involving "zo", "zoi", "la'o", "lo'u"/"le'u",
+changing the quoted words to instances of "any_word", "any_words", or
+"anything".
+
+4.  Assign selma'o to cmavo.
+
+5.  Append a "fa'o" to a text that doesn't end in one.
+
+6.  Glue together strings of words involving "zei" into brivla-equivalents.
+
+7.  Absorb BAhE into the next following word.
+
+8.  Absorb BU into the preceding word, changing effective selma'o to BY.
+
+9.  Absorb UI, CAI, Y, DAhO, FUhE, FUhO, UINAI, and CAINAI into previous word.
+
+10.  Attempt to compound the "lexer_?" rules.  This is done by a simpleminded
+backtracking recursive-descent parser, built by hand using some C macros
+on the basis of the grammar rules.  The backtracking is very crude:
+any failure causes the whole structure to be decomposed into its tokens
+and another rule is attempted.  In the end, each compound is reduced
+to a single token in the "lexer_?_7??" series, which is what the YACC
+parser actually sees.  Anything that can't be compounded is passed directly
+to YACC.
+
+-- 
+John Cowan					cowan@ccil.org
+		e'osai ko sarji la lojban.
+
+
