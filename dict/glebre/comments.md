@@ -67,3 +67,33 @@ about musth is for a jbopli who knows "glebre" but not "musth". Other
 notes, such as the one at {naxle}, are for glipli and clarify the meaning
 of the Lojban word.
 
+
+## 2004-12-14T13:15:31Z — xorxes (comment 186, on definition 15373, in reply to 181)
+
+Re: Inappropriately abstracted gloss words
+
+arj wrote:
+> "heat ; sex" would be "ka glebre", not "glebre".
+> 
+> A more correct keyword would be "be in heat ; sex", but this would be
+> collated under b, not h.
+
+The problem is that jbovlaste is designed as a Lojban -> Natlang
+dictionary. (Or Lojban -> Lojban.)
+
+The Natlang -> Lojban counterpart comes as a side effect, but does not
+always work very well. In a proper English -> Lojban dictionary we would
+have something like:
+
+heat 1. ka glare 2. ka glebre
+
+or whatever. (I'd probably use nu instead of ka.) There is no garantee
+that the words of one language are matched by single words of the other
+language.
+jbovlaste has definitions for single Lojban words, not for single natlang
+words. (In this case it is possible to add kamglare, kamglebre as words,
+but there is no reason in general to match every single English word with
+a single Lojban word.)
+
+mi'e xorxes
+
