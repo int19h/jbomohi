@@ -1,0 +1,103 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 34656 invoked from network); 9 Nov 2004 19:02:42 -0000
+Received: from unknown (66.218.66.216)
+  by m25.grp.scd.yahoo.com with QMQP; 9 Nov 2004 19:02:42 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta1.grp.scd.yahoo.com with SMTP; 9 Nov 2004 19:02:42 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CRbFz-00041N-IR
+	for lojban@yahoogroups.com; Tue, 09 Nov 2004 11:02:19 -0800
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.34)
+	id 1CRbF5-0003pj-F1; Tue, 09 Nov 2004 11:01:23 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 09 Nov 2004 11:01:18 -0800 (PST)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CRbEV-0003nd-Lf
+	for lojban-list@lojban.org; Tue, 09 Nov 2004 11:00:47 -0800
+Date: Tue, 9 Nov 2004 11:00:47 -0800
+Message-ID: <20041109190047.GV20718@chain.digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20041107081848.GW18082@chain.digitalkingdom.org> <1624C623-3213-11D9-9684-000D9329C984@online.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1624C623-3213-11D9-9684-000D9329C984@online.fr>
+User-Agent: Mutt/1.5.6+20040722i
+X-archive-position: 8968
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Re: Computer grammar question: non-left recursive RPN?
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 23372
+Content-Length: 1417
+
+On Tue, Nov 09, 2004 at 06:49:14AM +0100, Rapha?l Poss wrote:
+> Le 7 nov. 04, ? 09:18, Robin Lee Powell a ?crit :
+> >Lojban has a reverse polish (i.e. postfix math) mode built in.
+> >
+> >The ABNF form of this rule is:
+> >
+> >rp-expression = rp-operand rp-operand operator
+> >
+> >rp-operand = operand / rp-expression
+> >
+> >which does exactly what you'd expect.
+> >
+> >I can't figure out a way to convert this into a version without
+> >left recursion.  I've got:
+> >
+> >rp-expression = operand rp-expression-tail
+> >rp-expression-tail = rp-expression operator rp-expression-tail / ()
+> >
+> >(where () is the empty production), but I'm not at all certain
+> >it's equivalent, and the parse trees it produces look very wrong
+> >(i.e. not left recursive at all).
+> >
+> >Help?
+> 
+> (I assume from the ABNF grammar above that a RP expression has at
+> least 2 operands and 1 operator)
+
+*Excatly* 2 operands per operator.
+
+> What about :
+> 
+> rp-expression = operand operand rp-tail
+> rp-tail = operand rp-tail / operator
+
+Umm, that's just:
+
+rp-expression = operand operand+ operator
+
+These are nested reverse polish notation expressions; very
+different.
+
+For example:
+
+1 2 + 3 4 + +
+
+is (1 + 2) + (3 + 4)
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
+
+
+           
+
