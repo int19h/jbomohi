@@ -1,0 +1,42 @@
+Subject: Lojban and LALR(1)ity
+To: lojban@cuvmb.cc.columbia.edu
+From: John Cowan <cbmvax!uunet!marob.masa.com!cowan>
+Date: Fri, 11 Mar 1994 15:13:49 -0500 (EST)
+Cc: lojbab (Logical Language Group)
+X-Mailer: ELM [version 2.4 PL23]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Message-ID: <KVr83IBGT_G.A.CJB.x30kLB@chain.digitalkingdom.org>
+Content-Length: 1510
+
+Jorge and Matthew have both brought up the question "Why should Lojban be
+limited to LALR(1) parsability?"  The answer is very simple and practical.
+
+We have a technique, namely the use of Yacc, for testing if a language meets
+this specification.  Yacc and its relatives (Byacc and Bison) are available
+on just about every platform.  The same cannot be said of any more powerful
+parser-generator program.
+
+History shows that Loglan did not, in fact, become unambiguously machine
+parsable until the use of Yacc was introduced into the Project.  Before
+that, we had various grammars which were claimed to be unambiguous but
+in fact failed the test.
+
+We already allow small extensions to LALR(1) parsability, through the
+preprocessor section of the grammar.  In particular, the logical connectives
+themselves (the jeks, joiks, geks, etc.) are not LALR(1).  But all of these
+are essentially bounded; any unboundedness is of a simple iterative, not
+recursive, kind.  (Example: the preparser allows unboundedly long numbers
+to be processed, but numbers have no internal structure.)
+
+Overusing preprocessing is dangerous: the second baseline grammar, in fact,
+fails to parse "re pamai boi gerku" = "two (firstly) dogs" correctly.
+This error was completely missed by Yacc, and was caught only by an actual
+example.  Change 6 grew out of this: the new grammar calls for "reboi pamai
+gerku", which can be parsed correctly.
+
+-- 
+John Cowan		sharing account <lojbab@access.digex.net> for now
+		e'osai ko sarji la lojban.
+
