@@ -1,4 +1,4 @@
-# mail/lojban-list thread 666d913c6f3f-color | root 20020314223317.ga7349@piclab.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 666d913c6f3f-color | root 20020314223317.ga7349@piclab.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2002-03-14T23:47:08Z | Jay Kominek <jay.kominek@colorado.edu> | pine.gso.4.40.0203141642500.18526-100000@ucsub.colorado.edu | mail/lojban-list/cur/1016149628.b978b9ef80d6d580.jbomohi:2,S
 
@@ -45,6 +45,60 @@ What's wrong with RGB at gamma = 1?
 John Cowan <jcowan@reutershealth.com>     http://www.reutershealth.com
 I amar prestar aen, han mathon ne nen,    http://www.ccil.org/~cowan
 han mathon ne chae, a han noston ne 'wilith.  --Galadriel, _LOTR:FOTR_
+
+           
+
+
+
+=== 3 | 2002-03-15T05:05:08Z | Nathaniel Smith <njs@uclink4.berkeley.edu> | 20020315050507.ga3874@njs.dhis.org | mail/lojban-list/cur/1016168708.f44593d466b7e8da.jbomohi:2,S
+On Thu, Mar 14, 2002 at 10:17:29PM -0500, John Cowan wrote:
+> Jay Kominek scripsit:
+> 
+> > x3 is exactly what you're asking for. Yes, RGB is borked, but I believe it
+> > still makes an acceptable default, as most people are familiar with it,
+> > and do not need the kind of precision required.
+> 
+> What's wrong with RGB at gamma = 1?
+
+</lurk>
+
+There are two main problems:
+  1) No precision.  Every monitor in the world has a different space
+     called "RGB", and the same RGB triple can look very very
+     different on different devices.  (Fixing gamma does help here,
+     somewhat, but not that much -- there are still differences in
+     phosphors, etc.  And let's not get into environmental lighting
+     conditions...)
+  2) Poor gamut.  There are lots of colors which aren't expressible
+     using RGB (at least, not without serious cheating).  This
+     includes all the most intense (saturated) ones.
+     Nice picture (look for "gamut"):
+        http://www.adobe.com/support/techguides/color/cms_glossary/G.html
+(The solution to both of these problems is to use one of the CIE
+spaces, like CIEXYZ or CIEL*a*b* or CIEL*u*v* or ...  These spaces
+often tend to be "more intuitive" as well, ie, correspond more
+closely to perceived color.)
+
+These problems, of course, are likely irrelevant to this discussion
+:-).  (Though, honestly, I can't imagine that people will ever use
+this selbri aside from describing how to set a web-page background or
+something.  Most color space coordinates really aren't intuitive --
+if you don't believe me, then quick, what's the difference between
+tan and brown in RGB?  And what are the coordinates for purple?
+Would you be able to answer questions like that usefully while
+half-way through a sentence?)
+
+<lurk>
+
+-- Nathaniel
+
+-- 
+So let us espouse a less contested notion of truth and falsehood, even
+if it is philosophically debatable (if we listen to philosophers, we
+must debate everything, and there would be no end to the discussion).
+  -- Serendipities, Umberto Eco
+
+This email may be read aloud.
 
            
 
