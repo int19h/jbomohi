@@ -1,0 +1,71 @@
+Return-Path: <kominek@ucsub.colorado.edu>
+X-Sender: kominek@ucsub.colorado.edu
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_3_2); 27 Aug 2001 21:19:44 -0000
+Received: (qmail 37999 invoked from network); 27 Aug 2001 21:19:30 -0000
+Received: from unknown (10.1.10.142)
+  by l7.egroups.com with QMQP; 27 Aug 2001 21:19:30 -0000
+Received: from unknown (HELO ucsub.colorado.edu) (128.138.129.12)
+  by mta3 with SMTP; 27 Aug 2001 21:19:29 -0000
+Received: from ucsub.colorado.edu (kominek@ucsub.colorado.edu [128.138.129.12])
+	by ucsub.colorado.edu (8.11.6/8.11.2/ITS-5.0/student) with ESMTP id f7RLJT317067
+	for <lojban@yahoogroups.com>; Mon, 27 Aug 2001 15:19:29 -0600 (MDT)
+Date: Mon, 27 Aug 2001 15:19:29 -0600 (MDT)
+To: <lojban@yahoogroups.com>
+Subject: Re: [lojban] LALR1 question
+In-Reply-To: <20010827135306.A31570@digitalkingdom.org>
+Message-ID: <Pine.GSO.4.33.0108271513210.13310-100000@ucsub.colorado.edu>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Jay Kominek <jay.kominek@colorado.edu>
+X-Yahoo-Message-Num: 10185
+Content-Length: 1702
+
+
+On Mon, 27 Aug 2001, Robin Lee Powell wrote:
+
+> On Mon, Aug 27, 2001 at 04:38:44PM -0400, Rob Speer wrote:
+> > On Mon, Aug 27, 2001 at 11:17:55AM -0600, Jay Kominek wrote:
+> > > Hrm. A parser with back tracking or more look ahead (or basically any
+> > > parser which can parse a larger class of languages) could take the sa=
+me
+> > > YACC grammar and be able to parse "le broda joi le brode" correctly..=
+. I
+> > > think...
+> >
+> > So, what is the advantage to having Lojban interpreted by a parser whic=
+h can't
+> > backtrack or look ahead more than one word?
+>
+> All other parsers turn out to be _extremely_ inefficient, IIRC from my
+> course on such things.
+>
+> So, basically, it's to make computers happy.
+
+LALR(1) deals in a table on the order of O(n^2), where n is the number of
+productions in the language. (Maybe n is the size of the set of terminals
+_and_ non-terminals. Not really relevent.)
+
+LALR(2) would need a table around O((2*n)^2), IIRC.
+
+Backtracking is a pain, but doesn't make things too much more inefficient.
+
+The main advantage to using a non-backtracking parser with just one word
+of lookahead is that parser generators for such grammars are commonly
+available, and easy to implement.
+
+In fact, I don't know that I've ever seen a reference to a C (or C++, or
+Java, or Perl) parser generator which is anything _but_ LALR(1).
+
+Most programming languages are LALR(1), so most programming language
+courses, or compiler building courses wherein computer science students
+are taught how to construct a parser tend to gloss over the details of all
+other classes of parsers.
+
+- Jay Kominek <jay.kominek@colorado.edu>
+  Plus =C3=A7a change, plus c'est la m=C3=AAme chose
+
+
+           
+
