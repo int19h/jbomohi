@@ -1,0 +1,125 @@
+# mail/lojban-list thread 668876842e39-tech%3A_proposed_grammar_change_2%24i | root y93dlchszvf.a.krg.6v0klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1996-03-11T01:44:54Z | unknown | 9f11785935d96e9a17c4f89843b23112b38a1904@jbomohi.invalid | mail/lojban-list/cur/826508694.84dbbec32b50724c.jbomohi:2,S
+CHANGE 46
+
+CURRENT LANGUAGE:
+
+Termsets are a pair of term sequences joined by a logical connective;
+the start is NUhI and the elidable terminator is NUhU.  The logical
+connective can be afterthought EK, in which case NUhU must precede it,
+or forethought GEK-GIK, in which case NUhU must precede the GIK.
+
+PROPOSED CHANGE:
+
+The syntax "NUhI terms NUhU EK terms /NUhU/" is REMOVED from Lojban.
+It is a hybrid of forethought (the NUhI) and afterthought, and is
+overly restrictive.
+
+Instead, a "term group" construct is introduced, joining the terms
+with the new cmavo "ce'e" of the new selma'o CEhE.  A logical connective
+is permitted but not required, thus:  "term ce'e term ... pe'e EK term
+ce'e term ..."  "pe'e" belongs to the new selma'o PEhE.
+
+The corresponding forethought syntax remains "NUhI GEK terms NUhU GIK
+terms NUhU", and the syntax "NUhI terms NUhU", with no logical connective,
+is added as well.
+
+RATIONALE:
+
+1) Afterthought termset logical connection becomes genuinely afterthought,
+without the need for any special start cmavo.
+
+2) Providing termsets without logical connectives (in both forethought
+and afterthought forms) provides cmavo grouping to solve two unrelated
+problems.  By grouping a "se BAI" with a "te BAI" (or "ve BAI, or whatever)
+we can require that both BAIs refer to the same underlying event:
+
+	se ka'a ko'a ce'e te ka'a ko'e
+
+The presence of the "ce'e" makes sure that "ko'a" is the destination and
+"ko'e" the destination of the same act of going.
+
+The other problem is that of indicating that two numerically quantified
+sumti have co-equal scope:
+
+	ci nanmu re gerku cu batci
+
+says that three men bite two dogs each, for a possible total of six dogs,
+whereas
+
+	ci nanmu ce'e re gerku cu batci
+	nu'i ci nanmu re gerku nu'u cu batci
+
+says that three men bite two dogs each, the same two dogs.
+
+
+3c3
+<      THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-45 DATED 6 JANUARY 1996
+---
+>      THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-46 DATED 21 FEBRUARY 1996
+19c19
+<   grammar.245
+---
+>   grammar.246
+197a198
+> %token CEhE_517         /*        afterthought term list connective */
+258a260
+> %token PEhE_591         /*        afterthought termset connective prefix */
+538c540
+<                                   GIK_816  subsentence_41  tail_terms_71
+---
+>                                 GIK_816  subsentence_41  tail_terms_71
+548,549c550,551
+< terms_80                :  term_81
+<                         |  terms_80  term_81
+---
+> terms_80                :  terms_A_81
+>                         |  terms_80  terms_A_81
+552,554c554,564
+< term_81                 :  sumti_90
+<                         |  modifier_82
+<                         |  term_set_83
+---
+> terms_A_81              :  terms_B_82
+>                         |  terms_A_81  PEhE_591  JOIK_JEK_422  terms_B_82
+>                         ;
+> 
+> terms_B_82              :  term_83
+>                         |  terms_B_82  CEhE_517  term_83
+>                         ;
+> 
+> term_83                 :  sumti_90
+>                         |  modifier_84
+>                         |  term_set_85
+558c568
+< modifier_82             :  mod_head_490  gap_450
+---
+> modifier_84             :  mod_head_490  gap_450
+562,563c572,573
+< 
+< term_set_83             :  NUhI_587  GEK_807  terms_80  NUhU_gap_460
+---
+> term_set_85             :  NUhI_587  terms_80  NUhU_gap_460
+>                         |  NUhI_587  GEK_807  terms_80  NUhU_gap_460
+565,566d574
+<                         |  NUhI_587  terms_80  NUhU_gap_460
+<                                 JOIK_EK_421  terms_80  NUhU_gap_460
+649c657
+< relative_clause_122     :  GOI_542  term_81  GEhU_gap_464
+---
+> relative_clause_122     :  GOI_542  term_83  GEhU_gap_464
+713,714c721,722
+< linkargs_160            :  BE_504  term_81  BEhO_gap_467
+<                         |  BE_504  term_81  links_161  BEhO_gap_467
+---
+> linkargs_160            :  BE_504  term_83  BEhO_gap_467
+>                         |  BE_504  term_83  links_161  BEhO_gap_467
+717,718c725,726
+< links_161               :  BEI_505  term_81
+<                         |  BEI_505  term_81  links_161
+---
+> links_161               :  BEI_505  term_83
+>                         |  BEI_505  term_83  links_161
+
+
