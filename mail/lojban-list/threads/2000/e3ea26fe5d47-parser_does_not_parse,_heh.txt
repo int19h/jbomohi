@@ -1,0 +1,43 @@
+# mail/lojban-list thread e3ea26fe5d47-parser_does_not_parse,_heh | root 20000508211555.e715@hackandroll.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2000-05-09T00:15:56Z | Lalo Martins <lalo@hackandroll.org> | 20000508211555.e715@hackandroll.org | mail/lojban-list/cur/957831356.e3ea26fe5d4734ee.jbomohi:2,S
+lalo:~/falcon/src/lojban/parser> gcc -o parser.i386 *.c
+print.c:9: initializer element is not constant
+
+The line in question is:
+
+static FILE *stream = stdout;
+
+which is of course just plain wrong... stdout _can't_ be used
+as an initializer.
+
+I'm also contributing a Makefile - rather simple, but it works,
+and using a Makefile at all helps because we don't have to
+recompile the whole beast when one of the source files change.
+It still doesn't deal with dependencies on the header files (so
+if you change one header file you have to "rm *.o") but it's
+already an improvement.
+
+
+[]s,
+                                               |alo
+                                               +----
+--
+          Hack and Roll  ( http://www.hackandroll.org )
+            News for, uh, whatever it is that we are.
+
+
+http://www.webcom.com/lalo           mailto:lalo@hackandroll.org
+                 pgp key in the personal page
+
+Brazil of Darkness (RPG)    ---     http://zope.gf.com.br/BroDar
+
+------------------------------------------------------------------------
+WRITERS WANTED! Themestream allows ALL writers to publish their 
+articles on the Web, reach thousands of interested readers, and get 
+paid in cash for their work. Click below:
+http://click.egroups.com/1/3840/3/_/17627/_/957832036/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
