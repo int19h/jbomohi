@@ -1,0 +1,26 @@
+This is called R2D2 Lojban for lack of any better descriptor, and because I thought of it whilst watching R2D2 in episode 2.
+
+I was sitting there thinking, "Gee, how do all these people understand what R2D2 is saying? Do they all really know R2D2-speak? Maybe he is just encoding their normal language in beeps!"
+
+*''Haven't seen episode 2 (yet?), but in the original trilogy C3PO translates for everybody. - mi'e. ((kreig.daniyl.))''
+**i think luke directly responds to things R2D2 says towards the end of the original three. but maybe he was just picking up on concern in the beeps.
+
+So, I was thinking one could encode Lojban in a series of tones. Just give each character its own tone, and then slide between dipthongs in some easily recognized fashion.
+
+From my time fiddling around with writing software that generates DTMF tones for phone dialing, I know that I (at least) can recognize a pair of pure tones in about 35 milliseconds. Silence can be perceived in about 10 milliseconds. Make it 50ms and 25ms respectively to cover 99% of the bell curve. Then one can condense "e'osai ko sarji la lojban" down to 1 second.
+
+* there are references which seem to indicate that humans can distinguish tone glides as short as 40 milliseconds. i'll try to accumulate good references tomorrow, but for now [http://www.google.com/search?hl=en&lr=&ie=utf-8&oe=utf-8&q=difference+limen+tone+perception&btnG=Google+Search|try searching for "difference limen tone perception"].
+
+Not particularly useful, I suppose, but if ones computer could talk to them in Lojban, then this might be a way to let it talk to you faster.
+
+Ideas for handling dipthongs:
+* Generate the tones that correspond to both vowels in the dipthong at the same time, but put more energy into the tone which corresponds to the leading vowel. (Or trailing vowel, whichever.)
+* Slide linearly between the two vowel frequencies, first to second. (Probably easily confused.)
+** logarithmic, etc, whatever.
+
+i've had my computer searching for an optimal letter to frequency mapping for a few days now. currently it searchs the mapping space (3.5568e14 possibilities) randomly. i'll concoct something genetic algorithm-ism in a day or so to handle the end of the search. (a bit of statistical analysis says that my random search has already found mappings better than ~99.9999% of all mappings. (no, the number of 9s there is not arbitrary, but not exact either.)) --((Jay Kominek|jay))
+
+* '''''.a'ucai''' .e'o ko cusku le do velfancu''
+** Well, the idea is to have consonants which appear together as spread apart as possible. So, one finds the score for a mapping by, for each valid consonant pair, averaging the log distance between the two consonants. (2*log distance for initial consonant pairs, as you want a mapping to be rewarded more for making those clearer). we use the log, because once the consonants in a pair get a reasonable distance away from each other, they probably don't need to get any further away, so we lessen the reward to mappings which have a couple of consonants at either end of the mapping from each other. i think that makes some sense. let me know if anything needs to be clarified. right now the best mapping i've found has a score of 1.92589877. the mean is around 1.7, with a standard deviation of 0.4, if i recall correctly. (calculated assuming a normal distribution. so its up to the 5.6th standard deviation or so. :) --((Jay Kominek|jay))
+*** What's the frequency range? One octave? I assume you're using log to achieve the subjective (musical note) quality of a given frequency, as opposed to its linear frequency. Also, consider using non-spectral noises (hisses, pops) for vowels.
+**** the frequency range doesn't come into play in choosing the ordering. i was thinking i'll find the range over which the human ear is most sensitive and spread the frequencies across it evenly. (after digging up a bit on human tone perception to make sure that nothing will be masking anything else.)
