@@ -1,0 +1,559 @@
+; This is a Parsing Expression Grammar for Lojban.
+; See http://www.pdos.lcs.mit.edu/~baford/packrat/
+; 
+; All rules have the form:
+; 
+; 	name <- peg-expression
+; 
+; which means that the grammatical construct "name" is parsed using
+; "peg-expression".  
+; 
+; 1)  Names in lower case are grammatical constructs.
+; 2)  Names in UPPER CASE are selma'o (lexeme) names, and are terminals.
+; 3)  Concatenation is expressed by juxtaposition with no operator symbol.
+; 4)  / represents *ORDERED* alternation (choice).  If the first
+;     option succeeds, the others will never be checked.
+; 5)  ? indicates that the element to the left is optional.
+; 6)  * represents optional repetition of the construct to the left.
+; 7)  + represents one-or-more repetition of the construct to the left.
+; 8)  () serves to indicate the grouping of the other operators.
+;
+; Longest match wins.
+
+; --- GRAMMAR ---
+
+text <- si-clause? NAI* (CMENE+ free* / (indicators / free+ / indicators free+))? joik-jek? text-1 (FAhO .*)?
+
+text-1 <- ((I (jek / joik)? (stag? BO)? free*)+ / NIhO+ free*)? paragraphs?
+
+paragraphs <- paragraph (NIhO+ free* paragraphs)?
+
+paragraph <- (statement / fragment) (I free* (statement / fragment)?)*
+
+statement <- statement-1 / prenex statement
+
+statement-1 <- statement-2 (I joik-jek statement-2?)*
+
+statement-2 <- statement-3 (I (jek / joik)? stag? BO free* statement-2?)?
+
+statement-3 <- sentence / tag? TUhE free* text-1 (TUhU free*)?
+
+fragment <- ek free* / gihek free* / quantifier / NA free* / terms (VAU free*)? / prenex / relative-clauses / links / linkargs
+
+prenex <- terms ZOhU free*
+
+sentence <- (terms (CU free*)?)? bridi-tail
+
+subsentence <- sentence / prenex subsentence
+
+bridi-tail <- bridi-tail-1 (gihek stag? KE free* bridi-tail (KEhE free*)? tail-terms)?
+
+bridi-tail-1 <- bridi-tail-2 (gihek free* bridi-tail-2 tail-terms)*
+
+bridi-tail-2 <- bridi-tail-3 (gihek stag? BO free* bridi-tail-2 tail-terms)?
+
+bridi-tail-3 <- selbri tail-terms / gek-sentence
+
+gek-sentence <- gek subsentence gik subsentence tail-terms / tag? KE free* gek-sentence (KEhE free*)? / NA free* gek-sentence
+
+tail-terms <- terms? (VAU free*)?
+
+terms <- terms-1+
+
+terms-1 <- terms-2 (PEhE free* joik-jek terms-2)*
+
+terms-2 <- term (CEhE free* term)*
+
+term <- sumti / ( (tag / FA free*) (sumti / (KU free*)?) ) / termset / NA KU free*
+
+termset <- NUhI free* gek terms NUhU free* gik terms (NUhU free*)? / NUhI free* terms (NUhU free*)?
+
+sumti <- sumti-1 (VUhO free* relative-clauses)?
+
+sumti-1 <- sumti-2 ((ek / joik) stag? KE free* sumti (KEhE free*)?)?
+
+sumti-2 <- sumti-3 (joik-ek sumti-3)*
+
+sumti-3 <- sumti-4 ((ek / joik) stag? BO free* sumti-3)?
+
+sumti-4 <- sumti-5 / gek sumti gik sumti-4
+
+sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri (KU free*)? relative-clauses?
+
+sumti-6 <- (LAhE free* / NAhE BO free*) relative-clauses? sumti (LUhU free*)? / KOhA free* / lerfu-string (BOI free*)? / LA free* relative-clauses? CMENE+ free* / (LA / LE) free* sumti-tail (KU free*)? / LI free* mex (LOhO free*)? / ZO any-word free* / LU text (LIhU free*)? / LOhU lohu-tail free*
+
+lohu-tail <- lohu-tail-si-clause / LEhU / any-word-no-SI-handling lohu-tail
+lohu-tail-si-clause <- LEhU si-clause SI
+
+; / ZOI any-word anything any-word free*
+
+sumti-tail <- (sumti-6 relative-clauses?)? sumti-tail-1 / relative-clauses sumti-tail-1
+
+sumti-tail-1 <- quantifier? selbri relative-clauses? / quantifier sumti
+
+relative-clauses <- relative-clause (ZIhE free* relative-clause)*
+
+relative-clause <- GOI free* term (GEhU free*)? / NOI free* subsentence (KUhO free*)?
+
+selbri <- tag? selbri-1
+
+selbri-1 <- selbri-2 / NA free* selbri
+
+selbri-2 <- selbri-3 (CO free* selbri-2)?
+
+selbri-3 <- selbri-4+
+
+selbri-4 <- selbri-5 (joik-jek selbri-5 / joik stag? KE free* selbri-3 (KEhE free*)?)*
+
+selbri-5 <- selbri-6 ((jek / joik) stag? BO free* selbri-5)?
+
+selbri-6 <- tanru-unit (BO free* selbri-6)? / (NAhE free*)? guhek selbri gik selbri-6
+
+tanru-unit <- tanru-unit-1 (CEI free* tanru-unit-1)*
+
+tanru-unit-1 <- tanru-unit-2 linkargs?
+
+tanru-unit-2 <- BRIVLA free* / GOhA RAhO? free* / KE free* selbri-3 (KEhE free*)? / ME free* sumti (MEhU free*)? (MOI free*)? / (number / lerfu-string) MOI free* / NUhA free* mex-operator / SE free* tanru-unit-2 / JAI free* tag? tanru-unit-2 / any-word (ZEI any-word)+ / NAhE free* tanru-unit-2 / NU NAI? free* (joik-jek NU NAI? free*)* subsentence (KEI free*)?
+
+linkargs <- BE free* term links? (BEhO free*)?
+
+links <- BEI free* term links?
+
+quantifier <- number (BOI free*)? / VEI free* mex (VEhO free*)?
+
+mex <- mex-1 (operator mex-1)* / FUhA free* rp-expression
+
+mex-1 <- mex-2 (BIhE free* operator mex-1)?
+
+mex-2 <- operand / (PEhO free*)? operator mex-2+ (KUhE free*)?
+
+;rp-expression <- rp-operand rp-operand operator
+
+;rp-operand <- operand / rp-expression
+
+rp-expression <- (operand / operand rp-operand operator) rp-operand operator
+
+rp-operand <- operand / rp-expression
+
+operator <- operator-1 (joik-jek operator-1 / joik stag? KE free* operator (KEhE free*)?)*
+
+operator-1 <- operator-2 / guhek operator-1 gik operator-2 / operator-2 (jek / joik) stag? BO free* operator-1
+
+operator-2 <- mex-operator / KE free* operator (KEhE free*)?
+
+mex-operator <- SE free* mex-operator / NAhE free* mex-operator / MAhO free* mex (TEhU free*)? / NAhU free* selbri (TEhU free*)? / VUhU free*
+
+operand <- operand-1 ((ek / joik) stag? KE free* operand (KEhE free*)?)?
+
+operand-1 <- operand-2 (joik-ek operand-2)*
+
+operand-2 <- operand-3 ((ek / joik) stag? BO free* operand-2)?
+
+operand-3 <- quantifier / lerfu-string (BOI free*)? / NIhE free* selbri (TEhU free*)? / MOhE free* sumti (TEhU free*)? / JOhI free* mex-2+ (TEhU free*)? / gek operand gik operand-3 / (LAhE free* / NAhE BO free*) operand (LUhU free*)?
+
+number <- PA (PA / lerfu-word)*
+
+lerfu-string <- lerfu-word (PA / lerfu-word)*
+
+lerfu-word <- BY / any-word BU / LAU lerfu-word / TEI lerfu-string FOI
+
+ek <- NA? SE? A NAI?
+
+gihek <- NA? SE? GIhA NAI?
+
+jek <- NA? SE? JA NAI?
+
+joik <- SE? JOI NAI? / interval / GAhO interval GAhO
+
+interval <- SE? BIhI NAI?
+
+joik-ek <- joik free* / ek free*
+
+joik-jek <- joik free* / jek free*
+
+gek <- SE? GA NAI? free* / joik GI free* / stag gik
+
+guhek <- SE? GUhA NAI? free*
+
+gik <- GI NAI? free*
+
+tag <- tense-modal (joik-jek tense-modal)*
+
+stag <- simple-tense-modal ((jek / joik) simple-tense-modal)*
+
+tense-modal <- simple-tense-modal free* / FIhO free* selbri (FEhU free*)?
+
+simple-tense-modal <- NAhE? SE? BAI NAI? KI? / NAhE? ((time space? / space time?) / CAhA / (time space? / space time?) CAhA) KI? / KI / CUhE
+
+time <- ZI time-offset* (ZEhA (PU NAI?)?)? interval-property* / ZI? time-offset+ (ZEhA (PU NAI?)?)? interval-property* / ZI? time-offset* ZEhA (PU NAI?)? interval-property* / ZI? time-offset* (ZEhA (PU NAI?)?)? interval-property+
+
+time-offset <- PU NAI? ZI?
+
+space <- VA space-offset* space-interval? (MOhI space-offset)? / VA? space-offset+ space-interval? (MOhI space-offset)? / VA? space-offset* space-interval (MOhI space-offset)? / VA? space-offset* space-interval? MOhI space-offset
+
+space-offset <- FAhA NAI? VA?
+
+space-interval <- (VEhA / VIhA / VEhA VIhA) (FAhA NAI?)? / space-int-props / (VEhA / VIhA / VEhA VIhA) (FAhA NAI?)? space-int-props
+
+space-int-props <- (FEhE interval-property)+
+
+interval-property <- number ROI NAI? / TAhE NAI? / ZAhO NAI?
+
+free <- SEI free* (terms (CU free*)?)? selbri SEhU? / SOI free* sumti sumti? SEhU? / vocative relative-clauses? selbri relative-clauses? DOhU? / vocative relative-clauses? CMENE+ free* relative-clauses? DOhU? / vocative sumti? DOhU? / (number / lerfu-string) MAI / TO text TOI? / XI free* (number / lerfu-string) BOI? / XI free* VEI free* mex VEhO?
+
+vocative <- (COI NAI?)+ / DOI / (COI NAI?)+ DOI
+
+indicators <- FUhE? indicator+
+
+indicator <-  (UI / CAI) NAI? / Y / DAhO / FUhO
+
+; The following rules are non-formal:
+; 
+; word<1100> <- [BAhE] any-word [indicators]
+; 
+; any-word <- "any single word (no compound cmavo)"
+; 
+; anything <- "any text at all, whether Lojban or not"
+; 
+; null<1101> <- any-word SI / utterance SA / text SU
+
+;         any single lexable Lojban words 
+any_word <- BRIVLA / CMENE / CMAVO 
+any_word-no-SI-handling <- BRIVLA-no-SI-handling / CMENE-no-SI-handling / CMAVO-no-SI-handling
+
+;         a possibly unlexable phoneme string 
+; anything <- "AnyThing" 
+
+; --- MORPHOLOGY ---
+
+; Letter Groups
+consonant <- [bcdfgjklmnprstvxz]
+vowel <- [aeiou]
+other-letter <- ['y,.]
+lojban-letter <- consonant / vowel / otherLetter
+cmene-letter <- lojban-letter / [BCDFGJKLMNPRSTVXZ] / [AEIOU] / [hY]
+
+; Handling of spaces
+spacing <- '.' spaces* si-clause? (UI NAI?)* / spaces+ si-clause? (UI NAI?)*
+spacing-no-SI-handling <- '.' spaces* (UI NAI?)* / spaces+ (UI NAI?)*
+spaces <- ' ' / '\n' / '\t' / '\r'
+
+; Handling of SI
+si-clause <- !SI !ZO any-word-no-SI-handling SI / !SI !ZO any-word-no-SI-handling !SI si-clause SI
+
+; For handling things of higher priority than SI (i.e. lo'u...le'u, zo)
+SI-no-SI-handling <- "si" post-cmavo-no-SI-handling
+post-cmavo-no-SI-handling <- si-spacing / &CMAVO-no-SI-handling / SI-no-SI-handling
+si-spacing <- '.' si-spaces* / si-spaces+
+si-spaces <- ' ' / '\n' / '\t' / '\r'
+
+;         any brivla 
+; For now: gismu pattern.
+; BRIVLA	: /[bcdfgjklmnprstvxz]{2}['a-z]{2,}[aeiou]/
+;		/ /[bcdfgjklmnprstvxz][aeiou][bcdfgjklmnprstvxz]y?[bcdfgjklmnprstvxz]['a-z]*[aeiou]/
+;		/ /[bcdfgjklmnprstvxz][aeiou]'?[aeiou][bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
+;		/ /[aeiou]('?[aeiou]){,2}[bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
+; BRIVLA <- "broda" spacing / "brode" spacing / "brodi" spacing / "brodo" spacing / "brodu" spacing
+
+BRIVLA <- consonant consonant lojban-letter lojban-letter brivla-tail / consonant vowel consonant 'y'? consonant brivla-tail / consonant vowel [']? vowel consonant consonant brivla-tail
+
+brivla-tail <- vowel spacing / lojban-letter brivla-tail
+
+BRIVLA-no-SI-handling <- consonant consonant lojban-letter lojban-letter brivla-tail-no-SI-handling / consonant vowel consonant 'y'? consonant brivla-tail-no-SI-handling / consonant vowel [']? vowel consonant consonant brivla-tail-no-SI-handling
+
+brivla-tail-no-SI-handling <- vowel spacing-no-SI-handling / lojban-letter brivla-tail-no-SI-handling
+
+; CMENE <- /\.?[,'a-pr-z]+[bcdfgjklmnprstvxz]/
+; CMENE <- "cmene" spacing / ".alis" spacing / "bab" spacing
+CMENE <- '.'? cmene-letter cmene-tail
+
+cmene-tail <- consonant spacing / cmene-letter cmene-tail
+
+CMENE-no-SI-handling <- '.'? cmene-letter cmene-tail
+
+cmene-tail-no-SI-handling <- consonant spacing-no-SI-handling / cmene-letter cmene-tail
+
+CMAVO <- known-cmavo post-cmavo-spacing / (consonant / '.') vowel (['] vowel / vowel)* post-cmavo-spacing
+CMAVO-no-SI-handling <- (consonant / '.') vowel (['] vowel / vowel)* post-cmavo-no-SI-handling
+
+known-cmavo <- A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / BY / CAI / CAhA / CEI / CEhE / CO / COI / CU / CUhE / DAhO / DOI / DOhU / FA / FAhA / FAhO / FEhE / FEhU / FIhO / FOI / FUhA / FUhE / FUhO / GA / GAhO / GEhU / GI / GIhA / GOI / GOhA / GUhA / I / JA / JAI / JOI / JOhI / KE / KEI / KEhE / KI / KOhA / KU / KUhE / KUhO / LA / LAU / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / MAhO / ME / MEhU / MOI / MOhE / MOhI / NA / NAI / NAhE / NAhU / NIhE / NIhO / NOI / NU / NUhA / NUhI / NUhU / PA / PEhE / PEhO / PU / RAhO / ROI / SA / SE / SEI / SEhU / SI / SOI / SU / TAhE / TEI / TEhU / TO / TOI / TUhE / TUhU / UI / VA / VAU / VEI / VEhA / VEhO / VIhA / VUhO / VUhU / XI / Y / ZAhO / ZEI / ZEhA / ZI / ZIhE / ZO / ZOI / ZOhU
+
+; Handling of what can go after a cmavo
+post-cmavo <- !BU post-cmavo-spacing
+post-cmavo-spacing <- spacing / &CMAVO
+
+; --- SELMAHO ---
+
+
+;         eks; basic afterthought logical connectives 
+A <- ".a" post-cmavo / ".e" post-cmavo / "ji" post-cmavo / ".o" post-cmavo / ".u" post-cmavo
+
+;         modal operators 
+BAI <- "du'o" post-cmavo / "si'u" post-cmavo / "zau" post-cmavo / "ki'i" post-cmavo / "du'i" post-cmavo / "cu'u" post-cmavo / "tu'i" post-cmavo / "ti'u" post-cmavo / "di'o" post-cmavo / "ji'u" post-cmavo / "ri'a" post-cmavo / "ni'i" post-cmavo / "mu'i" post-cmavo / "ki'u" post-cmavo / "va'u" post-cmavo / "koi" post-cmavo / "ca'i" post-cmavo / "ta'i" post-cmavo / "pu'e" post-cmavo / "ja'i" post-cmavo / "kai" post-cmavo / "bai" post-cmavo / "fi'e" post-cmavo / "de'i" post-cmavo / "ci'o" post-cmavo / "mau" post-cmavo / "mu'u" post-cmavo / "ri'i" post-cmavo / "ra'i" post-cmavo / "ka'a" post-cmavo / "pa'u" post-cmavo / "pa'a" post-cmavo / "le'a" post-cmavo / "ku'u" post-cmavo / "tai" post-cmavo / "bau" post-cmavo / "ma'i" post-cmavo / "ci'e" post-cmavo / "fau" post-cmavo / "po'i" post-cmavo / "cau" post-cmavo / "ma'e" post-cmavo / "ci'u" post-cmavo / "ra'a" post-cmavo / "pu'a" post-cmavo / "li'e" post-cmavo / "la'u" post-cmavo / "ba'i" post-cmavo / "ka'i" post-cmavo / "sau" post-cmavo / "fa'e" post-cmavo / "be'i" post-cmavo / "ti'i" post-cmavo / "ja'e" post-cmavo / "ga'a" post-cmavo / "va'o" post-cmavo / "ji'o" post-cmavo / "me'a" post-cmavo / "do'e" post-cmavo / "ji'e" post-cmavo / "pi'o" post-cmavo / "gau" post-cmavo / "zu'e" post-cmavo / "me'e" post-cmavo / "rai" post-cmavo
+;         next word intensifier 
+BAhE <- "ba'e" post-cmavo / "za'e" post-cmavo
+;         sumti link to attach sumti to a selbri 
+BE <- "be" post-cmavo
+;         multiple sumti separator between BE, BEI 
+BEI <- "bei" post-cmavo
+;         terminates BEBEI specified descriptors 
+BEhO <- "be'o" post-cmavo
+;         prefix for high-priority MEX operator 
+BIhE <- "bi'e" post-cmavo
+;         interval component of JOI 
+BIhI <- "mi'i" post-cmavo / "bi'o" post-cmavo / "bi'i" post-cmavo
+;         joins two units with shortest scope 
+BO <- "bo" post-cmavo
+;         number or lerfu-string terminator 
+BOI <- "boi" post-cmavo
+;         turns any word into a BY lerfu word 
+BU <- "bu" post-cmavo
+;         individual lerfu words 
+BY <- "jo'o" post-cmavo / "ru'o" post-cmavo / "ge'o" post-cmavo / "je'o" post-cmavo / "lo'a" post-cmavo / "na'a" post-cmavo / "se'e" post-cmavo / "to'a" post-cmavo / "ga'e" post-cmavo / ".y'y" post-cmavo / "by" post-cmavo / "cy" post-cmavo / "dy" post-cmavo / "fy" post-cmavo / "gy" post-cmavo / "jy" post-cmavo / "ky" post-cmavo / "ly" post-cmavo / "my" post-cmavo / "ny" post-cmavo / "py" post-cmavo / "ry" post-cmavo / "sy" post-cmavo / "ty" post-cmavo / "vy" post-cmavo / "xy" post-cmavo / "zy" post-cmavo
+
+;         specifies actualitypotentiality of tense 
+CAhA <- "ca'a" post-cmavo / "pu'i" post-cmavo / "nu'o" post-cmavo / "ka'e" post-cmavo
+;         afterthought intensity marker 
+CAI <- "pei" post-cmavo / "cai" post-cmavo / "cu'i" post-cmavo / "sai" post-cmavo / "ru'e" post-cmavo
+;         pro-bridi assignment operator 
+CEI <- "cei" post-cmavo
+;         afterthought term list connective 
+CEhE <- "ce'e" post-cmavo
+;         names; require consonant end, then pause no
+;                                    LA or DOI selma'o embedded, pause before if
+;                                    vowel initial and preceded by a vowel 
+;         tanru inversion  
+CO <- "co" post-cmavo
+COI <- "ju'i" post-cmavo / "coi" post-cmavo / "fi'i" post-cmavo / "ta'a" post-cmavo / "mu'o" post-cmavo / "fe'o" post-cmavo / "co'o" post-cmavo / "pe'u" post-cmavo / "ke'o" post-cmavo / "nu'e" post-cmavo / "re'i" post-cmavo / "be'e" post-cmavo / "je'e" post-cmavo / "mi'e" post-cmavo / "ki'e" post-cmavo / "vi'o" post-cmavo
+;         vocative marker permitted inside names; must
+;                                    always be followed by pause or DOI 
+;         separator between head sumti and selbri 
+CU <- "cu" post-cmavo
+;         tensemodal question 
+CUhE <- "cu'e" post-cmavo / "nau" post-cmavo
+
+;         cancel anaphoracataphora assignments 
+DAhO <- "da'o" post-cmavo
+;         vocative marker 
+DOI <- "doi" post-cmavo
+;         terminator for DOI-marked vocatives 
+DOhU <- "do'u" post-cmavo
+
+;         modifier head generic case tag 
+FA <- "fai" post-cmavo / "fa" post-cmavo / "fe" post-cmavo / "fo" post-cmavo / "fu" post-cmavo / "fi'a" post-cmavo / "fi" post-cmavo
+;         superdirections in space 
+FAhA <- "du'a" post-cmavo / "be'a" post-cmavo / "ne'u" post-cmavo / "vu'a" post-cmavo / "ga'u" post-cmavo / "ti'a" post-cmavo / "ni'a" post-cmavo / "ca'u" post-cmavo / "zu'a" post-cmavo / "ri'u" post-cmavo / "ru'u" post-cmavo / "re'o" post-cmavo / "te'e" post-cmavo / "bu'u" post-cmavo / "ne'a" post-cmavo / "pa'o" post-cmavo / "ne'i" post-cmavo / "to'o" post-cmavo / "zo'i" post-cmavo / "ze'o" post-cmavo / "zo'a" post-cmavo / "fa'a" post-cmavo
+FAhO <- "fa'o" post-cmavo
+;         normally elided 'done pause' to indicate end
+;                                    of utterance string 
+;         space interval mod flag 
+FEhE <- "fe'e" post-cmavo
+;         ends bridi to modal conversion 
+FEhU <- "fe'u" post-cmavo
+;         marks bridi to modal conversion 
+FIhO <- "fi'o" post-cmavo
+;         end compound lerfu 
+FOI <- "foi" post-cmavo
+;         reverse Polish flag 
+FUhA <- "fu'a" post-cmavo
+;         open long scope for indicator 
+FUhE <- "fu'e" post-cmavo
+;         close long scope for indicator 
+FUhO <- "fu'o" post-cmavo
+
+;         geks; forethought logical connectives 
+GA <- "ge'i" post-cmavo / "ge" post-cmavo /  "go" post-cmavo / "ga" post-cmavo / "gu" post-cmavo
+;         openclosed interval markers for BIhI 
+GAhO <- "ke'i" post-cmavo / "ga'o" post-cmavo
+;         marker ending GOI relative clauses 
+GEhU <- "ge'u" post-cmavo
+;         forethought medial marker 
+GI <- "gi" post-cmavo
+;         logical connectives for bridi-tails 
+GIhA <- "gi'e" post-cmavo / "gi'i" post-cmavo / "gi'o" post-cmavo / "gi'a" post-cmavo / "gi'u" post-cmavo
+;         attaches a sumti modifier to a sumti 
+GOI <- "no'u" post-cmavo / "ne" post-cmavo / "goi" post-cmavo / "po'u" post-cmavo / "pe" post-cmavo / "po'e" post-cmavo / "po" post-cmavo
+;         pro-bridi 
+GOhA <- "mo" post-cmavo / "nei" post-cmavo / "go'u" post-cmavo / "go'o" post-cmavo / "go'i" post-cmavo / "no'a" post-cmavo / "go'e" post-cmavo / "go'a" post-cmavo / "du" post-cmavo / "bu'a" post-cmavo / "bu'e" post-cmavo / "bu'i" post-cmavo / "co'e" post-cmavo
+;         GEK for tanru units, corresponds to JEKs 
+GUhA <- "gu'e" post-cmavo / "gu'i" post-cmavo / "gu'o" post-cmavo / "gu'a" post-cmavo / "gu'u" post-cmavo
+
+;         sentence link 
+I <- ".i" post-cmavo
+
+;         jeks; logical connectives within tanru 
+JA <- "je'i" post-cmavo / "je" post-cmavo /  "jo" post-cmavo / "ja" post-cmavo / "ju" post-cmavo
+;         modal conversion flag 
+JAI <- "jai" post-cmavo
+;         flags an array operand 
+JOhI <- "jo'i" post-cmavo
+;         non-logical connectives 
+JOI <- "fa'u" post-cmavo / "pi'u" post-cmavo / "joi" post-cmavo / "ce'o" post-cmavo / "ce" post-cmavo / "jo'u" post-cmavo / "ku'a" post-cmavo / "jo'e" post-cmavo / "ju'e" post-cmavo
+
+;         left long scope marker 
+KE <- "ke" post-cmavo
+;         right terminator for KE groups 
+KEhE <- "ke'e" post-cmavo
+;         right terminator, NU abstractions 
+KEI <- "kei" post-cmavo
+;         multiple utterance scope for tenses 
+KI <- "ki" post-cmavo
+;         sumti anaphora 
+KOhA <- "da'u" post-cmavo / "da'e" post-cmavo / "di'u" post-cmavo / "di'e" post-cmavo / "de'u" post-cmavo / "de'e" post-cmavo / "dei" post-cmavo / "do'i" post-cmavo / "mi'o" post-cmavo / "ma'a" post-cmavo / "mi'a" post-cmavo / "do'o" post-cmavo / "ko'a" post-cmavo / "fo'u" post-cmavo / "ko'e" post-cmavo / "ko'i" post-cmavo / "ko'o" post-cmavo / "ko'u" post-cmavo / "fo'a" post-cmavo / "fo'e" post-cmavo / "fo'i" post-cmavo / "fo'o" post-cmavo / "vo'a" post-cmavo / "vo'e" post-cmavo / "vo'i" post-cmavo / "vo'o" post-cmavo / "vo'u" post-cmavo / "ru" post-cmavo / "ri" post-cmavo / "ra" post-cmavo / "ta" post-cmavo / "tu" post-cmavo / "ti" post-cmavo / "zi'o" post-cmavo / "ke'a" post-cmavo / "ma" post-cmavo / "zu'i" post-cmavo / "zo'e" post-cmavo / "ce'u" post-cmavo / "da" post-cmavo / "de" post-cmavo / "di" post-cmavo / "ko" post-cmavo / "mi" post-cmavo / "do" post-cmavo
+;         right terminator for descriptions, etc. 
+KU <- "ku" post-cmavo
+;         MEX forethought delimiter 
+KUhE <- "ku'e" post-cmavo
+;         right terminator, NOI relative clauses 
+KUhO <- "ku'o" post-cmavo
+
+;         name descriptors 
+LA <- "lai" post-cmavo / "la'i" post-cmavo / "la" post-cmavo
+;         lerfu prefixes 
+LAU <- "ce'a" post-cmavo / "lau" post-cmavo / "zai" post-cmavo / "tau" post-cmavo
+;         sumti qualifiers 
+LAhE <- "tu'a" post-cmavo / "lu'a" post-cmavo / "lu'o" post-cmavo / "la'e" post-cmavo / "vu'i" post-cmavo / "lu'i" post-cmavo / "lu'e" post-cmavo
+;         sumti descriptors 
+LE <- "lei" post-cmavo / "loi" post-cmavo / "le'i" post-cmavo / "lo'i" post-cmavo / "le'e" post-cmavo / "lo'e" post-cmavo / "lo" post-cmavo / "le" post-cmavo
+;         possibly ungrammatical text right quote 
+LEhU <- "le'u" post-cmavo
+;         convert number to sumti 
+LI <- "me'o" post-cmavo / "li" post-cmavo
+;         grammatical text right quote 
+LIhU <- "li'u" post-cmavo
+;         elidable terminator for LI 
+LOhO <- "lo'o" post-cmavo
+;         possibly ungrammatical text left quote 
+LOhU <- "lo'u" post-cmavo-no-SI-handling
+;         grammatical text left quote 
+LU <- "lu" post-cmavo
+;         LAhE close delimiter 
+LUhU <- "lu'u" post-cmavo
+
+;         change MEX expressions to MEX operators 
+MAhO <- "ma'o" post-cmavo
+;         change numbers to utterance ordinals 
+MAI <- "mo'o" post-cmavo / "mai" post-cmavo
+;         converts a sumti into a tanru_unit 
+ME <- "me" post-cmavo
+;         terminator for ME 
+MEhU <- "me'u" post-cmavo
+;         change sumti to operand, inverse of LI 
+MOhE <- "mo'e" post-cmavo
+;         motion tense marker 
+MOhI <- "mo'i" post-cmavo
+;         change number to selbri 
+MOI <- "mei" post-cmavo / "moi" post-cmavo / "si'e" post-cmavo / "cu'o" post-cmavo / "va'e" post-cmavo
+
+;         bridi negation  
+NA <- "ja'a" post-cmavo / "na" post-cmavo
+;         attached to words to negate them 
+NAI <- "nai" post-cmavo
+;         scalar negation  
+NAhE <- "to'e" post-cmavo / "je'a" post-cmavo / "na'e" post-cmavo / "no'e" post-cmavo
+;         change a selbri into an operator 
+NAhU <- "na'u" post-cmavo
+;         change selbri to operand; inverse of MOI 
+NIhE <- "ni'e" post-cmavo
+;         new paragraph; change of subject 
+NIhO <- "ni'o" post-cmavo / "no'i" post-cmavo
+;         attaches a subordinate clause to a sumti 
+NOI <- "voi" post-cmavo / "noi" post-cmavo / "poi" post-cmavo
+;         abstraction  
+NU <- "ni" post-cmavo / "du'u" post-cmavo / "si'o" post-cmavo / "nu" post-cmavo / "li'i" post-cmavo / "ka" post-cmavo / "jei" post-cmavo / "su'u" post-cmavo / "zu'o" post-cmavo / "mu'e" post-cmavo / "pu'u" post-cmavo / "za'i" post-cmavo
+;         change operator to selbri; inverse of MOhE 
+NUhA <- "nu'a" post-cmavo
+;         marks the start of a termset 
+NUhI <- "nu'i" post-cmavo
+;         marks the middle and end of a termset 
+NUhU <- "nu'u" post-cmavo
+
+;         numbers and numeric punctuation 
+PA <- "dau" post-cmavo / "fei" post-cmavo / "gai" post-cmavo / "jau" post-cmavo / "rei" post-cmavo / "vai" post-cmavo / "pi'e" post-cmavo / "pi" post-cmavo /  "fi'u" post-cmavo / "za'u" post-cmavo / "me'i" post-cmavo / "ni'u" post-cmavo / "ki'o" post-cmavo / "ce'i" post-cmavo / "ma'u" post-cmavo / "ra'e" post-cmavo / "da'a" post-cmavo / "so'a" post-cmavo / "ji'i" post-cmavo / "su'o" post-cmavo / "su'e" post-cmavo / "ro" post-cmavo / "rau" post-cmavo / "so'u" post-cmavo / "so'i" post-cmavo / "so'e" post-cmavo / "so'o" post-cmavo / "mo'a" post-cmavo / "du'e" post-cmavo / "te'o" post-cmavo / "ka'o" post-cmavo / "ci'i" post-cmavo / "tu'o" post-cmavo / "xo" post-cmavo / "pai" post-cmavo / "no'o" post-cmavo / "no" post-cmavo / "pa" post-cmavo / "re" post-cmavo / "ci" post-cmavo / "vo" post-cmavo / "mu" post-cmavo / "xa" post-cmavo / "ze" post-cmavo / "bi" post-cmavo / "so" post-cmavo
+;         afterthought termset connective prefix 
+PEhE <- "pe'e" post-cmavo
+;         forethought (Polish) flag 
+PEhO <- "pe'o" post-cmavo
+;         directions in time 
+PU <- "ba" post-cmavo / "pu" post-cmavo / "ca" post-cmavo
+
+;         flag for modified interpretation of GOhI 
+RAhO <- "ra'o" post-cmavo
+;         converts number to extensional tense 
+ROI <- "re'u" post-cmavo / "roi" post-cmavo
+
+SA <- "sa" post-cmavo
+;         metalinguistic eraser to the beginning of
+;                                    the current utterance 
+;         conversions 
+SE <- "se" post-cmavo / "te" post-cmavo / "ve" post-cmavo / "xe" post-cmavo
+;         metalinguistic bridi insert marker 
+SEI <- "sei" post-cmavo / "ti'o" post-cmavo
+;         metalinguistic bridi end marker 
+SEhU <- "se'u" post-cmavo
+;         metalinguistic single word eraser 
+SI <- "si" post-cmavo
+;         reciprocal sumti marker 
+SOI <- "soi" post-cmavo
+;         metalinguistic eraser of the entire text 
+SU <- "su" post-cmavo
+
+;         tense interval properties 
+TAhE <- "ru'i" post-cmavo / "ta'e" post-cmavo / "di'i" post-cmavo / "na'o" post-cmavo
+;         closing gap for MEX constructs 
+TEhU <- "te'u" post-cmavo
+;         start compound lerfu 
+TEI <- "tei" post-cmavo
+;         left discursive parenthesis 
+TO <- "to'i" post-cmavo / "to" post-cmavo
+;         right discursive parenthesis 
+TOI <- "toi" post-cmavo
+;         multiple utterance scope mark 
+TUhE <- "tu'e" post-cmavo
+;         multiple utterance end scope mark 
+TUhU <- "tu'u" post-cmavo
+
+;         attitudinals, observationals, discursives 
+UI <- ".i'a" post-cmavo / ".ie" post-cmavo / ".a'e" post-cmavo / ".u'i" post-cmavo / ".i'o" post-cmavo / ".i'e" post-cmavo / ".a'a" post-cmavo / ".ia" post-cmavo / ".o'i" post-cmavo / ".o'e" post-cmavo / ".e'e" post-cmavo / ".oi" post-cmavo / ".uo" post-cmavo / ".e'i" post-cmavo / ".u'o" post-cmavo / ".au" post-cmavo / ".ua" post-cmavo / ".a'i" post-cmavo / ".i'u" post-cmavo / ".ii" post-cmavo / ".u'a" post-cmavo / ".ui" post-cmavo / ".a'o" post-cmavo / ".ai" post-cmavo / ".a'u" post-cmavo / ".iu" post-cmavo / ".ei" post-cmavo / ".o'o" post-cmavo / ".e'a" post-cmavo / ".uu" post-cmavo / ".o'a" post-cmavo / ".o'u" post-cmavo / ".u'u" post-cmavo / ".e'o" post-cmavo / ".io" post-cmavo / ".e'u" post-cmavo / ".ue" post-cmavo / ".i'i" post-cmavo / ".u'e" post-cmavo / "ba'a" post-cmavo / "ja'o" post-cmavo / "ca'e" post-cmavo / "su'a" post-cmavo / "ti'e" post-cmavo / "ka'u" post-cmavo / "se'o" post-cmavo / "za'a" post-cmavo / "pe'i" post-cmavo / "ru'a" post-cmavo / "ju'a" post-cmavo / "ta'o" post-cmavo / "ra'u" post-cmavo / "li'a" post-cmavo / "ba'u" post-cmavo / "mu'a" post-cmavo / "do'a" post-cmavo / "to'u" post-cmavo / "va'i" post-cmavo / "pa'e" post-cmavo / "zu'u" post-cmavo / "sa'e" post-cmavo / "la'a" post-cmavo / "ke'u" post-cmavo / "sa'u" post-cmavo / "da'i" post-cmavo / "je'u" post-cmavo / "sa'a" post-cmavo / "kau" post-cmavo / "ta'u" post-cmavo / "na'i" post-cmavo / "jo'a" post-cmavo / "bi'u" post-cmavo / "li'o" post-cmavo / "pau" post-cmavo / "mi'u" post-cmavo / "ku'i" post-cmavo / "ji'a" post-cmavo / "si'a" post-cmavo / "po'o" post-cmavo / "pe'a" post-cmavo / "ro'i" post-cmavo / "ro'e" post-cmavo / "ro'o" post-cmavo / "ro'u" post-cmavo / "ro'a" post-cmavo / "re'e" post-cmavo / "le'o" post-cmavo / "ju'o" post-cmavo / "fu'i" post-cmavo / "dai" post-cmavo / "ga'i" post-cmavo / "zo'o" post-cmavo / "be'u" post-cmavo / "ri'e" post-cmavo / "se'i" post-cmavo / "se'a" post-cmavo / "vu'e" post-cmavo / "ki'a" post-cmavo / "xu" post-cmavo / "ge'e" post-cmavo / "bu'o" post-cmavo
+
+;         distance in space-time 
+VA <- "vi" post-cmavo / "va" post-cmavo / "vu" post-cmavo
+;         end simple bridi or bridi-tail 
+VAU <- "vau" post-cmavo
+;         left MEX bracket 
+VEI <- "vei" post-cmavo
+;         right MEX bracket 
+VEhO <- "ve'o" post-cmavo
+;         MEX operator 
+VUhU <- "ge'a" post-cmavo / "fu'u" post-cmavo / "pi'i" post-cmavo / "fe'i" post-cmavo / "vu'u" post-cmavo / "su'i" post-cmavo / "ju'u" post-cmavo / "gei" post-cmavo / "pa'i" post-cmavo / "fa'i" post-cmavo / "te'a" post-cmavo / "cu'a" post-cmavo / "va'a" post-cmavo / "ne'o" post-cmavo / "de'o" post-cmavo / "fe'a" post-cmavo / "sa'o" post-cmavo / "re'a" post-cmavo / "ri'o" post-cmavo / "sa'i" post-cmavo / "pi'a" post-cmavo / "si'i" post-cmavo
+;         space-time interval size 
+VEhA <- "ve'u" post-cmavo / "ve'a" post-cmavo / "ve'i" post-cmavo / "ve'e" post-cmavo
+;         space-time dimensionality marker 
+VIhA <- "vi'i" post-cmavo / "vi'a" post-cmavo / "vi'u" post-cmavo / "vi'e" post-cmavo
+VUhO <- "vu'o" post-cmavo
+;         glue between logically connected sumti
+;                                     and relative clauses 
+
+;         subscripting operator 
+XI <- "xi" post-cmavo
+
+;         hesitation 
+Y <- ".y" post-cmavo
+
+;         event properties - inchoative, etc. 
+ZAhO <- "co'i" post-cmavo / "pu'o" post-cmavo / "co'u" post-cmavo / "mo'u" post-cmavo / "ca'o" post-cmavo / "co'a" post-cmavo / "de'a" post-cmavo / "ba'o" post-cmavo / "di'a" post-cmavo / "za'o" post-cmavo
+;         time interval size tense 
+ZEhA <- "ze'u" post-cmavo / "ze'a" post-cmavo / "ze'i" post-cmavo / "ze'e" post-cmavo
+;         lujvo glue 
+ZEI <- "zei" post-cmavo
+;         time distance tense 
+ZI <- "zu" post-cmavo / "za" post-cmavo / "zi" post-cmavo
+;         conjoins relative clauses 
+ZIhE <- "zi'e" post-cmavo
+;         single word metalinguistic quote marker 
+ZO <- "zo" post-cmavo-no-SI-handling
+;         delimited quote marker 
+ZOI <- "zoi" post-cmavo / "la'o" post-cmavo
+;         prenex terminator (not elidable) 
+ZOhU <- "zo'u" post-cmavo
+
