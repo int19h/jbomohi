@@ -1,0 +1,27 @@
+# mail/lojban-list thread a3aad4f615b2-cmene_checker | root 199708051248.iaa28745@shekel.mcl.cs.columbia.edu | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1997-08-05T12:48:09Z | "Mark E. Shoulson" <shoulson@cs.columbia.edu> | 199708051248.iaa28745@shekel.mcl.cs.columbia.edu | mail/lojban-list/cur/870785289.a3aad4f615b2a8bb.jbomohi:2,S
+Found this program in my archives.  It checks for valid cmene, and is
+probably pretty close to right.  The commented-out lines are the regexp
+from MediaMOO that I developed first and copied from.  I imagine I could do
+something slicker with perl these days.
+
+~mark
+
+#!/bin/sh
+
+# 3:  nocmen = 
+#
+#   "^la%|[aeiouy]la%|^[^a-z.]%|.[^a-z,']%|'$%|[^aeiouy]'%|'[^aeiouy]%![^aeiou]$%
+#   |[hqw]%|[bdgjvz][cfkpst]%|[cfkpst][bdgjvz]%|%([bcdfgjklmnprstvxz]%)%1%|[cjs
+#   z][cjsz]%|cx%|kx%|xc%|xk%|mz";
+
+echo -n "$*" | egrep -i \
+"^la|[aeiouy]la|^doi|[aeiouy]doi|^[^a-z.]|.[^a-z,']|'\$|[^aeiouy]'|'[^aeiuoy]|[aeiouy]\$|[hqw]|[bdgjvz][cfkpst]|[cfkpst][bdgjvz]|[cjsz][cjsz]|cx|kx|xc|xk|mz" > /dev/null || echo -n "$*" | grep -i '\([bcdfgjklmnprstvxz]\)\1' > /dev/null
+
+
+q=$?
+echo $q
+exit $q
+
+

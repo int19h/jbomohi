@@ -1,0 +1,33 @@
+Date: Tue, 5 Aug 1997 08:48:09 -0400
+Message-Id: <199708051248.IAA28745@shekel.mcl.cs.columbia.edu>
+From: "Mark E. Shoulson" <shoulson@cs.columbia.edu>
+To: cowan@ccil.org, lojbab@access.digex.net
+Subject: cmene checker
+X-Mozilla-Status: 0001
+X-From-Space-Date: Tue Aug  5 08:55:09 1997
+X-From-Space-Address: shoulson@cs.columbia.edu
+Content-Length: 779
+
+Found this program in my archives.  It checks for valid cmene, and is
+probably pretty close to right.  The commented-out lines are the regexp
+from MediaMOO that I developed first and copied from.  I imagine I could do
+something slicker with perl these days.
+
+~mark
+
+#!/bin/sh
+
+# 3:  nocmen = 
+#
+#   "^la%|[aeiouy]la%|^[^a-z.]%|.[^a-z,']%|'$%|[^aeiouy]'%|'[^aeiouy]%![^aeiou]$%
+#   |[hqw]%|[bdgjvz][cfkpst]%|[cfkpst][bdgjvz]%|%([bcdfgjklmnprstvxz]%)%1%|[cjs
+#   z][cjsz]%|cx%|kx%|xc%|xk%|mz";
+
+echo -n "$*" | egrep -i \
+"^la|[aeiouy]la|^doi|[aeiouy]doi|^[^a-z.]|.[^a-z,']|'\$|[^aeiouy]'|'[^aeiuoy]|[aeiouy]\$|[hqw]|[bdgjvz][cfkpst]|[cfkpst][bdgjvz]|[cjsz][cjsz]|cx|kx|xc|xk|mz" > /dev/null || echo -n "$*" | grep -i '\([bcdfgjklmnprstvxz]\)\1' > /dev/null
+
+
+q=$?
+echo $q
+exit $q
+
