@@ -1,0 +1,180 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 13 Jul 2003 08:18:46 -0700 (PDT)
+Received: from n21.grp.scd.yahoo.com ([66.218.66.77])
+	by digitalkingdom.org with smtp (Exim 4.12)
+	id 19bicJ-0001uD-00
+	for lojban-in@lojban.org; Sun, 13 Jul 2003 08:18:23 -0700
+X-eGroups-Return: sentto-44114-20381-1058109472-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.67.199] by n21.grp.scd.yahoo.com with NNFMP; 13 Jul 2003 15:17:52 -0000
+X-Sender: MorphemeAddict@wmconnect.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 47307 invoked from network); 13 Jul 2003 15:17:51 -0000
+Received: from unknown (66.218.66.218)
+  by m6.grp.scd.yahoo.com with QMQP; 13 Jul 2003 15:17:51 -0000
+Received: from unknown (HELO imo-m08.mx.aol.com) (64.12.136.163)
+  by mta3.grp.scd.yahoo.com with SMTP; 13 Jul 2003 15:17:50 -0000
+Received: from MorphemeAddict@wmconnect.com
+	by imo-m08.mx.aol.com (mail_out_v36_r1.1.) id r.1d8.dc6e8e5 (4394)
+	 for <lojban@yahoogroups.com>; Sun, 13 Jul 2003 11:17:46 -0400 (EDT)
+Message-ID: <1d8.dc6e8e5.2c42d21a@wmconnect.com>
+To: lojban@yahoogroups.com
+X-Mailer: 6.0 sub 12
+From: MorphemeAddict@wmconnect.com
+X-Yahoo-Profile: lojbaner
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Sun, 13 Jul 2003 11:17:46 EDT
+Subject: [lojban] more errors in EBNF rules (and other comments)
+Content-Type: multipart/alternative; boundary="part1_1d8.dc6e8e5.2c42d21a_boundary"
+X-archive-position: 5878
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: MorphemeAddict@wmconnect.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 4384
+Lines: 140
+
+--part1_1d8.dc6e8e5.2c42d21a_boundary
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+
+In looking through the wiki list of grammar rule typos in the Red Book, I 
+noticed they all had large spaces where the missing "|" was supposed to be, so I 
+looked through the whole EBNF grammar for more large spaces, and I found two 
+more, which I then compared with the YACC version:
+
+1) fragment-20 should have a "|" before NA.
+
+2) sumti-tail-111 should have a "|" between the first "sumti-tail-1" and the 
+second "relative-clauses".
+
+3)  Another difference I noticed is that where YACC has rules for 
+
+sumti_90
+sumti_A_91
+sumti_B_92
+sumti_C_93
+sumti_D_94
+sumti_E_95
+sumti_F_96
+sumti_G_97
+
+EBNF has 
+
+sumti90
+sumti-191
+sumti-292
+sumti-393
+sumti-494
+sumti-595
+sumti-697
+
+with no sumti-7 rule and no rule numbered 96.  Perhaps sumti-5, sumti-6, and 
+sumti-7 were combined.  Here is what I think they should be:
+
+sumti-595 = sumti-6 [relative-clauses] | quantifier selbri gap 
+[relative-clauses] 
+
+sumti-696 = [quantifier] sumti-7
+
+sumti-797 = {text of current rule sumti-697}
+
+4)  It looks like rule sumti-292 should be 
+
+sumti-292 = [sumti-2 joik-ek] sumti-3
+
+instead of (the apparently equivalent)
+
+sumti-292 = sumti-3 [joik-ek sumti-3]...
+
+Why was so much alteration made to the EBNF version when a straightforward 
+rewrite of the YACC would have been clearer?
+
+Stevo
+
+--part1_1d8.dc6e8e5.2c42d21a_boundary
+Content-Type: text/html; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+
+<HTML>
+
+<FONT FACE=arial,helvetica><FONT  SIZE=2 FAMILY="SANSSERIF" FACE="Verdana Ref" LANG="0">In looking through the wiki list of grammar rule typos in the Red Book, I noticed they all had large spaces where the missing "|" was supposed to be, so I looked through the whole EBNF grammar for more large spaces, and I found two more, which I then compared with the YACC version:
+<BR>
+<BR>1) fragment-20 should have a "|" before NA.
+<BR>
+<BR>2) sumti-tail-111 should have a "|" between the first "sumti-tail-1" and the second "relative-clauses".
+<BR>
+<BR>3) &nbsp;Another difference I noticed is that where YACC has rules for 
+<BR>
+<BR>sumti_90
+<BR>sumti_A_91
+<BR>sumti_B_92
+<BR>sumti_C_93
+<BR>sumti_D_94
+<BR>sumti_E_95
+<BR>sumti_F_96
+<BR>sumti_G_97
+<BR>
+<BR>EBNF has 
+<BR>
+<BR>sumti<U>90</U>
+<BR>sumti-1<U>91</U>
+<BR>sumti-2<U>92</U>
+<BR>sumti-3<U>93</U>
+<BR>sumti-4<U>94</U>
+<BR>sumti-5<U>95</U>
+<BR>sumti-6<U>97
+<BR>
+<BR></U>with no sumti-7 rule and no rule numbered <U>96</U>. &nbsp;Perhaps sumti-5, sumti-6, and sumti-7 were combined. &nbsp;Here is what I think they should be:
+<BR>
+<BR>sumti-5<U>95</U> = sumti-6 [relative-clauses] | quantifier selbri gap [relative-clauses] 
+<BR>
+<BR>sumti-6<U>96</U> = [quantifier] sumti-7
+<BR>
+<BR>sumti-7<U>97</U> = {text of current rule sumti-6<U>97</U>}
+<BR>
+<BR>4) &nbsp;It looks like rule sumti-2<U>92</U> should be 
+<BR>
+<BR>sumti-2<U>92</U> = [sumti-2 joik-ek] sumti-3
+<BR>
+<BR>instead of (the apparently equivalent)
+<BR>
+<BR>sumti-2<U>92</U> = sumti-3 [joik-ek sumti-3]...
+<BR>
+<BR>Why was so much alteration made to the EBNF version when a straightforward rewrite of the YACC would have been clearer?
+<BR>
+<BR>Stevo</FONT>
+<br>
+
+<!-- |**|begin egp html banner|**| -->
+
+<table border=0 cellspacing=0 cellpadding=2>
+<tr bgcolor=#FFFFCC>
+<td align=center><font size="-1" color=#003399><b>Yahoo! Groups Sponsor</b></font></td>
+</tr>
+<tr bgcolor=#FFFFFF>
+<td align=center width=470><table border=0 cellpadding=0 cellspacing=0> <tr> <td align=center><font face=arial size=-2>ADVERTISEMENT</font><br><a href="http://rd.yahoo.com/M=194081.3551198.4824677.1261774/D=egroupweb/S=1706665094:HM/A=1663535/R=0/SIG=11ps6rfef/*http://www.ediets.com/start.cfm?code=30504&media=atkins" alt=""><img src="http://us.a1.yimg.com/us.yimg.com/a/ed/ediets/stat_300x250_atkinsnewsvii.gif" alt="click here" width="300" height="250" border="0"></a></td></tr></table> </td>
+</tr>
+<tr><td><img alt="" width=1 height=1 src="http://us.adserver.yahoo.com/l?M=194081.3551198.4824677.1261774/D=egroupmail/S=:HM/A=1663535/rand=675059110"></td></tr>
+</table>
+
+<!-- |**|end egp html banner|**| -->
+
+
+<br>
+<tt>
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com</tt>
+<br>
+
+<br>
+<tt>Your use of Yahoo! Groups is subject to the <a href="http://docs.yahoo.com/info/terms/">Yahoo! Terms of Service</a>.</tt>
+</br>
+
+</HTML>
+
+--part1_1d8.dc6e8e5.2c42d21a_boundary--
+

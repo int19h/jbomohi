@@ -1,0 +1,57 @@
+# mail/lojban-list thread 8ac204b6c8ca-more_errors_in_ebnf_rules_%28and_other_comments | root 1d8.dc6e8e5.2c42d21a@wmconnect.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2003-07-13T15:17:46Z | MorphemeAddict@wmconnect.com | 1d8.dc6e8e5.2c42d21a@wmconnect.com | mail/lojban-list/cur/1058109466.8ac204b6c8ca5a29.jbomohi:2,S
+In looking through the wiki list of grammar rule typos in the Red Book, I 
+noticed they all had large spaces where the missing "|" was supposed to be, so I 
+looked through the whole EBNF grammar for more large spaces, and I found two 
+more, which I then compared with the YACC version:
+
+1) fragment-20 should have a "|" before NA.
+
+2) sumti-tail-111 should have a "|" between the first "sumti-tail-1" and the 
+second "relative-clauses".
+
+3)  Another difference I noticed is that where YACC has rules for 
+
+sumti_90
+sumti_A_91
+sumti_B_92
+sumti_C_93
+sumti_D_94
+sumti_E_95
+sumti_F_96
+sumti_G_97
+
+EBNF has 
+
+sumti90
+sumti-191
+sumti-292
+sumti-393
+sumti-494
+sumti-595
+sumti-697
+
+with no sumti-7 rule and no rule numbered 96.  Perhaps sumti-5, sumti-6, and 
+sumti-7 were combined.  Here is what I think they should be:
+
+sumti-595 = sumti-6 [relative-clauses] | quantifier selbri gap 
+[relative-clauses] 
+
+sumti-696 = [quantifier] sumti-7
+
+sumti-797 = {text of current rule sumti-697}
+
+4)  It looks like rule sumti-292 should be 
+
+sumti-292 = [sumti-2 joik-ek] sumti-3
+
+instead of (the apparently equivalent)
+
+sumti-292 = sumti-3 [joik-ek sumti-3]...
+
+Why was so much alteration made to the EBNF version when a straightforward 
+rewrite of the YACC would have been clearer?
+
+Stevo
+
