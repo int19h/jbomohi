@@ -1,0 +1,216 @@
+Received: from YALEVM.YCC.YALE.EDU by MINERVA.CIS.YALE.EDU via SMTP; Thu, 18 Mar 1993 17:32:01 -0500
+Received: from CUVMB.CC.COLUMBIA.EDU by YaleVM.YCC.Yale.Edu (IBM VM SMTP V2R2)    with BSMTP id 6381; Thu, 18 Mar 93 17:30:51 EST
+Received: from CUVMB.BITNET by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with BSMTP  id 1745; Thu, 18 Mar 93 17:31:32 EST
+Date:         Thu, 18 Mar 1993 10:40:34 EST
+Reply-To: bob@gnu.ai.mit.edu
+Sender: Lojban list <LOJBAN%CUVMB.bitnet@YaleVM.YCC.YALE.EDU>
+Comments:     Warning -- original Sender: tag was bob@GRACKLE.STOCKBRIDGE.MA.US
+From: bob@GNU.AI.MIT.EDU
+Subject:      dictionaries
+X-To:         lojban@cuvmb.cc.columbia.edu, bob@grackle.stockbridge.ma.us,               wil@cix.compulink.co.uk
+To: Erik Rauch <erikr@MINERVA.CIS.YALE.EDU>
+In-Reply-To:  William Stuart-smith's message of Wed,               17 Mar 1993 23:42:00 GMT               <9303180735.AA26917@albert.gnu.ai.mit.edu>
+Status: O
+
+   Are there any Lojban - English dictionary programs?
+
+Not that I know of.  I am very interested.
+
+   I would like to have a go at the Emacs version if it doesn't
+   already exist.  lojbab suggested that Bob Chassell might help me
+   with this: could you mail me please if you can help, Bob?
+
+Yes, I would like to, although I will not have much time.
+
+How much Emacs Lisp do you know?  If none, I recommend my (not yet
+complete) book on programming in Emacs Lisp.
+
+What should the output of a dictionary program look like?  Here are
+three possibilities:
+
+  * english-lojban-interlineal (region-begining region-end)
+
+    Mark a region of English text and generate a buffer containing an
+    interlineal of both the English and the lojban. (Clearly, the
+    lojban would be ungrammatical and many words would be undefined;
+    nonetheless, this would be useful.)
+
+  * lojban-english-interlineal (region-begining region-end)
+
+    The converse of `english-lojban-interlineal'.
+
+    Mark a region of lojban text and generate a buffer containing an
+    interlineal of both the lojban and the English.
+
+    Ideally, the words of each line should be spaced so they line up,
+    one under the other, something like this:
+
+    .i mi cadzu  pagre        le  vorme      le  kumfa
+       I  walk   pass-through the door  into the room.
+
+     (I.e., I walkingly pass through the door, meaning, I walk through
+     the door.)
+
+     Eventually, I would like to see something like this combined with
+     a grammar checker (maybe using Flex and Bison) to check the
+     lojban utterance and mark it with various kinds of brackets.
+
+  * lojban-lookup (english-regexp)
+
+    This may be what you are thinking of.
+
+    Type `M-x lojban-lookup RET' and part of an English word or a
+    regular expression, then type TAB for completion on the English
+    word in the minibuffer.  When an English word completes, display
+    both the English word and the lojban in the minibuffer.  At same
+    time, make it possible to continue to edit the English word so you
+    can change it (eg, change `deer' to `dear' to `beer'), seeing the
+    lojban word change as you change the English.  (This could be
+    tricky.).  Then type RET to insert the lojban word into the
+    current buffer at point.
+
+    Perhaps `lojban-lookup' should display the complete lojban
+    dictionary entry for for the word in a help buffer, so you see the
+    place structure.
+
+    Also, a pop up buffer is a good idea because you will get several
+    hits for one English word.  For example, `M-x occur RET young RET'
+    gives me three hits:
+
+      nanla               boy     boy of age...; a young male human  'lad'
+      nixli  nix xli      girl    girl of age...; a young female human
+      citno  cit          young   be young; adj.                  'junior'
+
+    Of course, only the lojban word should get inserted into your buffer.
+
+    The function should hunt for all the English words in the
+    dictionary, not just for the `key' words.  Many of the English
+    meanings are not expressed by the key words.  For example the verb
+    `partition', fendi, has the key word `divide'; `kilt' has the key
+    word `dress'; `border' has the key word `edge'.
+
+    Eventually, the dictionary should spell out English translations
+    of the second and subsequent place structure meanings so that
+    looking up `destination' gets you
+
+      kama  kla  go    come/go to...<destination> from... <departure-point>
+                        via...<route> using...<mode-of-conveyance>
+
+    With my current dictionary, you don't get anything when you search
+    for `destination'.
+
+    The function should also make it easy for you to specify which of
+    several lojban words you want inserted into the buffer.  Perhaps
+    each of the entries in the Help buffer could be numbered so if you
+    have three entries, as shown in the first example above, you could
+    type `3' to get `citno' inserted.
+
+    As a prototype, you might be able to adapt the `occur' code to do
+    something like this.  The `occur' definition is in `replace.el'.
+    (Also, by using `occur', it should be easy to get the English
+    meaning of lojban word.)  I think that `ispell.el' has code for
+    selecting an entry by number.
+
+Best wishes
+
+    Robert J. Chassell               bob@gnu.ai.mit.edu
+    Rattlesnake Mountain Road        (413) 298-4725
+    Stockbridge, MA 01262-0693 USA
+
+
+By the way, here is a hastily written function to clean up the raw
+gismu list from the Planned Languages Server to make a nicer listing.
+Of course, if you use this, then some entries are folded onto two
+lines but `occur' only picks up one line....perhaps if you write a
+function adapting `occur', you should run it on the raw gismu list and
+then run a function like this to clean up the display in the help
+buffer.
+
+(defun clean-up-gismu-list (count)
+  "Clean up an entry in the gismu list so it fits into 80 columns.
+Prefix arg COUNT specifies how many lines to clean up at once.
+Default is one line.  (This is so you can test what this does.)
+When it can, `clean-up-gismu-list' folds lines at appropriate words or
+at semi-colons.
+Run `untabify' on the buffer first.
+Works for the gismu list from 09/09/90."
+
+  (interactive "p")
+  (while (> count 0)
+
+    ;; Lojban word followed by type
+    (move-to-column 10)
+    (let ((here (point)))
+      (delete-region
+       here
+       (progn
+         (re-search-backward "\\w+" nil t)
+         (forward-char 1) (point))))
+    (insert-char ?   (- 9 (current-column)))
+
+    ;; Keyword or phrase
+    (re-search-forward "\\(  \\)\\(\\w+\\|&\\)")
+    (goto-char (match-beginning 2))
+    (let ((here (point)))
+      (delete-region
+       here
+       (progn
+         (re-search-backward "\\(\\w+\\|\*\\)" nil t)
+         (forward-char 1) (point))))
+    (insert-char ?   (- 14 (current-column)))
+
+    ;; Long description
+    (re-search-forward "\\(  \\)\\(\\w+\\)")
+    (goto-char (match-beginning 2))
+    (let ((here (point)))
+      (delete-region
+       here
+       (progn
+         (re-search-backward "\\(\\w+\\|\*\\)" nil t)
+         (forward-char 1) (point))))
+    (if (> (current-column) 29)
+        (insert "  ")
+      (insert-char ?   (- 30 (current-column))))
+
+    ;; Other white space
+    (while (re-search-forward
+            "\\(  [ ]*\\)\\(\\w+\\|\|--\\)"
+            (save-excursion (end-of-line) (point)) t)
+      (progn
+        (goto-char (match-beginning 1))
+        (insert ? )
+        (delete-region (match-beginning 1) (match-end 1))))
+
+    ;; Fold long lines at special words:
+    (beginning-of-line)
+    (if (re-search-forward
+         "\\(connective:\\|terminator:\\|sumti:\\|modifier:\\)"
+         (save-excursion (end-of-line) (point)) t)
+        (insert "\n                                "))
+
+    ;; Fold long lines at semi-colon
+    (beginning-of-line)
+    (while (search-forward ";" (save-excursion (end-of-line) (point)) t)
+      (insert "\n                                ")
+      (forward-line -1)
+      (end-of-line)
+      (while (> (current-column) 78)
+        (progn
+          (move-to-column 72)
+          (forward-word -1)
+          (insert "\n                                ")
+          (end-of-line)))
+      (forward-line 1))
+
+    ;; Fold remaining long lines
+    (end-of-line)
+    (while (> (current-column) 78)
+      (progn
+        (move-to-column 72)
+        (forward-word -1)
+        (if (looking-at-backward "\(") (forward-char -1))
+        (insert "\n                                    ")
+        (end-of-line)))
+    (forward-line 1)
+    (setq count (1- count))))
+
