@@ -1,6 +1,75 @@
-# mail/lojban-list thread dde2bdb676d6-veijo's_1994_proposal_for_nested_relative_claus | root 199601071354.iaa23060@locke.ccil.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread dde2bdb676d6-veijo's_1994_proposal_for_nested_relative_claus | root 199601071354.iaa23060@locke.ccil.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1996-01-07T13:19:14Z | Veijo Vilva <veion@XIRON.PC.HELSINKI.FI> | 199601071321.paa15644@xiron.pc.helsinki.fi | mail/lojban-list/cur/821020754.1ea0da54e1dcfc44.jbomohi:2,S
+>Date:         Sun, 7 Jan 1996 04:56:40 -0500
+>From: John Cowan <cowan@LOCKE.CCIL.ORG>
+>Subject:      Veijo's 1994 proposal for nested relative clauses
+
+> 1)      le (poi le (poi le tcadu cu se klama ku'o) nanmu cu se viska ku'o)
+ verba
+>         the (into-the-town-going man)-seeing-child
+
+> and complained that the center-embedding was excessive, compared with the
+> Finnish equivalent.  The problem is that Lojban has articles which are
+> always on the left, whereas Finnish has no articles at all.  He then
+> proposed a linearized version using a special marker:
+>
+> 2)      le poi le tcadu cu se klama xu'o nanmu cu se viska ku'o verba
+
+[...]
+
+> Veijo then proposed a Yacc version which (unbeknownst to him) has S/R
+> errors.  I tried several more versions which also have errors, sometimes
+> even more errors.
+
+  The following version gives no errors:
+
+sumti_tail_111          :  sumti_tail_A_112
+                           /* inner-quantified sumti relative clause */
+/* modified rule */     |  preposed_relative_clause_125  sumti_tail_A_112
+                           /* pseudo-possessive
+                              (an abbreviated inner restriction);
+                              note that sumti cannot be quantified */
+                        |  sumti_F_96  sumti_tail_A_112
+                           /* pseudo-possessive with outer restriction */
+                        |  sumti_F_96  relative_clauses_121  sumti_tail_A_112
+                        ;
+
+/* added rules */
+
+preposed_relative_clause_125 : GOI_542  term_81  GEhU_gap_464
+                        |  NOI_585  rel_chain_126 KUhO_gap_469
+                        ;
+
+rel_chain_126           :  sentence_40
+                        |  rel_chain_126 XUhO_gap_xxx sentence_40
+                        ;
+
+> However, I think there is a more fundamental issue.  Veijo claimed
+> that Examples 1 and 2 were equivalent to postposed relative clauses:
+
+  Not strictly equivalent as I used sumti conversion to simplify
+  the expressions, but that is quite legitimate, I'd think.
+
+> "And what do we learn from this, comrades?"  I'm not sure, but at any
+> rate some further thinking is needed.  Please comment!
+
+  I'd like to add this feature to the language. It offers a working
+  solution to a problem which people with an English background
+  don't mostly even perceive. Of course, it isn't necessary to be
+  able to express any conceivable thing in a simple way in Lojban,
+  is it :-)
+
+
+  co'o mi'e veion
+
+---------------------------------
+.i mi du la'o sy. Veijo Vilva sy.
+---------------------------------
+
+
+
+=== 2 | 1996-01-07T13:19:14Z | Veijo Vilva <veion@XIRON.PC.HELSINKI.FI> | 199601071354.iaa23060@locke.ccil.org | mail/lojban-list/cur/821020754.dde2bdb676d67509.jbomohi:2,S
 >Date:         Sun, 7 Jan 1996 04:56:40 -0500
 >From: John Cowan <cowan@LOCKE.CCIL.ORG>
 >Subject:      Veijo's 1994 proposal for nested relative clauses
