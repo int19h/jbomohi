@@ -1,0 +1,67 @@
+Reply-To: BARRETO%VELAHF@ECCSA.TR.UNISYS.COM
+Date: Tue Dec 12 17:10:00 1995
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Paulo Barreto <BARRETO%VELAHF@ECCSA.TR.UNISYS.COM>
+Subject:      Re: LR(k)
+X-To:         lojban%cuvmb.cc.columbia.edu@TRSVR.BITNET
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+Message-ID: <6PnBpM7a6aJ.A.5mF.hu0kLB@chain.digitalkingdom.org>
+Content-Length: 2570
+
+Myself (Paulo):
+>Knuth's theorem states that *all* deterministic context-free languages
+>have an LR(1) grammar.
+
+John:
+>I'm not familiar with the theorem. Surely not all languages are LALR(1)
+
+See Knuth, D.E. [1965] "On the translation of languages from left to
+right", Information and Control 8(6), p.607-639. (I could fax it to
+you on request). I remember to have seen this proof also in Aho, A.V.
+and Ullman, J.D. [1972] "The Theory of Parsing, Translation and
+Compiling", Prentice-Hall (I don't remember the pages). With some
+(correction: much) effort, I could also find my class notes with the
+proof (if it was an exercise, I don't guarantee it's correct :-)
+
+John:
+>Surely not all languages are LALR(1)
+
+I wouldn't be so sure about that :-)
+
+There's a stronger result: any deterministic context-free language with
+the prefix property (i.e. no string of the language is a prefix of any
+other string of the same language) has an LR(0) grammar.
+
+The subset of Lojban where all utterances finish in an explicit FA'O
+presents the prefix property, hence it has an LR(0) grammar. If the
+preparser supplies FA'O when it is ellipsized, full Lojban can be
+modelled on an LR(0) grammar. And YACC needs an "end-of-file token",
+anyway.
+
+I think this line of reasoning can be followed to prove that all
+deterministic context-free languages *are* LALR(1). However, I wish to
+point out that this is not a panacea. The LR(0) grammar assured by this
+theorem may reflect a syntax structure that is entirely different from
+the current grammar.
+
+>From a practical point of view, the "hacked" YACC grammar is more or
+less fine (some more comments would make it easier to read). But we
+assert that Lojban is unambiguous and that it can be reasonably well
+described by a context-free grammar; hence, it *should* be possible to
+show an LR(1) grammar for it, and perhaps an LR(k) grammar that
+keeps the overall phrase structure of the YACC grammar. Even a less
+tricky YACC grammar would be interesting in itself.
+
+Finally, I don't see why Lojbab's afraid of trying to find such a
+grammar, as its equivalence (in the sense of generating the same
+language) to the current YACC grammar should be a stated in the form
+of a *theorem*, not a gratuitous assertion. (I don't think the proof
+would be longer than that of Fermat's last theorem, or the four-color
+theorem for planar graphs :-)
+
+co'o mi'e paulos.
+
+    Paulo S. L. M. Barreto  --  Software Analyst  --  Unisys Brazil
+    Standard disclaimer applies ("I do not speak for Unisys", etc.)
+                       e'osai ko sarji la lojban.
+
