@@ -62,3 +62,22 @@ And se tai, te tai, and ve tai.
 
 -Robin
 
+
+## 2004-11-22T19:41:59Z — xorxes (comment 171, on definition 2647, in reply to 170)
+
+Re: Fourth place.
+
+rlpowell wrote:
+> xorxes wrote:
+> > rlpowell wrote:
+> > > According to the ma'oste, there's a fourth place, "in property".
+> > 
+> > But where would it come from, and what would it mean?
+> > There is already x3 for a property.
+> 
+> From "tai": (x1 resembles x2 sharing ideal form/shape x3 in property x4)
+
+So how do x3 and x4 differ? 
+
+mi'e xorxes
+
