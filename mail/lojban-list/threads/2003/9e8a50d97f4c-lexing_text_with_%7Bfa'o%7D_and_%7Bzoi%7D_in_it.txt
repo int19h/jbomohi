@@ -1,4 +1,4 @@
-# mail/lojban-list thread 9e8a50d97f4c-lexing_text_with_%7Bfa'o%7D_and_%7Bzoi%7D_in_it | root 200302020059.24435.phma@webjockey.net | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 9e8a50d97f4c-lexing_text_with_%7Bfa'o%7D_and_%7Bzoi%7D_in_it | root 200302020059.24435.phma@webjockey.net | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2003-02-02T05:59:24Z | Pierre Abbat <phma@webjockey.net> | 200302020059.24435.phma@webjockey.net | mail/lojban-list/cur/1044165564.9e8a50d97f4c645c.jbomohi:2,S
 Is this a correct way of lexing zoi-quotes?:
@@ -405,6 +405,40 @@ Okay. How about these?
 
 /ledInjujIcmufa'oþemElios/
 /ledInjujIcmufa'oþemelI,u/
+
+phma
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
+
+
+=== 8 | 2003-02-05T02:26:05Z | Pierre Abbat <phma@webjockey.net> | 200302042126.05978.phma@webjockey.net | mail/lojban-list/cur/1044411965.77e9131bee985ec3.jbomohi:2,S
+On Tuesday 04 February 2003 15:48, Robert LeChevalier wrote:
+> At 06:48 AM 2/4/03 -0500, Pierre wrote:
+> >How would you lex the following?:
+>
+> My best guess, and I'm not using any algorithm per se.
+>
+> >/la xidEkel. rIrxe fa'o tIgri se li ni stIka lI te/
+>
+>                          # and abort processing at this point.
+
+valfendi currently outputs what you say (plus type-of-word annotations). If it 
+had fa'o-detection, it would lex it as /la xidEkel rIrxe fa'o tIgri 
+selinistIkalIte/ with everything from /tIgri/ on resolved as foreign text. 
+But the words after /fa'o/ are in fact /tIgris elinistI kalIte/, and if there 
+were a Greek parser which saw an instruction to call the Lojban parser and 
+then resume when the Lojban was finished, it would lose those three words, 
+since the Lojban lexer cannot detect {fa'o} until it has read the end of the 
+piece. That is why I think that {fa'o} should must be always followed by a 
+pause: not because the algorithm can't lex it otherwise (it does, as well as 
+lex some other illegally-pronounced phrases such as /kybuladjAn/) but because 
+not putting a pause forces the algorithm to process text after the {fa'o} 
+before it can detect the {fa'o}.
 
 phma
 

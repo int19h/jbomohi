@@ -1,0 +1,72 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 04 Feb 2003 18:26:45 -0800 (PST)
+Received: from n17.grp.scd.yahoo.com ([66.218.66.72])
+	by digitalkingdom.org with smtp (Exim 4.05)
+	id 18gFGo-0003gv-00
+	for lojban-in@lojban.org; Tue, 04 Feb 2003 18:26:38 -0800
+X-eGroups-Return: sentto-44114-18502-1044411964-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.67.196] by n17.grp.scd.yahoo.com with NNFMP; 05 Feb 2003 02:26:05 -0000
+X-Sender: phma@ixazon.dynip.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_3_4); 5 Feb 2003 02:26:04 -0000
+Received: (qmail 50716 invoked from network); 5 Feb 2003 02:26:03 -0000
+Received: from unknown (66.218.66.217)
+  by m3.grp.scd.yahoo.com with QMQP; 5 Feb 2003 02:26:03 -0000
+Received: from unknown (HELO blackcat.ixazon.lan) (208.150.110.21)
+  by mta2.grp.scd.yahoo.com with SMTP; 5 Feb 2003 02:26:03 -0000
+Received: by blackcat.ixazon.lan (Postfix, from userid 1001)
+	id BB3C52639; Wed,  5 Feb 2003 02:26:06 +0000 (UTC)
+Organization: dis
+To: lojban@yahoogroups.com
+User-Agent: KMail/1.5
+References: <5.2.0.9.0.20030203221325.00abe690@pop.east.cox.net> <5.2.0.9.0.20030204153751.031fcec0@pop.east.cox.net>
+In-Reply-To: <5.2.0.9.0.20030204153751.031fcec0@pop.east.cox.net>
+Message-Id: <200302042126.05978.phma@webjockey.net>
+From: Pierre Abbat <phma@webjockey.net>
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Tue, 4 Feb 2003 21:26:05 -0500
+Subject: [lojban] Re: Lexing text with {fa'o} and {zoi} in it
+Content-Type: text/plain; charset=US-ASCII
+X-archive-position: 4015
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: phma@webjockey.net
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1346
+
+On Tuesday 04 February 2003 15:48, Robert LeChevalier wrote:
+> At 06:48 AM 2/4/03 -0500, Pierre wrote:
+> >How would you lex the following?:
+>
+> My best guess, and I'm not using any algorithm per se.
+>
+> >/la xidEkel. rIrxe fa'o tIgri se li ni stIka lI te/
+>
+>                          # and abort processing at this point.
+
+valfendi currently outputs what you say (plus type-of-word annotations). If it 
+had fa'o-detection, it would lex it as /la xidEkel rIrxe fa'o tIgri 
+selinistIkalIte/ with everything from /tIgri/ on resolved as foreign text. 
+But the words after /fa'o/ are in fact /tIgris elinistI kalIte/, and if there 
+were a Greek parser which saw an instruction to call the Lojban parser and 
+then resume when the Lojban was finished, it would lose those three words, 
+since the Lojban lexer cannot detect {fa'o} until it has read the end of the 
+piece. That is why I think that {fa'o} should must be always followed by a 
+pause: not because the algorithm can't lex it otherwise (it does, as well as 
+lex some other illegally-pronounced phrases such as /kybuladjAn/) but because 
+not putting a pause forces the algorithm to process text after the {fa'o} 
+before it can detect the {fa'o}.
+
+phma
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
