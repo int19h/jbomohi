@@ -1,0 +1,142 @@
+Return-Path: <lojbab>
+Message-Id: <m0jyJkf-0001XhC@snark.thyrsus.com>
+Date: Fri, 12 Jul 91 05:25 EDT
+From: lojbab (Bob LeChevalier)
+To: lojban-list
+Subject: response to Mark Shoulson on optional "cu"
+X-From-Space-Date: Fri Jul 12 05:26:14 1991
+X-From-Space-Address: lojbab
+Content-Length: 5685
+
+
+Mark's confusion here may explain why we have to work hard on explaining
+how elision works.  His questions are NOT stupid, since many people ask
+them.
+
+The change from 'elidable' to 'optional' for "cu" actually has no real
+effect on the grammar of valid Lojban sentences.  It does not produce a
+shift-reduce error.  We do not accept shift/reduce errors in our
+unambiguity proof based on YACC.  But the change IS really tied into the
+elidable system, and that is where Mark gets confused.  All of his
+problem examples do not parse as he expects, because he omitted critical
+elidables.  I am responding on-line rather than with off-line
+preparation, so I cannot fiddle with his actual examples.  So pardon if
+I use my own.
+
+<le mlatu citka> <le ratcu>
+
+is two sumti with no selbri.  Optional 'cu' has no direct relevance
+here.  It will not be inserted by the parser, which accepts a collection
+of sumti with no selbri as grammatical (a list of answers to ma
+questions, for example)
+
+What the parser WILL do is add in elidable 'ku' at the end of each "le"
+description:
+
+(le mlatu citka KU> <le ratcu KU> VAU
+
+Because 'cu' is an optional instead of an elidable, it will never be
+inserted using the YACC error processing.  It does not need to be,
+because every sentence that uses "cu" has an alternative form using some
+other elidable. Modifying the above example to one that makes the
+probably intended sense:
+
+le mlatu cu citka le ratcu
+The cat eats the rat.
+
+parses correctly, with the "cu" identifying that there was an elidable
+'ku' after 'mlatu':
+
+<le mlatu KU> cu <citka {le ratcu KU} VAU>
+
+So the 'real sentence' is
+le mlatu ku cu citka le ratcu ku vau
+
+IN THIS SENTENCE, THE "cu" IS 'OPTIONAL'.  It is NOT possible to talk
+about optionality in a sentence where you have already elided, because
+taking the option changes the conditions for elision.
+
+Thus
+
+le mlatu ku citka le ratcu ku vau
+
+is equally grammatical to the version with "cu" in it, and indeed the
+final 'ku' and 'vau' are elidable regardless of the "cu", so
+
+le mlatu ku citka le ratcu
+<le mlatu ku> <citka {le ratcu KU} VAU>
+
+works as well as
+
+le mlatu ku cu citka le ratcu
+<le mlatu ku> cu <citka {le ratcu KU} VAU>
+
+and in this pair of examples it can be seen that the "cu" is 'optional',
+as opposed to 'elidable', since it parses the same with or without the
+"cu".
+
+Without the "cu" however, the "ku" after mlatu is NOT elidable, since
+the x1 sumti then combines with the selbri to form the 2-sumti phrase
+that I started with.
+
+The reason for making the grammar change is simply that the parser never
+really needs to insert an elided "cu".  If it gets to the selbri, it
+must already have terminated any preceding sumti with their proper
+terminators in order to realize that there is a selbri to recognize.  In
+such a case it does not need the "cu".
+
+On the other hand, HUMAN BEINGS prefer the "cu" to the rats nest of
+elidables.  They know that if they insert the optional "cu", that they
+don;t need to worry about terminating a variety of constructs that might
+be seen before the selbri.  Many examples of this are shown in draft
+textbook lesson 4/4A, though probably not enough or well-explained,
+since Mark got confused.
+
+HUMAN listeners also prefer the "cu" becausae it helps them, who parse
+more than one token at a time in their minds, to divide the sentence
+they hear in two - the pre-selbri part and the selbri+post-selbri part.
+In moderately complex sentence, for example with an abstraction clause
+having sub arguments in front of the selbri, this makes Lojban
+understandable:
+
+le nu le prenu ku klama le zarci kei ku se pluka mi
+The event the person goes to the store  pleases  me
+
+Uses 3 elidables and you may have trouble finding the two selbri (main
+and abstract) in the text.  But it parses grammatically (unless I made a
+screw-up) and effectively identically to the easier to see version using
+"cu":
+
+le nu le prenu cu klama le zarci cu se pluka mi
+<le {nu (le prenu KU) cu (klama <le zarci KU> VAU) KEI} KU> cu <se pluka {mi} VAU>
+
+with the "cu", two elidables before 'se pluka' became really elidable.
+Without the "cu" you need at least 2 of the 4 that were elided, and if
+they are the wrong two, you still get in trouble (you must have the
+second "ku" as one of the at-least-two , or without the "cu", the "se
+pluka" becomes part of a tanru of x1 of the form abbreviated as:
+
+le <nu klama kei> <se pluka>
+
+The key thing to remember is that elidables are NOT always elidable,
+they are OPTIONALLY elidable under specific if not well-stated
+conditions.  This makes OPTIONAL 'cu' seem not quite so different from
+OPTIONALLY elidable 'cu'.  The peril is that a description such as the
+grammar change report presumes that the reader knows how each of the
+constructs being changed works before and after the change.  In this
+case, what really happened was that a path that the parser never needs
+to take - inserting an 'elided' "cu" - has been eliminated from the
+parser tables.  In some earlier versions of the grammar, we had not been
+able to do this.  Presumably the grammar is now stable and well-formed
+enough to allow the optional "cu".  The disadvantage of the change,of
+course, is that with the "cu" not listed in the elidables, when the
+parser processes text, it inserts all the other elidables and not the
+"cu", and reading the parser output for a large block of text is more
+difficult without that large-print CU to tell you where the selbri is.
+This however is a small tradeoff for a cleaner and more honest grammar,
+and I still hope to eventually have a post processor that can
+automatically process parser outputs into some kind of structured
+readble form.  But not this month.
+
+lojbab
+
