@@ -1,0 +1,714 @@
+Return-Path: <rmcivor@macsrule.com>
+X-Sender: rmcivor@macsrule.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_3_2); 4 Sep 2001 22:33:10 -0000
+Received: (qmail 24261 invoked from network); 4 Sep 2001 22:02:57 -0000
+Received: from unknown (10.1.10.142)
+  by l10.egroups.com with QMQP; 4 Sep 2001 22:02:57 -0000
+Received: from unknown (HELO tomts7-srv.bellnexxia.net) (209.226.175.40)
+  by mta3 with SMTP; 4 Sep 2001 22:02:56 -0000
+Received: from localhost ([64.230.90.20]) by tomts7-srv.bellnexxia.net
+          (InterMail vM.4.01.03.16 201-229-121-116-20010115) with ESMTP
+          id <20010904220252.HMGD29250.tomts7-srv.bellnexxia.net@localhost>;
+          Tue, 4 Sep 2001 18:02:52 -0400
+Date: Tue, 4 Sep 2001 18:02:58 -0400
+Content-Type: multipart/alternative;
+	boundary=Apple-Mail-991252081-2
+Subject: Re: [lojban] LALR1 question
+Cc: lojban@yahoogroups.com
+To: "Bob LeChevalier (lojbab)" <lojbab@lojban.org>
+X-Mailer: Apple Mail (2.388)
+In-Reply-To: <4.3.2.7.2.20010831185654.00bd77a0@pop.cais.com>
+Mime-Version: 1.0 (Apple Message framework v388)
+Message-Id: <20010904220252.HMGD29250.tomts7-srv.bellnexxia.net@localhost>
+From: Robert McIvor <rmcivor@macsrule.com>
+X-Yahoo-Message-Num: 10445
+Content-Length: 21189
+
+           
+--Apple-Mail-991252081-2 
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	format=flowed;
+	charset=us-ascii
+
+
+On Friday, August 31, 2001, at 08:49 PM, Bob LeChevalier (lojbab) wrote:
+
+> Originally, JCB thought to prove Loglan's unambiguity using the 
+> theories of
+> a guy named Yngve.  I'm not entirely sure what those theories are or how
+> they were related to the problem.  In 1977 or 1978, IIRC, a Loglanist, I
+> believe it was Doug Landauer, proposed using YACC as a more formal 
+> method
+> of proving the language unambiguous, and made a first cut at a machine
+> grammar.  It was quickly found that Loglan as it was then was nowhere 
+> near
+> unambiguous - I think they were only able to come up with a working 
+> grammar
+> for around 30% of the language.
+>
+> Two or three Loglanists worked with JCB over the next few years to 
+> devise a
+> machine grammar that would work.  At the time, the machine grammar was
+> considered something distinct from the human grammar of the language, 
+> and
+> all that was needed was that it be able to parse a corpus of specially
+> designed test sentences in the same way that the human grammar would.  
+> Even
+> this proved difficult, and was not achieved until 1982.  The major
+> milestones were Jeff Prothero's idea to use YACC's error recovery 
+> system to
+> handle elidable terminators (and Jeff was the first one to get a 
+> moderately
+> complete machine grammar as a result, though it still had problems), 
+> and a
+> 6 months period during which Scott Layson lived with JCB to finish the 
+> last
+> remaining problems.  Part of the problem was getting access to suitable
+> computers - this was the era of CP/M in home computers, and YACC ran on
+> mainframes that JCB had no access to. So these various other people used
+> university connections to get time on machines.  Somewhere in here, Bob
+> McIvor worked to convert YACC to run on a home computer - since he reads
+> this forum, he may be able to fill on his role in all this.
+
+	This is essentially correct. YACC on a CP/M computer required about 
+45 minutes
+per pass. (My present Mac, which is less than half the speed of current 
+Macs does a
+much larger grammar in less than 1 second.
+
+>
+> There were two major problems with the Layson/JCB machine grammar of
+> 1982.  First of all, it was known that the test corpus was incomplete - 
+> it
+> covered those things that JCB thought were important, but did not cover
+> everything that had been used with the language.  Thus, parsing random
+> Loglan tests often failed because of things that had not been in the 
+> test
+> corpus. So JCB sought to slowly expand the corpus along with the machine
+> grammar to describe that corpus.
+>
+> The second problem was that the machine grammar did not really work.  
+> Large
+> chunks of the language were hidden in C code routines as the
+> "Preparser".  Unlike current Lojban, there was NO formalization of the
+> rules for the Preparser.  Mostly it included identifying words, and then
+> glomming together some known sequences as unparseable units that would 
+> be
+> arbitrarily declared grammatical and flagged as such by invisible tokens
+> called "machine lexemes".  It also included treating collections of 
+> cmavo
+> written as a single word without spaces as if it were a single
+> word/grammatical unit.  Thus the TLI Loglan equivalent of "lenu" was
+> grammatically distinct from "le nu", and ANY string of cmavo starting 
+> with
+> a member of PA-equivalent was considered a number, while any string of
+> cmavo starting with a member of PU-equivalent (which then included all 
+> of
+> the tense and modal words) was considered a "tense".
+
+	Although JCB insisted on calling it a preparser, it was never much more
+than a lexer.  When I took over the grammar, one of the first changes I 
+made
+was to eliminate the 'machine lexemes by the equivalent of subscripting 
+lexemes.
+e,g, NO1 NO2  for different negations.  Another change was to allow a 
+speaker
+to pause virtually anywhere (except in the middle of a word) and still 
+get a parse.
+There is a slight ambiguity here.  A pause between le and po (Your le 
+nu) would
+cause the parser to parse differently than an unpaused lepo.  This was 
+done by
+rescanning whenever a pause did not make sense and eliminating it.  The 
+next
+version concatenated all cmavo before lexing, and using a finite state 
+grammar
+to lex the concatenation.  It is possible this finite state grammar 
+could be converted
+to a YACC grammar, but I have not attempted it yet.  The lexer produces 
+the correct
+subscripted lexemes for input to the conflict-free YACC grammar.  There 
+is an
+implementation in progress which will take a written Loglan sentence, 
+break it down
+into stress-marked syllables and/or reconstruct a correctly punctuated 
+written Loglan
+sentence from a written string of stress-marked syllables (with required 
+pauses marked)
+As before excess pauses are eliminated.  In this version the two 
+meanings of lepo can
+be done with stress LEpo and lePO.  By using stress many of the 
+unnatural necessary
+pauses can be eliminated.  The syllable string is then submitted to the 
+parser.
+	This latter phase is incomplete, largely because I haven't had the 
+time to devote to
+it.  The remaining problems mainly have to do with proper recognition of 
+acronyms and
+'strong-quoted' non-Loglan words.
+
+>
+> It took very little for people to find grammatical strings that the 
+> parser
+> approved which were nonsense or parsed incorrectly, but which were not 
+> part
+> of the test corpus.  There thus came a period of debate as to whether 
+> the
+> "human grammar" or the "machine grammar" defined the language.
+>
+> [2 paragraphs of context with no parser info follow, so feel free to 
+> skip
+> them.]
+>
+> Right about then is when the community splintered.  Jim Carter proposed
+> some extensions to the language which he had found useful in doing the
+> first extensive set of translations using the language.  JCB disliked
+> almost all of these, and pc didn't like most of them, dubbing Carter's
+> usage and formalisms as "Nalgol" 'because he got everything in Loglan
+> backwards'.  But Jim Carter persisted in advocating for his changes, and
+> Bob Chassell as then-editor of Lognet published his advocacy.  This and
+> other things led JCB to feel a loss of control over the language, and he
+> took back essentially dictatorial power over TLI and the language.  
+> Almost
+> everyone else left the community in response.
+>
+> I knew JCB personally in San Diego and was oblivious to most of the
+> politics, so I stayed on, and eventually started working on the 
+> dictionary
+> revision.  But almost no one was doing anything, and my efforts bogged 
+> down
+> too.
+
+	Largely because the people that were doing something were the ones
+above that were ordered by JCB to have nothing further to do with Loglan 
+for
+at least one year.
+
+>   Finally in 1986, I attempted to get some new people in the DC area
+> involved, and made new efforts to get people going again.  This became 
+> the
+> Washington Loglan Users Group, which a year later became LLG after JCB 
+> and
+> I split.
+>
+> Before the split I contacted several old Loglanists, and got Scott 
+> Layson
+> to send me the YACC grammar, parser and corpus, which he had converted 
+> for
+> use on an MS-DOS PC.  This was primarily so that I would have a 
+> reference
+> standard in teaching the new people I had recruited the language, 
+> because
+> to put it simply, I knew little more than they did.  The split occurred
+> when JCB accused Nora and me of copyright violation in distributing
+> LogFlash with wordlists via Shareware on a BBS, and he seemed to think 
+> that
+> I intended to freely distribute Layson's parser as well (which I wasn't,
+> since we hadn't written it ourselves).  Jeff Prothero then stepped in 
+> with
+> his own effort, a backtracking parser based on his own version of the 
+> YACC
+> grammar, which he claimed was in the public domain anyway since his
+> original work on it had been done as a student on U of Washington
+> computers, and he had never signed anything over to TLI. Prothero 
+> engaged
+> in several stunts, including compressing the YACC grammar into an
+> unreadable solid block of C code so that no one could practically 
+> compare
+> his version with the TLI version of the grammar.  This led to lawsuit
+> threats and further heightened the sense that we needed a version of 
+> Loglan
+> derived independently of JCB's copyright-claims.  That version is what
+> became Lojban.
+>
+> In June of 1987, with me having essentially no knowledge of YACC or 
+> machine
+> parsing, Jeff Taylor and I started working on a new from-scratch Loglan
+> grammar and parser.  Jeff had done an SLR(1) parser for Loglan for his
+> Master's work in computer science, and had the knowhow that I did
+> not.  Over the next several months, we built up a new grammar, buying a
+> copy of Abraxas Software's PCYACC because all of the freeware versions 
+> of
+> YACC were unable to hold a grammar as large as Loglan's  (Indeed PCYACC 
+> was
+> also unable to do so, and they eventually modified their program at our
+> behest to make the lookahead table large enough to hold the 
+> then-language.)
+>
+> Thus I can answer the question that we used YACC, because it was what 
+> JCB
+> had established a YACC-based "machine grammar" as the standard for the
+> language, and YACC was the tool that was readily at hand for us to get 
+> our
+> alternate Loglan standard in place quickly, and the volunteers I had at 
+> the
+> time knew YACC parsing well.
+>
+> Nora, Jeff and I disliked the "hidden grammar" of the Preparser, as 
+> well as
+> the violation of audiovisual isomorphism that came from parsing "lenu"
+> differently from "le nu",
+
+	As I indicated above, Loglanists are currently required to pause 
+between le and pa
+to give the two-word meaning, and the pause must be written (with a 
+comma).  The
+pauseless one-word form is the commonest occurrence. Consecutive cmavo 
+which
+are parsed as a single lexeme may be written separately or combined, but 
+will appear
+as combined in the parse output.
+
+	I believe JCB learned his lesson from the split, and afterwards 
+accepted open
+discussion and criticism and never again attempted to impose his will in 
+the fashion
+described by Lojbab.  Loglan has remained an open language, although 
+changes now
+are rare and mainly extensions, rather than changes to preexisting 
+structures.
+
+Sincerely,
+
+Robert A McIvor
+           
+--Apple-Mail-991252081-2 
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/enriched;
+	charset=us-ascii
+
+
+On Friday, August 31, 2001, at 08:49 PM, Bob LeChevalier (lojbab)
+wrote:
+
+
+<excerpt>Originally, JCB thought to prove Loglan's unambiguity using
+the theories of=20
+
+a guy named Yngve.  I'm not entirely sure what those theories are or
+how=20
+
+they were related to the problem.  In 1977 or 1978, IIRC, a Loglanist,
+I=20
+
+believe it was Doug Landauer, proposed using YACC as a more formal
+method=20
+
+of proving the language unambiguous, and made a first cut at a machine=20=
+
+
+grammar.  It was quickly found that Loglan as it was then was nowhere
+near=20
+
+unambiguous - I think they were only able to come up with a working
+grammar=20
+
+for around 30% of the language.
+
+
+Two or three Loglanists worked with JCB over the next few years to
+devise a=20
+
+machine grammar that would work.  At the time, the machine grammar was=20=
+
+
+considered something distinct from the human grammar of the language,
+and=20
+
+all that was needed was that it be able to parse a corpus of specially=20=
+
+
+designed test sentences in the same way that the human grammar would.=20
+Even=20
+
+this proved difficult, and was not achieved until 1982.  The major=20
+
+milestones were Jeff Prothero's idea to use YACC's error recovery
+system to=20
+
+handle elidable terminators (and Jeff was the first one to get a
+moderately=20
+
+complete machine grammar as a result, though it still had problems),
+and a=20
+
+6 months period during which Scott Layson lived with JCB to finish the
+last=20
+
+remaining problems.  Part of the problem was getting access to
+suitable=20
+
+computers - this was the era of CP/M in home computers, and YACC ran
+on=20
+
+mainframes that JCB had no access to. So these various other people
+used=20
+
+university connections to get time on machines.  Somewhere in here,
+Bob=20
+
+McIvor worked to convert YACC to run on a home computer - since he
+reads=20
+
+this forum, he may be able to fill on his role in all this.
+
+</excerpt>
+
+	This is essentially correct. YACC on a CP/M computer required =
+about
+45 minutes
+
+per pass. (My present Mac, which is less than half the speed of
+current Macs does a=20
+
+much larger grammar in less than 1 second.
+
+<color><param>0000,0000,DEB7</param>
+
+</color><excerpt>
+
+There were two major problems with the Layson/JCB machine grammar of=20
+
+1982.  First of all, it was known that the test corpus was incomplete
+- it=20
+
+covered those things that JCB thought were important, but did not
+cover=20
+
+everything that had been used with the language.  Thus, parsing random=20=
+
+
+Loglan tests often failed because of things that had not been in the
+test=20
+
+corpus. So JCB sought to slowly expand the corpus along with the
+machine=20
+
+grammar to describe that corpus.
+
+
+The second problem was that the machine grammar did not really work.=20
+Large=20
+
+chunks of the language were hidden in C code routines as the=20
+
+"Preparser".  Unlike current Lojban, there was NO formalization of the=20=
+
+
+rules for the Preparser.  Mostly it included identifying words, and
+then=20
+
+glomming together some known sequences as unparseable units that would
+be=20
+
+arbitrarily declared grammatical and flagged as such by invisible
+tokens=20
+
+called "machine lexemes".  It also included treating collections of
+cmavo=20
+
+written as a single word without spaces as if it were a single=20
+
+word/grammatical unit.  Thus the TLI Loglan equivalent of "lenu" was=20
+
+grammatically distinct from "le nu", and ANY string of cmavo starting
+with=20
+
+a member of PA-equivalent was considered a number, while any string of=20=
+
+
+cmavo starting with a member of PU-equivalent (which then included all
+of=20
+
+the tense and modal words) was considered a "tense".
+
+</excerpt>
+
+	Although JCB insisted on calling it a preparser, it was never =
+much
+more=20
+
+than a lexer.  When I took over the grammar, one of the first changes
+I made=20
+
+was to eliminate the 'machine lexemes by the equivalent of
+subscripting lexemes.
+
+e,g, NO1 NO2  for different negations.  Another change was to allow a
+speaker
+
+to pause virtually anywhere (except in the middle of a word) and still
+get a parse.
+
+There is a slight ambiguity here.  A pause between le and po (Your le
+nu) would=20
+
+cause the parser to parse differently than an unpaused lepo.  This was
+done by=20
+
+rescanning whenever a pause did not make sense and eliminating it.=20
+The next
+
+version concatenated all cmavo before lexing, and using a finite state
+grammar=20
+
+to lex the concatenation.  It is possible this finite state grammar
+could be converted
+
+to a YACC grammar, but I have not attempted it yet.  The lexer
+produces the correct
+
+subscripted lexemes for input to the conflict-free YACC grammar.=20
+There is an=20
+
+implementation in progress which will take a written Loglan sentence,
+break it down
+
+into stress-marked syllables and/or reconstruct a correctly punctuated
+written Loglan
+
+sentence from a written string of stress-marked syllables (with
+required pauses marked)
+
+As before excess pauses are eliminated.  In this version the two
+meanings of lepo can
+
+be done with stress LEpo and lePO.  By using stress many of the
+unnatural necessary=20
+
+pauses can be eliminated.  The syllable string is then submitted to
+the parser.
+
+	This latter phase is incomplete, largely because I haven't had =
+the
+time to devote to=20
+
+it.  The remaining problems mainly have to do with proper recognition
+of acronyms and=20
+
+'strong-quoted' non-Loglan words.
+
+<color><param>0000,0000,DEB7</param>
+
+</color><excerpt>
+
+It took very little for people to find grammatical strings that the
+parser=20
+
+approved which were nonsense or parsed incorrectly, but which were not
+part=20
+
+of the test corpus.  There thus came a period of debate as to whether
+the=20
+
+"human grammar" or the "machine grammar" defined the language.
+
+
+[2 paragraphs of context with no parser info follow, so feel free to
+skip=20
+
+them.]
+
+
+Right about then is when the community splintered.  Jim Carter
+proposed=20
+
+some extensions to the language which he had found useful in doing the=20=
+
+
+first extensive set of translations using the language.  JCB disliked=20
+
+almost all of these, and pc didn't like most of them, dubbing Carter's=20=
+
+
+usage and formalisms as "Nalgol" 'because he got everything in Loglan=20
+
+backwards'.  But Jim Carter persisted in advocating for his changes,
+and=20
+
+Bob Chassell as then-editor of Lognet published his advocacy.  This
+and=20
+
+other things led JCB to feel a loss of control over the language, and
+he=20
+
+took back essentially dictatorial power over TLI and the language.=20
+Almost=20
+
+everyone else left the community in response.
+
+
+I knew JCB personally in San Diego and was oblivious to most of the=20
+
+politics, so I stayed on, and eventually started working on the
+dictionary=20
+
+revision.  But almost no one was doing anything, and my efforts bogged
+down=20
+
+too.
+
+</excerpt>
+
+	Largely because the people that were doing something were the =
+ones=20
+
+above that were ordered by JCB to have nothing further to do with
+Loglan for
+
+at least one year.
+
+
+<excerpt>  Finally in 1986, I attempted to get some new people in the
+DC area=20
+
+involved, and made new efforts to get people going again.  This became
+the=20
+
+Washington Loglan Users Group, which a year later became LLG after JCB
+and=20
+
+I split.
+
+
+Before the split I contacted several old Loglanists, and got Scott
+Layson=20
+
+to send me the YACC grammar, parser and corpus, which he had converted
+for=20
+
+use on an MS-DOS PC.  This was primarily so that I would have a
+reference=20
+
+standard in teaching the new people I had recruited the language,
+because=20
+
+to put it simply, I knew little more than they did.  The split
+occurred=20
+
+when JCB accused Nora and me of copyright violation in distributing=20
+
+LogFlash with wordlists via Shareware on a BBS, and he seemed to think
+that=20
+
+I intended to freely distribute Layson's parser as well (which I
+wasn't,=20
+
+since we hadn't written it ourselves).  Jeff Prothero then stepped in
+with=20
+
+his own effort, a backtracking parser based on his own version of the
+YACC=20
+
+grammar, which he claimed was in the public domain anyway since his=20
+
+original work on it had been done as a student on U of Washington=20
+
+computers, and he had never signed anything over to TLI. Prothero
+engaged=20
+
+in several stunts, including compressing the YACC grammar into an=20
+
+unreadable solid block of C code so that no one could practically
+compare=20
+
+his version with the TLI version of the grammar.  This led to lawsuit=20
+
+threats and further heightened the sense that we needed a version of
+Loglan=20
+
+derived independently of JCB's copyright-claims.  That version is what=20=
+
+
+became Lojban.
+
+
+In June of 1987, with me having essentially no knowledge of YACC or
+machine=20
+
+parsing, Jeff Taylor and I started working on a new from-scratch
+Loglan=20
+
+grammar and parser.  Jeff had done an SLR(1) parser for Loglan for his=20=
+
+
+Master's work in computer science, and had the knowhow that I did=20
+
+not.  Over the next several months, we built up a new grammar, buying
+a=20
+
+copy of Abraxas Software's PCYACC because all of the freeware versions
+of=20
+
+YACC were unable to hold a grammar as large as Loglan's  (Indeed
+PCYACC was=20
+
+also unable to do so, and they eventually modified their program at
+our=20
+
+behest to make the lookahead table large enough to hold the
+then-language.)
+
+
+Thus I can answer the question that we used YACC, because it was what
+JCB=20
+
+had established a YACC-based "machine grammar" as the standard for the=20=
+
+
+language, and YACC was the tool that was readily at hand for us to get
+our=20
+
+alternate Loglan standard in place quickly, and the volunteers I had
+at the=20
+
+time knew YACC parsing well.
+
+
+Nora, Jeff and I disliked the "hidden grammar" of the Preparser, as
+well as=20
+
+the violation of audiovisual isomorphism that came from parsing "lenu"=20=
+
+
+differently from "le nu",=20
+
+</excerpt>
+
+	As I indicated above, Loglanists are currently required to pause
+between le and pa
+
+to give the two-word meaning, and the pause must be written (with a
+comma).  The
+
+pauseless one-word form is the commonest occurrence. Consecutive cmavo
+which=20
+
+are parsed as a single lexeme may be written separately or combined,
+but will appear
+
+as combined in the parse output.
+
+
+	I believe JCB learned his lesson from the split, and afterwards
+accepted open=20
+
+discussion and criticism and never again attempted to impose his will
+in the fashion
+
+described by Lojbab.  Loglan has remained an open language, although
+changes now
+
+are rare and mainly extensions, rather than changes to preexisting
+structures.
+
+
+Sincerely,
+
+
+Robert A McIvor=
+           
+--Apple-Mail-991252081-2--
+
