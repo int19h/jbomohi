@@ -24,7 +24,7 @@
 
 text <- spaces* su-clause* spaces* (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO .*)?
 
-text-1 <- (I (jek / joik)? (stag? BO)? text-1 free*)+ / NIhO+ paragraphs? free* / (paragraphs / joik-jek paragraphs / joik-jek / ())
+text-1 <- (I (jek / joik)? (stag? BO)? free* text-1)+ / NIhO+ free* paragraphs? / (paragraphs / joik-jek paragraphs / joik-jek / ())
 
 paragraphs <- paragraph (NIhO+ free* paragraphs)?
 
@@ -92,7 +92,7 @@ lehu-si-clause <- LEhU SI / any-word-no-SI-handling SI / LEhU lehu-si-clause SI 
 
 sumti-tail <- (sumti-6 relative-clauses?)? sumti-tail-1 / relative-clauses sumti-tail-1
 
-sumti-tail-1 <- quantifier? selbri relative-clauses? / quantifier sumti
+sumti-tail-1 <- selbri relative-clauses? / quantifier selbri relative-clauses? / quantifier sumti
 
 relative-clauses <- relative-clause (ZIhE free* relative-clause)*
 
@@ -245,8 +245,9 @@ absorb-indicators <- UI NAI? / CAI NAI? / Y / DAhO / FUhO / FUhE
 
 ; Handling of spaces
 spacing <- !. / spaces+ si-clause absorb-indicators*
-spaces <- '.' / ' ' / '\n' / '\t' / '\r' / Y
-spaces-not-Y <- '.' / ' ' / '\n' / '\t' / '\r'
+space-chars <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
+spaces <- space-chars+ 'y'+ / '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
+spaces-not-Y <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
 
 ; SU clauses
 su-clause <- (!SU !NIhO !LU !TUhE !TO any-word)+ SU
@@ -301,21 +302,21 @@ CMENE-no-BU-handling <- cmene-letter cmene-tail-no-BU-handling
 cmene-tail-no-BU-handling <- cmene-consonant !"y" spacing-no-BU-handling / cmene-letter cmene-tail-no-BU-handling
 
 ;; CMAVO morphology
-CMAVO-post-morphology <- spaces-not-Y+ / CMAVO-cmene-check (CMAVO-brivla-check / CMAVO-consonant-check)
+CMAVO-post-morphology <- &spaces+ / CMAVO-cmene-check (CMAVO-brivla-check / CMAVO-consonant-check)
 CMAVO-brivla-check <- &(consonant? vowel (['] vowel / vowel)* initial-pair vowel lojban-letter lojban-letter) 
 
 CMAVO-cmene-check <- !( cmene-letter CMAVO-cmene-check-tail )
-CMAVO-cmene-check-tail <- consonant spaces-not-Y+ / cmene-letter CMAVO-cmene-check-tail
+CMAVO-cmene-check-tail <- consonant &spaces+ / cmene-letter CMAVO-cmene-check-tail
 
 CMAVO-consonant-check <- !['] !( consonant consonant / cmene-letter consonant consonant / cmene-letter cmene-letter consonant consonant / cmene-letter cmene-letter consonant "y" consonant (consonant / vowel-not-y) / cmene-letter cmene-letter cmene-letter consonant consonant )
 ; The "CMAVO-post" productions only occur after another cmavo as a
 ; test for whether another cmavo immediately follows, with  no
 ; intervening spaces; hence must start with consonant.
-CMAVO-post <- !. / !vowel CMAVO-post-morphology known-cmavo / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)+
+CMAVO-post <- !. / (spaces+ / !vowel) CMAVO-post-morphology known-cmavo / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)+
 CMAVO-post-no-SI-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 CMAVO-post-no-BU-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 
-CMAVO <- known-cmavo post-cmavo-spacing / consonant? vowel (['] vowel / vowel)+ post-cmavo-spacing
+CMAVO <- known-cmavo / consonant? vowel (['] vowel / vowel)+ post-cmavo-spacing
 CMAVO-no-SI-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo-no-SI-handling
 CMAVO-no-SA-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo
 CMAVO-no-BU-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo-no-BU-handling
@@ -325,11 +326,11 @@ known-cmavo <- A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / 
 ; Handling of what can go after a cmavo
 post-cmavo <- !BU-bare post-cmavo-spacing
 post-cmavo-spacing <- post-cmavo-check si-clause absorb-indicators*
-post-cmavo-check <- !. / spaces-not-Y+ / &CMAVO-post / &BRIVLA
-post-cmavo-no-SI-handling <- !. / spaces-not-Y+ / &CMAVO-post-no-SI-handling / &BRIVLA / SI
+post-cmavo-check <- !. / spaces+ / &CMAVO-post / &BRIVLA
+post-cmavo-no-SI-handling <- !. / spaces+ / &CMAVO-post-no-SI-handling / &BRIVLA / SI
 post-cmavo-no-BU-handling <- spacing-no-BU-handling / &CMAVO-post-no-BU-handling / &BRIVLA / BU
 
-pre-cmavo <- BAhE? spaces-not-Y*
+pre-cmavo <- BAhE?
 
 ; --- SELMAHO ---
 
@@ -395,7 +396,7 @@ BOI-words <- "boi"
 ;         turns any word into a BY lerfu word 
 BU <- BU-words post-cmavo-no-BU-handling
 BU-words <- "bu"
-BU-bare <- spaces-not-Y* !['] !( cmene-letter cmene-letter cmene-letter consonant consonant / cmene-letter cmene-letter consonant consonant / cmene-letter consonant consonant / consonant consonant ) "bu" !['] spaces-not-Y*
+BU-bare <- spaces-not-Y* !['] !( cmene-letter cmene-letter cmene-letter consonant consonant / cmene-letter cmene-letter consonant consonant / cmene-letter consonant consonant / consonant consonant ) "bu" !['] !vowel
 ;         individual lerfu words 
 BY <- pre-cmavo BY-sa-clause? BY-words post-cmavo
 BY-no-SA-handling <- pre-cmavo BY-words post-cmavo
