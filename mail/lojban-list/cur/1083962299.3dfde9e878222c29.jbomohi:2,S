@@ -1,0 +1,118 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 42261 invoked from network); 7 May 2004 20:39:41 -0000
+Received: from unknown (66.218.66.166)
+  by m3.grp.scd.yahoo.com with QMQP; 7 May 2004 20:39:41 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta5.grp.scd.yahoo.com with SMTP; 7 May 2004 20:39:41 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.31)
+	id 1BMC8B-0008Jb-KZ
+	for lojban@yahoogroups.com; Fri, 07 May 2004 13:39:39 -0700
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.31)
+	id 1BMC7b-0008It-Ah; Fri, 07 May 2004 13:39:03 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 07 May 2004 13:38:59 -0700 (PDT)
+Received: from web41901.mail.yahoo.com ([66.218.93.152])
+	by chain.digitalkingdom.org with smtp (Exim 4.31)
+	id 1BMC7Q-0008IP-N7
+	for lojban-list@lojban.org; Fri, 07 May 2004 13:38:52 -0700
+Message-ID: <20040507203819.68997.qmail@web41901.mail.yahoo.com>
+Received: from [200.49.74.2] by web41901.mail.yahoo.com via HTTP; Fri, 07 May 2004 13:38:19 PDT
+Date: Fri, 7 May 2004 13:38:19 -0700 (PDT)
+In-Reply-To: <20040507185509.GN7020@digitalkingdom.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-archive-position: 7683
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias2000@yahoo.com.ar
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+From: Jorge "Llambías" <jjllambias2000@yahoo.com.ar>
+Reply-To: jjllambias2000@yahoo.com.ar
+Subject: [lojban] Re: My parser, SI, SA, and ZOI
+X-Yahoo-Group-Post: member; u=142311107
+X-Yahoo-Profile: jjllambias2000
+X-Yahoo-Message-Num: 22149
+Content-Length: 2299
+
+
+--- Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+> > What does {da zo si si} do?
+> 
+> It *should* result in just 'da', because zo is defined as turning itself
+> and the next argument into a single word.  zoi is *not* so defined.
+
+I checked grammar .300, and there seems to be no such distinction
+between zo and zoi:
+
+a. If the Lojban word ``zoi'' (selma'o ZOI) is identified, take the 
+following Lojban word (which should be end delimited with a pause for
+separation from the following non-Lojban text) as an opening delimiter. 
+Treat all text following that delimiter, until that delimiter recurs 
+*after a pause*, as grammatically a single token (labelled 'anything_699' 
+in this grammar). There is no need for processing within this text 
+except as necessary to find the closing delimiter.
+
+b. If the Lojban word ``zo'' (selma'o ZO) is identified, treat the 
+following Lojban word as a token labelled 'any_word_698', instead of 
+lexing it by its normal grammatical function.
+
+So both words turn what follows into special tokens, but remain
+themselves as separate tokens.
+
+That's not good. It causes a lot of problems. All of the
+following should give error if grammar .300 is followed 
+to the letter:
+
+{zo da si de} 
+
+si will erase the previous token, 'any_word_698', and then 
+ZO followed by KOhA should give an error.
+
+{zo da zei de}
+
+zei will join 'any_word_698' and KOhA and turn everything 
+into BRIVLA, but then ZO followed by BRIVLA should cause 
+an error.  
+
+{zo da bu}
+
+bu will turn 'any_word_698' into BY, but then ZO followed 
+by BY should cause an error.
+
+Similar things will happen with zoi:
+
+{zoi gy sth gy si}
+
+will give an error because si will swallow the 'any_word_698'
+token and what's left: ZOI any_word_698 anything_699 will be
+followed by something else and give an error. The only way to 
+recover is to add three more {si}'s to remove everything.
+
+I think that the Right Thing is to treat {zo <word>} and
+{zoi <word> <anything> <word>} as single tokens of selmaho
+KOhA.
+
+In any case, I don't see any justification for treating 
+{zo} in one way and {zoi} in another.
+
+mu'o mi'e xorxes
+ 
+
+
+	
+		
+__________________________________
+Do you Yahoo!?
+Win a $20,000 Career Makeover at Yahoo! HotJobs  
+http://hotjobs.sweepstakes.yahoo.com/careermakeover 
+
+
+
+
+           
+
