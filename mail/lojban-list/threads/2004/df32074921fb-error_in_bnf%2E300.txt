@@ -1,0 +1,59 @@
+# mail/lojban-list thread df32074921fb-error_in_bnf%2E300 | root 20040321184454.ga32271@digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2004-03-21T18:44:54Z | Robin Lee Powell <lojban-out@lojban.org> | 20040321184454.ga32271@digitalkingdom.org | mail/lojban-list/cur/1079894694.df32074921fb4381.jbomohi:2,S
+There's a contradiction between grammar.300 and bnf.300 and, regardless
+of baselining issues, bnf.300 is *clearly* wrong:
+
+    text-1<2> = [(I [jek | joik] [[stag] BO] #) ... | NIhO ... #] [paragraphs]
+
+The problem is that there's supposed to be a "text-1" betweev "BO]" and "#)".
+
+Here's the grammar.300 part (w/o comments); you mostly want to look at text_B_2.
+
+%start text_0
+
+%%
+
+text_0                  :  text_A_1
+                        |  indicators_411  text_A_1
+                        |  free_modifier_32  text_A_1
+                        |  cmene_404  text_A_1
+                        |  indicators_411  free_modifier_32  text_A_1
+                        |  NAI_581  text_0
+                        ;
+
+text_A_1                :  JOIK_JEK_422  text_B_2
+                        /* incomplete JOIK_JEK  without preceding I */
+                        /* compare note on paragraph_10 */
+                        |  text_B_2
+                        ;
+
+text_B_2                :  I_819  text_B_2
+                        |  I_JEK_820  text_B_2
+                        |  I_BO_811  text_B_2
+                        |  para_mark_410  text_C_3
+                        |  text_C_3
+                        ;
+
+text_C_3                :  paragraphs_4
+                        |  /* empty */
+                        ;
+
+
+The test case is "mi broda .i je no da zo'u broda", which jbofi'e chokes on
+because of this problem.
+
+-Robin
+
+-- 
+Me: http://www.digitalkingdom.org/~rlpowell/  ***   I'm a *male* Robin.
+"Constant neocortex override is the only thing that stops us all
+from running out and eating all the cookies."  -- Eliezer Yudkowsky
+http://www.lojban.org/             ***              .i cimo'o prali .ui
+
+
+
+
+           
+
+

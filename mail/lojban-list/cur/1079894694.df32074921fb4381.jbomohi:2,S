@@ -1,0 +1,97 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 31204 invoked from network); 21 Mar 2004 18:46:23 -0000
+Received: from unknown (66.218.66.166)
+  by m17.grp.scd.yahoo.com with QMQP; 21 Mar 2004 18:46:23 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta5.grp.scd.yahoo.com with SMTP; 21 Mar 2004 18:46:23 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1B57xn-0007E5-1j
+	for lojban@yahoogroups.com; Sun, 21 Mar 2004 10:46:23 -0800
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1B57wU-0007C4-WB; Sun, 21 Mar 2004 10:45:03 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 21 Mar 2004 10:45:00 -0800 (PST)
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1B57wM-0007Br-FP
+	for lojban-list@lojban.org; Sun, 21 Mar 2004 10:44:54 -0800
+Date: Sun, 21 Mar 2004 10:44:54 -0800
+Message-ID: <20040321184454.GA32271@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.5.1+cvs20040105i
+X-archive-position: 7280
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Error in bnf.300
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 21755
+Content-Length: 1720
+
+There's a contradiction between grammar.300 and bnf.300 and, regardless
+of baselining issues, bnf.300 is *clearly* wrong:
+
+    text-1<2> = [(I [jek | joik] [[stag] BO] #) ... | NIhO ... #] [paragraphs]
+
+The problem is that there's supposed to be a "text-1" betweev "BO]" and "#)".
+
+Here's the grammar.300 part (w/o comments); you mostly want to look at text_B_2.
+
+%start text_0
+
+%%
+
+text_0                  :  text_A_1
+                        |  indicators_411  text_A_1
+                        |  free_modifier_32  text_A_1
+                        |  cmene_404  text_A_1
+                        |  indicators_411  free_modifier_32  text_A_1
+                        |  NAI_581  text_0
+                        ;
+
+text_A_1                :  JOIK_JEK_422  text_B_2
+                        /* incomplete JOIK_JEK  without preceding I */
+                        /* compare note on paragraph_10 */
+                        |  text_B_2
+                        ;
+
+text_B_2                :  I_819  text_B_2
+                        |  I_JEK_820  text_B_2
+                        |  I_BO_811  text_B_2
+                        |  para_mark_410  text_C_3
+                        |  text_C_3
+                        ;
+
+text_C_3                :  paragraphs_4
+                        |  /* empty */
+                        ;
+
+
+The test case is "mi broda .i je no da zo'u broda", which jbofi'e chokes on
+because of this problem.
+
+-Robin
+
+-- 
+Me: http://www.digitalkingdom.org/~rlpowell/  ***   I'm a *male* Robin.
+"Constant neocortex override is the only thing that stops us all
+from running out and eating all the cookies."  -- Eliezer Yudkowsky
+http://www.lojban.org/             ***              .i cimo'o prali .ui
+
+
+
+
+           
+
