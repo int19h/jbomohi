@@ -6016,3 +6016,41 @@ script more.
 
 
 
+
+## 2004-12-22T21:23:49Z — rlpowell (@rlpowell) (post 3263)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041222203016.GX20429@chain.digitalkingdom.org
+In-Reply-To: 20041222202452.GW20429@chain.digitalkingdom.org
+
+On Wed, Dec 22, 2004 at 12:24:52PM -0800, Robin Lee Powell wrote:
+> Unfortunately, valfendi drops . and my parser doesn't, so these
+> don't compare properly in several cases.  I'll have to hack my
+> test script more.
+
+Fixed, new list:
+
+*** Sentence: muSTElaVIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu (STEla) VIson.
+
+*** Sentence: muSTE.laVIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu >STE< -la VIson.
+
+*** Sentence: muSTE.la.VIson  1
+MISMATCH!
+valfendi: >muSTE< -la VIson.
+pegbased: -mu >STE< -la VIson.
+
+*** Sentence: muSTEl,aVIson  1
+MISMATCH!
+valfendi: >muSTE< -l,a VIson.
+pegbased: -mu (STEl,a) VIson.
+
+-Robin
+
+
+
