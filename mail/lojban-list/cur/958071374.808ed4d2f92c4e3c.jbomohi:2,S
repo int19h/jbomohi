@@ -1,0 +1,137 @@
+Return-Path: <sentto-44114-2659-mark=kli.org@returns.onelist.com>
+Delivered-To: shoulson-kli@meson.org
+Received: (qmail 1156 invoked from network); 11 May 2000 18:55:48 -0000
+Received: from zash.lupine.org (205.186.156.18)
+  by pi.meson.org with SMTP; 11 May 2000 18:55:48 -0000
+Received: (qmail 9996 invoked by uid 40001); 11 May 2000 18:56:06 -0000
+Delivered-To: kli-mark@kli.org
+Received: (qmail 9993 invoked from network); 11 May 2000 18:56:06 -0000
+Received: from ck.egroups.com (208.50.144.69)
+  by zash.lupine.org with SMTP; 11 May 2000 18:56:06 -0000
+X-eGroups-Return: sentto-44114-2659-mark=kli.org@returns.onelist.com
+Received: from [10.1.10.35] by ck.egroups.com with NNFMP; 11 May 2000 18:56:01 -0000
+Received: (qmail 26437 invoked from network); 11 May 2000 18:56:00 -0000
+Received: from unknown (10.1.10.26) by m1.onelist.org with QMQP; 11 May 2000 18:56:00 -0000
+Received: from unknown (HELO uhura.concentric.net) (206.173.118.93) by mta1 with SMTP; 11 May 2000 18:56:00 -0000
+Received: from cliff.concentric.net (cliff.concentric.net [206.173.118.90]) by uhura.concentric.net (8.9.1a/(98/12/15 5.12)) id OAA07922; Thu, 11 May 2000 14:55:59 -0400 (EDT) [1-800-745-2747 The Concentric Network]
+Errors-To: <nellardo@concentric.net>
+Received: from concentric.net ([216.112.226.144]) by cliff.concentric.net (8.9.1a) id OAA00020; Thu, 11 May 2000 14:55:58 -0400 (EDT)
+Message-ID: <391B0164.86F2EE28@concentric.net>
+Organization: Herds of Wild Buffalo Girls
+X-Mailer: Mozilla 4.7 (Macintosh; I; PPC)
+X-Accept-Language: en
+To: lojban@egroups.com
+From: Brook Conner <nellardo@concentric.net>
+MIME-Version: 1.0
+Mailing-List: list lojban@egroups.com; contact lojban-owner@egroups.com
+Delivered-To: mailing list lojban@egroups.com
+Precedence: bulk
+List-Unsubscribe: <mailto:lojban-unsubscribe@egroups.com>
+Date: Thu, 11 May 2000 14:56:14 -0400
+Reply-To: nellardo@concentric.net
+Subject: [lojban] Initial thoughts on programatic semantics for lojban, or Spoken Perl
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Length: 3905
+Lines: 99
+
+So I finally got around to writing down some thoughts for what a
+computer-appropriate semantics for lojban might consist of.
+
+I use the name "Spoken Perl", not because I strive for Perl's (lack of)
+readability, but rather, for Perl's usefulness. For example, if speaking
+lojban to a computer becomes as useful as the amount of Perl typed in
+the same time, then there's a clear win, especially for the large number
+of programmers with RSI (including the noted open source developers
+Jamie Zawinski and Ben Wing). I'll figure out a suitable lojban name for
+this semantics when I'm further along.
+
+Let's start simple:
+
+	print $_;
+
+which, in Perl, means "print out the value of the last significant
+variable I referenced." The equivalent Haskell would be "print it". In
+lojban, there's a fairly simple translation of this, with as much
+precision as the Perl, and more flexibility:
+
+	ko jarco ko'a
+
+How is this more flexible in lojban? First off, there's a whole series
+of "it-n" variables, with nice rigid binding rules, plus the flexibility
+to explicitly bind them yourself. Second, who are we addressing with
+"ko"? Why, the computer, i.e., the lojban interpreter/compiler in the
+same sense that "print $_;" is addressing the Perl interpreter/compiler.
+So, we can speak to other things too. We can either use a nominative and
+then "ko":
+
+	coi la netskaip. .i ko jarco ko'a
+
+or simply state the fact that someone prints (shows, literally)
+something else:
+
+	la netskaip. jarco ko'a
+
+This is akin to a Prolog statement, a message send in an object-oriented
+PL, and a "tell" in AppleScript. In fact, it suggests a multi-method to
+me, because depending on both x1 and x2, "showing" means something
+different. If x1 is netscape, then you want HTML or somesuch. If x1 is
+the interpreter, then you want ASCII. And of course, what you show
+depends entirely on x2. If ko'a is a number, you should show one thing.
+If ko'a is a dog, you should show another.
+
+It occurs to me that, unlike those kinds of statements, the lojban one
+should be evaluated lazily. For those not up on PL research, this means
+that the actions of this statement won't be performed until absolutely
+required. Why? Consider these statements:
+
+	ko jarco ko'a .i la netskaip. jarco ko'a
+
+	la netskaip, jarco ko'a .i ko jarco ko'a
+
+In lojban, the two bridi "ko..." and "la netskaip....." are independent,
+so these two utterances with the two bridi in either order are
+equivalent. Now, in programming languages with state, lazy evaluation
+can be a major pain - you might get different answers if you perform
+operations in a different order. However, lojban has plenty of cmavo to
+specify order, conditionals, etc. some of which carry implicit order.
+For instance, .ijo ("if-and-only-if" for bridi)  implies that the second
+statement be evaluated first. So:
+
+	ko jarco ko'a .ijo la netskaip. jarco ko'a
+
+	print it if-and-only-if Netscape prints it.
+
+More usefully we can negate the second bridi (in this case):
+
+	ko jarco ko'a .ijonai la netskaip. jarco ko'a
+
+	print it if-and-only-if Netscape does not print it. (e.g., Netscape
+couldn't because of an error).
+
+"pruca" seems especially useful for defining procedures. In PL-speak,
+the positions look like this:
+
+x1 - procedure name
+x2 - input parameters
+x3 - output (return values)
+x4 - the block or expression executed by the procedure.
+
+More on this one later.....
+
+Lojban letterals and set notation look like they might work well for
+regular expressions.
+
+And mekso, of course, well, they work pretty much as is. You can even do
+hexadecimal :-)
+
+Brook
+
+------------------------------------------------------------------------
+Remember four years of good friends, bad clothes, explosive chemistry
+experiments.
+http://click.egroups.com/1/4051/3/_/17627/_/958071361/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
