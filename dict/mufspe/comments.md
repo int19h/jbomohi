@@ -33,3 +33,25 @@ xorxes wrote:
 Actually it means "the instant of being married", so it's a rather bad
 word. But I'll edit it to "marriage" anyway.
 
+
+## 2003-10-15T14:16:13Z — xorxes (comment 118, in reply to 117)
+
+Re: mu'e speni?
+
+arj wrote:
+> xorxes wrote:
+> > Is mufspe meant to be mu'e speni?
+> > 
+> > Isn't this a marriage rather than a bride or groom?
+> 
+> Actually it means "the instant of being married", so it's a rather bad
+> word. But I'll edit it to "marriage" anyway.
+
+It's the marriage considered as a whole, as opposed to considering it a
+process, activity or state. The instant of becoming married would be {mu'e
+spebi'o}. Probably {pu'u spebi'o} for the wedding, and the bride and groom
+would be the {ca'o spebi'o}. {co'a speni} is perhaps more like "newlywed".
+{pu'o speni} would be fiance(e), but {pu'o} doesn't seem to have a rafsi.
+
+
+
