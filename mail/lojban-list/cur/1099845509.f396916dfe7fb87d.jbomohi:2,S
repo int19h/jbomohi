@@ -1,0 +1,103 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 34232 invoked from network); 7 Nov 2004 16:39:33 -0000
+Received: from unknown (66.218.66.216)
+  by m19.grp.scd.yahoo.com with QMQP; 7 Nov 2004 16:39:33 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta1.grp.scd.yahoo.com with SMTP; 7 Nov 2004 16:39:33 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.34)
+	id 1CQq4h-0000pr-CF
+	for lojban@yahoogroups.com; Sun, 07 Nov 2004 08:39:31 -0800
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.34)
+	id 1CQq3x-0000ou-5v; Sun, 07 Nov 2004 08:38:45 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 07 Nov 2004 08:38:41 -0800 (PST)
+Received: from mail2.epfl.ch ([128.178.50.133])
+	by chain.digitalkingdom.org with smtp (Exim 4.34)
+	id 1CQq3k-0000oi-9M
+	for lojban-list@lojban.org; Sun, 07 Nov 2004 08:38:32 -0800
+Received: (qmail 9404 invoked by uid 107); 7 Nov 2004 16:38:29 -0000
+Received: from mailav3.epfl.ch (128.178.50.218)
+  by mail2.epfl.ch with SMTP; 7 Nov 2004 16:38:29 -0000
+Received: from (128.178.50.57) by MAILAV3.EPFL.CH via smtp
+	 id 07fc_b7a94d10_30db_11d9_9f85_0002b3eef5fe;
+	Sun, 07 Nov 2004 17:40:22 +0100 (CET)
+Received: from imap1.epfl.ch (128.178.50.4)
+  by mail0.epfl.ch (AngelmatoPhylax SMTP proxy); Sun, 07 Nov 2004 17:38:29 +0100
+Received: from [83.77.145.51] by imap1.epfl.ch (mshttpd); Sun, 07 Nov
+ 2004 17:38:29 +0100
+Message-ID: <258b0215cb.215cb258b0@imap.epfl.ch>
+Date: Sun, 07 Nov 2004 17:38:29 +0100
+X-Mailer: iPlanet Messenger Express 5.2 HotFix 1.21 (built Sep  8 2003)
+MIME-Version: 1.0
+Content-Language: en
+X-Accept-Language: en
+Priority: normal
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-archive-position: 8958
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: gregory.dyke@epfl.ch
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+X-eGroups-From: GREGORY DYKE <gregory.dyke@epfl.ch>
+From: GREGORY DYKE <lojban-out@lojban.org>
+Reply-To: gregory.dyke@epfl.ch
+Subject: [lojban] Re: Computer grammar question: non-left recursive RPN?
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 23363
+Content-Length: 1277
+
+As per promise, first a piece of code to illustrate how to make the tree from the new grammar.
+
+
+    /** SumExpression  = Term
+     *                 | SumExpression SumOp Term
+     */
+
+    ->LL(1)
+    SumExpression = Term {SumOp Term}
+
+Doing this recursively would not be good, which is why we are doing it iteratively
+
+-------------------------------------
+    private Tree sumExpression() {
+        Tree t;
+
+        t = term();
+        while(token == PLUS || token == MINUS){
+            int operator = sumOp();
+            Tree right = term();
+            t = new Tree.Binop(start, 
+                               operator, t, 
+                               right);
+        }
+        return t;
+    }
+-------------------------------------
+
+> The ABNF form of this rule is:
+> 
+> rp-expression = rp-operand rp-operand operator
+> 
+> rp-operand = operand / rp-expression
+
+just one thing, can an rp-expression be just an operand? I would have thought so...
+
+Hey, wait! you need a stack to make the tree of rp-notation. You can't do it in one-token lookahead (I presume the point of this was to make it LL1)...
+
+(take all this with a pinch of salt: I love this stuff and will gladly look into it further, but my memory is rather poor in these matters...)
+
+Greg
+
+
+
+
+
+           
+
