@@ -1,6 +1,61 @@
-# mail/lojban-list thread 43d5c274dca2-my_lojban-%3Eprolog_thingy | root r4tnbxpn_jg.a.o3.620klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 43d5c274dca2-my_lojban-%3Eprolog_thingy | root r4tnbxpn_jg.a.o3.620klb@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1993-03-31T04:15:03Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | fad97cb0bec7ef97ee5e54887554afd13f922069@jbomohi.invalid | mail/lojban-list/cur/733551303.e272c5f6b0ae1c61.jbomohi:2,S
+Well, ladies and germs, this is what I can get my Lojban-PROLOG processor to
+do so far:
+
+Input text:
+}mi nelci le klama be le zarci be le ckafi be'o bei le pulji bei le berti
+
+Parser output, after going through LEX:
+
+}brivla nelci
+}brivla klama
+}brivla zarci
+}brivla ckafi
+}brivla pulji
+}brivla berti
+}end_of_lex_list
+}mi nelci le klama be le zarci be le ckafi ku beho ku bei
+}le pulji ku bei le berti ku beho ku vau
+
+PROLOG output
+
+}[q(suho(1), _FIPFN, q(suho(1), _FIREF, q(suho(1), _FISES, ckafi(_FISES, _FISZG,
+}_FISZH, _FISZI, _FISZJ), [], zarci(_FIREF, _FISES, _FITIV, _FITIW, _FITIX)),
+}[], q(suho(1), _FIUAD, pulji(_FIUAD, _FIUUR, _FIUUS, _FIUUT, _FIUUU), [],
+}q(suho(1), _FIVID, berti(_FIVID, _FIWCR, _FIWCS, _FIWCT, _FIWCU), [],
+}klama(_FIPFN, _FIREF, _FIUAD, _FIVID, _FIWRT)))), [], nelci(mi, _FIPFN,
+}_FIPFO, _FIPFP, _FIPFQ))]
+
+Translation
+Branched quantifiers: E X : broda(X) ; brode(X) => su'o broda ku poi brode
+There exists a broda, which brode's, such that...
+(These are preferred in Linguistics to the normal plain "E X".
+q(E,X,A(X),B(X),C(X)) = (E X: broda(X) ; brode(X)) (C(X))
+There exists an A, which Bs, such that C.
+
+}E X:
+}    E Y:
+}       E Z: ckafi(Z); [] (zarci(Y,Z))
+}       ; [] (
+}            E W: pulji(W) ; [] (
+}                                E V: berti(V); [] (klama(X,Y,W,V))
+}                                )
+}            )
+}   ; [] (nelci(mi,X))
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nick S. Nicholas,                      "Rode like foam on the river of pity
+CogSci & CompSci student,               Turned its tide to strength
+University of Melbourne, Australia.     Healed the hole that ripped in living"
+nsn@{munagin.ee|mundil.cs}.mu.oz.au           - Suzanne Vega, Book Of Dreams
+______________________________________________________________________________
+
+
+
+=== 2 | 1993-03-31T04:15:03Z | Nick Nicholas <nsn@MULLIAN.EE.MU.OZ.AU> | l5i0oetzugj.a.b5.a30klb@chain.digitalkingdom.org | mail/lojban-list/cur/733551303.dc573443eb4d8306.jbomohi:2,S
 Well, ladies and germs, this is what I can get my Lojban-PROLOG processor to
 do so far:
 
