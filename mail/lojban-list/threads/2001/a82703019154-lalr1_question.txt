@@ -1,4 +1,4 @@
-# mail/lojban-list thread a82703019154-lalr1_question | root lpbbjkmninkhacndiigmmealekaa.a.rosta@ntlworld.com | 15 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a82703019154-lalr1_question | root lpbbjkmninkhacndiigmmealekaa.a.rosta@ntlworld.com | 16 messages | rendered by jbomohi mail-v1
 
 === 1 | 2001-08-27T15:57:24Z | And Rosta <a.rosta@ntlworld.com> | lpbbjkmninkhacndiigmmealekaa.a.rosta@ntlworld.com | mail/lojban-list/cur/998927844.a82703019154d758.jbomohi:2,S
 I don't think I understand what the difference between 0-tokens 
@@ -602,6 +602,84 @@ Yes. And still am, alas.
 
 --And.
 
+
+           
+
+
+
+=== 16 | 2001-08-28T03:34:43Z | John Cowan <cowan@ccil.org> | e15bzef-0000o1-00@mercury.ccil.org | mail/lojban-list/cur/998969683.c0b7a640c721e37b.jbomohi:2,S
+And Rosta scripsit:
+
+> So "shifting" means "adding to the innermost incomplete phrase" and
+> "reducing" means "terminating the innermost incomplete phrase"? So
+> presumably on reaching a given word it is possible to reduce several
+> times and then shift?
+
+Just so.  But not all reductions that can be made are made; the
+lookahead token is also considered.
+
+COnsider the following slightly lunatic grammar, where NP is the start:
+
+NP <- NP1
+NP <- NP1 'and' NP
+NP1 <- 'also' NP 'as:well'
+NP1 <- NP1 'so:they:say'
+NP1 <- Name
+
+where Name is a terminal.  So here are some grammatical strings:
+
+John
+John, so they say
+John and James
+John, so they say, and James
+John, so they say, so they say, and also James and George as well
+also John and James as well, and also George and Frank, so they say, as well
+
+Now consider the string "John and James so:they:say".  "John" will be shifted
+onto the stack; likewise with "and".  Now "James" is the current token.
+What to do?  We could reduce "John and James" to NP, but that is wrong:
+if we do so, we end up shifting "so:they:say" and then failing, because
+"NP so:they:say" is not the RHS of any rule.  We have proved that this grammar
+is not LR(0).
+
+Instead, we must shift "James", then shift "so:they:say", then reduce the two
+of them to "NP1", and then "John and NP1" to "NP", which is the start symbol. 
+(I am skipping obvious steps like reducing names to NP1s.)
+
+> If I understand this right, then, what I still don't understand is this.
+> As you say, at word 3, the parser has two choices, shift or reduce.
+> Now it seems to me that at this point it's not allowed to look at word
+> 4 [...]
+
+That's not really the problem in this case.  The problem arises
+because elidable terminators are only inserted into strings that
+would otherwise be ungrammatical, and only if the error is detected
+at the right point.  So the grammar of descriptions is
+
+Descr <- LE sumti KU
+Descr <- LE sumti ERROR
+
+where ERROR is a token introduced by the parser when it can neither
+shift nor reduce.  But in
+
+	le broda joi le ...
+
+"le" is shifted, so is "broda", and so is "joi".  Then the next word
+must be a brivla (or equivalent construct), and "le" is an error.
+This does not happen with
+
+	le broda .e le ...
+
+because as soon as ".e" is seen, an error results, and the parser
+recovers by inserting "ku" (followed by shift and reduce to "description").
+But "joi" is legal within a description, unlike ".e", so the opportunity
+to insert an elidable terminator is irrevocably lost.
+
+-- 
+John Cowan           http://www.ccil.org/~cowan              cowan@ccil.org
+Please leave your values        |       Check your assumptions.  In fact,
+   at the front desk.           |          check your assumptions at the door.
+     --sign in Paris hotel      |            --Miles Vorkosigan
 
            
 
