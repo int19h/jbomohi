@@ -50,17 +50,17 @@ statement-1 <- statement-2 (I joik-jek statement-2)* / statement-2 (I joik-jek s
 
 statement-2 <- statement-3 (I (jek / joik)? stag? BO free* statement-2)? / statement-3 (I (jek / joik)? stag? BO free*)?
 
-statement-3 <- sentence / tag? TUhE free* text-1 (TUhU free*)?
+statement-3 <- sentence / tag? TUhE free* text-1 TUhU? free*
 
-fragment <- prenex / terms (VAU free*)? / ek free* / gihek free* / quantifier / NA !JA free* / relative-clauses / links / linkargs
+fragment <- prenex / terms VAU? free* / ek free* / gihek free* / quantifier / NA !JA free* / relative-clauses / links / linkargs
 
 prenex <- terms ZOhU free*
 
-sentence <- (terms (CU free*)?)? bridi-tail / bridi-tail
+sentence <- (terms CU? free*)? bridi-tail / bridi-tail
 
 subsentence <- sentence / prenex subsentence
 
-bridi-tail <- bridi-tail-1 (gihek stag? KE free* bridi-tail (KEhE free*)? tail-terms)?
+bridi-tail <- bridi-tail-1 (gihek stag? KE free* bridi-tail KEhE? free* tail-terms)?
 
 bridi-tail-1 <- bridi-tail-2 (gihek !(stag? BO) !(stag? KE) free* bridi-tail-2 tail-terms)*
 
@@ -68,9 +68,9 @@ bridi-tail-2 <- bridi-tail-3 (gihek stag? BO free* bridi-tail-2 tail-terms)?
 
 bridi-tail-3 <- selbri tail-terms / gek-sentence
 
-gek-sentence <- gek subsentence gik subsentence tail-terms / tag? KE free* gek-sentence (KEhE free*)? / NA free* gek-sentence
+gek-sentence <- gek subsentence gik subsentence tail-terms / tag? KE free* gek-sentence KEhE? free* / NA free* gek-sentence
 
-tail-terms <- terms? (VAU free*)?
+tail-terms <- terms? VAU? free*
 
 terms <- terms-1+
 
@@ -78,13 +78,13 @@ terms-1 <- terms-2 (PEhE free* joik-jek terms-2)*
 
 terms-2 <- term (CEhE free* term)*
 
-term <- sumti / ( !gek (tag / FA free*) (sumti / (KU free*)?) ) / termset / NA KU free*
+term <- sumti / ( !gek (tag / FA free*) (sumti / KU? free*) ) / termset / NA KU free*
 
-termset <- NUhI free* gek terms (NUhU free*)? gik terms (NUhU free*)? / NUhI free* terms (NUhU free*)?
+termset <- NUhI free* gek terms NUhU? free* gik terms NUhU? free* / NUhI free* terms NUhU? free*
 
 sumti <- sumti-1 (VUhO free* relative-clauses)?
 
-sumti-1 <- sumti-2 ((ek / joik) stag? KE free* sumti (KEhE free*)?)?
+sumti-1 <- sumti-2 ((ek / joik) stag? KE free* sumti KEhE? free*)?
 
 sumti-2 <- sumti-3 (joik-ek sumti-3)*
 
@@ -92,9 +92,9 @@ sumti-3 <- sumti-4 ((ek / joik) stag? BO free* sumti-3)?
 
 sumti-4 <- sumti-5 / gek sumti gik sumti-4
 
-sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri (KU free*)? relative-clauses?
+sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri KU? free* relative-clauses?
 
-sumti-6 <- zo-clause indicators* free* / LOhU lohu-tail free* / lerfu-string !MOI BOI? free* / LU text (LIhU free*)? / (LAhE free* / NAhE BO free*) relative-clauses? sumti (LUhU free*)? / KOhA free* / LA free* relative-clauses? (CMENE !BU !ZEI)+ free* / (LA / LE) free* sumti-tail (KU free*)? / LI free* mex (LOhO free*)? / zoi-clause indicators* free*
+sumti-6 <- zo-clause indicators* free* / LOhU lohu-tail free* / lerfu-string !MOI BOI? free* / LU text LIhU? free* / (LAhE free* / NAhE BO free*) relative-clauses? sumti LUhU? free* / KOhA free* / LA free* relative-clauses? (CMENE !BU !ZEI)+ free* / (LA / LE) free* sumti-tail KU? free* / LI free* mex LOhO? free* / zoi-clause indicators* free*
 
 lohu-tail <- lehu-si-clause lohu-tail / LEhU / any-word-no-SI-handling lohu-tail
 
@@ -106,7 +106,7 @@ sumti-tail-1 <- selbri relative-clauses? / quantifier selbri relative-clauses? /
 
 relative-clauses <- relative-clause (ZIhE free* relative-clause)*
 
-relative-clause <- GOI free* term (GEhU free*)? / NOI free* subsentence (KUhO free*)?
+relative-clause <- GOI free* term GEhU? free* / NOI free* subsentence KUhO? free*
 
 selbri <- tag? selbri-1
 
@@ -116,29 +116,29 @@ selbri-2 <- selbri-3 (CO free* selbri-2)?
 
 selbri-3 <- selbri-4+
 
-selbri-4 <- selbri-5 (joik-jek selbri-5 / joik stag? KE free* selbri-3 (KEhE free*)?)*
+selbri-4 <- selbri-5 (joik-jek selbri-5 / joik stag? KE free* selbri-3 KEhE? free*)*
 
 selbri-5 <- selbri-6 ((jek / joik) stag? BO free* selbri-5)?
 
-selbri-6 <- tanru-unit (BO free* selbri-6)? / (NAhE free*)? guhek selbri gik selbri-6
+selbri-6 <- tanru-unit (BO free* selbri-6)? / NAhE? free* guhek selbri gik selbri-6
 
 tanru-unit <- tanru-unit-1 (CEI free* tanru-unit-1)*
 
 tanru-unit-1 <- tanru-unit-2 linkargs?
 
-tanru-unit-2 <- any-word spacing-no-absorb-opt (ZEI any-word spacing-no-absorb-opt)+ indicators* / BRIVLA !BU free* / GOhA RAhO? free* / KE free* selbri-3 (KEhE free*)? / ME free* (sumti / lerfu-string) (MEhU free*)? (MOI free*)? / (number / lerfu-string) MOI free* / NUhA free* mex-operator / SE free* tanru-unit-2 / JAI free* tag? tanru-unit-2 / NAhE free* tanru-unit-2 / NU NAI? free* (joik-jek NU NAI? free*)* subsentence (KEI free*)?
+tanru-unit-2 <- any-word spacing-no-absorb-opt (ZEI any-word spacing-no-absorb-opt)+ indicators* / BRIVLA !BU free* / GOhA RAhO? free* / KE free* selbri-3 KEhE? free* / ME free* (sumti / lerfu-string) MEhU? free* MOI? free* / (number / lerfu-string) MOI free* / NUhA free* mex-operator / SE free* tanru-unit-2 / JAI free* tag? tanru-unit-2 / NAhE free* tanru-unit-2 / NU NAI? free* (joik-jek NU NAI? free*)* subsentence KEI? free*
 
-linkargs <- BE free* term links? (BEhO free*)?
+linkargs <- BE free* term links? BEhO? free*
 
 links <- BEI free* term links?
 
-quantifier <- number !MOI BOI? free* / VEI free* mex (VEhO free*)?
+quantifier <- number !MOI BOI? free* / VEI free* mex VEhO? free*
 
 mex <- mex-1 (operator mex-1)* / FUhA free* rp-expression
 
 mex-1 <- mex-2 (BIhE free* operator mex-1)?
 
-mex-2 <- operand / (PEhO free*)? operator mex-2+ (KUhE free*)?
+mex-2 <- operand / PEhO? free* operator mex-2+ KUhE? free*
 
 ;li fu'a reboi ci pi'i voboi mu pi'i su'i reboi ci vu'u su'i du li rexa
 ;rp-expression <- rp-operand rp-operand operator
@@ -147,21 +147,21 @@ mex-2 <- operand / (PEhO free*)? operator mex-2+ (KUhE free*)?
 rp-expression <- operand rp-expression-tail
 rp-expression-tail <- rp-expression operator rp-expression-tail / ()
 
-operator <- operator-1 (joik-jek operator-1 / joik stag? KE free* operator (KEhE free*)?)*
+operator <- operator-1 (joik-jek operator-1 / joik stag? KE free* operator KEhE? free*)*
 
 operator-1 <- operator-2 / guhek operator-1 gik operator-2 / operator-2 (jek / joik) stag? BO free* operator-1
 
-operator-2 <- mex-operator / KE free* operator (KEhE free*)?
+operator-2 <- mex-operator / KE free* operator KEhE? free*
 
-mex-operator <- SE free* mex-operator / NAhE free* mex-operator / MAhO free* mex (TEhU free*)? / NAhU free* selbri (TEhU free*)? / VUhU free*
+mex-operator <- SE free* mex-operator / NAhE free* mex-operator / MAhO free* mex TEhU? free* / NAhU free* selbri TEhU? free* / VUhU free*
 
-operand <- operand-1 ((ek / joik) stag? KE free* operand (KEhE free*)?)?
+operand <- operand-1 ((ek / joik) stag? KE free* operand KEhE? free*)?
 
 operand-1 <- operand-2 (joik-ek operand-2)*
 
 operand-2 <- operand-3 ((ek / joik) stag? BO free* operand-2)?
 
-operand-3 <- quantifier / lerfu-string !MOI BOI? free* / NIhE free* selbri (TEhU free*)? / MOhE free* sumti (TEhU free*)? / JOhI free* mex-2+ (TEhU free*)? / gek operand gik operand-3 / (LAhE free* / NAhE BO free*) operand (LUhU free*)?
+operand-3 <- quantifier / lerfu-string !MOI BOI? free* / NIhE free* selbri TEhU? free* / MOhE free* sumti TEhU? free* / JOhI free* mex-2+ TEhU? free* / gek operand gik operand-3 / (LAhE free* / NAhE BO free*) operand LUhU? free*
 
 number <- PA (PA / lerfu-word)*
 
@@ -194,9 +194,10 @@ gik <- GI NAI? free*
 
 tag <- tense-modal (joik-jek tense-modal)*
 
-stag <- simple-tense-modal ((jek / joik) simple-tense-modal)*
+stag <- tag
+;stag <- simple-tense-modal ((jek / joik) simple-tense-modal)*
 
-tense-modal <- simple-tense-modal free* / FIhO free* selbri (FEhU free*)?
+tense-modal <- simple-tense-modal free* / FIhO free* selbri FEhU? free*
 
 simple-tense-modal <- NAhE? SE? BAI NAI? KI? / NAhE? ( ((time space? / space time?) CAhA) / (time space? / space time?) / CAhA ) KI? / KI / CUhE
 
@@ -214,7 +215,7 @@ space-int-props <- (FEhE interval-property)+
 
 interval-property <- number ROI NAI? / TAhE NAI? / ZAhO NAI?
 
-free <- SEI free* (terms (CU free*)?)? selbri SEhU? / SOI free* sumti sumti? SEhU? / vocative relative-clauses? selbri relative-clauses? DOhU? / vocative relative-clauses? (CMENE !BU !ZEI)+ free* relative-clauses? DOhU? / vocative sumti? DOhU? / (number / lerfu-string) MAI / TO text TOI? / XI free* (number / lerfu-string) BOI? / XI free* VEI free* mex VEhO?
+free <- SEI free* (terms CU? free*)? selbri SEhU? / SOI free* sumti sumti? SEhU? / vocative relative-clauses? selbri relative-clauses? DOhU? / vocative relative-clauses? (CMENE !BU !ZEI)+ free* relative-clauses? DOhU? / vocative sumti? DOhU? / (number / lerfu-string) MAI / TO text TOI? / XI free* (number / lerfu-string) BOI? / XI free* VEI free* mex VEhO?
 
 vocative <- (COI NAI?)+ DOI / (COI NAI?) (COI NAI?)* / DOI
 
