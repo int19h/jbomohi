@@ -1,0 +1,31 @@
+Reply-To: "Carl D. Burke" <cburke@MITRE.ORG>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: "Carl D. Burke" <cburke@MITRE.ORG>
+Subject:      Re: LR(k) Lojban Grammar
+X-To:         LOJBAN%CUVMB.BITNET@cunyvm.cuny.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+Status: OR
+
+>BTW the conflicts may not be actual ambiguities; they could be places where
+>a more sophisticated parser would have no problem.
+
+Well, conflicts ARE ambiguities to any LR(1) parser, since the grammar cannot
+be unambiguously parsed using only the grammar rules.  Precedence is a hack;
+it's used either to (1) make the grammar writer's job easier, or (2) allow
+parsing of non-LR(1) (and possibly non-context-free) constructions.
+Since LR(2) or higher parser generators aren't generally available (the
+tables get really big really quick), and I don't know of any context-sensitive
+parser generators, that leaves you with hacks or grammar changes.
+[Recursive descent is equivalent in power to any other context-free
+parsing method, so that won't help and makes lack of ambiguity harder
+to demonstrate.]  If you're going to use precedence to resolve an otherwise
+ambiguous grammar, that's OK, but it should be explicitly documented
+for those who aren't using YACC workalikes.
+
+That's still a lot easier to resolve than a natural language, since a
+computer can make sense out of it easily, but the grammar per se isn't
+unambiguous and shouldn't be advertised as such.
+
+--
+Carl
+
