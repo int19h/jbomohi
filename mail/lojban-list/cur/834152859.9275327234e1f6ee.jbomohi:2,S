@@ -1,0 +1,136 @@
+Received: from VMS.DC.LSOFT.COM (vms.dc.lsoft.com [205.186.43.2]) by locke.ccil.org (8.6.9/8.6.10) with ESMTP id JAA03298 for <cowan@LOCKE.CCIL.ORG>; Fri, 7 Jun 1996 09:21:54 -0400
+Message-Id: <199606071321.JAA03298@locke.ccil.org>
+Received: from PEACH.EASE.LSOFT.COM (205.186.43.4) by VMS.DC.LSOFT.COM (LSMTP for OpenVMS v1.0a) with SMTP id BD6D243E ; Fri, 7 Jun 1996 9:11:13 -0400
+Date:         Fri, 7 Jun 1996 09:07:39 -0400
+Reply-To: "Robert J. Chassell" <bob@GNU.AI.MIT.EDU>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+X-UIDL: 834155086.018
+From: "Robert J. Chassell" <bob@GNU.AI.MIT.EDU>
+Subject:      Re: Newcomer's questions
+X-To:         veion@xiron.pc.helsinki.fi
+X-cc:         lojban@cuvmb.cc.columbia.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+In-Reply-To:  <Pine.LNX.3.91.960607075731.16348A-100000@xiron.pc.helsinki.fi>
+              (veion@xiron.pc.helsinki.fi)
+X-Mozilla-Status: 0015
+X-From-Space-Date: Fri Jun 07 09:35:28 1996
+X-From-Space-Address: -
+Content-Length: 4369
+
+If you cannot get Logflash to work, try GNU Emacs Flashcard mode.
+
+As far as I know, Flashcard mode has fewer features than
+Logflash; but I have never used Logflash.
+
+(Because of an illness in the family, I have not spent any time on
+Lojban recently, not even working with vocabulary.)
+
+
+I can send you my bug fixes.  The program's author is currently in
+Kazakstan with a very expensive net connection (i.e., please don't
+write him); he will release a new version, merging these fixes, when
+he gets back this summer.
+
+Here is what I put into my .emacs file:
+
+;;; Flashcard mode
+;; from Lars Huttar, June 1994
+;; Lojban-English words are in `~bob/flashcard/'
+
+(autoload 'flashcard "flashcard"
+   "Use Flashcard package to drill on flashcards." t)
+
+;; Limit drill to cards that have been guessed right this many times
+(setq fc-limit-num-right 3)
+
+;; Drill in multiple-choice mode
+(setq fc-multiple-choice t)
+
+;; Delimiters for multiline Lojban records.
+(setq fc-field-delimiter "/=/")
+(setq fc-record-delimiter "^\*\\|^%")
+
+; Entries look like this:
+;
+; * bond (sibling),
+;     x1 is a sibling of x2 by bond/tie/standard/parent(s) x3
+;     /:/
+;     /=/ tunba (tub)
+; * bond (sororal),
+;     x1 is a sister of/sororal to x2 by bond/tie/standard/parent(s) x3; [not
+;     necessarily biological]
+;     /:/
+;     /=/ mensi (mes me'i)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; flashcard.el -- a package for drilling on questions and answers.
+;;; Copyright (c) 1994 by Lars Huttar <huttar@cs.oberlin.edu>
+;;; Freely distributable under the GNU GPL.
+
+;;; Version: 0.95 (beta)
+;;; Release date: Wed Jun  8 09:50:13 1994
+
+;;; The author welcomes suggestions and bug reports.
+;;; However, the author offers NO WARRANTY, express or implied.
+
+;;; The purpose of `flashcard' is to drill the user over a
+;;; user-created database of questions and answers.  It records
+;;; scores, and can tailor the drill according to the user's past
+;;; performance.  To quickly summarize its features, I'll describe an
+;;; example.
+
+;;; I create a vocabulary file; the top line indicates that there are
+;;; two fields in this file, called `dutch' and `english'.  (But I
+;;; could have three or more fields if desired.)  I then enter a bunch
+;;; of pairs of Dutch and English words, one pair on a line.  E.g.:
+
+;;;     !% Fields: dutch        english
+;;;
+;;;     wie     who
+;;;     huis    house
+;;;     straat  street
+
+;;; etc.  Then I can use `flashcard' to drill me on this file, either
+;;; presenting me with the `dutch' field and letting me think of the
+;;; `english' field, or vice versa.  `flashcard' will not check my
+;;; answers (unless I'm in multiple-choice mode); I must judge if I
+;;; got the answer right or wrong, and hit `r' or `w' accordingly.
+;;; `flashcard' keeps score for each field and each record: how many
+;;; times I've gotten it right, how many times I've gotten it wrong,
+;;; and when was the last time I got it right.  This information is
+;;; stored in a separate score file.
+
+;;; At some later date I can come back to the same vocabulary
+;;; file, and have `flashcard' drill me on selected cards, based
+;;; on criteria such as "all cards which I haven't gotten right
+;;; in a month" or "all cards which I've gotten right less than
+;;; 75% of the time."
+;;; Multiple vocabulary files can be loaded, mixed together, and
+;;; drilled on simultaneously.  When the drilling is done, scores will
+;;; be saved to the appropriate separate score files.
+
+;;; Someday perhaps there will be info documentation with all the
+;;; information organized, and a nice tutorial.
+
+;;; Some sample Japanese vocabulary files can be obtained by anonymous
+;;; ftp from:
+;;;     crl.nmsu.edu:CLR/multiling/japanese/vocabulary
+;;;     kuso.shef.ac.uk:pub/japanese/larstango
+;;;     ftp.cc.monash.edu.au:pub/nihongo/mangajin-vocab
+;;; However, you need Mule (Multilingual Emacs) or Nemacs (Japanese
+;;; Emacs) to display the characters.
+
+;;; Installation:
+;;; Copy flashcard.el into a directory in your load-path.  Byte-compile
+;;; it if desired.  Put the following in your .emacs file:
+;;;    (autoload 'flashcard "flashcard"
+;;;       "Use Flashcard package to drill on flashcards." t)
+
+;;; LCD Archive Entry:
+;;; flashcard.el|Lars Huttar|huttar@cs.oberlin.edu
+;;; |Selective drilling on flashcards, tailored to your past performance
+;;; |1994/06/08 09:50:13|0.95|
+
