@@ -1,6 +1,6 @@
 For computer applications of Lojban, there needs to be a formal grammar of numbers. I started from ((xorxes))' grammar below, and revised it in places and made it into a ((PEG)) grammar.
 
-This meets all the rules in chapter 18 of CLL, except the one where it contradicts Lojban for Beginners, and LfB has the more useful reading. Namely, you can have a decimal point inside a "digit" (segment) of a mixed-base number like a time.
+I intend to meet all the rules in chapter 18 of CLL, except the one where it contradicts Lojban for Beginners, and LfB has the more useful reading. Namely, you can have a decimal point inside a "digit" (segment) of a mixed-base number like a time.
 
 This involves defining 14 new selma'o. SA is not handled yet (what should it do inside a number?) Also, letters mixed with numbers are not handled, but I consider this a feature and not a bug.
 
@@ -8,23 +8,24 @@ The "number" rule in the existing grammar is replaced, and these rules are inser
 
 ^digit <- NO / TUhO
 digits <- digit+
-thousand <- digits KIhO
-whole <- thousand+ digits
-decimal2 <- whole (PI digits (RAhE digits)?)? / PAI
+thousand <- digits? KIhO
+whole <- thousand+ digits? / digits
+approx <- whole / MAhU
+after-decimal <- whole? ( RAhE whole? / JIhI approx? )?
+approx-decimal <- (whole? PI)? approx
+decimal2 <- whole (PI after-decimal / JIhI approx-decimal)? / PAI
 decimal1 <- MAhU? decimal2 / MAhU
 decimal <- decimal1 CEhI?
 digitplace <- decimal PIhE?
 tuple <- digitplace+
-real <- decimal / tuple
+real <- decimal / tuple / indef
 indef <- PI? RO / TUhO
-component <- real / indef
-fraction <- component FIhU fraction / component
+fraction <- real? FIhU fraction? / real
 complex <- fraction? KAhO fraction? / fraction
-quantity <- component / fraction / DAhA quantity
-range <- SUhO quantity?
-fuzzy <- complex JIhI complex
+quantity <- real / fraction / DAhA quantity
+range <- DAhA? SUhO quantity?
 
-number <- quantity / complex / fuzzy / range / indef number
+number <- indef number / range+ / complex / quantity
 
 NO <- pre-cmavo NO-words post-cmavo
 NO-words <- "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9"
