@@ -1,0 +1,60 @@
+Return-Path: <richard@rrbcurnow.freeuk.com>
+X-Sender: richard@rrbcurnow.freeuk.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_3_2); 29 Aug 2001 22:01:57 -0000
+Received: (qmail 59922 invoked from network); 29 Aug 2001 21:51:57 -0000
+Received: from unknown (10.1.10.142)
+  by l7.egroups.com with QMQP; 29 Aug 2001 21:51:57 -0000
+Received: from unknown (HELO scrabble.freeuk.net) (212.126.144.6)
+  by mta3 with SMTP; 29 Aug 2001 21:51:57 -0000
+Received: from du-008-0092.freeuk.com ([212.126.151.92] helo=rrbcurnow.freeuk.com)
+	by scrabble.freeuk.net with esmtp (Exim 3.12 #2)
+	id 15cDFY-0002ra-00
+	for lojban@yahoogroups.com; Wed, 29 Aug 2001 22:51:53 +0100
+Received: from richard by rrbcurnow.freeuk.com with local (Exim 2.02 #2)
+	id 15cCDX-0006IS-00; Wed, 29 Aug 2001 21:45:43 +0100
+Date: Wed, 29 Aug 2001 21:45:43 +0100
+To: lojban@yahoogroups.com
+Subject: Re: [lojban] LALR1 question
+Message-ID: <20010829214543.A9524@rrbcurnow.freeuk.com>
+Mail-Followup-To: lojban@yahoogroups.com
+References: <Pine.GSO.4.33.0108271715470.17048-100000@ucsub.colorado.edu> <20010828024050.A941@twcny.rr.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.2i-nntp
+In-Reply-To: <20010828024050.A941@twcny.rr.com>; from rob@twcny.rr.com on Tue, Aug 28, 2001 at 02:40:50AM -0400
+From: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-Yahoo-Message-Num: 10268
+Content-Length: 1308
+
+I don't think the joi-overloading between selbri and sumti is the worst
+problem by any means.  The most problematic case I came across when
+doing the pre-parser in jbofi'e was the constructions like
+
+I JA optional-simple-tense BO
+I JA optional-simple-tense KE
+I JA optional-simple-tense something-else
+
+where the decision to reduce or not depends on whether bo, ke or
+something else comes at the end of a tense which has potentially
+arbitrary length.  So in this case no value of k is high enough for
+LR(k) to be up to the job.
+
+On Tue, Aug 28, 2001 at 02:40:50AM -0400, Rob Speer wrote:
+> On Mon, Aug 27, 2001 at 05:29:11PM -0600, Jay Kominek wrote:
+> > My conclusion: If you want the language to be syntactically unambiguous,
+> > LALR(1) is a fairly good choice. The most you'd want to do is switch to an
+> > LR(2) parser. If you need more than that, you're doing something wrong.
+> 
+> Actually, now I'm wondering - would changing the language to LR(2) actually
+> help? What if you change {le broda joi le brode} to {le broda ui joi le brode}
+> - would that not parse in LR(2), or does UI somehow not count in the
+> lookahead? Am I looking at this all wrong?
+
+-- 
+R.P.Curnow,Weston-super-Mare,UK  | C++: n., An octopus made by
+http://www.rrbcurnow.freeuk.com/ |  nailing extra legs on a cat.
+
+           
+
