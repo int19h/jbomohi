@@ -3358,3 +3358,69 @@ http://promotions.yahoo.com/new_mail
 
 
 
+
+## 2004-12-21T20:28:41Z — rlpowell (@rlpowell) (post 3197)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041221171919.GV20429@chain.digitalkingdom.org
+In-Reply-To: 20041221161107.20021.qmail@web41906.mail.yahoo.com
+
+On Tue, Dec 21, 2004 at 08:11:07AM -0800, Jorge Llamb?as wrote:
+> 
+> --- Robin Lee Powell wrote:
+> > On Tue, Dec 21, 2004 at 04:41:17AM -0800, Jorge Llamb?as wrote:
+> > > I think this is all it takes:
+> > > 
+> > > cmavo <- !cmene !gismu !lujvo !fuhivla cmavo-form / digit
+> > 
+> > No, they need to be PA, not just cmavo:
+> > 
+> > Morphology pass:  text=(  CMAVO=(  cmavo=(  digit=( 1 )  )  )
+> > CMAVO=(  cmavo=(  digit=( 2 )  )  )  CMAVO=(  PA=(  digit=( 3 )
+> > ))  )
+> 
+> Right, the problem is that PA is followed by space or consonant,
+> not by digit, so PA should end &(space / consonant / digit).
+> Probably every &(space / consonant) should be changed to that.
+> 
+>  post-word <- &(space / consonant / digit)
+
+Can't do that, sorry.  A non-terminal must contain at least one
+non-& and non-! element.  Removed the & from post-word, changed all
+calls to it to be &post-word.
+
+> > > I thought about replacing: 
+> > > 
+> > >  stressed <- comma* [AEIOU]
+> > > 
+> > > with:
+> > > 
+> > >  stressed <- comma* [?????]
+> > > 
+> > > and making the corresponding changes in the letter
+> > > definitions, and adding:
+> > > 
+> > >  letter <- comma* [A-Z]
+> > > 
+> > >  BY <- Y space-chars* BU / &cmavo ( j o h o / ... / x y / z y
+> > >  / letter ) &(spaces / consonant)
+> > > 
+> > > but I guess that would be too revolutionary for some people. 
+> > 
+> > I don't understand what this would do?
+> 
+> Use caps to represent lerfu, and use an acute mark on vowels to
+> represent stress. 
+
+Aaah.  The acute marks come through as ?, which should explain well
+enough why I oppose this.  :-)
+
+I'm sure I could figure out how to view them properly, but that's
+not the point: until nothing but X (where X is probably Unicode) is
+the sole accepted option for all computer-based text, we need to
+stick to ascii.
+
+-Robin
+
+
+
