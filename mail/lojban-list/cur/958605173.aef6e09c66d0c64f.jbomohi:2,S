@@ -1,0 +1,128 @@
+Return-Path: <sentto-44114-2747-958604989-mark=kli.org@returns.onelist.com>
+Delivered-To: shoulson-kli@meson.org
+Received: (qmail 9560 invoked from network); 17 May 2000 23:09:07 -0000
+Received: from zash.lupine.org (205.186.156.18)
+  by pi.meson.org with SMTP; 17 May 2000 23:09:07 -0000
+Received: (qmail 17101 invoked by uid 40001); 17 May 2000 23:09:52 -0000
+Delivered-To: kli-mark@kli.org
+Received: (qmail 17098 invoked from network); 17 May 2000 23:09:52 -0000
+Received: from mq.egroups.com (207.138.41.138)
+  by zash.lupine.org with SMTP; 17 May 2000 23:09:52 -0000
+X-eGroups-Return: sentto-44114-2747-958604989-mark=kli.org@returns.onelist.com
+Received: from [10.1.10.38] by mq.egroups.com with NNFMP; 17 May 2000 23:09:50 -0000
+Received: (qmail 11982 invoked from network); 17 May 2000 23:09:48 -0000
+Received: from unknown (10.1.10.142) by m4.onelist.org with QMQP; 17 May 2000 23:09:48 -0000
+Received: from unknown (HELO uhura.concentric.net) (206.173.118.93) by mta3 with SMTP; 17 May 2000 23:09:48 -0000
+Received: from marconi.concentric.net (marconi.concentric.net [206.173.118.71]) by uhura.concentric.net (8.9.1a/(98/12/15 5.12)) id TAA20351; Wed, 17 May 2000 19:09:48 -0400 (EDT) [1-800-745-2747 The Concentric Network]
+Errors-To: <nellardo@concentric.net>
+Received: from concentric.net ([216.112.226.144]) by marconi.concentric.net (8.9.1a) id TAA25441; Wed, 17 May 2000 19:09:47 -0400 (EDT)
+Message-ID: <3923246E.F4F73A84@concentric.net>
+Organization: Herds of Wild Buffalo Girls
+X-Mailer: Mozilla 4.7 (Macintosh; I; PPC)
+X-Accept-Language: en
+To: lojban@egroups.com
+References: <20000516214537.44864.qmail@hotmail.com>
+From: Brook Conner <nellardo@concentric.net>
+MIME-Version: 1.0
+Mailing-List: list lojban@egroups.com; contact lojban-owner@egroups.com
+Delivered-To: mailing list lojban@egroups.com
+Precedence: bulk
+List-Unsubscribe: <mailto:lojban-unsubscribe@egroups.com>
+Date: Wed, 17 May 2000 19:12:53 -0400
+Reply-To: nellardo@concentric.net
+Subject: Re: [lojban] More on lojban programatic semantics: Strong typing and  inferencing of types
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Length: 3874
+Lines: 89
+
+la xorxes. cusku di'e
+> la brukcr cusku di'e
+> 
+> >So, for example, you can use "poi" to annotate sumti with type
+> >information, or simply an appropriate selbri for "declaring" variables:
+> >
+> >ko jarco la stokuot. poi mekso -- show the "stock-quote", which is a
+> >mathematical expression
+> 
+> For annotation {noi} is better than {poi}.
+> {la stokout poi mekso} would be used to restrict the reference to
+> {la stokuot} which is a mekso, as opposed to any other {la stokuot}
+> which is something else.
+
+Hmmm. You raise an interesting trade-off. Since noi is "incidental", it
+implies that there isn't another "la stokuot." somewhere that is
+actually a different kind of "la stokuot." However, most PLs have
+scoping rules that allow multiple things of the same name - the scoping
+makes sure the referent of the name is always unambiguous. 
+
+On the other hand, "poi" implies that the characteristic named is an
+*essential* aspect of the thing named - this is much closer to the
+meaning of a type in a PL.
+
+> >la stokuot. mekso -- "stock-quote" is a mathematical expr.
+> >
+> >la stokuot. namcu -- "stock-quote" is a number.
+> 
+> I think a mekso cannot be a namcu, it's supposed to be an
+> unevaluated expression, but I may be wrong. The mekso part
+> of the language has never really been worked out.
+
+Ehm, I think a namcu is a valid mekso, but I wasn't (yet) talking about
+type hierarchy - just giving multiple examples. These bridi were meant
+to be examples of declarations.
+ 
+> >la stokuot. saclu -- "stock-quote" is a rational number
+> 
+> Again, for {saclu} I think it is only the symbolic representation,
+> not the number that is at stake. You would be saying for example
+> that {la stokout} is the name of the string of symbols 0.75,
+> not the number 0.75=3/4
+
+My understanding was that naclu (and the other similar gismu) followed a
+sumti pattern of "x1 is <some kind of number> of value x2". So naclu
+means that x1 is a rational, whose value is given by x2. So in the
+example above, I would be saying that "la stokuot." is an *unspecified*
+rational number. X2 is the value. So you could "initialize" a variable
+at the same time by including x2.
+ 
+> >The diversity of "number" gismu that include units has a nice side
+> >effect of reducing the kinds of goofs that crashed  the recent Mars
+> >mission: if it's "minli", then it is miles. If it is "mitre", then it is
+> >meters.
+> 
+> I'm not sure what you mean here. I think it is the other way
+> around, because the units are included in the gismu, the numbers
+> (se minli, se mitre) are actually all adimensional.
+
+A numerical value in x2 is adimensional, but the things in x1 *are*
+dimensioned, because the gismu asserts that this is so. Further
+,something in x2 could be dimensioned if it was identified earlier as
+being in a dimension. In this case, either the dimensions have to agree,
+or there has to be a reasonable conversion. So:
+
+la numbr. namcu li pe --- "Number" is a number, whose value is 1
+
+la distens. minli la numbr.  -- "Distance" is in miles, the value 1
+
+la triplen. mitre la distens. -- Either an error (la distens. is miles,
+la triplen. is meters) or conversion of values automatically takes place.
+
+la fatsos. grake la distens. -- Definitely an error - "Fatsos" is in
+grams the value "Distance" _ but distance has been specified to be in
+miles, and there's no way to convert miles to grams.
+
+> It is an interesting topic. Colin Fine posted some interesting
+> stuff about this kind of thing a couple of years ago.
+
+Cool. I'll have to dig in the archives.
+
+co'o mi'e brukcr.
+
+------------------------------------------------------------------------
+You have a voice mail message waiting for you at iHello.com:
+http://click.egroups.com/1/3555/3/_/17627/_/958604989/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
