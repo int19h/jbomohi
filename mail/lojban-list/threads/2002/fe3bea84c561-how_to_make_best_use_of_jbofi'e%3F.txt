@@ -1,4 +1,4 @@
-# mail/lojban-list thread fe3bea84c561-how_to_make_best_use_of_jbofi'e%3F | root sd122068.087@gwise-gw1.uclan.ac.uk | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread fe3bea84c561-how_to_make_best_use_of_jbofi'e%3F | root sd122068.087@gwise-gw1.uclan.ac.uk | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2002-06-20T17:35:02Z | And Rosta <arosta@uclan.ac.uk> | sd122068.087@gwise-gw1.uclan.ac.uk | mail/lojban-list/cur/1024594502.fe3bea84c5615ac6.jbomohi:2,S
 X-list: lojban-list
@@ -89,5 +89,53 @@ je xlali -- RLP 				http://www.lojban.org/
 
 
            
+
+
+
+=== 4 | 2002-06-20T17:47:38Z | Shae Matijs Erisson <shae@ScannedInAvian.com> | 87it4dsuyt.fsf@webwitches.com | mail/lojban-list/cur/1024595258.08b110ea495f58d7.jbomohi:2,S
+And Rosta <arosta@uclan.ac.uk> writes:
+
+> Bearing in mind that I've not used or downloaded it -- and do tell me
+> if I'm talking out my arse here -- I'd like to ask if there are any clever 
+> ways of using it in a Windows invironment, or whether one has to 
+> create a text file and run jbofi'e on it -- which is something one
+> probably wouldn't bother to do for, say, an email message with
+> one sentence of Lojban in it.
+
+I primarily use a lightly modified elisp defun that runs jbofi'e on any
+selected region, though I have another version that uses the rest of the line
+instead.  These started with the file "emacs_functions" that comes with the
+debian jbofi'e package and they require emacs of course:
+
+;;;;;;;;; lojban defuns
+(defun lojban-parse () ""
+  (interactive)
+  (shell-command-on-region (region-beginning) (region-end)
+"jbofihe -x -b"))
+
+(defun lojban-fgrep (regexp) "fgrep lojban-common for a word"
+  (interactive "sfgrep pattern: ")
+  (grep (concat "fgrep -h \"" regexp  "\" /usr/share/lojban/*")))
+
+(global-set-key [(f9)] 'lojban-fgrep)
+
+(global-set-key [(f11)] 'lojban-parse)
+; end lojban stuff
+
+The lojban-fgrep defun searches all of the files in the lojban-common debian
+package for whatever regexp you put in.
+
+Since I also use XEmacs for my irc client, these are very useful on the #lojban
+channel on irc.openprojects.net.
+
+Assuming you already know how to use emacs, this will all work equally well on
+windows with minor modifications.
+-- 
+Shae Matijs Erisson - http://www.webwitches.com/~shae/
+<radix> shapr: I think you *are* a purist :)
+<radix> shapr: it's just that you're morally against unstable software, instead
+        of morally against MS, or non-free software, or whatnot.
+
+
 
 
