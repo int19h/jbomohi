@@ -1,0 +1,181 @@
+Return-Path: <@SEGATE.SUNET.SE:LOJBAN@CUVMB.BITNET>
+Received: from SEGATE.SUNET.SE by xiron.pc.helsinki.fi  with smtp
+	(Linux Smail3.1.28.1 #1) id m0sQjUA-0000YkC; Wed, 28 Jun 95 01:52 EET DST
+Message-Id: <m0sQjUA-0000YkC@xiron.pc.helsinki.fi>
+Received: from segate.sunet.se by SEGATE.SUNET.SE (LSMTP for OpenVMS v0.1a) with SMTP id DB2C1BD5 ; Wed, 28 Jun 1995 0:37:48 +0200
+Date:         Tue, 27 Jun 1995 23:36:07 +0100
+Reply-To:     ucleaar <ucleaar@UCL.AC.UK>
+Sender:       Lojban list <LOJBAN@CUVMB.BITNET>
+From:         ucleaar <ucleaar@UCL.AC.UK>
+Subject:      TECH: AFTERTHOUGHT SCOPE
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Content-Length: 4947
+Lines: 165
+
+Here is a discussion paper on afterthought scope. It discusses what
+we should be able to do scopewise in afterthought, and possible ways
+of doing it. I think it requires about 6 to 9 new cmavo, all in existing
+selmao, plus perhaps some optional extras in UI.
+
+                   AFTERTHOUGHT SCOPE
+
+1. SCOPE-SENSITIVITY
+
+SCOPE-SENSITIVE terms comprise all sumti whose innermost descriptor
+is (implicitly or explicitly) {lo}.
+
+SCOPE-INSENSITIVE terms comprise all sumti whose innermost descriptor
+is {le}.
+
+At this stage I'm ignoring {la}, {lai}, {lahi}, {loi}, {lohi}, {lei}
+and {lehi}. I'm also ignoring {na} and coordinators.
+
+Relative scope between two terms matters if at least one of them is
+scope-sensitive. (An exception to this is <{suo lo},{suo lo}>
+and <{ro lo},{ro lo}> pairs: the relative scope of these makes no
+difference to the meaning. I shall ignore this exception.)
+
+2. POSSIBLE SCOPES FOR A PAIR OF TERMS
+
+2.1 SCOPE-INSENSITIVE + SCOPE-INSENSITIVE
+
+Scope is not an issue here. {le ci nanmu cu batci le re gerku} means
+that each of a certain three men bit each of a certain three dogs.
+
+2.2 SCOPE-INSENSITIVE + SCOPE-SENSITIVE
+
+There are two possibilities here.
+
+2.2.1 {le ci nanmu} has scope over {re gerku}
+
+   {le ci nanmu cu batci re gerku}
+   "Ax, x in C (a certain cimei): x is man, Ey, y a remei, Az, z
+    in y: z is dog, x bite z"
+   There are exactly three men, and up to six dogs.
+   "Ax" precedes "Ey"
+
+2.2.2 {le ci nanmu} does not have scope over {re gerku}
+
+   {re gerku cu se batci le ci nanmu}
+   "Ey, y a remei, Az, z in y: z is dog, Ax, x in C (a certain cimei):
+    x is man, x bite z"
+   There are exactly three men and exactly two dogs.
+   "Ey" precedes "Ax"
+
+The relevant scope difference is whether the "Ax" precedes or follows
+the "Ey".
+
+2.3 SCOPE-SENSITIVE + SCOPE-SENSITIVE
+
+There are three possibilities here.
+
+2.3.1 {ci nanmu} has scope over {re gerku}
+
+   {ci nanmu cu batci re gerku}
+   "Ew, w a cimei, Ax, x in w: x is man, Ey, y a remei, Az, z in y:
+    z is dog, x bite z"
+   There are exactly three men and up to six dogs.
+   "Ew" precedes "Az"
+   "Ax" precedes "Ey"
+
+2.3.2 {re gerku} has scope over {ci nanmu}
+
+   {re gerku cu se batci ci nanmu}
+   "Ey, y a remei, Az, z in y: z is dog, Ew, w a cimei, Ax, x in w:
+    x is man, x bite z"
+   There are exactly two dogs men and up to six men.
+   "Ey" precedes "Ax"
+   "Az" precedes "Ew"
+
+2.3.3 {ci nanmu} and {re gerku} have coordinate scope
+
+   {ci da poi nanmu e re de poi gerku zohu da batci de}
+   "Ew, w a cimei, Ey, y a remei, Ax, x in w, Az, z in y: x is man,
+    z is dog, x bite z"
+   There are exactly three men and exactly two dogs.
+   "Ew" precedes "Az"
+   "Ey" precedes "Ax"
+
+3 KINDS OF AFTERTHOUGHT SCOPE
+
+I suggest that we have devices for indicating the following:
+
+   * the scope of a scope-sensitive sumti relative to another specified
+     sumti
+   * the scope of a scope-insensitive sumti relative to another specified
+     scope-sensitive sumti
+
+The specified sumti can be
+
+   * specified by an anaphor (pro-form)
+   * the first term in a specified prenex
+   * the last term in a specified prenex
+
+[Where the prenex (i) contains only what has been put in it so far,
+and (ii) can be implicit.]
+
+The 5 kinds of scope (defined above) are:
+
+   * X and Y have coordinate scope
+     [X and Y are scope-sensitive]
+   * X has scope over Y
+     [Y is scope-sensitive]
+   * Y has scope over X
+     [X is scope-sensitive]
+   * X doesn't have scope over Y
+     [X is scope-insensitive, Y is scope-sensitive]
+   * Y doesn't have scope over X
+     [X is scope-sensitive, Y is scope-insensitive]
+
+For the parsimoniously minded, the last two aren't strictly necessary.
+
+4 SUGGESTIONS FOR IMPLEMENTATION
+
+4.1 Scope relative to another sumti specified by an anaphor
+
+Add 5 new cmavo in GOI, one cmavo for each of the 5 kinds of scope.
+{SUMTI-X GOI SUMTI-Y} means "X is in the specified scope relationship
+with Y".
+
+4.2 Scope relative to the first/last term in a specified prenex
+
+Define the following anaphoric possibilities:
+
+  X is the { first | last } term in the prenex of Y
+
+where Y, working recursively, is either
+
+  the { outermost | localmost } bridi
+
+or
+
+  the bridi one level of embedding toward the middle of the bridi
+  hierarchy away from Y
+
+Thus we need the following cmavo:
+
+  * the outermost bridi - GOhA
+  * the localmost bridi - GOhA [this exists, as {nei}]
+  * the bridi one level of embedding toward the middle of the bridi
+    hierarchy away from ... - LAhE (1)
+  * the first term in the prenex of - LAhE (2)
+  * the last term in the prenex of - LAhE (2)
+
+[i.e. in total, 3 new cmavo in LAhE, and 1 new cmavo in GOhA]
+
+These can then be used with GOI as in 4.1.
+
+The structure would be: SUMTI-1 GOI LAhE (2) (LAhE (1))* GOhA
+
+5 ABBREVIATORY DEVICES
+
+Define a set of cmavo in UI that toggle between current scope defaults.
+
+Where X precedes Y:
+
+   X has scope over Y / Y has scope over X / X and Y are coordinate
+
+---
+And
+
