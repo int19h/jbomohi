@@ -1,0 +1,103 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 09 May 2003 00:08:27 -0700 (PDT)
+Received: from n26.grp.scd.yahoo.com ([66.218.66.82])
+	by digitalkingdom.org with smtp (Exim 4.12)
+	id 19E1zN-0000SQ-01
+	for lojban-in@lojban.org; Fri, 09 May 2003 00:08:17 -0700
+X-eGroups-Return: sentto-44114-19702-1052464066-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.67.195] by n26.grp.scd.yahoo.com with NNFMP; 09 May 2003 07:07:46 -0000
+X-Sender: tk1@despammed.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_6_6); 9 May 2003 07:07:45 -0000
+Received: (qmail 92778 invoked from network); 9 May 2003 07:07:45 -0000
+Received: from unknown (66.218.66.217)
+  by m2.grp.scd.yahoo.com with QMQP; 9 May 2003 07:07:45 -0000
+Received: from unknown (HELO n5.grp.scd.yahoo.com) (66.218.66.89)
+  by mta2.grp.scd.yahoo.com with SMTP; 9 May 2003 07:07:45 -0000
+Received: from [66.218.66.118] by n5.grp.scd.yahoo.com with NNFMP; 09 May 2003 07:07:45 -0000
+To: lojban@yahoogroups.com
+Message-ID: <b9fk40+4li1@eGroups.com>
+In-Reply-To: <5.2.0.9.0.20030506230928.03786d50@pop.east.cox.net>
+User-Agent: eGroups-EW/0.82
+X-Mailer: Yahoo Groups Message Poster
+From: "c1tk" <tk1@despammed.com>
+X-Originating-IP: 137.132.3.12
+X-Yahoo-Profile: c1tk
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Fri, 09 May 2003 07:07:44 -0000
+Subject: [lojban] Re: Some ideas/questions (long)
+Content-Type: text/plain; charset=ISO-8859-1
+X-archive-position: 5200
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: tk1@despammed.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2035
+
+Hello all,
+
+> >(I am thinking of utterances such as ".i le gerku jersi le mlatu fa'o"
+> It is not rejected by the Lojban parser, but doesn't have that meaning.  It 
+> merely represents the grammatical list of two sumti: "The dog-chaser, the 
+> cat", which might be an answer to the question:
+
+Oops, sorry that was a bad example. But I found there are some other
+utterances which do cause problems. For example, {le gerku joi le mlatu},
+under the grammar described in the file "bnf.233", does have a valid unique
+parse:
+
+	text
+	=> text-1
+	=> paragraphs
+	=> paragraph
+	=> paragraph-1
+	=> paragraph-2
+	=> utterance
+	=> term				by rule: utterance = term ... /VAU#/
+	=> sumti
+	=> sumti-1 joik sumti
+	...
+	=> {le} sumti-tail-1 joik sumti
+	=> {le} selbri joik sumti
+	...
+	=> {le} tanru-unit-2 joik sumti
+	=> {le gerku} joik sumti
+	=> {le gerku joi} sumti
+	...
+	=> {le gerku joi le mlatu}
+
+However, the same utterance is not accepted by the machine parser in
+"grammar.c". Thus, the grammar given in "bnf.233" and the grammar described
+by "grammar.c" actually correspond to not the same language, but _two_
+different languages. If Lojban is a single, unambiguous language, then at
+least one of the grammars must be wrong.
+
+(While I know that this bit of weirdness is semi-documented in Chapter 14 of
+the Reference Grammar, but it does not help in resolving this anomaly.)
+
+Thanks,
+-- 
+GPG:f75949318a026c5707ff188b438cca87faf73a82 http://angelfire.com/folk/sm0p/
+GCS/MU d- s: a- C++() UL P++(+++) L++(+++) E- W++ N(+) o K? w--- O? M? V?   
+PS(+) PE Y+ PGP+ t? 5? X- R- tv-() b+ DI(+) D+ G e++ h-- !r>+++ !y
+
+
+
+------------------------ Yahoo! Groups Sponsor ---------------------~-->
+Rent DVDs Online - Over 14,500 titles.
+No Late Fees & Free Shipping.
+Try Netflix for FREE!
+http://us.click.yahoo.com/YoVfrB/XP.FAA/uetFAA/GSaulB/TM
+---------------------------------------------------------------------~->
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
