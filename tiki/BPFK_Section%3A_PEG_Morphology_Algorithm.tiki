@@ -40,41 +40,57 @@ words <- initial-spaces (word spaces)*
 
 word <- lojban-word / non-lojban-word
 
-lojban-word <- cmene / gismu / lujvo / fuhivla / cmavo
-
-non-lojban-word <- !lojban-word (!spaces .)+
+lojban-word <- cmene / cmavo / brivla
 
 ;-------------------------------------------------------------------
 
-cmene <- !h cmene-rafsi* cmene-part &spaces
+cmene <- (!doi-la-lai-lahi onset nucleus / digit)* &consonant onset &spaces
 
-cmene-rafsi <- cmene-part (i / u) y
-
-cmene-part <- cmene-syllable* consonant+ 
-
-cmene-syllable <- !doi-la-lai-lahi (syllable / consonantal-syllable / y-syllable)
-
-doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !vowel
+doi-la-lai-lahi <- (d o i / l a (h? i)?) !h !nucleus
 
 ;-------------------------------------------------------------------
 
-gismu <- stressed-long-rafsi &final-syllable vowel
+cmavo <- !cmene !CVCy-lujvo (cmavo-form &post-word / stressed-cmavo-form &post-cmavo) 
+
+CVCy-lujvo <- CVC-rafsi y initial-rafsi* brivla-core / stressed-CVC-rafsi y short-final-rafsi
+
+post-cmavo <- spaces / !nucleus &independent lojban-word
+
+independent <- stressed / consonant vowel-y / !final-syllable / cmene
+
+stressed-cmavo-form <- consonant? (nucleus &nucleus)* &stressed nucleus
+
+cmavo-form <- consonant? (nucleus &nucleus)* !stressed nucleus / y+ / digit
 
 ;-------------------------------------------------------------------
 
-lujvo <- !cmavo (initial-rafsi+ final-rafsi / short-lujvo)
+brivla <- !cmavo initial-rafsi* brivla-core
+
+brivla-core <- fuhivla / gismu / CVV-final-rafsi / short-lujvo
 
 short-lujvo <- stressed-initial-rafsi short-final-rafsi 
 
 stressed-initial-rafsi <- stressed-extended-rafsi / stressed-y-rafsi / stressed-y-less-rafsi
 
-initial-rafsi <- (extended-rafsi / y-rafsi / !any-extended-rafsi y-less-rafsi) !vowel h?
-
-final-rafsi <- fuhivla / gismu / CVV-final-rafsi / short-lujvo
+initial-rafsi <- (extended-rafsi / y-rafsi / !any-extended-rafsi y-less-rafsi) !nucleus h?
 
 ;-------------------------------------------------------------------
 
+any-extended-rafsi <- fuhivla / extended-rafsi / stressed-extended-rafsi
+
 fuhivla <- fuhivla-head stressed-syllable final-syllable
+
+stressed-extended-rafsi <- stressed-brivla-rafsi / stressed-fuhivla-rafsi 
+
+extended-rafsi <- brivla-rafsi / fuhivla-rafsi
+
+stressed-brivla-rafsi <- &unstressed-syllable brivla-head stressed-syllable y
+
+brivla-rafsi <- &(unstressed-syllable unstressed-syllable) brivla-head y
+
+stressed-fuhivla-rafsi <- fuhivla-head stressed-syllable &consonant y-syllable
+
+fuhivla-rafsi <- &unstressed-syllable fuhivla-head &consonant y-syllable
 
 fuhivla-head <- !rafsi-string brivla-head
 
@@ -85,6 +101,8 @@ slinkuhi <- consonant rafsi-string
 rafsi-string <- y-less-rafsi* (gismu / CVV-final-rafsi / stressed-y-less-rafsi short-final-rafsi / y-rafsi / stressed-y-rafsi / stressed-y-less-rafsi? initial-pair y)
 
 ;-------------------------------------------------------------------
+
+gismu <- stressed-long-rafsi &final-syllable vowel
 
 CVV-final-rafsi <- consonant stressed-vowel h &final-syllable vowel
 
@@ -118,86 +136,43 @@ r-hyphen <- r &consonant / n &r
 
 ;-------------------------------------------------------------------
 
-any-extended-rafsi <- fuhivla / extended-rafsi / stressed-extended-rafsi
-
-stressed-extended-rafsi <- cmene-rafsi / stressed-cmavo-rafsi / stressed-brivla-rafsi / stressed-fuhivla-rafsi 
-
-extended-rafsi <- cmene-rafsi / cmavo-rafsi / brivla-rafsi / fuhivla-rafsi
-
-stressed-fuhivla-rafsi <- fuhivla-head stressed-syllable &consonant y-syllable
-
-fuhivla-rafsi <- &syllable fuhivla-head &consonant y-syllable
-
-stressed-brivla-rafsi <- &(syllable syllable) brivla-head stressed-syllable h y
-
-brivla-rafsi <- &(syllable syllable) brivla-head h y
-
-stressed-cmavo-rafsi <- stressed-cmavo-form h y
-
-cmavo-rafsi <- !y unstressed-cmavo-form h y
-
-;-------------------------------------------------------------------
-
-cmavo <- !cmene !CVC-lujvo (cmavo-form &post-cmavo / unstressed-cmavo-form &lojban-word) !vowel !y
-
-CVC-lujvo <- CVC-rafsi y initial-rafsi* final-rafsi / stressed-CVC-rafsi y short-final-rafsi
-
-post-cmavo <- spaces / cmene / &stressed lojban-word / !cluster lojban-word / &cluster-syllable-non-word lojban-word
-
-cluster-syllable-non-word <- cluster nucleus !lojban-word
-
-stressed-cmavo-form <- consonant? (nucleus h)* stressed-nucleus
-
-unstressed-cmavo-form <- consonant? (nucleus h)* unstressed-nucleus / consonant y / y h y / y+
-
-cmavo-form <- consonant? (nucleus h)* nucleus / consonant y / y h y / y+
-
-;-------------------------------------------------------------------
+final-syllable <- !stressed syllable !cmene &post-word
 
 stressed-syllable <- &stressed syllable / syllable &stress
-stressed-nucleus <- &stressed nucleus / nucleus &stress
 stressed-diphthong <- &stressed diphthong / diphthong &stress
 stressed-vowel <- &stressed vowel / vowel &stress
 
 unstressed-syllable <- !stressed syllable !stress
-unstressed-nucleus <- !stressed nucleus !stress
 unstressed-diphthong <- !stressed diphthong !stress
 unstressed-vowel <- !stressed vowel !stress
 
+stress <- y-syllable* syllable spaces
+stressed <- onset? semi-consonant? comma* [[AEIOU]
+
+syllable <- onset? !y-nucleus nucleus / digit 
 y-syllable <- onset? y !y
 
-final-syllable <- onset? !stressed nucleus !y &post-word
-
-post-word <- spaces / !non-lojban-word !cmene (consonant / digit) 
-
-syllable <- onset? nucleus coda? !y / digit 
-nucleus <- diphthong / semi-consonant? vowel
+nucleus <- (diphthong / semi-consonant? vowel / y-nucleus) !y h?
+y-nucleus <- (i /u)? y
 semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / i / o / u
 
-stress <- (consonant+ y?)? syllable spaces
-stressed <- onset? semi-consonant? comma* [[AEIOU]
-
-a <- comma* [[aA]
-e <- comma* [[eE]
+a <- comma* [[aA] !y
+e <- comma* [[eE] !y
 i <- comma* [[iI] 
-o <- comma* [[oO]
+o <- comma* [[oO] !y
 u <- comma* [[uU] 
-y <- comma* [[yY] 
+y <- comma* [[yY] !vowel
+
+h <- comma* [['h] &nucleus
 
 ;-------------------------------------------------------------------
 
-cluster <- consonant consonant+
+onset <- syllabic? consonant? consonantal-syllable? initial
 
-onset <- h / consonantal-syllable? initial
-
-coda <- !initial !consonantal-syllable consonant
-
-consonantal-syllable <- consonant syllabic-consonant &initial
-
+consonantal-syllable <- consonant? syllabic &consonant
 initial-pair <- &initial consonant consonant !consonant
-
 initial <- (affricate / sibilant? other? liquid?) !consonant
 
 affricate <- t c / t s / d j / d z
@@ -208,49 +183,57 @@ other <- p / t !l / k / f / x / b / d !l / g / v / m / n !liquid
 
 sibilant <- c / s !x / (j / z) !n !liquid
 
-consonant <- voiced-consonant / unvoiced-consonant / syllabic-consonant
+consonant <- voiced / unvoiced / syllabic
 
-syllabic-consonant <- l / m / n / r
+syllabic <- l / m / n / r
 
-voiced-consonant <- b / d / g / j / v / z
+voiced <- b / d / g / j / v / z
 
-unvoiced-consonant <- c / f / k / p / s / t / x
+unvoiced <- c / f / k / p / s / t / x
 
 l <- comma* [[lL] !h !l
 m <- comma* [[mM] !h !m !z
 n <- comma* [[nN] !h !n !affricate
 r <- comma* [[rR] !h !r
-b <- comma* [[bB] !h !b !unvoiced-consonant
-d <- comma* [[dD] !h !d !unvoiced-consonant
-g <- comma* [[gG] !h !g !unvoiced-consonant
-v <- comma* [[vV] !h !v !unvoiced-consonant
-j <- comma* [[jJ] !h !j !z !unvoiced-consonant
-z <- comma* [[zZ] !h !z !j !unvoiced-consonant
-s <- comma* [[sS] !h !s !c !voiced-consonant
-c <- comma* [[cC] !h !c !s !x !voiced-consonant 
-x <- comma* [[xX] !h !x !c !k !voiced-consonant 
-k <- comma* [[kK] !h !k !x !voiced-consonant
-f <- comma* [[fF] !h !f !voiced-consonant
-p <- comma* [[pP] !h !p !voiced-consonant
-t <- comma* [[tT] !h !t !voiced-consonant
-
-h <- comma* [['h] &(vowel / y)
-
-digit <- comma* [[0123456789] !h !y
+b <- comma* [[bB] !h !b !unvoiced
+d <- comma* [[dD] !h !d !unvoiced
+g <- comma* [[gG] !h !g !unvoiced
+v <- comma* [[vV] !h !v !unvoiced
+j <- comma* [[jJ] !h !j !z !unvoiced
+z <- comma* [[zZ] !h !z !j !unvoiced
+s <- comma* [[sS] !h !s !c !voiced
+c <- comma* [[cC] !h !c !s !x !voiced
+x <- comma* [[xX] !h !x !c !k !voiced
+k <- comma* [[kK] !h !k !x !voiced
+f <- comma* [[fF] !h !f !voiced
+p <- comma* [[pP] !h !p !voiced
+t <- comma* [[tT] !h !t !voiced
 
 ;-------------------------------------------------------------------
 
+digit <- comma* [[0123456789] !h !nucleus
+
+post-word <- spaces / !nucleus lojban-word
+
 spaces <- !Y initial-spaces
 
-initial-spaces <- (space-chars / !ybu Y)+ EOF? / EOF
+initial-spaces <- (comma* space-char / !ybu Y)+ EOF? / EOF
 
-ybu <- Y space-chars* BU
-
-space-chars <- comma* [[.\t\n\r?!\u0020]
+ybu <- Y space-char* BU
 
 EOF <- comma* !.
 
 comma <- [[,]
+
+non-lojban-word <- !lojban-word non-space+
+
+NORATS non-space <- !space-char .
+
+NORATS space-char <- [[.\t\n\r?!\u0020]
+
+;-------------------------------------------------------------------
+
+lujvo <- !gismu !fuhivla brivla
 
 ;-------------------------------------------------------------------
 
