@@ -134,3 +134,48 @@ where that place structure comes from.
 
 mi'e xorxes
 
+
+## 2004-11-22T20:30:34Z — rlpowell (comment 174, on definition 2647, in reply to 173)
+
+Re: Fourth place.
+
+xorxes wrote:
+> rlpowell wrote:
+> > xorxes wrote:
+> > > rlpowell wrote:
+> > > > From "tai": (x1 resembles x2 sharing ideal form/shape x3 in
+property
+> > x4)
+> > > 
+> > > So how do x3 and x4 differ? 
+> > 
+> > da de tamsmi lo bolci lo ka bartu
+> > 
+> > "da resembles de in that it has the outer shape of a ball".
+> 
+> Wouldn't that be:
+> 
+> da .e de tamsmi lo bolci lo ka (makau) bartu (ce'u)
+> x and y resemble a ball in their outsides.
+
+No, definately not.
+
+> If x3 is not a property, then x1, x2 and x3 resemble
+> one another in property x4
+
+Nope.
+
+da tamsmi de lo bolci tu'a lo nenri .i ku'i da tamsmi de lo bliku tu'a lo
+bartu
+
+Certainly in the first case you wouldn't say that da and de both resemble
+an (idealized) ball?
+
+Besidse, the point is that the x3 is a platonic ideal; nothing *really*
+resembles it, it's more of a concept.
+
+Where this place structure comes from, I have no idea, but clearly x3=t1,
+and x4=s3.
+
+-Robin
+
