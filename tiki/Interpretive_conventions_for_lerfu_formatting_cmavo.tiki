@@ -1,0 +1,54 @@
+There is a class of ((letteral))s that don't stand for a specific written
+symbol, but rather modify the following letterals in a letteral
+string. I have chosen to call these "lerfu formatting cmavo".
+
+The ((CLL)) is rather skimpy on the details on how these cmavo are to be
+interpreted, and how they interact, and this is one of the issues the
+BPFK has to decide.
+
+As I (((tsali))) promised in
+[http://www.lojban.org/bpfk/viewtopic.php?t=44], I'm making this page to
+show what we know about lerfu formatting cmavo from the examples in CLL,
+and some possible solutions to situations that aren't described in the
+book.
+
+We assume for the time being that the lerfu formatting cmavo are the
+following: ((ga'e)), ((to'a)), ((lo'a)), ((ge'o)), ((je'o)), ((jo'o)), ((ru'o)), ((lo'a)), ((na'a))
+plus BU-letterals prefixed with the following: ((zai)), ((ce'a))
+
+We assume that all other letterals stand for a distinct symbol, because
+otherwise, all letteral sequences with nonce letterals would be
+ambiguous as to what is formatting and what is printable characters.
+
+!!What we already know about the Lojban lerfu sequence formatting cmavo
+* The lerfu formatting cmavo modifies the immediately following ordinary letteral.
+* If X and Y are ordinary letterals, and Z is a lerfu formatting cmavo, and X precedes Y, and X is modified by Z, then Y is also modified by Z, except in cases where Z is a single-lerfu modifier, such as TAU or LAU. In other words, most lerfu formatting cmavo applies at least to the entire contiguous sequence of letterals following it.
+
+!!Models for handling cases that are as yet undefined
+All of these are intended to be baseline-compliant, ie. render none of
+the examples in ((CLL)) invalid. Please add a note if you think this is
+incorrect.
+!The Microsoft Word model (state machine)
+* Formatting applies by default to all ordinary letterals of the current sequence
+* Formatting is by default additive. For example, "ce'a bold. bu ce'a .italik. bu .abu" results in a lowercase a that is both bold and italic.
+** We could establish a system of "categories" that lerfu formatting cmavo can encode "features" of, and say that subsequent lerfu formatting cmavo supersede previous ones __in the same category__. Thus, "ce'a pavrel. bu .abu ce'a  pavnon. bu by." results in a 12pt lowercase a followed by a 10pt lowercase b.
+* Formatting may be canceled by a special format that says "revert to state before the application of the last lerfu formatting cmavo".
+!The CSS model
+* Formatting applies to all following letterals in the string which are of "the same kind" as the lerfu formatting cmavo is. Unformatted lerfu forming cmavo apply to the entire remaining text; formatting that appears when Cyrillic shift is active applies to all remaining Cyrillic text, formatting that appears in ((XI)) subscripts N levels deep apply in all following subscripts N levels deep, and so on.
+* Less crunchy, because it relieves the speaker of the burden of updating many different kinds of formatting when switching contexts.
+* Undesirable because it establishes a hierarchical interpretation of a structure that is supposed to be "linear" (actually left-recursive, see grammar rule __((lerfu_string_root_986))__).
+
+!!A baseline-violating proposal
+Create a new set of grammar rules:
+* GAhE_1620 (terminal for lerfu formatting cmavo) - move all formatting cmavo here from BY
+* ZAI_1621 (terminal for zai and ce'a)
+* XUhU_1629 (terminal for new terminator cmavo)
+* formatted_lerfu_string_1988 : GAhE_1620 lerfu_string_root_986 XUhU_gap_1410 | ZAI_1621 lerfu_word_987 lerfu_string_root_986 XUhU_gap_1410 ;
+* XUhU_gap_1410 : XUhU_1629 | XUhU_1629 free_modifier_32 | error ;
+Modify lerfu_string_root_986 thus:
+
+lerfu_string_root_986 : lerfu_word_987
+;:|  lerfu_string_root_986  lerfu_word_987
+;:|  lerfu_string_root_986  PA_672
+;:|  formatted_lerfu_string_1988
+;:;
