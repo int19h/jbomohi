@@ -1,0 +1,243 @@
+Received: from VMS.DC.LSOFT.COM (vms.dc.lsoft.com [205.186.43.2]) by locke.ccil.org (8.6.9/8.6.10) with ESMTP id HAA13556 for <cowan@LOCKE.CCIL.ORG>; Tue, 27 Feb 1996 07:15:51 -0500
+Message-Id: <199602271215.HAA13556@locke.ccil.org>
+Received: from PEACH.EASE.LSOFT.COM (205.186.43.4) by VMS.DC.LSOFT.COM (LSMTP for OpenVMS v1.0a) with SMTP id D32FA639 ; Tue, 27 Feb 1996 6:39:36 -0500
+Date:         Tue, 27 Feb 1996 06:37:53 -0500
+Reply-To: Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Subject:      delayed response on YACC LR(k) discussion - from Jeff Prothero
+X-To:         lojban@cuvmb.cc.columbia.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+X-Mozilla-Status: 0001
+X-From-Space-Date: Tue Feb 27 12:17:52 1996
+X-From-Space-Address: -
+Content-Length: 10494
+
+A debate a couple of months ago on Lojban as an LR(k) language led me to
+pass the discussion on to Jeff Prothero, who helped do the original
+Loglan parser, and who has been most helpful as a founder of the Lojban
+effort even though he is not reading Lojban List.
+
+Here are his comments.  I don't have the theory to add my two cents in.
+
+>From: jsp@betz.biostr.washington.edu (Jeff Prothero)
+>
+>*laugh*!  I'm not qualified.  But then, Feynman claimed to be ignorant.
+>(Read "No Ordinary Genius" last night, and cried more than I had in some
+>time.  Yup, I'm weird.)
+>
+>| There's a stronger result: any deterministic
+>| context-free language with the prefix property
+>| (i.e. no string of the language is a prefix of any
+>| other string of the same language) has an LR(0)
+>| grammar.
+>
+>Well, for starters, Lojban almost certainly doesn't have the prefix
+>property -- it is chock full of
+>
+>  A connective B
+>
+>forms where A is a valid statement by itself.  No?
+>
+>| The subset of Lojban where all utterances finish
+>| in an explicit FA'O presents the prefix property,
+>| hence it has an LR(0) grammar.
+>
+>Ok, I'll believe this establishes the property.  Would make all the
+>one-word statements in the language into two-word ones, and feel pretty
+>clumsy, of course :)
+>
+>| I think this line of reasoning can be followed to
+>| prove that all deterministic context-free
+>| languages *are* LALR(1).  However, I wish to point
+>| out that this is not a panacea.  The LR(0) grammar
+>| assured by this theorem may reflect a syntax
+>| structure that is entirely different from the
+>| current grammar.
+>
+>Okie, I'm not a math type, nor am I following formal languages or Lojban
+>these days.  But here's one way of looking at what is going on.
+>
+>Section I -- LALR(0) grammars as a programming language -- math take
+>--------------------------------------------------------------------
+>
+>The LALR(0) grammar compiles into a big table with transitions between
+>the states driven by the symbol currently being examined.  This means
+>that
+>
+>1)  You have conditional execution -- you can have
+>    the state machine do different things based on
+>    different situations.
+>
+>2)  You have an arbitrary-size statevector:  You
+>    can always add one more bit to the statevector
+>    just by doubling the number of states.
+>
+>By making appropriate transitions between states, you can implement
+>arbitrary changes to the statevector.  Intuitively, I think you can
+>write arbitrary programs which have N-bits of global variables, for some
+>fixed-at-compiletime N:  We could likely write a program which converted
+>an arbitrary Pascal program using only global variables into an LALR()
+>grammar.
+>
+>I'm not quite sure that this is true; However, it is reasonably clear
+>that we can store arbitrary (but fixed-in-advance) amounts of
+>information in the state machine statevector (in the form of the pointer
+>to the current state).  Hence, any time we have a decision which
+>requires LR(k) lookahead for some fixed K, we can just defer the
+>decision and keep shifting, storing the K symbols in our statevector,
+>until we get to the point where we can make the decision.
+>
+>That's handwaving, not mathematically tight argument, of course, but I
+>think it perhaps explains why the cited result might be true.  (I'm
+>certainly not inclined to doubt Knuth's math!)
+>
+>
+>Section II -- LALR(0) grammars as a programming language -- engineering take
+>----------------------------------------------------------------------------
+>
+>| From a practical point of view, the "hacked" YACC
+>| grammar is more or less fine (some more comments
+>| would make it easier to read).  But we assert that
+>| Lojban is unambiguous and that it can be
+>| reasonably well described by a context-free
+>| grammar; hence, it *should* be possible to show an
+>| LR(1) grammar for it
+>
+>Well, we may need to make a transition from mathematics to engineering
+>here :).  Suppose our alphabet has 128 symbols, and we have an LR(k)
+>grammar where k==5.  This means that storing a that lookahead into the
+>state vector will involve storing 7x5==35 bits.  Storing each additional
+>bit requires doubling the number of grammatical rules involved in the
+>particular construct:  For example, if we want to remember whether we're
+>in a passive or active construction when parsing an infix ruleset, we'll
+>have to make two copies of all the rules in that ruleset, probably
+>calling them ACTIVE_XXX and PASSIVE_XXX.
+>
+>I'm sure you've done this kind of thing often enough to recognize the
+>procedure, lojbab :).  Analytically, what you're doing can be thought of
+>as declaring and using a one-bit local variable in that part of the
+>parsing "code".
+>
+>So, adding our 35 bits of state will require multiplying the number of
+>rules in that part of the grammar by 2^35, or roughly 32 trillion.
+>
+>Mathematically, multiplying the number of rules in a given part of the
+>Lojban grammar by 32 trillion is of course entirely trivial:  It was
+>finite before and it's finite now, and it will work quite nicely.
+>
+>>From an engineering point of view, equally obviously, casually
+>multiplying the number of rules in some part of the grammar by 32
+>trillion is a decidedly nontrivial change:  It increases the disk space
+>needed to store it from kilobytes to terabytes, for starters, and
+>similarly the amount of ram required to store the state machine, and the
+>amount of net bandwidth to download the thing.
+>
+>Exponential growth can be quite stunning :)
+>
+>| Finally, I don't see why Lojbab's afraid of trying
+>| to find such a grammar, as its equivalence (in the
+>| sense of generating the same language) to the
+>| current YACC grammar should be a stated in the
+>| form of a *theorem*, not a gratuitous assertion.
+>| (I don't think the proof would be longer than that
+>| of Fermat's last theorem, or the four-color
+>| theorem for planar graphs :-)
+>
+>Admitting the point, I think -- since the four-color proof was too long
+>for a human to comprehend, and required a lot of computer time just to
+>generate and check.  And I'm not sure there was any element of
+>exponential explosion in there, just a lot of cases to consider.  A
+>Lojban grammar too long for any human to read might be cute, but would
+>it be useful?  :)
+>
+>LALR(1) grammars may be able to express arbitrary Fortran programs, but
+>I think it is clear that for most programs, most of the time, they are
+>an exceedingly opaque way of describing the computation.  They express a
+>very restricted class of computations in a very clean fashion, at the
+>price of being obscenely ill-suited to describing computations outside
+>that domain.
+>
+>IMHO, a significant fraction of the Lojban grammar lies outside that
+>domain, is much more perspicuously described by other computational
+>paradigms, and the current Lojban grammatical description quite properly
+>and pragmatically uses non-LALR descriptions for those parts.  (I'm
+>thinking in particular of various sorts of canonicalization and
+>grammatical "noise" filtering which at least used to be done before
+>turning the LALR(1) machine proper loose on the input.)
+>
+>
+>Section III -- LALR(0) grammars as a programming language -- intuitive take
+>----------------------------------------------------------------------------
+>
+>| any deterministic context-free language with the
+>| prefix property (i.e. no string of the language is
+>| a prefix of any other string of the same language)
+>| has an LR(0) grammar.
+>
+>As with many mathematical statements, the naive intuitive reading may be
+>more impressive than the actuality :)
+>
+>I remember my formal languages class pointing out:
+>
+>-> A finite state machine can recognize a language
+>   consisting of any number k of 'I's.  But it can't
+>   recognize a language consisting of k 'I's followed
+>   by k 'J's.  (E.g., a paren-matching problem.)
+>
+>-> A finite state machine with one stack (our
+>   LALR() grammars, in essence) Can recognize k
+>   'I's followed by k 'J's (the paren-matching problem)
+>   but cannot recognize k 'I's followed by k 'J's
+>   followed by k 'K's (a counting problem).
+>
+>-> A finite state machine with two stacks (a
+>   universal turing machine -- two stacks equal
+>   one infinite tape) can solve the counting
+>   problem, and anything else we know how to
+>   solve.
+>
+>(Penrose thinks quantum effects power intuition, and allow super-Turing
+>results.  I think this extremely dubious.  But quantum effects may
+>possibly reduce the "computational complexity" of some sorts of
+>computations:  The recent work on quantum factoring of integers is
+>strongly suggestive.)
+>
+>The counting problem demonstrates that there are quite trivial languages
+>which are not LALR(k) for any k.
+>
+>It also seems likely to me that some Lojban constructions are not
+>LALR(k) for any k, meaning that Knuth's above-cited proof may not apply
+>anyhow:  Don't we sometimes need to "see over" a parenthetical comment
+>or such which may be of unlimited length, before deciding which
+>reduction to take (reduce/reduce ambiguity) or whether to reduce
+>(shift/reduce ambiguity)?  The preprocessing hacks have no trouble
+>stripping out an arbitrarily long interpolation, since they are written
+>in a Turing-universal language, but it is not clear to me that these
+>parts of the grammatical description can be expressed in pure pushdown
+>form, even in "principle".
+>
+>"Principle" is a funny thing, of course.  For example, we could argue
+>that nobody has ever made a grammatical statement of more than 10^1000
+>words, and nobody ever will, hence the set of strings described "in
+>principle" by any human language is in fact finite, not infinite, and we
+>don't even need LALR(0)-strong mechanisms to recognize human languages,
+>include Lojban:  simple state machines / regular expressions simply
+>listing all acceptable strings in the language are in fact
+>mathematically perfectly sufficient to describe them.
+>
+>We avoid taking this approach not because it is mathematically unsound,
+>but because it is unhelpful and unperspicuous -- explicit effectively
+>infinite lists of strings aren't good ways of describing languages in
+>practice, even if they suffice in principle.
+>
+>I think we similarly avoid LALR(0) descriptions of Lojban not because
+>they are mathematically unsound or impossible, but because they would be
+>unhelpful and unperspicuous -- explicit effectively infinite lists of
+>grammatical rules aren't good ways of describing languages in practice,
+>even if they suffice in principle.
+>
+> :)
+>
+> Cynbe
+
