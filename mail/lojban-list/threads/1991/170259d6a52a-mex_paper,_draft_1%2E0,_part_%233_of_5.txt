@@ -1,0 +1,92 @@
+# mail/lojban-list thread 170259d6a52a-mex_paper,_draft_1%2E0,_part_%233_of_5 | root m0jfamw-0002tvc@snark.thyrsus.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1991-05-21T17:45:58Z | cowan | m0jfamw-0002tvc@snark.thyrsus.com | mail/lojban-list/cur/674847958.170259d6a52a2b4f.jbomohi:2,S
+4.  Forethought Operators (Polish Notation, Functions)
+
+The infix form explained so far is reasonable for many purposes, but it is
+limited and rigid.  It works smoothly only where all operators have exactly
+two operands, and where precedences can either be assumed from context
+or are limited to just two levels, with some help from parentheses.  
+
+But there are many operators which do not have two operands, or which have
+a variable number of operands.  Traditionally, some of these (like negation)
+have been written in the same infix style as the dyadic operators, and
+Lojban can emulate that style through the use of a pair of tricks, the
+null operand "tu'o" and the null operator "ge'a".  The first is suitable
+when there are too few operands, the second when there are too many.
+For example:
+
+	li tu'o va'a ny. du no vu'u ny
+	the number (null) additive-inverse n equals the number zero minus n
+	-n = 0 - n
+
+The "tu'o" fulfills the grammatical requirement for a left operand for "va'a",
+even though semantically none is needed or wanted.
+
+Here is an example using "ge'a", plus several other new features:
+
+	li cinonoki'oki'o du li ci gei bi ge'a pano
+	the-number three-zero-comma-comma equals
+		the-number eight exponential-notation three to-base one-zero
+	                   8
+	300,000,000 = 3 x 10
+
+The operator "gei" takes three operands:  an order of magnitude, a value,
+and a base, in that order.  (This differs from the standard value, base,
+order-of-magnitude order that scientific notation uses.)  Since infix
+notation will not allow three operands, the third operand has to be hooked
+on with "ge'a".  In addition, the left side of the equation illustrates
+the elision of zeros after "ki'o", making "ki'oki'o" a way of saying
+"million".
+
+However, getting the "tu'o"s and "ge'a"s right is annoying.  The alternative
+is the use of "forethought operators", also known as Polish notation.
+In this style of writing mathematics, the operator comes first and the
+operands afterwards.  For example:
+
+	li si'u paboi reboi ciboi du li xa
+	the-number plus one two three equals the-number six
+
+Note the normally elidable number/lerfu terminator, "boi".  This is required
+after "pa" and "re" because otherwise the reading would be "pareci" = 123.
+It is not required after "ci" but is inserted here for symmetry.  The only
+time "boi" is required is, as in this case, when there are two consecutive
+numbers or lerfu strings.
+
+Forethought mekso can use any number of operands, in this case three.
+How do we know how many operands there are in ambiguous circumstances?  The
+usual Lojban solution is employed:  an elidable terminator, in this case "ku'e".
+Example:
+
+	li .abu su'i va'a ny. ku'e su'i zy du li xy
+	the-number a plus additive-inverse( n ) plus z equals the-number x
+	a + -n + z = x
+
+Here the operator "va'a" and the terminator "ku'e" serve as, in effect,
+parentheses.  (The regular parentheses "vei" and "ve'o" are NOT used for
+this purpose.)  If the "ku'e" were omitted, the "su'i zy" would be
+swallowed up by the "va'a" forethought operator, which would then appear
+to have two operands, "ny" and "su'i zy.", where the latter is also a
+forethought operator.
+
+Forethought mekso is also useful for matching standard functional notation.
+How do we represent "y = f(x)"?  The answer is:
+
+	li .ybu du li ma'o fy.boi xy.
+	the-number y equals the-number the-operator f x
+	y = f(x)
+
+Again, no parentheses are used.  The construct "ma'o fy.boi" is the equivalent
+of an operator.  In mathematics, letters sometimes mean functions and
+sometimes mean variables, with only the context to tell which.  Lojban
+chooses to accept the variable interpretation as default, and uses the
+special flag "ma'o" to mark a lerfu as an operator.  "xy" and "ybu" are
+variables, but "fy" is an operator (a function) because "ma'o" is used.
+The "boi" is required because otherwise the "xy" would look like part of
+the operator name.
+
+When using forethought mekso, the optional marker "pe'o" may be placed
+in front of the operator.  This can help avoid confusion by providing
+clearly marked "pe'o" and "ku'e" pairs to delimit the operand list.
+
+
