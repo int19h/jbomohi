@@ -1519,3 +1519,42 @@ Jay Kominek <jkominek@miranda.org>
 
 
 
+
+## 2004-12-18T05:02:59Z — anonymous (@anonymous) (post 3145)
+
+Title: PEG Morphology Algorithm
+Message-Id: 200412172212.48996.phma@phma.hn.org
+
+Here's the comment of one of valfendi's functions, isslinkuhi, which is used 
+in finding the beginning of a brivla (or rejecting a string as not containing 
+a valid brivla) and in checking for a valid fu'ivla rafsi (according to my 
+rule, which allows many arbitrarily long fu'ivla to have rafsi). Below is my 
+attempt at a PEG translation. How is the translation?
+
+phma
+---
+/* A slinku'i, as far as word breaking is concerned, is anything that matches
+   the regex
+   ^C[raf3]*([gim]?$|[raf4]?y)
+   but does not match the regex
+   ^[raf3]*([gim]?$|[raf4]?y)
+   where
+   C matches any consonant
+   [raf3] matches any 3-letter rafsi
+   [raf4] matches any 4-letter rafsi
+   [gim] matches any gismu.
+   Anything after the first 'y' is ignored. It has no effect on where to break 
+the
+   word, only on whether the word is valid. */
+
+slinkuhi <- !(3-letter-rafsi* (gismu? space / long-rafsi? y)) consonant 
+3-letter-rafsi* (gismu? space / long-rafsi? y)
+
+3-letter-rafsi <- CVV-rafsi / CVC-rafsi / CCV-rafsi
+
+-- 
+..i le babzba ba zbasu
+lo jbazbabu lo babjba
+
+
+
