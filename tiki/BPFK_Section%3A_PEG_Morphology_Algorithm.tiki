@@ -172,7 +172,7 @@ semi-consonant <- (i / u) &vowel
 diphthong <- a i / a u / e i / o i
 vowel <- a / e / i / o / u
 
-stress <- (consonant+ y)? syllable spaces
+stress <- (consonant+ y?)? syllable spaces
 stressed <- (h / consonant / y)* semi-consonant? comma* [[AEIOU]
 
 a <- comma* [[aA]
@@ -186,13 +186,29 @@ y <- comma* [[yY]
 
 non-initial-cluster <- !initial-cluster cluster
 
-cluster <- consonant initial-consonant* consonant !consonant
+cluster <- consonant (initial-cluster / consonant) !consonant
 
-initial-cluster <- initial-consonant+ consonant !consonant
+;cluster <- consonant initial-consonant* consonant !consonant
 
-initial-pair <- initial-consonant consonant !consonant
+;initial-cluster <- initial-consonant+ consonant !consonant
 
-initial-consonant <- !l !n !r !(d-t l) consonant &(r / l) / !(s x) !(j n) !(z n) sibilant &consonant / d-t &sibilant !(sibilant consonant)
+;initial-pair <- initial-consonant consonant !consonant
+
+;initial-consonant <- !l !n !r !(d-t l) consonant &(r / l) / !(s x) !(j n) !(z n) sibilant &consonant / d-t &sibilant !(sibilant consonant)
+
+;d-t <- d / t
+
+initial-pair <- &initial-cluster consonant consonant !consonant
+
+initial-cluster <- &(consonant consonant+) (affricate / sibilant? other? liquid?) !consonant
+
+affricate <- t c / t s / d j / d z
+
+liquid <- l / r 
+
+other <- p / t !l / k / f / x / b / d !l / g / v / m / n !liquid 
+
+sibilant <- c / s !x / j !n / z !n
 
 consonant <- voiced-consonant / unvoiced-consonant / l / m / n / r
 
@@ -200,13 +216,9 @@ voiced-consonant <- b / d / g / j / v / z
 
 unvoiced-consonant <- c / f / k / p / s / t / x
 
-sibilant <- c / j / s / z
-
-d-t <- d / t
-
 l <- comma* [[lL] !h !l
 m <- comma* [[mM] !h !m !z
-n <- comma* [[nN] !h !n !(t c) !(t s) !(d j) !(d z)
+n <- comma* [[nN] !h !n !affricate
 r <- comma* [[rR] !h !r
 b <- comma* [[bB] !h !b !unvoiced-consonant
 d <- comma* [[dD] !h !d !unvoiced-consonant
