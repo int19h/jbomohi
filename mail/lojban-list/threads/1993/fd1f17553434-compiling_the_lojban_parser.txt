@@ -1,0 +1,51 @@
+# mail/lojban-list thread fd1f17553434-compiling_the_lojban_parser | root 9310201817.aa24464@albert.gnu.ai.mit.edu | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1993-10-20T19:11:20Z | "Robert J. Chassell" <bob@GRACKLE.STOCKBRIDGE.MA.US> | 199310201915.aa08553@eli.cs.yale.edu | mail/lojban-list/cur/751144280.0ade0e404cca4d84.jbomohi:2,S
+John Cowan noted that:
+
+    ... <malloc.h> which does not exist on ANSI C systems.  The correct
+    ANSI C equivalent is <stdlib.h>. ...
+
+Weirdly enough, I cannot include <stdlib.h> either.  I just
+comment out the
+
+     # include <malloc.h>
+
+line in lojban.h.  It looks like this:
+
+    # include <string.h>
+    /* # include <malloc.h> */
+    # include <ctype.h>
+
+Then the following command:
+
+    gcc -g -traditional -o parser *.c
+
+compiles the parser successfully.  No other changes are required.
+
+I am using the GNU C Compiler version 2.3.3.  Although I installed
+this version of GCC in a plain vanilla manner, various people have
+twiddled with my system so I don't know what is standard and what is
+specific to my machine.  You may have experiment to see what works
+with your system.
+
+
+The parser works fine and is both fun and educational.
+
+For example, `parser -ft' converts the following Lojban:
+
+    .i ko catlu    le kevna be le bitmu be'o    poi ke'a trixe le pixra
+          Look at the cavity in   the wall    which is behind the picture.
+
+into this:
+
+    (i {ko <catlu [(le {<kevna [be (le bitmu KU) be'o]>
+     <poi [ke'a (trixe {<le pixra KU> VAU})] KU'O>} KU) VAU]>})
+
+
+
+    Robert J. Chassell               bob@gnu.ai.mit.edu
+    Rattlesnake Mountain Road        bob@grackle.stockbridge.ma.us
+    Stockbridge, MA 01262-0693 USA   (413) 298-4725
+
+

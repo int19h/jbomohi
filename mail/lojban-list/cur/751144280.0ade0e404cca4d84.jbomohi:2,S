@@ -1,0 +1,64 @@
+Received: from ELI.CS.YALE.EDU by NEBULA.SYSTEMSZ.CS.YALE.EDU via SMTP; Wed, 20 Oct 1993 15:15:20 -0400
+Received: from YALEVM.YCC.YALE.EDU by eli.CS.YALE.EDU via SMTP; Wed, 20 Oct 1993 15:15:14 -0400
+Message-Id: <199310201915.AA08553@eli.CS.YALE.EDU>
+Received: from CUVMB.CC.COLUMBIA.EDU by YaleVM.YCC.Yale.Edu (IBM VM SMTP V2R2)    with BSMTP id 3334; Wed, 20 Oct 93 15:13:13 EDT
+Received: from CUVMB.COLUMBIA.EDU by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with  BSMTP id 5970; Wed, 20 Oct 93 15:15:56 EDT
+Date:         Wed, 20 Oct 1993 15:11:20 EDT
+Reply-To: "Robert J. Chassell" <bob@GRACKLE.STOCKBRIDGE.MA.US>
+Sender: Lojban list <LOJBAN%CUVMB.bitnet@YaleVM.YCC.YALE.EDU>
+From: "Robert J. Chassell" <bob@GRACKLE.STOCKBRIDGE.MA.US>
+Subject:      Compiling the Lojban parser
+X-To:         lojban@cuvmb.cc.columbia.edu
+To: Erik Rauch <rauch>
+In-Reply-To:  <9310201817.AA24464@albert.gnu.ai.mit.edu> (message from Logical               Language Group on Wed, 20 Oct 1993 14:15:02 -0400)
+X-From-Space-Date: Wed Oct 20 11:11:20 1993
+X-From-Space-Address: @YaleVM.YCC.YALE.EDU:LOJBAN@CUVMB.BITNET
+Content-Length: 1361
+
+John Cowan noted that:
+
+    ... <malloc.h> which does not exist on ANSI C systems.  The correct
+    ANSI C equivalent is <stdlib.h>. ...
+
+Weirdly enough, I cannot include <stdlib.h> either.  I just
+comment out the
+
+     # include <malloc.h>
+
+line in lojban.h.  It looks like this:
+
+    # include <string.h>
+    /* # include <malloc.h> */
+    # include <ctype.h>
+
+Then the following command:
+
+    gcc -g -traditional -o parser *.c
+
+compiles the parser successfully.  No other changes are required.
+
+I am using the GNU C Compiler version 2.3.3.  Although I installed
+this version of GCC in a plain vanilla manner, various people have
+twiddled with my system so I don't know what is standard and what is
+specific to my machine.  You may have experiment to see what works
+with your system.
+
+
+The parser works fine and is both fun and educational.
+
+For example, `parser -ft' converts the following Lojban:
+
+    .i ko catlu    le kevna be le bitmu be'o    poi ke'a trixe le pixra
+          Look at the cavity in   the wall    which is behind the picture.
+
+into this:
+
+    (i {ko <catlu [(le {<kevna [be (le bitmu KU) be'o]>
+     <poi [ke'a (trixe {<le pixra KU> VAU})] KU'O>} KU) VAU]>})
+
+
+
+    Robert J. Chassell               bob@gnu.ai.mit.edu
+    Rattlesnake Mountain Road        bob@grackle.stockbridge.ma.us
+    Stockbridge, MA 01262-0693 USA   (413) 298-4725
+
