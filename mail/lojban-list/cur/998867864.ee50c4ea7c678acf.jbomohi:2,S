@@ -1,0 +1,125 @@
+Return-Path: <jimc@math.ucla.edu>
+X-Sender: jimc@math.ucla.edu
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_3_2); 26 Aug 2001 23:17:54 -0000
+Received: (qmail 50567 invoked from network); 26 Aug 2001 23:17:54 -0000
+Received: from unknown (10.1.10.26)
+  by l9.egroups.com with QMQP; 26 Aug 2001 23:17:54 -0000
+Received: from unknown (HELO bodhi.math.ucla.edu) (128.97.4.253)
+  by mta1 with SMTP; 26 Aug 2001 23:17:54 -0000
+Received: from localhost (bodhi.math.ucla.edu [128.97.4.253])
+	by bodhi.math.ucla.edu (8.8.8/8.8.8) with ESMTP id QAA11404
+	for <lojban@yahoogroups.com>; Sun, 26 Aug 2001 16:17:44 -0700 (PDT)
+Date: Sun, 26 Aug 2001 16:17:44 -0700 (PDT)
+Sender: <jimc@xena.cft.ca.us>
+To: <lojban@yahoogroups.com>
+Subject: How grammar is learned
+Message-ID: <Pine.LNX.4.33.0108261530500.2670-100000@xena.cft.ca.us>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Jim Carter <jimc@MATH.UCLA.EDU>
+X-Yahoo-Message-Num: 10148
+Content-Length: 5585
+
+Oops, I was overactive with the "D" key due to the high list traffic, so I
+lost who I'm replying to, but I think it was Craig.  The issue was
+anecdotes about how he feels he learns language.  Here's a theoretical
+article that bears on the point.
+
+Prince, Alan, and Paul Smolensky, "Optimality: From Neural Networks to
+Universal Grammar", Science, vol 275 page 1604 (14 March 1997).
+
+jimc's summary:  Chomsky proposed that language behavior be studied in
+connection with grammar (semantics being recognized but left for later).
+A grammar in Chomsky's sense is a specification in such a form (such as
+BNF) that all valid sentences could potentially be generated from it.  In
+the present article a different approach is taken.  Grammar rules are
+stated as a set of constraints (such as, people like the subject first, or
+people don't like adjacent consonants).  The valid sentences are the ones
+that optimally satisfy those constraints.  (Phonology and syntax are merged
+in this analysis.) The kinds of judgments actually made about sentences
+are a subset of the judgments that could be made, so that it appears that
+the capacity to include certain judgments among the grammatical rules is
+hardwired in the brain. (No quantitative data on this point, but presumably
+it's in the references.)
+
+The optimization is also a special case: strict hierarchy.  Thus a sentence
+that fails a more important rule gets a bad score that cannot be redeemed
+by less important good features.  However, the ranking order of the various
+feature judgments differs from one language to the next, and many features
+are considered irrelevant in one language even though they have high
+ranking in another.  Example, Chinese words absolutely cannot end in a
+consonant (counting r, n, ng as vowels), while English has no compunction
+about that.
+
+There is a pre-existing theory called the "theory of harmony" very similar
+to the above, saying that the valid sentences are those most in harmony
+with a list of grammatical rules.  A neural net is well adapted to
+implement a harmony grammar.
+
+In the Chomskyan view, substantially different programs are needed to
+generate output and to parse input, and the grammar has to be coordinated
+between them. If neural nets are used, consider the "deep" vs. "surface"
+structure (meaning vs. language).  To generate a sentence, fix the deep
+structure signals and read out the surface structure which "means" what you
+keyed in.  To parse, fix the surface structure signals on the same net and
+read out the deep structure.
+
+Young children can parse more complex sentences than they can correctly
+generate.  Of course their neural net weights have not converged to the
+adult values.  When a valid (adult) sentence is keyed into the net's
+surface states, it avoids violating many constraints, and thus more subtle
+details of the sentence (such as semantics) govern what state the deep
+structure assumes.  On the other hand, if the same deep structure were
+keyed in for generation, many of the potential outputs would violate
+important rules due to the flaky weights, and the optimal output would be
+both simple (less potential violations) and of low fidelity compared to
+what an adult could produce.  It is hard to understand the in-out mismatch
+using a Chomskyan grammar theory.  [end]
+
+
+For more on this business of "keying in" input or output state vectors,
+see:
+
+Hinton, Geoffrey E, Peter Dayan, Brendan J. Frey, Radford M. Neal, "The
+Wake-Sleep Algorithm for Unsupervised Neural Networks", Science, vol 268
+(26 May 1995), p. 1158.
+
+Their experiment used U.S. Postal Service "CEDAR" handwritten digit
+samples at 8x8 pixels.  The neural net had 4 layers kind of in duplicate,
+such that the state of each "neuron" in a downstream layer was a function
+of those upstream, but there were also connections from the downstream
+neuron back to a "shadow copy" of the upstream neurons.  Connection weights
+were initially random.
+
+During the "wake" phase, the in->out connections produced whatever
+downstream patterns they wanted, and the out<-in connections were adjusted
+so the shadow copies matched the authentic upstream neurons as closely as
+possible; in particular, the shadow net was rewarded if it could reproduce
+the authentic digit patterns it was seeing.  During the "sleep"  or "dream"
+phase the main net was gated off, outputs (digit choices, 4 bits) were
+activated one pattern at a time, the shadow net reproduced what it could,
+and the in->out connections (with input from the shadow neurons) were
+adjusted so as to reproduce as closely as possible the imposed outputs or
+the resulting inter-layer levels.
+
+This process converged so that most 0's activated one output pattern (4
+bits, binary coded decimal), most 1's activated another, and so on.
+Training consisted of 500 repetitions of 7000 different pictures.
+Afterward, novel pictures were presented and 4.8% of them were classified
+correctly.  This was better than competing algorithms which require human
+judgments in the training process.
+
+Machines dreaming of zipcodes (Post Codes for you Brits) seem surreal, but
+the form of the neural net used matches what is needed to encode and decode
+language according to the model of the first paper.  However, the net
+tested here had four layers of 64, 16, 16, 4 neurons.  I expect it would
+take a lot more than that to handle language.
+
+James F. Carter          Voice 310 825 2897    FAX 310 206 6673
+UCLA-Mathnet;  6115 MSA; 405 Hilgard Ave.; Los Angeles, CA, USA  90095-1555
+Email: jimc@math.ucla.edu    http://www.math.ucla.edu/~jimc (q.v. for PGP key)
+
+
+           
+
