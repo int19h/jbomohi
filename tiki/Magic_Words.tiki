@@ -1,0 +1,185 @@
+This document was originated to provide a clearing house for discussion related to the BPFK Magic Words checkpoint, as well as a place safer than /tmp to store my ongoing description of the magic word interactions, which here follows.
+
+Magic words are all cmavo that interact directly with the nature of the speech stream, so SI SA SU ZO ZOI LOhU LEhU 
+
+The two documents that were used to construct this page are [http://www.lojban.org/files/machine-grammars/grammar.300|grammar.300] (which is a plain text document, and really should be renamed to have .txt after it) and [http://lojban.org/publications/reference_grammar/chapter19.html|RefGram Chapter 19], section 16.
+
+It is worth noting that these two documents contradict each other on many points.
+
+! Outstanding Questions
+
+* Is nested lo'u...le'u allowed?
+* Does zoi function in lo'u...le'u?
+
+! Magic Words Handling
+
+(based on C16 S19 of the RefGram)
+
+In order of precedence:
+
+".y." is completely ignored (i.e. considered whitespace) except
+before "bu".
+
+"zo" quotes the following word, no matter what it is, except ".y".
+
+"si" erases the preceding word unless it is a "zo".  ".y" is
+ignored.
+
+"sa" erases the preceding word and other words, unless the preceding
+word is a "zo".  "sa" erases back until it sees a word of the same
+selma'o as the word that follows "sa".  The previous same-selma'o
+word is itself erased.  ".y." is ignored for selma'o matching
+purposes.
+
+"su" is the same as "sa", but erases back to the beginning of input.
+
+"lo'u" quotes all following Lojban words up to a "le'u" (but not a
+"zo le'u"; this is to allow nested lo'u...le'u quotes inside a
+lo'u...le'u, so you can talk about mistakes you made that include a
+previous error quote).
+
+"le'u" is ungrammatical except at the end of a "lo'u" quotation and
+after "zo".
+
+ZOI cmavo use the following word as a delimiting word, no matter
+what it is (except ".y."), but using "le'u" may create difficulties.
+
+"zei" combines the preceding and the following word into a lujvo,
+but does not affect "zo", "si", "sa", "su", "lo'u", ZOI cmavo,
+"fa'o", "zei", and ".y.".
+
+BAhE cmavo mark the following word, unless it is "si", "sa", or "su"
+(in which case the eraser erases the ba'e, possibly along with other
+things), or unless it is preceded by "zo" (in which case the BAhE
+itself is quoted by "zo", and loses its special effect). Multiple
+BAhE cmavo may be used in succession, in which case they all affect
+the next non-BAhE word.
+
+"bu" makes the preceding word into a lerfu word, except for "zo",
+"si", "sa", "su", "lo'u", ZOI cmavo, "fa'o", "zei", BAhE cmavo,
+"bu". Note that ".y." is specifically included.  Multiple "bu" cmavo
+may be used in succession, in which case a new letteral is formed
+for each additional "bu'".
+
+UI and CAI cmavo mark the previous word, except for "zo", "si",
+"sa", "su", "lo'u", ZOI, "fa'o", "zei", BAhE cmavo, and "bu".
+Multiple UI cmavo may be used in succession. A following "nai" is
+made part of the UI.
+
+"da'o", "fu'e", and "fu'o" are the same as UI, but do not absorb a
+following "nai".
+
+! grammar.300 stuff
+
+   Step 2 - Filtering
+
+   From start to end, performing the following filtering and lexing tasks
+   using the given order of precedence in case of conflict:
+
+   a. If the Lojban word "zoi" (selma'o ZOI) is identified, take the
+   following Lojban word (which should be end delimited with a pause for
+   separation from the following non-Lojban text) as an opening delimiter.
+   Treat all text following that delimiter, until that delimiter recurs
+   *after a pause*, as grammatically a single token (labelled 'anything_699'
+   in this grammar).  There is no need for processing within this text
+   except as necessary to find the closing delimiter.
+
+   b. If the Lojban word "zo" (selma'o ZO) is identified, treat the
+   following Lojban word as a token labelled 'any_word_698', instead of lexing
+   it by its normal grammatical function.
+
+   c. If the Lojban word "lo'u" (selma'o LOhU) is identified, search for
+   the closing delimiter "le'u" (selma'o LEhU), ignoring any such closing
+   delimiters absorbed by the previous two steps.  The text between the
+   delimiters should be treated as the single token 'any_words_697'.
+
+   d. Categorize all remaining words into their Lojban selma'o category,
+   including the various delimiters mentioned in the previous steps.  In
+   all steps after step 2, only the selma'o token type is significant for
+   each word.
+
+   e. If the word "si" (selma'o SI) is identified, erase it and the
+   previous word (or token, if the previous text has been condensed into a
+   single token by one of the above rules).
+
+   f. If the word "sa" (selma'o SA) is identified, erase it and all
+   preceding text as far back as necessary to make what follows attach to
+   what precedes.  (This rule is hard to formalize and may receive further
+   definition later.)
+
+   g. If the word 'su' (selma'o SU) is identified, erase it and all
+   preceding text back to and including the first preceding token word
+   which is in one of the selma'o:  NIhO, LU, TUhE, and TO.  However, if
+   speaker identification is available, a SU shall only erase to the
+   beginning of a speaker's discourse, unless it occurs at the beginning of
+   a speaker's discourse.  (Thus, if the speaker has said something, two
+   "su"'s are required to erase the entire conversation.
+
+
+   Step 3 - Termination
+
+   If the text contains a FAhO, treat that as the end-of-text and ignore
+   everything that follows it.
+
+
+   Step 4 - Absorption of Grammar-Free Tokens
+
+   In a new pass, perform the following absorptions (absorption means that
+   the token is removed from the grammar for processing in following steps,
+   and optionally reinserted, grouped with the absorbing token after
+   parsing is completed).
+
+   a. Token sequences of the form any - (ZEI - any) ..., where there may be
+   any number of ZEIs, are merged into a single token of selma'o BRIVLA.
+
+   b. Absorb all selma'o BAhE tokens into the following token.  If
+   they occur at the end of text, leave them alone (they are errors).
+
+   c. Absorb all selma'o BU tokens into the previous token.  Relabel the
+   previous token as selma'o BY.
+
+   d. If selma'o NAI occurs immediately following any of tokens UI or CAI,
+   absorb the NAI into the previous token.
+
+   e. Absorb all members of selma'o DAhO, FUhO, FUhE, UI, Y, and CAI
+   into the previous token.  All of these null grammar tokens are permitted
+   following any word of the grammar, without interfering with that word's
+   grammatical function, or causing any effect on the grammatical
+   interpretation of any other token in the text.  Indicators at the
+   beginning of text are explicitly handled by the grammar.
+
+   Step 5 - Insertion of Lexer Lexemes
+
+   Lojban is not in itself LALR1.  There are words whose grammatical
+   function is determined by following tokens.  As a result, parsing of the
+   YACC grammar must take place in two steps.  In the first step, certain
+   strings of tokens with defined grammars are identified, and either
+
+   a. are replaced by a single specified 'lexer token' for step 6, or
+
+   b. the lexer token is inserted in front of the token string to identify
+   it uniquely.
+
+   The YACC grammar included herein is written to make YACC generation of a
+   step 6 parser easy regardless of whether a. or b. is used.  The strings
+   of tokens to be labelled with lexer tokens are found in rule terminals
+   labelled with numbers between 900 and 1099.  These rules are defined
+   with the lexer tokens inserted, with the result that it can be verified
+   that the language is LALR1 under option b. after steps 1 through 4 have
+   been performed.  Alternatively, if option a. is to be used, these rules
+   are commented out, and the rule terminals labelled from 800 to 900 refer
+   to the lexer tokens *without* the strings of defining tokens.  Two sets
+   of lexer tokens are defined in the token set so as to be compatible with
+   either option.
+
+   In this step, the strings must be labelled with the appropriate lexer
+   tokens.  Order of inserting lexer tokens *IS* significant, since some
+   shorter strings that would be marked with a lexer token may be found
+   inside longer strings.  If the tokens are inserted before or in place of
+   the shorter strings, the longer strings cannot be identified.
+
+   If option a. is chosen, the following order of insertion works correctly
+   (it is not the only possible order): A, C, D, B, U, E, H, I,
+   J, K, M ,N, G, O, V, W, F, P, R, T, S, Y, L, Q. This ensures that the longest
+   rules will be processed first; a PA+MAI will not be seen as a PA
+   with a dangling MAI at the end, for example.
