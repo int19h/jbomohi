@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4f97921e46bc-my_parser,_si,_sa,_and_zoi | root 20040506003409.gi7020@digitalkingdom.org | 10 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4f97921e46bc-my_parser,_si,_sa,_and_zoi | root 20040506003409.gi7020@digitalkingdom.org | 11 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-05-06T00:34:09Z | Robin Lee Powell <lojban-out@lojban.org> | 20040506003409.gi7020@digitalkingdom.org | mail/lojban-list/cur/1083803649.4f97921e46bc9660.jbomohi:2,S
 Now that I can parse ZOI, it was necessary to figure out what the
@@ -561,6 +561,91 @@ __________________________________
 Do you Yahoo!?
 Win a $20,000 Career Makeover at Yahoo! HotJobs  
 http://hotjobs.sweepstakes.yahoo.com/careermakeover 
+
+
+
+
+           
+
+
+
+=== 11 | 2004-05-07T20:47:25Z | Robin Lee Powell <lojban-out@lojban.org> | 20040507204725.gb27947@digitalkingdom.org | mail/lojban-list/cur/1083962845.1b0e06c13a742501.jbomohi:2,S
+On Fri, May 07, 2004 at 01:38:19PM -0700, Jorge Llamb?as wrote:
+> So both words turn what follows into special tokens, but remain
+> themselves as separate tokens.
+
+Oh, I'm sorry, you are correct.  I thought both 'zo' and the following
+token were eaten, but it's just the following token.
+
+> That's not good. It causes a lot of problems. 
+
+Yeah, no kidding.  I don't do token replacement of any kind, of course,
+as I have no preprocessor.
+
+> All of the following should give error if grammar .300 is followed to
+> the letter:
+> 
+> {zo da si de} 
+> 
+> si will erase the previous token, 'any_word_698', and then 
+> ZO followed by KOhA should give an error.
+
+Correct.  We can't test this because the official parser doesn't have si
+handling.
+
+> {zo da zei de}
+> 
+> zei will join 'any_word_698' and KOhA and turn everything 
+> into BRIVLA, but then ZO followed by BRIVLA should cause 
+> an error.  
+
+No.  This fails, but not for that reason.  ZO processing happens long
+before ZEI, so ZEI tries to bind any_word_698 and KOhA, any_word_698 is
+not allowed as an argument to ZEI in grammar.300
+
+It does, in fact, fail in the official parser.
+
+> {zo da bu}
+> 
+> bu will turn 'any_word_698' into BY, but then ZO followed 
+> by BY should cause an error.
+
+Again, ZO happens first, but BU can't handle any_word_698, so it fails.
+
+It does, in fact, fail in the official parser.
+
+> Similar things will happen with zoi:
+> 
+> {zoi gy sth gy si}
+> 
+> will give an error because si will swallow the 'any_word_698'
+> token 
+
+No; anything_699 (which is what you meant) does *NOT* swallow the
+delimiter, so si will swallow gy, and you end up with 
+"zoi gy anything_699", which won't parse.
+
+Again, not testable.
+
+> I think that the Right Thing is to treat {zo <word>} and {zoi <word>
+> <anything> <word>} as single tokens of selmaho KOhA.
+
+Why KOhA?
+
+> In any case, I don't see any justification for treating {zo} in one
+> way and {zoi} in another.
+
+Neither do I, as zo doesn't actually work the way I thought it did.
+
+<sigh>
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/  ***  I'm a *male* Robin.
+"Many philosophical problems are caused by such things as the simple
+inability to shut up." -- David Stove, liberally paraphrased.
+http://www.lojban.org/  ***  loi pimlu na srana .i ti rokci morsi
 
 
 
