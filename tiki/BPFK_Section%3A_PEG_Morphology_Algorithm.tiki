@@ -54,15 +54,11 @@ gismu <- !cmene stressed-long-rafsi !stressed vowel &post-word !cmene
 
 lujvo <- !cmene !tosmabru (stressed-initial-rafsi short-final-rafsi / initial-rafsi medial-rafsi* final-rafsi) !cmene
 
-;tosmabru <- unstressed-cmavo-form lujvo
+stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi y / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi
 
-tosmabru <- unstressed-cmavo-form (lujvo / brivla-form) / cmavo-form (cmavo-form / spaces)
+initial-rafsi <- (fuhivla-rafsi / long-rafsi y / CVC-rafsi y? / CCV-rafsi / CVV-rafsi) &consonant
 
-stressed-initial-rafsi <- stressed-fuhivla-rafsi / stressed-long-rafsi y / stressed-CVC-rafsi y? / stressed-CCV-rafsi / stressed-CVV-rafsi r-hyphen?
-
-initial-rafsi <- (fuhivla-rafsi / long-rafsi y / CVC-rafsi y? / CCV-rafsi / CVV-rafsi r-hyphen?) &consonant
-
-medial-rafsi <- !fuhivla !gismu initial-rafsi &consonant
+medial-rafsi <- !fuhivla !gismu !stressed-initial-rafsi initial-rafsi &consonant
 
 final-rafsi <- fuhivla / gismu / CVV-final-rafsi / stressed-initial-rafsi short-final-rafsi
 
@@ -71,14 +67,20 @@ CVV-final-rafsi <- consonant stressed-vowel h !stressed vowel &post-word
 short-final-rafsi <- !stressed (consonant diphthong / initial-pair vowel) &post-word
 
 stressed-long-rafsi <- (stressed-CCV-rafsi / stressed-CVC-rafsi) consonant 
+
 stressed-CVC-rafsi <- consonant stressed-vowel consonant !any-fuhivla-rafsi
+
 stressed-CCV-rafsi <- initial-pair stressed-vowel !any-fuhivla-rafsi
-stressed-CVV-rafsi <- consonant (unstressed-vowel h stressed-vowel / stressed-diphthong) !any-fuhivla-rafsi !(r-hyphen any-fuhivla-rafsi)
+
+stressed-CVV-rafsi <- consonant (unstressed-vowel h stressed-vowel / stressed-diphthong) r-hyphen? !any-fuhivla-rafsi
 
 long-rafsi <- (CCV-rafsi / CVC-rafsi) consonant 
+
 CVC-rafsi <- consonant unstressed-vowel consonant !any-fuhivla-rafsi
+
 CCV-rafsi <- initial-pair unstressed-vowel !any-fuhivla-rafsi
-CVV-rafsi <- consonant (unstressed-vowel h unstressed-vowel / unstressed-diphthong) !any-fuhivla-rafsi !(r-hyphen any-fuhivla-rafsi)
+
+CVV-rafsi <- consonant (unstressed-vowel h unstressed-vowel / unstressed-diphthong) r-hyphen? !any-fuhivla-rafsi
 
 r-hyphen <- r &consonant / n &r
 
@@ -96,7 +98,7 @@ stressed-fuhivla-rafsi-C <- unstressed-cmavo-form stressed-slinkujy
 
 stressed-fuhivla-rafsi-D <- !stressed-slinkujy initial-cluster unstressed-syllable* stressed-syllable consonant+ y 
 
-stressed-lujvy <- (CVV-rafsi r-hyphen)? y-less-rafsi* stressed-y-rafsi
+stressed-lujvy <- y-less-rafsi* stressed-y-rafsi
 stressed-slinkujy <- !stressed-lujvy consonant y-less-rafsi* stressed-y-rafsi
 stressed-y-rafsi <- stressed-long-rafsi y / stressed-CVC-rafsi y
 
@@ -110,7 +112,7 @@ fuhivla-rafsi-C <- unstressed-cmavo-form slinkujy
 
 fuhivla-rafsi-D <- !slinkujy initial-cluster unstressed-syllable+ consonant+ y 
 
-lujvy <- (CVV-rafsi r-hyphen)? y-less-rafsi* y-rafsi
+lujvy <- y-less-rafsi* y-rafsi
 slinkujy <- !lujvy consonant y-less-rafsi* y-rafsi
 y-rafsi <- long-rafsi y / CVC-rafsi y 
 
@@ -118,21 +120,9 @@ y-less-rafsi <- CVC-rafsi / CCV-rafsi / CVV-rafsi
 
 ;-------------------------------------------------------------------
 
-;fuhivla <- !cmene !gismu !lujvo !tosmabru (fuhivla-A / fuhivla-B / fuhivla-C / fuhivla-D) !cmene
+fuhivla <- !cmene !gismu !lujvo !tosmabru !slinkuhi !non-initial-cluster unstressed-syllable* stressed-syllable !stressed syllable &post-word !cmene
 
-;fuhivla-A <- stressed-cmavo-form cluster syllable &post-word
-
-;fuhivla-B <- unstressed-cmavo-form non-initial-cluster fuhivla-tail
-
-;fuhivla-C <- unstressed-cmavo-form slinkuhi
-
-;fuhivla-D <- !slinkuhi initial-cluster fuhivla-tail
- 
-;fuhivla-tail <- unstressed-syllable* stressed-syllable syllable &post-word
-
-fuhivla <- !gismu !lujvo brivla-form
-
-brivla-form <- !cmene !tosmabru !slinkuhi !non-initial-cluster unstressed-syllable* stressed-syllable !stressed syllable &post-word !cmene
+tosmabru <- unstressed-cmavo-form (lujvo / fuhivla) / cmavo-form (cmavo-form / spaces)
 
 slinkuhi <- !lujvo consonant !any-fuhivla-rafsi medial-rafsi* final-rafsi 
 
