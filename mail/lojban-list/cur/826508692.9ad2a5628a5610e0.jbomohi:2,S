@@ -1,0 +1,141 @@
+Received: from punt4.demon.co.uk by stryx.demon.co.uk with SMTP
+	id AA10782 ; Tue, 12 Mar 96 00:05:06 GMT
+Received: from punt-4.mail.demon.net by mailstore for ia@stryx.demon.co.uk
+          id 826509125:03055:0; Mon, 11 Mar 96 01:52:05 GMT
+Received: from cunyvm.cuny.edu ([128.228.1.2]) by punt-4.mail.demon.net
+          id aa02777; 11 Mar 96 1:51 GMT
+Received: from CUVMB.CC.COLUMBIA.EDU by CUNYVM.CUNY.EDU (IBM VM SMTP V2R3)
+   with BSMTP id 4075; Sun, 10 Mar 96 20:50:29 EST
+Received: from CUVMB.COLUMBIA.EDU by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with
+ BSMTP id 7234; Sun, 10 Mar 96 20:50:53 EDT
+Date:         Sun, 10 Mar 1996 20:44:52 -0500
+Reply-To:     John Cowan <cowan@LOCKE.CCIL.ORG>
+Sender:       Lojban list <LOJBAN%CUVMB.bitnet@CUNYVM.CUNY.EDU>
+From:         John Cowan <cowan@LOCKE.CCIL.ORG>
+Subject:      TECH: PROPOSED GRAMMAR CHANGE 2$i
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Multiple recipients of list LOJBAN <LOJBAN%CUVMB.bitnet@CUNYVM.CUNY.EDU>
+Message-ID: <826509068.2777.0@cunyvm.cuny.edu>
+Content-Length: 4160
+
+
+CHANGE 45
+
+CURRENT LANGUAGE:
+
+Grammatically, I and ijek are treated identically, although in the
+semantics, I constitutes a stronger boundary.
+
+Prenexes can be attached only to sentences or to TUhE...TUhU groups, although
+logically a prenex can persist across several sentences connected by
+ijeks.
+
+PROPOSED CHANGE:
+
+Treat I as a higher-priority break than ijek (which is higher than
+I+BO or ijek+BO; no distinction is made between I+BO and ijek+BO).
+
+Shift all the sentence fragments (the forms of utterance_20 which are not
+sentence_40) to a higher level; they can only be connected by I, not by any
+lower-level form.
+
+Attach prenexes to the new level "statement_11"; statements contain ijeks
+and I+BOs, but not bare Is.
+
+RATIONALE:
+
+1) It has always been a rule that I and ijek have different semantic
+implications: I is a pure separator, whereas ijek connects as well as
+separating.  In particular, logical variables persist across ijek
+boundaries always, but (by default) not across I boundaries.  This change
+makes the grammar reflect the semantics.
+
+2) Logically connecting sentence fragments never did make very much sense,
+but was allowed because of the lack of distinction between I and ijek.
+
+
+3c3
+<      THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-44 DATED 6 JANUARY 1996
+---
+>      THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-43 DATED 6 JANUARY 1996
+19c19
+<   grammar.244
+---
+>   grammar.245
+164c164
+<    J, K, M ,N, G, O, V, W, F, P, R, S, Y, L, Q. This ensures that the longest
+---
+>    J, K, M ,N, G, O, V, W, F, P, R, T, S, Y, L, Q. This ensures that the
+ longest
+342,343c342,343
+< %token lexer_S_719      /*        flags an I, not BO */
+< /* %token lexer_T_720   /* null */
+---
+> %token lexer_S_719      /*        flags simple I */
+> %token lexer_T_720      /*        flags I_JEK */
+369,370c369,370
+< /*%token lexer_S_995    /*        :  lexer_S_719  I_root_996 */
+< /*%token lexer_T_1000   /* null */
+---
+> /*%token lexer_S_995    /*        :  lexer_S_719  I_545 */
+> /*%token  lexer_T_1000  /*        :  lexer_T_720  I_545  simple_JOIK_JEK_957
+ */
+396a397
+>                         |  I_JEK_820  text_B_2
+420,421c421,423
+< paragraph_10          :  paragraph_A_11
+<                         |  paragraph_10  I_819  paragraph_A_11
+---
+> paragraph_10            :  statement_11
+>                         |  paragraph_10  I_819  statement_11
+>                         |  paragraph_10  I_819  fragment_20
+428,433c430,431
+< paragraph_A_11          :  paragraph_B_12
+<                         |  paragraph_B_12  I_BO_811  paragraph_A_11
+<                         |  paragraph_B_12  I_BO_811
+<                         /* this last fixes an erroneous start to a sentence,
+<                            and permits incomplete JOIK_JEK after I, as well
+<                            in answer to questions on those connectives  */
+---
+> statement_11            :  statement_A_12
+>                         |  prenex_30  statement_11
+436c434,444
+< paragraph_B_12          :  utterance_20
+---
+> statement_A_12          :  statement_B_13
+>                         |  statement_A_12  I_JEK_820  statement_B_13
+>                         |  statement_A_12  I_JEK_820
+>                         ;
+>
+> statement_B_13          :  statement_C_14
+>                         |  statement_C_14  I_BO_811  statement_B_13
+>                         |  statement_C_14  I_BO_811
+>                         ;
+>
+> statement_C_14          :  sentence_40
+438d445
+<                         |  prenex_30  TUhE_610  text_B_2  TUhU_gap_454
+443c450
+< utterance_20            :  EK_802
+---
+> fragment_20             :  EK_802
+453d459
+<                         |  sentence_40
+459d464
+<                         |  terms_80  ZOhU_628  free_modifier_32
+506d510
+<                         |  prenex_30  sentence_40
+1240a1245,1248
+> I_JEK_820               :  lexer_T_1000
+>                         |  lexer_T_1000  free_modifier_32
+>                         ;
+>
+1492c1500,1503
+< lexer_S_995             :  lexer_S_719  I_root_956
+---
+> lexer_S_995             :  lexer_S_719  I_545
+>                         ;
+>
+> lexer_T_1000            :  lexer_T_720  I_545  simple_JOIK_JEK_957
+
+
