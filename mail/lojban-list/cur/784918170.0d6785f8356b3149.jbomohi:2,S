@@ -1,0 +1,149 @@
+From: Logical Language Group <lojbab>
+Message-Id: <199411151649.AA22393@access2.digex.net>
+Subject: PROPOSAL: Lambda Notation For Dummies (and & Rosta) & Lojban
+Date: Tue, 15 Nov 1994 11:49:30 -0500 (EST)
+Cc: lojbab@access.digex.net (Logical Language Group)
+X-Mailer: ELM [version 2.4 PL24beta]
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-From-Space-Date: Tue Nov 15 11:59:20 1994
+X-From-Space-Address: lojbab
+Content-Length: 4824
+
+Those who are geniuses (i.e. already understand lambda notation) should
+skip the first half of this, but look at the second half, after the "======".
+
+Lambda notation is essentially a gimmick for writing down functions without
+using names.  Consider the mathematical function "squared": 2 squared is 4,
+11 squared is 121, etc.  The usual way of writing the definition of this
+function is:
+
+1)	x squared = x * x
+
+where "*" substitutes for the multiplication sign, as usual in ASCII.
+There is an implication that the "x" on both sides of the equation
+means the same thing, and further more that it has no special significance
+except this sameness.  It would be equally to the purpose to write:
+
+2)	y squared = y * y
+
+and this definition of "squared" is exactly the same as Example 1.
+
+By introducing lambda, we manage to get the uses of the variable all on
+one side of the equation, thus:
+
+3)	squared = \lambda(x) x * x
+
+or, with the same meaning:
+
+4)	squared = \lambda(y) y * y
+
+but not of course
+
+5)	squared' = \lambda(x) y * y
+
+In Example 5, "squared-prime" is a function which returns the square of y,
+whatever y may be (presumably a free variable defined externally to this paper),
+and totally ignores its argument.
+
+So we see that \lambda(x) behaves formally like (Ex) or (Ax), in that it
+binds a variable locally.  Semantically, however, it is quite different: it
+produces not a quantification over an open sentence, but a function defined
+by an open sentence.
+
+(That's all that Lojban needs: you can skip down to "======" if you want.)
+
+Suppose we want to talk about functions of two arguments?  Consider "sum",
+defined as:
+
+6)	sum(x)(y) = x + y
+
+(The motivation for the notation "sum(x)(y)" rather than the usual "sum(x,y)"
+will become apparent in a moment.)  The lambda-fication of Example 6 is:
+
+7)	sum = \lambda(x) \lambda(y) x + y
+
+How to understand Example 7?  It says that "sum" is a function with one
+argument, called "x", whose value is >another function<.  This other
+function, which has no name, takes one argument called "y" whose value is
+the sum of the argument and "x".  Local scoping guarantees that the "x"
+in question is that constructed by the outer lambda.  Let us take a concrete
+example:  What is the value of
+
+8)	sum(2)(3)
+
+By expanding the inner part, "sum(2)", we get:
+
+9)	(\lambda(y) 2 + y)(3)
+        ------------------
+
+The underlined part is a function without a name, the value of "sum(2)".
+I have parenthesized it for clarity.  This nameless function, which could
+be called "increase-by-two", is then applied to the argument 3 to produce:
+
+10)	2 + 3
+
+which is
+
+11)	5
+
+So we get the expected answer in the end.  "Lambda calculus", which is not
+explained here, is a branch of mathematics that treats everything as a
+function, including even constants ("2" is rewritten as "\lambda(x) 2", i.e.
+a function which ignores its argument and always returns 2).  There are various
+rules of inference, including the idea that lambda-expressions may have
+their variables changed as long as the change is consistent and doesn't
+interfere with any inner lambda expressions ("alpha-conversion").
+
+======
+
+The Lojban analogue of lambda functions shows up with properties.  Consider
+the selbri "mamta", with place structure "x1 is the mother of x2".  The
+most obvious property here is
+
+11)	the property of being a mother
+
+focused on the x1 place; however, there is also
+
+12)	the property of having a mother
+
+focused on the x2 place.  Both of these are "le ka mamta".  If we want
+to look at more specific properties, like "being the mother of Jack" or
+"having Jill as a mother", we can disambiguate:
+
+13)	le ka mamta la djek.
+	the property-of being-a-mother of-Jack
+
+14)	le ka le djil. mamta
+	the property-of Jill being-the-mother [of-someone].
+
+In Examples 13 and 14, the sumti on which the property is focused is indicated
+by elision, but if the question "What is elided?" is asked, no answer is
+forthcoming: "zo'e" just begs the question, and "da" introduces unwanted
+existential quantification.  In the past, proposals have been made to overload
+the use of "kau" (currently used for indirect questions, and proposed for
+indirect commands as well).
+
+This proposal involves creating an explicit "lambda quantifier", which would
+formally belong to selma'o PA but would be attached only to da-series KOhA
+or BY cmavo.  Call it "xa'e" temporarily.  Using it, Example 11
+can be translated:
+
+15)	le ka xa'eda mamta [zo'e]
+
+and Example 12:
+
+16)	le ka [zo'e] mamta xa'eda
+
+Likewise, in the mekso domain, we can express Example 9 as:
+
+17)	li na'u xa'e da zo'u nu'a pi'i da da te'u ci
+	the-number (the-operator \lambda (X) : the-product-of X and-X) of-3
+
+(This formulation is off the cuff, and may contain errors.)
+
+-- 
+John Cowan		sharing account <lojbab@access.digex.net> for now
+		e'osai ko sarji la lojban.
+
