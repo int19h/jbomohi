@@ -1,0 +1,57 @@
+Return-Path: <richard@rrbcurnow.freeuk.com>
+X-Sender: richard@rrbcurnow.freeuk.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_0_4); 11 Mar 2001 22:43:31 -0000
+Received: (qmail 25492 invoked from network); 11 Mar 2001 22:43:29 -0000
+Received: from unknown (10.1.10.26) by l9.egroups.com with QMQP; 11 Mar 2001 22:43:29 -0000
+Received: from unknown (HELO s1.uklinux.net) (212.1.130.11) by mta1 with SMTP; 11 Mar 2001 22:43:28 -0000
+Received: from rrbcurnow.freeuk.com (root@ppp-1-15.cvx1.telinco.net [212.1.136.15]) by s1.uklinux.net (8.11.2/8.11.1) with ESMTP id f2BMhPr16301 for <lojban@yahoogroups.com>; Sun, 11 Mar 2001 22:43:26 GMT
+Envelope-To: <lojban@yahoogroups.com>
+Received: from richard by rrbcurnow.freeuk.com with local (Exim 2.02 #2) id 14cEWg-0000Dn-00 for lojban@yahoogroups.com; Sun, 11 Mar 2001 22:41:22 +0000
+Date: Sun, 11 Mar 2001 22:41:22 +0000
+To: lojban@yahoogroups.com
+Subject: Re: [lojban] How do you parse lujvo into the component rafsi?
+Message-ID: <20010311224122.B703@rrbcurnow.freeuk.com>
+Reply-To: Richard Curnow <rpc@myself.com>
+Mail-Followup-To: lojban@yahoogroups.com
+References: <002d01c0a920$b720c680$825681ce@wlink.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.2i-nntp
+In-Reply-To: <002d01c0a920$b720c680$825681ce@wlink.net>; from seidensticker@msn.com on Fri, Mar 09, 2001 at 09:12:33PM -0800
+Sender: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-eGroups-From: Richard Curnow <rpc@myself.com>
+From: Richard Curnow <richard@rrbcurnow.freeuk.com>
+X-Yahoo-Message-Num: 5760
+Content-Length: 1421
+
+On Fri, Mar 09, 2001 at 09:12:33PM -0800, seidensticker wrote:
+> I'm working on an algorithm for breaking a lujvo into its component
+> parts.  (My goal: given an unknown lujvo, break it up into parts and
+> display the definitions of each of those parts.)  Chapter 4, section
+> 11 of the grammar book ("The lujvo-making algorithm") talks about
+> creating lujvo, but my question is about the reverse.  Is there a
+> place where this is simply described?
+
+Another "rival" piece of source code you might want to look at is within
+my "jbofi'e" program, available at
+http://www.rrbcurnow.freeuk.com/jbofihe.  There is an algorithm of sorts
+within the split_lujvo function in canonluj.c for breaking lujvo into
+constituent rafsi.  This algorithm is pretty lax about whether consonant
+clusters etc are valid or not.  It assumes the "lujvo" it has been given
+to break up is valid in the first place.   To do the legality checking
+(in the early stages of processing the input), a fairly complex
+automatically generated state machine is used - see morf.c, morf_nfa.in
+and the builder sources in the n2d subdirectory.  BTW, a new release is
+hopefully going to appear quite soon now.
+
+-- 
+----------------------------------------------------------------------
+Richard P. Curnow                                       rpc@myself.com
+Weston-super-Mare
+United Kingdom                            http://go.to/richard.curnow/
+
+
+           
+
