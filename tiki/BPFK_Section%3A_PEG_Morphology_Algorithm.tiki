@@ -123,19 +123,21 @@ cmavo <- consonant? vowel-y (h? vowel-y)*
 
 ;-------------------------------------------------------------------
 
-vowel-y <- a / e / i / o / u / y
-
 stressed-diphthong <- (i / u) stressed-vowel / stressed-rafsi-diphthong
 
-stressed-rafsi-diphthong <- [[AEO] comma* i / [[A] comma* u
+stressed-rafsi-diphthong <- &stressed  (a i / a u / e i / o i)
 
-stressed-vowel <- [[AEIOU] comma* !a !e !o !y
+stressed-vowel <- &stressed !y vowel-y
 
 diphthong <- (i / u) vowel / rafsi-diphthong
 
-rafsi-diphthong <- [[aeo] comma* i / [[a] comma* u
+rafsi-diphthong <- !stressed (a i / a u / e i / o i)
 
-vowel <- [[aeiou] comma* !a !e !o !y
+vowel <- !stressed !y vowel-y
+
+vowel-y <- a / e / i / o / u / y
+
+stressed <- [[AEIOUY]
 
 a <- [[aA] comma* !a !e !o !y
 e <- [[eE] comma* !a !e !o !u !y
