@@ -1,0 +1,36 @@
+Return-Path: <cowan>
+Message-Id: <m0je9yq-0003KsC@snark.thyrsus.com>
+From: cowan (John Cowan)
+Subject: Re: Machine grammar and elidables
+To: lojban-list
+Date: Fri, 17 May 91 14:56:45 EDT
+In-Reply-To: <9105171317.AA01341@bigd.cray.com>; from "bigd.cray.com!dmb" at May 17, 91 8:17 am
+X-Mailer: ELM [version 2.2 PL13]
+X-From-Space-Date: Fri May 17 14:57:37 1991
+X-From-Space-Address: cowan
+Content-Length: 1103
+
+David Bowen writes:
+>    I was looking at this issue a few weeks ago.  I concluded that we could
+> eliminate "cu" with only a minor change in the grammar, without introducing
+> any ambiguities.
+
+In the grammar the parser actually implements, "cu" is no longer an elidable
+in the formal sense -- it is actually optional, i.e. there are separate
+rules for cu-present and cu-omitted.  That's why your test worked.
+"fa'o" is also now treated specially, not as a regular elidable.
+
+As for the others, "ku'o" is the only one known to be always elidable
+if nothing else is elided.  All the others are needed at least sometimes,
+and we keep "ku'o" for symmetry and because it sometimes makes it possible
+to elide more than one consecutive terminator by inserting it.
+
+We didn't define the elidables for fun.  All of them, modulo the three
+special cases here, are required to keep conflicts out of the grammar.
+Many were put in specifically because the presence of conflicts was
+reported during machine-grammar development.
+
+-- 
+cowan@snark.thyrsus.com		...!uunet!cbmvax!snark!cowan
+		e'osai ko sarji la lojban
+
