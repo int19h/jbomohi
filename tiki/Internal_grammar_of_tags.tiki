@@ -1,7 +1,9 @@
-__Grammar simplification proposal__, by ((xorxes))
+__Tense grammar simplification proposal__, by ((xorxes))
 
 !!Current grammar:
 
+^ 
+   tense-modal = simple-tense-modal # | FIhO # selbri /FEhU#/ 
    simple-tense-modal = [[NAhE] [[SE] BAI [[NAI] [[KI]
                       | [[NAhE] (time [[space] | space [[time]) & CAhA [[KI]
                       | KI
@@ -13,10 +15,12 @@ __Grammar simplification proposal__, by ((xorxes))
    space-interval = ((VEhA & VIhA) [[FAhA [[NAI]]) & space-int-props
    space-int-props = (FEhE interval-property) ...
    interval-property = number ROI [[NAI] | TAhE [[NAI] | ZAhO [[NAI]
+^
 
 !!Proposed grammar:
 
-   simple-tense-modal = ([[NAhE] [[SE] tag-unit [[NAI]) ...
+^
+   tense-modal = ([[NAhE] [[SE] tag-unit [[NAI] #) ...
    tag-unit = BAI
             | CAhA
             | CUhE
@@ -31,25 +35,19 @@ __Grammar simplification proposal__, by ((xorxes))
             | [[FEhE] number ROI
             | [[FEhE] TAhE
             | [[FEhE] ZAhO
+            | FIhO # selbri /FEhU/ 
+^
 
 !!Rationale:
 
 !!!SE-conversion
-Every tag-unit can be used as a tag, and therefore as a connective.
-It is arbitrary and inconvenient that SE is currently disallowed with
-some tags.
+Every tag-unit can be used as a tag, and therefore as a connective. It is arbitrary and inconvenient that SE is currently disallowed with some tags.
 
 !!!NAhE
-That {NAhE PU}, {NAhE CAhA} and {NAhE PU CAhA} are all allowed, but {NAhE PU NAhE CAhA}
-is disallowed is arbitrary and inconvenient. Similarly for other combinations.
+{NAhE PU}, {NAhE CAhA} and {NAhE PU CAhA} are all allowed, but{NAhE PU NAhE CAhA} is not. This is arbitrary and inconvenient. Similarly for other combinations.
 
 !!!Order of units
-{co'a no'a broda} "starting to typically broda" is allowed, but
-{no'a co'a broda} "typically starting to broda" is not. It will be accepted by the parser, but parsed as {no'aku co'a broda}.
-Similarly for all other order restrictions.
-Note: arbitrary combinations of tag-units are already allowed in selbri-tags as long as
-there is an intervening {ja'a}, for example: {no'a ja'a co'a broda} is allowed,
-without ku's.
+{co'a no'a broda} "starting to typically broda" is allowed, but {no'a co'a broda} "typically starting to broda" is not. It will be accepted by the parser, but parsed as {no'aku co'a broda}. Similarly for all other order restrictions. Note: arbitrary combinations of tag-units are already allowed in selbri-tags as long as there is an intervening {ja'a}, for example: {no'a ja'a co'a broda} is allowed, without ku's.
 
 !!!NAI
 There's no good reason to allow it selectively here and there instead of everywhere.
@@ -59,7 +57,11 @@ Fully compatible. Everything currently grammatical remains grammatical.
 
 --------------------
 
-__Note:__ In the original proposal I had kept PU [[ZI], FAhA [[VA], ZEhA [[PU], VEhA [[FAhA] and VIhA [[FAhA] as separate forms because I thought their compound meaning might follow special compositional rules. I don't think that is the case, though. Just as the Imaginary Journey composition follows the ordinary left-to-right scope rule, these componds follow the rule too. For example {ze'u pu} indicates a long duration of an event in the past of some reference point, where the event is in the past for the whole duration.
+!!Notes
+
+#In the original proposal I had kept PU [[ZI], FAhA [[VA], ZEhA[[PU], VEhA [[FAhA] and VIhA [[FAhA] as separate forms because I thought their compound meaning might follow special compositional rules. I don't think that is the case, though. Just as the Imaginary Journey composition follows the ordinary left-to-right scope rule, these componds follow the rule too. For example {ze'u pu} indicates a long duration of an event in the past of some reference point, where the event is in the past for the whole duration.
+
+#Originally I had only redefined the simple-tense-modal, but since the exclusion of FIhO-modals from the general case was due to the LR(1) restriction which no longer applies, we can now generalize the full tense-modal. 
 
 --------------------
 (comments)
