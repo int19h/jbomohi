@@ -1,0 +1,49 @@
+Return-Path: <@FINHUTC.HUT.FI:LOJBAN@CUVMB.BITNET>
+Received: from FINHUTC.hut.fi by xiron.pc.helsinki.fi  with smtp
+	(Linux Smail3.1.28.1 #14) id m0pfDbx-0000R2C; Fri, 11 Mar 94 22:15 EET
+Message-Id: <m0pfDbx-0000R2C@xiron.pc.helsinki.fi>
+Received: from FINHUTC.HUT.FI by FINHUTC.hut.fi (IBM VM SMTP V2R2)
+   with BSMTP id 0795; Fri, 11 Mar 94 22:14:56 EET
+Received: from SEARN.SUNET.SE (NJE origin MAILER@SEARN) by FINHUTC.HUT.FI (LMail V1.1d/1.7f) with BSMTP id 0792; Fri, 11 Mar 1994 22:14:56 +0200
+Received: from SEARN.SUNET.SE (NJE origin LISTSERV@SEARN) by SEARN.SUNET.SE
+ (LMail V1.2a/1.8a) with BSMTP id 2789; Fri, 11 Mar 1994 21:13:52 +0100
+Date:         Fri, 11 Mar 1994 15:13:50 -0500
+Reply-To:     Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Sender:       Lojban list <LOJBAN%CUVMB.bitnet@FINHUTC.hut.fi>
+From:         Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Subject:      Lojban and LALR(1)ity
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Content-Length: 1535
+Lines: 29
+
+Jorge and Matthew have both brought up the question "Why should Lojban be
+limited to LALR(1) parsability?"  The answer is very simple and practical.
+
+We have a technique, namely the use of Yacc, for testing if a language meets
+this specification.  Yacc and its relatives (Byacc and Bison) are available
+on just about every platform.  The same cannot be said of any more powerful
+parser-generator program.
+
+History shows that Loglan did not, in fact, become unambiguously machine
+parsable until the use of Yacc was introduced into the Project.  Before
+that, we had various grammars which were claimed to be unambiguous but
+in fact failed the test.
+
+We already allow small extensions to LALR(1) parsability, through the
+preprocessor section of the grammar.  In particular, the logical connectives
+themselves (the jeks, joiks, geks, etc.) are not LALR(1).  But all of these
+are essentially bounded; any unboundedness is of a simple iterative, not
+recursive, kind.  (Example: the preparser allows unboundedly long numbers
+to be processed, but numbers have no internal structure.)
+
+Overusing preprocessing is dangerous: the second baseline grammar, in fact,
+fails to parse "re pamai boi gerku" = "two (firstly) dogs" correctly.
+This error was completely missed by Yacc, and was caught only by an actual
+example.  Change 6 grew out of this: the new grammar calls for "reboi pamai
+gerku", which can be parsed correctly.
+
+--
+John Cowan              sharing account <lojbab@access.digex.net> for now
+                e'osai ko sarji la lojban.
+
