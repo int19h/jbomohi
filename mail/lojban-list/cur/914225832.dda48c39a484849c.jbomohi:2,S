@@ -1,0 +1,95 @@
+Received: from spooler by stryx.demon.co.uk (Mercury/32 v2.01); 21 Dec 98 20:16:27 +0000
+Return-path: <bounce-lojban--112-ia=STRYX.DEMON.CO.UK@onelist.com>
+Received: from punt-11.mail.demon.net (194.217.242.34) by stryx.demon.co.uk (Mercury/32 v2.01);
+   21 Dec 98 20:16:17 +0000
+Received: from punt-1.mail.demon.net by mailstore for ia@stryx.demon.co.uk
+          id 914225926:10:19990:1; Mon, 21 Dec 98 07:38:46 GMT
+Received: from pop.onelist.com ([209.207.164.159]) by punt-1.mail.demon.net
+           id aa1019892; 21 Dec 98 7:38 GMT
+Received: (qmail 6145 invoked by alias); 21 Dec 1998 07:48:31 -0000
+Received: (qmail 6129 invoked from network); 21 Dec 1998 07:48:28 -0000
+Received: from unknown (HELO curnow.demon.co.uk) (158.152.181.99) by pop.onelist.com with SMTP; 21 Dec 1998 07:48:28 -0000
+Received: from richard by curnow.demon.co.uk with local (Exim 2.02 #2) id 0zrztx-000039-00; Mon, 21 Dec 1998 07:37:13 +0000
+To: lojban@onelist.com
+References: <199812210704.CAA06313@stmpy.cais.net>
+From: Richard Curnow <richard@curnow.demon.co.uk>
+Date: 21 Dec 1998 07:37:12 +0000
+In-Reply-To: "Bob LeChevalier's message of Mon, 21 Dec 1998 02:00:26 -0500
+Message-ID: <m2u2yqaqtz.fsf@curnow.demon.co.uk>
+X-Mailer: Gnus v5.3/Emacs 19.34
+Mailing-List: list lojban@onelist.com; contact lojban-owner@onelist.com
+Delivered-To: mailing list lojban@onelist.com
+Precedence: bulk
+List-Unsubscribe: <mailto:lojban-unsubscribe@ONElist.com>
+Mime-Version: 1.0
+Subject: [lojban] Re: lujvo making and the 'tosmabru failure' test
+X-PMFLAGS: 34078848 7 1 Y05B63.CNM
+Content-Length: 2662
+Lines: 54
+
+
+From: Richard Curnow <richard@curnow.demon.co.uk>
+
+>>>>> On Mon, 21 Dec 1998 02:00:26 -0500,
+>>>>> "Bob" == Bob LeChevalier (lojbab) <lojbab@lojban.org>
+>>>>> wrote thus:
+
+  Bob> From: "Bob LeChevalier (lojbab)" <lojbab@lojban.org>
+  Bob> At 10:56 PM 12/20/98 +0000, you wrote:
+
+  >> From: Richard Curnow <richard@curnow.demon.co.uk> I am trying to
+  >> get to the bottom of the lujvo-making algorithm described in
+  >> chapter 4, section 11 of the reference manual, in particular the
+  >> test in 5) for 'tosmabru failure'.
+  >> 
+  >> If the candidate lujvo starts CVC CVC CVC ..., and would break
+  >> into a cmavo and a shorter brivla, I am struggling to see how it
+  >> can break other than after the first CV, leaving the shorter
+  >> brivla being all but the initial 2 letters.
+
+  Bob> If a lujvo will fail the "tosmabru" test, then that is the
+  Bob> location at which it will break.  The test is therefore to
+  Bob> determine whether the remainder of the word, after taking off
+  Bob> the first CV, is a valid lujvo of its own.
+
+Agreed, so does the following algorithm achieve the desired effect:
+
+A. Work through steps 1..4 of the algorithm as in the ref. grammar.
+
+B. If the candidate lujvo starts with at least one CVC rafsi, consider
+the form after removing the initial CV.  Working from the left, try to
+partition this into valid rafsi (not necessarily at the points where
+rafsi were originally joined earlier), possibly with hyphens between
+them; if this can be done then the test fails and the lujvo has to
+start CVCyC..., otherwise it passes and the extra 'y' is not needed.
+
+(I think the left-to-right partitioning in unambiguous; if there is a
+'y' at the 4th or 5th letter, take the first rafsi up tothe 'y',
+otherwise take the first 3 letters; then repeat with the remainder of
+the string.  If you encounter a 'y' you know the rest of the string is
+a valid lujvo unless it only has 3 letters, so you are done.
+Otherwise, each 3 letter rafsi that you take off must certainly have a
+valid initial consonant pair, really it ought to appear in the
+dictionary as well!)
+
+  Bob> Hope this helps.
+
+Thanks, yes it does.
+
+(and thanks to <jorge@intermedia.com.ar> for the other reply).
+
+Regards
+Richard
+
+-- 
+Richard P. Curnow
+Stevenage, England
+
+------------------------------------------------------------------------
+To unsubscribe from this mailing list, or to change your subscription
+to digest, go to the ONElist web site, at http://www.onelist.com and
+select the User Center link from the menu bar on the left.
+------------------------------------------------------------------------
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
+
