@@ -1,0 +1,699 @@
+Contributed by Nick Nicholas, nsn@mullian.ee.mu.oz.au, 1993-8-7.
+
+This is the code to my Lojban Semantic Analyser, as reported on in lojban-list
+and _ju'i lobypli_. It is written in NU-Prolog (for enquiries on getting this
+version of Prolog, mail lee@munta.cs.mu.oz.au); its input file is the output
+of running the Lojban Parser on the input text with the -dl option, and then
+filtering this through the following LEX program:
+
+
+%%
+"2;0;30moi".+\n	;
+"Copyright 1991".+\n	;
+"Space used".+\n	;
+"lexing (selma'o CMENE): ".+\n	{printf("cmene ");
+				yyless(24);};
+"lexing (selma'o BRIVLA): ".+\n	{printf("brivla ");
+				yyless(25);};
+"lexing (selma'o EOT): EOT"\n		{printf("end_of_lex_list\n");};
+"lexing".+\n	;
+"{"	;
+"("	;
+"["	;
+"}"	;
+")"	;
+"]"	;
+"<"	;
+">"	;
+"'"	output('h');
+[A-Z]	output(tolower(yytext[0]));
+%%
+char *lowerstring(char *x)
+{int i;
+for(i=0;x[i]!='\0';i++)
+x[i]=tolower(x[i]);
+return x;}
+
+***
+
+% Here follows the Prolog code.
+?- pure(bridi_tail_50,4).
+?- pure(ask1,2).
+?- pure(permuteQ1,3).
+?- pure(deleteQ,6).
+?- pure(statement_42,3).
+?- pure(tail_terms_71,4).
+?- pure(terms_80,6).
+?- pure(selbri,5).
+?- pure(tanru_unit_B_152,5).
+?- pure(se_596,3).
+?- pure(anaphorise,4).
+?- pure(ask,3).
+?- dynamic uttered/1.
+/* This subsection of lojban grammar implements predications involving
+proper names, variable names, or values satisfying predicates as arguments,
+also, restrictive relative clauses, conjunctions, and event abstractions; 
+it implements the following BNF subset of lojban:
+
+text = [I|NIhO...] paragraphs FAhO
+paragraphs = paragraph [NIhO paragraphs]
+paragraph = paragraph1 [I [jek] paragraph1]...
+paragraph1 = sentence
+sentence = briditail | sentence1
+sentence1 = term... [CU] briditail | gek sentence1 gik sentence
+briditail = briditail3 [gihek briditail3 tailterms]
+briditail3 = selbri tailterms
+tailterms = [term] VAU
+term = sumti | (tag | FA ) (sumti | KU)
+sumti = sumti_1
+sumti_1 = sumti_4 [joik-ek sumti_4] ...
+sumti_4 = [quantifier] sumti_5 [relative-clauses]
+sumti_5 = KOhA | letteral-string BOI | LA CMENE... | LE sumti-tail KU
+sumti-tail = selbri
+relative-clauses = relative-clause
+relative-clause = NOI sentence KUhO
+selbri = tanru_unit_1
+tanru_unit_1 = tanru_unit_2 [linkargs]
+tanru_unit_2 = BRIVLA | SE tanru_unit_2 | NU sentence KEI
+linkargs = BE term [links] BEhO
+links = BEI term [links]
+number = PA [PA]...
+ek = A
+gihek = GIhA
+joik-ek = ek
+gek = GA
+gik = GI
+quantifier = number BOI
+letteral-string = letteral [PA | letteral] ...
+letteral = BY
+tag = BAI
+
+(A note on vocabulary: bridi is lojban for predication; selbri = predicate;
+sumti = argument; cmene = name). */
+
+text_0 --> 		text_B_2(Answers),
+			{print('Answers to the questions: '),
+			print(Answers),nl},
+			text_B_2_a.
+text_B_2_a -->		[];[faho].
+text_B_2(Answer) --> 	i_819(_), text_B_2(Answer);
+	     		para_mark_410, text_C_3(Answer);
+	     		text_C_3(Answer).
+text_C_3(Answers) --> 	paragraphs_4(_,Answers).
+paragraphs_4(P,Answers) --> 	
+			paragraph_A_10(statement,P,P,Answers1),
+			{postproc(P,P1),
+			assert(uttered(P1)),
+			print(P1),nl},
+			paragraphs_4_a(Answers2),
+			{append(Answers1,Answers2,Answers)}.
+paragraphs_4_a(Answers) -->	
+			para_mark_410, 
+			paragraphs_4(_,Answers).
+paragraphs_4_a([]) --> 	[].
+% statements get added to the database; questions get asked, and are not added
+% questions are considered interpolation in text: in text: [sentence1, 
+% ? question, CONNECTIVE sentence2], sentence1 and sentence2 are considered
+% joined by CONNECTIVE
+paragraph_A_10(X,Sentence,Para,Answers) -->
+			paragraph_B_11(P),
+			paragraph_A_10_a(X,Sentence,P,Para,Answers).
+paragraph_A_10_a(statement,c(CONN,PrevSent,NextSent),PrevSent,Para,Answers) -->
+                   	i_819(xu), 
+			paragraph_A_10(question(CONN),NextSent,Para,Answers).
+paragraph_A_10_a(statement,c(CONN,PrevSent,NextSent),PrevSent,Para,Answers) -->
+                   	i_819(CONN), 
+			{CONN \= xu},
+			paragraph_A_10(statement,NextSent,Para,Answers).
+paragraph_A_10_a(question(CONN),NextSent,PrevSent,Para,[Answer|Answers]) -->
+                   	i_819(xu), 
+			{ask(PrevSent,Para,Answer)},
+			paragraph_A_10(question(CONN),NextSent,Para,Answers).
+% connective functor: fragments P and T are connected by binary connective CONN
+paragraph_A_10_a(question(CONN),NextSent,PrevSent,Para,[Answer|Answers]) -->
+			i_819(CONN), 
+			{CONN  \= xu,
+			ask(PrevSent,Para,Answer)},
+			paragraph_A_10(statement,NextSent,Para,Answers).
+paragraph_A_10_a(statement,P,P,Para,[]) --> 	
+			[].
+paragraph_A_10_a(question(seq),[],PrevSent,Para,[Answer]) --> 	
+			[],
+			{ask(PrevSent,Para,Answer)}.
+paragraph_B_11(P) --> 	sentence_40(P).
+sentence_40(Predication) --> 	
+			bridi_tail_50([],2,Predication); 
+			sentence_A_41(Predication).
+sentence_A_41(c(CONN,P1,P2)) -->	
+			gek_807(CONN),sentence_A_41(P1),
+			gik_816,sentence_40(P2).
+sentence_A_41(P) -->	statement_42(_,P).
+
+% prolog counts arguments as we go; start at 1. Having read all arguments
+% before the bridi_tail, we will be up to the Nth argument --- where 
+% bridi_tail picks up the count after the predicate itself
+% Predication1 is the tail of Predication supplied by bridi_tail
+statement_42(Foreargs,Predication) -->	
+			terms_80(Foreargs,1,_,N,Predication,Predication1), 
+			{nonvar(N)},
+			statement_42_a(Foreargs,N,Predication1).
+
+statement_42_a(Foreargs,N,Predication1) -->
+			{nonvar(N)},
+			bridi_tail_50(Foreargs,N,Predication1);
+			front_gap_451, 
+			{nonvar(N)},
+			bridi_tail_50(Foreargs,N,Predication1).
+			
+bridi_tail_50(Foreargs,N,P) -->
+			bridi_tail_A_51(Foreargs,N,P).
+bridi_tail_A_51(Foreargs,N,P) -->
+			{append(Foreargs,Tailargs,ArgsIn)},
+			bridi_tail_C_53(ArgsIn,N,P1),
+			gihek_818(Conn),
+			bridi_tail_C_53(ArgsIn,N,P2),
+			tail_terms_71(Tailargs,N,P,c(Conn,P1,P2)).
+bridi_tail_A_51(Foreargs,N,P) -->
+			bridi_tail_C_53(Foreargs,N,P).
+
+bridi_tail_C_53(Foreargs,N,Predication,SIn,SOut):-
+			append(Foreargs,Tailargs,ArgsIn),
+			selbri_130(ArgsIn,Bridi,SIn,SOut1), 
+			tail_terms_71(Tailargs,N,Predication,Bridi,SOut1,SOut2),
+			SOut2 = SOut.
+
+tail_terms_71([],_,P,P) -->	
+			vau_gap_456.
+tail_terms_71(Tailargs,N,P,P1) -->	
+			{nonvar(N)},
+			terms_80(Tailargs,N,_,_,P,P1), vau_gap_456.
+
+% we anticipate the head of the list to be the Mth argument. We find its
+% successor will be the Nth. The successor of the last argument in the list
+% (return argument) will be the Xth.
+terms_80([Arg|Tail],M,N,X,P,P1) -->  
+			term_81(Arg,M,N,P,P2), terms_80_a(Tail,N,X,P2,P1).
+terms_80_a(Tail,N,X,P2,P1) -->
+			terms_80(Tail,N,_,X,P2,P1).
+terms_80_a([],N,N,P1,P1) --> [].
+
+% default: arguments are in seq. x1 x2 x3, so successor of x(n) is x(n+1)
+term_81(term(M,Arg),M,N,P,P1) -->	
+			{nonvar(M),N is M + 1},
+			sumti_90(Arg,P,P1).
+
+% the function of mod_head_490 is to alter this default; thus M is ignored
+% in determining the ordinal of the argument
+term_81(term(X,Arg),M,N,P,P1) -->	 
+			modifier_82(Arg,M,X,N,P,P1).
+% for time being, ignore these in building up predication
+modifier_82([],M,X,N,P,P) -->	
+			mod_head_490(M,X,N), gap_450.
+modifier_82(Arg,M,X,N,P,P1) -->	
+			mod_head_490(M,X,N), sumti_90(Arg,P,P1).
+sumti_90(Arg,P,P1) -->	sumti_A_91(Arg,P,P1).
+sumti_A_91(Arg,P,P1) -->
+			sumti_D_94(Arg1,P2,P3),
+			sumti_A_91_a(Arg,P,P1,Arg1,P2,P3).
+sumti_A_91_a(c(Conn,X1,X2),q(c(Conn,N1,N2),c(Conn,X1,X2),c(Conn,R1,R2),
+c(Conn,M1,M2),P1),P1,X1,q(N1,X1,R1,M1,[]),[]) -->	
+			joik_ek_421(Conn),
+			sumti_A_91(X2,q(N2,X2,R2,M2,[]),[]).
+sumti_A_91_a(Arg,P,P1,Arg,P,P1) -->	
+			[].
+sumti_D_94(Arg,P,P1) -->
+			sumti_E_95(Arg,Clause,P,P1),
+			sumti_D_94_a(Arg,Clause).
+sumti_D_94_a(Arg,Clause) -->
+			relative_clauses_121(Arg,Clause).
+sumti_D_94_a(Arg,_) --> [].
+sumti_E_95(Arg,Clause,P,P1) --> 
+			sumti_F_96(Arg,suho(1),Clause,P,P1).
+sumti_E_95(Arg,Clause,P,P1) -->
+			quantifier_300(N),
+			sumti_F_96(Arg,N,Clause,P,P1).
+
+% for now, ignore numbering of or relative clauses on anaphors and names; 
+% iota quantification with quantifier "la"
+sumti_F_96(Arg,_,_,q(la,Arg,[],[],P),P) -->	
+			anaphora_400(Arg);
+			la_558, cmene_405(Arg).
+% term q is quantifier: number, variable, initial restricting predication,
+% further restricting predications, remainder of predication
+sumti_F_96(Arg,N,Clause,q(N,Arg,Restrict,Clause,P1),P1) -->
+			description_110(Arg,Restrict).
+description_110(X,Restrict) -->	
+			le_562, 
+			sumti_tail_A_112(X,Restrict), 
+			gap_450.
+sumti_tail_A_112(X,Restrict) -->
+			selbri_130([term(1,X)],Restrict).
+relative_clauses_121(X,Clause) -->
+			relative_clause_122(X,Clause).
+relative_clause_122(X,Clause) -->
+			noi_585, sentence_40(Clause1), kuho_gap_469,
+			{anaphorise(keha,X,Clause1,Clause)}.
+% The instantiation of X will eventually force execution of order_transform
+% to delay until ArgsIn is fully known
+
+selbri_130(ArgsIn,Predication) -->	
+			tanru_unit_A_151(ArgsIn,Predication,P1).
+/*tanru_unit_A_151(ArgsIn,Predication,Predication) -->
+			tanru_unit_B_152(ArgsIn,ArgsOut,Selbri),
+			{functor(Predication,Selbri,5),
+			fill_in_args(Predication,ArgsOut)}.
+tanru_unit_A_151(ArgsIn,P,Predication) -->
+			tanru_unit_B_152(ArgsIn1,ArgsOut,Selbri),
+			linkargs_160(ArgsIn2,P,Predication),
+			{append(ArgsIn2,ArgsIn,ArgsIn1),
+			functor(Predication,Selbri,5),
+			fill_in_args(Predication,ArgsOut)}.*/
+tanru_unit_A_151(ArgsIn,P,Predication) -->
+			tanru_unit_B_152(ArgsIn1,ArgsOut,Selbri),
+			tanru_unit_A_151_a(ArgsIn,P,Predication,ArgsIn1,ArgsOut,Selbri).
+tanru_unit_A_151_a(ArgsIn,Predication,Predication,ArgsIn,ArgsOut,Selbri) -->
+			{functor(Predication,Selbri,5),
+			fill_in_args(Predication,ArgsOut)}.
+tanru_unit_A_151_a(ArgsIn,P,Predication,ArgsIn1,ArgsOut,Selbri) -->
+			linkargs_160(ArgsIn2,P,Predication),
+			{append(ArgsIn2,ArgsIn,ArgsIn1),
+			functor(Predication,Selbri,5),
+			fill_in_args(Predication,ArgsOut)}.
+tanru_unit_B_152(ArgsIn,ArgsIn,Selbri) -->
+			bridi_valsi_407(ArgsIn,Selbri).
+tanru_unit_B_152(ArgsIn,ArgsOut,Selbri) -->
+			se_480(N), tanru_unit_B_152(ArgsIn1,Args1,Selbri),
+			{order_transform(Args1,ArgsOut,N),
+			ArgsIn = ArgsIn1}. 
+tanru_unit_B_152(ArgsIn,ArgsOut,Nu) -->
+			nu_425(Nu),sentence_40(P),
+			{append(ArgsIn,[term(2,P)],ArgsOut)},
+			kei_gap_453.
+linkargs_160([Arg|Tail],P,P1) -->
+			be_504, term_81(Arg,2,N,P,P2),
+			linkargs_160_a(Tail,N,P1,P2).
+linkargs_160_a([],_,P,P) -->
+			beho_gap_467.
+linkargs_160_a(Tail,N,P1,P2) -->
+			links_161(Tail,N,_,P2,P1), beho_gap_467.
+links_161([Arg|Tail],N,_,P,P1) -->
+			bei_505, term_80(Arg,N,N1,P,P2),
+			links_161_a(Tail,N1,P1,P2).
+links_161_a([],_,P1,P1) -->
+			[].
+links_161_a(Tail,N1,P1,P2) -->
+			links_161(Tail,N1,_,P2,P1).
+
+quantifier_300(N) -->	number_812(N), boi_gap_461.
+anaphora_400(Arg) -->  	koha_555(Arg).
+anaphora_400([]) -->	by_string_817, boi_gap_461.
+cmene_405([Arg|Tail]) -->    cmene_517(Arg),cmene_405_a(Tail).
+cmene_405_a(Tail) --> cmene_405(Tail);
+		       [],
+		      {Tail=[]}.
+bridi_valsi_407(Args,Selbri) --> 
+			brivla_509(Args,Selbri).
+para_mark_410 --> ['niho'].
+joik_ek_421(Conn) -->
+		  ek_802(Conn).
+nu_425(nu) -->    ['nu'].
+nu_425(ka) -->    ['ka'].
+lex_nu_425(X):- var(X),!,fail.
+lex_nu_425(nu).
+lex_nu_425(ka).
+gap_450 -->       ['ku'].
+front_gap_451 --> ['cu'].
+kei_gap_453 -->   ['kei'].
+vau_gap_456 -->   ['vau'].
+boi_gap_461 -->   ['boi'].
+beho_gap_467 -->  ['beho'].
+kuho_gap_469 -->  ['kuho'].
+se_480(N) -->	  se_596(N).
+
+% M is the anticipated ordinal of the current arg; X is the ordinal of the 
+% current arg; N, that of its successor. for example, at the start of a
+% phrase, M is 1. if 'fe' is encountered, then X is 2 and N is 3.
+mod_head_490(_,X,N) -->  fa_527(X),{N is X + 1}.
+mod_head_490(M,0,M) --> modal_C_975.
+
+a_501(a) -->	  ['a'].
+a_501(e) -->	  ['e'].
+bai_502 -->	  ['bai'].
+be_504 -->	  ['be'].
+bei_505 -->	  ['bei'].
+by_513(b) -->     ['by'].
+by_513(c) -->     ['cy'].
+fa_527(1) -->	  ['fa'].
+fa_527(2) -->     ['fe'].
+fa_527(3) -->     ['fi'].
+fa_527(4) -->     ['fo'].
+fa_527(5) -->     ['fu'].
+ga_537(a) -->	  ['ga'].
+ga_537(e) -->	  ['ge'].
+giha_541(a) -->	  ['giha'].
+giha_541(e) -->	  ['gihe'].
+ja_546(a) -->	  ['ja'].
+ja_546(e) -->     ['je'].
+koha_555(koha) -->	['koha'].
+koha_555(kohe) -->	['kohe'].
+koha_555(kohi) -->	['kohi'].
+koha_555(koho) -->	['koho'].
+koha_555(kohu) -->	['kohu'].
+koha_555(foha) -->	['foha'].
+koha_555(fohe) -->	['fohe'].
+koha_555(fohi) -->	['fohi'].
+koha_555(foho) -->	['foho'].
+koha_555(fohu) -->	['fohu'].
+koha_555(mi) -->	['mi'].
+koha_555(keha) -->	['keha'].
+koha_555(da) -->	['da'].
+koha_555(de) -->	['de'].
+koha_555(di) -->	['di'].
+% and lexical classification of these:
+lex_da_555a(X):- var(X),!,fail.
+lex_da_555a(da).
+lex_da_555a(de).
+lex_da_555a(di).
+la_558 --> 	  ['la'].
+le_562 -->	  ['lo'];
+		  ['le'].
+noi_585 -->	  ['poi'].
+se_596(2) -->     ['se'].
+se_596(3) -->     ['te'].
+se_596(4) -->     ['ve'].
+se_596(5) -->     ['xe'].
+pa_672(0) -->     ['no'].
+pa_672(1) -->	  ['pa'].
+pa_672(2) -->     ['re'].
+pa_672(3) -->     ['ci'].
+pa_672(4) -->     ['vo'].
+pa_672(5) -->     ['mu'].
+pa_672(6) -->     ['xa'].
+pa_672(7) -->     ['ze'].
+pa_672(8) -->     ['bi'].
+pa_672(9) -->     ['so'].
+pa_672(suho(_)) -->
+		  ['suho'].
+pa_672(ro) -->	  ['ro'].
+ek_802(Conn) -->  a_501(Conn).
+jek_805(Conn) --> ja_546(Conn).
+gek_807(Conn) --> ga_537(Conn).
+number_812(N) --> number_root_961(N).
+gik_816 --> ['gi'].
+by_string_817 --> by_987;
+		  by_987, by_string_817a.
+by_string_817a --> by_987, by_string_817a;
+		   pa_672(_), by_string_817a.
+gihek_818(Conn) --> giha_541(Conn).
+% just plain sequencing
+i_819(Conn) --> ['i'],simple_joik_jek_957(Conn).
+i_819(xu) --> ['i','xu'].
+i_819(seq) --> ['i'].
+simple_joik_jek_957(Conn) --> jek_805(Conn).
+number_root_961(N) -->
+		  pa_672(N),{isNumber(N)}.
+% "at least" defaults to "at least 1".
+number_root_961(suho(1)) -->
+		  pa_672(suho(1)).
+number_root_961(ro) -->
+		  pa_672(ro).
+number_root_961(N) -->
+		  pa_672(N1),
+		  number_root_961(N2),
+		  {isNumber(N1), N3 is N1 * 10 , N is N3 + N2}.
+number_root_961(suho(N)) -->
+		  pa_672(suho(N)),
+		  number_root_961(N).
+% "all n": ignore n
+number_root_961(ro) -->
+		  pa_672(ro),
+		  number_root_961(_).
+modal_C_975 -->   bai_502;
+		  se_596(_), bai_502.
+by_987 -->	  by_513(_).
+
+% transform list of lists to list of heads of these lists; designed for use
+% with getTokenList
+select_first([[A|_]|B],[A|C]):-select_first(B,C).
+select_first([[_|end_of_file]],[]).
+
+% get declared lexemes out of file (preceding text) and declare them to
+% be part of program vocab. Returns text proper, as remainder of list
+
+lexeme_declarations([end_of_lex_list|Text],Text).
+lexeme_declarations([cmene|[X|Tail]],Text):-
+%	assert(cmene_517(_,X) --> [X]),
+	assert(cmene_517(X,X.SOut,SOut)), 
+	lexeme_declarations(Tail,Text).
+lexeme_declarations([brivla|[X|Tail]],Text):-
+%	assert(brivla_509(X) --> [X]),
+	assert(brivla_509(_,X,X.SOut,SOut)),
+	lexeme_declarations(Tail,Text).
+
+% change the order of arguments in a list, exchanging the 1st and Nth
+?- order_transform(A,_,_) when (A).
+order_transform([term(1,Arg)|X],[term(N,Arg)|Y],N):-
+	order_transform(X,Y,N).
+order_transform([term(N,Arg)|X],[term(1,Arg)|Y],N):-
+	order_transform(X,Y,N).
+order_transform([term(N,Arg)|X],[term(N,Arg)|Y],M):-
+	N =\= M, order_transform(X,Y,N).
+order_transform([],[],_).
+
+% fill in predication with arguments out of Arglist
+?- fill_in_args(_,A) when (A).
+fill_in_args(Predication,[]).
+fill_in_args(Predication,[term(N,Arg)|Tail]) :-
+		N > 0,arg(N,Predication,Arg),fill_in_args(Predication,Tail).
+fill_in_args(Predication,[term(0,Arg)|Tail]) :-
+		fill_in_args(Predication,Tail).
+
+% substitute all instances of (atom: anaphor) D with (variable: referent) X
+% in predication P, giving predication P1.
+%?- anaphorise(_,_,A,_) when A.
+anaphorise(D,X,A,A) :- D \== A, var(A).
+anaphorise(D,X,A,A) :- D \== A, atomic(A).
+anaphorise(D,X,D1,X) :- D == D1.
+anaphorise(D,X,P,P1) :-
+		compound(P),
+		functor(P,F,N),
+		ilist(1,N,NList),
+		functor(P1,F,N),
+		anaph_recurse(NList,D,X,P,P1).
+anaph_recurse([],D,X,_,_).
+anaph_recurse([N|T],D,X,P,P1) :-
+		arg(N,P,Q),
+		anaphorise(D,X,Q,Q1),
+		arg(N,P1,Q1),
+		anaph_recurse(T,D,X,P,P1).
+
+postproc(A,B) :- postproc0(A,C),postproc2(C,D,[],[]),postproc1(D,B),!.
+
+% postprocessing: resolve conjunctions
+postproc0(A,A) :- (var(A);atomic(A)),!.
+postproc0(q(c(C,N1,N2),c(C,X1,X2),c(C,R1,R2),c(C,M1,M2),P),
+	 c(C,q(N1,X1,R1,M1,Q1),q(N2,X2,R2,M2,Q2))) :-
+		anaphorise(c(C,X1,X2),X1,P,Q1),
+		anaphorise(c(C,X1,X2),X2,P,Q2),!.
+postproc0(P,P1) :-
+		functor(P,F,N),
+		ilist(1,N,NList),
+		functor(P1,F,N),
+		postproc0_recurse(NList,P,P1).
+postproc0_recurse([],_,_).
+postproc0_recurse([N|T],P,P1) :-
+		arg(N,P,Q),
+		postproc0(Q,Q1),
+		arg(N,P1,Q1),
+		postproc0_recurse(T,P,P1).
+
+% further postprocessing:
+% kill "la" quantification (anaphors and names; iota q'ntfn is different)
+postproc1(A,A) :- (var(A);atomic(A)),!.
+postproc1(q(la,X,R,M,Q),Q1) :-
+		postproc1(Q,Q1),!.
+postproc1(P,P1) :-
+		functor(P,F,N),
+		ilist(1,N,NList),
+		functor(P1,F,N),
+		postproc1_recurse(NList,P,P1).
+postproc1_recurse([],_,_).
+postproc1_recurse([N|T],P,P1) :-
+		arg(N,P,Q),
+		postproc1(Q,Q1),
+		arg(N,P1,Q1),
+		postproc1_recurse(T,P,P1).
+
+postproc2(A,A,B,B):-
+		(var(A);atomic(A)),!.
+postproc2(q(la,Da,R,M,P),q(suho(1),X,R1,M1,P1),RestOfPara,RestOfPara1):-
+		lex_da_555a(Da),
+		anaphorise(Da,X,P,P2),
+		anaphorise(Da,X,R,R2),
+		anaphorise(Da,X,M,M2),
+% if da occurs in one phrase, anaphorise it throughout the paragraph!
+		anaphorise(Da,X,RestOfPara,RestOfPara2),
+		postproc2(R2,R1,RestOfPara2,RestOfPara3),
+		postproc2(M2,M1,RestOfPara3,RestOfPara4),
+		postproc2(P2,P1,RestOfPara4,RestOfPara1),!.
+postproc2(q(Q,X,R,M,P),q(Q,X,R1,M1,P1),RestOfPara,RestOfPara1):-
+		(Q \= la ; not lex_da_555a(X)),
+		postproc2(R,R1,RestOfPara,RestOfPara2),
+		postproc2(M,M1,RestOfPara2,RestOfPara3),
+		postproc2(P,P1,RestOfPara3,RestOfPara1),!.
+postproc2(c(C,A,B),c(C,A1,B1),RestOfPara,RestOfPara1):-
+		postproc2(A,A1,[B|RestOfPara],[B2|RestOfPara2]),
+		postproc2(B2,B1,RestOfPara2,RestOfPara1),!.
+postproc2(A,A1,RestOfPara,RestOfPara1):-
+		nonvar(A),functor(A,F,N),ilist(1,N,NL),
+		F \= q, F \= c,
+		postproc2_recurse(NL,A,A1,RestOfPara,RestOfPara1).
+postproc2_recurse([],A,A,B,B).
+postproc2_recurse([H|T],A,A1,RestOfPara,RestOfPara1):-
+		arg(H,A,B),arg(H,A1,B1),
+		postproc2(B,B1,RestOfPara,RestOfPara2),
+		postproc2_recurse(T,A,A1,RestOfPara2,RestOfPara1).
+
+% generate list of numbers between A and B
+ilist(A,A,[A]).
+ilist(A,B,[A|T]):- A < B, C is A + 1,ilist(C,B,T).
+
+transform_semantic(P,Q):-
+	permuteQ1(_,P,Q);
+	generalise(P,P1),permuteQ1(_,P1,Q).
+
+% generalise quantifiers: if A then E, etc.
+
+generalise(P,P):- (var(P);atomic(P)),!.
+generalise(q(Q,X,R,M,P),q(suho(1),X,R1,M1,P1)):-
+	(Q = la ; Q = ro ),
+	generalise(R,R1),
+	generalise(M,M1),
+	generalise(P,P1).
+generalise(q(Q,X,R,M,P),q(Q,X,R1,M1,P1)):-
+	generalise(R,R1),
+	generalise(M,M1),
+	generalise(P,P1).
+generalise(P,Q):-
+	functor(P,Functor,2),lex_nu_425(Functor),
+	functor(Q,Functor,2),arg(1,P,X),arg(1,Q,X),
+	arg(2,P,Sent),generalise(Sent,Sent1),arg(2,Q,Sent1).
+generalise(P,P):-
+	functor(P,F,_),F \= q.
+
+% delete a quantification q(Q,X,R,M,_) from a clause
+%?- deleteQ(_,_,_,_,q(_,_,_,_,A),B) when A or B.
+deleteQ(Q,X,R,M,q(Q,X,R,M,P),P).
+deleteQ(Q,X,R,M,q(Q1,X1,R1,M1,q(Q2,X2,R2,M2,P)),
+q(Q1,X1,R1,M1,P1)):-
+	deleteQ(Q,X,R,M,q(Q2,X2,R2,M2,P),P1).
+deleteQ(_,_,_,_,P,P):-
+	functor(P,Functor,_),Functor \= q.
+
+% return: the subsection of the current clause starting at the first
+% quantifier other than the current one; also return the whole clause
+% such that this subsection may be permuted in permuteQ1
+getnextQ1(Q,q(Q,X,R,M,P),q(Q,X,R,M,P1),P2,P3):-
+	nonvar(P),getnextQ(Q,P,P1,P2,P3).
+getnextQ1(Q,q(Q1,X,R,M,P),P1,q(Q1,X,R,M,P),P1):- nonvar(Q1),Q \= Q1.
+getnextQ(Q,P0,P1,P2,P3):- getnextQ1(Q,P0,P1,P2,P3).
+getnextQ(Q,P0,P1,P3,P4):-
+	getnextQ1(Q,P0,P1,q(Q1,X,R,M,P),P2),
+	getnextQ(Q1,q(Q1,X,R,M,P),P2,P3,P4).
+
+% form all permutations of contiguous quantifications with same quantifier
+permuteQ1(_,P,P):- (var(P);atomic(P)),!.
+permuteQ1(Q,q(Q,X1,R1,M1,P1),q(Q,X2,R,M,P2)):-
+	deleteQ(Q,X2,R2,M2,q(Q,X1,R1,M1,P1),P3),
+	permuteQ1(_,R2,R),permuteQ1(_,M2,M),
+	permuteQ1(Q,P3,P2).
+permuteQ1(Q,q(Q1,X1,R1,M1,P1),q(Q1,X1,R1,M1,P1)):- Q \= Q1.
+permuteQ1(_,q(Q,X,R,M,P),WholeSentence):-
+	getnextQ(Q,q(Q,X,R,M,P),WholeSentence,NewSubSect,NewSubSectPerm),
+	permuteQ1(_,NewSubSect,NewSubSectPerm).
+permuteQ1(_,P,Q):-
+	functor(P,Functor,2),lex_nu_425(Functor),
+	functor(Q,Functor,2),arg(1,P,X),arg(1,Q,X),
+	arg(2,P,Sent),permuteQ1(_,Sent,Sent1),arg(2,Q,Sent1).
+permuteQ1(_,P,P):-
+	functor(P,Functor,_),Functor \= q.
+
+% expand embedded conjunctions in a sentence to the sentence level. e.g.
+% ExEy&(EzA,Ew+(EvB,EuC)) expands to &(ExEyEzA,+(ExEyEwEvB,ExEyEzEuC))
+% Applying this transformation to a text allows a question concerning a
+% possible alternative such as ?ExEyEzA to be answered in the affirmative.
+
+conjexpand(P,P,Pred,Pred):-
+	var(P),!;
+	nonvar(P),functor(P,F,_),F \= q, F \= c.
+conjexpand(q(Q,X,R,M,P),q(Q,X,R,M,P1),PrenexToDate,Expansion):-
+	conjexpand(P,P1,PrenexToDate,Expansion).
+conjexpand(c(C,A,B),P,PrenexToDate,c(C,Expansion1,Expansion2)):-
+	nonvar(PrenexToDate),
+	anaphorise(P,P1,PrenexToDate,PrenexToDate1),
+	anaphorise(P,P2,PrenexToDate,PrenexToDate2),
+	conjexpand(A,P1,PrenexToDate1,Expansion1),
+	conjexpand(B,P2,PrenexToDate2,Expansion2).
+conjexpand(c(C,A,B),P,PrenexToDate,c(C,Expansion1,Expansion2)):-
+	var(PrenexToDate),
+	conjexpand(A,P1,P1,Expansion1),
+	conjexpand(B,P2,P2,Expansion2).
+
+% when a para is still being parsed, the next sentence after a question is a
+% variable; this disrupts the program by futile delays, so replace it with []
+
+paracutoff(c(C,A,B),c(C,A,[])):- var(B).
+paracutoff(c(C,A,B),c(C,A,B)):- nonvar(B).
+
+% unidirectional unification. Thus, is database has car(red) and question
+% seeks car(_), unify; but if database has car(_), and question has car(red),
+% do not unify for lack of sufficient info
+unify(A,B):-
+	(var(A);nonvar(B),atomic(B)),A = B, !.
+unify(A,B):-
+	nonvar(A),functor(A,F,N),nonvar(B),functor(B,F,N),
+	ilist(1,N,NL),unify_recurse(NL,A,B).
+unify_recurse([],_,_).
+unify_recurse([H|T],A,B):-
+	arg(H,A,A1),arg(H,B,B1),
+	unify(A1,B1),unify_recurse(T,A,B).
+
+?- ask3(_,c(A,_,_),_) when A.
+ask3(P,X,_):- var(X),!,fail.
+ask3(P,c(seq,P1,_),Ans):- ask3(P,P1,Ans). 
+ask3(P,c(seq,_,P2),Ans):- ask3(P,P2,Ans). 
+ask3(P,c(e,P1,_),Ans):- ask3(P,P1,Ans). 
+ask3(P,c(e,_,P2),Ans):- ask3(P,P2,Ans). 
+ask3(X,Y,Y):- 
+	nonvar(X),nonvar(Y),
+	duplicate(X,X1),duplicate(Y,Y1),
+	unify(X1,Y1).
+?- ask2(_,c(A,_,_)) when A.
+ask2(P,X):- conjexpand(P,Q,Q,P1),ask2a(P1,X).
+ask2a(P,X):- functor(P,F,_),F \= c,ask3(P,X,_).
+ask2a(c(a,A,B),X):- ask2a(A,X);ask2a(B,X).
+ask2a(c(a,A,B),X):- ask3(c(a,A,B),X,_);ask3(c(a,B,A),X,_).
+ask2a(c(e,A,B),X):- 
+	ask3(A,X,Ans1),ask3(B,X,Ans2),
+	duplicate(c(e,A,B),c(e,Ans1,Ans2)).
+	% to guarantee we get any common prenexes right
+ask1(P,X):-
+	conjexpand(X,Q,Q,X1),ask2(P,X1).
+ask1(P,_):-
+	uttered(X),conjexpand(X,Prenex,Prenex,X1),ask2(P,X1).
+ask(P,X,Ans):- 
+	transform_semantic(P,P1),
+	postproc(P1,P2),
+	paracutoff(X,X1),
+	postproc(X1,X2),
+	ask1(P2,X2) -> Ans=yes;
+	Ans=no_answer.
+	
+parse(File) :-
+	cd('/stude/mundil/n/nsn/603'),
+	open(File,read,Stream),
+	getTokenList(Stream,TokList),
+	select_first(TokList,WordList),
+	lexeme_declarations(WordList,Text),
+	phrase(text_0,Text).
+

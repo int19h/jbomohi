@@ -1,0 +1,518 @@
+Project Report for 433-603: A Lojban-to-Prolog semantic analyser.
+
+Nick Nicholas #8928436; nsn@mullian.ee.mu.oz.au
+
+In this project, I have developed a semantic analyser which, given a text in a
+subset of the artificial language Lojban, will extract information from the
+text, store it in logical form, and answer simple questions on the text contents
+(the questions are also in Lojban, and are interspersed with the text; in this
+implementation, they are only yes/no questions). The analyser outputs the list
+of answers to the questions posed to it, and a logical form representation of
+its input text, excluding any questions.
+
+Lojban is an artificial language intended for human use, of the type
+exemplified by Esperanto and Interlingua. It differs from most such languages,
+in that it has been explicitly based on predicate logic. Predicates serve the
+role of verbs, predicates with preposed determiners serve the role of nouns,
+and predications serve as sentences.
+
+There are a number of reasons why this project is of interest. Lojban is a
+simplified model of a natural language (NL), using predicate logic as its
+modelling mechanism. Predicate logic also underlies the Prolog into which
+Lojban text will be transformed by the analyser. Therefore the task of
+transferring such information across from Lojban to Prolog will be considerably
+simpler than doing so for an NL. Lojban has already been shoehorned into a
+context-free grammar using YACC (this has involved some imaginative use of
+error recovery, but the grammar is still LALR(1) ). Thus the task of parsing
+Lojban text into identifiable grammatical constituents has already been dealt
+with: issues of resolving syntactic ambiguity need not distract the programmer
+from the more important semantic issues.
+
+Most of the semantic issues complicating logic-based knowledge representation
+of NL are also present in Lojban: higher-order predicates; metalinguistic
+comments and attitudinals; the ambiguous semantic relationship between head and
+modifier in word compounds; the representation of numbers, prepositional
+phrases, relative clauses, nonlogical connectives, negation, tense and
+modality; the distinction between "the" and "a" (echoed in the language's
+veridical and non-veridical determiners); the distinction between individual
+and collective plurals; subject-raising; and so forth. In effect, a
+Lojban-to-Prolog semantic analyser would be addressing many of the current
+issues in NLP knowledge representation, though biased towards predicate logic
+in its methodology. The use of a simplified model of NL, and the fact that this
+model falls short of capturing some NL nuances problematic for an analyser,
+help it cover much ground quickly, and provide insights for a similar analysis
+of NL proper. (Note that we claim that the subset of Lojban implemented will
+fall short of capturing such nuances; no such claim is made for the language
+proper). In particular, less attention needs to be paid to resolving syntactic
+issues than would be the case with an NL. Given how Lojban grammar is
+structured, modular subsets of Lojban grammar can be implemented in stages in
+the analyser. This has meant that results for simple phrases have become
+available a very short time into the project, and that expanding analyser
+functionality has proceeded in an orderly fashion.
+
+Lojban proper has roughly 600 YACC productions in its current grammar; of
+these, I have implemented about 80. The subset of the language implemented
+contains the following:
+
+1. Simple predications with a known predicate, and with arguments without
+internal structure (Proper names, logical variables). No quantification other
+than existential. eg. mi prami da --- \exists X: LOVES(me, X).
+
+2. Veridical arguments (cf. English "an") based on predicates, with internal
+arguments. eg. mi catra lo prami be lo pulji --- \exists X\exists Y:
+KILLS(me, X) & LOVES(X, Y) & POLICE(Y): I kill a lover of a policeman. Non-
+veridical arguments, which correspond more to the English "the", were not
+implemented. This was because the analyser did not get as far as implementing a
+discourse model of language, in which referents could be retrieved from their
+discourse environment rather than directly from their logical form. Without a
+discourse model, "the" could not be sensibly treated.
+
+3. Resolution of logical connectives. eg. mi nelci do .e ko'a --->  mi nelci
+do .ije mi nelci ko'a --- LIKES(i, you) & LIKES(i, x1): I like you and him.
+
+4. Restrictive relative clauses. eg. mi nelci le prenu ku poi do xebni
+ke'a --- (\exists X: HATES(you, X)) & LIKES(me, X) & PERSON(X): I like the
+person you hate.
+
+5. Higher order predicates. eg. lenu mi cadzu cu nandu --- DIFFICULT(event:
+WALKS(me)): My walking is difficult.
+
+6. Some simple quantification (numerical, existential and universal, as well as
+the standard rules for manipulating the latter two): eg. mu mensi cu cucycau
+--- 5X: SISTER(X) & BAREFOOT(X): five sisters are barefoot.
+
+This subset of the language is significantly curtailed compared to the rather
+ambitious program of the project proposal; it has, however, yielded
+satisfactory results in a very short time. Later in the report we outline some
+areas where the analyser could be readily extended without much effort.
+
+
+PREPROCESSING
+
+Parser.
+
+Lojban is characterised by having terminators: particles which indicate the end
+of a constituent, where an ambiguity would otherwise result. Thus for example,
+the end of a noun phrase beginning with a determiner is indicated by ku: le
+gerku ku = "the dog". Such terminators are useful in resolving ambiguities:
+thus le patfu be le nanmu ku poi tolni'o ku'o ku (the father ((of (the man)
+who is_old))) vs. le patfu be le nanmu ku ku poi tolni'o ((the father (of
+(the man))) who is_old). The profusion of terminators can make language use
+unwieldy, however, particularly when they are redundant --- that is, when the
+end of a constituent can be inferred from other words in the sentence. Thus le
+nanmu ku le gerku ku cu viska vau can be reduced to le nanmu le gerku
+cu viska, since (inter alia), the start of a new noun phrase, signalled by le,
+implies the end of the old noun phrase. Such elision is endemic to lojban, but
+cannot be specified by a context-free grammar of reasonable size; instead, YACC
+error recovery is used to insert the elided terminators. (For this to be
+possible, the elided text must be consistent with LALR(1) parsing. This means
+some intuitive elisions are judged ungrammatical by the parser, since they
+require more than one token of lookahead).
+
+For this reason, the YACC parser for Lojban, supplied by the Logical Language
+Group (and copyrighted to it), is used to preprocess text to be presented to
+the analyser. The parser does two things: first, it outputs a text with the
+elided terminators filled back into the text. Second, it precedes this output
+with a list of the grammemes (parts of speech) of all the words in the text:
+this is to supplement the analyser's lexical knowledge. If it doesn't recognise
+a word as a predicate word, but is told that it is, then it can proceed with
+parsing the text appropriately.
+
+Lexer.
+
+The parser output needs to be preprocessed further before it is presented to
+the analyser. Parser output has brackets surrounding the constituents it
+identifies, and the terminators it inserts into the text are capitalised; the
+text needs to be normalised in both respects. Also, the apostrophe used in
+lojban text is inconvenient in Prolog parsing, and is replaced wherever it
+occurs by the letter 'h'. Finally, of all the grammeme information preceding
+the text, only the list of words in grammeme BRIVLA (predicate word) and CMENE
+(proper name) is required by the analyser. Other grammeme information should
+be suppresed. This is relevant where the proper treatment of words has not yet
+been implemented: it is better to fail to parse text containing the non-
+restrictive relative particle noi or the non-veridical determiner le, than to
+analyse it erroneously, treating those words like words it already recognises
+--- the restrictive relative particle poi or the veridical determiner lo.
+
+An example of preparsing:
+
+Input file:
+.i mi denpa da .ije da denpa mi de .i de denpa da .i da denpa de
+
+Parser output (selma'o is Lojban for grammeme):
+lexing (selma'o lexer_S (i or ijek)): i
+lexing (selma'o KO'A): mi
+lexing (selma'o BRIVLA): denpa
+lexing (selma'o KO'A): da
+lexing (selma'o lexer_S (i or ijek)): (i je)
+lexing (selma'o KO'A): da
+lexing (selma'o BRIVLA): denpa
+lexing (selma'o KO'A): mi
+lexing (selma'o KO'A): de
+lexing (selma'o lexer_S (i or ijek)): i
+lexing (selma'o KO'A): de
+lexing (selma'o BRIVLA): denpa
+lexing (selma'o KO'A): da
+lexing (selma'o lexer_S (i or ijek)): i
+lexing (selma'o KO'A): da
+lexing (selma'o BRIVLA): denpa
+lexing (selma'o KO'A): de
+lexing (selma'o FA'O): (fa'o)
+lexing (selma'o EOT): EOT
+Space used: 5600 for tokens, 100 for strings
+(i {<[(mi {denpa <da VAU>}) (i je) (da {denpa <[mi de] VAU>})] i [de (
+denpa {da VAU})]> i <da [denpa (de VAU)]>})
+
+Lexer output:
+
+brivla denpa
+brivla denpa
+brivla denpa
+brivla denpa
+end_of_lex_list
+i mi denpa da vau i je da denpa mi de vau i de denpa da vau i da denpa
+de vau
+
+ANALYSER.
+
+The program is given the lexer output as input. It parses and stores internally
+any information on grammemes preceding the text proper. It then reads in the
+text using the standard function getTokenList, reduces the association list
+output by this function to a straightforward list of tokens, and passes this to
+the DCG parser. The DCG parser then sets to work filling in its main attribute:
+a logical form representation of the whole text. At any time, there will remain
+some text unparsed; thus the representation will have some unfilled gaps,
+denoted by Prolog variables. Often calls to procedures will be made while not
+all the relevant text has been parsed and represented. For example, the call
+to clause order_transform occurs when grammeme SE is found, and reorders the
+arguments of the current predication, according to which word of grammeme SE
+has been parsed. However, arguments in the predication can still be found after
+the grammeme, and if the call were to proceed immediately, the parser would be
+exchanging subsequently inaccessible variables, rather than arguments. For
+this reason, much programming time was spent in guaranteeing that delaying
+goals occured as appropriate, without any goals floundering.
+
+Before the logical form for any given predication is stored as part of the
+current text attribute, some postprocessing occurs: conjunctions are resolved
+from argument conjunction to sentence conjunction; redundant quantification of
+anaphors and names is eliminated; logical variables in text are represented as
+such; and relative clause anaphors are resolved. If the beginning of a new
+paragraph is reached, the text attribute for the old paragraph is dynamically
+stored, and a fresh one started; if the current sentence is a question, it is
+not stored as part of the attribute, but is asked with respect to all text
+parsed to date; both question and text structures are manipulated in ways
+discussed below to reach an answer.
+
+EXAMPLE OUTPUTS OF ANALYSER.
+
+We consider here program output for several test sentences, demonstrating the
+capabilities of the analyser.
+
+Proper names; simple predications; grammeme SE.
+
+Proper names can be composed of more than one token; for this reason, they are
+represented in the analyser as lists of tokens.
+The function of grammeme SE is to rearrange the arguments of the predicate it
+precedes; it is thus equivalent to a passiviser. se, in particular, exchanges
+the first and second argument of a predicate, while te exchanges the first and
+third. la nik. prami la zo'en. thus means "Nick loves Zoe", and la zo'en. se
+prami la nik. means "Zoe is loved by Nick"; both phrases should have the same
+logical form. Furthermore, words of grammeme SE can be juxtaposed, their
+functional effect following normal algebraic rules.
+
+Input phrase:
+ko'a se prami ko'e (He1 is loved by he2).
+Output:
+prami(kohe, koha, _FJJXH, _FJJXI, _FJJXJ)
+
+Input phrase:
+i la nik nikolys cu te te se prami la zo'en velonis vau (N.N. loves-
+[exchange 1st and 3rd; exchange 1st and 3rd; exchange 1st and 2nd; exchange
+1st and 2nd] Z.V.)
+Output:
+prami([zohen, velonis], [nik, nikolys], _FJKIK, _FJKIL, _FJKIM)
+
+Argument rearrangement with modifiers.
+
+Arguments can also be rearranged by preceding them with a word of
+grammeme FA, which explicitly states which is the ordinal of the noun phrase
+following it (which makes it equivalent to a case marker). Thus prami fa mi
+means "love --- "I" is the subject (the first argument)", or simply "I love".
+
+Input phrase:
+fi ko'a fe ko'e fa ko'i fu ko'o fo ko'u cu klama ([3rd arg.] He1, [2nd arg.]
+he2, [1st arg.] he3, [5th arg.] he4, [4th arg.] he5, goes).
+Output:
+klama(kohi, kohe, koha, kohu, koho)
+
+
+
+Relative clauses; veridical determiners.
+
+The noun phrase to which the relative clause is an adjunct is anaphorised by
+the word ke'a; the analyser can resolve this anaphor by making the variables
+used to denote the coindexed entities identical. The analyser is not yet
+equipped to handle nested relative clauses (in which the referent of ke'a is
+resolved by subscripting), non-restrictive relative clauses, or relative
+clauses in which ke'a is omitted (and usually pragmatically inferred to be in
+the first unfilled argument slot of the relative clause predication).
+
+Veridical determiners precede a predicate word, making it a noun; the
+arguments of this nested predicate are not filled in.
+
+Quantification is restricted in this analyser: any quantification (the default
+is existential, given by suho(1), corresponding to the Lojban su'o pa (at least
+one)) is represented by a tuple of five elements: the quantifier, the variable,
+the restriction to the variable, any further restrictions (relative clauses are
+placed here, though they could just be conjoined with the restrictions to the
+variable already extant), and the expression over which the restriction has
+scope. Thus \exists (x:x \in N)A would be represented by q(suho(1), X,
+natural_number(X), _, A). By default, all predicates are assumed to have five
+places.
+
+Input phrase:
+mi prami lo prenu ku poi ke'a citka lo cakla (I love the person who eats a
+chocolate).
+Output:
+q(suho(1), _FJKWJ, prenu(_FJKWJ, _FJKDO, _FJKDP, _FJKDQ, _FJKDR),
+q(suho(1), _FJKGU, cakla(_FJKGU, _FJKLJ, _FJKLK, _FJKLL, _FJKLM), _FJKIQ,
+citka(_FJKWJ, _FJKGU, _FJKGV, _FJKGW, _FJKGX)), prami(mi, _FJKWJ, _FJJZA,
+_FJJZB, _FJJZC))
+
+Rephrased (q(N,X,R,M,P) is rephrased here as N X: R, M; P. If M is empty, this
+is rendered as N X: R; P.):
+\exists X:
+  person(X), {first restriction on X}
+  (\exists Y:
+    chocolate(Y); (eats(X,Y))); {second restriction on X}
+  (loves(me,X)).
+
+Simple quantifiers; linkargs.
+
+The arguments of the predication in a noun phrase can be supplied by
+preceding the first such argument with be, and the remaining arguments with bei.
+
+Input phrase:
+ro gerku be pa jutsi cu stali lo zdani (All dogs of one species stay at a
+home). (The predicate gerku (dog) has two arguments: the dog itself, and its
+species).
+Output:
+q(ro, _FJJXB, q(1, _FJKAZ, jutsi(_FJKAZ, _FJKEV, _FJKEW, _FJKEX,
+_FJKEY), _FJKBE, gerku(_FJJXB, _FJKAZ, _FJKFE, _FJKFF, _FJKFG)), _FJJXG,
+q(suho(1), _FJKIT, zdani(_FJKIT, _FJKOG, _FJKOH, _FJKOI, _FJKOJ), _FJKKP,
+stali(_FJJXB, _FJKIT, _FJKIU, _FJKIV, _FJKIW)))
+
+Rephrased:
+\all X:
+  (1Y: species(Y); dog(X,Y));
+  (\exists Z: home(Z); stays(X,Z)).
+
+Conjunction resolution.
+
+The (logical) conjunction of two nouns in a sentence is expanded to the
+conjunction of two sentences, each with one of the two nouns so conjoined. The
+conjunction of two "bridi tails" (the equivalent of verbs with their trailing
+objects) is similarly resolved.
+
+Input phrase:
+mi .e ko'a prami ro lo nanmu gi'e xebni ro lo ninmu (He1 and I love all men
+and hate all women).
+Output (Conjunctions are represented by a three-tuple: the conjunction itself,
+and the two entities conjoined. Thus A and B is represented by c(e,A,B), and A
+or B by c(a,A,B). A sequence of sentences is represented by c(seq,A,B); in this
+analysis, sequence is treated as equivalent to logical conjunction, although
+there is a tense component involved which I have ignored):
+c(e, c(e, q(ro, _FJKEL, nanmu(_FJKEL, _FJKJW, _FJKJX, _FJKJY, _FJKJZ),
+_FJKFH, prami(mi, _FJKEL, _FJKEM, _FJKEN, _FJKEO)), q(ro, _FJKOU,
+ninmu(_FJKOU, _FJKUF, _FJKUG, _FJKUH, _FJKUI), _FJKPQ, xebni(mi, _FJKOU,
+_FJKOV, _FJKOW, _FJKOX))), c(e, q(ro, _FJKEL, nanmu(_FJKEL, _FJKJW,
+_FJKJX, _FJKJY, _FJKJZ), _FJKFH, prami(koha, _FJKEL, _FJKEM, _FJKEN,
+_FJKEO)), q(ro, _FJKOU, ninmu(_FJKOU, _FJKUF, _FJKUG, _FJKUH, _FJKUI),
+_FJKPQ, xebni(koha, _FJKOU, _FJKOV, _FJKOW, _FJKOX))))
+
+Rephrased:
+&(
+  &(
+      \all X (man(X)); loves(me,X),
+      \all Y (woman(Y)); hates(me,Y)),
+  &(
+      \all X (man(X)) loves(he1,X),
+      \all Y (woman(Y)) hates(he1,Y))).
+
+Higher order predications.
+
+Predications can be the arguments for other predicates.
+
+Input phrase:
+i mi ciksi le nu ko'a citka lo guzme kei le pulji (I explain the fact that he1
+eats a melon to a policeman).
+Output (The predicate nu/2 is introduced here as an event abstractor; its first
+argument is the variable denoting the event, and its second argument is the
+predication of the event, in logical form):
+q(suho(1), _FJKCT, nu(_FJKCT, q(suho(1), _FJKKT, guzme(_FJKKT, _FJKSC,
+_FJKSD, _FJKSE, _FJKSF), _FJKMP, citka(koha, _FJKKT, _FJKKU, _FJKKV,
+_FJKKW)), _FJKSY, _FJKSZ, _FJKTA), _FJKEP, q(suho(1), _FJKCU,
+pulji(_FJKCU, _FJLAA, _FJLAB, _FJLAC, _FJLAD), _FJKUN, ciksi(mi, _FJKCT,
+_FJKCU, _FJKCV, _FJKCW)))
+
+Rephrased:
+\exists X:
+  event(X,
+                 (\exists Y: melon(Y); eats(he1,Y)));
+  \exists Z: policeman(Z); explains(me,X,Z).
+
+Logical variables.
+
+The words da, de and di denote logical variables in Lojban (corresponding to an
+extent to our indefinite pronouns); the analyser recognises and represents them
+as such.
+
+Input phrase:
+i mi denpa da .ije da denpa mi de .i de denpa da .i da denpa de (I am
+waiting for X. And X is waiting for me while doing Y. Y waits for X. X waits
+for Y.)
+Output:
+c(e, q(suho(1), _FJMDO, [], [], denpa(mi, _FJMDO, _FJKEW, _FJKEX,
+_FJKEY)), c(seq, q(suho(1), _FJMLY, [], [], denpa(_FJMDO, mi, _FJMLY,
+_FJKNU, _FJKNV)), c(seq, denpa(_FJMLY, _FJMDO, _FJKYD, _FJKYE, _FJKYF),
+denpa(_FJMDO, _FJMLY, _FJLHA, _FJLHB, _FJLHC))))
+
+Rephrased:
+&(
+    \exists X:; waits(me,X,_),
+          &(
+              \exists Y: waits(X,me,Y),
+                   &(
+                       waits(Y,X,_),
+                       waits(X,Y,_)))).
+
+QUESTION ANSWERING
+
+Here follow some examples of questions posed to the analyser within texts. The
+analyser is shown to be capable of formally manipulating its knowledge to give
+answers to these questions, although of course it is not yet capable of making
+pragmatic inferences.
+
+Simple question answering.
+
+Input phrase:
+i mi nelci lo gerku .i xu mi nelci lo gerku .i je mi gerku (I like a dog. Do
+I like a dog? And I am a dog.)
+Output:
+c(e, q(suho(1), _FJKGT, gerku(_FJKGT, _FJKQE, _FJKQF, _FJKQG, _FJKQH),
+_FJKIP, nelci(mi, _FJKGT, _FJKGU, _FJKGV, _FJKGW)), gerku(mi, _FJMPN,
+_FJMPO, _FJMPP, _FJMPQ)) Answers to the questions: [yes]
+Rephrased:
+&(
+    \exists X: dog(X); likes(me,X),
+    dog(me)).
+
+Note that the question sentence is skipped in constructing the logical form of
+the input.
+
+Question answering with argument rearrangement.
+
+Input phrase:
+lo prenu lo gerku lo dakfu ro lo xamsi ro lo dertu cu klama .i xu fi lo
+dakfu fe lo gerku fa lo prenu fu ro lo dertu fo ro lo xamsi cu klama (A
+person goes to a dog from a knife via all seas using all ground. Is it true
+that from a knife to a dog a person using all ground via all seas goes?)
+Output:
+c(seq, q(suho(1), _FJKOU, prenu(_FJKOU, _FJKZI, _FJKZJ, _FJKZK,
+_FJKZL), _FJKOZ, q(suho(1), _FJKZR, gerku(_FJKZR, _FJLKF, _FJLKG, _FJLKH,
+_FJLKI), _FJKZW, q(suho(1), _FJLKO, dakfu(_FJLKO, _FJLVC, _FJLVD, _FJLVE,
+_FJLVF), _FJLKT, q(ro, _FJLVL, xamsi(_FJLVL, _FJMFZ, _FJMGA, _FJMGB,
+_FJMGC), _FJLVQ, q(ro, _FJMGI, dertu(_FJMGI, _FJMQW, _FJMQX, _FJMQY,
+_FJMQZ), _FJMGN, klama(_FJKOU, _FJKZR, _FJLKO, _FJLVL, _FJMGI)))))), [])
+Answers to the questions: [yes]
+
+The analyser is able to successfully reorder the arguments.
+
+Input phrase:
+lo prenu lo gerku lo dakfu ro lo xamsi ro lo dertu cu klama vau .i xu
+fu ro lo dertu fe lo gerku fa lo prenu fi lo dakfu fo ro lo xamsi cu klama
+(A person goes to a dog from a knife via all seas using all ground. Is it true
+that using all ground, to a dog a person goes from a knife via all seas?)
+Output:
+c(seq, q(suho(1), _FJKOU, prenu(_FJKOU, _FJLCC, _FJLCD, _FJLCE,
+_FJLCF), _FJKOZ, q(suho(1), _FJLCL, gerku(_FJLCL, _FJLPT, _FJLPU, _FJLPV,
+_FJLPW), _FJLCQ, q(suho(1), _FJLQC, dakfu(_FJLQC, _FJMDK, _FJMDL, _FJMDM,
+_FJMDN), _FJLQH, q(ro, _FJMDT, xamsi(_FJMDT, _FJMRB, _FJMRC, _FJMRD,
+_FJMRE), _FJMDY, q(ro, _FJMRK, dertu(_FJMRK, _FJNES, _FJNET, _FJNEU,
+_FJNEV), _FJMRP, klama(_FJKOU, _FJLCL, _FJLQC, _FJMDT, _FJMRK)))))), [])
+Answers to the questions: [no_answer]
+
+The quantification order is inversed here: it is valid to conclude from \exists
+x\exists y\exists z\all u\all vB that \exists z\exists y\exists x\all
+v\all uB, but not that \all v\exists y\exists x\exists z\all uB, as is asked
+by this question. Since the inference is not valid, there is no answer in the
+text.
+
+Question answering with conjunction rearrangement, and conjunction
+inferencing.
+
+Input phrase:
+la djak gerku gi'a prenu .i xu la djak gerku giha prenu .i mi denpa
+(Jack is a dog or a man. Is Jack either a dog or a man? I'm waiting.)
+Output:
+c(seq, c(a, gerku([djak], _FJKWK, _FJKWL, _FJKWM, _FJKWN),
+prenu([djak], _FJLLH, _FJLLI, _FJLLJ, _FJLLK)), denpa(mi, _FJOLD, _FJOLE,
+_FJOLF, _FJOLG)) Answers to the questions: [yes]
+
+Input phrase:
+la djak gerku gi'e prenu .i xu la djak gerku giha prenu .i mi denpa
+(Jack is a dog and a man. Is Jack either a dog or a man? I'm waiting.)
+Output:
+c(seq, c(e, gerku([djak], _FJKTZ, _FJKUA, _FJKUB, _FJKUC),
+prenu([djak], _FJLKA, _FJLKB, _FJLKC, _FJLKD)), denpa(mi, _FJOLU, _FJOLV,
+_FJOLW, _FJOLX)) Answers to the questions: [yes]
+
+Input phrase:
+la djak gerku gihe prenu .i xu la djak gerku .i mi denpa vau (Jack is a dog
+and a man. Is Jack a dog? I'm waiting.)
+Output:
+c(seq, c(e, gerku([djak], _FJKUR, _FJKUS, _FJKUT, _FJKUU),
+prenu([djak], _FJLLW, _FJLLX, _FJLLY, _FJLLZ)), denpa(mi, _FJNTQ, _FJNTR,
+_FJNTS, _FJNTT)) Answers to the questions: [yes]
+
+Input phrase:
+la djak gerku gi'a prenu .i xu la djak gerku .i mi denpa (Jack is a dog or a
+man. Is Jack a dog? I'm waiting.)
+Output:
+c(seq, c(a, gerku([djak], _FJKOP, _FJKOQ, _FJKOR, _FJKOS),
+prenu([djak], _FJKRY, _FJKRZ, _FJKSA, _FJKSB)), denpa(mi, _FJLBB, _FJLBC,
+_FJLBD, _FJLBE)) Answers to the questions: [no_answer]
+
+Question answering given insufficient/redundant information.
+
+Input phrase:
+i mi prami lo gerku ku poi ke'a savru .i xu mi prami lo gerku .i mi
+prami lo prenu .i xu mi prami lo prenu poi ke'a xunre (I love a dog who is
+noisy. Do I love a dog? I love a person. Do I love a person who is red?)
+Output:
+c(seq, q(suho(1), _FJMHR, gerku(_FJMHR, _FJKVW, _FJKVX, _FJKVY,
+_FJKVZ), savru(_FJMHR, _FJLBK, _FJLBL, _FJLBM, _FJLBN), prami(mi, _FJMHR,
+_FJKPA, _FJKPB, _FJKPC)), c(seq, q(suho(1), _FJMZI, prenu(_FJMZI, _FJNGF,
+_FJNGG, _FJNGH, _FJNGI), _FJNBE, prami(mi, _FJMZI, _FJMZJ, _FJMZK,
+_FJMZL)), [])) Answers to the questions: [yes, no_answer]
+
+POSSIBLE EXTENSIONS TO THE ANALYSER.
+
+The following extensions can be made to the analyser without much effort:
+
+* Question answering with insufficient/redundant information can be ex
+tended to omitting arguments to text or question predications. Thus, given the
+text "I killed the sheriff with a Colt 45 (but I did not shoot the deputy)",
+the question "Did I kill the sherriff" should be answered in the affirmative.
+
+* The rules for inferring the location in a relative clause of a ke'a anaphor
+when it is absent, alluded to above, can be programmed in. This would help the
+analyser cope better with Lojban text as it is actually written.
+
+* The range of anaphors the analyser can cope with can be extended to include
+predicate anaphors and some backcounting noun anaphors.
+
+* The analyser can be programmed to understand instructions of a limited
+domain, interspersed with its text: it could then start approximating an NL
+database interface.
+
