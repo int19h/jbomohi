@@ -1,4 +1,4 @@
-# mail/lojban-list thread fb732efdaa8a-lr%28k%29_lojban_grammar | root de442b53cd5557556bba8acd8a948ad3ce0455da@jbomohi.invalid | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread fb732efdaa8a-lr%28k%29_lojban_grammar | root de442b53cd5557556bba8acd8a948ad3ce0455da@jbomohi.invalid | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 1995-11-30T10:33:21Z | Paulo Barreto <BARRETO%VELAHF@ECCSA.TR.UNISYS.COM> | 79b210b797c6edf229499c06597d4d0ceb5760ad@jbomohi.invalid | mail/lojban-list/cur/817727601.99a559a6a8ecdde7.jbomohi:2,S
 lojbab:
@@ -149,5 +149,52 @@ a more sophisticated parser would have no problem.
                      ____
  Chris Bogart        \  /  http://www.quetzal.com
  Boulder, CO          \/   cbogart@quetzal.com
+
+
+
+=== 5 | 1995-11-30T10:33:21Z | "Carl D. Burke" <cburke@MITRE.ORG> | de442b53cd5557556bba8acd8a948ad3ce0455da@jbomohi.invalid | mail/lojban-list/cur/817727601.fb732efdaa8a629b.jbomohi:2,S
+>lojbab:
+>>But  even LR(4) would not eliminate a couple of the lexer/preparser
+>>constructs, since some (like numbers) are not LR(k) for any k, though
+>>it would have allowed the grammar to be significantly simpler.
+>
+>Do you have a proof of this? In which way do numbers destroy the LR(k)
+>property?
+
+Hmmm... Unfortunately I don't remember an exact reference, but I do
+remember being taught in some parser-related course (compiler theory
+or formal languages) that a large number of computer languages are not
+LR (actually, not context-free) when you parse them from the character
+level.  When you break processing into lexical analysis (usually a
+regular grammar) followed by a context-free grammar, it works fine.
+Numbers may or may not cause this problem for lojban.
+
+>lojbab:
+>>It is now probably too late because it would take too much work to
+>>verify that any given LR(non-1) grammar generated the same Lojban
+>>grammar, or even anything close.
+>
+>Chris:
+>>Probably true as a practical matter, but eventually knock wood there'll
+>>be academic interest in the language and we'll want to be able to
+>>define it in a more theoretically understandable way.  So it ought to
+>>be at least a long-term goal.
+
+This assumes that lojban has an LR(k) grammar... I can't find the
+reference right now, but the last I remember was that the grammar
+was not actually completely context-free -- there were some shift-reduce
+conflicts that YACC resolved using precedence of rules/productions.
+If S-R or R-R conflicts exist, the language is not LR(1), regardless
+of whether or not YACC can parse it; syntactic ambiguity exists,
+it's just hidden by the mechanics of the parser.
+
+Maybe the grammar has been fixed so that it has no conflicts when
+YACC is at it's strictest, and we're OK.  If the grammar has not
+been fixed, then a language policy decision has to be made: will
+lojban have a syntactically unambiguous grammar or not?
+
+--
+Carl
+cburke@mitre.org
 
 
