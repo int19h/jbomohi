@@ -1,0 +1,150 @@
+# mail/lojban-list thread efbe05b62315-%22most%22_again | root "swan.cl.ca.033:02.04.91.11.12.21"@cl.cam.ac.uk | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1991-05-02T11:12:15Z | David Elworthy <cbmvax!uunet!computer-lab.cambridge.ac.uk!David.Elworthy> | "swan.cl.ca.033:02.04.91.11.12.21"@cl.cam.ac.uk | mail/lojban-list/cur/673182735.efbe05b623155167.jbomohi:2,S
+A number of people have replied to my comments on "most". I want to clear up a
+few points here and throw in a few things just for interest's sake, and then
+leave it at that for a while (before the Lab bans me for using too much
+bandwidth!). Besides, as lojbab says:
+
+> I'll be running this topic by pc (John Parks-Clifford) for a more authoritative
+> opinion on the logical aspects.
+
+and it would be nice to have a "real logician" look at this. After all, this
+work is no more than the one of the cornerstones of my PhD research, and so
+can scarcely be considered authoritative (:-).
+
+(DE = david elworthy, DM = Dave Matuszek, JC = John Cowan, RC = Robert
+Chassell)
+
+
+
+DE> First, to restate the claim in a more formal way:
+DE>  no quantifier with the same meaning as the English word "most" can be
+DE> defined in first order logic, i.e. a logic in which there is
+DE> quantification over individuals drawn from some (finite or infinite)
+DE> universe.
+
+DM>The first comment/question is, does this really cause any problems for
+DM>Lojban?  In other words, though Lojban certainly tries to be logical,
+DM>I don't believe it tries to mirror first order logic, does it?  FOL is
+DM>certainly powerful, but equally certainly it is provably inadequate
+DM>for many tasks.
+
+Certainly: my comments arose from John Cowan saying:
+JC> Currently, "most" is a number, like "two".
+All of my reply is really an attempt to make sure that in giving a semantics
+to Lojban, we avoid some of the pitfalls of adopting a logic which is not
+expressive enough. I'm not so much concerned with the content of the language
+itself. I say this in response to
+
+RC> Anyhow, Lojban does have numbers and counting predicates.  What this
+RC> tells me is that if you want a lojban computer to handle most, you
+RC> will need to program the computer to compute (or at least, give it the
+RC> ability to pair and compare).
+Which is exactly what I was meaning to get at.
+
+
+To continue,
+
+DE> As an aside, it is a standard result that if a quantifier can be
+DE> defined in first order logic, then it is reducible to some combination
+DE> of "All" and "Exists" (which I will write here as A and E). For
+DE> example, the derived quantifier "two x" can be reduced to "Ex.Ey.x /=
+DE> y" (where /= is "not equal").  So we can translate "Two men walk" as
+DE> "two x.(man(x) & walk(x))", i.e.  "Ex.Ey.(x /= y & man(x) & man(y) &
+DE> walk(x) & walk(y))".
+
+DM> This is a little puzzling; it sounds more like this is a definition of
+DM> what FOL is.  You seem to be saying that if a quantifier can be
+DM> defined in FOL, then it can be defined in terms of the concepts
+DM> already in FOL.  This seems more of a truism than a "result" (which
+DM> implies to me that it is somehow provable).
+
+I was being a bit vague when I wrote this paragraph: the point I was really
+trying to get across was that you can't just arbitrarily invent new
+quantifiers and glue them on top of first order logic - you have also to show
+that you can give them the semantics you need. In papers on quantification,
+you occasionally find people just throwing in things like "Most x.F(x)"
+without specifying how they will interpret this. The point of the mail was
+really to give an informal sketch of why you can't give a semantics to most in
+the same way that you can for "all" and "every". The formal proof is in
+Barwise & Cooper.
+
+DM> My problem came in attempting to show that two sets were equal in size
+DM> by forming a 1-1 mapping between them  ... 
+DM> Is this basically what the proof is about?
+
+Yes: this is very similar to Barwise & Cooper's method.
+
+DE> One solution which is widely used is to adopt what are called
+DE> "generalized quantifiers". Now, instead of translating a sentence into
+DE> a quantifier over a variable, and a formula which uses that variable,
+DE> we express the quantifier as a relation between two sets. Thus
+DE> ...
+DE> English	Most men walk.
+DE> GQ	The intersection of the set of men and the set of walkers contains at
+DE> 	least half as many members as the set of men.
+
+DM> While I like the notion of generalized quantifiers, I still don't see
+DM> how things like "at least half" can be expressed without bringing in
+DM> the same sorts of problems.
+
+There are several ways of stating GQs. The one which in some sense is most
+fundamental (though not necessarily the clearest) is as a set of sets. To
+interpret a sentence of the form NP VP, we translate the NP into a GQ, and the
+VP into a set of individuals who do what the VP says. If the VP set is a
+member of the GQ from the NP, then the sentence is true. The GQs for "a man",
+"every man" and "most men" are:
+a man		{X <= U | X ^^ man' != 00}
+every man	{X <= U | man' <= X}
+most men	{X <= U | card(X ^^ man') >= card(man')/2}
+(where U is the universe of individuals, <= is subset, card is set
+cardinality, ^^ is intersection, man' is the set of men, != is not equals, and
+00 is the empty set). So "most men walk" has the truth condition
+ walk' ee {X <= U | card(X ^^ man') >= card(man')/2}
+
+This in turn means that the translation of a determiner is a function from a
+set (namely the N in the NP) to a GQ. Compare the FOL approach, where a
+determiner is translated into a function from a predicate (the N) to another
+set (the VP) to a quantified formula. For example:  (with \ being a lambda,
+other symbols as above)
+
+"every"
+GQ	\P.{X <= U | P <= X}
+FOL	\P.\Q.Ax.[P(x) => Q(x)]
+
+DM> In other words, if FOL quits being FOL when we introduce quantifiers
+DM> like "most" or "same number of," then neither can we arbitrarily throw
+DM> in new generalized quantifiers.  So:  there must be a "standard set"
+DM> of generalized quantifiers.  What is it?
+
+If you mean by this, is there a fixed list of GQs, the answer is that there
+isn't one. In fact, this is one of the advantages of GQ theory: that you can
+always invent a new one to cope with complex determiners (such as "at least
+three but no more than seventeen or alternatively exactly twenty-nine").
+However, it is claimed that *all* GQs encountered in natural language satisfy
+certain properties, namely (if D is a determiner, and A and B sets)
+
+Extension: if DAB holds (i.e. B ee DA) in universe U, then it also holds in
+universe U', where U <= U'.
+
+Conservativity: if DAB holds in a universe U, then DA(A^^B) also holds in U.
+
+Isomorphy: if DAB holds in U, and f is a bijection from U to another universe
+U', then Df(A)f(B) holds in U'.
+
+A consequence of these properties is that the truth of DAB depends purely on
+card(A) and card(A^^B).
+
+Note that there are constructs in natural languages which at first sight
+appear not to be expressible in GQs with these constraints. So far, every one
+has been explained away somehow (:-). Examples are "only" and "mainly", as in
+"only/mainly donkeys neigh", which are explained by claiming that they are not
+really determiners. I think a number of the non-exact quantifiers mentioned by
+Lojbab will come into this category.
+
+
+-- david elworthy
+
+
+
