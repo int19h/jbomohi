@@ -1,0 +1,156 @@
+Return-Path: <LOJBAN%CUVMB.BITNET@BITMAIL.LSOFT.COM>
+Received: from SEGATE.SUNET.SE by xiron.pc.helsinki.fi  with smtp
+	(Linux Smail3.1.28.1 #1) id m0tK7yI-0000ZWC; Mon, 27 Nov 95 20:08 EET
+Message-Id: <m0tK7yI-0000ZWC@xiron.pc.helsinki.fi>
+Received: from listmail.sunet.se by SEGATE.SUNET.SE (LSMTP for OpenVMS v1.0a) with SMTP id 255D4061 ; Mon, 27 Nov 1995 19:08:06 +0100
+Date:         Mon, 27 Nov 1995 12:38:53 -0501
+Reply-To:     "Robert J. Chassell" <bob@GNU.AI.MIT.EDU>
+Sender:       Lojban list <LOJBAN@CUVMB.BITNET>
+From:         "Robert J. Chassell" <bob@GNU.AI.MIT.EDU>
+Subject:      Guttman scales/Certainty Factors [long, hard] 3 of 4
+X-To:         lojban@cuvmb.bitnet
+To:           Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Content-Length: 5899
+Lines: 140
+
+This is the 3rd of 4 related messages.
+
+Here is an example of `certainty factors' as an interval scale.
+
+This message follows after, and is best understood, within the context
+of two other messages I just posted, called `Guttman Scales' and
+`Guttman scales examples'
+
+
+Now, I know full well that it is hard to translate from English to
+Lojban; but would one of you experts out there care to translate this?
+You would get a chance to work with numbers and equations, and other
+things we are telling new comers not to bother with.  :)
+
+(I don't know whether I could translate this if I had the time--I
+might not be able to.  I just ran this through the Unix `style'
+program and it tells me that this is readable at the 10th through 13th
+grade level --- this is considerably harder to follow than my usual
+writing, which is aimed at the 9th and 10th grade level, a level that
+is easy and comfortable for readers who went to college.)
+
+
+Certainty Factor example
+........................
+
+In the mid 1980s, David McAllister, at MIT, developed a metric for
+`certainty factors' for use in an `expert system' (a type of computer
+program).  This example will give you a sense of what can be
+done with an interval scale when you cannot make ratios.
+
+Metrics of this sort will become more commonplace in the years ahead,
+not only in diagnosing problems with oil refineries and illnesses in
+people, but also in mortgage lending and mutual fund investment.
+
+A certainty factor is used to express how accurate, truthful, or
+reliable you judge a predicate to be.  It is your judgement of how
+good your evidence is.  The issue is how to combine various
+judgements.
+
+Note that a certainty factor is neither a probability nor a truth
+value.
+
+Consider the expression `George is suffering from hypoxia'.
+
+Based on warnings given to pilots, we would speak of there being
+`strongly suggestive evidence' that George is suffering from hypoxia
+when he is flying in an unpressurized airplane at 12,000 feet and his
+judgement, memory, altertness, and coordination are off.
+
+Note, we are not saying "there is an eighty percent chance that George
+suffers hypoxia"; that is a probability estimate.  We are talking
+about our judgement of certainty.  You may be able to generate
+statements of probability, such as: "80% of US Air Force student
+pilots will fail to maintain altitude within 100 feet when they fly
+higher than... feet without supplementary oxygen, and this will
+indicate they suffer from hypoxia."  But this is a different sort of
+statement than one involving certainty factors.
+
+What I am doing is in this example of uncertainty is taking what I was
+taught as a student pilot and creating from that information a
+mechanism for diagnosing hypoxia.  I don't know the probability that a
+person of my health and age will suffer hypoxia at 12,000 feet, but I
+do know the symptoms, which, however, may be weak, or have other
+causes.
+
+In McAllister's scheme, a certainty factor is a number from 0.0 to
+1.0.  A phrase such as `suggestive evidence' is given a number such as
+0.6; `strongly suggestive evidence' is given a number such as 0.8.
+The person making the judgement uses the scale more or less as an
+ordinal scale.  The numbers are used in a metric to permit a computer
+to make calculations.
+
+McAllister's rules for combining certainty factors are such that you
+can add new evidence to existing evidence.  If the evidence is
+positive, this increases your certainty, as you would expect.  But you
+never become 100% certain.
+
+Continuing our hypoxia example: George tells us that he feels
+wonderful.  This is `suggestive evidence' that George suffers from
+hypoxia.  (Pilots are warned of this: "if you feel euphoric, consider
+hypoxia: you may be flying too high without oxygen, or suffering
+carbon monoxide poisoning from a broken heater."  Of course, there are
+many good reasons to become euphoric when you fly; hypoxia is
+insidiously dangerous.)
+
+McAllister defined the rule for adding two positive certainty factors
+like this:
+
+    CFcombine (CFa CFb) = CFa + CFb(1 - Cfa)
+
+I.e., reduce the influence of the second certainty factor by the
+remaining uncertainty of the first, and add the result to the
+certainty of the first.
+
+In our example, the altitude and loss of judgment are strongly
+suggestive evidence, with a certainty factor of 0.8; and euphoria is
+suggestive evidence, with a certainty factor of 0.8.  The combined
+certainty factor is:
+
+                .92     =  .6 + .8(1 - .6)
+
+(Incidentally, it does not matter which factor you start with first:
+
+       .8 + .6(1 - .8)  =  .6 + .8(1 - .6)  = .92
+
+Both sequences produce the same result.)
+
+McAllister also has rules for adding two negative certainties, and for
+adding a positive and a negative certainty.  A negative certainty is
+the degree to which you are certain the case is not so.
+
+The rule for adding two negative certainties is simple:
+Treat the two factors as positive and negate the result
+
+    CFcombine (CFe CFf) = -(CFcombine (-CFe -CFf))
+
+The rule for adding positive and negative certainty factors is more
+complex:
+
+    CFcombine (CFg CFh) =  (CFg + CFh) / (1 - min{|CFg|, |CFn|})
+
+Thus if your certainty for an instance is 0.88 and your certainty
+factor against it is 0.90, the result is:
+
+               -.17     = (.88 - -.90) / (1 - min(.88, .90))
+
+                        =   -.02 / .12
+
+I.e. take the difference, and then multiply that value by the
+reciprocal of the smallest remaining uncertainty.
+
+These three rules provide an interval scale for certainty factors.
+
+You will note that you cannot say that a certainty factor of 0.8 is
+twice the certainty of 0.4; the rules of this metric only involve
+those of addition and subtraction that I have shown, no others.
+
+    Robert J. Chassell               bob@gnu.ai.mit.edu
+    25 Rattlesnake Mountain Road     bob@rattlesnake.com
+    Stockbridge, MA 01262-0693 USA   (413) 298-4725
+
