@@ -1,0 +1,147 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 21 Mar 2004 17:21:27 -0800 (PST)
+Received: from n37.grp.scd.yahoo.com ([66.218.66.105])
+	by chain.digitalkingdom.org with smtp (Exim 4.30)
+	id 1B5E7u-0002TN-QR
+	for lojban-in@lojban.org; Sun, 21 Mar 2004 17:21:14 -0800
+X-eGroups-Return: sentto-44114-21781-1079918442-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.67.194] by n37.grp.scd.yahoo.com with NNFMP; 22 Mar 2004 01:20:42 -0000
+X-Sender: lojbab@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 81363 invoked from network); 22 Mar 2004 01:20:41 -0000
+Received: from unknown (66.218.66.216)
+  by m12.grp.scd.yahoo.com with QMQP; 22 Mar 2004 01:20:41 -0000
+Received: from unknown (HELO lakemtao03.cox.net) (68.1.17.242)
+  by mta1.grp.scd.yahoo.com with SMTP; 22 Mar 2004 01:20:41 -0000
+Received: from bob.lojban.org ([68.228.12.146]) by lakemtao03.cox.net
+          (InterMail vM.5.01.06.08 201-253-122-130-108-20031117) with ESMTP
+          id <20040322012037.TORK27519.lakemtao03.cox.net@bob.lojban.org>;
+          Sun, 21 Mar 2004 20:20:37 -0500
+Message-Id: <5.2.0.9.0.20040321193052.0357fd90@pop.east.cox.net>
+X-Sender: lojbab@pop.east.cox.net
+X-Mailer: QUALCOMM Windows Eudora Version 5.2.0.9
+To: rlpowell@digitalkingdom.org,lojban@yahoogroups.com
+In-Reply-To: <20040321184454.GA32271@digitalkingdom.org>
+X-eGroups-Remote-IP: 68.1.17.242
+From: Bob LeChevalier <lojbab@lojban.org>
+X-Yahoo-Profile: lojbab
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Sun, 21 Mar 2004 19:54:06 -0500
+Subject: [lojban] Re: Error in bnf.300
+Content-Type: text/plain; charset=US-ASCII
+X-archive-position: 7284
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: lojbab@lojban.org
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 3640
+Lines: 103
+
+At 10:44 AM 3/21/04 -0800, Robin Lee Powell wrote:
+>There's a contradiction between grammar.300 and bnf.300 and, regardless
+>of baselining issues, bnf.300 is *clearly* wrong:
+>
+>     text-1<2> = [(I [jek | joik] [[stag] BO] #) ... | NIhO ... #] 
+> [paragraphs]
+>
+>The problem is that there's supposed to be a "text-1" betweev "BO]" and "#)".
+
+I don't believe so, though I don't pretend to be able to read EBNF as well 
+as the YACC grammar.
+
+I could be wrong, but I believe that the EBNF is NOT designed to show the 
+structure within a single rule parses - it just shows what is a legal 
+string.  EBNF rules are also not supposed to be self-referencing so it 
+would be invalid to have a text-1 included in the rule for text-1; that is 
+what the "..." construct is supposed to communicate.
+
+The first three rules of text_B_2 are in the in order to allow you to stutter:
+
+.i   .i   .i   mi klama
+
+This was generalized to allow
+.ije  .ije  .ije   mi klama
+
+The "mi klama" gets included when you finally get to the text_c_3 YACC 
+rule/paragraphs EBNF rule.
+
+It is possible that the EBNF is incorrect in how it represents the 4th rule 
+of text_B_2, but my mind is twisted in the abbreviated 
+recursion/alternation, so I cannot be sure.  If it is incorrect, I think 
+the fix would be to change "| NIHO" to "] [NIHO]", because the EBNF as 
+stated appears to forbid ".i ni'o mi klama"
+
+>Here's the grammar.300 part (w/o comments); you mostly want to look at 
+>text_B_2.
+>
+>%start text_0
+>
+>%%
+>
+>text_0                  :  text_A_1
+>                         |  indicators_411  text_A_1
+>                         |  free_modifier_32  text_A_1
+>                         |  cmene_404  text_A_1
+>                         |  indicators_411  free_modifier_32  text_A_1
+>                         |  NAI_581  text_0
+>                         ;
+>
+>text_A_1                :  JOIK_JEK_422  text_B_2
+>                         /* incomplete JOIK_JEK  without preceding I */
+>                         /* compare note on paragraph_10 */
+>                         |  text_B_2
+>                         ;
+>
+>text_B_2                :  I_819  text_B_2
+>                         |  I_JEK_820  text_B_2
+>                         |  I_BO_811  text_B_2
+>                         |  para_mark_410  text_C_3
+>                         |  text_C_3
+>                         ;
+>
+>text_C_3                :  paragraphs_4
+>                         |  /* empty */
+>                         ;
+>
+>
+>The test case is "mi broda .i je no da zo'u broda", which jbofi'e chokes on
+>because of this problem.
+
+I believe that it should be rejecting it.  (See my other post).
+
+lojbab
+
+-- 
+lojbab                                             lojbab@lojban.org
+Bob LeChevalier, Founder, The Logical Language Group
+(Opinions are my own; I do not speak for the organization.)
+Artificial language Loglan/Lojban:                 http://www.lojban.org
+
+
+
+
+------------------------ Yahoo! Groups Sponsor ---------------------~-->
+Buy Ink Cartridges or Refill Kits for your HP, Epson, Canon or Lexmark
+Printer at MyInks.com.  Free s/h on orders $50 or more to the US & Canada.
+http://www.c1tracking.com/l.asp?cid=5511
+http://us.click.yahoo.com/mOAaAA/3exGAA/qnsNAA/GSaulB/TM
+---------------------------------------------------------------------~->
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+Yahoo! Groups Links
+
+<*> To visit your group on the web, go to:
+     http://groups.yahoo.com/group/lojban/
+
+<*> To unsubscribe from this group, send an email to:
+     lojban-unsubscribe@yahoogroups.com
+
+<*> Your use of Yahoo! Groups is subject to:
+     http://docs.yahoo.com/info/terms/
+ 
+
