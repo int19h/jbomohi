@@ -1,0 +1,126 @@
+Return-Path: <kominek@ucsub.colorado.edu>
+X-Sender: kominek@ucsub.colorado.edu
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_0_3_1); 2 May 2002 18:42:26 -0000
+Received: (qmail 8276 invoked from network); 2 May 2002 18:42:26 -0000
+Received: from unknown (66.218.66.217)
+  by m15.grp.scd.yahoo.com with QMQP; 2 May 2002 18:42:26 -0000
+Received: from unknown (HELO ucsub.colorado.edu) (128.138.129.12)
+  by mta2.grp.scd.yahoo.com with SMTP; 2 May 2002 18:42:26 -0000
+Received: from ucsub.colorado.edu (kominek@ucsub.colorado.edu [128.138.129.12])
+	by ucsub.colorado.edu (8.11.6/8.11.2/ITS-5.0/student) with ESMTP id g42IgJJ11865
+	for <lojban@yahoogroups.com>; Thu, 2 May 2002 12:42:19 -0600 (MDT)
+Date: Thu, 2 May 2002 12:42:19 -0600 (MDT)
+To: lojban@yahoogroups.com
+Subject: dictionary editing system (was: Lojban dictionary in TEI)
+In-Reply-To: <20020502181849.3425359DF3@cube.nefud.org>
+Message-ID: <Pine.GSO.4.40.0205021224310.3173-200000@ucsub.colorado.edu>
+MIME-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-959030623-1020364939=:3173"
+From: Jay Kominek <jay.kominek@colorado.edu>
+X-Yahoo-Group-Post: member; u=20706630
+X-Yahoo-Profile: jfkominek
+X-Yahoo-Message-Num: 14204
+Content-Length: 4803
+
+           
+---559023410-959030623-1020364939=:3173 
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+
+On Thu, 2 May 2002, Allan Bailey wrote:
+
+> new db structure:
+>
+> word: [gismu/cmavo/fu'vla/...]
+> english-gloss:
+> esperanto-gloss:
+> ...
+> <rodbau>-gloss:
+>
+> place_structure:
+> synonyms_related_words:
+> rafsi:
+
+I've attached a copy of the PostgreSQL tables I'd come up when working on
+this.
+
+A feature of particular note is that I separated out the entry for the
+Lojban word (that information is contained in the words table), and the
+content in the other language. Each row in the definitions table records
+the language of the definition.
+
+One also needs to record a keyword, or keywords for each place of brivla,
+so that when you construct the <otherlanguage>->Lojban portion of the
+dictionary, you can map words as appropriate.
+
+Some of the design requirements I'd come up when working on jbovlaste:
+
+* Users need to be presented with a semantic catagorization of the words,
+  whether or not the database stores it. (I was thinking a Wiki-esque
+  front end, which pulled definitions out of the database when indicated
+  by appropriate tags.)
+* There definitately needs to be a way for users to associate
+  near-arbitrary HTML with everything, so that they can link to, if
+  nothing else, mailing list archives.
+* Multilinguality of content. If you're going to implement this, you might
+  as well implement it so that it doesn't have to be redone for some other
+  language. (Supporting existing natlangs and close approximations thereof,
+  like Esperanto, is good enough.)
+* A (threaded) comment system, so users could provide feedback on
+  definitions of words, and the suitability of words for mapping to
+  particular concepts.
+* A voting system for words, with something mojo-esque to calculate whose
+  votes a worth more, etc.
+* The database needs to be designed so that it is easy to not only search
+  for words in any language the database has content in, but also to dump
+  the contents of the database to a file easily. (For export to a PDF, and
+  thus, a printer. See http://miranda.org/~jkominek/dict_en.pdf for an
+  example of my prototype's output.)
+
+I'm probably missing a lot.
+
+- Jay Kominek <jay.kominek@colorado.edu>
+  Plus =C3=A7a change, plus c'est la m=C3=AAme chose
+           
+---559023410-959030623-1020364939=:3173 
+Content-Type: TEXT/PLAIN; charset=US-ASCII; name="tables.sql"
+Content-Transfer-Encoding: BASE64
+Content-ID: <Pine.GSO.4.40.0205021242190.3173@ucsub.colorado.edu>
+Content-Description: 
+Content-Disposition: attachment; filename="tables.sql"
+
+QkVHSU47DQoNCkNSRUFURSBUQUJMRSB3b3JkcyAoDQogd29yZElkIHNlcmlhbCBwcmltYXJ5
+IGtleSwNCiB3b3JkIHRleHQgbm90IG51bGwgdW5pcXVlLA0KIHR5cGUgaW50MiBub3QgbnVs
+bCwNCiBhZGRlZCBpbnQ0IG5vdCBudWxsLA0KIGltYWdlIHRleHQgbm90IG51bGwsDQogeHJl
+ZnMgdGV4dCBub3QgbnVsbCwNCiB0eXBlc3BlY2lmaWMgdGV4dCBub3QgbnVsbCwNCiBldHlt
+b2xvZ2ljb3JpZ2luIHRleHQgbm90IG51bGwNCik7DQoNCkNSRUFURSBUQUJMRSBhdXRob3Jz
+ICgNCiBhdXRob3JJZCBzZXJpYWwgcHJpbWFyeSBrZXksDQogbmFtZSB0ZXh0IG5vdCBudWxs
+LA0KIHVzZXJuYW1lIHRleHQgbm90IG51bGwsDQogZW1haWwgdGV4dCBub3QgbnVsbCwNCiBz
+dXBlcnVzZXIgYm9vbCBub3QgbnVsbA0KKTsNCg0KQ1JFQVRFIFRBQkxFIGRlZmluaXRpb25z
+ICgNCiBkZWZpbml0aW9uSWQgc2VyaWFsIHByaW1hcnkga2V5LA0KIHdvcmRJZCBpbnQ0IHJl
+ZmVyZW5jZXMgd29yZHMsDQogbGFuZ3VhZ2UgdmFyY2hhcigxMjgpIG5vdCBudWxsLA0KIGF1
+dGhvcklkIGludDQgcmVmZXJlbmNlcyBhdXRob3JzLA0KIGVudHJ5Y29tbWVudCB0ZXh0IG5v
+dCBudWxsLA0KIGFkZGVkIGludDQgbm90IG51bGwsDQoNCiBkZWZpbml0aW9uIHRleHQgbm90
+IG51bGwsDQogZXhwbGFuYXRpb24gdGV4dCBub3QgbnVsbCwNCiB4cmVmcyB0ZXh0IG5vdCBu
+dWxsDQopOw0KDQpDUkVBVEUgVEFCTEUgZXR5bW9sb2dpZXMgKA0KIHdvcmRJZCBpbnQ0IHJl
+ZmVyZW5jZXMgd29yZHMsDQogbGFuZ3VhZ2UgdmFyY2hhcigxMjgpIG5vdCBudWxsLA0KIGV0
+eW1vbG9neSB0ZXh0IG5vdCBudWxsDQopOw0KDQpDUkVBVEUgVEFCTEUgdm90ZXMgKA0KIGRl
+ZmluaXRpb25JZCBpbnQ0IHJlZmVyZW5jZXMgZGVmaW5pdGlvbnMsDQogdm90ZXZhbCBpbnQy
+IG5vdCBudWxsLA0KIGF1dGhvcklkIGludDQgcmVmZXJlbmNlcyBhdXRob3JzDQopOw0KDQpD
+UkVBVEUgVEFCTEUga2V5d29yZHMgKA0KIGRlZmluaXRpb25JZCBpbnQ0IHJlZmVyZW5jZXMg
+ZGVmaW5pdGlvbnMsDQogcGxhY2UgaW50MiBub3QgbnVsbCwNCiBrZXl3b3JkIHRleHQgbm90
+IG51bGwNCik7DQoNCkNSRUFURSBUQUJMRSBsdWp2b21hcCAoDQogd29yZElkIGludDQgcmVm
+ZXJlbmNlcyB3b3JkcywNCiBwbGFjZSBpbnQyIG5vdCBudWxsLA0KIGNvbXBvbmVudCBpbnQ0
+IHJlZmVyZW5jZXMgd29yZHMsDQogY29tcG9uZW50cGxhY2UgaW50MiBub3QgbnVsbA0KKTsN
+Cg0KQ1JFQVRFIFRBQkxFIHJhZnNpICgNCiByYWZzaSBjaGFyKDQpLA0KIHdvcmRJZCBpbnQ0
+IHJlZmVyZW5jZXMgd29yZHMsDQogbGxnQXBwcm92ZWQgYm9vbCBub3QgbnVsbCBkZWZhdWx0
+ICdmJw0KKTsNCg0KSU5TRVJUIElOVE8gYXV0aG9ycyAobmFtZSwgdXNlcm5hbWUsIGVtYWls
+LCBzdXBlcnVzZXIpIFZBTFVFUw0KKCdhdXRvIGltcG9ydCBzY3JpcHRzJywgJ2ltcG9ydGVy
+JywgJ25vbmVAcXV1Lnh4JywgJ3QnKTsNCg0KLS0gRG9uJ3QgZm9yZ2V0IHRvIENPTU1JVCBp
+ZiBpdCBhbGwgd2VudCB3ZWxsLA0KLS0gb3IgUk9MTEJBQ0sgaWYgc29tZXRoaW5nIGZhaWxl
+ZC4NCg==
+           
+---559023410-959030623-1020364939=:3173--
+

@@ -1,4 +1,4 @@
-# mail/lojban-list thread ecaf4d50795c-lojban_dictionary_in_tei | root 5.1.0.14.0.20020501152814.02910bd0@digitalkingdom.org | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread ecaf4d50795c-lojban_dictionary_in_tei | root 5.1.0.14.0.20020501152814.02910bd0@digitalkingdom.org | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2002-05-01T19:30:22Z | lojbab <lojbab@lojban.org> | 5.1.0.14.0.20020501152814.02910bd0@digitalkingdom.org | mail/lojban-list/cur/1020281422.ecaf4d50795ccda9.jbomohi:2,S
 Anyone interested, please contact this gentleman.  I don't know what TEI is 
@@ -340,3 +340,61 @@ rafsi:
            
 
 
+
+=== 9 | 2002-05-02T18:42:19Z | Jay Kominek <jay.kominek@colorado.edu> | pine.gso.4.40.0205021224310.3173-200000@ucsub.colorado.edu | mail/lojban-list/cur/1020364939.47268fb7fabffc47.jbomohi:2,S
+
+On Thu, 2 May 2002, Allan Bailey wrote:
+
+> new db structure:
+>
+> word: [gismu/cmavo/fu'vla/...]
+> english-gloss:
+> esperanto-gloss:
+> ...
+> <rodbau>-gloss:
+>
+> place_structure:
+> synonyms_related_words:
+> rafsi:
+
+I've attached a copy of the PostgreSQL tables I'd come up when working on
+this.
+
+A feature of particular note is that I separated out the entry for the
+Lojban word (that information is contained in the words table), and the
+content in the other language. Each row in the definitions table records
+the language of the definition.
+
+One also needs to record a keyword, or keywords for each place of brivla,
+so that when you construct the <otherlanguage>->Lojban portion of the
+dictionary, you can map words as appropriate.
+
+Some of the design requirements I'd come up when working on jbovlaste:
+
+* Users need to be presented with a semantic catagorization of the words,
+  whether or not the database stores it. (I was thinking a Wiki-esque
+  front end, which pulled definitions out of the database when indicated
+  by appropriate tags.)
+* There definitately needs to be a way for users to associate
+  near-arbitrary HTML with everything, so that they can link to, if
+  nothing else, mailing list archives.
+* Multilinguality of content. If you're going to implement this, you might
+  as well implement it so that it doesn't have to be redone for some other
+  language. (Supporting existing natlangs and close approximations thereof,
+  like Esperanto, is good enough.)
+* A (threaded) comment system, so users could provide feedback on
+  definitions of words, and the suitability of words for mapping to
+  particular concepts.
+* A voting system for words, with something mojo-esque to calculate whose
+  votes a worth more, etc.
+* The database needs to be designed so that it is easy to not only search
+  for words in any language the database has content in, but also to dump
+  the contents of the database to a file easily. (For export to a PDF, and
+  thus, a printer. See http://miranda.org/~jkominek/dict_en.pdf for an
+  example of my prototype's output.)
+
+I'm probably missing a lot.
+
+- Jay Kominek <jay.kominek@colorado.edu>
+  Plus ça change, plus c'est la même chose
+           
