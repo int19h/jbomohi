@@ -1,0 +1,94 @@
+Return-Path: <kominek@ucsub.colorado.edu>
+X-Sender: kominek@ucsub.colorado.edu
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-7_3_2); 27 Aug 2001 23:30:17 -0000
+Received: (qmail 85914 invoked from network); 27 Aug 2001 23:29:58 -0000
+Received: from unknown (10.1.10.27)
+  by l7.egroups.com with QMQP; 27 Aug 2001 23:29:58 -0000
+Received: from unknown (HELO ucsub.colorado.edu) (128.138.129.12)
+  by mta2 with SMTP; 27 Aug 2001 23:29:58 -0000
+Received: from ucsub.colorado.edu (kominek@ucsub.colorado.edu [128.138.129.12])
+	by ucsub.colorado.edu (8.11.6/8.11.2/ITS-5.0/student) with ESMTP id f7RNTB328223
+	for <lojban@yahoogroups.com>; Mon, 27 Aug 2001 17:29:11 -0600 (MDT)
+Date: Mon, 27 Aug 2001 17:29:11 -0600 (MDT)
+To: <lojban@yahoogroups.com>
+Subject: Re: [lojban] LALR1 question
+In-Reply-To: <Pine.NEB.4.33.0108271909330.21447-100000@reva.sixgirls.org>
+Message-ID: <Pine.GSO.4.33.0108271715470.17048-100000@ucsub.colorado.edu>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Jay Kominek <jay.kominek@colorado.edu>
+X-Yahoo-Message-Num: 10193
+Content-Length: 2795
+
+
+On Mon, 27 Aug 2001, Invent Yourself wrote:
+
+> > > 	I have always been led to believe that LALR(1) parsers are the maxim=
+um
+> > > that can be conclusively proved to be unambiguous, which is why TLI
+> > > Loglan
+> > > grammar was based on YACC (and incidentally, Robin, has no shift-redu=
+ce
+> > > conflicts)
+> >
+> > LR(k) and LL(k) (for all k) grammars are also unambiguous.
+>
+> How hard would it be to create an LALR(5) Lojban, and how different would
+> it be to speak?
+
+It would be easier to define the machine grammar for something which was
+LALR(5), no nasty little restrictions, or need for kludges to force the
+language to shift instead of reduce in the appropriate places.
+
+Writing a LALR(5) parser generator and then running it (and using the
+parser) would be far more difficult taskes.
+
+LALR(5) would require that you create a matrix with dimensions n by n,
+where n is the number of valid different 6 token strings in the language.
+
+We've got 120 selma'o, (each selma'o =3D~ token), so in the worst case, its
+a table of 2985984000000 by 2985984000000. (Each entry is at least a few
+bytes, btw.)
+
+A more realisitic case would still exhaust the memory of most computers
+today.
+
+
+The answer for your second question is significantly more difficult.
+
+In fact, I don't suggest you read it. I'm answering mostly so as to ponder
+the question outloud for myself. I suggest asking a psycholinguist, or at
+least a linguist.
+
+My guess is, that if the language actually made significant use of having
+5 tokens of lookahead, that speaking it and understanding it would be
+beyond many humans. Supposedly humans have got a short term memory of 7
+give or take 2 items. LALR(5) would require that humans remember the last
+5 words said, in addition to the current one. Sort of...
+
+Memory and language processing is likely very different from the way a
+parser works. But I'd imagine that if people had to hold 6 words or so in
+memory, just to be able to identify a word as a determinor, or a group of
+words as a noun phrase, they'd have real problems.
+
+If you were merely upping the amount of look ahead so that you could leave
+out terminators in a lot more cases, then it would probably make things
+easier to remember. (Humans can stick missing terminators back in rather
+handily, in many cases.)
+
+(The last 3 paragraphs were pulled almost entirely out of my ass. Should
+they happen to be correct, then I'll be impressed. See, however, the note
+about asking a linguist.)
+
+My conclusion: If you want the language to be syntactically unambiguous,
+LALR(1) is a fairly good choice. The most you'd want to do is switch to an
+LR(2) parser. If you need more than that, you're doing something wrong.
+
+- Jay Kominek <jay.kominek@colorado.edu>
+  Plus =C3=A7a change, plus c'est la m=C3=AAme chose
+
+
+           
+
