@@ -1,0 +1,507 @@
+# mail/lojban-list thread ab2994ea3eba-relatives_and_quantifiers_%28pt_2_of_2%29 | root 9207091310.aa23519@relay1.uu.net | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1992-07-09T13:39:27Z | CJ FINE <cbmvax!uunet!bradford.ac.uk!C.J.Fine> | 9207091310.aa23519@relay1.uu.net | mail/lojban-list/cur/710689167.ab2994ea3ebaf5b9.jbomohi:2,S
+ 5. Indefinite sumti
+ -------------------
+
+[pe'i these are an annoying mistake, complicating
+ the syntax just so that we can omit a word here
+ there and thereby muddy the logical structure.]
+
+ However, we have them and we can cope.
+
+ Transformationally, as I understand it
+
+      <quantifier> <selbri>
+ eg   ze prenu
+
+ is exactly equivalent to
+
+      <quantifier> lo <selbri>
+      ze lo prenu
+
+ and we have precisely the same difficulties as with
+ any other external quantifier, except that the
+ <quantifier> and the optional <relative clauses>
+ are introduced at the same point in the syntax
+ (indefinite_sumti_94), so for example
+      ze prenu poi gleki
+ parses as
+      [ze prenu [poi gleki]]
+ with three constituents, and not explicitly as
+      [ze [prenu [poi gleki]]]
+ in the way
+      ze lo prenu poi gleki
+ does. i.e. the syntax is equivocal here.
+
+ There is another form of indefinite sumti, which I
+ do not understand:
+
+      <quantifier> <quantifier> <selbri>
+ eg   voboi ze prenu
+
+ I can only guess that it is intended to mean
+      <quantifier> lo <quantifier> <selbri>
+      vo lo ze prenu
+
+ If this is correct, it has the same problems: it
+ seems to parse as
+      voboi [ze prenu] [poi ....]
+ with the internal qualifier bound tighter to the
+ selbri, so its problems are no different.
+
+ [In passing, I suggest this form be withdrawn. As
+ far as I know nobody uses it, which is the only
+ justification for keeping an anomalous
+ construction; and the relation between
+ eg   voboi        prenu
+ and  voboi  ze    prenu
+ is rather odd (one would expect the omitted item in
+ the first to be on the front, rather than the
+ middle!)]
+
+ 6. Preposed possessives
+ -----------------------
+ The other anomaly in the current grammar is the
+ preposed possessive (the optional sumti_E_96 in
+ sumti_tail_113):
+
+      le mi cukta
+
+ I believe this is precisely equivalent to
+      le cukta pe mi
+
+ This does not interact problematically with
+ relative clauses, of either type:
+
+      lo mi cukta poi xunre = lo cukta pe mi zi'e
+				   poi xunre
+ restricts the set of books to those which are both
+ mine and red.
+
+      lo mi cukta noi xunre = lo cukta pe mi zi'e
+				   noi xunre
+ restricts the set to books which are mine, and
+ comments that they (my books) are red.
+
+ But it does not work at all with internal
+ quantifiers.
+
+      lomi ci cukta
+ which is always used to mean
+      'my three books', i.e.
+      'all books, restricted to those belong to me,
+		there are three of these'
+	(= lo ci [cukta pe mi])
+ is actually defined to be
+
+      lo mi [ci cukta] = [lo ci cukta] pe mi
+      'my books, out of the three' , i.e.
+      'all books (there are three), restricted
+to those which belong to me'
+
+ while,
+      *lo ci mi cukta
+ which has some hope of meaning what we want, is not
+ even valid!
+
+[It is true that these forms with 'lo' are relatively unusual, and it
+is more common to use 'le', which once again gets round the logical
+problems by pragmatics; but I think the problems are there nonetheless.]
+
+ 7. Summary of the problems
+ --------------------------
+
+ There are two basic problems, one of them in two
+ parts.
+
+ 1a.  restrictive relatives belong inside external
+ quantifiers, incidental relatives belong outside.
+
+ 1b. restrictive relatives belong inside internal
+ quantifiers, incidental relatives belong outside.
+
+ 2. preposed possessives belong inside internal
+ quantifiers.
+
+ 8. Suggestions for problem 1
+ ----------------------------
+
+ There are a number of possibilities I can think of.
+
+ a) Nothing.
+ Thus far, we have found this area to be workable.
+ However, wait until you try to teach the semantics
+ to a computer. This will require rules something
+ like the following:
+
+ quantified sumti:
+      store the quantifier, and go ahead and
+      interpret the sumti including any relative
+      clauses. Then select the specified number from
+      the set of denoted items. If there are any
+      incidental clauses stored, now apply them.
+
+ internal quantifier:
+      store the quantifier, and go ahead and
+      interpret the selbri, and carry the set of
+      denoted items forward.
+
+ relative clauses:
+      interpret each clause in turn. If it is a
+      restrictive, select appropriately from the
+      current set of denoted items. If it is an
+      incidental, remember it.
+      At the end of the relative clauses, if there
+      is an internal quantifier stored, use it to
+      select an appropriate number from the set.
+      Then carry the set forward.
+
+ Possible, but hideous, and not worthy of something
+ described as a logical language. (And preposed
+ possessives will give a further complication).
+
+ b) The minimal change I can see is to require all
+ restrictives to precede all incidentals, and modify
+ the grammar as follows to reinterpret almost what
+ we have:
+
+ sumti_C_93
+      :  sumti_D_95
+      |  indefinite_sumti_94
+      |  sumti_D_95 incidental
+      |  restricted_sumti
+      |  restricted_sumti ZIhEK_820 incidental
+      ;
+ /* Restricted_sumti needs to be distinguished from
+ sumti_D because we need the ZIhEK after it before
+ any incidental clauses. This distinction has to be
+ carried right down */
+
+ sumti_D_95
+       :  sumti_E_96
+       |  quantifier_300  sumti_E_96
+       ;
+
+ restricted_sumti
+      :  restricted_sumti_A
+      |  quantifier_300 restricted_sumti_A
+      ;
+
+ sumti_E_96
+      :  sumti_F_97
+      |  LAhE_561  sumti_C_93
+      |  NAhE_BO_809  sumti_C_93
+      ;
+
+ sumti_F_97
+      :  sumti_H_99
+      |  GEK_807  sumti_90  GIK_816  sumti_C_93
+      ;
+
+ restricted_sumti_A
+      :  sumti_H_99  restrictive
+      |  restricted_description
+      ;
+
+ sumti_H_99
+      :  anaphora_400
+      |  LA_558  cmene_A_404
+      |  LI_566  MEX_310  LOhO_gap_472
+      |  description_112
+      |  quote_arg_432
+      ;
+
+ restrictive
+      :  restrictive_A
+      |  restrictive  ZIhEK_820 restrictive_A
+      ;
+
+ restrictive_A
+      :  POI  sentence_40  KUhO_gap_469
+      :  PE  term_81  GEhU_gap_464
+      ;
+
+ incidental
+      :  incidental_A
+      |  incidental  ZIhEK_820 incidental_A
+      ;
+
+ incidental_A
+      :  NOI_584  sentence_40  KUhO_gap_469
+      :  GOI_542  term_81  GEhU_gap_464
+      ;
+
+ description_112
+      :  LA_558  sumti_tail_113  gap_450
+      |  LE_562  sumti_tail_113  gap_450
+      |  LUhI_572  sumti_90  LUhU_gap_463
+      ;
+
+ restricted_description
+      :  LA_558 sumti_tail_113 restrictive
+      |  LE_562 sumti_tail_113 restrictive
+      ;
+
+ sumti_tail_113
+      :  sumti_tail_A_114
+      |  sumti_E_96  sumti_tail_A_114
+      |  quantifier_300  sumti_90
+      ;
+
+ sumti_tail_A_114
+      :  bri_string_130
+      |  quantifier_300  bri_string_130
+      ;
+
+ (I have not bothered with following through LAhO,
+ GEKs, "le <quant> <sumti>" or indefinite_sumti)
+
+ I believe this will produce just the same surface
+ strings as we have at present, except that all
+ incidentals will have to follow all restrictives.
+ The parse will however be different: the
+ incidentals will lie outside the sumti_D, while the
+ restrictives will lie within the scope of the
+ external quantifier, and (in the case of a
+ description without KU) within the scope of the
+ internal quantifier. (Note that selma'o NOI and GOI
+ have to be split, and that ZIhE performs some very
+ strange functions).
+
+ The only thing in favour of this suggestion is that
+ it does the minimum damage to existing texts. It
+ complicates the syntax remarkably and - in the name
+ of compatibility - confusingly.
+
+ c) My preference is to introduce three specific
+ locations for relatives, thus
+      so'a lo panono cukta poi mi nelci ku poi
+      dopa'a nelci ku'o noi cfika
+ would parse as
+      {[so'a {[lo panono {cukta poi mi nelci} ku]
+      [poi dopa'a nelci ku'o]}] [noi cfika]}
+ i.e.
+      almost all of
+those of
+     the hundred
+          books I like
+that you also like
+      which incidentally are fiction...
+
+
+ sumti_C_93
+     :  sumti_D_95
+     :  sumti_D_95 incidental
+     |  indefinite_sumti_94
+     ;
+
+ indefinite_sumti_94
+      :  indefinite_A
+      |  indefinite_A incidental
+      ;
+
+ indefinite_A
+      :  quantifier_300  indefinite_B
+      |  indefinite_B
+      ;
+
+ indefinite_B
+      : sumti_tail_A_114  gap_450  restrictive
+      | sumti_tail_A_114  gap_450
+      ;
+ /* Or sumti_tail_B both times if we withdraw the
+ doubly-quantified indefinite */
+
+ sumti_D_95
+      :  sumti_E_96
+      |  quantifier_300  sumti_E_96
+      ;
+
+ sumti_E_96
+      :  sumti_F_97
+      |  LAhE_561  sumti_C_93
+      |  NAhE_BO_809  sumti_C_93
+      ;
+
+ sumti_F_97
+      :  sumti_G_98
+      |  GEK_807  sumti_90  GIK_816  sumti_C_93
+    /* negation of sumti GEK handled by negation of
+ entire sumti in E_96 above */
+      ;
+
+ sumti_G_98
+      :  sumti_H_99
+      |  sumti_H_99  restrictive
+      ;
+
+ sumti_H_99
+      :  anaphora_400
+      |  LA_558  cmene_A_404
+      |  LI_566  MEX_310  LOhO_gap_472
+      |  description_112
+      |  quote_arg_432
+      ;
+
+ restrictive
+      :  restrictive_A
+      |  restrictive  ZIhEK_820
+     restrictive_A
+      ;
+
+ restrictive_A
+      :  PE  term_81  GEhU_gap_464
+      |  POI  sentence_40  KUhO_gap_469
+      ;
+
+ incidental
+      :  incidental_A
+      |  incidental  ZIhEK_820
+     incidental_A
+      ;
+
+ incidental_A
+      :  GOI_542  term_81  GEhU_gap_464
+      |  NOI_584  sentence_40  KUhO_gap_469
+      ;
+
+ description_112
+      :  LA_558  sumti_tail_113  gap_450
+      |  LE_562  sumti_tail_113  gap_450
+      |  LUhI_572  sumti_90  LUhU_gap_463
+      ;
+
+ sumti_tail_113
+      :  sumti_tail_A_114
+      |  sumti_E_96  sumti_tail_A_114
+      |  quantifier_300  sumti_90
+      ;
+
+ sumti_tail_A_114
+      :  sumti_tail_B
+      |  quantifier_300  sumti_tail_B
+      ;
+
+ sumti_tail_B
+      :  bri_string_130
+      |  bri_string_130  restrictive
+      ;
+
+ d) I considered a solution with arbitrarily nested
+ scopes, each of which was limited by a quantifier
+ and/or restrictives, and each of which could have
+ an incidental attached to it, thus:
+
+ *[so'oboi
+  {
+  < [so'i
+    {
+    <lo tarci
+    > poi se viska tu'a le terdi ku'o
+    } noi melbi ku'o
+    ]
+  > poi mi di'i catlu ke'a ku'o
+  } no'u la ze mensi
+  ]
+
+ but this requires a much more complicated grammar,
+ and I think it can be managed by structures already
+ existing at a higher level (KE or LUhI). At any rate,
+ I did not investigate its syntax carefully.
+
+
+ I think (c) is the best solution.  It does not do
+ a lot of injury to existing texts: as long as they
+ don't mix restrictive and incidental clauses, they
+ will still parse; if they do, the two sets need to
+ be sorted out, and the first (restrictive) set
+ ended by a KUhO/GEhU (or by a KU if there is a
+ description). And the scoping will make sense.
+
+ Note that something like
+      le ci cukta poi mi nelci
+ will parse as
+      le [ci [cukta [poi mi nelci]]]
+ but you can force the restriction outside by
+      [le [ci cukta ku] [poi mi nelci]
+ which I claim is selecting those I like from among
+ the three books.
+
+ [I note in passing that, since the relationship
+ between quantifiers and relative clauses is here
+ strictly defined, it would not be difficult to add
+ preposed relatives, such as I suggested a few
+ months ago. They would still need to distinguish
+ the placing for restrictives and incidentals.
+ This was NOT the rationale for these suggestions,
+ though they did come out of the analysis I did to
+ understand the lojbangirz's objections to preposed
+ relatives.]
+
+ 9. Suggestions for problem 2
+ ----------------------------
+
+ a) Do nothing
+ We've coped up to now, but again the semantic rule
+ is nasty.
+
+ b) Ban the quantifier from a "lemi" type
+ description. The only thing in favour of this is
+ that it won't require things to be changed around;
+ but it will still make some existing utterances
+ invalid, and require a change to the syntax, as
+ well as forbidding something that we might want to
+ say.
+
+ c) Reverse the [sumti-4] and the [quantifier] in
+ [sumti-tail], to give
+
+ sumti_tail_113
+      :  sumti_tail_A_114
+      |  quantifier_300 sumti_tail_A_114
+      |  quantifier_300  sumti_90
+      ;
+
+ sumti_tail_A_114
+      :  bri_string_130
+      |  sumti_E_96  bri_string_130
+      ;
+
+ hence "leci mi cukta"
+
+ It will take us a little getting used to, but I
+ think this is logically greatly preferable.
+
+ 10. Conclusion
+ --------------
+
+ I have presented at length some logical problems in
+ our current sumti grammar, and made some
+ suggestions:
+
+ 1. Withdraw the <quant> <quant> <selbri> form of
+ indefinite sumti
+
+ 2. Distinguish restrictive from incidental clauses,
+ and define three distinct places where they may
+ occur: incidental ones only outside quantified
+ arguments, restrictive ones both inside external
+ quantifiers, and inside internal quantifiers in
+ descriptions.
+
+ 3. Reverse the order of the internal quantifier and
+ the preposed possessive in descriptions.
+
+ The three suggestions are all independent of one
+ another.
+
+ I have not looked at vocatives: since they do not
+ include quantifiers, they do not really have a
+ problem, though for consistency they should be
+ changed consistently with any changes to solve
+ problem 1.
+
+.ua.ui mi'e kolin
+
+
