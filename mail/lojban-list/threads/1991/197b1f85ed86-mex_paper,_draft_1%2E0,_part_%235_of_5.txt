@@ -1,0 +1,150 @@
+# mail/lojban-list thread 197b1f85ed86-mex_paper,_draft_1%2E0,_part_%235_of_5 | root m0jfana-0002v9c@snark.thyrsus.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1991-05-21T17:46:37Z | cowan | m0jfana-0002v9c@snark.thyrsus.com | mail/lojban-list/cur/674847997.197b1f85ed861224.jbomohi:2,S
+8.  Using Lojban Resources Within mekso
+
+One of the mekso design goals requires the ability to make use of Lojban's
+vocabulary resources within mekso to extend the built-in cmavo for
+operands and operators.  There are three main constructs that allow this:
+"na'u", which converts a selbri (possibly with accompanying tail terms)
+to an operator; "ni'e", which converts a selbri to an operand, and "mo'e",
+which converts a sumti to an operand.  All three constructs share the
+elidable terminator "te'u".
+
+Example of "na'u":
+
+	li na'u tanjo pai fe'i re du li ci'i
+	tan(pi/2) = infinity
+
+"tanjo" is the gismu for "tangent", and the "na'u" here converts it to
+an operator, which is then used in forethought.
+
+Example of "ni'e":
+
+	li ni'e sovda be va'u lo'e tanxe te'u du li pa re
+	The-number of eggs contained-by the-typical box = 12.
+	There are 12 eggs in an egg carton. 
+
+Here the selbri "sovda be va'u lo'e tanxe" (eggs contained-in a-typical box)
+is converted into an operand whose value is (in the U.S., anyhow) 12.
+The "te'u" is required here to avoid creating the unwanted tanru
+"tanxe du"; since "du" has the grammar of a brivla, it is possible for
+it to form tanru, but these tanru probably have no meaning.
+
+Example of "mo'e":
+
+	li mo'e lo ni le ratcu cu zvati le panka te'u du li du'e
+	The quantity of rats in the park = an excessive number.
+	There are too many rats in the park. 
+
+Note the use of "du'e", a member of selma'o PA (and therefore a number)
+which means "too many, an excessive number"; its meaning is subjective.
+
+
+9.  Unusual Uses of mekso
+
+So far we have seen mekso used as sumti (with "li") and as quantifiers
+(usually parenthesized).  There are a few other minor uses of
+mekso within Lojban.
+
+The cmavo "me'o" has the same grammar as "li" but slightly different
+semantics.  "li" means "the number which is the value of the mekso ...",
+whereas "me'o" just means "the mekso..."  So it is true that
+
+	li re su'i re du li vo
+	the-number two plus two equals the-number four
+	2 + 2 = 4
+
+but false that:
+
+	me'o re su'i re du me'o vo
+	the-mekso two plus two equals the-mekso four
+	"2 + 2" = "4"
+
+since the expressions "2 + 2" and "4" are not the same.  The relationship
+between "li" and "me'o" is related to that between "la'e" and "lu'e";
+"li" specifies the referent, whereas "me'o" specifies the symbol string.
+
+The cmavo "nu'a" is the inverse of "na'u", and allows a mekso operator
+to be used as a normal selbri, with the place structure:
+
+	x1 is the result of applying <the operator> to x2, x3, ...
+
+for as many places as may be required.  For example:
+
+	li ni'umu cu nu'a va'a li ma'umu
+	the-number minus-five is-the-additive-inverse-of the-number plus-five
+
+uses "nu'a" to convert the operator "va'a" into a two-place bridi.
+
+
+10.  Explicit Operator Precedence
+
+As mentioned earlier, Lojban does provide a way for the precedences of
+operators to be explicitly declared.  Current parsers do not understand
+these declarations, but the facility does exist and can be formalized
+at a later date.
+
+The declaration is made in the form of a metalinguistic comment using
+"ti'o", a member of selma'o SEI.  "sei", the other member of SEI, is
+used to insert metalinguistic comments on a bridi which give information
+about the discourse which the bridi comprises.  The format of a "ti'o"
+declaration is not formally established, but presumably would take the
+form of mentioning a mekso operator and then giving it either an absolute
+numerical precedence on some pre-established scale, or else specifying
+relative precedences between new operators and existing operators.
+
+
+11.  Miscellany
+
+A few other points:
+
+"se" can be used to convert an operator, so that its arguments are
+exchanged.  For example:
+
+	li ci se vu'u vo du li pa
+	the-number three (inverse) minus four equals the-number one
+
+The other converters of selma'o SE can also be used on operators with
+more than two operands, and they can be compounded to create unintelligible
+operators as needed.
+
+Members of selma'o NAhE are also legal on an operator to negate it.
+The semantics of negated operators are not clear.
+
+"la'e" and "lu'e" can be used on operands with the usual semantics to
+get the referent of or a symbol for an operand.
+
+"jo'i" is the array indicator, and is used to specify a vector:  it has
+a syntax reminiscent of a forethought operator, but has very high precedence;
+the components must be operands (not full expressions, unless parenthesized).
+The vector can have any number of components; "te'u" is the elidable terminator.
+Example:
+
+	li jo'i paboi reboi te'u su'i jo'i ciboi voboi du li jo'i voboi xaboi
+	the-number array( one two ) plus array( three four) equals
+		the-number array( four six)
+	(1,2) + (3,4) = (4,6)
+
+
+12.  mekso selma'o summary
+
+BOI	elidable terminator for numbers and lerfu strings
+BY	lerfu for variables and functions (also BU, LAU, TEI, FOI)
+FUhA	reverse-Polish flag
+GOhA	includes "du" (mathematical equality)
+JOhI	array flag
+KUhE	elidable terminator for forethought mekso
+LI	mekso articles (li and me'o)
+MAhO	lerfu function flag
+MOhE	convert sumti to operand
+NAhU	convert bridi-tail to operator
+NIhE	convert selbri to operand
+NUhA	convert operator to selbri
+PA	numbers
+PEhO	optional forethought mekso marker
+VEI	left parenthesis
+VEhO	right parenthesis
+VUhU	operators
+
+
