@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0ea09fcd4959-official_parser%3A_mi_%2Eeparoibo_do_broda | root 1080914022.176.4681.m12@yahoogroups.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0ea09fcd4959-official_parser%3A_mi_%2Eeparoibo_do_broda | root 1080914022.176.4681.m12@yahoogroups.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-01-05T05:44:40Z | "Stefan \"1of3\" Koch" <OneOfThree@gmx.net> | 001001bf573f$fb53ea00$fe7aa8c0@oneof | mail/lojban-list/cur/947051080.b28b3c2ff095080e.jbomohi:2,S
 Hi.
@@ -83,5 +83,43 @@ http://www.lojban.org/             ***              .i cimo'o prali .ui
 
 
            
+
+
+
+=== 3 | 2004-04-02T20:32:21Z | jcowan@reutershealth.com | 20040402203221.gh8492@skunk.reutershealth.com | mail/lojban-list/cur/1080937941.270ac722f4d37d85.jbomohi:2,S
+Robin Lee Powell scripsit:
+
+> On the other hand, the grammar says that "mi .eparoibo do broda" should
+> parse.
+
+Aaaah, at last one I understand and can fix.  The big switch statement
+starting at line 168 of lexruleo.c is a guard which prevents the complex
+and heavily backtracking tense grammar from being started if the first
+word can't possibly be part of a tense.  Unfortunately, PA_672 is not
+in this list, so if a simple_tag starts with PA, it won't be parsed.
+So just add after line 168 the line "PA_672:" and recompile.  Don't re-run
+yacc, or Ghu only knows what will happen.
+
+-- 
+"Take two turkeys, one goose, four              John Cowan
+cabbages, but no duck, and mix them             http://www.ccil.org/~cowan
+together. After one taste, you'll duck          jcowan@reutershealth.com
+soup the rest of your life."                    http://www.reutershealth.com
+        --Groucho
+
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+Yahoo! Groups Links
+
+<*> To visit your group on the web, go to:
+     http://groups.yahoo.com/group/lojban/
+
+<*> To unsubscribe from this group, send an email to:
+     lojban-unsubscribe@yahoogroups.com
+
+<*> Your use of Yahoo! Groups is subject to:
+     http://docs.yahoo.com/info/terms/
+ 
+
 
 

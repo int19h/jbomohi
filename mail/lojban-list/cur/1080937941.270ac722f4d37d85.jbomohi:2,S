@@ -1,0 +1,77 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 02 Apr 2004 12:33:04 -0800 (PST)
+Received: from n23.grp.scd.yahoo.com ([66.218.66.79])
+	by chain.digitalkingdom.org with smtp (Exim 4.30)
+	id 1B9VLW-00005W-Sz
+	for lojban-in@lojban.org; Fri, 02 Apr 2004 12:32:59 -0800
+X-eGroups-Return: sentto-44114-21915-1080937946-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.66.95] by n23.grp.scd.yahoo.com with NNFMP; 02 Apr 2004 20:32:27 -0000
+X-Sender: jcowan@reutershealth.com
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 26231 invoked from network); 2 Apr 2004 20:32:25 -0000
+Received: from unknown (66.218.66.172)
+  by m7.grp.scd.yahoo.com with QMQP; 2 Apr 2004 20:32:25 -0000
+Received: from unknown (HELO mail.reutershealth.com) (65.246.141.36)
+  by mta4.grp.scd.yahoo.com with SMTP; 2 Apr 2004 20:32:25 -0000
+Received: from skunk.reutershealth.com (mail [65.246.141.36])
+	by mail.reutershealth.com (Pro-8.9.3/Pro-8.9.3) with SMTP id PAA21486
+	for <lojban@yahoogroups.com>; Fri, 2 Apr 2004 15:26:13 -0500 (EST)
+Received: by skunk.reutershealth.com (sSMTP sendmail emulation); Fri,  2 Apr 2004 15:32:21 -0500
+To: lojban@yahoogroups.com
+Message-ID: <20040402203221.GH8492@skunk.reutershealth.com>
+References: <1080914022.176.4681.m12@yahoogroups.com> <001001bf573f$fb53ea00$fe7aa8c0@ONEOF> <20040402180240.GN6436@digitalkingdom.org>
+In-Reply-To: <20040402180240.GN6436@digitalkingdom.org>
+User-Agent: Mutt/1.4.1i
+X-eGroups-Remote-IP: 65.246.141.36
+From: jcowan@reutershealth.com
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Fri, 2 Apr 2004 15:32:21 -0500
+Subject: [lojban] Re: Official Parser: mi .eparoibo do broda
+Content-Type: text/plain; charset=US-ASCII
+X-archive-position: 7419
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jcowan@reutershealth.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1244
+
+Robin Lee Powell scripsit:
+
+> On the other hand, the grammar says that "mi .eparoibo do broda" should
+> parse.
+
+Aaaah, at last one I understand and can fix.  The big switch statement
+starting at line 168 of lexruleo.c is a guard which prevents the complex
+and heavily backtracking tense grammar from being started if the first
+word can't possibly be part of a tense.  Unfortunately, PA_672 is not
+in this list, so if a simple_tag starts with PA, it won't be parsed.
+So just add after line 168 the line "PA_672:" and recompile.  Don't re-run
+yacc, or Ghu only knows what will happen.
+
+-- 
+"Take two turkeys, one goose, four              John Cowan
+cabbages, but no duck, and mix them             http://www.ccil.org/~cowan
+together. After one taste, you'll duck          jcowan@reutershealth.com
+soup the rest of your life."                    http://www.reutershealth.com
+        --Groucho
+
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+Yahoo! Groups Links
+
+<*> To visit your group on the web, go to:
+     http://groups.yahoo.com/group/lojban/
+
+<*> To unsubscribe from this group, send an email to:
+     lojban-unsubscribe@yahoogroups.com
+
+<*> Your use of Yahoo! Groups is subject to:
+     http://docs.yahoo.com/info/terms/
+ 
+
+
