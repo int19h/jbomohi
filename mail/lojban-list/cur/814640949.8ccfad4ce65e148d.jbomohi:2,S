@@ -1,0 +1,86 @@
+Return-Path: <LOJBAN%CUVMB.BITNET@BITMAIL.LSOFT.COM>
+Received: from SEGATE.SUNET.SE by xiron.pc.helsinki.fi  with smtp
+	(Linux Smail3.1.28.1 #1) id m0t8CWc-0000ZQC; Wed, 25 Oct 95 22:34 EET
+Message-Id: <m0t8CWc-0000ZQC@xiron.pc.helsinki.fi>
+Received: from listmail.sunet.se by SEGATE.SUNET.SE (LSMTP for OpenVMS v1.0a) with SMTP id 18078629 ; Wed, 25 Oct 1995 21:34:14 +0100
+Date:         Wed, 25 Oct 1995 17:09:09 GMT
+Reply-To:     Don Wiggins <dwiggins@BFSEC.BT.CO.UK>
+Sender:       Lojban list <LOJBAN@CUVMB.BITNET>
+From:         Don Wiggins <dwiggins@BFSEC.BT.CO.UK>
+Subject:      Re: conflicts in grammar.235
+To:           Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Content-Length: 2363
+Lines: 71
+
+coi.
+
+Shift/reduce conflicts tend not to be much of problem with yacc - it's the
+reduce/reduce conflicts that are the big problem.
+
+>From the Sun "Programming Utilities & Libraries":
+
+: yacc detects such [associative] ambiguities when it is attempting to build
+: the parser.  It is instructive to consider the problem that confronts the
+: parser when it is given an input such as
+:
+:     expr - expr - expr
+:
+: When the parser has read the second expr, the input that it has seen:
+:
+:     expr - expr
+:
+: matches the right side of the grammar rule above.  The parser could reduce
+: the input by applying this rule; after applying the rule; the input is
+: reduced to expr (the left side of the rule).  The parser would then read the
+: final part of the input:
+:
+:     - expr
+:
+: and again reduce.  The effect of this is to take the left-associative
+: interpretation.
+: Alternatively, when the parser has seen
+:
+:     expr - expr
+:
+: it could defer the immediate application of the rule, and continue reading
+: the input until it had seen
+:
+:     expr - expr - expr
+:
+: It could then apply the rule to the rightmost three symbols, reducing them to
+: expr and leaving
+:
+:     expr - expr
+:
+: Now the rule can be reduced once more; the effect is to take the right
+: associative interpretation.  Thus, having read
+:
+:     expr - expr
+:
+: the parser can do two legal things, a shift or a reduction, and has no way
+: of deciding between them.  This is called a shift/reduce conflict.  ...
+:
+: When there are shift/reduce or reduce/reduce conflicts, yacc still produces a
+: parser.  It does this by selecting one of the valid steps whereever it has
+: a choice.  A rule describing which choice to make in a given situation is
+: called a disambiguating rule.
+:
+: yacc invokes two disambiguating rules by default:
+:
+: 1.  In a shift/reduce conflict, the default is to do the shift.
+:
+: ...
+
+Further on,
+
+: In general, whenever it is possible to apply disambiguating rules to
+: produce a correct parser, it is also possible to rewrite the grammar rules
+: so that the same inputs are read but there are no conflicts.  ...  Our
+: experience has suggested that this rewriting is somewhat unnatural and
+: produces slower parsers; thus, yacc will produce parsers even in the
+: presence of conflicts.
+
+Basically, ignore shift/reduce conflicts, like I always do :-)
+
+co'o mi'e dn.
+
