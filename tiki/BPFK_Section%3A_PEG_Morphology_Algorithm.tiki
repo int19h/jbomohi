@@ -230,9 +230,11 @@ digit <- comma* [[0123456789] !h !y
 
 post-word <- spaces / !non-lojban-word !cmene (consonant / digit) 
 
-spaces <- !y initial-spaces
+spaces <- !Y initial-spaces / EOF
 
-initial-spaces <- (space-chars / Y !(space-chars* BU) / comma* !.)+
+EOF <- comma* !.
+
+initial-spaces <- space-chars / Y !(space-chars* BU)
 
 space-chars <- comma* [[.\t\n\r?!\u0020]
 
