@@ -1,0 +1,54 @@
+Received: from VMS.DC.LSOFT.COM (vms.dc.lsoft.com [205.186.43.2]) by locke.ccil.org (8.6.9/8.6.10) with ESMTP id BAA04324 for <cowan@LOCKE.CCIL.ORG>; Tue, 12 Mar 1996 01:44:15 -0500
+Message-Id: <199603120644.BAA04324@locke.ccil.org>
+Received: from PEACH.EASE.LSOFT.COM (205.186.43.4) by VMS.DC.LSOFT.COM (LSMTP for OpenVMS v1.0a) with SMTP id 3E345A99 ; Tue, 12 Mar 1996 1:46:49 -0500
+Date:         Tue, 12 Mar 1996 08:46:06 +0200
+Reply-To: Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Subject:      Re: TECH: PROPOSED GRAMMAR CHANGE 2$i
+X-To:         lojban@cuvmb.cc.columbia.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+X-Mozilla-Status: 0011
+X-From-Space-Date: Tue Mar 12 10:27:38 1996
+X-From-Space-Address: -
+Content-Length: 1198
+
+> Date:         Mon, 11 Mar 1996 15:58:51 -0300
+> From: "Jorge J. Llambias" <jorge@INTERMEDIA.COM.AR>
+> Subject:      Re: TECH: PROPOSED GRAMMAR CHANGE 2$i
+
+>>CHANGE 46
+>...
+>>The corresponding forethought syntax remains "NUhI GEK terms NUhU GIK
+>>terms NUhU",
+
+> Is NUhI really necessary? Couldn't it be just "GEK terms /NUhU/ GIK
+> terms /NUhU/"? That would make it much more in tune with the
+> general use of geks.
+
+   This would work at the yacc level
+
+> (Even better if the first NUhU could be avoided.)
+
+   1 shift/reduce conflict
+
+> I supppose that there must be some yacc problem with that, but
+> I don't see why. If "ge sumti gi sumti" is ok, why would "ge sumti sumti
+> gi sumti sumti" cause any problems?
+
+   15 shift/reduce + 15 reduce/reduce conflicts
+
+  The shift/reduce come from the "ge sumti sumti" part and the reduce/
+  reduce conflicts from the "gi sumti sumti" part. The last one is
+  quite obvious as there is no way to discriminate between, e.g.
+
+      [ge sumti sumti gi sumti   sumti] [sumti]     and
+      [ge sumti sumti gi sumti] [sumti] [sumti]
+
+
+  co'o mi'e veion
+
+---------------------------------
+.i mi du la'o sy. Veijo Vilva sy.
+---------------------------------
+
