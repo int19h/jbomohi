@@ -1,0 +1,282 @@
+Return-Path: <cbmvax!uunet!CUVMA.BITNET!LOJBAN>
+Message-Id: <9112112213.AA01182@relay1.UU.NET>
+Date: Wed Dec 11 18:29:39 1991
+Reply-To: John Cowan <cbmvax!UUNET.UU.NET!snark.thyrsus.com!cowan>
+Sender: Lojban list <cbmvax!uunet!CUVMA.BITNET!pucc.PRINCETON.EDU!LOJBAN>
+From: John Cowan <cbmvax!UUNET.UU.NET!snark.thyrsus.com!cowan>
+Subject:      More on Lojban and Prolog (long)
+X-To:         Lojban List <lojban@cuvmb.cc.columbia.edu>
+To: John Cowan <cowan@SNARK.THYRSUS.COM>,
+        Eric Raymond <eric@SNARK.THYRSUS.COM>,
+        Eric Tiedemann <est@SNARK.THYRSUS.COM>
+X-From-Space-Date: Wed Dec 11 18:29:39 1991
+X-From-Space-Address: cbmvax!uunet!CUVMA.BITNET!LOJBAN
+Content-Length: 7650
+
+The computer programming language Prolog is a subset of Lojban, and uses
+many of the same concepts and terminology.  The following English word problem,
+due to John F. Sowa of IBM, neatly illustrates the process that can make
+Lojban machine-intelligible:
+
+***
+
+Sowa's original English:
+
+Washable allergenic things are washed.  Nonwashable allergenic things are
+vacuumed.  Everything that is gray and fuzzy is allergenic.  Shirts, socks,
+pajamas, dogs, and llamas are washable.  Lamps, sofas, cats, and computers
+are nonwashable.  Following are my gray, fuzzy possessions:  my pajamas,
+my sofa, my cat Thothmes, and my llama Millicent.  ...[D]etermine which of my
+possessions are washed and which vacuumed.
+
+***
+
+A free Lojban translation of the English:
+
+ni'o ro lu'ircumki je bilmrsallergeni cu jaurselylumci
+.i ro nalylu'icumki je bilmrsalergeni cu sakcyselylumci
+.i ro grusi je sulpo'e cu bilmrsalergeni
+.i ro creka .e ro smoka .e ro siptaxfu .e ro gerku
+        .e ro tcokumte cu lu'ircumki
+.i ro tergu'imi'i .e ro sfofa .e ro mlatu .e ro skami
+        cu nalylu'icumki
+.i lemi siptaxfu .e lemi sfofa .e la totmes. poi mlatu
+        .e la milisent. poi tcokumte
+        cu grusi je sulpo'e je selponse be mi
+.i ro ma jaurselylumci
+.i ro ma sakcyselylumci
+
+***
+
+Literal rendering of the Lojban:
+
+All wash-possible and sick-allergenic things are water-bewashed.
+All non-wash-possible and sick-allergenic things are vacuum-bewashed.
+All gray and wool-possessing things are sick-allergenic.
+All shirts and all socks and all sleep-garments and all dogs
+        and all SouthAmerican-camels are wash-possible.
+All illumination-source-machines and all sofas and all cats and all computers
+        are non-wash-possible.
+My sleep-garment and my sofa and Thothmes who is-a-cat
+        and Millicent who is-a-SouthAmerican-camel
+        are gray and wool-possessing and possessed by me.
+All what-things are-water-bewashed?
+All what-things are-suck-bewashed?
+
+***
+
+Formalized Lojban suitable for Prolog conversion:
+
+ni'o
+        roda zo'u
+                da jaurselylumci
+                .ijanai da lu'ircumki
+                        .ijebo da bilmrsalergeni
+ni'o
+        roda zo'u
+                da sakcyselylumci
+                .ijanai da nalylu'icumki
+                        .ijebo da bilmrsalergeni
+ni'o    roda zo'u
+                da bilmrsalergeni
+                .ijanai da grusi
+                        .ijebo da sulpo'e
+ni'o
+        roda zo'u
+                da lu'ircumki
+                .ijanai da creka
+        .i roda zo'u
+                da lu'ircumki
+                .ijanai da smoka
+        .i roda zo'u
+                da lu'ircumki
+                .ijanai da siptaxfu
+        .i roda zo'u
+                da lu'ircumki
+                .ijanai da gerku
+        .i roda zo'u
+                da lu'ircumki
+                .ijanai da tcokumte
+ni'o
+        roda zo'u
+                da nalylu'icumki
+                .ijanai da tergu'imi'i
+        roda zo'u
+                da nalylu'icumki
+                .ijanai da sfofa
+        roda zo'u
+                da nalylu'icumki
+                .ijanai da mlatu
+        roda zo'u
+                da nalylu'icumki
+                .ijanai da skami
+ni'o
+        mi ponse le siptaxfu
+        .i le siptaxfu cu siptaxfu
+        .i le siptaxfu cu grusi
+        .i le siptaxfu cu sulpo'e
+ni'o
+        mi ponse le sfofa
+        .i le sfofa cu sfofa
+        .i le sfofa cu grusi
+        .i le sfofa cu sulpo'e
+ni'o
+        mi ponse la totmes.
+        .i la totmes. cu mlatu
+        .i la totmes. cu grusi
+        .i la totmes cu sulpo'e
+ni'o
+        mi ponse la milisent.
+        .i la milisent. cu tcokumte
+        .i la milisent. cu grusi
+        .i la milisent. cu sulpo'e
+
+ni'oni'o
+
+ma jaurselylumci
+                        le siptaxfu cu jaurselylumci
+re'i
+                        la milisent. jaurselylumci
+re'i
+                        fe'o
+
+ni'o
+
+ma sakcyselylumci
+                        le sfofa cu sakcyselylumci
+re'i
+                        la totmes. cu sakcyselylumci
+re'i
+                        fe'o
+
+***
+
+Literal translation of the formalized Lojban:
+
+[new-topic]
+        for-all x
+                x is-water-bewashed
+                if (x is-wash-possible
+                        and x is-allergenic)
+[new-topic]
+        for-all x
+                x is-suck-bewashed
+                if (x is-non-wash-possible
+                        and x is-allergenic)
+[new-topic]
+        for-all x
+                x is-allergenic
+                if (x is-gray
+                        and x is-wool-possessing)
+[new-topic]
+        for-all x
+                x is-wash-possible
+                if x is-a-shirt
+        for-all x
+                x is-wash-possible
+                if x is-a-sock
+        for-all x
+                s is-wash-possible
+                if x is-a-sleep-garment
+        for-all x
+                x is-wash-possible
+                if x is-a-dog
+        for-all x
+                x is-wash-possible
+                if x is-a-SouthAmerican-camel
+[new-topic]
+        for-all x
+                x is-non-wash-possible
+                if x is-an-illumination-source-machine
+        for-all x
+                x is-non-wash-possible
+                if x is-a-sofa
+        for-all x
+                x is-non-wash-possible
+                if x is-a-cat
+        for-all x
+                x is-non-wash-possible
+                if x is-a-computer
+[new-topic]
+        I possess that-described-as-a sleep-garment
+        that-described-as-a sleep-garment is-a-sleep-garment
+        that-described-as-a sleep-garment is-gray
+        that-described-as-a sleep-garment is-wool-possessing
+[new-topic]
+        I possess that-described-as-a sofa
+        that-described-as-a sofa is-a-sofa
+        that-described-as-a sofa is-gray
+        that-described-as-a sofa is-wool-possessing
+[new-topic]
+        I possess that-called Thothmes
+        that-called Thothmes is-a-cat
+        that-called Thothmes is-gray
+        that-called Thothmes is-wool-possessing
+[new-topic]
+        I possess that-called Millicent
+        that-called Millicent is a SouthAmerican-camel
+        that-called Millicent is-gray
+        that-called Millicent is-wool-possessing
+
+[entirely-new-topic]
+
+what is-water-bewashed?
+                        that-described-as-a sleep-garment is-water-bewashed
+[ready-to-receive]
+                        that-called Millicent is-water-bewashed
+[ready-to-receive]
+                        [end-of-transmission]
+
+[new-topic]
+
+what is-suck-bewashed?
+                        that-described-as-a sofa is-suck-bewashed
+[ready-to-receive]
+                        that-called Thothmes is-suck-bewashed
+[ready-to-receive]
+                        [end-of-transmission]
+
+***
+
+Sowa's original (English-based) Prolog, converted from IBM to Edinburgh syntax:
+
+washed(X) :- washable(X), allergenic(X).
+
+vacuumed(X) :- nonwashable(X), allergenic(X).
+
+allergenic(X) :- gray(X), fuzzy(X).
+
+washable(X) :- shirt(X).
+washable(X) :- sock(X).
+washable(X) :- pajama(X).
+washable(X) :- dog(X).
+washable(X) :- llama(X).
+
+nonwashable(X) :- lamp(X).
+nonwashable(X) :- sofa(X).
+nonwashable(X) :- cat(X).
+nonwashable(X) :- computer(X).
+
+possess(me, pj1).  pajama(pj1).  gray(pj1).  fuzzy(pj1).
+possess(me, sf1).  sofa(pj1).  gray(pj1).  fuzzy(pj1).
+possess(me, thothmes).  cat(thothmes).  gray(thothmes).  fuzzy(thothmes).
+possess(me, millicent).  llama(millicent).  gray(millicent).  fuzzy(millicent).
+
+?- washed(X)
+washed(pj1)
+;
+washed(millicent)
+;
+no
+
+?-vacuumed(X)
+vacuumed(sf1)
+;
+vacuumed(thothmes)
+;
+no
+
+--
+cowan@snark.thyrsus.com         ...!uunet!cbmvax!snark!cowan
+                e'osai ko sarji la lojban
+
