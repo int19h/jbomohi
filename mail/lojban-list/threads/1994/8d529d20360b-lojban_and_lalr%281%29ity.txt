@@ -1,6 +1,39 @@
-# mail/lojban-list thread 8d529d20360b-lojban_and_lalr%281%29ity | root kvr83ibgt_g.a.cjb.x30klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 8d529d20360b-lojban_and_lalr%281%29ity | root kvr83ibgt_g.a.cjb.x30klb@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1994-03-11T20:13:49Z | unknown | 675836f4866305f69302bcfa56c068826cbc7a56@jbomohi.invalid | mail/lojban-list/cur/763416829.48e15a8fb94baa85.jbomohi:2,S
+Jorge and Matthew have both brought up the question "Why should Lojban be
+limited to LALR(1) parsability?"  The answer is very simple and practical.
+
+We have a technique, namely the use of Yacc, for testing if a language meets
+this specification.  Yacc and its relatives (Byacc and Bison) are available
+on just about every platform.  The same cannot be said of any more powerful
+parser-generator program.
+
+History shows that Loglan did not, in fact, become unambiguously machine
+parsable until the use of Yacc was introduced into the Project.  Before
+that, we had various grammars which were claimed to be unambiguous but
+in fact failed the test.
+
+We already allow small extensions to LALR(1) parsability, through the
+preprocessor section of the grammar.  In particular, the logical connectives
+themselves (the jeks, joiks, geks, etc.) are not LALR(1).  But all of these
+are essentially bounded; any unboundedness is of a simple iterative, not
+recursive, kind.  (Example: the preparser allows unboundedly long numbers
+to be processed, but numbers have no internal structure.)
+
+Overusing preprocessing is dangerous: the second baseline grammar, in fact,
+fails to parse "re pamai boi gerku" = "two (firstly) dogs" correctly.
+This error was completely missed by Yacc, and was caught only by an actual
+example.  Change 6 grew out of this: the new grammar calls for "reboi pamai
+gerku", which can be parsed correctly.
+
+-- 
+John Cowan		sharing account <lojbab@access.digex.net> for now
+		e'osai ko sarji la lojban.
+
+
+
+=== 2 | 1994-03-11T20:13:49Z | lojbab | grra7pkhe6k.a.xhb.r30klb@chain.digitalkingdom.org | mail/lojban-list/cur/763416829.e28b36d2be94f493.jbomohi:2,S
 Jorge and Matthew have both brought up the question "Why should Lojban be
 limited to LALR(1) parsability?"  The answer is very simple and practical.
 
