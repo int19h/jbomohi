@@ -1,4 +1,4 @@
-# mail/lojban-list thread d721b2e95bf3-tech%3A_lambda_and_%22ka%22_revisited | root m0tcyvk-0000ztc@xiron.pc.helsinki.fi | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread d721b2e95bf3-tech%3A_lambda_and_%22ka%22_revisited | root m0tcyvk-0000ztc@xiron.pc.helsinki.fi | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 1995-11-07T23:06:15Z | cowan | 7-yax6sncok.a.d0b.f60klb@chain.digitalkingdom.org | mail/lojban-list/cur/815785575.8d03bf5d92a8aaee.jbomohi:2,S
 After reading Quine's >Word and Object< a(over pc's strenuous objections)
@@ -269,6 +269,140 @@ John Cowan					cowan@ccil.org
 
 
 === 3 | 1995-11-07T23:06:15Z | unknown | a1d013d04597483795a9ce821f9bcb7b47cd1e31@jbomohi.invalid | mail/lojban-list/cur/815785575.20dde6e2afdeb5c9.jbomohi:2,S
+After reading Quine's >Word and Object< a(over pc's strenuous objections)
+and talking to pc on the phone, I now believe I understand what "ka"
+was menat to be about and how it can be intrepreted, and why a general
+"lambda" mechanism is needed.
+
+The objects described by "le ka ... kei" expressions in Lojban are
+essentially those described in W&O \S 34 as intensions.  (Note the "s".)
+For example, "le ka gerku" is "being a dog", or doghood; "le ka cukta" is
+"being a book", or bookness.  Both of these can be though of as monadic
+intensions, what are traditionally called attributes.  Brotherhood, though,
+is a dyadic intension, traditionally called a relation (not to be confused
+with the mathematician's sense of "relation" as "set of ordered pairs.")
+
+In general, we have no problem understanding these "le ka"
+constructs:  the relation "brotherhood" is "le ka bruna" and the related
+attribute "being a brother to John/brotherhood with John" is "le ka bruna la
+djan."  If a sumti is left out, it is one of those that is used to
+specify the parameters of the intension.
+
+But consider "le ka gerku" again.  In fact, "gerku" is a 2-place selbri
+in Lojban!  So must we say that "le ka gerku" is the relation between
+a dog and its breed?  By introducing a specific method of filling the
+place which cannot be confused with "zo'e" (simple omission) we can distinguish
+the cases of "doghood" and "dog-to-breed relationship".
+
+Higher numbers of places cause worse problems.  Thus for "dunda" we have
+the attribute of being a giver, the attribute of being a receiver of a gift,
+the attribute of being a gift, the relation between giver and receiver
+(for some specific gift), the relation between giver and gift (for some
+specific receiver), the relation between receiver and gift (for some specific
+giver), and the triadic relation among all three, for seven cases in all!
+"le ka dunda" can mean whichever of these is wanted, for "zo'e" is blessedly
+unspecified, but there must be some way of telling them apart.
+
+Quine's notation is "x[x is a dog]" and "xy[x is a dog of breed y]".  Here
+x and y are regular logical variables, and this construct binds them.
+That would lead to something like:
+
+1)	le ka xe'u da xe'u de zo'u da gerku de
+
+which is dreadfully verbose.  pc thought that:
+
+2)	le ka xe'u da de zo'u da gerku de
+
+would be better, or even
+
+3)	le ka da de xe'u da gerku de
+
+where "xe'u" is of selma'o ZOhU.  (In Example 1 it belongs to PA, and
+in Example 2 to a new selma'o -- this requires a small grammar change.)
+
+The corresponding cases for "x[x is a dog] are just:
+
+4)	le ka xe'u da zo'u da gerku [zo'e]
+5)	le ka xe'u da zo'u da gerku [zo'e]
+6)	le ka da xe'u da gerku [zo'e]
+
+Jorge has proposed overloading "ke'a", but Lojban Central doesn't like
+that, because the rules for subscripting become harder to keep track of
+when you have abstractions within relative clauses within abstractions,
+so we believe a new cmavo is required.
+
+Note that Examples 1 and 4 can be shortened to:
+
+7)	le ka xe'u da gerku xe'u de
+8)	le ka xe'u da gerku [zo'e]
+
+and of course there's no problem with leaving out "xe'u da/de" whenever
+context makes it clear what's wanted, but context can't do the whole
+trick:
+
+9)	mi ckaji le ka dunda
+
+is fine if I have the property of being a giver, but
+
+10)	mi ckaji le ka se dunda
+
+i.e.
+
+11)	mi ckaji le ka dunda xe'u da
+
+is downright false!
+
+We can't just have a new variable "xe'u" as a sumti by itself, because
+the bound variable may need recycling:
+
+12)	do ckaji le ka ga xe'u da xirma gi lo xirma cu citka da
+	You have-as-property the attribute-of
+		either (you are-a-horse) or (some horse(s) eat you)
+	You are either a horse or horse-fodder.
+
+(Of course, the colloquial of #12 can be rendered without dragging in
+properties, just using a general term, but it illustrates the point:
+the attribute "being either a horse or eaten by a horse" is as legitimate
+as any other.)
+
+A few trailing notes:  Quine wants to equate properties with sets for
+his limited purposes, but even he points out that that won't do for
+idioms of propositional attitude: the set of animals with hearts is
+equal to the set of animals with kidneys, but the property "having a heart"
+is not the same as the property "having a kidney".
+
+Quine also says that propositions are 0-adic intensions, but in Lojban
+we use a different abstractor:  "du'u".  This allows the default assumption
+to be that "ka" denotes a monadic intension even without "xe'u da"
+explicitly appearing anywhere (it would tend to be assumed in the x1
+place), leaving "du'u" for the 0-adic case.  Further, "du'u" provides an
+x2 place (of the abstraction, not the abstract bridi) which is a textual
+representation: it relates propositions to sentences.
+
+So my recommendation is to add "xe'u" as a new kind of PA, semantically
+only used by itself to quantify da-series logical variables.  It could
+also be used in the form "xe'u broda" if my proposal that "PA broda"
+= "PA da poi broda" is accepted, to make implicit dummy variables of restricted
+uses:
+
+13)	le ka xe'u da bruna xe'u nakni
+
+is the relationship "brotherhood" in the narrow sense, where each
+relatand is constrained to being male: in
+
+14)	le ka xe'u da bruna xe'u de
+
+we just have the relationship between a male and his sibling of either sex.
+
+Comments urgently requested!
+
+-- 
+John Cowan					cowan@ccil.org
+		e'osai ko sarji la lojban.
+
+
+
+=== 4 | 1995-11-07T23:06:15Z | John Cowan <cowan@ccil.org> | lfbhratexde.a.a1b.k60klb@chain.digitalkingdom.org | mail/lojban-list/cur/815785575.82298a7f4146614a.jbomohi:2,S
 After reading Quine's >Word and Object< a(over pc's strenuous objections)
 and talking to pc on the phone, I now believe I understand what "ka"
 was menat to be about and how it can be intrepreted, and why a general
