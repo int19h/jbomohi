@@ -1,0 +1,83 @@
+Return-Path: <lojban-out@lojban.org>
+Date: Sun Feb 08 07:53:39 2004
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 19387 invoked from network); 8 Feb 2004 15:53:39 -0000
+Received: from unknown (66.218.66.218)
+  by m16.grp.scd.yahoo.com with QMQP; 8 Feb 2004 15:53:39 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 8 Feb 2004 15:53:38 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.30)
+	id 1AprEp-0006ms-DZ
+	for lojban@yahoogroups.com; Sun, 08 Feb 2004 07:52:51 -0800
+Received: from dsl081-049-134.sfo1.dsl.speakeasy.net ([64.81.49.134] helo=chain.digitalkingdom.org)
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1AprEC-0006mT-O2; Sun, 08 Feb 2004 07:52:12 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 08 Feb 2004 07:52:10 -0800 (PST)
+Received: from sabre-wulf.nvg.ntnu.no ([129.241.210.67] ident=[86YUSCb9a8aO5DN54ZjXu0vUCmb24xT/])
+	by chain.digitalkingdom.org with esmtp (Exim 4.30)
+	id 1AprE3-0006m4-5t
+	for lojban-list@lojban.org; Sun, 08 Feb 2004 07:52:03 -0800
+Received: from hagbart.nvg.ntnu.no ([IPv6:::ffff:129.241.210.68]:45960 "EHLO
+	hagbart.nvg.ntnu.no" ident: "NO-IDENT-SERVICE[2]" whoson:
+	"-unregistered-") by sabre-wulf.nvg.ntnu.no with ESMTP
+	id <S64920AbUBHPtm>; Sun, 8 Feb 2004 16:49:42 +0100
+  Date:	Sun, 8 Feb 2004 16:51:45 +0100 (CET)
+X-X-Sender: arj@hagbart.nvg.ntnu.no
+In-Reply-To: <20040208091817.GN20322@digitalkingdom.org>
+Message-ID: <Pine.LNX.4.58.0402081647020.6261@hagbart.nvg.ntnu.no>
+References: <20040208091817.GN20322@digitalkingdom.org>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-MailScanner-Information: Please contact the ISP for more information
+X-MailScanner: Found to be clean
+X-archive-position: 7052
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: arj@nvg.org
+X-list: lojban-list
+To: lojban@yahoogroups.com
+X-eGroups-Remote-IP: 64.81.49.134
+From: Arnt Richard Johansen <arj@nvg.org>
+Reply-To: arj@nvg.org
+Subject: [lojban] Re: Regular expression for brivla?
+X-Yahoo-Group-Post: member; u=149088015
+X-Yahoo-Profile: lojbo
+X-Yahoo-Message-Num: 21529
+Content-Length: 963
+
+On Sun, 8 Feb 2004, Robin Lee Powell wrote:
+
+> Is there a known regular expression that covers all classes of
+> brivla?
+>
+> What about one that's just really close?
+>
+> Perl extensions are fine.
+
+>>From my (admittedly poor) understanding of regexes suggest that it is
+going to be very long-winded. Basically, you have to look at only the
+first five letters, exclude apostrophes, and see if there are at least two
+adjacent consonants. I can't think of any other way than doing something
+like:
+
+ [[bcdfgjklmnprstvxz][bcdfgjklmnprstvxz]*]
+  [[?][bcdfgjklmnprstvxz][bcdfgjklmnprstvxz]*]
+  [[?][?][bcdfgjklmnprstvxz][bcdfgjklmnprstvxz]*]
+  ...
+  ]
+
+This, of course, presupposes that you have already determined that the
+string you are checking is a valid Lojban word.
+
+-- 
+Arnt Richard Johansen                                http://arj.nvg.org/
+"This is the sort of bloody nonsense up with which I will not put!"
+   --attributed to Winston Churchill
+
+
+
+
+           
+
