@@ -1,4 +1,4 @@
-# mail/lojban-list thread e3ea26fe5d47-parser_does_not_parse,_heh | root 20000508211555.e715@hackandroll.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread e3ea26fe5d47-parser_does_not_parse,_heh | root 20000508211555.e715@hackandroll.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-05-09T00:15:56Z | Lalo Martins <lalo@hackandroll.org> | 20000508211555.e715@hackandroll.org | mail/lojban-list/cur/957831356.e3ea26fe5d4734ee.jbomohi:2,S
 lalo:~/falcon/src/lojban/parser> gcc -o parser.i386 *.c
@@ -37,6 +37,55 @@ WRITERS WANTED! Themestream allows ALL writers to publish their
 articles on the Web, reach thousands of interested readers, and get 
 paid in cash for their work. Click below:
 http://click.egroups.com/1/3840/3/_/17627/_/957832036/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
+
+=== 2 | 2000-05-09T00:39:23Z | Lalo Martins <lalo@hackandroll.org> | 20000508213922.g715@hackandroll.org | mail/lojban-list/cur/957832763.568a04ba8ea8bc60.jbomohi:2,S
+Sorry to followup to myself on such a short notice, but I just
+compiled it, so here is the "fix":
+
+On Mon, May 08, 2000 at 09:15:56PM -0300, Lalo Martins wrote:
+> lalo:~/falcon/src/lojban/parser> gcc -o parser.i386 *.c
+> print.c:9: initializer element is not constant
+> 
+> The line in question is:
+> 
+> static FILE *stream = stdout;
+
+Replacing it by:
+
+/*static FILE *stream = stdout;*/
+#define stream stdout
+
+did the trick. It's kind of temporary, however (changing the
+output stream would require a recompile). The correct fix is to
+make "stream" into a variable and have an initialization
+function that sets it to stdout.
+
+
+> I'm also contributing a Makefile
+
+Oops, I missed a line.
+
+
+[]s,
+                                               |alo
+                                               +----
+--
+          Hack and Roll  ( http://www.hackandroll.org )
+            News for, uh, whatever it is that we are.
+
+
+http://www.webcom.com/lalo           mailto:lalo@hackandroll.org
+                 pgp key in the personal page
+
+Brazil of Darkness (RPG)    ---     http://zope.gf.com.br/BroDar
+
+------------------------------------------------------------------------
+You have a voice mail message waiting for you at iHello.com:
+http://click.egroups.com/1/3555/3/_/17627/_/957832769/
 ------------------------------------------------------------------------
 
 To unsubscribe, send mail to lojban-unsubscribe@onelist.com
