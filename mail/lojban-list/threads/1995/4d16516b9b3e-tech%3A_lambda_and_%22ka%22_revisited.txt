@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4d16516b9b3e-tech%3A_lambda_and_%22ka%22_revisited | root m0tdcyn-0000ztc@xiron.pc.helsinki.fi | 6 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4d16516b9b3e-tech%3A_lambda_and_%22ka%22_revisited | root m0tdcyn-0000ztc@xiron.pc.helsinki.fi | 7 messages | rendered by jbomohi mail-v1
 
 === 1 | 1995-11-08T16:26:37Z | Chris Bogart <cbogart@QUETZAL.COM> | 199511081620.laa29093@locke.ccil.org | mail/lojban-list/cur/815847997.bc7d35062599c59a.jbomohi:2,S
 >Quine's notation is "x[x is a dog]" and "xy[x is a dog of breed y]".  Here
@@ -521,7 +521,120 @@ John Cowan					cowan@ccil.org
 
 
 
-=== 6 | 1995-11-08T16:26:37Z | Chris Bogart <cbogart@QUETZAL.COM> | m0tdcyn-0000ztc@xiron.pc.helsinki.fi | mail/lojban-list/cur/815847997.4d16516b9b3e3d3d.jbomohi:2,S
+=== 6 | 1995-11-08T17:25:29Z | John Cowan <cowan@LOCKE.CCIL.ORG> | m0tdfee-0000ztc@xiron.pc.helsinki.fi | mail/lojban-list/cur/815851529.10a45878c0074aa1.jbomohi:2,S
+la kris. ckaji le ka xe'u da cusku di'e kei
+
+> >3)      le ka da de xe'u da gerku de
+>
+> How would we use this in a sentence?  The property refers to two entities;
+> would it be something like {lei re nanmu cu ckaji leka da de xe'u da pendo
+> de}?  I think {lei} must be wrong here because there's only one entity
+> (consisting of 2 men); but {le} would be wrong too, because it would be
+> decomposable into {le pa nanmu cu ckaji leka da de xe'u da pendo de} and {le
+> drata nanmu ...}.
+
+I agree.  But you could use the shadowy "jo'u" (of JOI) which connects
+two entities while leaving them two:
+
+        la djan. jo'u la djim. ckaji le ka [xe'u da] bruna [xe'u de]
+        John and-jointly Jim have-the-property-of brotherhood
+
+> I don't know about lambda in logical theory but I know how it's used in
+> Lisp.  The whole lambda expression, which tells you what it's arguments are
+> then what their relationship should be, can be substituted wherever you
+> would normally use a named function (i.e. brivla).
+
+Beware!  This confuses general terms (brivla) with the abstract objects
+(properties/attributes/relationships) which are based on them.  The
+predicate "bruna" is true of something (or rather, ordered pairs of
+somethings, namely the brothers of the world); the abstract object
+"le ka bruna" is a theoretical construct representing the relationship
+between the members of those pairs.  In -gua!spi, the relationship is
+identified directly with the set of ordered pairs, but this fails in
+general, because sets are equal iff their members are equal, which is
+too strong (too weak?) an identity condition for attributes/relations.
+
+Even in (Common) Lisp there is a difference between a mere piece of code
+and a functional object based on the code.
+
+> The analogy with Lisp
+> would indicate that we could use it this way (brackets [] surround
+> lambda-expressions for emphasis and clarification):
+>
+>    pa nanmu cu [ka da de xe'u da pendo de kei] le drata nanmu
+>
+> which would be equivalent to {pa nanmu cu pendo le drata nanmu} -- but it
+> requires that {ka}'s places be defined by the {xe'u} clause.  This is a long
+> way of saying the same thing, but it makes a nice formal way to define new
+> lujvo:
+>
+>    ca'e sezpendo cei [ka da xe'u da pendo da]
+>
+> ...or pro-bridi
+>
+>    mi do broda cei [ka da de xe'u da de zmadu leka gleki kei] .i do la alis.
+> broda .i la alis. la djak. broda .i ...
+
+I almost agree with you (modulo syntax of lambda), but what you say suggests
+that there needs to be an explicit "anti-ka" operator that unwraps a property
+and makes it a selbri.  (This is not "ckaji", because "ckaji" only tolerates
+a one-place abstraction; this is a way of saying "x1, x2, x3 fit into the
+property abstraction [whatever]").  I'll mull this over.
+
+> Looking at things this way, then, {le [ka da de xe'u da pendo de]} would be
+> identical in meaning to {le pendo}, and {le SE [ka da de xe'u da pendo de]}
+> would mean {le SE pendo}, which strongly conflicts with my current
+> understanding of how {leka} is used.
+
+Not at all.  Again remember that a function considered as an object isn't
+the same as the application of that function.  "le pendo" refers to something
+which (in the speaker's estimation) returns T iff passed to the first argument
+of the "pendo" recognizer.  "le ka pendo" is that recognizer itself.
+
+> >We can't just have a new variable "xe'u" as a sumti by itself, because
+> >the bound variable may need recycling:
+> >
+> >12)     do ckaji le ka ga xe'u da xirma gi lo xirma cu citka da
+> >        You have-as-property the attribute-of
+> >                either (you are-a-horse) or (some horse(s) eat you)
+> >        You are either a horse or horse-fodder.
+>
+> Don't we have the same problem with {ke'a}:
+>
+>   la djan. poi ga ke'a xirma gi lo xirma cu citka ke'a
+> [or would it be something like:]
+>   la djan. poi ga ke'a goi da xirma gi lo xirma cu citka da
+
+That works fine because "poi" is only ever attached to one sumti, so
+we only need to be able to refer to that sumti, but potentially "ka"
+objects can be 2-place or n-place (though the current language doesn't
+seem to have any selbri that naturally demand other than 1-place (ka)
+or 0-place (du'u) intensions), so multiple variables are potentially
+needed.  Otherwise we could say "le ka xe'u bruna xe'u", where "xe'u"
+would be a member of KOhA, and forget the "da" variables.  But that
+won't work in general because the selfsame variable may need to appear
+in multiple places in the bridi.
+
+> PS how do {nu} and other abstractors fit into this picture?
+
+"nu" and its subtypes are all 0-adic; they refer to specific events in
+space-time that {fasnu}.  Likewise "si'o" and "li'i" are 0-adic, because
+they refer to mental events that correspond to physical ones through the
+perception of a named experiencer/thinker (the x2 of the abstractor).
+"jei" is probably 0-adic also, and is related to "du'u", which is now
+understood as a subtype of "ka" that is always 0-adic.
+
+I still don't have a good understanding of "ni", and anyone who does is
+urged to explain it to me; the discussion in the abstraction paper is
+skating on thin ice.
+
+--
+John Cowan                                      cowan@ccil.org
+                e'osai ko sarji la lojban.
+
+
+
+=== 7 | 1995-11-08T16:26:37Z | Chris Bogart <cbogart@QUETZAL.COM> | m0tdcyn-0000ztc@xiron.pc.helsinki.fi | mail/lojban-list/cur/815847997.4d16516b9b3e3d3d.jbomohi:2,S
 >Quine's notation is "x[x is a dog]" and "xy[x is a dog of breed y]".  Here
 >x and y are regular logical variables, and this construct binds them.
 
