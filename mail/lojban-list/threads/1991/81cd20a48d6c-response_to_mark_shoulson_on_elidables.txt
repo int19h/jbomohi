@@ -1,4 +1,4 @@
-# mail/lojban-list thread 81cd20a48d6c-response_to_mark_shoulson_on_elidables | root m0jxuyn-0000rac@snark.thyrsus.com | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 81cd20a48d6c-response_to_mark_shoulson_on_elidables | root m0jxuyn-0000rac@snark.thyrsus.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1991-07-11T06:31:00Z | lojbab | m0jxuyn-0000rac@snark.thyrsus.com | mail/lojban-list/cur/679213860.81cd20a48d6c7181.jbomohi:2,S
 Mark Shoulson writes:
@@ -55,5 +55,73 @@ broda {ke brode <ke brodo brodu ke'e> ke'e}
 Now end-of-text is legal and the parse completes.
 
 lojbab
+
+
+
+=== 2 | 1991-07-11T14:34:47Z | cbmvax!uunet!gnu.ai.mit.edu!grackle!bob | 9107111435.aa00539@grackle.uucp | mail/lojban-list/cur/679242887.4b0aaad084b90c74.jbomohi:2,S
+
+For those of you who have Emacs, here is a quick and dirty expression
+to format the list of subscribers like this:
+
+  cortesi@informix.com          (Dave Cortesi)      SF    Palo Alto CA      3
+  70401.62@compuserve.com       (George Lundin)     SF    San Francisco CA  3 
+              #[mailbox full]
+  chandley@otago.ac.nz          (Chris Handley)     oz 
+                 Dunedin NZ (      2)
+
+Formatting problems remain, mostly from empty fields and names like
+"erw2@po.CWRU.edu", but this expression does a good enough job, at
+least for me. :-)
+
+Do add a closing parenthesis to the
+    dave@prc.unisys.com   (Dave Matus)   PhilW Malvern PA  3
+entry.
+
+
+
+(defun format-subscribers ()
+  "Format the Lojban subscribers list that is dated  Thurs, 11 July 1991.
+Evaluate this function, then narrow to the region you wish to format, and
+type M-x format-subscribers."
+  (interactive)
+  (goto-char (point-min))
+  ;; replace-regexp sets to many undo boundaries for convenience here
+  (goto-char (point-min))
+  (while (not (eobp))
+    (if (re-search-forward " [ ]*" nil 'move)
+        (progn (delete-region (match-beginning 0) (match-end 0))
+               (insert " "))))
+  (goto-char (point-min))
+  (while (not (eobp))
+    (if (search-forward "\(" nil t)
+        (progn
+          (backward-char 1)
+          (indent-to 32)                
+          (forward-list 1)
+          (forward-char 1) 
+          (indent-to 52)
+          (forward-word 1)
+          (forward-char 1)        
+          (indent-to 58)))
+    (if (re-search-forward "[0-3]" nil t)
+        (progn
+          (backward-char 1)
+          (indent-to 76)))
+    (forward-line 1))
+  (goto-char (point-min))
+  (while (not (eobp))
+    (if (search-forward " oz " nil t)
+        (progn
+          (insert "\n")
+          (indent-to 12)))
+    (forward-line 1))
+  (goto-char (point-min))
+  (while (not (eobp))
+    (if (search-forward " #[" nil t)
+        (progn
+          (backward-char 2 )
+          (insert "\n")
+          (indent-to 12)))
+    (forward-line 1)))
 
 

@@ -1,0 +1,79 @@
+Return-Path: <cbmvax!uunet!ai.mit.edu!grackle!bob>
+	id AA00539; Thu, 11 Jul 91 10:34:47 EDT
+Date: Thu, 11 Jul 91 10:34:47 EDT
+Message-Id: <9107111435.AA00539@grackle.UUCP>
+To: ai-lab!lojban-list@snark.thyrsus.com
+In-Reply-To: Bob LeChevalier's message of Thu, 11 Jul 91 02:31 EDT <m0jxuYN-0000raC@snark.thyrsus.com>
+Subject: formatting subscriber list
+Reply-To: cbmvax!uunet!gnu.ai.mit.edu!grackle!bob
+From: cbmvax!uunet!gnu.ai.mit.edu!grackle!bob
+Sender: cbmvax!uunet!gnu.ai.mit.edu!grackle!bob
+X-From-Space-Date: Thu Jul 11 13:29:15 1991
+X-From-Space-Address: cbmvax!uunet!ai.mit.edu!grackle!bob
+Content-Length: 2018
+
+
+For those of you who have Emacs, here is a quick and dirty expression
+to format the list of subscribers like this:
+
+  cortesi@informix.com          (Dave Cortesi)      SF    Palo Alto CA      3
+  70401.62@compuserve.com       (George Lundin)     SF    San Francisco CA  3 
+              #[mailbox full]
+  chandley@otago.ac.nz          (Chris Handley)     oz 
+                 Dunedin NZ (      2)
+
+Formatting problems remain, mostly from empty fields and names like
+"erw2@po.CWRU.edu", but this expression does a good enough job, at
+least for me. :-)
+
+Do add a closing parenthesis to the
+    dave@prc.unisys.com   (Dave Matus)   PhilW Malvern PA  3
+entry.
+
+
+
+(defun format-subscribers ()
+  "Format the Lojban subscribers list that is dated  Thurs, 11 July 1991.
+Evaluate this function, then narrow to the region you wish to format, and
+type M-x format-subscribers."
+  (interactive)
+  (goto-char (point-min))
+  ;; replace-regexp sets to many undo boundaries for convenience here
+  (goto-char (point-min))
+  (while (not (eobp))
+    (if (re-search-forward " [ ]*" nil 'move)
+        (progn (delete-region (match-beginning 0) (match-end 0))
+               (insert " "))))
+  (goto-char (point-min))
+  (while (not (eobp))
+    (if (search-forward "\(" nil t)
+        (progn
+          (backward-char 1)
+          (indent-to 32)                
+          (forward-list 1)
+          (forward-char 1) 
+          (indent-to 52)
+          (forward-word 1)
+          (forward-char 1)        
+          (indent-to 58)))
+    (if (re-search-forward "[0-3]" nil t)
+        (progn
+          (backward-char 1)
+          (indent-to 76)))
+    (forward-line 1))
+  (goto-char (point-min))
+  (while (not (eobp))
+    (if (search-forward " oz " nil t)
+        (progn
+          (insert "\n")
+          (indent-to 12)))
+    (forward-line 1))
+  (goto-char (point-min))
+  (while (not (eobp))
+    (if (search-forward " #[" nil t)
+        (progn
+          (backward-char 2 )
+          (insert "\n")
+          (indent-to 12)))
+    (forward-line 1)))
+
