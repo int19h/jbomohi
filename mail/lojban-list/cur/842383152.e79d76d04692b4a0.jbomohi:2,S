@@ -1,0 +1,126 @@
+Received: from punt-4.mail.demon.net by stryx.demon.co.uk with SMTP
+	id AA14877 ; Tue, 10 Sep 96 23:34:11 BST
+Received: from punt-4.mail.demon.net by mailstore for ia@stryx.demon.co.uk
+          id 842383434:26743:0; Tue, 10 Sep 96 20:23:54 BST
+Received: from cunyvm.cuny.edu ([128.228.1.2]) by punt-4.mail.demon.net
+           id aa25738; 10 Sep 96 20:22 BST
+Received: from CUVMB.CC.COLUMBIA.EDU by CUNYVM.CUNY.EDU (IBM VM SMTP V2R3)
+   with BSMTP id 7833; Tue, 10 Sep 96 15:22:12 EDT
+Received: from CUVMB.COLUMBIA.EDU by CUVMB.CC.COLUMBIA.EDU (Mailer R2.07) with
+ BSMTP id 1129; Tue, 10 Sep 96 15:22:03 EDT
+Date:         Tue, 10 Sep 1996 15:19:12 -0400
+Reply-To:     John Cowan <cowan@LOCKE.CCIL.ORG>
+Sender:       Lojban list <LOJBAN%CUVMB.bitnet@CUNYVM.CUNY.EDU>
+From:         John Cowan <cowan@LOCKE.CCIL.ORG>
+Organization: Lojban Peripheral
+Subject:      Quantifier Scope Problem Solved!
+X-To:         Lojban List <lojban@cuvmb.cc.columbia.edu>
+X-cc:         jorge@intermedia.ar, pcliffje@crl.com
+To:           Multiple recipients of list LOJBAN <LOJBAN%CUVMB.bitnet@CUNYVM.CUNY.EDU>
+Message-ID: <842383373.25738.0@cunyvm.cuny.edu>
+Content-Length: 3349
+
+
+I was reflecting on the problem of quantifier scope in Lojban
+reflected by the English sentence "Two dogs bite three men".
+The translation
+
+1)      le re gerku cu batci le ci nanmu
+        The two dogs bit the three men.
+
+means that there are two dogs and three men in the speaker's mind,
+and that each of the dogs bites each of the men, for six acts of
+biting altogether.  No problem here.
+
+The translation
+
+2)      re lo gerku cu batci ci lo nanmu
+        Two dogs bite three men.
+
+means that there are two dogs (out of the complete set of dogs) and
+six acts of biting, but the number of men may vary from three to
+six, depending on how the overlap happens to work, because Example 2
+is equivalent to:
+
+3)      re da poi gerku ci de poi nanmu zo'u da batci de
+        For-two X which are-dogs, for-three Y which-are men, X bites Y
+
+Reversing the two variable bindings gives us three men, but from two
+to six dogs.  How do we, without introducing the specific article
+"le", get exactly two dogs and three men?
+
+I had proposed the artificial use of termsets for this purpose:
+
+5)      nu'i re da poi gerku ci de poi nanmu nu'u zo'u da batci de
+
+or with less machinery
+
+6)      nu'i re lo gerku ci lo nanmu nu'u cu batci      (forethought)
+        re lo gerku ce'e ci lo nanmu cu batci           (afterthought)
+
+but certain disadvantages result.  We needed a grammar change to make
+termsets without a connective grammatical (and to add afterthought
+termset machinery with "ce'e"), and we can't split the termset
+around the selbri for SVO order.
+
+Now I think I see a resolution to the problem.  Use
+
+7)      ro lo re lo gerku cu batci ro lo ci lo nanmu
+        Each-of two dogs bites each-of three men.
+
+Now the quantifiers of the two sumti are universal, so order doesn't
+matter: we get the right results even if the sumti are swapped around
+in a prenex.  Furthermore, we get a general theory of what
+LE+quantifier+sumti
+means:
+
+8)      ro lo re lo gerku
+
+is the same as
+
+9)      ro lo me re lo gerku
+        ro da poi me re lo gerku
+
+(using the new definition of "me" that makes it true of everything
+described
+by the sumti that it governs).
+
+Comments?
+
+Partly separate issue:  lojbab pointed out that afterthought termset
+logical
+connection like
+
+10)     la djan ce'e la meiris. pe'eje la frank. ce'e la eimis. cu prami
+        John Mary and Frank Amy loves.
+
+isn't very "afterthought", because you have to have used the "ce'e" to
+create
+the termset before you can logically connect it.  The only two other
+applications
+of termsets are the quantifier-scope use above, and a proposal to solve
+the
+"tense magnitude" problem thus:
+
+11)     la djan. zu'a la frank. ce'e sela'u lo mitre be li mu cu cadzu le
+bisli
+        John to-the-left-of (Frank in-quantity is-in-meters 5) walks on-the ice
+        John walks on the ice five meters leftward of Frank.
+
+where the termset allows both the origin point and the magnitude to be
+governed
+by the sumtcita "zu'a" = "left-of".  I forgot about this use, so it
+isn't yet in
+the reference grammar.
+
+Is the grammatical change required to add connective-less termsets and
+afterthought
+termsets with or without connections still required in the light of the
+first half
+of this message?
+
+--
+John Cowan                                              cowan@ccil.org
+                        e'osai ko sarji la lojban
+
+
