@@ -1,0 +1,77 @@
+Return-Path: <lojbab>
+Message-Id: <m0jeIA3-0003KKC@snark.thyrsus.com>
+Date: Fri, 17 May 91 23:40 EDT
+From: lojbab (Bob LeChevalier)
+To: cbmvax!uunet!bigd.cray.com!dmb, cbmvax!uunet!bigd.cray.com!m2xenix!onion!tessi!loop!dont
+Subject: Re: Machine grammar and elidables
+Cc: cbmvax!uunet!bigd.cray.com!dont, lojban-list@snark.thyrsus.com
+X-From-Space-Date: Fri May 17 23:41:32 1991
+X-From-Space-Address: lojbab
+Content-Length: 4225
+
+On David Bowen's comments on dont's attempt to eliniate elidables:
+1. David is correct that "cu" is optional, in the language and exists only to
+make elision of other elidables before the selbri easy.  Indeed, John Cowan
+has made this explicit in one of his proposed baseline modifications.
+2. Our analysis shows a similar situation for "ku'o" - it is always optional, but using it may make other elidables easy to elide.
+3. John Cowan's attempt at parser buiding led him to explore "fa'o" and to
+determin that it is no longer needed or useful in the grammar.  He is proposing
+its elimination as a resolution of the only significantly outstanding parser
+a major difficulty in constructing a YACC 
+parser.  I  am in favor of this change.
+4. Most other elidables are not optionals - they truly terminate something that
+has no other way of being ended, in at least one case.  Before August '89
+these were only two or three terminators (mostly "ku").  They were broken out 
+into separate selma'o  specifically to make it easier to elide them, and to tell
+what structure a given terminator was eliding.  Before then, it was trivial to
+construct sentences that required 4, 5, or 6 "ku"s in a row to terminate things.
+properly and to make sure things grouped the way you wanted them to.  The c
+change to this was approved by all active students of the language at the time,
+and was among the reasons for the Lesson4/Lesson 4A rewrite, and my soon t
+thereafter decision that the entire textbook would need rewriting before it
+could be published.
+By making the language more speaker-and-listener friedndly by expanding the
+terminators, we made it even harder to do what you are trying to do, I think.
+It is extremely difficult in the current grammar to mess with the elidables
+- minor change can lead to major conflicts.
+
+The primary requirement you need is thorough familiarity with the verbose
+listing output by YACC, listing all states, and the go-tos/shifts/reduces
+that take place depending upon the look-ahead token.  The ultimate Lojban
+formal grammar IS that set of states produced by YACC, since we regard the YACC
+grammar (and NOT the E-BNF) as the legitimate standard of the Lojban grammar.
+
+We have some pragmatic rules for many of the elidables; i.e. times that you
+cannot elide "ku" at the end of a sumti include any time it is followed by
+any token that can start off a selbri (the list is large so expanding this
+one elidable would multiply the grammar by an order of magnitude in my belief
+- and it maight then no longer be LALR 1).  "kei" is even tougher, since what
+can follow depends on what came before.  In "le nu broda [kei]" the "kei"
+cannot be elided if the next tokenm is the possible start of either a selbri
+OR a sumti; in "le nu broda ko'a" elision is forbidden if the next token
+starts a term (i.e. a sumti or tcita sumti).  But "ku" can be used instead of
+"kei" in this instance and it will always work and always allow "kei" to
+be elided, since it terminates the "le" sumti that the "nu broda ...[kei]"
+abstraction is inside.
+
+Another problem for would-be grammar experimenters.  The Lojban grammar is
+not much larger than most computer languages, but its degree of recursive
+and overlapping constructions leads to a lot of states in the state table.
+We needed a specially designed version of YACC, produiced by Abraxas (PCYACC),
+with elevated limits for some table size limits and compiled under "Huge"
+model, in order to even YACC the last few grammars.  John Cowan reports that
+he is having less trouble on UNIX systems, but even there you have to watch
+your table limits, I'm sure, especially if you want to try something like don
+is.
+
+In short, I do not believe the effort will bear much fruit, and I would only
+recommend it as an excuse to learn the grammar - you WILL have to do that in
+order to make any progress at all.  And remember that we are going to be
+very prejudiced against changes that in some way restrict usages that we have
+already taught or used in the language.  Almost all proposed changes now either
+have no effect on most day-to-day usage, or expand the capabilities thereof.
+This makes an elidable eliminating effort even more difficult than it might
+otherwise be.
+
+-lojbab
+
