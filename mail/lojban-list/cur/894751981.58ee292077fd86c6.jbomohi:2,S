@@ -1,0 +1,102 @@
+Received: from spooler by stryx.demon.co.uk (Mercury/32 v2.01); 11 May 98 20:55:57 +0000
+Return-path: <LOJBAN@cuvmb.cc.columbia.edu>
+Received: from punt-20.mail.demon.net (194.217.242.14) by stryx.demon.co.uk (Mercury/32 v2.01);
+   11 May 98 20:55:51 +0000
+Received: from punt-2.mail.demon.net by mailstore for ia@stryx.demon.co.uk
+          id 894750899:12:07527:0; Sat, 09 May 98 21:54:59 GMT
+Received: from listserv.cuny.edu ([128.228.100.10]) by punt-2.mail.demon.net
+           id aa0516472; 9 May 98 21:54 GMT
+Received: from listserv (listserv.cuny.edu) by listserv.cuny.edu (LSMTP for Windows NT v1.1b) with SMTP id <1.FE93C4CF@listserv.cuny.edu>; Sat, 9 May 1998 17:55:17 -0400
+Date:         Sat, 9 May 1998 18:13:01 -0400
+Reply-To:     John Cowan <cowan@LOCKE.CCIL.ORG>
+Sender:       Lojban list <LOJBAN@CUVMB.BITNET>
+From:         John Cowan <cowan@LOCKE.CCIL.ORG>
+Subject:      Re: Parsing lujvo
+X-To:         lojban@cuvmb.cc.columbia.edu
+To:           Multiple recipients of list LOJBAN <LOJBAN@CUVMB.BITNET>
+In-Reply-To:  <199805091935.PAA21645@locke.ccil.org> from "George Foot" at May
+              9, 98 08:04:02 pm
+Message-ID: <894750892.0516472.0@listserv.cuny.edu>
+X-PMFLAGS: 33554560 7
+Content-Length: 3058
+Lines: 83
+
+
+
+la djordj. cusku di'e
+
+> I'd like to know whether or not a machine parser for lujvo already exists.
+> I think it's quite a useful thing to have; it would convert a lujvo into
+> its component rafsi, and list the meanings of the rafsi.
+
+Yes, there is, but additional implementations are always useful.
+
+> At present it recursively attempts to extract rafsi from the left hand end
+> of the lujvo, each time testing whether or not the remaining word (minus
+> any hyphenating letters) is still a valid lujvo.  In doing this, it first
+> tries to look up the first five letters in a gismu dictionary; if they're
+> present then if no letters remain it returns success (i.e. parsed the
+> whole word), otherwise it recurses on the remaining letters.
+
+That's too simple an algorithm, as your counterexample below illustrates.
+
+> A couple of important points present themselves.  Firstly, is it possible
+> to resolve an arbitrary lujvo into component rafsi without needing to look
+> them up in a dictionary?
+
+Yes, it is always possible.
+
+>   tavta'atavlytavla
+>
+> it will look up "tavta" as a 5L rafsi, despite the following apostrophe,
+> then "tavt" as a 4L rafsi, despite the following `a' (which should be a
+> `y', no?), then finally "tav" as a 3L rafsi, which will finally resolve.
+> If it could split the word up sensibly to begin with then there would be
+> less dictionary searches (not that they take long) and it would just be a
+> nicer algorithm.
+
+Absolutely no dictionary searching is required: the algorithm works
+independently of what rafsi exist or don't exist.  The only
+possible analysis is CVC-CVV-CVCCy-CVCCV.
+
+> Secondly, and partially mentioned above, the reference grammar describes
+> lujvo creation twice; the first time it is very general, and the second
+> time it is more strict.  Specifically, the second time it says that all 4L
+> rafsi should be followed by a `y' hyphen.  Is this generally true then?
+
+Yes.
+
+> It seems to me that a CCVC rafsi could be followed by a CVCCV gismu, say,
+> provided they fit together, i.e. the last C of the first forms an
+> allowable consonant pair with the first C of the last.
+
+No, that is forbidden.
+
+> Thirdly, are there any circumstances in which a 5 letter rafsi (other than
+> a rafsi fu'ivla, which I'm not dealing with anyway) can appear other than
+> at the end of the word?
+
+No.
+
+> Fourthly, do cmavo count as rafsi?  There seem to be some in the gismu
+> list (CV'V form), which struck me as odd; these are cmavo, aren't they,
+> not gismu?  I thought gismu were always five letters long, CCVCV or CVCCV.
+
+Some cmavo have rafsi, though most don't.  Sometimes the rafsi of a cmavo
+is identical to the cmavo, and sometimes it isn't (typically because it
+is CVC, which no cmavo can be).
+
+> And finally, is "ta'a" a three letter rafsi or a four letter rafsi?
+
+THree letter.
+
+> PS: "The Complete Lojban" is an excellent book -- well worth waiting for.
+> I'm very happy to own a copy.
+
+Thank you!
+
+--
+John Cowan                                      cowan@ccil.org
+                e'osai ko sarji la lojban.
+
+
