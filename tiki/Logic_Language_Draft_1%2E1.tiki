@@ -1,0 +1,79 @@
+{Since this is a rough draft of a paper – eventually a pamphlet – to report to the Lojban community, the author would appreciate your leaving the text as it is and entering your comments, corrections, questions, discussions and so on in the space after the solid line.  Thank you. pc}
+
+Lojban is said to be a logical language.  The first sense in which that is true is that its grammar is – so far as possible – that of Formal Logic, Applied First Order Predicate Logic (AFOPL), to be more exact.  To understand the grammar and the semantics of Lojban, then, it is useful to look at this language of logic in some detail, keeping track of how its features are reflected in Lojban.
+
+In what follows, the language being described is described in English, which serves as a ''metalanguage'', a language for talking about the formal language, the ''object language''.  It should be noted that, when Lojban is developed enough, it will – like English – be usable as its own metalanguage.  For this reason, many things that are only in the metalanguage for AFOPL will appear also in Lojban and so will need to be discussed in what follows.  In addition, many features of Lojban go beyond the scope of AFOPL, but correspond to features of natural languages that logicians have dealt with in connection with – or at least on the model of – AFOPL, so they too will eventually find a place in this discussion.
+
+Logic as such is concerned directly with sorting out good arguments from bad.  The criterion for the usual sort of good argument, validity, is simply that when all the premises of an argument, the givens for a particular case, are true, the conclusion, the added information said to be derived from the premises, is true also.  So, the primary feature of the expressions of the language of logic is that they are capable of being true or false.  Such an expression is called a ''well-formed formula'', abbreviated ''wff'' (pronounced pretty much like a dog bark: “woof”).
+The simplest of these, the simplest thing in this language, are ''atomic'' wffs, expressions capable of being true or false, but having no parts that are also so able.
+
+In traditional presentations, the discussion begins with atomic wffs and how to build up molecular wffs by combining them.  Only later is the internal structure of atomic wffs examined.  However, for connection with Lojban, the opposite procedure makes more sense, for the first point at which Lojban imitates logic is exactly in the internal structure of simple sentences, which correspond intuitively (and in fact) to atomic wffs.
+
+Atomic wffs are composed of two sorts of things, ''terms'' and ''predicates'', the electrons and nucleus of the atom, as it were.  Each atomic wff consists of a single predicate combined with (“followed by” is the usual way) a certain number of terms, the number determined by the predicate, ranging from 0 on up.  We are talking here of AFOPL fairly abstractly but when it comes to be written down, predicates and terms have to be distinctively presented.  Here we will use capital Roman letters (with some exceptions) as predicates and lower case for terms and related items.   Officially, we can imagine each predicate as having a following superscript to indicate how many terms it takes to form an atomic wff.  We will, however, usually omit that superscript under the convention that predicates that appear always have the right number of terms explicitly following them.  Each predicate and term also strictly has a following subscript to distinguish one “F,” for example, from another.  Again, we will generally omit this mark on the assumption that subscript 0 is what we are using and it does not need to be written.  (There are endless variations on this specification of what AFOPL looks like, but all amount to this pattern.)
+
+In this discussion we will also take the combining of a predicate and the appropriate number of terms to mean that the term symbols are strung out left to right behind the predicate symbol.  Thus, “Fabc” is an atomic wff, formed of the three-placed predicate F combined with the three terms, a, b, and c, in that order. (Where, as often, the distinction between term and term symbol is not a problem, we will use the shorter expression, as here.)  Other arrangements are possible, though the only ones I have seen are ones putting the first term before the predicate (“aFbc”) and, in two-dimensional representations of wffs, having the terms circling around the predicate in an even more iconic atomic wff.
+
+The semantics of AFOPL assumes a number (greater than 0) of things – what kind of things is unspecified.  These are then seen as grouped together into sets of various degrees of complexity.  Although the original things need not include sets, the language may eventually come to treat sets as though they too were things, at least syntactically.  This will apply as well to a number of other abstractions: events, properties, and so on, which first appear in the metalanguage.
+
+The congery of things assumed, the ''domain'', constitutes the beginning of the specification – in the metalanguage – of a ''world''.  The specification is completed by an ''interpretation'', a function from the terms and predicates of the language to the things and sets of things in the world.  In an interpretation, each term is assigned a thing in the world, a thing it names or stands for (Note: not every thing in a world needs to have a name – be assigned to some term – and one thing may be assigned to several terms).  Similarly each 1-place predicate is assigned a set of things (perhaps empty), each 2-place predicate (binary relation) a set of ordered pairs, and so on.
+
+An atomic wff is ''true in'' a world just in case the referents of its terms are in the referent of its predicate in the appropriate way.  In the case of  “Ga” this would be that the thing which is the referent of “a” is in the set which is the referent of “G.”  Our sample above, “Fabc, ” would be true just in case the ordered triple of the referents of “a.” “b,” and “c,” in that order is in the set of ordered triples assigned to “F.”   Since logic is not concerned with what is true in a particular world, its metalanguage contains a number of devices for changing some assignments within a world as well as changing interpretations and domains, two ways to move to a new world.  We will need to glance at these only occasionally in what follows.
+
+Standard logic is ''bivalent'': every wff is either true or false.  So, any atomic wff that is not true in a world is ''false in'' that world.  We can look at other possibilities later, but this bivalence is fundamental to logic and to Lojban; other possibilities generally look to this pattern for guidance: what connectives to use, how to specify them, and so on.  For now, we will assume bivalence.
+
+Now that we have said enough about atomic wffs to start, let us turn to ''molecular'' wffs, ways in which already certified wffs can be combined to make more complex ones.  For this, logic uses ''truth-functional connectives''.  They are connectives in the obvious sense that they connect wffs, although some of them “connect” only one wff.  For the most part, they connect two.  They are truth-functional in the sense that whether the compounded wff is true or not depends on — and only on – the truth or falsity of the component sentences.  That is, regardless of what the sentences “say,” only their truth or falsity affects the compound.  This contrasts with at least some cases in English, where two compound sentences with the same pattern of truth or falsity in their components may have different truth values, dependent, apparently, on the meanings of these sentences involved: “If I release this pencil, it will fall to the floor” against “If I am King of Serendip, I fly to the Moon by flapping my wings.”  Where all of the components are presumed false, yet the first sentence is true and second false (if not, make up your own examples).
+
+Truth-functionality and bivalence together limit the number of connectives of a given size there can be.  There are only two truth possibilities for a single sentence, true or false, and for each of these a given connective yields always the same value, so, since the choice for the value for a true sentence is independent of that for a false sentence, there are only four possible connectives for a single sentence: the one that gives true whatever the component sentence is, a similar one that gives false regardless of input, an identity function that returns true for true and false for false, and negation (NOT), that returns true for false and false for true.  Only the last of these is of much use, of course.  For two components, there are four possible arrangements of truth-values: both true, both false, and one of each in two possible orders.  By the same line of reasoning as above, that gives 16 possible connectives.  If we assume that the possible values for the components are listed in the order TT, TF, FT, FF, then the 16 connectives are
+*Tautology: TTTT
+*Alternation (OR): TTTF
+*Converse implication: TTFT
+*Repeat first, ignore second:TTFF
+*Material implication (IF): TFTT
+*Repeat second, ignore first: TFTF
+*Material equivalence (IFF): TFFT
+*Conjunction (AND): TFFF
+*Denied conjunction (Pierce stroke, amphec, NAND): FTTT
+*Disjunction (mutual exclusion, XOR): FTTF
+*Denied second, ignore first: FTFT
+*Denied implication: FTFF
+*Denied first, ignore second: FFTT
+*Denied converse implication: FFTF
+*Denied alternation (Sheffer stroke, NOR) FFFT
+*Contradiction: FFFF
+
+Obviously, the second half of this list can be derived from the first by negation.  But the list of basic relations can be reduced further: all can be defined in terms of AND, OR and NOT, indeed, in terms of NOT and any one of OR, AND, and IF.  Some of these definitions are less tidy than having a simple form, since they may require repeating a component – though never more than two occurrences are strictly required. Furthermore, all of the connectives, including NOT and the other one-places ones, can be defined in terms of just NAND or just NOR, though requiring more repetitions in some cases.  For Lojban, it is useful to note that all of the connectives except Tautology and Contradiction can be defined in terms of NOT, AND, OR, IFF, and the two “repeat/ignore” forms without having to repeat any components.
+
+Logic has done little with connectives for more than two sentences, except to note that any binary truth functional one will be definable in terms of the two-place ones and NOT.  Since there are eight ways that three sentences might arrange truth-values, there are 2^8 such functions.  While there are twice as many combinations of two two-place connectives so that each component would have to occur only once, many three-placed connective are defined in a number of different ways in such an approach, so that some three-placed connectives cannot be defined in terms of two-placed ones without repetition of some components (never more than four occurrences, though probably fewer are actually required).  Logicians are generally untroubled by repetitions, however, even when they like minimalist systems in various ways.  Regardless of the number of components joined by a single connective, the function involved can always be represented using only two-place connectives (with considerable complexity and numerous repetitions as the number of components grows).
+
+Actual written out languages vary considerably in their representations of connectives.  Not only are there several variant forms for each connective function and variations on which ones are taken as primitive and which defined, there is even a divergence on the way in which “two component wffs joined by a two-place connective” is represented.  The most common form is ''infix'' (''Principia''): the connective goes between the two components (and the whole is enclosed in parentheses).  But there is also ''affix'' (Polish) in which the two components are merely concatenated and the connective is put in front (or, very rarely, at the end).  If the notation should be such that you cannot always tell when a wff begins (predicates and terms are not typographically distinct, say), Polish notation also needs an infix marker to separate the concatenated components.  But it never needs parentheses.  On the other hand, infix notation can often drop some – even most – parentheses by some conventions (left association, precedence of connectives, and so on) or by marking connectives for depth in some way.  Some grouping, whether by parentheses or their surrogates in infix notation or by the inherent binding strictures of affix notation, is necessary, since compound wffs may involve components which are themselves compound and, when we have a number of atomic wffs strung out with a number of connectives joining them, we need to know how the subordinate components are arranged:
+P & Q v R (& is AND, v is OR here) is ambiguous as it stands between an alternation of a conjunction of atomic wff and an atomic wff, (P & Q) v R (Polish AKPQR -- A is OR, K AND) and a conjunction of an atomic wff and an alternation of two others: P & (Q v R), KPAQR.  (Note: C (IF),A,K,E (IFF), N (NOT), and sometimes D (another version of OR), V ("some")and I (=) are not non-logical predicates in such Polish systems. P, Q, and R are 0-place predicates, wffs whose internal structure does not concern us at the moment.)
+
+((Logic  Language Draft 2.1))
+
+((Logic Language Draft 3.1))
+
+((Logic Language Draft 4.1))
+-----------
+
+(Place comments here)
+Thank you.
+
+* paragraph 2: in "a language for talking about, the formal language"; remove the comma
+* paragraph 3: "The criterion for a them usual sort"; huh?
+* paragraph 8: in "Similarly each 1-place predicates is"; predicates > predicate
+* paragraph 10:
+** in "is ''false in'' that world", did you mean for "in" to be italicized?
+***Yes, see ''true in'' in the previous paragaph.  This is not "true absolutely."
+** in "and to Lojban, other possibilities", change the comma to a semi-colon
+* paragraph 12: in "and identity function", and > an
+* paragraph last:
+** "with a number connectives" > "with a number of connectives"
+** Since you explain that "& is AND, v is OR here", it would be helpful if you also explained that in your Polish notation K is AND, A is OR (or did you want to leave this as an "exercise for the student"? zo'o)
+** It might also be clearer if we said "Note: CAKEN, and sometimes D, V and I are not predicates" (at least I think that's what you meant; if not, you need to really re-work the sentence)
+
+Thank you very much.  The corrections have been made.
+
+*Is there a title for this paper? After reading 1.1, 2.1, 3.1 I'm still wondering what its aim is. Thanks... -- ((tk1@))
+
+**The working title is "Logic Language."  1 is probably "Propositional Connectives in Logic;" 2 "Propositional Connectives in Lojban;"  3 "Quantifiers and Descriptors."
+**The purpose is two-fold: 1) to investigate in what senses Lojban (etc.) are logical languages, and 2) to start laying out how sentences in Lojban are to be transformed into logical structures for further analysis.  The wiki format is being used to get faster response from the intended audience about unclarities, inaccuracies, and what that audience wants to know about beyond the basics.  This is all part of an officially sanctioned (at one time, at least) project for LLG.
