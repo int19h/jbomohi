@@ -1,4 +1,4 @@
-# mail/lojban-list thread b563f79699f2-official_parser_wierdness_i_have_no_intention_o | root 20040328104136.ga6569@digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread b563f79699f2-official_parser_wierdness_i_have_no_intention_o | root 20040328104136.ga6569@digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2004-03-28T10:41:36Z | Robin Lee Powell <lojban-out@lojban.org> | 20040328104136.ga6569@digitalkingdom.org | mail/lojban-list/cur/1080470496.b563f79699f23062.jbomohi:2,S
 The official parser accepts "mi djuno le du'u" with no problems:
@@ -23,5 +23,47 @@ http://www.lojban.org/             ***              .i cimo'o prali .ui
 
 
            
+
+
+
+=== 2 | 2004-03-29T01:43:13Z | John Cowan <cowan@ccil.org> | 20040329014313.gd18719@ccil.org | mail/lojban-list/cur/1080524593.0356b9f9eafaaf82.jbomohi:2,S
+Robin Lee Powell scripsit:
+
+> The official parser accepts "mi djuno le du'u" with no problems:
+> 
+> 1       terms_80        mi
+> 2       selbri_130      djuno
+> 3       tail_terms_71   VAU
+> 4       bridi_tail_50   2   3
+> 5       text_0  1       4
+> 
+> Seems rather odd to *me*.
+
+This is a known problem: if there is a grammar error in the last two
+tokens, the yacc skeleton can't cope.  Its rule is to skip down three
+tokens before attempting error recovery, but instead it sees EOF and
+stops parsing, causing the last token or two to be quietly ignored.
+Another result of abusing error recovery.
+
+-- 
+John Cowan                              <jcowan@reutershealth.com>
+http://www.ccil.org/~cowan              http://www.reutershealth.com
+                Charles li reis, nostre emperesdre magnes,
+                Set anz totz pleinz ad ested in Espagnes.
+
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+Yahoo! Groups Links
+
+<*> To visit your group on the web, go to:
+     http://groups.yahoo.com/group/lojban/
+
+<*> To unsubscribe from this group, send an email to:
+     lojban-unsubscribe@yahoogroups.com
+
+<*> Your use of Yahoo! Groups is subject to:
+     http://docs.yahoo.com/info/terms/
+ 
+
 
 
