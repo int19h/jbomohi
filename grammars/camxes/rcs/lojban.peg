@@ -22,9 +22,16 @@
 
 ; --- GRAMMAR ---
 
-text <- spaces-not-Y* su-clause* spaces-not-Y* (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO .*)?
+; This mess here is to allow the following preference relation:
+; 1. no joik-jek, text-1
+; 2. joik-jek, text-1 optional
+; 3. neither
+text <- (spaces-not-Y* su-clause* spaces-not-Y* (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO .*)?) / (spaces-not-Y* su-clause* spaces-not-Y* (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? joik-jek text-1? (FAhO .*)?) / (spaces-not-Y* su-clause* spaces-not-Y* (Y !BU)? si-clause NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? (FAhO .*)?)
 
-text-1 <- (I (jek / joik)? (stag? BO)? free* text-1)+ / NIhO+ free* su-clause* spaces-not-Y* paragraphs? / (paragraphs / joik-jek paragraphs / joik-jek / ())
+; Please note that the "text-1" item in the text-1 production does
+; *not* match the BNF. This is due to a bug in the BNF.  The change
+; here was made to match grammar.300
+text-1 <- I (jek / joik)? (stag? BO)? free* text-1? / NIhO+ free* su-clause* spaces-not-Y* paragraphs? / paragraphs
 
 paragraphs <- paragraph (NIhO+ free* su-clause* spaces-not-Y* paragraphs)?
 
@@ -188,7 +195,7 @@ stag <- simple-tense-modal ((jek / joik) simple-tense-modal)*
 
 tense-modal <- simple-tense-modal free* / FIhO free* selbri (FEhU free*)?
 
-simple-tense-modal <- NAhE? SE? BAI NAI? KI? / NAhE? ((time space? / space time?) / CAhA / (time space? / space time?) CAhA) KI? / KI / CUhE
+simple-tense-modal <- NAhE? SE? BAI NAI? KI? / NAhE? ( ((time space? / space time?) CAhA) / (time space? / space time?) / CAhA ) KI? / KI / CUhE
 
 time <- ZI time-offset* (ZEhA (PU NAI?)?)? interval-property* / ZI? time-offset+ (ZEhA (PU NAI?)?)? interval-property* / ZI? time-offset* ZEhA (PU NAI?)? interval-property* / ZI? time-offset* (ZEhA (PU NAI?)?)? interval-property+
 
@@ -229,7 +236,18 @@ any-word-no-BU-handling <- CMAVO-no-BU-handling / BRIVLA-no-BU-handling / CMENE-
 
 ; --- MORPHOLOGY ---
 
-; Letter Groups
+;; -- General Morphology Issues
+;
+; 1.  Spaces (including '.y') and UI are eaten *after* a word.
+;
+; 2.  Morphology is checked *before* a word.
+;
+; 3.  BAhE is eaten *before* a word.
+;
+; 4.  <selma'o>-words should be used only in those situations where
+;	we are Really Sure that we don't need to worry about morphology.  In other words, basically never.
+
+;; -- Letter Groups
 consonant <- [bcdfgjklmnprstvxz]
 initial-pair <- "bl" /  "br" /  "cf" /  "ck" /  "cl" /  "cm" /  "cn" /  "cp" /  "cr" /  "ct" /  "dj" /  "dr" /  "dz" /  "fl" /  "fr" /  "gl" /  "gr" /  "jb" /  "jd" /  "jg" /  "jm" /  "jv" /  "kl" /  "kr" /  "ml" /  "mr" /  "pl" /  "pr" /  "sf" /  "sk" /  "sl" /  "sm" /  "sn" /  "sp" /  "sr" /  "st" /  "tc" /  "tr" /  "ts" /  "vl" /  "vr" /  "xl" /  "xr" /  "zb" /  "zd" /  "zg" /  "zm" /  "zv"
 cmene-consonant <- [bcdfgjklmnprstvxz] / [BCDFGJKLMNPRSTVXZ]
@@ -245,8 +263,9 @@ absorb-indicators <- UI NAI? / CAI NAI? / Y / DAhO / FUhO / FUhE
 
 ; Handling of spaces
 spacing <- !. / spaces+ si-clause absorb-indicators*
+spacing-opt <- !. / spaces+ si-clause absorb-indicators* / si-clause absorb-indicators*
 space-chars <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
-spaces <- space-chars+ 'y'+ / '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
+spaces <- space-chars+ 'y'+ !['] !vowel / '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
 spaces-not-Y <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
 
 ; SU clauses
@@ -262,10 +281,12 @@ lohu-tail-si-clause <- LEhU-no-SI-handling si-clause SI / !SI any-word-no-SI-han
 
 ; For handling things of higher priority than SI (i.e. lo'u...le'u, zo)
 spacing-no-SI-handling <- spaces+
+spacing-no-SI-handling-opt <- spaces*
 si-spacing <- spaces+
 
 ; For handling BU issues
 spacing-no-BU-handling <- spaces+ absorb-indicators*
+spacing-no-BU-handling-opt <- spaces* absorb-indicators*
 
 ;         any brivla 
 ; For now: gismu pattern.
@@ -316,21 +337,20 @@ CMAVO-post <- !. / (spaces+ / !vowel) CMAVO-post-morphology known-cmavo / !vowel
 CMAVO-post-no-SI-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 CMAVO-post-no-BU-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 
-CMAVO <- known-cmavo / consonant? vowel (['] vowel / vowel)+ post-cmavo-spacing
-CMAVO-no-SI-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo-no-SI-handling
-CMAVO-no-SA-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo
-CMAVO-no-BU-handling <- consonant? vowel (['] vowel / vowel)* post-cmavo-no-BU-handling
+CMAVO <- pre-cmavo-check known-cmavo / pre-cmavo-check consonant? vowel (['] vowel / vowel)+ spacing !BU-bare
+CMAVO-no-SI-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo-no-SI-handling
+CMAVO-no-SA-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo
+CMAVO-no-BU-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo-no-BU-handling
 
 known-cmavo <- A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / BY / CAI / CAhA / CEI / CEhE / CO / COI / CU / CUhE / DAhO / DOI / DOhU / FA / FAhA / FAhO / FEhE / FEhU / FIhO / FOI / FUhA / FUhE / FUhO / GA / GAhO / GEhU / GI / GIhA / GOI / GOhA / GUhA / I / JA / JAI / JOI / JOhI / KE / KEI / KEhE / KI / KOhA / KU / KUhE / KUhO / LA / LAU / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / MAhO / ME / MEhU / MOI / MOhE / MOhI / NA / NAI / NAhE / NAhU / NIhE / NIhO / NOI / NU / NUhA / NUhI / NUhU / PA / PEhE / PEhO / PU / RAhO / ROI / SA / SE / SEI / SEhU / SI / SOI / SU / TAhE / TEI / TEhU / TO / TOI / TUhE / TUhU / UI / VA / VAU / VEI / VEhA / VEhO / VIhA / VUhO / VUhU / XI / Y / ZAhO / ZEI / ZEhA / ZI / ZIhE / ZO / ZOI / ZOhU
 
 ; Handling of what can go after a cmavo
-post-cmavo <- !BU-bare post-cmavo-spacing
-post-cmavo-spacing <- post-cmavo-check si-clause absorb-indicators*
-post-cmavo-check <- !. / spaces+ / &CMAVO-post / &BRIVLA
-post-cmavo-no-SI-handling <- !. / spaces+ / &CMAVO-post-no-SI-handling / &BRIVLA / SI
-post-cmavo-no-BU-handling <- spacing-no-BU-handling / &CMAVO-post-no-BU-handling / &BRIVLA / BU
+post-cmavo <- !BU-bare !['] !vowel spacing-opt
+pre-cmavo-check <- !BRIVLA !CMENE
+post-cmavo-no-SI-handling <- !['] !vowel ( !. / spaces+ / &SI)
+post-cmavo-no-BU-handling <- !['] !vowel ( spacing-no-BU-handling-opt / &BU )
 
-pre-cmavo <- BAhE?
+pre-cmavo <- BAhE? pre-cmavo-check
 
 ; --- SELMAHO ---
 
@@ -394,9 +414,9 @@ BOI-sa-clause <- BOI-words spaces* BOI-sa-tail
 BOI-sa-tail <- SA &(pre-cmavo BOI-words) / !BOI-words any-word-no-SA-handling BOI-sa-tail
 BOI-words <- "boi"
 ;         turns any word into a BY lerfu word 
-BU <- BU-words post-cmavo-no-BU-handling
+BU <- pre-cmavo-check BU-words post-cmavo-no-BU-handling
 BU-words <- "bu"
-BU-bare <- spaces-not-Y* !['] !( cmene-letter cmene-letter cmene-letter consonant consonant / cmene-letter cmene-letter consonant consonant / cmene-letter consonant consonant / consonant consonant ) "bu" !['] !vowel spaces-not-Y*
+BU-bare <- pre-cmavo-check "bu" !['] !vowel spacing-opt
 ;         individual lerfu words 
 BY <- pre-cmavo BY-sa-clause? BY-words post-cmavo
 BY-no-SA-handling <- pre-cmavo BY-words post-cmavo
