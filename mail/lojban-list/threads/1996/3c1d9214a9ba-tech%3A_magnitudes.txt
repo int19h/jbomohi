@@ -1,4 +1,4 @@
-# mail/lojban-list thread 3c1d9214a9ba-tech%3A_magnitudes | root z73klzkrdal.a.btg._v0klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 3c1d9214a9ba-tech%3A_magnitudes | root z73klzkrdal.a.btg._v0klb@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1996-03-14T11:54:04Z | Logical Language Group <lojbab@ACCESS.DIGEX.NET> | begxpnbuibk.a.qtg._v0klb@chain.digitalkingdom.org | mail/lojban-list/cur/826804444.1a98235400d3d1af.jbomohi:2,S
 
@@ -119,5 +119,125 @@ grammar.
 
 lojbab
 
+
+
+
+=== 2 | 1996-03-14T11:54:04Z | Logical Language Group <lojbab@ACCESS.DIGEX.NET> | z73klzkrdal.a.btg._v0klb@chain.digitalkingdom.org | mail/lojban-list/cur/826804444.3c1d9214a9ba4855.jbomohi:2,S
+Veijo wrote:
+>mi pu cusku di'e
+>
+>>> Date:         Tue, 12 Mar 1996 15:10:14 -0500
+>>> From: John Cowan <cowan@LOCKE.CCIL.ORG>
+>>> Subject:      TECH: magnitude
+>>>
+>>> I have been kicking around the idea of a new cmavo of selma'o KI,
+>>> "ki'i'i" temporarily.  A sumti tcita involving this will be a specific
+>>> magnitude, thus:
+>>>
+>>> 1)      mi dansu le bisli ve'a ki'i'i lo mitre be li pa
+>>>        I dance on the ice over-interval one-meter.
+>>
+>>  I'd prefer a separate selma'o NEhE which would allow a slightly more
+>>  concise expression:
+>--More--
+>>
+>>          mi dansu le bisli ve'a ne'e mitre li pa
+>>
+>>  This would require a one-line addition to 'modifier_84':
+>>
+>>          | mod_head_490 NEhE_nnn selbri_130 tail_terms_71
+>
+>   Both of the above schemes have the shortcoming that a reference point
+>   cannot be expressed. The following modification makes this possible:
+>
+>         | mod_head_490 NEhE_nnn selbri_130 tail_terms_71 gap_450
+>         | mod_head_490 NEhE_nnn selbri_130 tail_terms_71
+>               TEhI_mmm sumti_90
+>
+>   {ne'e} and {te'i} would fit the already assigned cmavo quite well
+>   as {ne'a} = 'next to', {ne'i} = 'within' and {te'e} = 'bordering'
+>
+>
+>
+>
+>  co'o mi'e veion
+
+
+The problem with NEhE as you propose it, is that it will usually require
+a terminator except before CU or end of sentence.  Using the selbri grammar
+rather than the bridi grammar as you have,  thus has the same problem
+that SEI had.  The verbosity of requiring the terminator is comparable to
+that of requiring the sumti and linkarg markers.  Note that you can
+cut the latter by saying lo mitre pamei.
+
+As Cowan explained this proposal to me, you would not need the reference
+point grammar.  If you wanted to specify the reference point, it would be:
+mi dansu le bisli ve'a le manri ki'i'i lo mitre be li pa
+I dance on the ice over-interval at the reference point of one-meter.
+
+If the ki'i'i is ambiguous as to what the quantity is quantifying you would
+repeat the ve'a OR attach the ki'i'i phrase using an afterthought termset.
+The attempt at afterthought termsets, which evolved from your own work on
+that grammar problem, stemmed from the desire to accomodate just this kind
+of linking.
+
+Of course this means that you need to be able to have afterthought termsets
+with only singular sumti, and no logical connective, as the grammar you
+orginally proposed for such offset termsets provided.
+
+Cowan seems to prefer the repeated tense to remove ambiguity when necessary,
+whereas I like the afterthought termset link (other tense elements having been
+set off with "ku").  So the combination of the new cmavo and the afterthought
+termsets allows a bit of playing around to find the optimal solution, while
+making sure that we HAVE a solution, as I promised Goran.
+
+As to the termset grammar requiring either two terms or NUhU before the
+connective, the needed contrast is with the sumti grammar connectives.
+
+Jorge:
+>>   1 shift/reduce conflict
+>
+>Is it possible to identify when this happens? When a {gi} is found,
+>the only possibility is that it is closing the latest open gek,
+>isn't it? In other words, under what circumstances would the first
+>nu'u not be elidable?
+
+The relevant grammar is:>term_set_83             :  NUhI_587  GEK_807  terms_80
+ NUhU_gap_460
+>                                GIK_816  terms_80  NUhU_gap_460
+>                        |  NUhI_587  terms_80  NUhU_gap_460
+>                                JOIK_EK_421  terms_80  NUhU_gap_460
+>
+
+>sumti_C_93              :  sumti_D_94
+>                        |  GEK_807  sumti_90  GIK_816  sumti_C_93
+>                        ;
+
+It can be seen that without the NUhU_gap, any single term in the first terms_80
+will make the GEK term GIK look like sumti_93, i.e. a sumti rather than a
+complex structure - it will then slop up the 1st sumti after the GIk and
+the effective grammar is NUhI sumti_93 and the parser sits therew waiting for
+the rest of the termset, considering any other sumti that follow as part
+of the first half of the termset.
+
+With afterthought termsets not marked with NUhI, I think the NUhU is likely to
+ be never elidable, because the "term JOIK_EK term is again a sumti_93, and
+added terms remain part of the incomplete termset.
+
+The bottom line is that NUhU was added when I created the termset grammar
+as an alternative to a full set of connective designed specifically for
+termsets - not a wise investment when termsets were seen as a rather uncommon
+construct in the language.  NUhU may this be seen as parallelling the fronting
+consonants on the various connectives to keep them unambiguous, though
+taking an extra syllable, and often a pause: gi'V vs. nu'u.V vs. jV.
+though NUhU can also be used with JOIks as the connective.
+
+Given that we are trying in one fell swoop to allow afterthought termsets
+AND to allow termsets with no connective (to solve the ki'i'i problem and
+to allow added places to be expressed on BAI tags by an as yet undefined
+convention), we have a pretty limnited flexibility in how we play with the
+grammar.
+
+lojbab
 
 
