@@ -1,0 +1,138 @@
+# mail/lojban-list thread 43d778d06f17-the_lojban_morphology_algorithm_-_comments_and_ | root m0jxe8x-0000txc@snark.thyrsus.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1991-07-09T09:14:00Z | lojbab | m0jxe8x-0000txc@snark.thyrsus.com | mail/lojban-list/cur/679050840.43d778d06f177a18.jbomohi:2,S
+I started on this about a year ago, and have done minimal work on it.
+Neither John Cowan nor I am quite pleased with the algorithm as defined,
+though it does seem to properly define how to break a phoneme string
+into words.  Of course there seems to be no way to turn this into anything
+like an LR(k) algorithm.
+
+Thus I put this on the floor for our formalists and computer scientists to
+tackle.  Can anyone find a better, clearer, or more elegant way to handle
+Lojban text algorithmically, or even to describe the morphology formally?
+
+----
+lojbab = Bob LeChevalier, President, The Logical Language Group, Inc.
+         2904 Beau Lane, Fairfax VA 22031-1303 USA
+         703-385-0273
+         lojbab@snark.thyrsus.com
+
+
+
+                       Lojban Morphology Algorithm
+                          Trial 2 - 8 July 1991
+
+Assumption - Text string of transcribed phonemes and stress.
+
+1.  Because a pause is always a word break, process chunks of text that
+end in a pause.  Mark word breaks at each pause.
+
+2.  If an apostrophe occurs other than between two vowels, then flag an
+error.
+
+3.  If any word contains an impermissible medial, then flag an error.
+(Optionally, this step can be saved for last, which might allow some
+amount of error correction.  For all consonant clusters, treat a
+permissible initial as joined to the following vowel syllable.  For all
+other clusters, divide syllables between the consonants.  Divide
+syllables at a close-comma.
+
+4. For each piece of pause-bounded text, case on the final letter before
+the pause.  If an error is found, terminate processing of the pause-
+group.  The group must either be within a "zoi" quote, or the text is in
+error.  If it is a quote, the entire group is part of the quote and there
+is no need to attempt further lexing.
+     a. If the pause is immediately preceded by a consonant, a name has
+     been found (this should only occur at the very end of the pause-
+     group).
+          1)  Seek backwards from the final consonant until finding
+          "lai", "la'V", "doi", or start of text.
+          2) If "la'V" is found for any V other than "i", flag a mal-
+          formed name and continue searching backwards from this point
+          per 1), as this may be a recoverable error.
+          3)  If "lai", "la'i", "doi", or start of text are found, mark a
+          word break between them and the name.  Identify the name.  Also
+          place a word break before the marker and label the marker as a
+          cmavo.  Recurse from 4. for any unprocessed text before the
+          marker, treating the inserted word break as a pause.
+     b. If the pause is immediately preceded by "y":
+          1)  If the "y" is preceded by a vowel, mark an error.
+          2)  If the "y" is alone, mark a ".y." cmavo.
+          3)  If the "y" is preceded by an apostrophe, then there is a
+          vowel before the apostrophe.  Place a word break before the
+          vowel.  Mark the "V'y" as a lerfu.
+          4)  If the "y" is preceded by a consonant, place a word break
+          before the consonant, and mark the "Cy" as a lerfu.
+          5) Recurse from 4. for any remaining unprocessed text before
+          inserted word breaks, treating the inserted word break as a
+          pause.
+     c. If the pause is preceded by a vowel other than "y":
+          1)  If no stressed syllable exists in the text, then:
+               a)  If any consonant pair is found within the text, mark
+               an error.
+               b)  Mark a word break before each consonant.
+                    1]  For each word broken off, if the ending vowel is
+                    a "y", then mark an error if the phoneme before the
+                    "y" is a vowel.  Otherwise mark the word as a lerfu.
+                    2]  If the ending vowel is other than a "y", and is
+                    preceded by another vowel, ensure a valid diphthong
+                    is formed; mark an error if not.  Mark a valid word
+                    as a cmavo.
+          2)  If at least one stressed syllable is found, take the first
+          such syllable as a starting point.
+               a)  Examine the vowel of the following syllable, treating
+               a diphthong as a single vowel.
+               b)  If there is no following syllable, then word break
+               before the stressed syllable and following syllables.
+                    1]  If the stressed syllable begins with a consonant
+                    cluster, then mark an error.
+                    2]  Otherwise, the text is a string of cmavo.
+                    Analyze and word divide per 4.c.1)b).
+               c)  If the following syllable contains the FIRST half of a
+               "V'V", either the text to this point is a string of cmavo
+               or the stress is a secondary stress.  Determine which by
+               searching for a consonant cluster or "CyC" string in the
+               text preceding the "V'V".
+                    1]  If neither is found, the text up to and including
+                    the stressed syllable is a string of cmavo.  Mark a
+                    word break after the vowel of the stressed syllable
+                    and analyze the preceding text per 4.c.1)b).
+                    2]  If a consonant pair is found, the stress is a
+                    secondary stress.  Change the text to unstressed, and
+                    repeat from 4.c.2) for the next stressed syllable if
+                    there is one.  If there is none, mark an error.
+               d)  If the following syllable vowel is not a "y", word
+               break after that vowel.
+               e)  If the following syllable contains a "y", then check
+               the following syllable to see if it is the FIRST half of a
+               "V'V".  If so, then process per b) for a cmavo string or
+               secondary stress.  If not, then word break after that
+               following syllable.
+               f)  For a candidate word containing a stressed syllable
+               and following syllables:
+                    1]  If it is less than 5 characters long, then:
+                         a]  If there is a consonant cluster, than mark
+                         an error.
+                         b]  If there is no consonant cluster, then break
+                         up per 4.c.1)b).
+                    2]  Ignoring apostrophes in the count, if there is no
+                    consonant cluster of "CyC" in the first 5 characters,
+                    then word break before the first non-initial
+                    consonant.  The preceding will be either a lerfu (if
+                    the vowel is a "y") or a cmavo (otherwise).  Recurse
+                    on the remaining text starting at 5.c.2)f).
+                    3]  If the word is 5 letters long and of the form
+                    CCVCV, with a permissible initial for the consonant
+                    pair, or of the form CVCCV, it is a gismu.
+                    Otherwise, mark a 5-letter word as an error.
+                    4]  If a greater than 5 letter word is found, perform
+                    a "Tosmabru" test to see if an initial cmavo form
+                    word can fall off.  If so, mark the falling off word
+                    as a cmavo and recurse on the remaining text staring
+                    at 5.c.2)f).
+                    5]  Attempt to break up the word into rafsi by the
+                    lujvo analysis algorithm.  If it breaks up, it is a
+                    lujvo.  Otherwise it is a le'avla.
+
+
+
