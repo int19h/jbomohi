@@ -343,3 +343,10 @@ x1 cu simsa x2 fi'o tarmi x3 x4
 
 -Robin
 
+
+## 2004-11-26T16:57:01Z — arj (comment 179, on definition 15353)
+
+Definition from CLL
+
+This definition is copied verbatim from CLL page 212.
+
