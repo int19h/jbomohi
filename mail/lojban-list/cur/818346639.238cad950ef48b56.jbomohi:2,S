@@ -1,0 +1,45 @@
+Reply-To: Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Date: Thu Dec 7 14:30:39 1995
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Logical Language Group <lojbab@ACCESS.DIGEX.NET>
+Subject:      LR(k)
+X-To:         lojban@cuvmb.cc.columbia.edu
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+Message-ID: <R32wUhWskxH.A.yJG.Cv0kLB@chain.digitalkingdom.org>
+Content-Length: 1507
+
+>From: Paulo Barreto <BARRETO%VELAHF@ECCSA.TR.UNISYS.COM>
+>Subject:      LR(k) Lojban Grammar
+>
+>lojbab:
+>>But  even LR(4) would not eliminate a couple of the lexer/preparser
+>>constructs, since some (like numbers) are not LR(k) for any k, though
+>>it would have allowed the grammar to be significantly simpler.
+>
+>Do you have a proof of this?  In which way do numbers destroy the LR(k)
+>property?
+
+As Cowan has posted on the preparser algorithm, I can answer this.
+
+The Lojban grammar not only uses the Preparser, but also uses YACC error
+recovery as an integral part of its design, since that error recovery
+determines the insertion of elidable terminators.  This can cause
+violations of strict LR(1) that YACC resolves without ambiguity.
+
+The grammar allows an indefinite (and theoretically infinite) string of
+digits in numbers.
+
+I think the argument goes like this.  There are constructs starting with
+numbers that cannot be resolved until you know the token following the
+last digit of the number (e.g. number+ROI vs. number+MOI), and hence
+resolving such a grammatical construct, starting from the beginning of
+the number, takes an infinite look ahead.
+
+Tenses are also potentially infinite in length, and also have a very
+complex subgrammar.  Both tenses and numbers are resolved in the
+preparser to prevent them impacting on the YACC grammar.  But it is also
+safe to say that ALL lexer constructs defined in the grammar, relate to
+a specifically non-LR(1) grammar feature in the language.
+
+lojbab
+
