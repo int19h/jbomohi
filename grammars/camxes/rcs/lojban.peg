@@ -22,7 +22,7 @@
 
 ; --- GRAMMAR ---
 
-text <- si-clause? NAI* (CMENE+ free* / (indicators / free+ / indicators free+))? joik-jek? text-1 (FAhO .*)?
+text <- si-clause NAI* (CMENE+ free* / (indicators / free+ / indicators free+))? joik-jek? text-1 (FAhO .*)?
 
 text-1 <- ((I (jek / joik)? (stag? BO)? free*)+ / NIhO+ free*)? paragraphs?
 
@@ -82,8 +82,16 @@ sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri (KU free*)?
 
 sumti-6 <- (LAhE free* / NAhE BO free*) relative-clauses? sumti (LUhU free*)? / KOhA free* / lerfu-string (BOI free*)? / LA free* relative-clauses? CMENE+ free* / (LA / LE) free* sumti-tail (KU free*)? / LI free* mex (LOhO free*)? / ZO any-word free* / LU text (LIhU free*)? / LOhU lohu-tail free*
 
-lohu-tail <- lohu-tail-si-clause / LEhU / any-word-no-SI-handling lohu-tail
-lohu-tail-si-clause <- LEhU si-clause SI
+lohu-tail <- lehu-si-clause lohu-tail / LEhU / any-word-no-SI-handling lohu-tail
+
+lehu-si-clause <- LEhU SI / any-word-no-SI-handling SI / LEhU lehu-si-clause SI / any-word-no-SI-handling lehu-si-clause SI 
+
+;; ; First clause deals with a si after the le'u eating it.  The *entire* lo'u...le'u getting eating is handled at si-clause.
+;; lohu-tail <- lohu-si-clause SI / LEhU / any-word-no-SI-handling lohu-tail-no-SI
+
+;; lohu-tail-no-SI <- LEhU / any-word-no-SI-handling lohu-tail-no-SI
+
+;; lohu-si-clause <- !SI !LEhU-no-SI-handling any-word-no-SI-handling SI / !SI !LEhU-no-SI-handling any-word-no-SI-handling lohu-si-clause SI / LEhU-no-SI-handling lohu-si-clause SI lohu-tail-no-SI
 
 ; / ZOI any-word anything any-word free*
 
@@ -234,16 +242,25 @@ lojban-letter <- consonant / vowel / otherLetter
 cmene-letter <- lojban-letter / [BCDFGJKLMNPRSTVXZ] / [AEIOU] / [hY]
 
 ; Handling of spaces
-spacing <- '.' spaces* si-clause? (UI NAI?)* / spaces+ si-clause? (UI NAI?)*
+spacing <- '.' spaces* si-clause (UI NAI?)* / spaces+ si-clause (UI NAI?)*
 spacing-no-SI-handling <- '.' spaces* (UI NAI?)* / spaces+ (UI NAI?)*
 spaces <- ' ' / '\n' / '\t' / '\r'
 
-; Handling of SI
-si-clause <- !SI !ZO any-word-no-SI-handling SI / !SI !ZO any-word-no-SI-handling !SI si-clause SI
+; Handling of SI and interactions with zo and lo'u...le'u
+
+;; si-clause <- (!SI !ZO any-word-no-SI-handling SI / !SI any-word-no-SI-handling si-clause SI)*
+
+;; Just let the entire LOhU clause get eaten normally!  No problem!
+;;   Can't; that breaks "lo'u si mi le'u" because the 'si' inside is interpreted.
+si-clause <- (LOhU lohu-tail-si-clause SI / !LOhU !SI !ZO any-word-no-SI-handling SI / !LOhU !SI any-word-no-SI-handling si-clause SI)*
+
+lohu-tail-si-clause <- LEhU-no-SI-handling si-clause SI / !SI any-word-no-SI-handling lohu-tail-si-clause SI
+
+
 
 ; For handling things of higher priority than SI (i.e. lo'u...le'u, zo)
-SI-no-SI-handling <- "si" post-cmavo-no-SI-handling
-post-cmavo-no-SI-handling <- si-spacing / &CMAVO-no-SI-handling / SI-no-SI-handling
+;SI-no-SI-handling <- "si" post-cmavo-no-SI-handling
+post-cmavo-no-SI-handling <- si-spacing / &CMAVO-no-SI-handling / SI
 si-spacing <- '.' si-spaces* / si-spaces+
 si-spaces <- ' ' / '\n' / '\t' / '\r'
 
@@ -417,6 +434,7 @@ LAhE <- "tu'a" post-cmavo / "lu'a" post-cmavo / "lu'o" post-cmavo / "la'e" post-
 LE <- "lei" post-cmavo / "loi" post-cmavo / "le'i" post-cmavo / "lo'i" post-cmavo / "le'e" post-cmavo / "lo'e" post-cmavo / "lo" post-cmavo / "le" post-cmavo
 ;         possibly ungrammatical text right quote 
 LEhU <- "le'u" post-cmavo
+LEhU-no-SI-handling <- "le'u" post-cmavo-no-SI-handling
 ;         convert number to sumti 
 LI <- "me'o" post-cmavo / "li" post-cmavo
 ;         grammatical text right quote 
@@ -492,7 +510,7 @@ SEI <- "sei" post-cmavo / "ti'o" post-cmavo
 ;         metalinguistic bridi end marker 
 SEhU <- "se'u" post-cmavo
 ;         metalinguistic single word eraser 
-SI <- "si" post-cmavo
+SI <- "si" post-cmavo-no-SI-handling
 ;         reciprocal sumti marker 
 SOI <- "soi" post-cmavo
 ;         metalinguistic eraser of the entire text 
