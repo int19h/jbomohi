@@ -4389,3 +4389,80 @@ Of course this scheme depends on being able to combine multiple PEG-generated pa
 Or is there already a consensus that the requirement is for a single grand grammar covering every relevant aspect of the language?
 
 Clark Nelson
+
+## 2004-12-22T02:56:18Z — rlpowell (@rlpowell) (post 3226)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041222004732.GU20429@chain.digitalkingdom.org
+In-Reply-To: klark-3104-93968c7fa1@www.lojban.org
+
+On Tue, Dec 21, 2004 at 04:27:01PM -0800, wikidiscuss@lojban.org
+wrote:
+> Jorge, this is just marvelous work -- I'm in awe. (I'm also
+> envious of the amount of free time you appear to have. :-)
+> However, I have a concern about the overall approach you're taking
+> -- the high-level design, as it were.
+
+Actually, the high-level design is mine, not his.  See:
+
+http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/
+
+> The grammar in its current state does four separable things:
+
+Just because they *can* be seperated, doesn't mean they should be.
+
+> 1. It partitions the input stream into words.
+>
+> 2. It validates the words, rejecting invalid vowel and consonant patterns.
+>
+> 3. It determines the selma'o of a cmavo.
+>
+> 4. It categorizes brivla into gismu, lujvo and fu'ivla.
+
+In fact, these are not seperate actions, so far as I know, in either
+jbofihe or the current official parser.
+
+I don't consider step 2 to be distinct from step 4, by the way.
+
+> As a result, the grammar is fearsomely complex in spots. (OK, the
+> part that recognizes selma'o isn't complex; it's just huge.) 
+
+Yup.  You should see the version in the main grammar.
+
+> And it could be argued that categorizing brivla really belongs to
+> semantic analysis, not parsing.
+
+Umm, what?
+
+> For the sake of modularity and reducing point-complexity, I think
+> it would be worth considering splitting the job into its
+> components, and writing separate grammars:
+
+The problem with this is that we could argue for hours over where
+the seperations lie.  I was vehemently opposed to seperating out the
+morphology from the rest of the grammar in the first place, in fact.
+
+> Of course this scheme depends on being able to combine multiple
+> PEG-generated parsers into a single program. 
+
+Already done.  What you're describing might result in a noticeable
+slowdown in processing, but I can't be sure.
+
+> But if the parser generator takes parameters which can be used to
+> name the input and parser functions, that shouldn't be hard.
+
+It's a pain in the ass, but it's not hard.
+
+> Or is there already a consensus that the requirement is for a
+> single grand grammar covering every relevant aspect of the
+> language?
+
+As I said, the grammar is already in two parts: morphology and
+syntax.  The only reason I agreed to that, however, is that it was
+pointed out that other, completely different, morphologies might
+want to be used, and that that should be allowed for.
+
+-Robin
+
+
+
