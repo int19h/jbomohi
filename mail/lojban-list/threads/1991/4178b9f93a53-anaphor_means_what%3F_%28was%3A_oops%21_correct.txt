@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4178b9f93a53-anaphor_means_what%3F_%28was%3A_oops%21_correct | root "swan.cl.ca.187:25.03.91.09.23.53"@cl.cam.ac.uk | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4178b9f93a53-anaphor_means_what%3F_%28was%3A_oops%21_correct | root "swan.cl.ca.187:25.03.91.09.23.53"@cl.cam.ac.uk | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 1991-04-25T09:23:38Z | David Elworthy <cbmvax!uunet!computer-lab.cambridge.ac.uk!David.Elworthy> | "swan.cl.ca.187:25.03.91.09.23.53"@cl.cam.ac.uk | mail/lojban-list/cur/672571418.4178b9f93a5345b3.jbomohi:2,S
 
@@ -140,6 +140,136 @@ first.  That is, "every farmer with a donkey beats IT" is semantically
 identical to "every farmer with a donkey beats THE DONKEY" as well as to
 the selected-by-me deep structure (all F|farmer exists D (D is donkey and
 F owns D implies F beats D)).  
+
+		-- jimc
+
+
+
+=== 3 | 1991-04-29T10:13:42Z | David Elworthy <cbmvax!uunet!computer-lab.cambridge.ac.uk!David.Elworthy> | "swan.cl.ca.227:29.03.91.10.13.42"@cl.cam.ac.uk | mail/lojban-list/cur/672920022.60613d4d39798f14.jbomohi:2,S
+
+>> From: jimc@edu.ucla.math
+>> Date: Fri, 26 Apr 91 09:46:21 +0100
+
+> Date:  Thu, 25 Apr 91 10:23:38 +0100
+> To:  lojban-list@snark.thyrsus.com
+> From:  David Elworthy <David.Elworthy@computer-lab.cambridge.ac.uk>
+> Subject:  Re: anaphor means what? (was: oops! correction)
+   
+>> ...interpreting anaphors by copying the words of the antecedent. This 
+>> is an approach which was suggested by linguists some time ago, and which
+>> has been firmly rejected. What is wrong with it? 
+
+> You need a commitment (which English doesn't give) that the copied words 
+> have the same referent in their new home.  In other words:
+
+>	Every farmer who owns (a donkey) beats (a donkey)  [must transform to]
+>	All F, ((F is a farmer) and (exists D) and (D is a donkey) and
+>		(F owns D)) implies (F beats D)		[the same D]
+
+Interestingly, this is exactly the approach taken by Groenendijk and Stokhof,
+in their Dynamic Predicate Logic (DPL). Here, a variable introduced by an
+existential quantifier remains bound even outside the normal scope of the
+quantifier. The binding is terminated by negation and universal
+quantification, to prevent things like:
+
+ Every farmer who owns a donkey beats it. ?It neighs.
+
+which is found to be unacceptable by most people, except when you imagine that
+the second sentence is somehow still within the scope of the "every". (The
+unacceptability isn't too clear here, I know: please take it for granted that
+the general evidence is that you can't have a singular anaphor in later
+sentences.)
+
+A problem possibly arises with this:
+ Every farmer who owns a donkey beats it. They neigh.
+
+What seems to be happening here is that we have "summed" over all the "D"s. It
+may be clearer in the example with "Most farmers" in place of "Every farmer".
+[1]. You can solve this in the DPL approach, but it's a bit messy: the
+"summation" process gets defined as an operator on the interpretation of the
+formula, rather than an operator in the formula. An alternative is to replace
+D by a function, giving you:
+
+      All F, Exists D, ((F is a farmer) and (D(F) is defined)
+                        and (D(F) is a donkey) and (F owns D(F))) implies
+                        (F beats D(F))
+
+The disadvantage here is that you need to go to a higher-oreder logic,
+involving quantification over sets (or functions) with all the problems that
+introduces.
+
+-----
+
+>> The copying problem can also be seen in another classic sentence, 
+>> known as the Bach-Peters paradox:
+>> 
+>> (6) The boy who deserves it will get the prize he wants.
+
+> The infinite regression is a definite problem which I have already had to
+> solve by ugly hacks in [my] transformation program.  And even if referents 
+> are copied, not words, it looks to me as if you still have an infinite 
+> loop.
+
+Try widening the quantifiers:
+
+  (The b) (The p) [boy(b) & deserve(b,p) & will-get(b,p) and want(b,p)]
+
+where "The b" means "there is a definite b such that..."
+
+-----
+
+>> The conclusion from this is that the interpretation of anaphors is *not* 
+>> the business of the parser, or of the syntactic component in any sense. 
+
+[...]
+>  But that's because English is a pile of junk,
+> not an intrinsic feature of anaphora.
+
+Well, actually, I find English beautiful and difficult, which I why I do my
+research on it.
+
+> I would ascribe anaphor resolution to a "transformation" phase that
+> follows syntax analysis and precedes semantics.  My motivation is to
+> feed into the semantic analyser a uniform set of "deep structures".
+> Obviously :-), anaphora are irrelevant and have to be transformed away
+> first.  That is, "every farmer with a donkey beats IT" is semantically
+> identical to "every farmer with a donkey beats THE DONKEY" as well as to
+> the selected-by-me deep structure (all F|farmer exists D (D is donkey and
+> F owns D implies F beats D)).  
+
+OK, but I would call your "transformation" phase part of the semantics.  Note
+that the semantic analyser does have to feed information back up to it, so it
+can resolve inter-sentential anaphors (assuming you feed in one sentence at a
+time, rather than process the whole discourse).
+
+I don't think that all problems of anaphora can be solved purely in semantics.
+They certainly can't be at present, although formal theories of anaphora are
+getting better all the time. But there will always be cases where some fairly
+vague inference schemas are needed, as in
+  John is a guitarist because he thinks it is a beautiful instrument.
+
+You might also like to know that in at least one large-scale NL processing
+system, namely SRI's Core Language Engine, the anaphor resolution is done
+after the rest of the semantics: a so-called "quasi logical form" is
+constructed, with place markers for the anaphors.
+
+
+-----
+
+I think my earlier reply was probably rather negative. I'm not aiming to
+attack Lojban or any of the people who are working on it - it's just that I
+have spent some time studying this field, and I see some danger that Lojban
+will take an approach which is known to have problems with it.
+
+
+
+[1] This is off the point, so I've put it in a footnote. Dou you know how
+Lojban handles the semantics of "most"? If it is done by a quantifier similar
+to "exists" or "all", be warned that it can be shown this will not work! I'll
+forward details if you're interested.
+
+
+
 
 		-- jimc
 
