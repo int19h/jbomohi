@@ -1,7 +1,7 @@
 
 This script is in the public domain.
 
-Beware, to prevent transforming code pieces into hyperlinks some additional "[" charactere were inserted in the source code of this page. Do not go to "Edit" and cut-and-paste from there blindly.
+Beware, to prevent transforming code pieces into hyperlinks some additional "((" charactere were inserted in the source code of this page. Do not go to "Edit" and cut-and-paste from there blindly.
 
 ----
 
@@ -25,7 +25,7 @@ Beware, to prevent transforming code pieces into hyperlinks some additional "[" 
  use Getopt::Std;
  getopts("gcClLaRrp");
  if ($#ARGV < 0) {
- 	print "pilno: viska (Was Footnote: -aAg) (Was Footnote: -lrc | -C | -L | -R) valsi\n";
+ 	print "pilno: viska [[-aAg)) [[-lrc | -C | -L | -R] valsi\n";
  	exit 1;
  }
  if ($opt_a) {
@@ -38,7 +38,7 @@ Beware, to prevent transforming code pieces into hyperlinks some additional "[" 
  $opt_c = 1;
 
  while ($#ARGV >= 0) {
- my $valsi="$ARGV(Was Footnote: 0)";
+ my $valsi="$ARGV[[0]";
  shift;
 
  $valsi =~ s/h/\'/g if !$opt_g;
@@ -51,7 +51,7 @@ Beware, to prevent transforming code pieces into hyperlinks some additional "[" 
  	$fulldef = substr($v, $fullstart);
  	$rafsi = substr($v, $rafstart, $raflen);
  	$smalldef = substr($v, $smallstart, $fullstart - $smallstart);
- 	$v =~ /((Was Footnote: a-z\')+)/;
+ 	$v =~ /([[a-z\']+)/;
  	$val = $1;
 
  	print "\33[1m" . $val . "\33[0m";
