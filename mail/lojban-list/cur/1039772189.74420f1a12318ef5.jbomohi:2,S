@@ -1,0 +1,85 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 13 Dec 2002 01:39:26 -0800 (PST)
+Received: from n6.grp.scd.yahoo.com ([66.218.66.90])
+	by digitalkingdom.org with smtp (Exim 4.05)
+	id 18MmHu-0001lC-01
+	for lojban-in@lojban.org; Fri, 13 Dec 2002 01:39:18 -0800
+X-eGroups-Return: sentto-44114-18018-1039772327-lojban-in=lojban.org@returns.groups.yahoo.com
+Received: from [66.218.67.192] by n6.grp.scd.yahoo.com with NNFMP; 13 Dec 2002 09:38:47 -0000
+X-Sender: nessus@free.fr
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_3_0); 13 Dec 2002 09:38:47 -0000
+Received: (qmail 51016 invoked from network); 13 Dec 2002 09:38:46 -0000
+Received: from unknown (66.218.66.218)
+  by m10.grp.scd.yahoo.com with QMQP; 13 Dec 2002 09:38:46 -0000
+Received: from unknown (HELO mel-rto6.wanadoo.fr) (193.252.19.25)
+  by mta3.grp.scd.yahoo.com with SMTP; 13 Dec 2002 09:38:46 -0000
+Received: from mel-rta8.wanadoo.fr (193.252.19.79) by mel-rto6.wanadoo.fr (6.7.015)
+        id 3DF633E0001D62AB for lojban@yahoogroups.com; Fri, 13 Dec 2002 10:38:46 +0100
+Received: from tanj (80.9.201.146) by mel-rta8.wanadoo.fr (6.7.015)
+        id 3DF62F8400183C05 for lojban@yahoogroups.com; Fri, 13 Dec 2002 10:38:46 +0100
+Message-ID: <001f01c2a28b$6facbaa0$92c90950@tanj>
+To: <lojban@yahoogroups.com>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1106
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+From: "Lionel Vidal" <nessus@free.fr>
+X-Yahoo-Profile: cmacinf
+MIME-Version: 1.0
+Mailing-List: list lojban@yahoogroups.com; contact lojban-owner@yahoogroups.com
+Delivered-To: mailing list lojban@yahoogroups.com
+Precedence: bulk
+Date: Fri, 13 Dec 2002 10:36:29 +0100
+Subject: [lojban] parsing fa'o cmavo
+Content-Type: text/plain; charset=US-ASCII
+X-archive-position: 3529
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: nessus@free.fr
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1708
+
+This is kind of nitpicking really, but a formal specification of the
+breaking words algorithm does need to clarify all the cases.
+
+The problem is that the grammar does not require a pause after {fa'o},
+(if it does, this whole message is meaningless, and please ignore it)
+and so it can be difficult to parse it, because you may find you lost in
+parsing what follows {fa'o} (which may not even be lojban text) just
+to identify it.
+The following example are not really problems,
+but can make the life of the parser difficult :-)
+- {fa'ojustatest}: is that a name? I would say yes, always
+   parsing the longuest possible unit.
+- {fa'onow}: end of text follow by some english words? ok, but most
+   parsers will simply bark at the unknow 'w' letter and incorrectly spot
+   an error. You may have fun trying other things like {fa'omzmz} or
+  {fa'o<Kanji>}.
+
+And now for something more difficult: a legal brivla including fa'o and
+followed by something illegal, like {fa'oFTEmicoy}:
+the current backward algorithm rejects it, because of the final {oy} and
+a forward algorithmn accepts {fa'oFTEmi}as fu'ivla and barks at {coy}.
+But you may just say this is legal: {fa'o} and anything not lojban.
+
+To summarize, the problem is that you may end considering that any
+parsing error *after* {fa'o} makes it the true cmavo which would
+invalidate its very purpose... that is to stop parsing!
+
+It may well be the case I missed something obvious, or that 
+I misunderstood {fa'o} itself, but otherwise I think
+this point should be clarify (or corrected) in the grammar.
+
+-- Lionel
+
+
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+

@@ -1,0 +1,45 @@
+# mail/lojban-list thread 74420f1a1231-parsing_fa'o_cmavo | root 001f01c2a28b$6facbaa0$92c90950@tanj | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2002-12-13T09:36:29Z | Lionel Vidal <nessus@free.fr> | 001f01c2a28b$6facbaa0$92c90950@tanj | mail/lojban-list/cur/1039772189.74420f1a12318ef5.jbomohi:2,S
+This is kind of nitpicking really, but a formal specification of the
+breaking words algorithm does need to clarify all the cases.
+
+The problem is that the grammar does not require a pause after {fa'o},
+(if it does, this whole message is meaningless, and please ignore it)
+and so it can be difficult to parse it, because you may find you lost in
+parsing what follows {fa'o} (which may not even be lojban text) just
+to identify it.
+The following example are not really problems,
+but can make the life of the parser difficult :-)
+- {fa'ojustatest}: is that a name? I would say yes, always
+   parsing the longuest possible unit.
+- {fa'onow}: end of text follow by some english words? ok, but most
+   parsers will simply bark at the unknow 'w' letter and incorrectly spot
+   an error. You may have fun trying other things like {fa'omzmz} or
+  {fa'o<Kanji>}.
+
+And now for something more difficult: a legal brivla including fa'o and
+followed by something illegal, like {fa'oFTEmicoy}:
+the current backward algorithm rejects it, because of the final {oy} and
+a forward algorithmn accepts {fa'oFTEmi}as fu'ivla and barks at {coy}.
+But you may just say this is legal: {fa'o} and anything not lojban.
+
+To summarize, the problem is that you may end considering that any
+parsing error *after* {fa'o} makes it the true cmavo which would
+invalidate its very purpose... that is to stop parsing!
+
+It may well be the case I missed something obvious, or that 
+I misunderstood {fa'o} itself, but otherwise I think
+this point should be clarify (or corrected) in the grammar.
+
+-- Lionel
+
+
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
+
