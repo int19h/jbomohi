@@ -1,4 +1,4 @@
-# mail/lojban-list thread a82703019154-lalr1_question | root lpbbjkmninkhacndiigmmealekaa.a.rosta@ntlworld.com | 21 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a82703019154-lalr1_question | root lpbbjkmninkhacndiigmmealekaa.a.rosta@ntlworld.com | 22 messages | rendered by jbomohi mail-v1
 
 === 1 | 2001-08-27T15:57:24Z | And Rosta <a.rosta@ntlworld.com> | lpbbjkmninkhacndiigmmealekaa.a.rosta@ntlworld.com | mail/lojban-list/cur/998927844.a82703019154d758.jbomohi:2,S
 I don't think I understand what the difference between 0-tokens 
@@ -738,7 +738,239 @@ easily everything important in the field up to the publication of the book.
 
 
 
-=== 20 | 2001-08-28T02:07:26Z | And Rosta <a.rosta@dtn.ntl.com> | lpbbjkmninkhacndiigmaebjekaa.a.rosta@dtn.ntl.com | mail/lojban-list/cur/998964446.52101a8835a0d138.jbomohi:2,S
+=== 20 | 2001-09-01T00:49:15Z | "Bob LeChevalier (lojbab)" <lojbab@lojban.org> | 4.3.2.7.2.20010831185654.00bd77a0@pop.cais.com | mail/lojban-list/cur/999305355.3a5431596b8b1f85.jbomohi:2,S
+At 01:53 PM 8/27/01 -0700, Robin Lee Powell wrote:
+>On Mon, Aug 27, 2001 at 04:38:44PM -0400, Rob Speer wrote:
+> > On Mon, Aug 27, 2001 at 11:17:55AM -0600, Jay Kominek wrote:
+> > > Hrm. A parser with back tracking or more look ahead (or basically any
+> > > parser which can parse a larger class of languages) could take the same
+> > > YACC grammar and be able to parse "le broda joi le brode" correctly... I
+> > > think...
+> >
+> > So, what is the advantage to having Lojban interpreted by a parser 
+> which can't
+> > backtrack or look ahead more than one word?
+>
+>All other parsers turn out to be _extremely_ inefficient, IIRC from my
+>course on such things.
+>
+>So, basically, it's to make computers happy.
+
+Some history which I think will answer some of the questions on this issue.
+
+Originally, JCB thought to prove Loglan's unambiguity using the theories of 
+a guy named Yngve. I'm not entirely sure what those theories are or how 
+they were related to the problem. In 1977 or 1978, IIRC, a Loglanist, I 
+believe it was Doug Landauer, proposed using YACC as a more formal method 
+of proving the language unambiguous, and made a first cut at a machine 
+grammar. It was quickly found that Loglan as it was then was nowhere near 
+unambiguous - I think they were only able to come up with a working grammar 
+for around 30% of the language.
+
+Two or three Loglanists worked with JCB over the next few years to devise a 
+machine grammar that would work. At the time, the machine grammar was 
+considered something distinct from the human grammar of the language, and 
+all that was needed was that it be able to parse a corpus of specially 
+designed test sentences in the same way that the human grammar would. Even 
+this proved difficult, and was not achieved until 1982. The major 
+milestones were Jeff Prothero's idea to use YACC's error recovery system to 
+handle elidable terminators (and Jeff was the first one to get a moderately 
+complete machine grammar as a result, though it still had problems), and a 
+6 months period during which Scott Layson lived with JCB to finish the last 
+remaining problems. Part of the problem was getting access to suitable 
+computers - this was the era of CP/M in home computers, and YACC ran on 
+mainframes that JCB had no access to. So these various other people used 
+university connections to get time on machines. Somewhere in here, Bob 
+McIvor worked to convert YACC to run on a home computer - since he reads 
+this forum, he may be able to fill on his role in all this.
+
+There were two major problems with the Layson/JCB machine grammar of 
+1982. First of all, it was known that the test corpus was incomplete - it 
+covered those things that JCB thought were important, but did not cover 
+everything that had been used with the language. Thus, parsing random 
+Loglan tests often failed because of things that had not been in the test 
+corpus. So JCB sought to slowly expand the corpus along with the machine 
+grammar to describe that corpus.
+
+The second problem was that the machine grammar did not really work. Large 
+chunks of the language were hidden in C code routines as the 
+"Preparser". Unlike current Lojban, there was NO formalization of the 
+rules for the Preparser. Mostly it included identifying words, and then 
+glomming together some known sequences as unparseable units that would be 
+arbitrarily declared grammatical and flagged as such by invisible tokens 
+called "machine lexemes". It also included treating collections of cmavo 
+written as a single word without spaces as if it were a single 
+word/grammatical unit. Thus the TLI Loglan equivalent of "lenu" was 
+grammatically distinct from "le nu", and ANY string of cmavo starting with 
+a member of PA-equivalent was considered a number, while any string of 
+cmavo starting with a member of PU-equivalent (which then included all of 
+the tense and modal words) was considered a "tense".
+
+It took very little for people to find grammatical strings that the parser 
+approved which were nonsense or parsed incorrectly, but which were not part 
+of the test corpus. There thus came a period of debate as to whether the 
+"human grammar" or the "machine grammar" defined the language.
+
+[2 paragraphs of context with no parser info follow, so feel free to skip 
+them.]
+
+Right about then is when the community splintered. Jim Carter proposed 
+some extensions to the language which he had found useful in doing the 
+first extensive set of translations using the language. JCB disliked 
+almost all of these, and pc didn't like most of them, dubbing Carter's 
+usage and formalisms as "Nalgol" 'because he got everything in Loglan 
+backwards'. But Jim Carter persisted in advocating for his changes, and 
+Bob Chassell as then-editor of Lognet published his advocacy. This and 
+other things led JCB to feel a loss of control over the language, and he 
+took back essentially dictatorial power over TLI and the language. Almost 
+everyone else left the community in response.
+
+I knew JCB personally in San Diego and was oblivious to most of the 
+politics, so I stayed on, and eventually started working on the dictionary 
+revision. But almost no one was doing anything, and my efforts bogged down 
+too. Finally in 1986, I attempted to get some new people in the DC area 
+involved, and made new efforts to get people going again. This became the 
+Washington Loglan Users Group, which a year later became LLG after JCB and 
+I split.
+
+Before the split I contacted several old Loglanists, and got Scott Layson 
+to send me the YACC grammar, parser and corpus, which he had converted for 
+use on an MS-DOS PC. This was primarily so that I would have a reference 
+standard in teaching the new people I had recruited the language, because 
+to put it simply, I knew little more than they did. The split occurred 
+when JCB accused Nora and me of copyright violation in distributing 
+LogFlash with wordlists via Shareware on a BBS, and he seemed to think that 
+I intended to freely distribute Layson's parser as well (which I wasn't, 
+since we hadn't written it ourselves). Jeff Prothero then stepped in with 
+his own effort, a backtracking parser based on his own version of the YACC 
+grammar, which he claimed was in the public domain anyway since his 
+original work on it had been done as a student on U of Washington 
+computers, and he had never signed anything over to TLI. Prothero engaged 
+in several stunts, including compressing the YACC grammar into an 
+unreadable solid block of C code so that no one could practically compare 
+his version with the TLI version of the grammar. This led to lawsuit 
+threats and further heightened the sense that we needed a version of Loglan 
+derived independently of JCB's copyright-claims. That version is what 
+became Lojban.
+
+In June of 1987, with me having essentially no knowledge of YACC or machine 
+parsing, Jeff Taylor and I started working on a new from-scratch Loglan 
+grammar and parser. Jeff had done an SLR(1) parser for Loglan for his 
+Master's work in computer science, and had the knowhow that I did 
+not. Over the next several months, we built up a new grammar, buying a 
+copy of Abraxas Software's PCYACC because all of the freeware versions of 
+YACC were unable to hold a grammar as large as Loglan's (Indeed PCYACC was 
+also unable to do so, and they eventually modified their program at our 
+behest to make the lookahead table large enough to hold the then-language.)
+
+Thus I can answer the question that we used YACC, because it was what JCB 
+had established a YACC-based "machine grammar" as the standard for the 
+language, and YACC was the tool that was readily at hand for us to get our 
+alternate Loglan standard in place quickly, and the volunteers I had at the 
+time knew YACC parsing well.
+
+Nora, Jeff and I disliked the "hidden grammar" of the Preparser, as well as 
+the violation of audiovisual isomorphism that came from parsing "lenu" 
+differently from "le nu", so the essential difference between what became 
+the Lojban grammar and the TLI grammar was that our Preparser was a lexer 
+only that identified individual words by their token-type or "lexeme" 
+(which term became "selma'o" even though the word types of cmene and brivla 
+existed). The human Loglan grammar was ALREADY known NOT to be LR(k) for 
+any known value of k, because there were some potentially infinite 
+recursively defined strings that could occur at the point where YACC had to 
+use error logic to insert a terminator. We thus kept the "machine 
+lexemes" that JCB had used to get by the infinite strings problem - these 
+are the machine grammar rules numbered in the 800s. (In other words, we 
+knew about the problems that Curnow encountered).
+
+However, we insisted that the full grammar WITH inserted machine lexemes be 
+verified unambiguous with YACC, and thus all of the lexer rules were fully 
+spelled out in the machine grammar. These are the 900-series rules, and 
+when we tested the grammar, all of those rules were tested as 
+well. However since the language with the lexer rules was so big that it 
+blew up other YACC versions, when John Cowan went to develop what became 
+the official parser after Jeff Taylor no longer had time to work on the 
+project (and John was using a different YACC version) he chose to comment 
+out the lexer rules and thus simplify the part of the language that YACC 
+had to parse, in effect resurrecting the Preparser of TLI days, except that 
+its innards were fully documented and the written, uncommented-out machine 
+grammar was declared to be the standard rather than the parser (which might 
+have errors in its hard-coded implementation of the lexer rules). Note 
+that there are a few "grammarless" tokens that were never implemented in 
+uncommented rules, like SI/SA/SU, because they effectively generated 
+null-grammar strings of up to infinite length. These were numbered in the 
+1100s, and described in a textual algorithm to resolve in which order they 
+should be processed. (hopefully this answers And)
+
+At the same time, Prothero had developed a backtracking parser for the same 
+grammar that did not rely on YACC. But since Cowan was finding minor 
+things that needed revision in the YACC grammar as he implemented the 
+parser, keeping the two in sync was more than we could manage. But for a 
+brief time there was indeed an non-YACC parser for Lojban.
+
+After Cowan finished the parser, but before we had baselined the grammar, I 
+tracked down Doug Landauer, the original Loglan YACCer. Among the things 
+we discussed one day, was the idea of recasting the Lojban grammar in LR(2) 
+to LR(4) version, and he was willing to write the YACC equivalent tools to 
+support that effort. The advantage of LR(2) or LR(4) was that each level 
+would eliminate a chunk of the lexer rules, especially the compound logical 
+connectives that used NA and SE. Most of the other lexer rules used only 
+selma'o that never appeared in any non-lexer rules, but NA and SE did 
+(eventually, however, we had the FIhO/no-FIhO dichotomy which also broke 
+this concept).
+
+We did not carry out this project because
+1) Doug never actually did what he offered to do
+2) Recasting the grammar in a new form would take a lot of time from people 
+like lojbab and Cowan who had too little, with only a theoretical benefit; 
+there was no real doubt that the language was unambiguous because we were 
+able to test the lexer rules in PCYACC, and generating a software version 
+of those rules seemed to be fully in hand.
+3) The grammar was essentially solid as it was, and the language was 
+starting to see use, and there was no reason to risk it; I was well-tired 
+of being a language "developer" and wanted a community of users.
+4) The real bottom line was that YACC was universally available, understood 
+by lots of people in the community, and hence we would not be dependent on 
+one or two people who had the right software in the right version as well 
+as more specialized knowhow in order to be able to support the 
+grammar/parser development.
+
+These arguments still remain. The technology apparently exists to do an 
+LR(4) version of the grammar, but we've baselined, and proving equivalence 
+is tougher than writing software. We similar cannot formally prove that 
+the E-BNF is identical to the YACC grammar, which is why the latter takes 
+precedence over the former, if ever a conflict is found).
+
+To answer xod, my understanding is that a different grammar form would 
+ideally have the identical net result, but have a significantly smaller 
+number of rules because we could eliminate some of the kluges needed to get 
+YACC to group things the correct way. So Jay's answer:
+>If you were merely upping the amount of look ahead so that you could leave
+>out terminators in a lot more cases, then it would probably make things
+>easier to remember. (Humans can stick missing terminators back in rather
+>handily, in many cases.)
+>
+>(The last 3 paragraphs were pulled almost entirely out of my ass. Should
+>they happen to be correct, then I'll be impressed. See, however, the note
+>about asking a linguist.)
+
+happens to be exactly correct in describing my thinking. We would not be 
+upping the lookahead except to make the machine grammar match the human 
+grammar better, and thus at most eliminate some kluges. There was never 
+any intent to change the human language, only the way that we described it 
+for the machine so that it could be proven unambiguous.
+
+Hopefully I've dealt with some of the questions usefully.
+--
+lojbab lojbab@lojban.org
+Bob LeChevalier, President, The Logical Language Group, Inc.
+2904 Beau Lane, Fairfax VA 22031-1303 USA 703-385-0273
+Artificial language Loglan/Lojban: http://www.lojban.org
+
+
+
+
+=== 21 | 2001-08-28T02:07:26Z | And Rosta <a.rosta@dtn.ntl.com> | lpbbjkmninkhacndiigmaebjekaa.a.rosta@dtn.ntl.com | mail/lojban-list/cur/998964446.52101a8835a0d138.jbomohi:2,S
 Jay:
 > On Mon, 27 Aug 2001, And Rosta wrote:
 > 
@@ -816,7 +1048,7 @@ Yes. And still am, alas.
 
 
 
-=== 21 | 2001-08-28T03:34:43Z | John Cowan <cowan@ccil.org> | e15bzef-0000o1-00@mercury.ccil.org | mail/lojban-list/cur/998969683.c0b7a640c721e37b.jbomohi:2,S
+=== 22 | 2001-08-28T03:34:43Z | John Cowan <cowan@ccil.org> | e15bzef-0000o1-00@mercury.ccil.org | mail/lojban-list/cur/998969683.c0b7a640c721e37b.jbomohi:2,S
 And Rosta scripsit:
 
 > So "shifting" means "adding to the innermost incomplete phrase" and
