@@ -26,11 +26,11 @@
 ; 1. no joik-jek, text-1
 ; 2. joik-jek, text-1 optional
 ; 3. neither
-text <- (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO dotStar)?) / (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? joik-jek text-1? (FAhO dotStar)?) / (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? (FAhO dotStar)?)
+text <- (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? text-1 (FAhO dot-star)?) / (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? joik-jek text-1? (FAhO dot-star)?) / (spaces-not-Y? su-clause* spaces-not-Y? (Y !BU)? si-clause SI* intro-sa-clause? NAI* ((CMENE !ZEI !BU)+ free* / (indicators free+ / indicators / free+))? (FAhO dot-star)?)
 
 intro-sa-clause <- SA / any-word-SA-handling intro-sa-clause
 
-NORATS dotStar <- .*
+NORATS dot-star <- .*
 
 ; Please note that the "text-1" item in the text-1 production does
 ; *not* match the BNF. This is due to a bug in the BNF.  The change
@@ -91,11 +91,40 @@ sumti-4 <- sumti-5 / gek sumti gik sumti-4
 
 sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri (KU free*)? relative-clauses?
 
-sumti-6 <- zo-clause / LOhU lohu-tail free* / lerfu-string-no-MOI (BOI free*)? / LU text (LIhU free*)? / (LAhE free* / NAhE BO free*) relative-clauses? sumti (LUhU free*)? / KOhA free* / LA free* relative-clauses? CMENE+ free* / (LA / LE) free* sumti-tail (KU free*)? / LI free* mex (LOhO free*)? 
-; / ZOI any-word anything any-word free*
+sumti-6 <- zo-clause / LOhU lohu-tail free* / lerfu-string-no-MOI (BOI free*)? / LU text (LIhU free*)? / (LAhE free* / NAhE BO free*) relative-clauses? sumti (LUhU free*)? / KOhA free* / LA free* relative-clauses? CMENE+ free* / (LA / LE) free* sumti-tail (KU free*)? / LI free* mex (LOhO free*)? / ZOI zoi-tail free*
 
-zo-clause <- ZO zo-si-clause? Y absorb-indicators* free* / ZO zo-si-clause? any-word absorb-indicators* free*
+; ****
+; zo
+; ****
+zo-clause <- ZO zo-si-clause? Y absorb-indicators* free* / ZO zo-si-clause? any-word spacing-no-absorb-opt absorb-indicators* free*
 zo-si-clause <- (Y / any-word-no-SI-handling) SI / (Y / any-word-no-SI-handling) zo-si-clause SI
+
+; ****
+; zoi
+; ****
+zoi-tail <- zoi-si-start? any-word-zoi { startString = new String(anyWordZoiSEP2.toString()); } zoi-si-middle? zoi-first-word zoi-word* zoi-spacing-no-absorb-opt zoi-si-end? any-word-zoi &{ startString.equals(anyWordZoiSEP9) } zoi-spacing-no-absorb-opt
+
+NORATS zoi-first-word <- zoi-spacing-no-absorb-opt anyWordZoiSEP1:any-word-zoi &{ !startString.equals(anyWordZoiSEP1) } / zoi-spacing-no-absorb-opt zoiPrintableWordSEP1:zoi-printable-word &{ !startString.equals(zoiPrintableWordSEP1) }
+
+NORATS zoi-word <- &( zoi-spaces anyWordZoiSEP1:any-word-zoi &{ startString.equals(anyWordZoiSEP1) } ) zoi-spaces / zoi-spaces zoiPrintableWordSEP1:zoi-printable-word &{ !startString.equals(zoiPrintableWordSEP1) }
+
+NORATS zoi-spacing-no-absorb-opt <- !. / spaces?
+
+NORATS zoi-printable-word <- (!space-chars .)+
+
+NORATS zoi-spaces <- space-chars+ / !.
+
+; The SI behaviour we want with ZOI is that SI does not work inside the delimiters
+; (obviously), the delimiters take one SI each to remove, and the stuff inside the
+; delimiters takes one SI to remove, no matter how long it is.
+;
+; This means there are a bunch of cases, and we just handle them individually with the appropriate number of trailing SI
+
+zoi-si-start <- any-word-zoi { startString = new String(anyWordZoiSEP1.toString()); } zoi-word* zoi-spaces any-word-zoi &{ startString.equals(anyWordZoiSEP5) } zoi-spacing-no-absorb-opt SI SI SI
+
+zoi-si-middle <- zoi-word* zoi-spaces any-word-zoi &{ startString.equals(anyWordZoiSEP3) } zoi-spacing-no-absorb-opt SI SI
+
+zoi-si-end <- any-word-zoi &{ startString.equals(anyWordZoiSEP1) } zoi-spacing-no-absorb-opt SI
 
 lohu-tail <- lehu-si-clause lohu-tail / LEhU / any-word-no-SI-handling lohu-tail
 
@@ -127,7 +156,7 @@ tanru-unit <- tanru-unit-1 (CEI free* tanru-unit-1)*
 
 tanru-unit-1 <- tanru-unit-2 linkargs?
 
-tanru-unit-2 <- any-word (ZEI any-word)+ absorb-indicators* / BRIVLA free* / GOhA RAhO? free* / KE free* selbri-3 (KEhE free*)? / ME free* sumti (MEhU free*)? (MOI free*)? / (number / lerfu-string) MOI free* / NUhA free* mex-operator / SE free* tanru-unit-2 / JAI free* tag? tanru-unit-2 / NAhE free* tanru-unit-2 / NU NAI? free* (joik-jek NU NAI? free*)* subsentence (KEI free*)?
+tanru-unit-2 <- any-word spacing-no-absorb-opt (ZEI any-word spacing-no-absorb-opt)+ absorb-indicators* / BRIVLA free* / GOhA RAhO? free* / KE free* selbri-3 (KEhE free*)? / ME free* sumti (MEhU free*)? (MOI free*)? / (number / lerfu-string) MOI free* / NUhA free* mex-operator / SE free* tanru-unit-2 / JAI free* tag? tanru-unit-2 / NAhE free* tanru-unit-2 / NU NAI? free* (joik-jek NU NAI? free*)* subsentence (KEI free*)?
 
 linkargs <- BE free* term links? (BEhO free*)?
 
@@ -239,13 +268,14 @@ indicator <-  ((UI / CAI) NAI? / Y / DAhO / FUhO) !BU
 
 ;         any single lexable Lojban words 
 any-word <- zo-word-clause / CMAVO-no-absorb / BRIVLA-no-absorb / CMENE-no-absorb
+any-word-zoi <- CMAVO-zoi / BRIVLA-zoi / CMENE-zoi
 any-word-SA-handling <- zo-word-clause / CMAVO / BRIVLA / CMENE
 any-word-no-SI-handling <- zo-word-clause / CMAVO-no-SI-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
 any-word-no-SA-handling <- zo-word-clause / CMAVO-no-SA-handling / BRIVLA-no-SI-handling / CMENE-no-SI-handling
 any-word-no-BU-handling <- zo-word-clause / CMAVO-no-BU-handling / BRIVLA-no-BU-handling / CMENE-no-BU-handling
 
 ; Special case of 'zo' when it and what it eats need to be treated as a single word (i.e. matched by any-word)
-zo-word-clause <- ZO zo-word-si-clause? Y / ZO zo-word-si-clause? any-word
+zo-word-clause <- ZO zo-word-si-clause? Y / ZO zo-word-si-clause? any-word spacing-no-absorb-opt
 zo-word-si-clause <- (Y / any-word-no-SI-handling) SI / (Y / any-word-no-SI-handling) zo-word-si-clause SI
 
 ;; -- General Morphology Issues
@@ -268,30 +298,39 @@ vowel-not-y <- [aeiou]
 other-letter <- [',]
 lojban-letter <- consonant / vowel / otherLetter
 cmene-letter <- lojban-letter / [BCDFGJKLMNPRSTVXZ] / [AEIOU] / [hY]
-any-letter <- cmene-letter / [0-9]
+number-char <- [0123456789]
+any-letter <- cmene-letter / number-char
 
 ; Indicator absorbtion; grammar.300 4d and 4e
 absorb-indicators <- UI NAI? / CAI NAI? / Y / DAhO / FUhO / FUhE
+
+; Characters we recognize as spaces.
+; *******
+; *******
+; *** NB: If you change this, you *must* change the code in myStringCompare in peg2rats.pl
+; *******
+; *******
+space-chars <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
 
 ; Handling of spaces
 spacing <- !. / spaces si-clause absorb-indicators*
 spacing-no-absorb <- !. / spaces si-clause
 spacing-no-absorb-opt <- !. / spaces? si-clause
 spacing-opt <- !. / spaces si-clause absorb-indicators* / si-clause absorb-indicators*
-space-chars <- '.' / ' ' / '\n' / '\t' / '\r' / '?' / '!'
 spaces <- space-chars* "y"+ space-chars+ !"'" !vowel / space-chars+
 spaces-not-Y <- space-chars+
 
+
 ; SU clauses
-su-clause <- (!SU !NIhO !LU !TUhE !TO any-word)+ SU / SU
+su-clause <- (!SU !NIhO !LU !TUhE !TO any-word spacing-no-absorb-opt)+ SU / SU
 
 ; Handling of SI and interactions with zo and lo'u...le'u
 
-si-clause <- (LOhU lohu-tail-si-clause SI / !LOhU !SI !ZO any-word-no-SI-handling SI / !LOhU !SI !ZO any-word-no-SI-handling si-clause SI )* END-SI-CLAUSE
-;; This is just to make reading the parser output easier.
-END-SI-CLAUSE <- ()
+si-clause <- (LOhU lohu-tail-si-clause SI / ZOI zoi-tail-no-SI-handling SI SI SI SI / !ZOI !LOhU !SI !ZO any-word-no-SI-handling SI / !ZOI !LOhU !SI !ZO any-word-no-SI-handling si-clause SI )*
 
 lohu-tail-si-clause <- LEhU-no-SI-handling si-clause SI / !SI any-word-no-SI-handling lohu-tail-si-clause SI
+
+zoi-tail-no-SI-handling <- anyWordZoiSEP1:any-word-zoi &{ myAssign( new String(anyWordZoiSEP1.toString()) ) } zoi-spacing-no-absorb-opt zoi-first-word zoi-word* zoi-spacing-no-absorb-opt anyWordZoiSEP5:any-word-zoi &{ startString.equals(anyWordZoiSEP5) } zoi-spacing-no-absorb-opt
 
 ; For handling things of higher priority than SI (i.e. lo'u...le'u, zo)
 spacing-no-SI-handling <- spaces
@@ -313,7 +352,9 @@ BRIVLA <- BAhE? initial-pair lojban-letter lojban-letter brivla-tail / BAhE? con
 ;/ FUHIVLA
 
 BRIVLA-no-absorb <- BAhE? initial-pair lojban-letter lojban-letter brivla-tail-no-absorb / BAhE? consonant !"y" vowel consonant "y"? consonant brivla-tail-no-absorb / BAhE? consonant !"y" vowel "'"? !"y" vowel consonant consonant brivla-tail-no-absorb
-brivla-tail-no-absorb <- vowel-not-y spacing-no-absorb / lojban-letter brivla-tail-no-absorb
+brivla-tail-no-absorb <- vowel-not-y &spacing-no-absorb / lojban-letter brivla-tail-no-absorb
+
+BRIVLA-zoi <- initial-pair lojban-letter lojban-letter brivla-tail-no-absorb / consonant !"y" vowel consonant "y"? consonant brivla-tail-no-absorb / consonant !"y" vowel "'"? !"y" vowel consonant consonant brivla-tail-no-absorb
 
 ; FUHIVLA <- !"'" consonant consonant brivla-tail / !CMAVO cmene-letter consonant consonant brivla-tail / !CMAVO cmene-letter cmene-letter consonant consonant brivla-tail / cmene-letter cmene-letter consonant "y" consonant (consonant / vowel-not-y) brivla-tail / cmene-letter cmene-letter cmene-letter consonant consonant brivla-tail
 
@@ -332,8 +373,10 @@ CMENE <- BAhE? cmene-letter cmene-tail
 
 cmene-tail <- cmene-consonant !"y" spacing / cmene-letter cmene-tail
 
+CMENE-zoi <- cmene-letter cmene-tail-no-absorb
+
 CMENE-no-absorb <- BAhE? cmene-letter cmene-tail-no-absorb
-cmene-tail-no-absorb <- cmene-consonant !"y" spacing-no-absorb / cmene-letter cmene-tail-no-absorb
+cmene-tail-no-absorb <- cmene-consonant !"y" &spacing-no-absorb / cmene-letter cmene-tail-no-absorb
 
 CMENE-no-SI-handling <- cmene-letter cmene-tail-no-SI-handling
 
@@ -357,11 +400,15 @@ CMAVO-post <- !. / (spaces / !vowel) CMAVO-post-morphology known-cmavo / !vowel 
 CMAVO-post-no-SI-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 CMAVO-post-no-BU-handling <- !. / !vowel CMAVO-post-morphology consonant vowel (['] vowel / vowel)*
 
+; The basic 'CMAVO' production is a bit special, in that all single-vowel cmavo are handled by the first section.
 CMAVO <- pre-cmavo-check known-cmavo / pre-cmavo-check consonant? vowel (['] vowel / vowel)+ spacing !BU-bare
-CMAVO-no-absorb <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* spacing-no-absorb-opt !BU-bare / BU
-CMAVO-no-SI-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo-no-SI-handling
-CMAVO-no-SA-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo
-CMAVO-no-BU-handling <- pre-cmavo-check consonant? vowel (['] vowel / vowel)* post-cmavo-no-BU-handling
+
+CMAVO-letters <- number-char+ / consonant? vowel (['] vowel / vowel)*
+CMAVO-zoi <- pre-cmavo-check CMAVO-letters &spacing-no-absorb-opt
+CMAVO-no-absorb <- pre-cmavo-check CMAVO-letters &spacing-no-absorb-opt !BU-bare / BU
+CMAVO-no-SI-handling <- pre-cmavo-check CMAVO-letters post-cmavo-no-SI-handling
+CMAVO-no-SA-handling <- pre-cmavo-check CMAVO-letters post-cmavo
+CMAVO-no-BU-handling <- pre-cmavo-check CMAVO-letters post-cmavo-no-BU-handling
 
 known-cmavo <- A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / BY / CAI / CAhA / CEI / CEhE / CO / COI / CU / CUhE / DAhO / DOI / DOhU / FA / FAhA / FAhO / FEhE / FEhU / FIhO / FOI / FUhA / FUhE / FUhO / GA / GAhO / GEhU / GI / GIhA / GOI / GOhA / GUhA / I / JA / JAI / JOI / JOhI / KE / KEI / KEhE / KI / KOhA / KU / KUhE / KUhO / LA / LAU / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / MAhO / ME / MEhU / MOI / MOhE / MOhI / NA / NAI / NAhE / NAhU / NIhE / NIhO / NOI / NU / NUhA / NUhI / NUhU / PA / PEhE / PEhO / PU / RAhO / ROI / SA / SE / SEI / SEhU / SI / SOI / SU / TAhE / TEI / TEhU / TO / TOI / TUhE / TUhU / UI / VA / VAU / VEI / VEhA / VEhO / VIhA / VUhO / VUhU / XI / Y / ZAhO / ZEI / ZEhA / ZI / ZIhE / ZO / ZOI / ZOhU
 
@@ -1109,7 +1156,7 @@ ZO <- pre-cmavo ZO-words zo-post-cmavo
 ZO-words <- "zo"
 zo-post-cmavo <-  spaces-not-Y / &CMAVO-post-no-SI-handling / SI / &BRIVLA
 ;         delimited quote marker 
-ZOI <- pre-cmavo ZOI-sa-clause? ZOI-words post-cmavo
+ZOI <- pre-cmavo ZOI-sa-clause? ZOI-words !BU-bare !['] !vowel zoi-spacing-no-absorb-opt !ZEI
 ZOI-no-SA-handling <- pre-cmavo ZOI-words post-cmavo
 ZOI-sa-clause <- ZOI-words spaces? ZOI-sa-tail
 ZOI-sa-tail <- SA &(pre-cmavo ZOI-words) / !ZOI-words any-word-no-SA-handling ZOI-sa-tail
