@@ -1,0 +1,38 @@
+Return-Path: <LOJBAN%CUVMB.BITNET@BITMAIL.LSOFT.COM>
+Received: from SEGATE.SUNET.SE by xiron.pc.helsinki.fi  with smtp
+	(Linux Smail3.1.28.1 #1) id m0tMUKW-0000ZVC; Mon, 4 Dec 95 08:24 EET
+Message-Id: <m0tMUKW-0000ZVC@xiron.pc.helsinki.fi>
+Received: from listmail.sunet.se by SEGATE.SUNET.SE (LSMTP for OpenVMS v1.0a) with SMTP id B11B4DD2 ; Sun, 3 Dec 1995 22:11:00 +0100
+Date:         Sun, 3 Dec 1995 17:23:12 -0500
+Reply-To:     "Carl D. Burke" <cburke@MITRE.ORG>
+Sender:       Lojban list <LOJBAN@CUVMB.BITNET>
+From:         "Carl D. Burke" <cburke@MITRE.ORG>
+Subject:      Re: LR(k) Lojban Grammar
+X-To:         LOJBAN%CUVMB.BITNET@cunyvm.cuny.edu
+To:           Veijo Vilva <veion@XIRON.PC.HELSINKI.FI>
+Content-Length: 1173
+Lines: 22
+
+>BTW the conflicts may not be actual ambiguities; they could be places where
+>a more sophisticated parser would have no problem.
+
+Well, conflicts ARE ambiguities to any LR(1) parser, since the grammar cannot
+be unambiguously parsed using only the grammar rules.  Precedence is a hack;
+it's used either to (1) make the grammar writer's job easier, or (2) allow
+parsing of non-LR(1) (and possibly non-context-free) constructions.
+Since LR(2) or higher parser generators aren't generally available (the
+tables get really big really quick), and I don't know of any context-sensitive
+parser generators, that leaves you with hacks or grammar changes.
+[Recursive descent is equivalent in power to any other context-free
+parsing method, so that won't help and makes lack of ambiguity harder
+to demonstrate.]  If you're going to use precedence to resolve an otherwise
+ambiguous grammar, that's OK, but it should be explicitly documented
+for those who aren't using YACC workalikes.
+
+That's still a lot easier to resolve than a natural language, since a
+computer can make sense out of it easily, but the grammar per se isn't
+unambiguous and shouldn't be advertised as such.
+
+--
+Carl
+
