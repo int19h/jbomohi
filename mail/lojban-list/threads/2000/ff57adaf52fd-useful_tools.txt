@@ -1,4 +1,4 @@
-# mail/lojban-list thread ff57adaf52fd-useful_tools | root 95.120a4.26def531@aol.com | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread ff57adaf52fd-useful_tools | root 95.120a4.26def531@aol.com | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-08-30T23:39:29Z | BestATN@aol.com | 95.120a4.26def531@aol.com | mail/lojban-list/cur/967678769.ff57adaf52fd7bf1.jbomohi:2,S
 i agree with pycyn's comment to elrond.  i use windows almost exclusively, 
@@ -176,7 +176,98 @@ Artificial language Loglan/Lojban:                 http://www.lojban.org
 
 
 
-=== 7 | 2000-08-31T02:33:32Z | pycyn@aol.com | c0.896b8bb.26df1dfc@aol.com | mail/lojban-list/cur/967689212.1c2fa7bbd264e284.jbomohi:2,S
+=== 7 | 2000-09-01T05:29:21Z | Richard Curnow <richard@rrbcurnow.freeuk.com> | 20000901062921.a96@rrbcurnow.freeuk.com | mail/lojban-list/cur/967786161.e9da6de17716515f.jbomohi:2,S
+On Thu, Aug 31, 2000 at 12:44:38PM -0400, Bob LeChevalier (lojbab) wrote:
+> 
+> That sounds like the old version of Nora's parser/glosser, which took 
+> Cowan's "official" parser's parenthesized output (the parentheses are 
+> produced by the parser and show the levels of nesting for grammar 
+> structures; braces and brackets are alternated with parentheses) and lines 
+> the English up with the Lojban words in that parenthesized output.  It of 
+> course MUST be used with a fixed font or nothing will line up, but since it 
+> is a DOS program, fixed font should be the norm.
+> 
+> The new version, which should be the one on lojban.org, does not leave the 
+> parentheses in, and the only symbols are braces around the case tags that 
+> label the place structures.  You might want to take a look if you can stand 
+> a sickly DOS program.
+> 
+> What I don't know is how this compares with jbofi'e.
+> 
+
+In rough terms :
+- jbofi'e was developed under Unix and is very unlikely to be portable
+  to DOS (memory size issues).
+- the parser and glosser functions are all integrated into the one tool.
+- the parser was build using the bnf.300 file as a reference - I set out
+  to avoid using John Cowan's yacc grammar entirely.  I thought this
+  would ultimately provide a route for validating the equivalence of the
+  bnf grammar and the yacc grammar, by checking whether the same texts
+  parse or fail to parse on the two tools.
+- some of the output formats are similar (though not identical to) those
+  produced by the 'official' software.
+
+Here are a few example outputs :
+
+Input text (my attempt at translating the maxim 'there's a time and a
+            place for everything'):
+
+  mapti jai ca je vi me ro da
+
+jbofihe on its own gives
+
+(0[mapti {jai <ca je vi> <me (1ro da)1>}])0
+
+Which is fairly similar to the original parser format (parentheses are
+numbered so you can match things in very deeply nested constructions.)
+
+jbofihe -x gives a gloss as well :
+ 
+[<<^mapti /compatible/ /[type-of]/ jai /being the/ ca /time of/ je /and/ vi /location of/ me /amongst those that are/ ^ro /every/ /(of)/ da /X/^^>>]
+
+and finally jbofihe -x -b puts the gloss in 'block' mode.
+
+
+[ << |  mapti                jai       ca      je  vi          
+[ << |  compatible [type-of] being the time of and location of 
+[ <<  \                                                        
+1 2  3                                                         
+
+me                      / ro         da \   | >> ] 
+amongst those that are |  every (of) X   |  | >> ] 
+                       |                 | /  >> ] 
+                       4                4  3  2  1 
+
+In the -x cases, the differently shaped brackets are used to envelop
+particular constructions (e.g. sumti, sentence etc).  
+
+I've just noticed that last example doesn't show the case tagging
+feature, so here's one that does
+
+le zarci cu se klama mi la london.
+
+[ ( le                      zarci            ) cu      << se klama             
+[ ( the                     trading place(s) ) is/does << being destination(s) 
+[ ( klama2 (destination(s))                  )         <<                      
+1 2                                          2         3                       
+
+>> ( mi                ) ( la                 london. ) ] 
+>> ( I, me             ) (                    [NAME]  ) ] 
+>> ( klama1 (go-er(s)) ) ( klama3 (origin(s))         ) ] 
+3  4                   4 5                            5 1 
+
+-- 
+----------------------------------------------------------------------
+Richard P. Curnow                                       rpc@myself.com
+Weston-super-Mare
+United Kingdom                            http://go.to/richard.curnow/
+
+
+           
+
+
+
+=== 8 | 2000-08-31T02:33:32Z | pycyn@aol.com | c0.896b8bb.26df1dfc@aol.com | mail/lojban-list/cur/967689212.1c2fa7bbd264e284.jbomohi:2,S
 In a message dated 00-08-30 20:02:18 EDT, xod writes:
 
 << The last and only time I tried a Lojban glosser program, instead of
