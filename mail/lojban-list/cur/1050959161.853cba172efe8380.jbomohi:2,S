@@ -1,0 +1,99 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (EGP: mail-8_2_6_5); 21 Apr 2003 21:06:20 -0000
+Received: (qmail 42891 invoked from network); 21 Apr 2003 21:06:18 -0000
+Received: from unknown (66.218.66.218)
+  by m5.grp.scd.yahoo.com with QMQP; 21 Apr 2003 21:06:18 -0000
+Received: from unknown (HELO digitalkingdom.org) (204.152.186.175)
+  by mta3.grp.scd.yahoo.com with SMTP; 21 Apr 2003 21:06:18 -0000
+Received: from lojban-out by digitalkingdom.org with local (Exim 4.12)
+	id 197iUT-0006Fv-00
+	for lojban@yahoogroups.com; Mon, 21 Apr 2003 14:06:17 -0700
+Received: from digitalkingdom.org ([204.152.186.175] helo=chain)
+	by digitalkingdom.org with esmtp (Exim 4.12)
+	id 197iUM-0006FT-00; Mon, 21 Apr 2003 14:06:10 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 21 Apr 2003 14:06:09 -0700 (PDT)
+Received: from rlpowell by digitalkingdom.org with local (Exim 4.12)
+	id 197iUD-0006FE-00; Mon, 21 Apr 2003 14:06:01 -0700
+Date: Mon, 21 Apr 2003 14:06:01 -0700
+To: random@digitalkingdom.org
+Cc: lojban-list@lojban.org
+Subject: [lojban] YahooGroups snarfing/downloading/archiving program!!
+Message-ID: <20030421210601.GV31828@digitalkingdom.org>
+Mail-Followup-To: random, lojban-list@lojban.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.4i
+X-archive-position: 4878
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+Precedence: bulk
+X-list: lojban-list
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+X-Yahoo-Group-Post: member; u=116389790
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 19357
+Content-Length: 1228
+
+I've been looking for one of these for years!
+
+http://parthe.lpthe.jussieu.fr/~zeitlin/yahoo2mbox.html
+
+It even un-munges the e-mail addresses!!  YAAAAY!
+
+There are two non-trivial bugs in it.  Here's the mail I sent him:
+
+Problems:
+
+You have $mboxname |= $groupname; where you mean to use ||=.
+
+Secondly, it didn't actually handle the advertising redirects at
+all!
+
+Changing:
+
+# go to the new page
+if ( $url ) {
+    $request->uri($url);
+    $response = $ua->simple_request($request);
+}
+
+To:
+
+
+# go to the new page
+if ( $url ) {
+    $request->uri($url);
+    $response = $ua->simple_request($request);
+    $request->uri($msgUrl);
+    $response = $ua->simple_request($request);
+}
+
+
+Around line 926 seems to fix this.
+
+It appears to do advertising redirects on every message that is 0 mod 4, btw.
+
+By the way, I'm *very* impressed at your ability to unmangle the e-mail
+addresses!  Way to go!  (Even if it's not you that figured it out. 8).
+
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/    ***    I'm a *male* Robin.
+.i le pamoi velru'e zo'u crepu le plibu taxfu
+.i le remoi velru'e zo'u mo .i le cimoi velru'e zo'u ba'e prali .uisai
+http://www.lojban.org/   ***   to sa'a cu'u lei pibyta'u cridrnoma toi
+
+
+
+
+           
+

@@ -1,0 +1,60 @@
+# mail/lojban-list thread 853cba172efe-yahoogroups_snarfing%2Fdownloading%2Farchiving_ | root 20030421210601.gv31828@digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2003-04-21T21:06:01Z | Robin Lee Powell <lojban-out@lojban.org> | 20030421210601.gv31828@digitalkingdom.org | mail/lojban-list/cur/1050959161.853cba172efe8380.jbomohi:2,S
+I've been looking for one of these for years!
+
+http://parthe.lpthe.jussieu.fr/~zeitlin/yahoo2mbox.html
+
+It even un-munges the e-mail addresses!!  YAAAAY!
+
+There are two non-trivial bugs in it.  Here's the mail I sent him:
+
+Problems:
+
+You have $mboxname |= $groupname; where you mean to use ||=.
+
+Secondly, it didn't actually handle the advertising redirects at
+all!
+
+Changing:
+
+# go to the new page
+if ( $url ) {
+    $request->uri($url);
+    $response = $ua->simple_request($request);
+}
+
+To:
+
+
+# go to the new page
+if ( $url ) {
+    $request->uri($url);
+    $response = $ua->simple_request($request);
+    $request->uri($msgUrl);
+    $response = $ua->simple_request($request);
+}
+
+
+Around line 926 seems to fix this.
+
+It appears to do advertising redirects on every message that is 0 mod 4, btw.
+
+By the way, I'm *very* impressed at your ability to unmangle the e-mail
+addresses!  Way to go!  (Even if it's not you that figured it out. 8).
+
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/    ***    I'm a *male* Robin.
+.i le pamoi velru'e zo'u crepu le plibu taxfu
+.i le remoi velru'e zo'u mo .i le cimoi velru'e zo'u ba'e prali .uisai
+http://www.lojban.org/   ***   to sa'a cu'u lei pibyta'u cridrnoma toi
+
+
+
+
+           
+
+
