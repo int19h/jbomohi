@@ -1,0 +1,48 @@
+Reply-To: Chris Bogart <cbogart@QUETZAL.COM>
+Sender: Lojban list <LOJBAN@CUVMB.BITNET>
+From: Chris Bogart <cbogart@QUETZAL.COM>
+Subject:      Re: LR(k) Lojban Grammar
+X-To:         lojban@cuvmb.bitnet
+To: John Cowan <cowan@LOCKE.CCIL.ORG>
+Status: OR
+
+chris:
+>>>eventually knock wood there'll
+>>>be academic interest in the language and we'll want to be able to
+>>>define it in a more theoretically understandable way.  So it ought to
+>>>be at least a long-term goal.
+
+>This assumes that lojban has an LR(k) grammar...
+
+Well, if ly. has a non-LR(k) grammar, that would be slow to parse using a
+generic yacc-like tool for whatever class of grammar it has, then we don't
+want to use that parser day-in and day-out.  But we'll still want to do that
+work for theoretical reasons.
+
+>I can't find the
+>reference right now, but the last I remember was that the grammar
+>was not actually completely context-free -- there were some shift-reduce
+>conflicts
+
+Do shift-reduce conflicts mean the language is not context-free?  Or do they
+mean the language is not LR(1)?
+
+>...that YACC resolved using precedence of rules/productions.
+>If S-R or R-R conflicts exist, the language is not LR(1), regardless
+>of whether or not YACC can parse it; syntactic ambiguity exists,
+>it's just hidden by the mechanics of the parser.
+
+If the parser is the official language definition, then the mechanics of the
+parser are part of the definition as well.  So the parser does its job of
+providing an unambiguous definition of syntax (after all, it parses a
+sentence the same way every time, regardless of conflicts) and also does its
+job of proving the language can be machine-parsed.  It just does it in a
+opaque way :-(
+
+BTW the conflicts may not be actual ambiguities; they could be places where
+a more sophisticated parser would have no problem.
+
+                     ____
+ Chris Bogart        \  /  http://www.quetzal.com
+ Boulder, CO          \/   cbogart@quetzal.com
+
