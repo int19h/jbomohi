@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4e57aa0f6f26-veijo's_1994_proposal_for_nested_relative_claus | root xffrnisrnpo.a.iz.e10klb@chain.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4e57aa0f6f26-veijo's_1994_proposal_for_nested_relative_claus | root xffrnisrnpo.a.iz.e10klb@chain.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 1996-01-07T09:56:40Z | unknown | 095c4437551d7fef3fe6830b8847be030a31443c@jbomohi.invalid | mail/lojban-list/cur/821008600.897c2d3f078fa3c1.jbomohi:2,S
 I have finally gotten around to evaluating it, and as proposed it
@@ -54,5 +54,62 @@ rate some further thinking is needed.  Please comment!
 -- 
 John Cowan					cowan@ccil.org
 		e'osai ko sarji la lojban.
+
+
+
+=== 2 | 1996-01-07T09:56:40Z | John Cowan <cowan@LOCKE.CCIL.ORG> | 199601070934.laa14761@xiron.pc.helsinki.fi | mail/lojban-list/cur/821008600.4ebb6aafeb430931.jbomohi:2,S
+I have finally gotten around to evaluating it, and as proposed it
+causes shift/reduce errors.  However, I suspect that it is either not
+necessary or not sufficient, because it conflates center-embedding with preposed
+relative clauses.
+
+To review, Veijo looked at the sumti:
+
+1)      le (poi le (poi le tcadu cu se klama ku'o) nanmu cu se viska ku'o) verba
+        the (into-the-town-going man)-seeing-child
+
+and complained that the center-embedding was excessive, compared with the
+Finnish equivalent.  The problem is that Lojban has articles which are
+always on the left, whereas Finnish has no articles at all.  He then
+proposed a linearized version using a special marker:
+
+2)      le poi le tcadu cu se klama xu'o nanmu cu se viska ku'o verba
+
+wherein the two relative clauses are separated by "xu'o" rather than
+"ku'o", and the "le poi le poi" stutter at the beginning is removed.
+All the clauses except the first would necessarily be of "poi" type.
+
+Veijo then proposed a Yacc version which (unbeknownst to him) has S/R
+errors.  I tried several more versions which also have errors, sometimes
+even more errors.
+
+However, I think there is a more fundamental issue.  Veijo claimed
+that Examples 1 and 2 were equivalent to postposed relative clauses:
+
+3)      le verba poi viska le nanmu poi klama le tcadu
+        the child that sees the man that goes-into the town
+
+As he correctly states, Example 3 is much easier to understand than
+Example 1: there is no center-embedding, but just ordinary iteration.
+However, Example 3 is >not< the result of postposing the relative
+clauses in Example 1.  That gives:
+
+4)      le verba poi le nanmu poi le tcadu cu se klama cu se viska
+        the child that the man that the town is-gone-into-by is-seen-by
+
+which is not quite as center-embedded as Example 1.  What happens if
+we prepose the relative clauses of Example 3?  We get
+
+5)      le poi viska le poi klama le tcadu ku'o le nanmu ku'o verba
+        the seer-of the goer-to-the-store man child
+
+which is also center-embedded.
+
+"And what do we learn from this, comrades?"  I'm not sure, but at any
+rate some further thinking is needed.  Please comment!
+
+--
+John Cowan                                      cowan@ccil.org
+                e'osai ko sarji la lojban.
 
 
