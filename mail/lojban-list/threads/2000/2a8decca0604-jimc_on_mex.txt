@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2a8decca0604-jimc_on_mex | root lpbbjkmninkhacndiigmeenhcfaa.a.rosta@pmail.net | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2a8decca0604-jimc_on_mex | root lpbbjkmninkhacndiigmeenhcfaa.a.rosta@pmail.net | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2000-03-03T13:20:05Z | And Rosta <a.rosta@pmail.net> | 44114.382.2152.959273826@egroups.com | mail/lojban-list/cur/952089605.364135ce9bc6aa82.jbomohi:2,S
 jimc:
@@ -173,6 +173,144 @@ GET A NEXTCARD VISA, in 30 seconds!  Get rates
 as low as 0.0% Intro APR and no hidden fees.
 Apply NOW!
 http://click.egroups.com/1/975/1/_/17627/_/952089557/
+------------------------------------------------------------------------
+
+To unsubscribe, send mail to lojban-unsubscribe@onelist.com
+
+
+
+=== 3 | 2000-03-03T17:45:05Z | John Cowan <jcowan@reutershealth.com> | 38bffa21.4b67ff55@reutershealth.com | mail/lojban-list/cur/952105505.5243839cca5c3d72.jbomohi:2,S
+From: John Cowan <jcowan@reutershealth.com>
+
+And Rosta wrote:
+
+> I've never had any trouble with defining positive integers in this way,
+> but feasibility of "the obvious extension" is not at all apparent to my
+> unmathematical mind. As far as I can see, only positive integers are
+> valid set cardinalities, while other numbers can be derived by operations
+> on integers but not on sets.
+
+Okay, here we go.  Notation:  {x, y, z} means the set with members x, y, z.
+
+As explained before, the natural numbers (positive integers) are identified with
+as the set of all sets with appropriate cardinality.  Thus 5 is the set of all
+fivesomes, and 3  is the set of all triplets.  This particular convention is called
+"Frege natural numbers" after its inventor.  It is extended to other numbers
+as follows:
+
+0 is just {{}}, the set of all null sets (there is only one). 
+
+Negative numbers are construed by a trick such as -5 = {0, 5}.
+
+To get the rational numbers, you also need the notion of an ordered pair, notated
+(a, b), which is identified with {a, {a, b}}: the set containing a set of the two
+members and also the first member.  Given this set, you can reconstruct the
+pair: the set has two members, one of which is a sub-member of the other.
+That's the first element of the pair.  The second element is then easy to discover.
+This convention extends to ordered n-tuples by construing (a, b, c, ...) as
+(a, (b, (c, ...))).
+
+Now we identify 5/3 with the ordered pair (5, 3) which is just the set {5, {5, 3}}.
+
+Real numbers are represented as infinite sets:  \pi is the infinite
+ordered sequence (3, 3.1, 3.14, 3.141, 3.1415, 3.14159, 3.141592, ...),
+representing a sequence of rationals the limit of which is \pi.  By 3.1
+here I mean 31/10, which is {31, {31, 10}}.  We have to put some simple
+restrictions on the sequences to prevent getting a representation for
+infinity, and to avoid multiple representations for 2.0000000... as (2, 2, 2, 2, ...)
+and (1, 1.9, 1.99, 1.999, 1.9999, ...).  I omit the details here.
+
+Complex numbers are just ordered pairs of real numbers: 3+4i =
+(3.0000...., 4.0000...).
+
+Many other schemes are possible, with different representation tricks at
+different levels.  Von Neumann's positive integers, for example, use the
+conventions:
+
+	0 = {},
+	1 = {0} = {{}},
+	2 = {0, 1} = {{}, {{}}},
+	3 = {0, 1, 2} = {{}, {{}}, {{}, {{}}}}
+
+etc. etc.  They are better for some purposes and worse for others: see below.
+One nice property of the von Neumann integers is that the cardinality of the
+set just *is* the integer: the number N has N members.  The Frege integers
+discussed above are a little more complex: every member of the number N
+has N members.
+
+> I don't understand this. That is, I don't understand how classes can
+> be summed, especially not in a way that gives the results you describe.
+
+First we define + on numbers recursively, by Peano's axioms (invented by
+a man named Dedekind, curiously):
+
+	if X = 0, X + Y = Y;
+	else X + succ(Y) = succ(X + Y)
+
+where "succ" is a function meaning "successor of".  We can see that this
+is true by following the recursion:
+
+	2 + 2 is 2 + succ(1),
+	which is succ(2 + 1),
+	which is succ(succ(2 + 0)),
+	which is succ(succ(2)),
+	which is succ(3),
+	which is 4.
+
+How do we interpret the "succ" function in terms of sets?  Well, let us use the von
+Neumann interpretation of numbers instead of the Frege one: 0 is {}, and the
+successor of a number has as its members, (a) of the members of that number
+and (b) the number itself.
+
+We can generalize this definition to any set:  the successor of {Frank, George,
+Peter} is {Frank, George, Peter, {Frank, George, Peter}}.  Unfortunately,
+{Frank, George, Peter} is not the successor of any set, so it is no use
+asking what the sum of {Frank, George, Peter} and {Mary, Louise, Catherine}
+might be.  But that doesn't matter, because we only care about + as applied
+to numbers, and our method for doing so always generates the correct (von Neumann)
+number.  We can also define + for sets that are Frege numbers, but I won't
+do so, as the principle is the same and the details are more tedious.
+
+> Can't Lojban already do the equivalent by using the ordinary apparatus
+> or integers and variables plus the maths gismu?
+
+Yes, and even integers you can skip, by construing "li pa" as "lo'i te pamoi".
+ 
+> > Units of measure are defined to multiply the second place argument (a
+> > number or other expression) by the unit.  They would normally be used in
+> > restrictive subordinate clauses.  "I weigh 70 kilograms" in Lojban would
+> > come out /mi tilju poi kilgrake lo'i mei ze no/.
+> 
+> ze no mei?
+
+A little guaspi leaking in, where the equivalents of mei and moi are
+prefixes as in Chinese rather than suffixes as in English.  Makes more
+sense, really.
+
+> And that poi doesn't seem to make sense.
+
+It isn't grammatical.
+
+I think the right way is to say that *my weight* (a quantity abstraction) is-in-kilos
+the number 70:  "le ni mi tilju cu kilgra li 70".
+
+> Last time I read the guaspi file (admittedly, some years ago now) I found that
+> you seem to share my unfortunate gift for writing expositions that are
+> supposed to be, but aren't, intelligible to the general reader ;-)
+
+I guess I must be a special reader, then.
+
+-- 
+
+Schlingt dreifach einen Kreis vom dies! || John Cowan <jcowan@reutershealth.com>
+Schliesst euer Aug vor heiliger Schau,  || http://www.reutershealth.com
+Denn er genoss vom Honig-Tau,           || http://www.ccil.org/~cowan
+Und trank die Milch vom Paradies.            -- Coleridge (tr. Politzer)
+
+------------------------------------------------------------------------
+GET A NEXTCARD VISA, in 30 seconds!  Get rates as low as 0.0% 
+Intro or 9.9% Fixed APR and no hidden fees.  Apply NOW!
+http://click.egroups.com/1/937/1/_/17627/_/952105506/
 ------------------------------------------------------------------------
 
 To unsubscribe, send mail to lojban-unsubscribe@onelist.com
