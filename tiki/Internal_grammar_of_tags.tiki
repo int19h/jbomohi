@@ -2,21 +2,21 @@ __Grammar simplification proposal__, by ((xorxes))
 
 !!Current grammar:
 
-   simple-tense-modal = (Was Footnote: NAhE) (Was Footnote: SE) BAI (Was Footnote: NAI) (Was Footnote: KI)
-                      | (Was Footnote: NAhE) (time (Was Footnote: space) | space (Was Footnote: time)) & CAhA (Was Footnote: KI)
+   simple-tense-modal = ~np~[NAhE] [SE] BAI [NAI] [KI]~/np~
+                      | ~np~[NAhE] (time [space] | space [time]) & CAhA [KI]~/np~
                       | KI
                       | CUhE
-   time = ZI & time-offset ... & ZEhA (Was Footnote: PU (([NAI))) & interval-property ...
-   time-offset = PU (Was Footnote: NAI) (Was Footnote: ZI)
+   time = ZI & time-offset ... & ZEhA ~np~[PU [NAI]] & interval-property ...~/np~
+   time-offset = PU ~np~[NAI] [ZI]~/np~
    space = VA & space-offset ... & space-interval & (MOhI space-offset)
-   space-offset = FAhA (Was Footnote: NAI) (Was Footnote: VA)
-   space-interval = ((VEhA & VIhA) (Was Footnote: FAhA (([NAI)))) & space-int-props
+   space-offset = FAhA ~np~[NAI] [VA]~/np~
+   space-interval = ((VEhA & VIhA) ~np~[FAhA [NAI]] & space-int-props~/np~
    space-int-props = (FEhE interval-property) ...
-   interval-property = number ROI (Was Footnote: NAI) | TAhE (Was Footnote: NAI) | ZAhO (Was Footnote: NAI)
+   interval-property = number ROI~np~ [NAI] | TAhE [NAI] | ZAhO [NAI]~/np~
 
 !!Proposed grammar:
 
-   simple-tense-modal = ((Was Footnote: NAhE) (Was Footnote: SE) tag-unit (Was Footnote: NAI)) ...
+   simple-tense-modal = ~np~([NAhE] [SE] tag-unit [NAI]) ...~/np~
    tag-unit = BAI
             | CAhA
             | CUhE
@@ -24,34 +24,34 @@ __Grammar simplification proposal__, by ((xorxes))
             | ZI
             | PU
             | VA
-            | (Was Footnote: MOhI) FAhA
+            | ~np~[MOhI] FAhA~/np~
             | ZEhA
             | VEhA
             | VIhA
-            | (Was Footnote: FEhE) number ROI
-            | (Was Footnote: FEhE) TAhE
-            | (Was Footnote: FEhE) ZAhO
+            | ~np~[FEhE] number ROI~/np~
+            | ~np~[FEhE] TAhE~/np~
+            | ~np~[FEhE] ZAhO~/np~
 
 !!Rationale:
 
-!SE-conversion
+!!!SE-conversion
 Every tag-unit can be used as a tag, and therefore as a connective.
 It is arbitrary and inconvenient that SE is currently disallowed with
 some tags.
 
-!NAhE
+!!!NAhE
 That {NAhE PU}, {NAhE CAhA} and {NAhE PU CAhA} are all allowed, but {NAhE PU NAhE CAhA}
 is disallowed is arbitrary and inconvenient. Similarly for other combinations.
 
-!Order of units
+!!!Order of units
 {co'a na'o broda} "starting to typically broda" is allowed, but {na'o co'a broda} "typically starting to broda" is not. It will be accepted by the parser, but parsed as {na'oku co'a broda}. Similarly for all other order restrictions.
 Note: arbitrary combinations of tag-units are already allowed in selbri-tags as long as there is an intervening {ja'a}, for example: {na'o ja'a co'a broda} is allowed, without ku's.
 
 
-!NAI
+!!!NAI
 There's no good reason to allow it selectively here and there instead of everywhere.
 
-!Backwards compatibility
+!!!Backwards compatibility
 Fully compatible. Everything currently grammatical remains grammatical.
 
 --------------------
