@@ -2074,3 +2074,79 @@ easily.
 
 
 
+
+## 2004-12-19T07:37:50Z — rlpowell (@rlpowell) (post 3159)
+
+Title: PEG Morphology Algorithm
+Message-Id: 20041219015850.GA1684@chain.digitalkingdom.org
+In-Reply-To: 200412182001.57982.phma@phma.hn.org
+
+On Sat, Dec 18, 2004 at 08:01:57PM -0500, Pierre Abbat wrote:
+> On Saturday 18 December 2004 18:52, Robin Lee Powell wrote:
+> > On Sat, Dec 18, 2004 at 08:13:24AM -0500, Pierre Abbat wrote:
+> > > Is a C program sufficiently unambiguous?
+> >
+> > Absolutely not.  It's not a formalism, it's a piece of code.
+> 
+> Is there a formalism that I can translate valfendi into?
+
+I don't know what formalisms you know, so I can't really answer
+that.
+
+> The problem appears to be that you and I think differently. 
+
+Yes.  I tried to explain this to you when I was asking you question
+about the valfendi algorithm some months ago.  I gave up after a
+while; I couldn't figure out what you were talking about.
+
+> When I wrote valfendi, I separated, as well as I could, the
+> operation of splitting a stream of phonemes into words from the
+> operation of determining whether those words are valid. This is
+> easier for me to understand. To do that, I have to find the string
+> that matches one regular expression (or parsing expression or
+> whatever) at the beginning of the remaining text, then check
+> whether that string, no more and no less, matches another
+> expression. 
+
+That is a fundamentally algorithmic way of thinking, yes.
+
+> For instance, if the text is /dAmymlongEnavau/, the first
+> expression matches /dAmymlongEna/, which the second does not
+> match, although it does match /dAmymlo/. I could write a PEG with
+> two expressions, called lex-brivla and valid-brivla, and then
+> write "brivla <- &lex-brivla valid-brivla", but that would match
+> /dAmymlongEnavau/ and consume /dAmymlo/, even though lex-brivla
+> matched /dAmymlongEna/. Trying to do both checks at once is
+> confusing to me, though you seem to understand it.
+
+You've taken brivla out of context, so it's hard to go from what you
+just said to something useful, but I assume that the top level is
+something like:
+
+morphology <- word*
+
+word <- cmavo / brivla / cmene
+
+Then with your brivla, it only consumes dAmymlo, but that's fine
+because the next run of "word" will start at "ng" (which will
+probably cause breakage, but that's fine I hope).  I have no idea if
+this helps you; as with the algorithm itself, I'm not certain I
+actually have any real idea what you're asking.
+
+One way to do what you want, I suppose, would be to add another
+stage to the parser.  Right now, it's got a morphology stage and a
+grammar stage.  You could break morphology into word-grouping and
+word-recognition stages.  I have not the slightest idea why this
+approach is useful however.
+
+> So, is there something sufficiently programming-language-like that
+> I can check that it's doing the same as valfendi, 
+
+See, umm, that's impossible.  There is no way, in general, to
+compare to non-trivial programs to show that they are doing the same
+thing.  This would be the whole reason I like formalisms.
+
+-Robin
+
+
+
