@@ -1,0 +1,364 @@
+# mail/lojban-list thread 5feb867fe77b-conlang%3A_lisp_representation_of_%22deep_struc | root pine.sun.3.91.961029165859.28318i-100000@earth | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1996-11-01T14:28:09Z | John Cowan <cowan@ccil.org> | 327a08f9.aea@ccil.org | mail/lojban-list/cur/846858489.1e4f0c8be241e3b7.jbomohi:2,S
+On the CONLANG list <conlang@diku.dk>, I posted the following
+response to TImothy Miller, who was attempting to create a
+LISP-like representation of the (semantic) structure of language.
+
+I pointed out that most of the examples he posted went word-for-word
+into Lojban.  Here's my posting:
+
+Timothy Miller scripsit:
+
+> Here are some incomplete thoughts that express structure:
+
+Except for being verb-first, this *is* Lojban.  And Lojban
+can tag the subject with "fa" when it appears after the
+verb.  Here are Lojban translations using that style: with
+few exceptions, they mirror your structures exactly.
+ 
+> "to run slowly"
+> (slow run)
+
+masno bajra
+
+> "red apple"
+> (red apple)
+
+xunre plise
+ 
+> "appleish red thing"
+> (apple red)
+
+plise xunre
+ 
+> "to be able to run"
+> (can run)
+
+Lojban reverses this: bajra kakne.  In the sentence
+"John is able to run", we are expressing that John
+has a running type of ability, not an ability type
+of running (whatever that might be).
+ 
+> And here are some sentences of various types:
+> 
+> "I run slowly"
+> ((slow run) i)
+
+masno bajra fa mi
+slow run (subject) I 
+
+> "I can see you"
+> ((can see) i you)
+
+viska kakne fa mi do
+see is-able (subj) I you
+
+> "Jane sees John"
+> (see jane john)
+
+viska fa la djein. la djan.
+sees (subj.) (name) Jane (name) John 
+
+> "I gave him an apple"
+> ((past give) i apple he)
+>    OR
+> (past (give i apple he))
+> [which one?]
+
+pu dunda fa mi lo plise ko'a
+(past) give (subj) I an/some apple(s) him
+
+meaning, of course, that I gave apples to him,
+not that I gave him to apples.  If the number is
+really important, change "lo" to "pa" to get
+"one apple".
+ 
+> "Leave!"
+> (imp (leave you))
+>   OR
+> (leave ko) [a la lojban]
+> [which one?]
+
+cliva fa ko
+leave (subj) (imperative-you)
+ 
+> "Red apples are nice"
+> (nice (red (plural apple)))
+
+xamgu fa za'u xunre plise
+good (subj) more-than-(1) red apples
+ 
+> "Can you see me?"
+> (ques (see you i))
+
+xu viska fa do mi
+(True?) see (subj) you me
+
+But this means "Do you see me?"  The
+"possibility" element requires
+
+xu viska kakne fa do mi
+(True) see is-able (subj) you me
+ 
+> "Where are we?"
+> (((in _?_) exist) we)
+
+Lojban has a verb for "is-at", so
+zvati fa mi'o ma
+is-at (subj) we (what?)
+
+where "mi'o" specifically means
+"you and I, but not others".
+ 
+> "The cat runs up the tree"
+> (((up tree) run) (the cat))
+> [how would you put this into past tense?]
+
+Lojban treats the destination of running
+as a place, so
+
+bajra klama fa le mlatu le trice
+runningly goes (subj) the cat the tree
+ 
+> "Don't eat"
+> (imp ((not eat) you))
+> [imperative for whole sentence, just verb, or use 'ko' from Lojban?]
+
+na citka fa ko
+(It is false) eat (subj) (you-imperative)
+ 
+> "I don't eat"
+> ((not eat) i)
+
+na citka fa mi
+(It is false) eat (subj) I
+
+But this means only that on some unspecified occasion I didn't
+eat, whereas "I don't do X" in English usually means that I never
+do X, or that I habitually don't do X:
+
+noroi citka fa mi
+no-times eat (subj) I
+I never eat
+
+na ta'e citka fa mi
+(false) habitually eat (subj) I
+It is false that I habitually eat
+ 
+> "Eat cookies after dinner"
+> (imp (((after dinner) eat) you cookies))
+>   OR
+> (((after dinner) (imp eat)) you cookies)
+>   OR
+> (((after dinner) eat) ko cookies)
+> [which one?]
+
+ba le vacysai
+        citka fa ko loi cmalu titnanba
+in-future-of the dinner (lit. evening-meal)
+        eat (subj) (you-imp) part-of-mass small cakes
+                        (lit. sweet-bread)
+
+> "Are you hungry?"
+> (ques (hungry you))
+
+xu xagji fa do
+(True?) hunger (subj) you
+ 
+> "If I eat, then I'm full, otherwise I'm hungry"
+> (if (eat i) (full i) (hungry i))
+> [note: "full" would actually be replaced by a proper indication of the
+> MEANING of full in context, ie. have had enough eat, or something]
+
+ganai citka fa mi gi cidja selmansi
+        .ije ganai na citka gi xagji
+
+if eat (subj) I then food-type-of satisfied
+and if not eat then hungry
+
+where the subject is given only once and is understood the other
+three times.  Other translations are possible.
+
+> "I'm hungry"
+> (hungry i)
+
+xagji fa do
+hunger (subj) I
+ 
+> "I am (being) seen"  [someone sees me]
+> (see X i)
+
+viska fa da mi
+see (subj) something me
+ 
+> "What sees me"
+> (see ? i)
+
+viska fa ma mi
+see (subj) (what?) me
+ 
+> "Are you hungry?"
+> (ques (hungry you))
+>    OR
+
+xu xagji fa do
+(True?) hunger (subj) you
+ 
+> "Who is hungry?"
+> (fill-in (hungry ?))
+>   OR
+
+xagji fa ma
+hunger (subj) (what?)
+
+> (hungry ?)
+> [If a computer were to parse this, would it be good to indicate that the
+> sentence is a fill-in-the-blank question before hand, in addition to the
+> blank?]
+
+xu xagji
+(True?) hunger
+Is the obvious person hungry?
+
+After all, there is really no need to say "Are you hungry?" except
+that English verbs need subjects.  Lojban sentences don't, so
+"Hungry?" is plenty.  Whose hunger would you be asking about, normally,
+except the listener's?  (Of course, there are contexts like
+"Is Fido hungry?" as well.)
+ 
+> lojban: "ko (speak) ko"
+> (speak ko ko)
+> [ie. speak to yourself, and allow yourself to speak to you]
+
+tavla fa ko ko
+speak (subj) you-imp you-imp
+
+> "Where do we eat?"
+> (((in ?) eat) we)
+
+citka vi ma fa mi'a/ma'a
+eat near (what?) (subj) we
+
+"mi'a" excludes the listener, and means "I and others",
+whereas "ma'a" means "you and I and others".
+
+> "it is imperative that john eat a sandwich"
+> (imp (eat joe sandwich))
+>    [which is similar in meaning to]
+
+Lojban doesn't have a direct representation of these
+third-person imperatives.  You can say "must eat"
+or the like.
+
+> "make joe eat a sandwich"
+> (cause ko (eat joe sandwitch))
+
+gasnu fa ko
+        le nu citka fa la djos. lo snuji
+agent (subj) you-imp
+        (the event-of eats (subj) (name) Joe a/some sandwich(es))
+ 
+> (if (? dog) (...))
+> [I wrote this down when discussing with a friend, but I don't remember
+> what it means]
+
+This too can be said in Lojban:
+
+ganai gerku fa ma gi co'e
+if dog (subj) (what?) then the-obvious-claim
+What is it that if it is a dog, then the obvious sentence is true?
+
+> "A dog runs now"
+> ((present run) dog)
+
+ca bajra fa lo gerku
+(present) runs (subj) a/some dog(s)
+ 
+> "I run in the park"
+> (((in (the park)) run) i)
+
+bajra vi le panka fa mi
+run at-location the park (subj) I
+
+> "The unhappy me eats chocolate" or "I eat chocolate when I'm not happy"
+> (eat ((not happy) i) chocolate)
+
+citka fa mi poi to'e gleki ku'o loi cakla
+eat (subj) I such-that( opposite-of happy ) part-of-mass-of chocolate
+
+Note the use of "to'e" (other than) rather than "na" (false) here,
+as well as the explicit "poi ... ku'o" relative clause.
+
+> (run (happy i))
+> [what does this mean?]
+
+bajra fa mi poi gleki
+run (subj) I such-that happy
+
+"The happy me runs."
+
+> "the smiling dog runs"
+> (run (smile dog))
+> [ie. smile participle.  When a sentence is used as a noun, in english
+> surface structure, the verb will become a participle, I think]
+
+bajra fa le cisma gerku
+runs (subj) the smile-type-of dog
+
+or
+
+bajra fa le gerku poi cisma
+runs (subj) the dog such-that runs
+ 
+> "I'm faster than you"
+> ((comp fast) i you)
+
+sutra zmadu fa mi do
+fast exceeds (subj) I you
+I exceed you in fast-ness.
+ 
+> "I am big"
+> (big i)
+
+barda fa mi
+big (subj) I
+ 
+> "I am John"
+> (equal i john)
+
+du fa mi la djan.
+= (subj) I (name) John.
+
+But this means that I am identical with some John or other
+than you know.  It might be appropriate in response to
+"Which of you is John?"  More normal versions of the English
+sentence are:
+
+cmene fa zo djan. mi 
+is-name-of (subj) the-word "John" me
+"John" is the name of me.
+
+mi'e djan.
+I-am John.
+
+where "mi'e is a self-vocative particle.
+
+> Let's see what we can do with this.  :)
+
+Read
+ftp://ftp.access.digex.net/pub/access/lojbab/draft-reference-grammar
+to see what we have already done with it.  :-)
+
+If you get tired of saying "fa" in every sentence, move the subject
+before the verb and insert "cu" between them.  You can leave off the
+"cu"
+if the subject is a pronoun, and in some other cases too.
+
+When it comes to Lisp-style languages that are (as And says)
+"in-your-facely compositional", Lojban has the area sewed up, methinks.
+-- 
+John Cowan						cowan@ccil.org
+			e'osai ko sarji la lojban
+
+
