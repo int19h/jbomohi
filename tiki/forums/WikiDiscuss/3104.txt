@@ -4361,3 +4361,31 @@ http://celebrity.mail.yahoo.com
 
 
 
+
+## 2004-12-22T00:27:01Z — klark (@klark) (post 3225)
+
+Title: Re: PEG Morphology Algorithm -- design
+Message-Id: klark-3104-93968c7fa1@www.lojban.org
+In-Reply-To: rlpowell-0-e27b4eb161@www.lojban.org
+
+Jorge, this is just marvelous work -- I'm in awe. (I'm also envious of the amount of free time you appear to have. :-) However, I have a concern about the overall approach you're taking -- the high-level design, as it were.
+
+The grammar in its current state does four separable things:
+1. It partitions the input stream into words.
+2. It validates the words, rejecting invalid vowel and consonant patterns.
+3. It determines the selma'o of a cmavo.
+4. It categorizes brivla into gismu, lujvo and fu'ivla.
+
+As a result, the grammar is fearsomely complex in spots. (OK, the part that recognizes selma'o isn't complex; it's just huge.) And it could be argued that categorizing brivla really belongs to semantic analysis, not parsing.
+
+For the sake of modularity and reducing point-complexity, I think it would be worth considering splitting the job into its components, and writing separate grammars:
+1. A partitioning grammar that considers an input string, and accepts a word (cmene, brivla, cmavo or non-Lojban) from its head.
+2. A validating grammar that considers a Lojban word, and rejects it (re-categorizing it as non-Lojban?) if it has invalid vowel or consonant patterns.
+3. Selma'o determination might be more easily described as a symbol table lookup than as a parsing problem.
+4. A grammar that considers a valid Lojban brivla, and categorizes it.
+
+Of course this scheme depends on being able to combine multiple PEG-generated parsers into a single program. But if the parser generator takes parameters which can be used to name the input and parser functions, that shouldn't be hard.
+
+Or is there already a consensus that the requirement is for a single grand grammar covering every relevant aspect of the language?
+
+Clark Nelson
