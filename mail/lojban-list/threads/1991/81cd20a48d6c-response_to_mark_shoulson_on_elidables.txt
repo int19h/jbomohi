@@ -1,0 +1,59 @@
+# mail/lojban-list thread 81cd20a48d6c-response_to_mark_shoulson_on_elidables | root m0jxuyn-0000rac@snark.thyrsus.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 1991-07-11T06:31:00Z | lojbab | m0jxuyn-0000rac@snark.thyrsus.com | mail/lojban-list/cur/679213860.81cd20a48d6c7181.jbomohi:2,S
+Mark Shoulson writes:
+>Consider the language:
+>
+>A --> e | < A > | < A A >    (e is the empty string)
+>
+>Now, we can obviously derive strings (1) <<<><>>> and (2) <<<>><>> from
+>this.  Now, eliding the last two rightbrackets from (1), we get <<<><>.
+>This is probably legal, though the "not the prefix of any string"
+>restriction probably cuts me down.  We can also elide the last and
+>second-to-last rightbracket in (2), yielding <<<><>, the same string.
+
+(1) looks legal.  The elision in (2) is not legal, based on the "not the
+prefix of any string" rule.  It may seem like begging your question, but
+you cannot elide the second-to-last rightbracket in (2) because the result
+<<<><>> is the prefix of another string, i.e. (1).  Thus the elided form
+<<<><> must be that of (1).
+
+
+>I'm pretty sure you're restriction avoids such a mess, but it's something
+>to consider.  I mean,
+>
+>broda ke brode ke brodo brodu
+>
+>is taken to mean
+>
+>broda ke brode ke brodo brodu ke'e ke'e
+>
+>But *could* mean
+>
+>broda ke brode ke'e ke brodo brodu ke'e  (though why you'd want to is beyond
+>me)
+
+Similarly, you could not elide the first ke'e in the last sentence,
+because the result would be the prefix of the sentence before.
+
+Now pragmatically, I ask you to think like an LR(1) parser.  It will not detect
+an elision until it finds a next-token causing the string to be ungrammatical.
+In broda ke brode ke brodo brodu, the parser sees nothing wrong till it gets
+to the place after the brodu.  'End of text' there is not a legal token
+because there are unclosed structures.  Therefore it knows an elision has taken
+place.  The rule is that it attempts closure on the innermost construct first.
+This gives
+broda ke brode <ke brodo brodu ke'e>
+
+It then looks again - sees that end-of-text is still illegal, and
+inserts the closure for the next outer construct (actually what it is
+doing is climbing back up the parse tree, I think.
+
+This gives
+broda {ke brode <ke brodo brodu ke'e> ke'e}
+
+Now end-of-text is legal and the parse completes.
+
+lojbab
+
+
