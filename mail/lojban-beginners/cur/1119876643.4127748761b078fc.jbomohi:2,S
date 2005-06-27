@@ -1,0 +1,83 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Mon, 27 Jun 2005 10:55:30 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.50)
+	id 1Dmt4b-0004ur-MV
+	for lojban-beginners-real@lojban.org; Mon, 27 Jun 2005 05:50:49 -0700
+Received: from smtpout.mac.com ([17.250.248.72])
+	by chain.digitalkingdom.org with esmtp (Exim 4.50)
+	id 1Dmt4Y-0004uj-17
+	for lojban-beginners@lojban.org; Mon, 27 Jun 2005 05:50:49 -0700
+Received: from mac.com (smtpin07-en2 [10.13.10.152])
+	by smtpout.mac.com (Xserve/8.12.11/smtpout15/MantshX 4.0) with ESMTP id j5RCohEQ028536
+	for <lojban-beginners@lojban.org>; Mon, 27 Jun 2005 05:50:44 -0700 (PDT)
+Received: from [192.168.1.185] ([208.253.76.35])
+	(authenticated bits=0)
+	by mac.com (Xserve/smtpin07/MantshX 4.0) with ESMTP id j5RCoegg000980;
+	Mon, 27 Jun 2005 05:50:42 -0700 (PDT)
+In-Reply-To: <EC9405E7-9697-45AD-99E2-A0EDD9D755B4@gmail.com>
+References: <EC9405E7-9697-45AD-99E2-A0EDD9D755B4@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v730)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Message-Id: <1FC40674-E65E-47B8-B957-719BC621BB83@mac.com>
+From: Richard Todd <rwtodd@mac.com>
+Subject: [lojban-beginners] Re: Hello from a new lojban learner
+Date: Mon, 27 Jun 2005 07:50:43 -0500
+To: lojban-beginners@lojban.org
+X-Spam-Score: -2.6 (--)
+X-archive-position: 1539
+X-Approved-By: rlpowell@digitalkingdom.org
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@chain.digitalkingdom.org
+Errors-to: lojban-beginners-bounce@chain.digitalkingdom.org
+X-original-sender: rwtodd@mac.com
+Precedence: bulk
+Reply-to: lojban-beginners@chain.digitalkingdom.org
+X-list: lojban-beginners
+Content-Length: 2162
+
+On Jun 27, 2005, at 12:11 AM, Mitch Tishmack wrote:
+> To elaborate on the previous example, use gerku as the meaning of  
+> la chien, der Hund, and dog. This enables me to look for links from  
+> gerku to other languages and easily build lists of words to ask. If  
+> any fellow programmers have a better idea on how they would  
+> implement this I am more than happy to listen to them.
+
+You didn't really say what your program is trying to do, but I am  
+assuming it is a flashcard type of thing, where it puts up a  
+'question' word, and then gives a list of words in the other  
+languages.  The user picks the 'answer' word that means the same  
+thing as the 'question' word it put up?
+
+If so, then I'd store the words as tuples:
+bow  german-for-bow  french-for-bow    #  (as in bow-and-arrow)
+bow  german-for-bow  french-for-bow    # (as in take a bow)
+dog    ...
+fish    ...
+turkey  ....
+
+So then, say your program selects the first bow tuple for the  
+question.  It selects german to flash on screen, and french for the  
+answer set (so that there is a right answer to choose from!).  Then  
+in needs to select 3 other random incorrect answers.  To avoid the  
+ambiguity problem, all the program has to do is make sure the other  
+random answer tuples do not contain any of the same words as the  
+question tuple.  So, to complete the example, it could randomly  
+select 'dog', and check that none of the dog words equal the bow  
+words.  No problem there.  Then, if it randomly selects that second  
+type of 'bow', it will notice that the english component matches the  
+question tuple, and would move on without selecting a word from this  
+tuple.
+
+Make sense?
+
+Putting a lojban word in each tuple to avoid ambiguity would also  
+seem to imply that the question word will always be a lojban word.   
+(or each question word will always be annotated with a lojban word to  
+disambiguate it?)  That may be fine for your purposes, but for the  
+program I'm assuming you are trying to write, I'm not sure it makes  
+any sense.  There's no reason not to go ahead and make lojban one of  
+the languages it quizzes you on, of course!
+
+In any case, good luck!
+
+
+
