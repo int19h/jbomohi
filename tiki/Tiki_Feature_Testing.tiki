@@ -1,11 +1,6 @@
-Sorry, I need to precise my thought:
-This change is needed, it's not a bug perhaps but at least a missing
-feature, so + 1 to do it
-Just the parser technologie from 1.10 is quite different and that
-*cannot* be "pushed" the same.
-Also, we tested out:
-{BOX(title=>Summary "Test"!)} gives Summa ??
-{BOX(title=>Summary "Test")} gives the same ??
+
+{BOX(title=>Summary "Test"!)} gives Summa ??{BOX}
+{BOX(title=>Summary "Test")} gives the same ??{BOX}
 Normally the " should be considered only if followin directly = or =>
 
 {BOX(title="Hallo, Bertrand!")}Mein Text{BOX} misses totally the title !!!
@@ -21,6 +16,25 @@ but  {BOX(title=>Hallo, Bertrand!)}Mein Text{BOX} as expected cuts to Hallo
 {BOX(title=>Hallo Bertrand!)}Mein Text{BOX} is right
 {BOX(title=Hallo Bertrand!)}Mein Text{BOX} also
 
+~np~
+
+{BOX(title=>Summary "Test"!)} gives Summa ??{BOX}
+{BOX(title=>Summary "Test")} gives the same ??{BOX}
+Normally the " should be considered only if followin directly = or =>
+
+{BOX(title="Hallo, Bertrand!")}Mein Text{BOX} misses totally the title !!!
+as {BOX(title=>"Hallo, Bertrand!", bg=>red, width=>50% )}Mein Text{BOX}
+but the color is ok
+
+so, not even sure this solution is quite correct .... I would regexp
+personnaly.
+
+{BOX(title=>"Hallo, Bertrand!")}Mein Text{BOX} is right
+but  {BOX(title=>Hallo, Bertrand!)}Mein Text{BOX} as expected cuts to Hallo
+
+{BOX(title=>Hallo Bertrand!)}Mein Text{BOX} is right
+{BOX(title=Hallo Bertrand!)}Mein Text{BOX} also
+~/np~
 
 Test du'e.
 
