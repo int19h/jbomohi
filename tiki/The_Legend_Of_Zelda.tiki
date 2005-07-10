@@ -1,203 +1,328 @@
-This is ((bancus|my)) file for zelda translation. Comments on my translations?
+[bancus|I] have been working on translating The Legend of Zelda to Lojban. This page holds a copy of my notes while working on it.
 
-~pp~
-Cave Text (0x405C to 0x45B1)
-24 characters -------->|
-  IT'S DANGEROUS TO GO
-	 ALONE! TAKE THIS
--
- LE ZA'I PAVYSEIKLA CU 
-  CKAPE .I KO CPACU TI
-24 characters -------->|
-  MASTER USING IT AND
-	YOU CAN HAVE THIS
--
- KO VLIBI'O .IJE MI BA
- DUNDA DO LE TI DAKFU 
--
- KO CERTU LE ZU'O PILNO
- LO DAKFU .IBA DUNDA DO
- TI
-24 characters -------->|
- TAKE ANY ROAD YOU WANT
--
-	  KO KLAMA FO 
-	LE SELDJICA BE DO
-24 characters -------->|
- SECRET IS IN THE TREE
-	 AT THE DEAD-END
--
-  LE SELMIPRI CU NENRI 
- LE TRICU BE VI LUTFA'O
-24 characters -------->|
-	LET'S PLAY MONEY
-	MAKING GAME
--
-		MI'O KELCI 
-	 LE NU DINJI'A
-24 characters -------->|
-  PAY ME FOR THE DOOR
-	  REPAIR CHARGE
--
-	 KO PLEJI FI MI 
-	LE NU VORME CIKRE
-24 characters -------->|
-	 SHOW THIS TO THE
-		 OLD WOMAN
--
-	 KO JARCO TU'A TI
-	 LE NALCI'O NINMU
-24 characters -------->|
-	 MEET THE OLD MAN
-		AT THE GRAVE
--
-	KO PENMI LE NALCI'O
-	NANMI VI LE MROSTU
-24 characters -------->|
-  BUY MEDICINE BEFORE
-  YOU GO
--
-  KO TERVECNU LO medicine
-	 PU LE NU DO KLAMA
-24 characters -------->|
-  PAY ME AND I'LL TALK
--
-	GANAI DO PLEJI MI 
-		GI MI TAVLA
-24 characters -------->|
-	THIS AIN'T ENOUGH
-		  TO TALK
-24 characters -------->|
-		  GO UP,UP
-	 THE MOUNTAIN AHEAD
-24 characters -------->|
-  GO NORTH,WEST,SOUTH
-  WEST TO THE FOREST (um... 0x40 is added to the T, I'm not sure what that means)
-  OF MAZE
-24 characters -------->|
-	 BOY, YOU'RE RICH
--
-	  .U'E DO RICFU
-24 characters -------->|
-  BUY SOMETHING' WILL YA
--
-	.E'O KO TERVECNU
-24 characters -------->|
-		BOY, THIS IS
-	 REALLY EXPENSIVE
--
-	  TI MUTCE KARGU
-24 characters -------->|
- TAKE ANY ONE YOU WANT
--
-		KO CPACU PA 
-	LE SELDJICA BE DO
-24 characters -------->|
-	  IT'S A SECRET
-	  TO EVERYBODY
--
-	 TI SELMIPRI FI
-		 RO PRENU
-24 characters -------->|
-	GRUMBLE,GRUMBLE
--
-	 .OIRO'OBE'U
-24 characters -------->|
-	 EASTMOST PENNINSULA
-	  IS THE SECRET
+{img src="http://www.surreality.us/5.png"}
+{img src="http://www.surreality.us/7.png"}
+{img src="http://www.surreality.us/8.png"}
+{img src="http://www.surreality.us/9.png"}
+{img src="http://www.surreality.us/13.png"}
 
+General notes on the encoding. VRAM loading is done by one routine, which is given an address and does the following:
 
-Item Descriptions (0x92B0-94BC)
+1. If the byte at the address has the high-bit set, we're done. Return.
+2. Otherwise, read two bytes from that address, this is the address (big-endian) in VRAM that the data should be written to.
+3. Read the next byte. If high bit (bit 7) is set, set the Inc32 bit of $2000. If bit 6 is set, perform RLE. (Explained below.) The remaining six bits are the length.
+4. If performing RLE, read the next byte, write it length times, then go to 1.
+5. Otherwise, read the next byte.
+6. *There's something here with line-reseting and the higher bits. I'm not fully sure about it though.*
+7. Write this byte.
+8. Decrement length.
+9. If length is not zero, go to 5.
+10. Go to 1.
 
-Menu (0X9D58-0X9DEF)
-
-Additional Text (0xA969-0xA98E)
-
-Additional Text (0xAB17-0xAB40)
-
-Credits (0xAC6E-0xAE09)
-
-Some menu(?) stuff (0x19D17-0x19D76)
-
-Another menu? (0x1A12A-0x1A211)
-
-Continute/Save/Retry menu and misc. (0x1A2CB-0x1A3F3)
-
-Storyline (0x1A4A2-0x1A7DA)
-</verbatim>
-
-This one I'm having a hard time inserting. I can insert the text, but the colors will be all wacky.
-
-<verbatim>
-
-|<-- 19  chars -->|
-THE LEGEND OF ZELDA
-
-|<----- 24 CHARS ----->|
-MANY  YEARS  AGO  PRINCE
-			..		..
-DARKNESS	GANNON  STOLE
-
-ONE OF THE TRIFORCE WITH
-
-POWER.	 PRINCESS ZELDA
-
-HAD  ONE OF THE TRIFORCE
-
-WITH WISDOM. SHE DIVIDED
-		 .. ..
-IT INTO  8 UNITS TO HIDE
-		  ..		..
-IT FROM	GANNON  BEFORE
-
-SHE WAS CAPTURED.
-				 .. ..
-  GO FIND THE  8 UNITS
-  ..	 ..
-	 LINK  TO SAVE HER.
-
- |<---- 22 CHARS ---->|
- LE LISRI PE LA ZELDAS.
-|<----- 24 CHARS ----->|
-.I LE  PACYNO'I  PO'U LA  
-GANYN. PUZUKI ZERLE'A PA 
-LE CIBYVLI PO'U LE BAPLI
-.I  LE	NOBLI  PO'U  LA 
-ZELDAS. GOI  KO'A  PONSE 
-LE CIBYVLI PO'U LE PRIJE
-GOI KO'E	.I LE NU KO'A
-FENDI  KO'E LE  BI SPISA
-GOI  KO'I	CU  VELMIPRI 
-KO'A  KO'E  LA GANYN. BA
-LE	NU  KO'A	SELKAVBU 
-
-.I  KO FACKI  LE  SELZVA
-KO'I  TEZU'E XRUTI  KO'A 
-
-<ReaperSMS> theRizen: the start of the vram copy block for the text is at A3FE in bank6
-<theRizen> okay, now what do I do with it?
-<ReaperSMS> rip it out and decode it?
-<ReaperSMS> format is VRAM hi, VRAM lo, Inc/Skip/Length byte, Data byte(s)
-<theRizen> do you have a desciption of the encode?
-<ReaperSMS> yeah
-<ReaperSMS> it's a bunch of glued together blocks
-<ReaperSMS> first two bytes are the vram address, in big endian
-<ReaperSMS> next byte is a length/setup byte
-<ReaperSMS> high bit is the inc32 flag from $2000 ($80 -- inc 32 bytes at a time)
-<ReaperSMS> the low 6 bits are the length, if they're 0, copy 64 bytes
-<ReaperSMS> if bit 6 is set, repeat one byte length # of times
-<theRizen> repeat?
-<theRizen> oh
-<ReaperSMS> it's RLE
-<theRizen> for like RLE
-<theRizen> got ya
-<ReaperSMS> example: 23 D0 58 FF FF
-<ReaperSMS> writes to $23D0 in vram
-<ReaperSMS> length byte is 58 (01011000)
-<ReaperSMS> so repeat the next byte (FF) 24 times
-<ReaperSMS> if the high bit of the vram address is set, (the FF at the end) it ends the set
-
+I do my romhacking with hexpose. It's pretty simple, but it does the job. I also used a disassembler at some point to figure out some of the above, but I ended up just gleaning it from various sources and how the data itself works.
 
 Title screen is in the vicinity of 0x1AAEA
 
-~/pp~
+Due to the nature of the loading routine, I can translate such that things take up less space, but I can't make them take more. That is, unless I can find where the reference addresses are stored. Hopefully, this won't cause too many issues.
+
+~/pp~{img src="img/wiki_up/5.png" }In-game text $405C-$45B1:
+(Lengths include * ending marker)
+E9=Exclaim
+EC=Period
+E4=Space?
+(Regular letter & $C0)
+$405C 43 Bytes
+-
+  IT'S DANGEROUS TO GO
+    ALONE! TAKE THIS.
+-
+   .O'I DO PO'O KLAMA
+     I KO CPACU TI
+-
+
+$4087 42 Bytes
+-
+  MASTER USING IT AND
+   YOU CAN HAVE THIS.
+-
+ DO KA'E PONSE TI GI'O 
+  CERTU LOZU'O PILNO
+-
+$40B1 25 Bytes
+-
+ TAKE ANY ROAD YOU WANT.
+-
+ KO KLAMA FO LE SELDJICA
+-
+
+
+$40C9 42 Bytes
+-
+ SECRET IS IN THE TREE
+    AT THE DEAD-END.
+-
+ MIPRI NE'I LE TRICU 
+   BEVI LE SE PLUTA
+-
+
+$40F3 34 Bytes
+-
+   LET'S PLAY MONEY
+   MAKING GAME.
+-
+  .E'U MI'O KELCI 
+ LEZU'O JDINI CPACU
+-
+
+$4115 41 Bytes
+-
+  PAY ME FOR THE DOOR
+     REPAIR CHARGE.
+-
+
+    KO PLEJI FI MI
+  LONU CIKRE LE VORME
+-
+
+$413D 36 Bytes
+-
+    SHOW THIS TO THE
+      OLD WOMAN.
+-
+    KO JARCO TU'A TI
+    LE TOLCI'O NINMU
+-
+
+$4162 39 Bytes
+-
+    MEET THE OLD MAN
+      AT THE GRAVE.
+-
+ KO PENMI LE TOLCI'O NANMU
+    LE MORSI STUZI
+-
+
+$4189 30 Bytes
+-
+  BUY MEDICINE BEFORE
+  YOU GO.
+-
+KO TE VECNU LO VE MIKCE
+PU LONU KLAMA
+-
+
+$41A7 23 Bytes
+-
+  PAY ME AND I'LL TALK.
+-
+ KO PLIJE MI POI TAVLA
+-
+(I really don't like the above, but it's space-restricted.)
+
+$41BE 34 Bytes
+-
+ THIS AIN'T ENOUGH
+        TO TALK.
+-
+ KO ZMADU PLIJE
+-
+
+$41E2
+-
+       GO UP,UP,
+   THE MOUNTAIN AHEAD.
+-
+
+$4208
+-
+  GO NORTH,WEST,SOUTH,
+  WEST TO THE FOREST
+    OF MAZE.
+-
+# For some reason, the T in FOREST is anded with $40 instead of $80.
+
+$423C
+-
+    BOY, YOU'RE RICH!
+-
+    .UE DO RICFU
+-
+$4151
+-
+ BUY SOMETHIN' WILL YA!
+-
+
+$4268
+-
+     BOY, THIS IS
+   REAL EXPENSIVE!
+-
+
+$428D
+-
+ TAKE ANY ONE YOU WANT.
+-
+
+$42A4
+-
+     IT'S A SECRET
+     TO EVERYBODY.
+-
+
+$42C8
+-
+   GRUMBLE, GRUMBLE...
+-
+
+$42DD
+-
+  EASTMOST PENNINSULA
+     IS THE SECRET.
+-
+
+$4305
+-
+ DODONGO DISLIKES SMOKE.
+-
+
+$431D
+-
+ DID YOU GET THE SWORD
+ FROM THE OLD MAN ON
+ TOP OF THE WATERFALL?
+-
+
+$435D
+-
+     WALK INTO THE
+       WATERFALL.
+-
+
+$4380
+-
+  SECRET POWER IS SAID
+   TO BE IN THE ARROW.
+-
+
+$43AC
+-
+    DIGDOGGER HATES
+ CERTAIN KIND OF SOUND.
+-
+
+$43D6
+-
+    I BET YOU'D LIKE
+   TO HAVE MORE BOMBS.
+-
+
+$4400
+-
+    IF YOU GO IN THE
+ DIRECTION OF THE ARROW.
+-
+
+$442C
+-
+    LEAVE YOUR LIFE
+       OR MONEY.
+-
+
+$444F
+-
+ THERE ARE SECRETS WHERE
+   FAIRIES DON'T LIVE.
+-
+
+All of Treasures $91AB-$94BC
+Main menu is around 9D58
+"ZELDA" appears at 9EFB for some reason
+
+A969:
+-
+THANKS LINK,YOU'RE
+?THE HERO OF HYRULE*
+-
+
+AB17 has some more endgame stuff
+Credits at AC6F
+AD45:
+ANOTHER QUEST WILL START(AB)FROM HERE PRESS THE START BUTTON
+YOU ARE GREAT
+YOU HVE AN AMAZING WISDOM AND POWER
+END OF "THE LEGEND OF ZELDA"
+
+More main menu at 1A15C
+1A2CB has death menu stuff
+1A329 looks to have the pause menu stuff
+
+story notes
+E6 = Corner
+E4/E5 = top/bottom border
+
+colors: green = 11, red = 10, white = 00, also white = 01?
+
+AABBCCDD
+
+BA
+DC
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|11 11|11 11|00 00|00 00|00 00|00 00|11 11|11 11|
+|11 11|11 11|00 00|00 00|00 00|00 00|11 11|11 11|
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|11 11|00 00|00 00|00 00|00 00|00 00|00 00|11 11|
+|11 11|11 10|10 10|10 10|10 10|10 10|10 11|11 11|
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|11 11|00 00|00 00|00 01|
+|11 11|00 00|00 00|10 10|
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+
+
+Visible story screen runs from 1A454 to 1A827
+
+THE LEGEND OF ZELDA
+LE LISRI PE LA ZELDAS
+
+MANY  YEARS  AGO  PRINCE
+DARKNESS   GANNON  STOLE
+ONE OF THE TRIFORCE WITH
+POWER     PRINCESS ZELDA
+HAD  ONE OF THE TRIFORCE
+WITH WISDOM  SHE DIVIDED
+IT INTO  8 UNITS TO HIDE
+IT FROM   GANNON  BEFORE
+SHE WAS CAPTURED
+
+GO FIND THE  8 UNITS
+LINK TO SAVE HER
+-----------------------|
+LE  PALCI  PO'U LA GANYN 
+PUKI ZERLE'A LE CIBMAKFA
+PE LOKA TSALI I LE NOBLI
+PO'U LA ZELDAS  PONSE LE 
+CIBMAKFA  PE  LOKA PRIJE 
+I ZY  FENDI  FI BI SPISA 
+TEZU'E  LENU MIPRI FI GY
+KEI PU  LENU ZY SELKAVBU
+
+   DOI LINK KO CPACU    
+      LE BI SPISA        
+  TEZU'E LONU NURGAU ZY
+
+2109 " CMENE "
+2112 " NI KANRO "
+22A7 "CFARI TADJI"
+22E7 "VIMCU TADJI"
+
+REGISTER YOUR NAME
+CUXNA LE DO CMENE
+ELIMINATION MODE
+  VIMCU TADJI
+  -LIFE-
+NI KANRO
+
+USE B BUTTON
+FOR THIS
+KO PILNO BY
+
+2984
