@@ -9,11 +9,15 @@ General notes on the encoding. VRAM loading is done by one routine, which is giv
 3. Read the next byte. If high bit (bit 7) is set, set the Inc32 bit of $2000. If bit 6 is set, perform RLE. (Explained below.) The remaining six bits are the length.
 4. If performing RLE, read the next byte, write it length times, then go to 1.
 5. Otherwise, read the next byte.
-6. *There's something here with line-reseting and the higher bits. I'm not fully sure about it though.*
+6. **There's something here with line-reseting and the higher bits. I'm not fully sure about it though. See Below.**
 7. Write this byte.
 8. Decrement length.
 9. If length is not zero, go to 5.
 10. Go to 1.
+
+RLE: Stands for Run-Length Encoding. With RLE, you'll have pairs of bytes. The first gives you a run-length, the second is the data itself. When uncompressing, you simply repeat the data byte run-length times.
+
+Line-reseting: Basically, with the cave text (which is most of the text in the game), setting bit 7 on the text causes that char to be printed, and the next to be written exactly one tile below the origin. Setting bit 6 causes the same thing, except that the next is written two tiles below the origin. I have not explored whether this works everywhere or what, but I really doubt it. (There are actual graphic tiles that need those bits.) I suspect there's actually a separate text-rendering sub-routine.
 
 I do my romhacking with hexpose. It's pretty simple, but it does the job. I also used a disassembler at some point to figure out some of the above, but I ended up just gleaning it from various sources and how the data itself works.
 
@@ -110,6 +114,7 @@ PU LONU KLAMA
 $41A7 23 Bytes
 -
   PAY ME AND I'LL TALK.
+
 -
  KO PLIJE MI POI TAVLA
 -
