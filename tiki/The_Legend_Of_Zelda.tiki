@@ -7,14 +7,22 @@ General notes on the encoding. VRAM loading is done by a few routines, the main 
 The routine is given an address and does the following:
 
 1. If the byte at the address has the high-bit set, we're done. Return.
+
 2. Otherwise, read two bytes from that address, this is the address (big-endian) in VRAM that the data should be written to.
+
 3. Read the next byte. If high bit (bit 7) is set, set the Inc32 bit of $2000. If bit 6 is set, perform RLE. (Explained below.) The remaining six bits are the length.
+
 4. If performing RLE, read the next byte, write it length times, then go to 1.
+
 5. Otherwise, read the next byte.
-7. Write this byte.
-8. Decrement length.
-9. If length is not zero, go to 5.
-10. Go to 1.
+
+6. Write this byte.
+
+7. Decrement length.
+
+8. If length is not zero, go to 5.
+
+9. Go to 1.
 
 RLE: Stands for Run-Length Encoding. With RLE, you'll have pairs of bytes. The first gives you a run-length, the second is the data itself. When uncompressing, you simply repeat the data byte run-length times.
 
@@ -31,9 +39,12 @@ Cave text is distinct from the usual routines, in that it has no way to set the 
 Cave text starts at a certain point, and has three lines. Text starts on the first line. Line termination is achieved by setting high-bits on the last character in the line.:
 
 * Bit 7 (AND $80) moves to the second line.
+
 * Bit 6 (AND $40) moves to the third line.
+
 * Bits 6 and 7 (AND $C0), set together, terminate the text.
 
+~pre~
 $405C 43 Bytes
 -
   IT'S DANGEROUS TO GO
@@ -144,7 +155,6 @@ $4208
   WEST TO THE FOREST
     OF MAZE.
 -
-# For some reason, the T in FOREST is anded with $40 instead of $80.
 
 $423C
 -
@@ -238,6 +248,7 @@ $444F
  THERE ARE SECRETS WHERE
    FAIRIES DON'T LIVE.
 -
+~/pre~
 
 All of Treasures $91AB-$94BC:
 
@@ -245,54 +256,38 @@ These actually are in the ROM out of order from when they appear on screen.
 
 These also seem to have their own sub-routine for display. This one starts with a byte indicating how far over to start the line. Lines are terminated with $FF. Some times you get two lines for descriptions, sometimes only one. The positioning of the lines seems to be decided somewhere that I haven't found.
 
-
-
-
 Main menu is around 9D58
+
 "ZELDA" appears at 9EFB for some reason
 
+~pre~
 A969:
 -
 THANKS LINK,YOU'RE
 ?THE HERO OF HYRULE*
 -
+~/pre~
 
 AB17 has some more endgame stuff
+
 Credits at AC6F
+
+~pre~
 AD45:
 ANOTHER QUEST WILL START(AB)FROM HERE PRESS THE START BUTTON
 YOU ARE GREAT
 YOU HVE AN AMAZING WISDOM AND POWER
 END OF "THE LEGEND OF ZELDA"
+~/pre~
 
 More main menu at 1A15C
+
 1A2CB has death menu stuff
+
 1A329 looks to have the pause menu stuff
 
-story notes
-E6 = Corner
-E4/E5 = top/bottom border
-
-colors: green = 11, red = 10, white = 00, also white = 01?
-
-AABBCCDD
-
-BA
-DC
-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-|11 11|11 11|00 00|00 00|00 00|00 00|11 11|11 11|
-|11 11|11 11|00 00|00 00|00 00|00 00|11 11|11 11|
-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-|11 11|00 00|00 00|00 00|00 00|00 00|00 00|11 11|
-|11 11|11 10|10 10|10 10|10 10|10 10|10 11|11 11|
-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-|11 11|00 00|00 00|00 01|
-|11 11|00 00|00 00|10 10|
-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-
 Visible story screen runs from 1A454 to 1A827
-
+~pre~
 THE LEGEND OF ZELDA
 LE LISRI PE LA ZELDAS
 
@@ -321,12 +316,17 @@ KEI PU  LENU ZY SELKAVBU
    DOI LINK KO CPACU    
       LE BI SPISA        
   TEZU'E LONU NURGAU ZY
+~/pre~
 
 2109 " CMENE "
+
 2112 " NI KANRO "
+
 22A7 "CFARI TADJI"
+
 22E7 "VIMCU TADJI"
 
+~pre~
 REGISTER YOUR NAME
 CUXNA LE DO CMENE
 ELIMINATION MODE
@@ -337,5 +337,4 @@ NI KANRO
 USE B BUTTON
 FOR THIS
 KO PILNO BY
-
-2984
+~/pre~
