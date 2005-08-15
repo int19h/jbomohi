@@ -1,0 +1,158 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 76993 invoked from network); 15 Aug 2005 04:45:43 -0000
+Received: from unknown (66.218.66.218)
+  by m23.grp.scd.yahoo.com with QMQP; 15 Aug 2005 04:45:43 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta3.grp.scd.yahoo.com with SMTP; 15 Aug 2005 04:45:43 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.52)
+	id 1E4Wqz-0003T7-OA
+	for lojban@yahoogroups.com; Sun, 14 Aug 2005 21:45:41 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.52)
+	id 1E4Wqf-0003Sj-Jl; Sun, 14 Aug 2005 21:45:23 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 14 Aug 2005 21:45:11 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.52)
+	id 1E4WqM-0003SN-M0
+	for lojban-list-real@lojban.org; Sun, 14 Aug 2005 21:45:02 -0700
+Received: from [208.234.8.229] (helo=intelligenesiscorp.com)
+	by chain.digitalkingdom.org with esmtp (Exim 4.52)
+	id 1E4WqI-0003S7-Bc
+	for lojban-list@lojban.org; Sun, 14 Aug 2005 21:45:02 -0700
+Received: from zombiethustra (pcp06586041pcs.nrockv01.md.comcast.net [69.140.24.121])
+	by intelligenesiscorp.com (8.12.10/8.12.10) with SMTP id j7F4il9d027670;
+	Mon, 15 Aug 2005 00:44:48 -0400
+Cc: "Ari Heljakka" <heljakka@iki.fi>,
+        "Izabela Lyon Freire Goertzel" <izabela@goertzel.org>
+Date: Mon, 15 Aug 2005 00:44:44 -0400
+Message-ID: <JNEIJCJJHIEAILJBFHILAEKBFFAA.ben@goertzel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook IMO, Build 9.0.2416 (9.0.2911.0)
+In-Reply-To: <JNEIJCJJHIEAILJBFHILKEJOFFAA.ben@goertzel.org>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
+Importance: Normal
+X-Spam-Score: -2.6 (--)
+X-archive-position: 10355
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: ben@goertzel.org
+X-list: lojban-list
+X-Spam-Score: -2.6 (--)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 1:12:0:0
+X-eGroups-From: "Ben Goertzel" <ben@goertzel.org>
+From: "Ben Goertzel" <lojban-out@lojban.org>
+Reply-To: ben@goertzel.org
+Subject: [lojban] Re: Loglish: A Modest Proposal
+X-Yahoo-Group-Post: member; u=116389790; y=JUGKDILdeeKNMCFELalg9Y7O80TGong6zdrIO3V1M1kk5opP4Q
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 24733
+Content-Length: 3434
+
+
+Hi,
+
+As an example of the algorithms I described in my prior mail, suppose
+someone says
+
+"Ben murder chicken pliers quu weapon"
+
+This means that "Ben murders chickens using pliers as a weapon"
+
+Now, suppose there is no Loglish dictionary entry for "murder."  Then the
+Loglish parser needs to find the closest semantic match in the Loglish
+dictionary, using WordNet-based semantic distance.  Suppose this match is
+"kill", with the dictionary
+
+kill
+arg1: agent
+arg2: patient
+arg3: instrument
+
+Then the algorithm must use WordNet similarity to figure out that "weapon"
+matches to "instrument" not "agent" or "patient" (a particularly easy
+problem since "Ben" and "chicken" are filling the "agent" and "patient"
+slots anyway, but it won't always be this easy)
+
+Note that the person making the sentence was being fuzzy in a
+natural-language-ish way, via using "method" instead of "instrument."  But
+inside the Loglish parser, this fuzziness is processed out via using WordNet
+semantic distance calculations, resulting in the semantic parse (expressed
+as a series of predicate logic relationships)
+
+murder_1(Ben_1, chicken_1, pliers_1)
+Inheritance(murder_1, murder)
+Inheritance(Ben_1, Ben)
+Inheritance(chicken_1, chicken)
+Inheritance(pliers_1, pliers)
+Agent(murder_1, Ben_1_
+Patient(murder_1, chicken_1)
+Instrument(murder_1, pliers_1_
+
+Of course the sentence "Ben kills chickens with a pliers" is parseable
+unproblematically by a host of existing English parsers, so Loglish adds
+little value here.  But note that even here it does add some value because
+an ordinary English parser would produce two parses corresponding to
+
+[Ben kills chickens] with a pliers
+
+vs.
+
+Ben kills [chickens with a pliers]
+
+Common sense tells us to choose the first of these two options but an
+automated parser may lack this common sense.  The Loglish version eliminates
+the syntactic ambiguity of the English version, which is exactly what it's
+supposed to do.
+
+-- Ben G
+
+p.s. I'm considering changing the name of Loglish to "quul"  ;-)
+
+
+> In nearly all cases it will be possible to achieve successful results via
+> simple algorithms such as
+>
+> "Resolve 'X qui Y' to the sense of X whose WordNet definition has the
+> smallest semantic distance to Y."
+>
+> "Given 'X quu Y' , assign Y to the argument position of X whose
+> description
+> in the Loglish dictionary has the smallest semantic distance to Y."
+>
+> I'm quite confident these algorithms would work with 97%+
+> accuracy, and 99%+
+> accuracy after some training and fiddling.
+>
+> Of course, this quu algorithm requires a Loglish dictionary to be written,
+> but this dictionary doesn't have to be complete because one can
+> use another
+> algorithm:
+>
+> "Given 'X quu Y' , if X is not in the Loglish dictionary, find the
+> semantically closest Z to X so that Z is in the Loglish dictionary, and
+> assign Y to the argument position of Z whose description in the Loglish
+> dictionary has the smallest semantic distance to Y, and then assign Y to a
+> corresponding argument position for X"
+>
+> I bet this will work with 90%+ accuracy.
+>
+> Obviously this is more complex and funkier than Lojban parsing, but OTOH
+> having the full English vocabulary to use is a big thing...
+
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
