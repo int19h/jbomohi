@@ -1,4 +1,4 @@
-# mail/lojban-beginners thread 1e47e4966d51-new_3d_logo_for_lojban%2E | root 20050829115544.70072.qmail@web33403.mail.mud.yahoo.com | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-beginners thread 1e47e4966d51-new_3d_logo_for_lojban%2E | root 20050829115544.70072.qmail@web33403.mail.mud.yahoo.com | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2005-08-29T11:55:44Z | Opi Lauma <opi_lauma@yahoo.com> | 20050829115544.70072.qmail@web33403.mail.mud.yahoo.com | mail/lojban-beginners/cur/1125316544.1e47e4966d518f41.jbomohi:2,S
 coi rodo
@@ -233,5 +233,108 @@ On Aug 29, 2005, at 1:15 PM, la cuncuxnas. wrote:
 >
 >
 >
+
+
+
+=== 8 | 2005-08-30T07:41:56Z | Opi Lauma <opi_lauma@yahoo.com> | 20050830074156.91702.qmail@web33410.mail.mud.yahoo.com | mail/lojban-beginners/cur/1125387716.3ae3174d90c29c51.jbomohi:2,S
+coi rodo
+
+Here is my code for those of you who has Maple and who
+wants to play with my picture (I do not know whether
+such persons exists but any way...). One need just
+copy-paste and press enter.
+
+*******************************************************
+restart:
+> l := 2.2:
+> rc := 0.2:
+> r_pl := 0.3:
+> k := 2.0:
+> with(plottools):
+> with(plots):
+> g1 := plot3d([ sin(theta)*cos(alpha)+0.7,
+sin(theta)*sin(alpha), cos(theta)],
+theta=0..Pi,alpha=-Pi..Pi,color=blue):
+> g2 := plot3d([ sin(theta)*cos(alpha)-0.7,
+sin(theta)*sin(alpha), cos(theta)],
+theta=0..Pi,alpha=-Pi..Pi,color=blue):
+> c1 := plot3d([ rc*cos(theta), rc*sin(theta), z],
+theta=-Pi..Pi,z=-l..l,color=red):
+> c2 := plot3d([ rc*cos(theta), z, rc*sin(theta)],
+theta=-Pi..Pi,z=-l..l,color=red):
+> c3 := plot3d([ z, rc*cos(theta), rc*sin(theta)],
+theta=-Pi..Pi,z=-l..l,color=red):
+> pl_1p := plot3d([  l, r*sin(theta), r*cos(theta)],
+theta=-Pi..Pi, r=0..r_pl,color=red):
+> pl_1m := plot3d([ -l, r*sin(theta), r*cos(theta)],
+theta=-Pi..Pi, r=0..r_pl,color=red):
+> pl_2p := plot3d([ r*sin(theta),  l, r*cos(theta)],
+theta=-Pi..Pi, r=0..r_pl,color=red):
+> pl_2m := plot3d([ r*sin(theta), -l, r*cos(theta)],
+theta=-Pi..Pi, r=0..r_pl,color=red):
+> pl_3p := plot3d([ r*sin(theta), r*cos(theta),  l],
+theta=-Pi..Pi, r=0..r_pl,color=red):
+> pl_3m := plot3d([ r*sin(theta), r*cos(theta), -l],
+theta=-Pi..Pi, r=0..r_pl,color=red):
+> 
+> k_1p := plot3d([  l+(r_pl-r)*k, r*sin(theta),
+r*cos(theta)], theta=-Pi..Pi, r=0..r_pl,color=red):
+> k_1m := plot3d([ -l-(r_pl-r)*k, r*sin(theta),
+r*cos(theta)], theta=-Pi..Pi, r=0..r_pl,color=red):
+> k_2p := plot3d([ r*sin(theta),  l+(r_pl-r)*k,
+r*cos(theta)], theta=-Pi..Pi, r=0..r_pl,color=red):
+> k_2m := plot3d([ r*sin(theta), -l-(r_pl-r)*k,
+r*cos(theta)], theta=-Pi..Pi, r=0..r_pl,color=red):
+> k_3p := plot3d([ r*sin(theta), r*cos(theta), 
+l+(r_pl-r)*k], theta=-Pi..Pi, r=0..r_pl,color=red):
+> k_3m := plot3d([ r*sin(theta), r*cos(theta),
+-l-(r_pl-r)*k], theta=-Pi..Pi, r=0..r_pl,color=red):
+> 
+> l_1 := [l+r_pl*k,0,0]:
+> l_2 := [0,l+r_pl*k,0]:
+> tor1 :=
+tubeplot([cos(t)*l_1[1]+sin(t)*l_2[1],cos(t)*l_1[2]+sin(t)*l_2[2],cos(t)*l_1[3]+sin(t)*l_2[3]],
+>
+t=0..2*Pi,radius=0.02,tubepoints=20,style=patchnogrid,color=green):
+> l_1 := [l+r_pl*k,0,0]:
+> l_2 := [0,0, l+r_pl*k]:
+> tor2 :=
+tubeplot([cos(t)*l_1[1]+sin(t)*l_2[1],cos(t)*l_1[2]+sin(t)*l_2[2],cos(t)*l_1[3]+sin(t)*l_2[3]],
+>
+t=0..2*Pi,radius=0.02,tubepoints=20,style=patchnogrid,color=green):
+> l_1 := [0, l+r_pl*k,0]:
+> l_2 := [0,0, l+r_pl*k]:
+> tor3 :=
+tubeplot([cos(t)*l_1[1]+sin(t)*l_2[1],cos(t)*l_1[2]+sin(t)*l_2[2],cos(t)*l_1[3]+sin(t)*l_2[3]],
+>
+t=0..2*Pi,radius=0.02,tubepoints=20,style=patchnogrid,color=green):
+> display[plots](g1,g2,c1,c2,c3,pl_1p, pl_1m, pl_2p,
+pl_2m, pl_3p, pl_3m,
+>                k_1p, k_1m, k_2p, k_2m, k_3p, k_3m,
+tor1, tor2,tor3);
+****************************************************
+
+And here is Maple cell which generate PostScript
+picture:
+****************************************************
+display[plots](g1,g2,c1,c2,c3,pl_1p, pl_1m, pl_2p,
+pl_2m, pl_3p, pl_3m,
+>                k_1p, k_1m, k_2p, k_2m, k_3p, k_3m,
+tor1, tor2,tor3);
+>
+plotsetup(ps,plotoptions=`colour=cmyk,width=5in,height=5in`);
+> plots[display](g1,g2,c1,c2,c3,pl_1p, pl_1m, pl_2p,
+pl_2m, pl_3p, pl_3m,
+>                k_1p, k_1m, k_2p, k_2m, k_3p, k_3m,
+tor1, tor2,tor3,scaling=CONSTRAINED);
+****************************************************
+
+
+		
+____________________________________________________
+Start your day with Yahoo! - make it your home page 
+http://www.yahoo.com/r/hs 
+ 
+
 
 
