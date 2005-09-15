@@ -1,0 +1,176 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Wed, 14 Sep 2005 22:20:16 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.52)
+	id 1EFjU5-00022g-7P
+	for lojban-beginners-real@lojban.org; Wed, 14 Sep 2005 19:28:21 -0700
+Received: from [69.26.161.194] (helo=panel.net-sentry.net)
+	by chain.digitalkingdom.org with esmtps (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.52)
+	id 1EFjTz-00022T-26
+	for lojban-beginners@chain.digitalkingdom.org; Wed, 14 Sep 2005 19:28:21 -0700
+Received: from [58.11.42.133] (helo=[192.168.1.108])
+	by panel.net-sentry.net with esmtpa (Exim 4.52)
+	id 1EFjTy-0004Ls-2p
+	for lojban-beginners@chain.digitalkingdom.org; Wed, 14 Sep 2005 21:28:14 -0500
+Subject: [lojban-beginners] web-based markup of lojban parse output
+From: John Leuner <jewel@pixie.co.za>
+To: lojban-beginners@chain.digitalkingdom.org
+In-Reply-To: <4328B4A9.4030301@hypermetrics.com>
+References: <4327B1F1.5090001@hypermetrics.com>
+	 <e6663d20050914060928c881e2@mail.gmail.com>
+	 <4328ABA5.8020806@hypermetrics.com>
+	 <e6663d200509141623ed7d0f3@mail.gmail.com>
+	 <4328B4A9.4030301@hypermetrics.com>
+Content-Type: multipart/mixed; boundary="=-5uGSV9k3GkoKVXS4NwIX"
+Message-Id: <1126751255.2992.10.camel@localhost.localdomain>
+Mime-Version: 1.0
+Date: Thu, 15 Sep 2005 09:27:35 +0700
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - panel.net-sentry.net
+X-AntiAbuse: Original Domain - chain.digitalkingdom.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - pixie.co.za
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Spam-Score: -2.6 (--)
+X-archive-position: 2073
+X-Approved-By: rlpowell@digitalkingdom.org
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@chain.digitalkingdom.org
+Errors-to: lojban-beginners-bounce@chain.digitalkingdom.org
+X-original-sender: jewel@pixie.co.za
+Precedence: bulk
+Reply-to: lojban-beginners@chain.digitalkingdom.org
+X-list: lojban-beginners
+Content-Length: 2833
+
+
+--=-5uGSV9k3GkoKVXS4NwIX
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+A few months ago I wrote a silly php script to do something similar (I
+was trying to recreate a tool that xod wrote several years ago) but
+didn't get far with it.
+
+(Attached)
+
+John Leuner
+
+On Thu, 2005-09-15 at 06:39, Hal Fulton wrote:
+> Matt Arnold wrote:
+> > I'm extremely encouraged to hear you're programming Lojban tools. That's 
+> > mainly what I wanted to discuss with you. Are you not able to talk about 
+> > features yet?
+> 
+> Oh, I can talk. I just am always hesitant to talk about what I "plan" to
+> do or "might" do, etc. Talk is cheap, as they say. ;)
+> 
+> All I've got so far is code that parses cmavo.txt, gismu.txt, and
+> noralujv.txt and produces lists (arrays and hashes) where words can be
+> looked up and so on.
+> 
+> I know those lists are old, but they were handy. If I do anything
+> really serious, I will work with data from jbovlaste instead.
+> 
+> Based on the little code I have, I did a little web templating (I
+> didn't use Rails) and created a simple tool.
+> 
+> It's not "officially" released yet, but why not let people look
+> at it?
+> 
+>    http://hypermetrics.com/pikmin.html
+> 
+> 
+> Cheers,
+> Hal
+> 
+> 
+> 
+> 
+> 
+
+--=-5uGSV9k3GkoKVXS4NwIX
+Content-Disposition: attachment; filename=lojmark.php
+Content-Type: application/x-php; name=lojmark.php
+Content-Transfer-Encoding: 7bit
+
+<?php
+$gismu = fopen("/usr/share/lojban/gismu.txt", "r");
+
+fgets($gismu);
+
+$gismumap = array();
+
+while (!feof ($gismu)) {
+ $line = fgets($gismu, 8192);
+ $g = substr($line, 1, 5);
+ $g = trim($g);
+ $gloss = substr($line, 20, 20);
+ $gismumap[$g] = $gloss;
+}
+fclose($gismu);
+
+$cmavo = fopen("/usr/share/lojban/cmavo.txt", "r");
+
+fgets($cmavo);
+
+$cmavomap = array();
+
+while (!feof ($cmavo)) {
+ $line = fgets($cmavo, 8192);
+ $g = substr($line, 1, 10);
+ $g = trim($g);
+ $gloss = substr($line, 20, 42);
+ $cmavomap[$g] = $gloss;
+}
+fclose($cmavo);
+
+
+
+/*print_r($gismumap);*/
+
+$file = fopen ("http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/palm/la%20nicte%20cadzu/nic-1.1-1.html", "r");
+if (!$file) {
+   echo "<p>Unable to open remote file.\n";
+   exit;
+}
+
+while (!feof ($file)) {
+   $line = fgets ($file, 8192);
+   $input = strtok($line, " ");
+   while($input !== false) {
+	if($gismumap[$input] == null) {
+         if($cmavomap[$input] == null) {
+          echo $input;
+         } else {
+            echo "<a href=\"javascript: void(0)\" title=\"";
+            echo $cmavomap[$input];
+            echo "\">";
+            echo $input;
+            echo "</a>";
+	  }
+	}
+        else {
+
+	echo "<a href=\"javascript: void(0)\" title=\"";
+        echo $gismumap[$input];
+        echo "\">";
+        echo $input;
+        echo "</a>";
+        }
+	$input = strtok(" ");
+	echo " ";
+   }
+
+}
+
+echo "done";
+fclose($file);
+?> 
+
+
+--=-5uGSV9k3GkoKVXS4NwIX--
+
+
+
