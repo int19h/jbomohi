@@ -1,3 +1,33 @@
-If you know what a MOO is and would like to work on the Lojban MOO in progress (it's having the stuffing ripped out of it to make it multilingual), please visit ((Lojban IRC)).
+If you know what a MOO is and would like to work on or visit the Lojban MOO in progress (it's having the stuffing ripped out of it to make it multilingual), please visit ((Lojban IRC)).
+
+! How To Assist With Translating The MOO
+
+# Get admin privs.  Come on #lojban and ask rlpowell.
+## Please note that if you do anything with the admin user (such as move around the MOO) it affects ''everyone'' who uses that user.  So try to avoid that sort of thing.  If you must do something jarring to test something, please put the admin back the way you found it when you're done.
+# Find a message you want to translate.
+# Run "showall object" on the object with the message.  Look for the message in the output.  If it's not in a .msg field, you'd probably best stop right there and send mail to ((Robin Powell)) with what you were trying to do.
+# Having found the .msg field in question in the "showall" output, look for a "*" in the line with the .msg field name in it.  If there is one (and there almost certainly will be), that field is inherited.  If not, something wierd is going on, and you'd probably best stop right there and send mail to ((Robin Powell)) with what you were trying to do.
+# So, now we need to figure out which object originally defined that field.  There are a couple of ways to do this; the fastest one is '!find /usr/lib/mooix -type f | xargs grep "[[the message]"'.  You can also do the following:
+## Find the parent line in "showall".
+## Replace "/var" with "/usr".  showall that.
+## Repeat until there is no "*" in the showall line for the field you're wanting to translate.
+# So you now have the /usr/lib/mooix path of an object.  __YOU MUST__ change /usr to /var; any edits in /usr will be destroyed.  So you want to do something like: "edit mooix:/var/lib/mooix/concrete/thing put_under.msg".  Again, if you edit __anything__ under mooix:/usr, your changes will be lost.
+
+!! How To Do The Actual Translating
+
+I'm using psuedo-xml tags to do the translation work with.  So let's say you "edit the nice wooden desk's name".  You'll see something like:
+
+~pp~
+nice wooden desk
+~/pp~
+
+You want to turn this in to:
+
+~pp~
+<lang code="en">nice wooden desk</lang><lang code="jbo">melbi mudri jubme</lang>
+~/pp~
+
+Feel free to translate into more than just English and Lojban, but there need to be language objects for any other languages you want to add, so mail ((Robin Powell)) if you're going to do that sort of thing.
 
 -Robin
+
