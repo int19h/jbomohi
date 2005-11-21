@@ -56,3 +56,61 @@ When translating a name, leave the article out, as Robin indicated above. When t
 <rlpowell> So never ever ever change things in /usr.
 <rlpowell> Test your code changes in /var and then e-mail me with what you changed so I can roll it into the tree.
 ~/pp~
+
+! Translating Verbs (i.e. command names)
+
+You'll need to be an admin for this.
+
+# Find something you'd like to be able to do.  Find the original .cmd file for it.
+# Copy the entire text of the .cmd file.
+# Edit a file named <brivla>.cmd.jbo on the same object as the original .cmd file (except in the /var tree, which should happen by default anyways).  It technically doesn't __have__ to be named .jbo, but it simplifies things.
+# Make aliases for the various parts of speech, such as "direct_object=object2", which says that the object in the 2nd sumti place will be called the direct object when the verb is run.  Doing this aliasing means most verbs don't actually need to be touched at all.
+# Unless you have made, or are planning on making, a special Lojban-only verb, make sure that the line ends with the verb to use, such as ": say".
+
+!! Example
+
+The example is mooix:concrete/thing put.cmd
+
+~pp~
+# "put down object / put object down"
+verb, do_preposition(down), direct_object(this)(touchable)(tomove) : put_in
+# "put object in object"
+verb, direct_object(touchable)(tomove), io_preposition(set@in_prepositions), indirect_object(this)(touchable)(open) : put_in
+# "put object on object"
+verb, direct_object(touchable)(tomove), io_preposition(set@on_prepositions), indirect_object(this)(touchable) : put_on
+# "put object under object"
+verb, direct_object(touchable)(tomove), io_preposition(set@under_prepositions), indirect_object(this)(touchable) : put_under
+# "put object behind object"
+verb, direct_object(touchable)(tomove), io_preposition(set@behind_prepositions), indirect_object(this)(touchable) : put_under
+~/pp~
+
+The first one can simply be dropped.
+
+The rest become:
+
+~pp~
+## "prepositional" forms
+# "punji le bolci le nenri be le jubme"
+brivla, direct_object=object2(touchable)(tomove), io_preposition=preposition3(set@in_prepositions), indirect_object=object3(this)(touchable)(open) : put_in
+# "punji le bolci le cpana be le jubme"
+brivla, direct_object=object2(touchable)(tomove), io_preposition=preposition3(set@on_prepositions), indirect_object=object3(this)(touchable) : put_on
+# "punji le bolci le cnita be le jubme"
+brivla, direct_object=object2(touchable)(tomove), io_preposition=preposition3(set@under_prepositions), indirect_object=object3(this)(touchable) : put_under
+# "punji le bolci le trixe be le jubme"
+brivla, direct_object=object2(touchable)(tomove), io_preposition=preposition3(set@behind_prepositions), indirect_object=object3(this)(touchable) : put_behind
+~/pp~
+
+In addition, Lojban has the non-prepositional use of "punji", like so:
+
+~pp~
+## Regular bridi forms
+# "punji le bolci le jubmi"
+brivla, direct_object=object2(touchable)(tomove), indirect_object=object3(this)(touchable) : put_on
+~/pp~
+
+!! Lojban .cmd Elements
+
+;objectN:Phrases that the moo has matched with an available object, such as "le bolci" or "le bolci poi nenri le tanxe".  N is the sumti position of the object, so the first object after the brivla will be object2.
+;prepositionN:This is a bit of a hack; these are "prepositional" phrases, by which I mean things like "le cnita be".  They are associated with and have the same N as the object they modify.
+;lojban_quoteN:Lojban quotes (i.e. quotes using lu...li'u; no actual Lojban correctness is enforced in the quotes).  Numbered along with objects.
+;non_lojban_quoteN:Non-Lojban quotes, which currently only use "..." but should some day use zoi properly.  Numbered along with objects.
