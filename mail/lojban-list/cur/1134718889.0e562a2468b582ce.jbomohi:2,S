@@ -1,0 +1,110 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 38764 invoked from network); 16 Dec 2005 07:45:11 -0000
+Received: from unknown (66.218.66.166)
+  by m14.grp.scd.yahoo.com with QMQP; 16 Dec 2005 07:45:11 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta5.grp.scd.yahoo.com with SMTP; 16 Dec 2005 07:45:11 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.54)
+	id 1EnAFa-0006rW-6g
+	for lojban@yahoogroups.com; Thu, 15 Dec 2005 23:43:34 -0800
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.54)
+	id 1EnAEY-0006qX-Nu; Thu, 15 Dec 2005 23:42:31 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 15 Dec 2005 23:42:22 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.54)
+	id 1EnAE8-0006qJ-RV
+	for lojban-list-real@lojban.org; Thu, 15 Dec 2005 23:42:04 -0800
+Received: from cuttlefish.mweb.co.za ([196.2.50.76])
+	by chain.digitalkingdom.org with esmtp (Exim 4.54)
+	id 1EnAE7-0006pz-AF
+	for lojban-list@lojban.org; Thu, 15 Dec 2005 23:42:04 -0800
+Received: from cuttlefish.mweb.co.za (localhost.localdomain [127.0.0.1])
+	by pwfilter01.mweb.co.za (Postfix) with ESMTP id 481CA34551;
+	Fri, 16 Dec 2005 09:41:32 +0200 (SAST)
+Received: from cuttlefish.mweb.co.za (localhost.localdomain [127.0.0.1])
+	by cuttlefish.mweb.co.za (nod32smtp); Fri, 16 Dec 2005 09:41:32 +0200
+Received: from Debug (air.mweb.co.za [196.2.53.154])
+	by cuttlefish.mweb.co.za (Postfix) with SMTP id 2E34034389;
+	Fri, 16 Dec 2005 09:41:22 +0200 (SAST)
+Cc: jewel@pixie.co.za
+Date: Fri, 16 Dec 2005 07:41:29 GMT
+X-Posting-IP: 203.144.240.245 via 189.2.255.60
+X-Mailer: Endymion MailMan Standard Edition v3.2.19
+Message-Id: <20051216074122.2E34034389@cuttlefish.mweb.co.za>
+X-Spam-Score: -1.6 (-)
+X-archive-position: 10909
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jewel@pixie.co.za
+X-list: lojban-list
+X-Spam-Score: -1.6 (-)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 2:4:8:0
+X-eGroups-From: jewel@pixie.co.za
+From: lojban-out@lojban.org
+Reply-To: jewel@pixie.co.za
+Subject: [lojban] Lojban parsing using Common Lisp
+X-Yahoo-Group-Post: member; u=116389790; y=dciUJEfjBGgWG6dDUr6dh-HcUTd86hs9ZUdWEs4HL0ARgSSjNw
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 25305
+Content-Length: 2264
+
+I have posted the first version of my Common Lisp PEG parser generator to
+http://common-lisp.net/project/cl-peg/.
+
+Using this program in combination with the lojban PEG grammar
+(http://people.debian.org/~jewel/lojban_peg/lojban_grammar.peg) it is possible to parse
+lojban text into a tree of objects.
+
+Like Robin's RATS! parser
+(http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/index.html) this gives us
+the potential to:
+
+* Check whether the input is well-formed (is grammatically correct or not)
+* Guess at which part of the text is malformed
+* Transform the input into another form (such as marked up HTML, or glossed output like
+that produced by jbofihe)
+* Interpret the data against some existing knowledge (see
+http://sow.lcs.mit.edu/2004/proceedings/Speer.pdf) or manipulate it in some way for
+searching or publishing electronic data (eg http://jorne.sourceforge.net/)
+
+The reason I specifically implemented this parser in Lisp is because I think it makes a
+great platform for interactively manipulating lojbanic input and interactive programming
+of lobjan-related programs.
+
+Although we already have several software tools that process lojban I think we have only
+scratched the surface of possible applications. 
+
+I would love to see a syntax-aware editing environment for composing lojban text. Not only
+would it provide lookup information for lojban word lists and fuihvla, but also give hints
+as to the grammaticality and semantics of your text.
+
+Notes:
+
+- To use my grammar I suggest you install the SBCL Lisp compiler and the SLIME editor.
+- Here is a graph of a part of the parse tree produced for "ko sipna". In this picture the
+nodes are in reverse order (fixed in a later version of my program)
+http://people.debian.org/~jewel/lojban_peg/ko_sipna.png
+
+John Leuner
+
+
+---------------------------------------------
+This message was sent using M-Web Airmail - JUST LIKE THAT
+Get an SMS sent to your phone when you receive an email and save time and money.
+M-Web members only. http://mweb.co.za/mobile .
+
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
