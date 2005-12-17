@@ -1,0 +1,49 @@
+lojban_peg_parser.jar: xtc/lang/lojban.class
+{
+    /usr/local/java/bin/jar -cfm lojban_peg_parser.jar \
+    META-INF/MANIFEST.MF xtc/util xtc/tree gnu xtc/parser xtc/lang;
+}
+
+xtc/lang/lojban.class: lojban.class 
+{
+    mv -f lojban*.class xtc/lang;
+}
+
+lojban.class: lojban.java 
+{
+
+    /*/usr/local/java/bin/javac -cp "rats-runtime.jar:xtc.jar" lojban.java;*/
+    /usr/local/java/bin/javac -cp '/home/rlpowell/www/hobbies/lojban/grammar/rats:/usr/share/java/gnu.getopt.jar' lojban.java;
+}
+
+lojban.java: lojban.rats
+{
+    rm Parser.java || echo;
+
+    /usr/local/java/bin/java -Xms128m -Xmx256m -jar xtc.jar -util rats lojban.rats;
+
+    /*
+    head -30 lojban.java  > temp;
+    cat bootstrap.java >> temp;
+    tail -n +30 lojban.java >>temp;
+
+    mv temp lojban.java;
+    */
+}
+
+lojban.rats: ../lojban.peg ../morph_header.peg /tmp/lojban_morphology.peg peg2rats.pl header.java
+{
+/*
+    if [exists lojban.rats] then
+    {
+	mv -f "--backup=numbered" lojban.rats backup/lojban.rats;
+    }
+*/
+    cat ../lojban.peg ../morph_header.peg /tmp/lojban_morphology.peg | peg2rats.pl > lojban.rats;
+    mv /tmp/lojban_morphology.peg /tmp/lojban_morphology.peg.old;
+}
+
+/tmp/lojban_morphology.peg:
+{
+    ../snarf_morph.sh >/tmp/lojban_morphology.peg;
+}
