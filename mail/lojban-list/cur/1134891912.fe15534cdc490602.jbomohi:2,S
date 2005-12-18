@@ -1,0 +1,165 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 41807 invoked from network); 18 Dec 2005 07:47:14 -0000
+Received: from unknown (66.218.66.172)
+  by m25.grp.scd.yahoo.com with QMQP; 18 Dec 2005 07:47:14 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta4.grp.scd.yahoo.com with SMTP; 18 Dec 2005 07:47:14 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.54)
+	id 1EntGD-0006np-Ax
+	for lojban@yahoogroups.com; Sat, 17 Dec 2005 23:47:13 -0800
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.54)
+	id 1EntFB-0006n2-HZ; Sat, 17 Dec 2005 23:46:10 -0800
+Received: with ECARTIS (v1.0.0; list lojban-list); Sat, 17 Dec 2005 23:46:01 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.54)
+	id 1EntEm-0006mt-6Y
+	for lojban-list-real@lojban.org; Sat, 17 Dec 2005 23:45:44 -0800
+Received: from anemone.mweb.co.za ([196.2.50.73])
+	by chain.digitalkingdom.org with esmtp (Exim 4.54)
+	id 1EntEk-0006ml-AG
+	for lojban-list@lojban.org; Sat, 17 Dec 2005 23:45:43 -0800
+Received: from anemone.mweb.co.za (localhost.localdomain [127.0.0.1])
+	by pwfilter01.mweb.co.za (Postfix) with ESMTP id 22CD1266AB
+	for <lojban-list@lojban.org>; Sun, 18 Dec 2005 09:45:16 +0200 (SAST)
+Received: from Debug (air.mweb.co.za [196.2.53.154])
+	by anemone.mweb.co.za (Postfix) with SMTP id 1578D261FB;
+	Sun, 18 Dec 2005 09:45:06 +0200 (SAST)
+Date: Sun, 18 Dec 2005 07:45:12 GMT
+X-Posting-IP: 202.44.139.49
+X-Mailer: Endymion MailMan Standard Edition v3.2.19
+Message-Id: <20051218074506.1578D261FB@anemone.mweb.co.za>
+X-Virus-Scanned: ClamAV using ClamSMTP
+X-Spam-Score: -1.6 (-)
+X-archive-position: 10929
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jewel@pixie.co.za
+X-list: lojban-list
+X-Spam-Score: -1.6 (-)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 2:4:8:0
+X-eGroups-From: jewel@pixie.co.za
+From: lojban-out@lojban.org
+Reply-To: jewel@pixie.co.za
+Subject: [lojban] Re: Lojban parsing using Common Lisp
+X-Yahoo-Group-Post: member; u=116389790; y=QMzlwofsjQJTDpFhe3rWUGayXBfzbfJrfollipzkBRUTIS4NyQ
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 25325
+Content-Length: 3250
+
+In the README I give a short walk-through describing how to call the parser.
+
+I don't give instructions on how to setup the Lisp environment, however.
+
+Basically, once you have asdf-install available you can do:
+
+CL-USER> (require 'asdf-install)
+("SB-EXECUTABLE" "ASDF-INSTALL")
+CL-USER> (asdf-install:install "http://common-lisp.net/project/cl-peg/cl-peg_0.01.tar.gz")
+
+and then call the parser from the REPL prompt.
+
+(Usage instructions from the README):
+
+Usage:
+
+First create a PEG grammar file, eg:
+
+sentence <-  article? subject verb ( preposition? article? (object / object preposition
+object ))
+spaces <- [ ]*
+article <- spaces ("the" / "the two" / "a")
+preposition <- spaces ("on" / "at" / "to" / "with")
+subject <- spaces ("man" / "men" / "dog" / "dogs" / "cat")
+verb <- spaces ("sat" / "saw" / "shot" / "gave")
+object <- spaces ("cannon" / "hat" / "mat")
+
+then create a grammar object and result object:
+
+(require 'cl-peg)
+(defvar *mygrammar*)
+(defvar *pr*)
+
+CL-USER> (setf *mygrammar* (cl-peg:create-peg-parser "example.peg"))
+*MYGRAMMAR*
+
+Now you can parse some input (starting at offset 0):
+
+CL-USER> (setf *pr* (cl-peg:parse *mygrammar* "the cat sat on the mat" 0))
+#S(CL-PEG:PR
+   :MATCHED T
+   :RESULT #S(PV :PE NIL :CHILDREN NIL)
+   :ORIGINAL-INPUT "the cat sat on the mat"
+   :ORIGINAL-INPUT-OFFSET 0)
+
+Once you have this parse-result you can check whether the parse succeeded:
+
+CL-USER> (cl-peg:pr-matched *pr*)
+T
+
+whether all the input was matched (versus some prefix)
+
+CL-USER> (cl-peg:matched-all *pr*)
+T
+
+and see the indices of the region matched:
+
+CL-USER> (cl-peg:matched-region *pr*)
+(0 22)
+
+or the text:
+
+CL-USER> (cl-peg:pv-input-string *pr* (cl-peg:pr-result *pr*))
+"the cat sat on the mat"
+
+To see a detailed parse tree you have to specify keep-parse-result to the parse method:
+
+CL-USER> (setf *pr* (cl-peg:parse *mygrammar* "the cat sat on the mat" 0 t))
+<large tree>
+
+For more advanced usage (walking the parse tree or executing lisp code during the parse),
+the API is not yet defined. The pv struct is likely to change.
+
+John Leuner
+
+> On Fri, Dec 16, 2005 at 07:41:29AM +0000, jewel@pixie.co.za wrote:
+> > I have posted the first version of my Common Lisp PEG parser
+> > generator to http://common-lisp.net/project/cl-peg/.
+> 
+> Go you!
+> 
+> Does the tarball have good instructions on how to run it?
+> 
+> -Robin
+> 
+> -- 
+> http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+> Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+> Proud Supporter of the Singularity Institute - http://singinst.org/
+> 
+> 
+> To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+> with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+> you're really stuck, send mail to secretary@lojban.org for help.
+> 
+
+
+---------------------------------------------
+This message was sent using M-Web Airmail - JUST LIKE THAT
+Get an SMS sent to your phone when you receive an email and save time and money.
+M-Web members only. http://mweb.co.za/mobile .
+
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+

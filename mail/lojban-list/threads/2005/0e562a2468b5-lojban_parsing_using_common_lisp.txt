@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0e562a2468b5-lojban_parsing_using_common_lisp | root 20051216074122.2e34034389@cuttlefish.mweb.co.za | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0e562a2468b5-lojban_parsing_using_common_lisp | root 20051216074122.2e34034389@cuttlefish.mweb.co.za | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2005-12-16T07:41:29Z | lojban-out@lojban.org | 20051216074122.2e34034389@cuttlefish.mweb.co.za | mail/lojban-list/cur/1134718889.0e562a2468b582ce.jbomohi:2,S
 I have posted the first version of my Common Lisp PEG parser generator to
@@ -101,6 +101,122 @@ I would absolutely adore this. I've longed for such an application for
 a long time. It would be ten times better if it were written for the
 Palm operating system. Thank you so much for what you've done!
 -epkat
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 4 | 2005-12-18T07:45:12Z | lojban-out@lojban.org | 20051218074506.1578d261fb@anemone.mweb.co.za | mail/lojban-list/cur/1134891912.fe15534cdc490602.jbomohi:2,S
+In the README I give a short walk-through describing how to call the parser.
+
+I don't give instructions on how to setup the Lisp environment, however.
+
+Basically, once you have asdf-install available you can do:
+
+CL-USER> (require 'asdf-install)
+("SB-EXECUTABLE" "ASDF-INSTALL")
+CL-USER> (asdf-install:install "http://common-lisp.net/project/cl-peg/cl-peg_0.01.tar.gz")
+
+and then call the parser from the REPL prompt.
+
+(Usage instructions from the README):
+
+Usage:
+
+First create a PEG grammar file, eg:
+
+sentence <-  article? subject verb ( preposition? article? (object / object preposition
+object ))
+spaces <- [ ]*
+article <- spaces ("the" / "the two" / "a")
+preposition <- spaces ("on" / "at" / "to" / "with")
+subject <- spaces ("man" / "men" / "dog" / "dogs" / "cat")
+verb <- spaces ("sat" / "saw" / "shot" / "gave")
+object <- spaces ("cannon" / "hat" / "mat")
+
+then create a grammar object and result object:
+
+(require 'cl-peg)
+(defvar *mygrammar*)
+(defvar *pr*)
+
+CL-USER> (setf *mygrammar* (cl-peg:create-peg-parser "example.peg"))
+*MYGRAMMAR*
+
+Now you can parse some input (starting at offset 0):
+
+CL-USER> (setf *pr* (cl-peg:parse *mygrammar* "the cat sat on the mat" 0))
+#S(CL-PEG:PR
+   :MATCHED T
+   :RESULT #S(PV :PE NIL :CHILDREN NIL)
+   :ORIGINAL-INPUT "the cat sat on the mat"
+   :ORIGINAL-INPUT-OFFSET 0)
+
+Once you have this parse-result you can check whether the parse succeeded:
+
+CL-USER> (cl-peg:pr-matched *pr*)
+T
+
+whether all the input was matched (versus some prefix)
+
+CL-USER> (cl-peg:matched-all *pr*)
+T
+
+and see the indices of the region matched:
+
+CL-USER> (cl-peg:matched-region *pr*)
+(0 22)
+
+or the text:
+
+CL-USER> (cl-peg:pv-input-string *pr* (cl-peg:pr-result *pr*))
+"the cat sat on the mat"
+
+To see a detailed parse tree you have to specify keep-parse-result to the parse method:
+
+CL-USER> (setf *pr* (cl-peg:parse *mygrammar* "the cat sat on the mat" 0 t))
+<large tree>
+
+For more advanced usage (walking the parse tree or executing lisp code during the parse),
+the API is not yet defined. The pv struct is likely to change.
+
+John Leuner
+
+> On Fri, Dec 16, 2005 at 07:41:29AM +0000, jewel@pixie.co.za wrote:
+> > I have posted the first version of my Common Lisp PEG parser
+> > generator to http://common-lisp.net/project/cl-peg/.
+> 
+> Go you!
+> 
+> Does the tarball have good instructions on how to run it?
+> 
+> -Robin
+> 
+> -- 
+> http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+> Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+> Proud Supporter of the Singularity Institute - http://singinst.org/
+> 
+> 
+> To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+> with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+> you're really stuck, send mail to secretary@lojban.org for help.
+> 
+
+
+---------------------------------------------
+This message was sent using M-Web Airmail - JUST LIKE THAT
+Get an SMS sent to your phone when you receive an email and save time and money.
+M-Web members only. http://mweb.co.za/mobile .
+
+
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
