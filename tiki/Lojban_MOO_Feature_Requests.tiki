@@ -12,6 +12,8 @@
 
 ! Long-Form Requests
 
+These are loosely (as in, the first few but not necessarily the whole list) in the order that ((Robin Lee Powell|Robin)) expects to work on them.  If you think something not near the top is Very Important, please use the discuss tab to say so.
+
 ^Generic multilingual communication commands to allow communication with speakers of other languages.
 
 examples: 
@@ -21,8 +23,24 @@ examples:
 angry/fengu, annoyed/fanza, kiss/cinba, respect/sinma, like/nelci, cry/krixa, dance/dansu, hate/xebni, agree/tugni, sleepy/tatpi, relax/surla, upset/dunku, poke/tunta, shake/desku, hurt/cortu
 
 problems:
-Would it be possible to implement something like "ask/tell $player to do something" for a defined set of somethings?^
+Would it be possible to implement something like "ask/tell $player to do something" for a defined set of somethings?
 
+__IN PROGRESS__: Eimi is working on this.^
+
+^More intuitive translation commands:
+
+cmene fa "blue ball" le blanu bolci bau la gliban
+skicu le mudri jubme fo lu .i marji lo melbi mudri li'u .i skicu jy fo zoi zoi Made of beautiful wood. zoi bau la gliban
+finti le xunre bolci .i le xunre bolci cu se cmene "red ball" bau la gliban
+
+Note from Robin: To go along with this, fix the language marker code in the grammar to return the language object, rather than the name, so the turn-name-into-language-object crap doesn't have to be repeated everywhere.  In addition, might as well put the code that dissects and rebuilds lang expressions into Thing.pm (which theoretically means it should go in the Python and Ruby Thing interfaces as well; perhaps make it a method instead?)
+^
+
+^Allow any user to add a translation to an object they don't own if no translation for that language exists yet.^
+
+^Translator permissions:
+
+A specific role allowing users to use translation commands on objects they don't own.^
 
 ^Incorporate word-lookup software similar to that at http://www.hypermetrics.com/pikmin so that instead of:
 
@@ -35,21 +53,6 @@ Foobar says "lemi varkiclaflo'i cu culno lo angila" which means "my specific" "h
 ^Language fallbacks:
 
 if something hasn't been translated into all the languages the moo permits, then I prefer lojban, followed by English, followed by Spanish (since I remember a little from highschool), and then just anything else available.^
-
-^Translator permissions:
-
-A specific role allowing users to use translation commands on objects they don't own.^
-
-^Allow any user to add a translation to an object they don't own if no translation for that language exists yet.^
-
-^More intuitive translation commands:
-
-cmene fa "blue ball" le blanu bolci bau la gliban
-skicu le mudri jubme fo lu .i marji lo melbi mudri li'u .i skicu jy fo zoi zoi Made of beautiful wood. zoi bau la gliban
-finti le xunre bolci .i le xunre bolci cu se cmene "red ball" bau la gliban
-
-Note from Robin: To go along with this, fix the language marker code in the grammar to return the language object, rather than the name, so the turn-name-into-language-object crap doesn't have to be repeated everywhere.  In addition, might as well put the code that dissects and rebuilds lang expressions into Thing.pm (which theoretically means it should go in the Python and Ruby Thing interfaces as well; perhaps make it a method instead?)
-^
 
 ^Modify the web client for the MOO in such a way that when someone creates an object, they can upload a little flashcard-like drawing of it that will appear in a separate window in the web client, similar to [img/wiki_up/smani_daplu.gif|the inventory panel in Monkey Island 2]. Perhaps there could even be another window to show a drawing of the room itself. Of course these images would not be visible to anyone playing the game from a terminal or Telnet.
 ^
@@ -78,7 +81,7 @@ Currently, "" works for quoting English text.  This is a very handy shortcut, bu
 
 All commands in the Lojban version have to be of brivla form.  Loosening that restriction would allow us to do some handy things.  Examples:
 
-;le pastu cu mo:show, showall, or look
+;le pastu cu mo:show, showall, or look -- Erm, that *is* a brivla --((rlpowell))
 ;ni'o:clear the screen
 ;fa'o:exit the moo
 ;ki'e nolraitru:see the emotes in point 1 above
@@ -124,6 +127,20 @@ finti le xunre bolci zo'e mooix:ball^
 
 There doesn't appear to be any way to refer to an object by its name in a non-current langauge.  Additionally, the mooix: absolute path references are ugly when they're sitting in the middle of otherwise valid lojban.  Once {zoi} quotes work (point 11 above), it would be nice if {la'o} could be used to refer to an object by its non-lojban (either English, or whatever other language the moo is translated into, or mooix: fully-qualified) name.^
 
+
+
+! Robin's Notes To Himself
+
+These are unlikely to mean anything to anyone else; saves me having to keep notes in multiple places.
+
+* Make a tutorial about how to code complex multilingual stuff using both the old_version and current of concrete/thing/take_verb, for situations where the ball is in the blue box is in the red box.
+* The programmer tutorial will have to be altered, in particular to take into account the preposition->relation stuff.
+* We should have a flag users can set to see the raw <lang> and <field> and <initial>, for debugging if nothing else. (is <field> even used anymore?)
+*  packages and (in particular) the "install" verb have been ripped to shreds and need to be tested.  This includes translations of install_*.msg in abstract/builder
+
+! Completed Requests
+
+
 ^display quotes
 
 The lojban parser, when it encounters a quotation in place _n_, creates the variables $any_quote[n] and $lojban_quote[n] (or $non_lojban_quote[n], as appopriate).  I also want it to create $display_quote[n], which would have the correct quotation marks around it to be displayed in output text.
@@ -135,14 +152,7 @@ __DONE__.  See cusku.cmd.jbo and friends.  At this point, cusku_verb can be dest
 
 There needs to be a way to call generic_verb but lie to it about what verb was actually called.  Discussion on irc produced the syntax
 
-brivla=greet(this), direct_object=object2 : generic^
+brivla=greet(this), direct_object=object2 : generic
 
-! Robin's Notes To Himself
-
-These are unlikely to mean anything to anyone else; saves me having to keep notes in multiple places.
-
-* Make a tutorial about how to code complex multilingual stuff using both the old_version and current of concrete/thing/take_verb, for situations where the ball is in the blue box is in the red box.
-* The programmer tutorial will have to be altered, in particular to take into account the preposition->relation stuff.
-* We should have a flag users can set to see the raw <lang> and <field> and <initial>, for debugging if nothing else. (is <field> even used anymore?)
-*  packages and (in particular) the "install" verb have been ripped to shreds and need to be tested.  This includes translations of install_*.msg in abstract/builder
-
+__DONE__: The syntax actually used is brivla(this)(value=greet), direct_object=object2 : generic
+^
