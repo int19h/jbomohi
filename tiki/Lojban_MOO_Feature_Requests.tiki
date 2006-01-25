@@ -29,7 +29,16 @@ Default for all these should be to set the user's own language, with lang tags a
 
 Notes from Robin: To go along with this, fix the language marker code in the grammar to return the language object, rather than the name, so the turn-name-into-language-object crap doesn't have to be repeated everywhere.  __DONE__
 
-In addition, might as well put the code that dissects and rebuilds lang expressions into Thing.pm (which theoretically means it should go in the Python and Ruby Thing interfaces as well; perhaps make it a method instead?)
+In addition, might as well put the code that dissects and rebuilds lang expressions into a method.
+* This has been done on admin, and it mostly works.  Outstanding issues:
+** The admin's edit_verb is based on avatar, so it doesn't work on methods.
+*** It should refuse to edit them instead of failing stupidly; use mooix::thing's "implements"
+** Need to do builder's edit_verb as well, once the current one is given to avatar
+*** Should always default to lang xml for methods
+** We've only done edit.cmd and is.cmd, I'm sure there are others.
+*** List of others; please add: rename, describe
+*** Can we somehow factor ''all'' xml-related code out of these into just one or two method calls?  I don't think so.
+** We've not done the Lojban versions at all (galfi.cmd.jbo, setca.cmd.jbo)
 ^
 
 ^Allow any user to add a translation to an object they don't own if no translation for that language exists yet.^
