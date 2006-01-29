@@ -30,20 +30,22 @@ Default for all these should be to set the user's own language, with lang tags a
 Notes from Robin: To go along with this, fix the language marker code in the grammar to return the language object, rather than the name, so the turn-name-into-language-object crap doesn't have to be repeated everywhere.  __DONE__
 
 In addition, might as well put the code that dissects and rebuilds lang expressions into a method.
-* This has been done on admin, and it mostly works.  Outstanding issues:
+* This has been done, and it mostly works.  Outstanding issues:
 ** The admin's edit_verb is based on avatar, so it doesn't work on methods.
 *** It should refuse to edit them instead of failing stupidly; use mooix::thing's "implements"
 *** Actually, I think avatar's (as opposed to builder's or programmer's) safechange would have caused a refusal
-*** Note in addition that edit_verb no longer needs to be different for avatar vs. builder, but get_field and set_field does
-** Need to do builder's edit_verb as well, once the current one is given to avatar
+*** Note in addition that edit_verb no longer needs to be different for avatar vs. builder, but get_field and set_field doe
 *** Should always default to lang xml for methods
+*** All of the above is __DONE__, and seems to work
 ** We've only done edit.cmd and is.cmd, I'm sure there are others.
 *** List of others; please add: rename, describe, set
+**** set.cmd, is.cmd, edit.cmd, rename.cmd __done__
 *** Can we somehow factor ''all'' xml-related code out of these into just one or two method calls?  I don't think so.
 **** Actually, we may be able to, with set_field_in_lang and get_field_in_lang
 ***** __DONE__; edit_verb has been updated to use them; set_verb doesn't need them
-** Also, we should make sure that assigning a value with <lang> tags in it always assigns in xml mode
+** Also, we should make sure that assigning a value with <lang> tags in it always assigns in xml mode __DONE__
 ** We've not done the Lojban versions at all (galfi.cmd.jbo, stika.cmd.jbo)
+*** galfi.cmd, cmene.cmd, binxo.cmd __done__
 ^
 
 ^Allow any user to add a translation to an object they don't own if no translation for that language exists yet.^
