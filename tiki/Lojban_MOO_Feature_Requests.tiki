@@ -20,46 +20,6 @@
 
 These are loosely (as in, the first few but not necessarily the whole list) in the order that ((Robin Lee Powell|Robin)) expects to work on them.  If you think something not near the top is Very Important, please use the discuss tab to say so.
 
-^More intuitive translation commands:
-
-cmene fa "blue ball" le blanu bolci bau la gliban
-
-skicu le mudri jubme fo lu .i marji lo melbi mudri li'u .i skicu jy fo zoi zoi Made of beautiful wood. zoi bau la gliban
-
-finti le xunre bolci .i le xunre bolci cu se cmene "red ball" bau la gliban
-
-Default for all these should be to set the user's own language, with lang tags and everything.  Provide mulcmene/full_name to edit the raw stuff.
-
-Notes from Robin: To go along with this, fix the language marker code in the grammar to return the language object, rather than the name, so the turn-name-into-language-object crap doesn't have to be repeated everywhere.  __DONE__
-
-In addition, might as well put the code that dissects and rebuilds lang expressions into a method.
-* This has been done, and it mostly works.  Outstanding issues:
-** The admin's edit_verb is based on avatar, so it doesn't work on methods.
-*** It should refuse to edit them instead of failing stupidly; use mooix::thing's "implements"
-*** Actually, I think avatar's (as opposed to builder's or programmer's) safechange would have caused a refusal
-*** Note in addition that edit_verb no longer needs to be different for avatar vs. builder, but get_field and set_field doe
-*** Should always default to lang xml for methods
-*** All of the above is __DONE__, and seems to work
-** We've only done edit.cmd and is.cmd, I'm sure there are others.
-*** List of others; please add: rename, describe, set
-**** set.cmd, is.cmd, edit.cmd, rename.cmd __done__
-*** Can we somehow factor ''all'' xml-related code out of these into just one or two method calls?  I don't think so.
-**** Actually, we may be able to, with set_field_in_lang and get_field_in_lang
-***** __DONE__; edit_verb has been updated to use them; set_verb doesn't need them
-** Also, we should make sure that assigning a value with <lang> tags in it always assigns in xml mode __DONE__
-** We've not done the Lojban versions at all (galfi.cmd.jbo, stika.cmd.jbo) (umm, there is no stika.cmd.jbo)
-*** galfi.cmd, cmene.cmd, binxo.cmd, skicu.cmd __DONE__
-** NEAT! A side effect of the foo(value=bar) trick in .cmd is that we can ''get rid of rename_verb and describe_verb'' and all their attendant messages; just use field(value=name) : set, or whatever, in the .cmd.  __DONE__
-***Rename also has the (desirable) side effect of informing others that the name has changed.  Being able to have that modification however the name is changed (rename, set, edit, whatever) would be very nice (and ends up getting into deep issues).  Probably best to add a name_onset method, which gets called by safechange.
-**** Conveniently enough, this already exists: ./concrete/thing/name_onset (and "usage of my name_onset").
-^
-
-^Allow any user to add a translation to an object they don't own if no translation for that language exists yet.^
-
-^Translator permissions:
-
-A specific role allowing users to use translation commands on objects they don't own.^
-
 ^More natural support for exits
 
 In the English MOO, you can go through an exit merely by giving its name.  In the Lojban version, it would be nice if that were possible, as well as using spatial tenses.  This is likely to be difficult.
@@ -77,6 +37,12 @@ For bonus points, it would be even nicer if you could go anywhere in the MOO (or
 ^Support for full zoi quotes
 
 Currently, "" works for quoting English text.  This is a very handy shortcut, but it would be nice if proper zoi quotes worked too.^
+
+^Allow any user to add a translation to an object they don't own if no translation for that language exists yet.^
+
+^Translator permissions:
+
+A specific role allowing users to use translation commands on objects they don't own.^
 
 ^Assignable pronouns
 
@@ -205,4 +171,38 @@ Foobar says "lemi varkiclaflo'i cu culno lo angila" which means "my specific" "h
 
 __DONE__:
 The object in question is the jbofi'e.  Stick it in your ear, and any lojban it hears it will translate for you.  You can also ask it (fo) about (fe) any text you're considering saying, even if it's not in your ear.
+^
+
+^More intuitive translation commands:
+
+cmene fa "blue ball" le blanu bolci bau la gliban
+
+skicu le mudri jubme fo lu .i marji lo melbi mudri li'u .i skicu jy fo zoi zoi Made of beautiful wood. zoi bau la gliban
+
+finti le xunre bolci .i le xunre bolci cu se cmene "red ball" bau la gliban
+
+Default for all these should be to set the user's own language, with lang tags and everything.  Provide mulcmene/full_name to edit the raw stuff.
+
+Notes from Robin: To go along with this, fix the language marker code in the grammar to return the language object, rather than the name, so the turn-name-into-language-object crap doesn't have to be repeated everywhere.  __DONE__
+
+In addition, might as well put the code that dissects and rebuilds lang expressions into a method.
+* This has been done, and it mostly works.  Outstanding issues:
+** The admin's edit_verb is based on avatar, so it doesn't work on methods.
+*** It should refuse to edit them instead of failing stupidly; use mooix::thing's "implements"
+*** Actually, I think avatar's (as opposed to builder's or programmer's) safechange would have caused a refusal
+*** Note in addition that edit_verb no longer needs to be different for avatar vs. builder, but get_field and set_field doe
+*** Should always default to lang xml for methods
+*** All of the above is __DONE__, and seems to work
+** We've only done edit.cmd and is.cmd, I'm sure there are others.
+*** List of others; please add: rename, describe, set
+**** set.cmd, is.cmd, edit.cmd, rename.cmd __done__
+*** Can we somehow factor ''all'' xml-related code out of these into just one or two method calls?  I don't think so.
+**** Actually, we may be able to, with set_field_in_lang and get_field_in_lang
+***** __DONE__; edit_verb has been updated to use them; set_verb doesn't need them
+** Also, we should make sure that assigning a value with <lang> tags in it always assigns in xml mode __DONE__
+** We've not done the Lojban versions at all (galfi.cmd.jbo, stika.cmd.jbo) (umm, there is no stika.cmd.jbo)
+*** galfi.cmd, cmene.cmd, binxo.cmd, skicu.cmd __DONE__
+** NEAT! A side effect of the foo(value=bar) trick in .cmd is that we can ''get rid of rename_verb and describe_verb'' and all their attendant messages; just use field(value=name) : set, or whatever, in the .cmd.  __DONE__
+***Rename also has the (desirable) side effect of informing others that the name has changed.  Being able to have that modification however the name is changed (rename, set, edit, whatever) would be very nice (and ends up getting into deep issues).  Probably best to add a name_onset method, which gets called by safechange.
+**** Conveniently enough, this already exists: ./concrete/thing/name_onset (and "usage of my name_onset").
 ^
