@@ -11,3 +11,5 @@
 * Given "Which one of the debugger you're holding, and the debugger which is in Turgul  do you mean?" it would be nice if any of the responses that worked matched the question asked, or vice versa.
 * The language parameters (the language command, edit in language, etc) are case-sensitive.
 * The spoofing prevention code can be fooled.  But it's a lot harder to do; write.c doesn't include spoof checking.
+Details of the new plan pasted here:
+So msg on thing strips any <sender> tags, inserts new ones iff it should (that is, for the object named $avatar, iff it appears in the callstack before the nearest stack boundary), and calls notice on all appropriate objects, which also strip any <sender> tags that don't come from Thing.msg, and then calls write on the session, which also strips any <sender> tags that don't come from the notice of the owner of the session.  Actually, write will strip any <sender> tags unless the method calling it belongs to the owner of the session (not limited to notice).
