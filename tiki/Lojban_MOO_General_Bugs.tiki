@@ -1,5 +1,7 @@
 ((The Lojban MOO))
 
+! Outstanding Bugs
+
 * showall doesn't require any kind of documentation for .cmd fields.  In other words, it seems to me that if there is a global command named "kick", "help kick" should say something.  It currently doesn't, and there's no way to get a list of commands with no associated help.
 * No help for the dictionary object.  :-|
 * The output from "dict" that the dictionary produces isn't using msg(), so it can't be wrapped in zoi or anything.
@@ -12,3 +14,7 @@
 * The language parameters (the language command, edit in language, etc) are case-sensitive.
 * The spoofing prevention code can be fooled.  But it's a lot harder to do; write.c doesn't include spoof checking.
 ** New anti-spoofing plan: So msg on thing strips any <sender> tags (actually, converts <, >, & to html entities), inserts new ones iff it should (that is, for the object named $avatar, iff it appears in the callstack before the nearest stack boundary), and calls notice on all appropriate objects, which also ignore <sender> tags if the thing calling them isn't from mooix:concrete/thing's msg, and then calls write on the session, which also ignores any <sender> tags if the calling object is not the owner of the session.
+*** Partially implemented; checks in notice and write not done.
+** Another wrinkle is backgrounded spoofers.  This should be fixable by having msg call <np>ps -u geteuid() -o ppid | grep '^ *1 *$'</np>.  This works because each method call chain gets its own uid.  Any such chain that terminates in PID 1 must have a fork in it where the parent has ended.  In this case, respect only the immediately preceding callstack entry, rather than anything in the callstack.
+
+! Fixed Bugs
