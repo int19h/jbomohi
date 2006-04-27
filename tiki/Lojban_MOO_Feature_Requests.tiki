@@ -1,17 +1,13 @@
 ! Short-Form Requests
 
-* zoi quotes
+
 * "mi klama le cnita" should work.
 * klama le gapru .i klama le cnita -- tries to resolve "le cnita" before going up; same thing in English
 * "edit the name of the red ball" doesn't work
 * Try to make "You can't do that." indicate when it is actually simply confused.
 * Add code to check for well-formed XML when people edit things, and bug them if it's crap.  This is probably better done by having per-language editing instead; see 6. More intuitive translation commands below.
 * {viska la'o zoi users/m_labinx/portfolio/cloak zoi} should be the same as {viska mooix:users/m_labinx/portfolio/cloak} -- probably isn't possible as such, but allowing mooix:stuff in zoi quotes (if we had zoi quotes) should work fine.
-* Another thing to stew on: is there a way to make tense part of a command?  That is, I can think of no more natural translation for the remove of clothing than {co'u dasni}
-* Someone should create a voting booth object inside the MOO.  Doesn't need any code hacking, just Programmer level access.
 * A chat mode (where the normal action is speaking, and using commands requires extra typing) would be snazzy.  Bonus points if it acts like IRC.  Having / be the thing that introduces commands would certainly help there.
-* Write an advanced programmer tutorial that does awareness, self movement, dispensing and ownership handling, multilingualism, and stuff like that. I suggest a Meep dispenser, where the meeps can be leashed to things and if they aren't they wander.
-* lo'u...le'u and zo quotes should work, in addition to lu...li'u (and eventually, zoi).
 * contents of rooms should be sorted, and avatars listed separately from inanimate objects
 * Write an advanced builder tutorial that does an ocean liner: that is, a bunch of rooms inside a container or another room (the boat) which in turn is inside another room (the bit of ocean currently being sailed).  Varying degrees of transparency to outside objects, windows, etc.  Note that I'm reasonably certain that not all the features required for this exist yet.
 * There should either be an xml language object or setting one's language field to "xml" should work, in either case all tags should be visible in the raw (i.e. dexml just skips the processing).
@@ -36,10 +32,6 @@ Currently, exits are named and used based on their direction.  It would be nice 
 
 For bonus points, it would be even nicer if you could go anywhere in the MOO (or anywhere you'd already been to once) in the same way, with the software plotting the route for you.^
 
-^Support for full zoi quotes
-
-Currently, "" works for quoting English text.  This is a very handy shortcut, but it would be nice if proper zoi quotes worked too.^
-
 ^Allow any user to add a translation to an object they don't own if no translation for that language exists yet.^
 
 ^Translator permissions:
@@ -62,24 +54,6 @@ finti le xunre bolci zo'e mooix:ball^
 
 if something hasn't been translated into all the languages the moo permits, then I prefer lojban, followed by English, followed by Spanish (since I remember a little from highschool), and then just anything else available.^
 
-^Support for sumtcita
-
-gunta la norlaitru se pi'o le grana^
-
-^Allow tense to be able to distinguish commands from each other
-
-co'u dasni le pastu^
-
-^Support for non-brivla commands
-
-All commands in the Lojban version have to be of brivla form.  Loosening that restriction would allow us to do some handy things.  Examples:
-
-;le pastu cu mo:show, showall, or look (mo may technically be a brivla, but it isn't of the brivla form that the parser recognizes (no consonant cluster))
-;ni'o:clear the screen
-;fa'o:exit the moo
-;ki'e nolraitru:see the emotes in point 1 above
-;le nukni bolci cu me le xunre bolci:reparent^
-
 ^En passant object creation
 
 This is somewhat speculative, but it would be incredibly cool to be able to create an object inline with a command to use it, using bi'u to indicate that it's a new creation.
@@ -100,13 +74,12 @@ At the very least, .e should work for performing the same operation on multiple 
 
 catlu le pastu .e le xunre bolci^
 
-^tanru commands
-
-Allow a command to be a tanru, such as {smaji cusku} (or {sivni cusku}) for whisper^
 
 ^la'o name quoting
 
-There doesn't appear to be any way to refer to an object by its name in a non-current langauge.  Additionally, the mooix: absolute path references are ugly when they're sitting in the middle of otherwise valid lojban.  Once {zoi} quotes work (point 11 above), it would be nice if {la'o} could be used to refer to an object by its non-lojban (either English, or whatever other language the moo is translated into, or mooix: fully-qualified) name.^
+There doesn't appear to be any way to refer to an object by its name in a non-current langauge.  Additionally, the mooix: absolute path references are ugly when they're sitting in the middle of otherwise valid lojban.  Once {zoi} quotes work (point 11 above), it would be nice if {la'o} could be used to refer to an object by its non-lojban (either English, or whatever other language the moo is translated into, or mooix: fully-qualified) name.
+**This is partly done now.  Need to work on a few details.
+^
 
 ^Modify the web client for the MOO in such a way that when someone creates an object, they can upload a little flashcard-like drawing of it that will appear in a separate window in the web client, similar to [img/wiki_up/smani_daplu.gif|the inventory panel in Monkey Island 2]. Perhaps there could even be another window to show a drawing of the room itself. Of course these images would not be visible to anyone playing the game from a terminal or Telnet.
 ^
@@ -114,6 +87,8 @@ There doesn't appear to be any way to refer to an object by its name in a non-cu
 ^Vocatives
 
 Along the lines of a chat mode, we should make vocatives work.  Each one emit some text (so that {ki'e} would do roughly the same thing as {ckire}) and also assign the assignable pronoun {do}
+**vocatives are supported now, we just need to fill them in
+**Also, they don't assign {do}
 ^
 ^Field aliases in alternate languages
 
@@ -136,6 +111,39 @@ These are unlikely to mean anything to anyone else; saves me having to keep note
 
 ! Completed Requests
 
+* zoi quotes
+* Another thing to stew on: is there a way to make tense part of a command?  That is, I can think of no more natural translation for the remove of clothing than {co'u dasni}
+* Someone should create a voting booth object inside the MOO.  Doesn't need any code hacking, just Programmer level access. (I'm removing this, since we now have prayer)
+* Write an advanced programmer tutorial that does awareness, self movement, dispensing and ownership handling, multilingualism, and stuff like that. I suggest a Meep dispenser, where the meeps can be leashed to things and if they aren't they wander.
+* lo'u...le'u and zo quotes should work, in addition to lu...li'u (and eventually, zoi).
+
+
+
+^Support for full zoi quotes
+
+Currently, "" works for quoting English text.  This is a very handy shortcut, but it would be nice if proper zoi quotes worked too.^
+
+^Support for sumtcita
+
+gunta la norlaitru se pi'o le grana^
+
+^Allow tense to be able to distinguish commands from each other
+
+co'u dasni le pastu^
+
+^Support for non-brivla commands
+
+All commands in the Lojban version have to be of brivla form.  Loosening that restriction would allow us to do some handy things.  Examples:
+
+;le pastu cu mo:show, showall, or look (mo may technically be a brivla, but it isn't of the brivla form that the parser recognizes (no consonant cluster))
+;ni'o:clear the screen
+;fa'o:exit the moo
+;ki'e nolraitru:see the emotes in point 1 above
+;le nukni bolci cu me le xunre bolci:reparent^
+
+^tanru commands
+
+Allow a command to be a tanru, such as {smaji cusku} (or {sivni cusku}) for whisper^
 
 ^display quotes
 
