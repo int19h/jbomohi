@@ -56,6 +56,20 @@ More interestingly, what inheritance strategy handles that ''and'' the following
 
 We want both John and Ed looking at My Room to see their own languages (jbo and en, resp.).
 
+!!Re-Stating The Problem
+
+The problem is that given two messages, one above the other in the
+tree (where Meep 1 is above Meep 2, for example) the message down
+the tree might be a direct translation, as with /usr/.../room and
+/var/...room, and hence we really only want to see one of them.  On
+the other hand, it might be a new, more specific message, as with
+Meep 1 vs. animal.
+
+There doesn't seem to be any way to distinguish between the two
+cases (a message below another in a tree being a translation vs.
+being a more specific message) without putting in some kind of
+flagging system; I haven't thought of one that is workable.
+
 !!Some Possible Strategies
 
 !!!Normal Inheritance, User's Language
@@ -96,15 +110,7 @@ a defined message.
 A variant on this, with similar problems, is to present the first
 message up the tree we find in the user's language but if there is
 another message further down the tree, we present that as well in
-parens or something.  The idea is that the message down the tree
-will be more specific.  The problem is that the message down the
-tree might be a direct translation, as with /usr/.../room and
-/var/...room, and hence we really only want to see one of them.
-
-There doesn't seem to be any way to distinguish between the two
-cases (a message below another in a tree being a translation vs.
-being a more specific message) without putting in some kind of
-flagging system; I haven't thought of one that is workable.
+parens or something.  
 
 !!!!The Good
 
