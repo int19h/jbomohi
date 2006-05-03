@@ -1,5 +1,7 @@
 ((The Lojban MOO))
 
+[The Lojban MOO: Inheritance vs. Multilingualism]
+
 ! Outstanding Bugs
 
 * in both English and Lojban, "and"/".e" is used for the "The parser believes that you need to supply the following parts of speech:" list.  Should be "and/or" and ".a"
@@ -23,39 +25,3 @@
 * viska le cpana be le mudri jubme -- doesn't work; need a viska.cmd.jbo for furniture
 * Entering the command "cusku lu cipra" produces (Guessing that you meant to type: cusku "lu cipra" ...).  It should be able to guess that I actually mean to type "cusku lu cipra li'u"
 * When an object has a name only in one language (<lang code="jbo">xunre bolci</lang>, for instance), it can't be refered to in other languages except by id.  Note that if it's only in English (and therefore is saved without the <lang> tags), this problem doesn't exist.
-
-!Design discussion
-
-What follows is something of a dumping ground for thoughts.  It'll probably be incomplete, and if you don't understand it, don't worry.
-
-We're looking at completely redoing the way the multilingualism is done in
-Mooix.  Specifically, instead of having xml files that each contain all
-languages, we're going to have separate files for translations into each
-language.  So that instead of having one name, you'd have name.en, name.jbo,
-name.es, or whatever else.
-
-One advantage is that it would be faster than splitting the xml.  Another
-advantage comes from the fact that language packs could be made much more
-easily (so you could download an entire language and add it to your MOO,
-without it breaking anything that currently exists).  It also makes it much
-clearer which fields are subject to translation (so you won't be like me,
-with an editor of "<lang code='en'>vim</lang><lang code='jbo'>vim</lang>".
-
-So far the chief difficulty seems to be with inheritance.
-
-In the following, we have two users, John (who language is Lojban, "jbo"),
-and Ed (whose language is English, "en").  Ed creates a Meep, and gives it a
-description in English.  Finally, John derives his own mipri from Ed's Meep,,
-but doesn't change anything in it.  So we've got:
-
-~pp~
-/usr/lib/mooix/contrib/animal/description.en:              An animal.
-/var/lib/mooix/contrib/animal/description.jbo:             .i danlu
-/var/lib/mooix/users/ed/portfolio/Meep/description.en:     A meep!
-~/pp~
-
-It seems desirable that both John and Ed see the Meep described as "A meep!"
-(even though for John that's not his own language), instead of John seeing
-".i danlu" (which just means "[It's an] animal").
-
-What inheritance strategy provides this?
