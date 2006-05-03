@@ -25,18 +25,24 @@ but doesn't change anything in it.  So we've got:
 ~pp~
 /usr/lib/mooix/contrib/animal/description.en:              An animal.
 /var/lib/mooix/contrib/animal/description.jbo:             .i danlu
-/var/lib/mooix/users/ed/portfolio/Meep/description.en:     A meep!
+/var/lib/mooix/users/ed/portfolio/Meep1/description.en:     A meep!
 ~/pp~
 
 It seems desirable that both John and Ed see the Meep described as "A meep!"
 (even though for John that's not his own language), instead of John seeing
 ".i danlu" (which just means "[[It's an] animal").
 
+In addition, we want John to be able to create a descendant of Ed's meep, with properly translated messages, like:
+
+~pp~
+/var/lib/mooix/users/ed/portfolio/Meep2/description.jbo:     .i me la mip
+~/pp~
+
 Here's a picture of this case:
 
 {img src="img/wiki_up/lang_inheritance_1.jpg" }
 
-What inheritance strategy provides this?
+What inheritance strategy provides this?  We want John looking at the first Meep to see English (the wrong language for him) and we want Ed looking at the second Meep to see English (the correct language for him).
 
 More interestingly, what inheritance strategy handles that ''and'' the following case?
 
@@ -47,3 +53,20 @@ More interestingly, what inheritance strategy handles that ''and'' the following
 /var/.../room/description.jbo:             .i kumfa
 /var/lib/mooix/users/ed/portfolio/My_Room contains no description* files at all.
 ~/pp~
+
+We want both John and Ed looking at My Room to see their own languages (jbo and en, resp.).
+
+!!Some Possible Strategies
+
+!!!Normal Inheritance, User's Language
+
+In this case, the bottom-most definition in the user's language prevails.
+
+!!!!The Good
+
+Both John and Ed looking at Meep2 or My Room see the correct messages in their own language.
+
+!!!!The Bad
+John looking at Meep 1 sees the generic ".i danlu".
+
+
