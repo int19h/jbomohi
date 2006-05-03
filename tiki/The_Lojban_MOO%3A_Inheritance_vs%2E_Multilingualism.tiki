@@ -69,4 +69,54 @@ Both John and Ed looking at Meep2 or My Room see the correct messages in their o
 !!!!The Bad
 John looking at Meep 1 sees the generic ".i danlu".
 
+!!!Last Object Special
 
+This is like "Normal Inheritance, User's Language" except that the
+object we are actually looking at getts special dispensation: we
+don't look past it for translations if we find anything  at all.
+
+!!!!The Good
+
+John looking at Meep 1 sees the more specific (but wrong language)
+"A meep!".
+
+Both John and Ed looking at Meep2 or My Room see the correct messages in their own language.
+
+!!!!The Bad
+
+John looking at an unmodified child of Meep 1 sees the less specific
+"An animal.".  This means that a child with no modifications has
+different behaviour than the parent, which is not cool.
+
+!!!Reverse Hierarchical
+
+We walk up the stack, and take something from the first object with
+a defined message.
+
+A variant on this, with similar problems, is to present the first
+message up the tree we find in the user's language but if there is
+another message further down the tree, we present that as well in
+parens or something.  The idea is that the message down the tree
+will be more specific.  The problem is that the message down the
+tree might be a direct translation, as with /usr/.../room and
+/var/...room, and hence we really only want to see one of them.
+
+There doesn't seem to be any way to distinguish between the two
+cases (a message below another in a tree being a translation vs.
+being a more specific message) without putting in some kind of
+flagging system; I haven't thought of one that is workable.
+
+!!!!The Good
+
+John looking at Meep 1 sees the more specific (but wrong language)
+"A meep!".
+
+John looking at Meep 2 sees the right thing.
+
+!!!!The Bad
+
+Ed looking at Meep 2 sees only the Lojban message; his translation
+is effectively lost unless John copies it.  Copying it kind of
+defeats the purpose of an object oriented system.
+
+Same with Ed looking at My Room.
