@@ -279,6 +279,21 @@ specificity.
 
 The "show *something* in my language, dammit" tag works here (as it does with any variant).
 
+A crack at pseudo-code for the recursive version:
+
+~pp~
+best_lang( object, field, user's preferred lang )
+{
+    if at the root
+	return list of all available languages on the root object
+    else
+	language list = best_lang( object's parent, field, user's preferred lang )
+	Add all languages on object to the list.  If a duplicate is
+	    found, clear the list and then add the duplicate back in
+	return the resulting list
+}
+~/pp~
+
 !!!!The Good
 
 Seems to work in all the cases presented so far.
