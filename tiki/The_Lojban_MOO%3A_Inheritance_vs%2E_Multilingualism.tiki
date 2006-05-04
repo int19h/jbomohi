@@ -247,7 +247,7 @@ language, as well".
 
 !!!!The Good
 
-Seems to work in all the cases presented so far.
+Seems to work in all the cases presented so far.  (but not a simple extension of them; see The Bad)
 
 No manual intervention at all.
 
@@ -264,3 +264,35 @@ as to correct a spelling mistake) will seem to do the wrong thing,
 as all languages above that one will be "lost". OTOH, if the change
 is not trivial, then all languages above being lost are The Right
 Thing, and telling the difference requires smart intervention.
+
+!!!Daddy's Got A Brand New Non-Existant Tag
+
+So "Look Ma, No Tags!" turns out to not DTRT; this is an extension
+that counts from the bottom instead of the top, on the same
+principle: a repeated copy in the same language means an increase in
+specificity.
+
+# Start at the top of the chain (i.e. the root object) (actual implementation will presumably be recursive to the top and then return stuff back up)
+# Walk down the chain towards the child we're wondering about.  Collect a list of languages.
+# If we see a language that matches our current one, clear the list, then add the language in question back into it.
+# When we reach the child and have collected all of its languages, return the language most preferred by the user.
+
+The "show *something* in my language, dammit" tag works here (as it does with any variant).
+
+!!!!The Good
+
+Seems to work in all the cases presented so far.
+
+No manual intervention at all.
+
+!!!!The Bad
+
+Potentially non-obvious to the casual builder.
+
+Cases where a user makes a child with a message on the object in
+language X and updates it in only language X in a trivial way (such
+as to correct a spelling mistake) will seem to do the wrong thing,
+as all languages above that one will be "lost". OTOH, if the change
+is not trivial, then all languages above being lost are The Right
+Thing, and telling the difference requires smart intervention.
+
