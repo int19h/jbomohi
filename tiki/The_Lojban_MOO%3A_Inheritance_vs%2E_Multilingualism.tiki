@@ -229,3 +229,35 @@ best_lang( object, field, user's preffered lang, language list (starts empty ) )
     return best_lang( object's parent, field, user's preffered lang, language list )
 }
 ~/pp~
+
+Given that, we just grab the normally inherited field X.[[whatever
+best_lang returns].
+
+Some extensions:
+
+Change "if X is already in the language list, return X" to "if X is
+already in the language list, return the thing in the language list
+that is highest in the user's preferences".  Not doing this because
+a proper preference list is a fair bit of work; I'm not going to
+bother until someone wants a more-than-two language MUD.
+
+Add a user flag that says "If you don't find my language at the
+most-specific level, please print out whatever you *do* find in my
+language, as well".
+
+!!!!The Good
+
+Seems to work in all the cases presented so far.
+
+No manual intervention at all.
+
+!!!!The Bad
+
+Potentially non-obvious to the casual builder.
+
+Cases where a user makes a child with a message on the object in
+language X and updates it in only language X in a trivial way (such
+as to correct a spelling mistake) will seem to do the wrong thing,
+as all languages above that one will be "lost". OTOH, if the change
+is not trivial, then all languages above being lost are The Right
+Thing, and telling the difference requires smart intervention.
