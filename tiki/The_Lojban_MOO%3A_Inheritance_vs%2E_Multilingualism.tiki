@@ -282,7 +282,7 @@ The "show *something* in my language, dammit" tag works here (as it does with an
 A crack at pseudo-code for the recursive version:
 
 ~pp~
-best_lang( object, field, user's preferred lang )
+best_lang( object, field )
 {
     if at the root
 	return list of all available languages on the root object
@@ -292,6 +292,17 @@ best_lang( object, field, user's preferred lang )
 	    found, clear the list and then add the duplicate back in
 	return the resulting list
 }
+
+language list = best_lang( object, field )
+
+EITHER
+    IF language list includes the user's preferred lang, return
+    that ELSE return the first thing on the list
+OR
+    Sort the list via the user's preferred languages list and return
+    the top
+DEPENDING ON whether more than one language has been implemented for
+the user (the latter) or not (the former)
 ~/pp~
 
 !!!!The Good
