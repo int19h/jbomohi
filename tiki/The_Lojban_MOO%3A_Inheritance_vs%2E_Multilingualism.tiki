@@ -191,4 +191,13 @@ Lets us draw a clear distinction between translations and specializations.
 With proper configuration, allows a solution to all cases presented so far.
 
 !!!!The Bad
-Gives us more complexity in deciding what overrides what.  Makes the user's task of editing an object that much more complicated, with the decisions of what to override and what not to.
+!!!!!Complexity
+Gives us more complexity in deciding what overrides what.  An implementation note, here, that seems to make this very easy from a coding perspective.  Given variable X, and user's preferred language Y:
+
+# Find X.def.  Since the core objects will have these added, this should always exist, but even if it doesn't we're OK.  Call the full path of X.def PATH/X.def.  Set the variable def_path to PATH.  If there's no X.def, set it to the empty string.
+# Find PATH2/X.Y.  If none, then not even the core object is translated to the user's language; it doesn't much matter what we do then, but we treat it as this step failing; go to the next step.  Anyways, if PATH2 is a (non-proper) substring of def_path (or def_path is empty), then great: X.Y is more specific, and we're done.  Otherwise, continue.
+# Find PATH3/X.L, for all languages L that the MUD supports.  If PATH3 is a (non-proper) substring of def_path (or def_path is empty), that's our string, we're done.  Otherwise, continue.
+# Find PATH/parent/MORE_PATH/X.def.  Set def_path based on this.  Return to step 1.  Lather, rinse, repeat.
+
+!!!!!Editing
+Makes the user's task of editing an object that much more complicated, with the decisions of what to override and what not to.  Except that it looks like we can automate this trivially: if you're editing variable X in language Y, and X.Y exists up the parent tree before or at the same level as the previous X.def, you are assumed to be creating a more specific instance of variable X (indeed, I haven't thought of a case where that fails yet), and X.def is automatically created at your level.
