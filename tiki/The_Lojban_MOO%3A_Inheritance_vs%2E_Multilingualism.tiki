@@ -201,3 +201,29 @@ Gives us more complexity in deciding what overrides what.  An implementation not
 
 !!!!!Editing
 Makes the user's task of editing an object that much more complicated, with the decisions of what to override and what not to.  Except that it looks like we can automate this trivially: if you're editing variable X in language Y, and X.Y exists up the parent tree before or at the same level as the previous X.def, you are assumed to be creating a more specific instance of variable X (indeed, I haven't thought of a case where that fails yet), and X.def is automatically created at your level.  This means, as far as I've noticed (and I haven't walked every step) that every case presented so for works (assuming all core objects have .def files in the right places) ''without anyone doing anything special''.  Just regular editing.
+
+!!!Look Ma, No Tags!
+
+So realizing that Untagged Special can put the tags in place
+automatically when editing made me wonder if we can do it
+programatically, hence dispensing with the actual tags.  I believe
+the answer to be yes.  The idea here is that if we see the same
+language twice down the parent tree, then everything after the
+more-parental instance must be a more-specific object.
+
+The algorithm is as follows:
+
+~pp~
+object = [the original object]
+field = [description, article, name, whatever]
+best_lang( object, field, user's preffered lang, language list (starts empty ) )
+{
+    if field.user's prefirred lang is found, return user's prefirred lang
+
+    For X = every language in the MUD:
+	if field.X exists, add X to language list
+	    if X is already in the language list, return X
+
+    return best_lang( object's parent, field, user's preffered lang, language list )
+}
+~/pp~
