@@ -22,7 +22,7 @@
 
 ; --- GRAMMAR ---
 
-text <- intro-null NAI-clause* text-part-2 (!text-1 joik-jek)? text-1? faho-clause EOF?
+PUBLIC text <- intro-null NAI-clause* text-part-2 (!text-1 joik-jek)? text-1? faho-clause EOF?
 
 intro-null <- spaces? su-clause* intro-si-clause
 text-part-2 <- (CMENE-clause+ / indicators?) free*
@@ -1162,12 +1162,13 @@ SPACE ZOhU-no-SA-handling <- pre-clause ZOhU post-clause
 ; inner-word (the stuff inside BRIVLA=( ... ), for example) is an
 ; evenly nested, arbitrary length sequence of foo=( ... ) tags with
 ; stuff inside them.  Gotta snarf it all.
-NORATS inner-word <- space-char* (!equals-char !space-char .)+ equals-char open-paren inner-word close-paren inner-word? / (!close-paren-char .)+
+NORATS inner-word <- space-char (!equals-char !space-char .)+ equals-char open-paren inner-word close-paren inner-word? / inner-word2
+NORATS inner-word2 <- !close-paren-char . inner-word2 / !close-paren-char . &space-char
 NORATS space-char <- ' '
 NORATS equals-char <- '='
 NORATS close-paren-char <- ')'
 NORATS open-paren <- "( "
-NORATS close-paren <- " "* ") "
+NORATS close-paren <- " ) "
 
 ;         any single lexable Lojban words 
 any-word <- any-word-pre inner-word close-paren spaces?
