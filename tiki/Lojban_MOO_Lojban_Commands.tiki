@@ -1,30 +1,74 @@
-~tc~Up to date as of Wed Jan  4 23:48:12 UTC 2006 (date on the mooix server).  Check for new stuff using:
-ls -lrt $(find /var/lib/mooix /usr/lib/mooix -type f -name '*.cmd.jbo') | tail
+~tc~Up to date as of 15 May 2006.  Check for new stuff using:
+ls -lrt $(find /var/lib/mooix /usr/lib/mooix -type f -name '*.cmd.jbo') | less
 ~/tc~
 ! Movement Commands
 
 ;go through an exit:klama [[exit] (i.e. "klama le stici" to go west)
-;go to your home:zdakla/klama le zdani
+;go through an exit:[[exit] (i.e. "stici" to go west)
+;go to your home:zdakla/klama le zdani/zdani klama
 ;list the exits out of the room you are in:ma pluta
 
 ! Communication Commands
 
 ;say out loud:cusku lu ... li'u/cusku "..." OR just "...
 ;say to someone (others can hear you, though):cusku lu ... li'u [[name]/cusku "..." [[name]
+;whisper in general (others may be able to hear you):smasku lu ... li'u/smasku "..."
+;whisper to someone (others may be able to hear you):smasku lu ... li'u [[name]/smasku "..." [[name]
 ;perform an action, assume a pose:jarco lu ...li'u/jarco "..."  OR just :...
 ;pray to the gods (use to ask for help or request creation of something):ceirpikci/cevypikci lu...li'u
 
+!! Social Expression Commands
+
+These commands present a simple message in each available language;
+for example "cinma la bab" presents both Lojbanic and English
+translations of "[[your name] kisses Bob.".  There are also English
+equivalents.  Many take a single argument, others take none; should
+be obvious from the meanings.
+
+* badri
+* cinba
+* cisma
+* ckire
+* cmila
+* coi
+* cortu
+* dansu
+* desku
+* desygau
+* dunku
+* fanza
+* fengu
+* gleki
+* je'e
+* jgira
+* klaku
+* nelci
+* plipe
+* prami
+* rinsa
+* sinma
+* steba
+* surla
+* tatpi
+* terpa
+* tugni
+* tungau
+* tunta
+* xebni
+
+
 ! Interaction Commands
 
-;list your inventory:ponse/ralte ma
+;list your inventory:ponse/ralte/bevri ma
 ;look around the room:viska
 ;look at an object:viska [[object]/catlu [[object]
 ;pick up/take an object:cpacu/lebna/ponse/ralte [[object]
 ;drop an object:falgau [[object] or [[object] farlu
 ;put an object on/under/behind/in another object:[[object] cu cpana/cnita/trixe/nenri/se vasru [[object]
 ;look on top of/under/behind/in an object:ma cpana/cnita/trixe/nenri/se vasru [[object]
+;put an object under another object:[[object] cu se gapru [[object]
 ;put an object somewhere:punji [[object] [[object] (defaults to cpana)/punji [[object]] le nenri/cpana/cnita/trixe be [[object]
-;put an object somewhere:[[object] cu klama [[object] (defaults to cpana)/[[object]] cu klama le nenri/cpana/cnita/trixe be [[object]
+;put an object somewhere:[[object] cu klama/zvati [[object] (defaults to cpana)/[[object]] cu klama/zvati le nenri/cpana/cnita/trixe be [[object]
 ;put an object inside/beneath another object:setca/nitygau [[object] [[object]
 ;close a container or a door:[[object] cu ganlo
 ;open a container or a door:[[object] cu kalri
@@ -67,8 +111,9 @@ binxo lu .i na cinri li'u" you can say "le cmene po mi cu binxo lu
 ;get a list of all help topics:sidju/mulsidju fi "liste"
 ;quit/leave:sipna/sisti
 ;who's online:ma cikna
-;list languages:selbau ma
-;select a language:selbau [[language]
+;list languages:selbau ma/ma bangu
+;select a language:selbau [[language]/[[language] bangu
+;use an alternate language for a single command:[[language] bangu fi "[[command]"
 ;rename something:lu [[name] li'u/"[[name]" cu cmene [[object]
 ;set something's description:skicu [[object] fo "[[description]"
 ;set your home to your current location:(ti/le se zvati be mi/etc) zdani mi
@@ -76,7 +121,7 @@ binxo lu .i na cinri li'u" you can say "le cmene po mi cu binxo lu
 ;set a field to false (0):fa "[[field]" po [[object] cu na jetnu
 ;set a field to false (0):fa "[[field]" po [[object] cu jitfa
 ;make a shortcut to an object:lu [[short name] li'u tcita [[object]
-;remove a shortcut to an object:no da tcita [[object]
+;remove a shortcut to an object:no da tcita [[object]/na tcita [[object]
 ;list your shortcuts:tcita
 ;set a field to a value:fa "[[field]" po [[object] cu binxo lu [[setting] li'u/"[[setting]"
 ;set a field to a value in another language:fa "[[field]" po [[object] cu binxo lu [[setting] li'u/"[[setting]" bau la [[language]
@@ -84,21 +129,41 @@ binxo lu .i na cinri li'u" you can say "le cmene po mi cu binxo lu
 ;edit a field on another object ("name" and "description" are common choices):galfi "[[field]" po [[object name]
 ;editing in another language:galfi "[[field]" po [[object name] bau la [[language]
 
+! Special Object Commands
+
+These are commands that only apply to particular objects.
+
+!! Dictionaries
+
+;look for a dictionary entry:sisku "[[word]"/lu valsi li'u le [[dictionary object]
+
+!! Animals
+
+;feed an animal:le [[animal] cu citka (optional: le [[consumable])
+;feed an animal:ctigau le [[animal] (optional: le [[consumable])
+
+!! Weapons
+
+;wield a weapon:jgari le [[weapon]
+
 ! Builder/Advanced Commands
 
+;teleport an object to nowhere (for parent objects):[[object] cu zvati no da
 ;unset/remove a field:vimcu "[[field]" [[object]
 ;turn on logging:vreji
 ;display your log (thus erasing it):ma fasnu
 ;destroy an object:daspo [[object]
 ;create an object:finti "[[name]"/lu [[name] li'u fo [[class]
-;list classes:finti fo ma/jutsi/klesi
-;list objects you've created:finti ma
-;list objects others have created:[[user] finti ma
+;create an object:zbasu "[[name]"/lu [[name] li'u [[class]
+;create an object of the "thing" class:"[[name]"/lu [[name] li'u cu zasti
+;list classes:finti fo ma/jutsi/klesi/zbasu fi ma
+;list objects you've created:finti/zabus ma
+;list objects others have created:[[user] finti/zbasu ma
 ;show lots of information about an object (show):lanli [[ojbect] [[field: optional]/ckaji [[object] ma
 ;show ''lots'' of information about an object (showall):tcelanli [[ojbect] [[field: optional]
-;dig a room with exits:le cliva ce'o le xruti cu pluta le kumfa ti
-;dig a room without exits:pluta le kumfa ti
-;dig a exits to an existing room:le cliva ce'o le xruti cu pluta la'o zoi mooix:portfolio/kumfa zoi ti
+;dig a room with exits:le [[cliva] ce'o le [[xruti] cu pluta le [[kumfa] ti
+;dig a room without exits:pluta le [[kumfa] ti
+;dig a exits to an existing room:le [[cliva] ce'o le [[xruti] cu pluta [[la'o zoi mooix:portfolio/kumfa zoi] ti
 ;list a field or a method:catlu "[[field/method]" po [[object]
 ;get usage/detailed information on an object:ma plitadji fi [[object]]
 ;get usage/detailed information on a field or method:ma plitadji fi "[[field/method]" po [[object]
