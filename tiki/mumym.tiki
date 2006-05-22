@@ -10,33 +10,33 @@ A deb (probably outdated at this point) is available at http://www.surreality.us
 
 When Mumym is just sitting there, having just joined, or not playing a game, you can tell it to start the game process by saying:
 
-doi mumym ko cfari
+~pre~doi mumym ko cfari~/pre~
 
 Mumym then enters the starting phase. Here, players can specify their desire to play with the following:
 
-doi mumym mi kelci djica
+~pre~doi mumym mi kelci djica~/pre~
 
 You can also tell it that you want an AI to play with a command like the following:
 
-doi mumym la .alis kelci
+~pre~doi mumym la .alis kelci~/pre~
 
 When all the players are ready, you can tell Mumym to start the actual game with:
 
-doi mumym ko cfagau
+~pre~doi mumym ko cfagau~/pre~
 
 Mumym will then ask the players in order to guess. You can respond with a guess by saying:
 
-zo gismu
+~pre~zo gismu~/pre~
 
 Where gismu is your guess.
 
 At any time during play, you can tell Mumym to end the current game by saying:
 
-doi mumym ko sisti
+~pre~doi mumym ko sisti~/pre~
 
 You can also ask Mumym to redisplay its startup message by saying:
 
-doi mumym ko sarji
+~pre~doi mumym ko sarji~/pre~
 
 ! Contributing AI
 
@@ -46,7 +46,7 @@ I have a generally open call for new AI classes for Mumym. It must be written in
 
 When making an AI, you derive from the following class:
 
-class AI:
+~pre~class AI:
         "Base class for AIs."
         def __init__(self, mumym):
                 global possible_gismu
@@ -59,11 +59,11 @@ class AI:
 
         def makeGuess(self):
                 "Called when it's the AI's turn, you should make a guess with self.mumym.guess()."
-                pass
+                pass~/pre~
 
 Here is an example of a very simple AI:
 
-class SimpleAI(AI): # la alis.
+~pre~class SimpleAI(AI): # la alis.
         "A simple AI that will only guess random words that haven't already been guessed."
         def onGuess(self, guess, score):
                 # This needs to be done in a try block, in case some bonehead guesses a word
@@ -76,6 +76,6 @@ class SimpleAI(AI): # la alis.
         def makeGuess(self):
                 guess = random.choice(self.possible_gismu)
                 self.mumym.msg(self.mumym.chan, "la .alis smadi le du'u zo " + guess + " valsi")
-                self.mumym.guess(".alis", guess)
+                self.mumym.guess(".alis", guess)~/pre~
 
 If you need help or want to submit one, contact ((bancus)).
