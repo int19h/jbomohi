@@ -24,3 +24,25 @@ Okay, fixed.
 I think it looks weird to have a URL in a print dictionary, so I omitted
 it. Perhaps Xod prefers it that way.
 
+
+## 2006-06-16T21:53:11Z — rlpowell (comment 259, on definition 14337, in reply to 258)
+
+Re: Paucity of information.
+
+arj wrote:
+> rlpowell wrote:
+> > Seems like adding his full English name and/or a link to more
+> information
+> > about him would make the definition actuall useful, espcially since he
+> > *doesn't use* "Xod" in English, as far as I know.
+> 
+> Okay, fixed.
+> 
+> I think it looks weird to have a URL in a print dictionary, so I omitted
+> it. Perhaps Xod prefers it that way.
+
+
+I'm assuming the cmene won't go in the printed dictionary.
+
+-Robin
+
