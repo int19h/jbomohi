@@ -1,0 +1,188 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Sat, 08 Jul 2006 23:32:12 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1FzSpv-0000OS-9v	for lojban-beginners-real@lojban.org; Sat, 08 Jul 2006 23:32:11 -0700
+Received: from ihug-mail.icp-qv1-irony5.iinet.net.au ([203.59.1.199] helo=mail-ihug.icp-qv1-irony5.iinet.net.au)	by chain.digitalkingdom.org with esmtp (Exim 4.62)	(envelope-from <arran4@gmail.com>)	id 1FzSpt-0000OL-HF	for lojban-beginners@lojban.org; Sat, 08 Jul 2006 23:32:11 -0700
+Received: from 203-214-51-192.dyn.iinet.net.au (HELO [192.168.1.254]) ([203.214.51.192])  by mail-ihug.icp-qv1-irony5.iinet.net.au with ESMTP; 09 Jul 2006 14:32:01 +0800
+X-BrightmailFiltered: true
+X-Brightmail-Tracker: AAAAAA==
+X-IronPort-AV: i="4.06,220,1149436800";    d="pl'?scan'208"; a="832348842:sNHT27416332"
+From: "Arran U." <arran4@gmail.com>
+To: lojban-beginners@lojban.org
+Subject: [lojban-beginners] gismu.txt & cmavo.txt to Manpages
+Date: Sun, 9 Jul 2006 16:29:43 +1000
+User-Agent: KMail/1.9.1
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="nextPart1704719.FmxhSziMMu";  protocol="application/pgp-signature";  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Message-Id: <200607091629.47528.arran4@gmail.com>
+X-Spam-Score: -2.0 (--)
+X-archive-position: 3382
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@lojban.org
+Errors-to: lojban-beginners-bounce@lojban.org
+X-original-sender: arran4@gmail.com
+Precedence: bulk
+Reply-to: lojban-beginners@lojban.org
+X-list: lojban-beginners
+Content-Length: 5798
+
+--nextPart1704719.FmxhSziMMu
+Content-Type: multipart/mixed; 
+  boundary="Boundary-01=_XJKsEWGgn+ULzWi"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+--Boundary-01=_XJKsEWGgn+ULzWi
+Content-Type: text/plain; 
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+I created this for the sake of it. It's your under GPL and the condition yo=
+u=20
+report what ever you do with it (really only interested in modifications.)
+=2D-=20
+=2D4
+
+A novice was trying to fix a broken Lisp machine by turning the power off a=
+nd=20
+on.=20
+Knight, seeing what the student was doing, spoke sternly: "You cannot fix a=
+=20
+machine by just power-cycling it with no understanding of what is going=20
+wrong."=20
+Knight turned the machine off and on.=20
+The machine worked.
+
+--Boundary-01=_XJKsEWGgn+ULzWi
+Content-Type: application/x-perl; 
+  name="convertToManpages.pl"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="convertToManpages.pl"
+
+#!/usr/bin/perl -W
+open (ASCFILEGISMU, "gismu.txt");
+open (ASCFILECMAVO, "cmavo.txt");
+
+local %count;
+
+$count{gimsu} = 0;
+$count{cmavo} = 0;
+$count{rasfi} = 0;
+$count{gismuref} = 0;
+
+print CSFILEGISMU "'gismuID', 'gismu', 'glossword', 'hintword', 'gismu places', 'lobjan textbook code', '1993 frequency count', 'comments'\n";
+print CSFILERASFI "'rasfiID', 'rasfi', 'gismu'\n";
+print CSFILEGISMUREF "'gismurefID', 'referencedGismu', 'referencingGismu'\n";
+print CSFILECMAVO "'cmavoID', 'cmavo', 'selma\\'o', 'gismu places', 'comments'\n";
+
+local $line;
+local %rasfi;
+
+mkdir "man8jbo";
+
+foreach $line (<ASCFILEGISMU>)
+{  
+
+	if (substr($line, 1,5) ne '01436')
+	{
+		my $gismu =		substr($line,   1,   5 -   1 + 1); 	$gismu =~ s/\s*$//;		$gismu =~ s/^\s*//;		$gismu =~ s/\'/\\\'/;		
+		my $pavrasfi =		substr($line,   7,   9 -   7 + 1); 	$pavrasfi =~ s/\s*$//;		$pavrasfi =~ s/^\s*//;		$pavrasfi =~ s/\'/\\\'/;	
+		my $relrasfi = 		substr($line,  11,  13 -  11 + 1); 	$relrasfi =~ s/\s*$//;		$relrasfi =~ s/^\s*//;		$relrasfi =~ s/\'/\\\'/;	
+		my $cibrasfi = 		substr($line,  15,  18 -  15 + 1); 	$cibrasfi =~ s/\s*$//;		$cibrasfi =~ s/^\s*//;		$cibrasfi =~ s/\'/\\\'/;	
+		my $glivalsi =		substr($line,  20,  39 -  20 + 1); 	$glivalsi =~ s/\s*$//;		$glivalsi =~ s/^\s*//;		$glivalsi =~ s/\'/\\\'/;	
+		my $samdyglivalsi = 	substr($line,  41,  60 -  41 + 1); 	$samdyglivalsi =~ s/\s*$//;	$samdyglivalsi =~ s/^\s*//;	$samdyglivalsi =~ s/^\'/\\\'/;	
+		my $selbridi = 		substr($line,  62, 157 -  62 + 1); 	$selbridi =~ s/\s*$//;		$selbridi =~ s/^\s*//;		$selbridi =~ s/\'/\\\'/;	
+		my $numbercode = 	substr($line, 159, 160 - 159 + 1); 	$numbercode =~ s/\s*$//;	$numbercode =~ s/^\s*//;	$numbercode =~ s/\'/\\\'/;	
+		my $frequencycount = 	substr($line, 161, 164 - 161 + 1); 	$frequencycount =~ s/\s*$//;	$frequencycount =~ s/^\s*//;	$frequencycount =~ s/\'/\\\'/;	
+		my $comments =		substr($line, 164); 			$comments =~ s/\s*$//;		$comments =~ s/^\s*//;		$comments =~ s/\'/\\\'/;	
+		open (MANFILE, ">man8jbo/$gismu.8jbo");
+		print MANFILE ".TH \"", $gismu, " - ", $glivalsi, "\" 8jbo\n";
+		print MANFILE ".SH glico bangu valsi\n", $glivalsi, " ", $samdyglivalsi, "\n";
+		print MANFILE ".SH selbridi\n", $selbridi, "\n";
+		print MANFILE ".SH rasfi\n";
+		print MANFILE "$pavrasfi "  if ($pavrasfi ne "");
+		print MANFILE "$relrasfi "  if ($relrasfi ne "");
+		print MANFILE "$cibrasfi\n" if ($cibrasfi ne "");
+		print MANFILE ".SH notes\n", $comments, "'\n\n";
+		print MANFILE "Lojban book code: ", $numbercode, "\n\n";
+		print MANFILE "1993 Frequency number: ", $frequencycount, "\n";
+
+		$rasfi{$pavrasfi} = $gismu if ($pavrasfi ne "");
+                $rasfi{$relrasfi} = $gismu if ($relrasfi ne "");
+		$rasfi{$cibrasfi} = $gismu if ($cibrasfi ne "");
+
+		if ($comments =~ m/\(cf\. (.*)\)/)
+		{
+			print MANFILE ".SH See also\n";
+			foreach (split(/, /, $1))
+			{
+				print MANFILE "$_(8jbo) ";
+			}
+			print MANFILE "\n";
+		}
+		close(MANFILE);
+		system("gzip -f \"man8jbo/$gismu.8jbo\"");
+
+
+	} else {
+		print "Err", $line, "\n";
+	}
+}
+
+foreach $line (<ASCFILECMAVO>)
+{  
+
+	if (substr($line, 0,5) ne '01090')
+	{
+		my $cmavo =		substr($line,   0,  11 -   0 + 0); 	$cmavo =~ s/\s*$//;		$cmavo =~ s/^\s*//;	$cmavo =~ s/\'/\\\'/;		
+		my $selmao =		substr($line,  11,  19 -  11 + 1); 	$selmao =~ s/\s*$//;		$selmao =~ s/^\s*//;	$selmao =~ s/\'/\\\'/;	
+		my $glivalsi =		substr($line,  20,  39 -  20 + 1); 	$glivalsi =~ s/\s*$//;		$glivalsi =~ s/^\s*//;	$glivalsi =~ s/\'/\\\'/;	
+		my $selbridi = 		substr($line,  62, 157 -  62 + 1); 	$selbridi =~ s/\s*$//;		$selbridi =~ s/^\s*//;	$selbridi =~ s/\'/\\\'/;	
+		my $comments =		substr($line, 164); 			$comments =~ s/\s*$//;		$comments =~ s/^\s*//;	$comments =~ s/\'/\\\'/;	
+
+		open (MANFILE, ">man8jbo/$cmavo.8jbo");
+		print MANFILE ".TH \"", $cmavo, " - ", $glivalsi, "\" 8jbo\n";
+		print MANFILE ".SH glico bangu valsi\n", $glivalsi, " ", $samdyglivalsi, "\n";
+		if (defined $rasfi{$cmavo})
+		{
+			print MANFILE ".SH rasfi shared with gismu\n", $rasfi{$cmavo}, "\n"; 
+			delete $rasfi{$cmavo};
+		}
+		print MANFILE ".SH selbridi\n$selbridi\n";
+		print MANFILE ".SH selmao\n";
+		print MANFILE "$selmao\n";
+		print MANFILE ".SH notes\n", $comments, "'\n\n";
+		if ($comments =~ m/\(cf\. (.*)\)/)
+		{
+			print MANFILE ".SH See also\n";
+			foreach (split(/, /, $1))
+			{
+				print MANFILE "$_(8jbo) ";
+			}
+			print MANFILE "\n";
+		}
+		close(MANFILE);
+		system("gzip -f \"man8jbo/$cmavo.8jbo\"");
+	} else {
+		print "Err", $line, "\n";
+	}
+}
+
+
+--Boundary-01=_XJKsEWGgn+ULzWi--
+
+--nextPart1704719.FmxhSziMMu
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2-ecc0.1.6 (GNU/Linux)
+
+iD8DBQBEsKJbtr4wvL3HgC0RAmBGAJ4oZizmknbxkvVZFgIQTr5CNfHdWwCdEJHb
+FBEPYT5rMZhNrHrta7LNJ3c=
+=vAz+
+-----END PGP SIGNATURE-----
+
+--nextPart1704719.FmxhSziMMu--
+
+
