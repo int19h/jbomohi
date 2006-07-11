@@ -1,0 +1,128 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 57055 invoked from network); 11 Jul 2006 22:59:27 -0000
+Received: from unknown (66.218.67.35)
+  by m39.grp.scd.yahoo.com with QMQP; 11 Jul 2006 22:59:27 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta9.grp.scd.yahoo.com with SMTP; 11 Jul 2006 22:59:27 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.62)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1G0RCO-0003K9-OL
+	for lojban@yahoogroups.com; Tue, 11 Jul 2006 15:59:24 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.62)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1G0RBL-0003Jf-V9; Tue, 11 Jul 2006 15:58:22 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 11 Jul 2006 15:58:11 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1G0RAt-0003JO-6v	for lojban-list-real@lojban.org; Tue, 11 Jul 2006 15:57:51 -0700
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <rlpowell@digitalkingdom.org>)	id 1G0RAs-0003JH-W3	for lojban-list@lojban.org; Tue, 11 Jul 2006 15:57:51 -0700
+Date: Tue, 11 Jul 2006 15:57:50 -0700
+Message-ID: <20060711225750.GM10845@chain.digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <925d17560607100826x2a37ffcfi69c9964cabf0b53@mail.gmail.com> <537d06d00607100919v70febc62u93929e72b0041c48@mail.gmail.com> <20060710164123.GS3440@chain.digitalkingdom.org> <e202d93c0607101027w88e0fa5p858d0694a6375a6b@mail.gmail.com> <20060710173540.GV3440@chain.digitalkingdom.org> <e202d93c0607101841r2f925d26ve483782380a9ab2e@mail.gmail.com> <20060711052439.GC10845@chain.digitalkingdom.org> <e202d93c0607111135h90d1cb2t4023fdad74bc7b00@mail.gmail.com> <20060711200739.GK10845@chain.digitalkingdom.org> <e202d93c0607111434y586469b1n6f265c0e6132bdfe@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e202d93c0607111434y586469b1n6f265c0e6132bdfe@mail.gmail.com>
+User-Agent: Mutt/1.5.11+cvs20060403
+X-archive-position: 12124
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+X-list: lojban-list
+X-Spam-Score: -3.2 (---)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+From: Robin Lee Powell <lojban-out@lojban.org>
+Reply-To: rlpowell@digitalkingdom.org
+Subject: [lojban] Is Lojban a CFG? (was Re: [lojban-beginners] Re: Enumerating in Lojban)
+X-Yahoo-Group-Post: member; u=116389790; y=U8FPatczxBiImPtemHqmhTAmHOIKYzvPeOq6ujWZEsziap_StA
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 26550
+Content-Length: 2881
+
+Moving this to the main list.
+
+I found most of it too technical for me to make much sense of; my CS
+degree is 10 years behind me these days.
+
+On Tue, Jul 11, 2006 at 05:34:30PM -0400, Jonathan Gibbons wrote:
+> >> then "le nu broda ku brode" and "le nu broda kei brode" are
+> >> grammatical, but "le nu broda brode", eliding both terminators,
+> >> is not.  But if we rewrote the elidable terminators as optional
+> >> elements, then "le nu broda brode" would be grammatical and
+> >> ambiguous.
+> >
+> 
+> I've read this at least three or four times already; given that
+> grammar and a general context-free language parser, rather than an
+> LALR(1) parser, it would find the derivation that splits "le nu
+> broda brode" into "(le nu broda) (brode)" by the start symbol, and
+> then "((LE) (NU broda)) (brode)" and so on, becuase with the
+> requirement of a sumti and a selbri, that statement is /not/
+> ambiguous. 
+
+It's actually a two-selbri requirement, not a sumti+selbri
+requirement.
+
+Try it with:
+
+le nu broda ku brode brodi
+
+le nu broda kei brode brodi
+
+le nu broda brode brodi
+
+Where should the last one break off the second selbri?  Answer:
+no-where; it's simply not valid lojban, and no place is more valid
+than any other.  There is no correct fix.
+
+> >Not to claim that this can be done in general (maybe it can, I
+> >don't know), I would like to point out that this particular
+> >example can easily be fixed by re-iterating the 'selbri' rule in
+> >sumti, with minor modifications:
+> >
+> >        start = sumti selbri
+> >        sumti = LE tanru /KU/
+> >                | LE NU tanru /KEI/ /KU/
+> >                | LE NU tanru /KU/
+> >                | LE NU tanru /KEI/
+> >        selbri = tanru | NU tanru /KEI/
+> >        tanru = BRIVLA | tanru BRIVLA
+> >
+> 
+> That certainly does remove the (unambiguous given the previous
+> grammar) statement "le nu broda brode", if the elements in "/"s
+> are now required. Although it does look like there would need to
+> be an option under selbri for "NU tanru" by itself, to accept all
+> of the above statements. If, on the other hand, they are optional,
+> then it accepts the same language as the above. If they're a hack,
+> then they're still a hack.
+
+They were intended to be optional; I never tested this grammar that
+I can recall.
+
+> That said, I suspect this discussion may be outside the scope of
+> the beginners' list; would it be more polite to swap to a less
+> spam-everyone forum?
+
+Done.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
