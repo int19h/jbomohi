@@ -1,0 +1,174 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Tue, 11 Jul 2006 13:07:39 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1G0OWB-0000JO-Il	for lojban-beginners-real@lojban.org; Tue, 11 Jul 2006 13:07:39 -0700
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <rlpowell@digitalkingdom.org>)	id 1G0OWB-0000JG-7p	for lojban-beginners@lojban.org; Tue, 11 Jul 2006 13:07:39 -0700
+Date: Tue, 11 Jul 2006 13:07:39 -0700
+To: lojban-beginners@lojban.org
+Subject: [lojban-beginners] Re: Enumerating in Lojban
+Message-ID: <20060711200739.GK10845@chain.digitalkingdom.org>
+References: <1684503175.20060710193640@mail.ru> <925d17560607100826x2a37ffcfi69c9964cabf0b53@mail.gmail.com> <537d06d00607100919v70febc62u93929e72b0041c48@mail.gmail.com> <20060710164123.GS3440@chain.digitalkingdom.org> <e202d93c0607101027w88e0fa5p858d0694a6375a6b@mail.gmail.com> <20060710173540.GV3440@chain.digitalkingdom.org> <e202d93c0607101841r2f925d26ve483782380a9ab2e@mail.gmail.com> <20060711052439.GC10845@chain.digitalkingdom.org> <e202d93c0607111135h90d1cb2t4023fdad74bc7b00@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e202d93c0607111135h90d1cb2t4023fdad74bc7b00@mail.gmail.com>
+User-Agent: Mutt/1.5.11+cvs20060403
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+X-archive-position: 3413
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@lojban.org
+Errors-to: lojban-beginners-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+Precedence: bulk
+Reply-to: lojban-beginners@lojban.org
+X-list: lojban-beginners
+Content-Length: 6561
+
+On Tue, Jul 11, 2006 at 02:35:12PM -0400, Jonathan Gibbons wrote:
+> >I'm sorry, I have no idea what you're talking about.  Precedence
+> >of "le xekri ckafi" is obviously handleable in CFGs, and has
+> >nothing whatever to do with the difficulty of handling elidable
+> >terminators in a formal language.
+> 
+> Last I checked, that statement elides "ku", 
+
+No.  {le xekri ckafi} is a single sumti; it means "the black
+type-of coffee".  If you intended {le xekri ku ckafi}, which is a
+bridi meaning "The black thing is coffee", then you failed to insert
+a terminator in a place that it's not elidable.
+
+> The question that determines whether it is context-free is whether
+> or not a statement merely has another meaning because of the
+> erroneous elision of a terminator, and therefore is still in the
+> language, or is ungrammatical for that reason alone.
+
+It's split pretty evenly.  In this case, both versions are valid,
+but there are other cases where that's not true.
+
+> I have read those pages, and what you've been saying. It just
+> doesn't make much sense to me, using what looks to be a contextual
+> parser (if not turing-complete, I've been trying to construct a
+> proof one way or the other for about a day showing equivalency to
+> the lambda calculus, but don't really have the time to dedicate to
+> it) 
+
+If your incredibly vague statements above are referring to PEG, it
+is definately not Turing complete, because there are knows languages
+that it can't express.  The PEG literature gives examples.
+
+> for a language that certainly seems context-free to me just
+> because a parser that can only handle a very restricted subset of
+> context-free grammars (which is to say, LALR(1)) cannot handle it.
+> I've seen a whole lot of "I believe" and not much of any "I know",
+> and am trying to figure out what the vague references to "The
+> Right Thing" you keep making actually mean.
+
+I believe that Lojban is not expressible as a BNF, IOW, is not a
+CFG.  I don't have the ability to formalize a proof.  I have,
+however, seen *no* evidence to the contrary.  If you can produce a
+BNF that handles even, say, 5 of Lojban's terminators correctly,
+then I'll have evidence.  Good lick.
+
+> I have also been working on writing a transformation code to go
+> from the EBNF that bnf.300 uses to one that fits bison's input
+> format, with elidable terminators as optional elements. 
+
+It's not going to work; I've already tried it.
+
+> All that's left to do the job of a CFG (which is just determining
+> if a derivation exists) is to define a lexer, because I don't want
+> to bother writing what is more conveniently described by other
+> expressions in a CFG, and to make a program that finds the
+> preferable derivation should just require defining a set of
+> precedence and grouping rules. 
+
+Precedence and grouping rules might fix it, but then that's outside
+of the BNF formalism, which means it's not a formal specification
+anymore, so why bother?  There are already 2 ad hoc Lojban parsers;
+I don't see that we need another one.
+
+> I've been trying to figure out how in the world the behavior of
+> elidable terminators is non-context-free from the point of view of
+> a parser, and mostly failing, unless it is by meaning that some
+> strings are not in the language because of grammatical ambiguity,
+> while others are in the language regardless of grammatical
+> ambiguity.
+
+It's been a long time, so I'm having trouble remembering the
+problems one runs into if the elidable terminators are merely
+optional.
+
+*AH*!  Found it in my mail.  This is the conversation that lead me
+to conclude that if making a BNF for Lojban *is* possible, which I
+doubt, it's too hard for me.
+
+- -------------
+
+On Mon, Feb 09, 2004 at 03:19:46PM -0500, jcowan@reutershealth.com
+wrote:
+[my question was "how do you turn the elidable terminators into
+BNF?"]
+>
+> You can't transform them into BNF at all, because the whole point
+> is that the behavior of /xxx/ is not context-free: you can't
+> decide whether a terminator is elidable without looking at the
+> entire context. Consider this simplified grammar:
+>
+>       start = sumti selbri
+>       sumti = LE selbri /KU/
+>       selbri = tanru | NU tanru /KEI/
+>       tanru = BRIVLA | tanru BRIVLA
+>
+> then "le nu broda ku brode" and "le nu broda kei brode" are
+> grammatical, but "le nu broda brode", eliding both terminators, is
+> not.  But if we rewrote the elidable terminators as optional
+> elements, then "le nu broda brode" would be grammatical and
+> ambiguous.
+
+Not to claim that this can be done in general (maybe it can, I don't
+know), I would like to point out that this particular example can
+easily be fixed by re-iterating the 'selbri' rule in sumti, with
+minor modifications:
+
+        start = sumti selbri
+        sumti = LE tanru /KU/
+                | LE NU tanru /KEI/ /KU/
+                | LE NU tanru /KU/
+                | LE NU tanru /KEI/
+        selbri = tanru | NU tanru /KEI/
+        tanru = BRIVLA | tanru BRIVLA
+
+If this *is* possible in general, it would certainly be amazingly
+unwieldy, but at least then we'd *have* a formal grammar, which
+right now we do not seem to.
+
+- -------------
+
+Having read that, please note the following from the bottom of
+http://teddyb.org/~rlpowell//hobbies/lojban/grammar/
+
+    To give you a sense of what I mean, consider fixing 'kei'. This
+    requires having the grammar descending from a NU clause to eat
+    all brivla it sees until the next kei. Because BNF is inherently
+    ambiguous, forcing this requires that every place where two
+    brivla could occur next to each other be re-written`to only form
+    two separate selbri when there is a kei between them, but only
+    inside a NU clause. If this is possible in BNF/CFGs, and I'm not
+    totally certain it is, it requires nearly doubling the size of
+    the grammar because you have to have everything under
+    'subsentence' copied into a "[foo]_during_NU" form, or whatever.
+
+    When you're done with that, try another big elidable terminator,
+    like 'ku'. This will require the same thing, but the ku
+    additions to the grammar and the nu additions to the grammar
+    must work nested, in either order. That's two more complete
+    sets, not including the 'ku' or 'kei' sets. You now have a
+    grammar on the order of four times the original size, and you've
+    fixed only two elidable terminators.
+
+-Robin
+
+-- 
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
+Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
