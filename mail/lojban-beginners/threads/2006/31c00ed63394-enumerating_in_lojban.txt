@@ -1,4 +1,4 @@
-# mail/lojban-beginners thread 31c00ed63394-enumerating_in_lojban | root 1684503175.20060710193640@mail.ru | 14 messages | rendered by jbomohi mail-v1
+# mail/lojban-beginners thread 31c00ed63394-enumerating_in_lojban | root 1684503175.20060710193640@mail.ru | 15 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-07-10T12:36:40Z | Yanis Batura <ybatura@mail.ru> | 1684503175.20060710193640@mail.ru | mail/lojban-beginners/cur/1152535000.31c00ed633943903.jbomohi:2,S
 How is enumerating handled in Lojban?
@@ -482,6 +482,128 @@ http://teddyb.org/~rlpowell//hobbies/lojban/grammar/
 http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
 Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
 Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
+
+
+=== 15 | 2006-07-11T21:34:30Z | Jonathan Gibbons <jonored@gmail.com> | e202d93c0607111434y586469b1n6f265c0e6132bdfe@mail.gmail.com | mail/lojban-beginners/cur/1152653670.2186b420b1803a02.jbomohi:2,S
+> It's split pretty evenly.  In this case, both versions are valid,
+> but there are other cases where that's not true.
+
+It would be remarkably helpful if you could provide an example of a
+sentence and non-sentence for which the absence or presence of an
+elidable terminator means that the string is or is not in Lojban; it
+would also be the core of a proof by counterexample of Lojban being
+not context-free; a string for with the terminator's inclusion of
+elision means that there must not exist or must exist a derivation
+from the grammar of that string. I have yet to see a string where it
+seems sensible to exclude it from the language on the basis of a
+missing terminator.
+
+> If your incredibly vague statements above are referring to PEG, it
+> is definately not Turing complete, because there are knows languages
+> that it can't express.  The PEG literature gives examples.
+
+Whether or not it has the capability to recognize any language /on
+it's normal input/ does not actually determine whether or not it is
+turing-complete; it would be sufficient if there exists some way of
+arranging start conditions (input and grammar, I would take it, unless
+there are more things defining it's behavior) such that a language and
+an input are represented in some fashion on the input, and determine
+some form of success or failure. Alternately, the ability to emulate
+in some fashion any of a rather large proportion of other formalisms
+would be quite sufficient.
+
+> I believe that Lojban is not expressible as a BNF, IOW, is not a
+> CFG.  I don't have the ability to formalize a proof.  I have,
+> however, seen *no* evidence to the contrary.  If you can produce a
+> BNF that handles even, say, 5 of Lojban's terminators correctly,
+> then I'll have evidence.  Good lick.
+>
+
+It would be very nice to know what "The Right Thing" actually means,
+given that everything I've read defining it seems to point towards the
+use of elidable terminators as overrides for some default grouping,
+rather than as elements that are required based on context for some
+strings to be in the language. If that is so, then I'll go ahead and
+define a related language that /is/ context-free instead of
+artificially non-context-free, with as much overlap with Lojban as I
+can, and will carry on with that new language.
+
+> > I have also been working on writing a transformation code to go
+> > from the EBNF that bnf.300 uses to one that fits bison's input
+> > format, with elidable terminators as optional elements.
+>
+> It's not going to work; I've already tried it.
+
+Now I'm curious; what algorithm was it using? optional elements
+certainly would cause shift/reduce and reduce/reduce conflicts all
+over the place with bison's default algorithm, which is an LALR
+algorithm. But then, if you were trying to cause it to fail some of
+the time when something was elided and thereby caused one of the
+not-allowed ambiguities then of course it would.
+
+> Precedence and grouping rules might fix it, but then that's outside
+> of the BNF formalism, which means it's not a formal specification
+> anymore, so why bother?  There are already 2 ad hoc Lojban parsers;
+> I don't see that we need another one.
+
+Precedence and grouping cannot change the set of strings in a
+language, only the interpretation of said strings. They tend to be
+cleaner at doing it than trying to rewrite the grammar directly to be
+completely unambiguous, as well. As such, the precedence and grouping
+cannot change the answer of "yes, that is lojban" or "no, that's not
+lojban."
+
+> > then "le nu broda ku brode" and "le nu broda kei brode" are
+> > grammatical, but "le nu broda brode", eliding both terminators, is
+> > not.  But if we rewrote the elidable terminators as optional
+> > elements, then "le nu broda brode" would be grammatical and
+> > ambiguous.
+>
+
+I've read this at least three or four times already; given that
+grammar and a general context-free language parser, rather than an
+LALR(1) parser, it would find the derivation that splits "le nu broda
+brode" into "(le nu broda) (brode)" by the start symbol, and then
+"((LE) (NU broda)) (brode)" and so on, becuase with the requirement of
+a sumti and a selbri, that statement is /not/ ambiguous. If it were,
+then you could use a precedence and grouping rule to decide which
+derivation is intended, and therefore disambiguate it, the same way
+that "1+2*3" is disambiguated in many programming languages. Using
+precedence rules to disambiguate does not change whether a language is
+context-free or not, because "context-free" is a statement about how
+one may determine whether or not a string is in a language or not, not
+about how one interprets any given string; it just is a way of
+describing a particular derivation as the intended derivation.
+
+> Not to claim that this can be done in general (maybe it can, I don't
+> know), I would like to point out that this particular example can
+> easily be fixed by re-iterating the 'selbri' rule in sumti, with
+> minor modifications:
+>
+>         start = sumti selbri
+>         sumti = LE tanru /KU/
+>                 | LE NU tanru /KEI/ /KU/
+>                 | LE NU tanru /KU/
+>                 | LE NU tanru /KEI/
+>         selbri = tanru | NU tanru /KEI/
+>         tanru = BRIVLA | tanru BRIVLA
+>
+
+That certainly does remove the (unambiguous given the previous
+grammar) statement "le nu broda brode", if the elements in "/"s are
+now required. Although it does look like there would need to be an
+option under selbri for "NU tanru" by itself, to accept all of the
+above statements. If, on the other hand, they are optional, then it
+accepts the same language as the above. If they're a hack, then
+they're still a hack.
+
+That said, I suspect this discussion may be outside the scope of the
+beginners' list; would it be more polite to swap to a less
+spam-everyone forum?
+
+ -Jonathan
 
 
 
