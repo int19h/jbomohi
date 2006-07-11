@@ -1,4 +1,4 @@
-# mail/lojban-beginners thread 31c00ed63394-enumerating_in_lojban | root 1684503175.20060710193640@mail.ru | 12 messages | rendered by jbomohi mail-v1
+# mail/lojban-beginners thread 31c00ed63394-enumerating_in_lojban | root 1684503175.20060710193640@mail.ru | 13 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-07-10T12:36:40Z | Yanis Batura <ybatura@mail.ru> | 1684503175.20060710193640@mail.ru | mail/lojban-beginners/cur/1152535000.31c00ed633943903.jbomohi:2,S
 How is enumerating handled in Lojban?
@@ -284,6 +284,51 @@ in a formal language.
 http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
 Reason #237 To Learn Lojban: "Homonyms: Their Grate!"
 Proud Supporter of the Singularity Institute - http://singinst.org/
+
+
+
+
+=== 13 | 2006-07-11T18:35:12Z | Jonathan Gibbons <jonored@gmail.com> | e202d93c0607111135h90d1cb2t4023fdad74bc7b00@mail.gmail.com | mail/lojban-beginners/cur/1152642912.ec16ed6d5fc6e317.jbomohi:2,S
+> I'm sorry, I have no idea what you're talking about.  Precedence of
+> "le xekri ckafi" is obviously handleable in CFGs, and has nothing
+> whatever to do with the difficulty of handling elidable terminators
+> in a formal language.
+
+Last I checked, that statement elides "ku", making it such that a
+plain CFG -- not a CFG to describe the language and precedence rules
+for the parser to determine which derivation to associate meaning to
+-- cannot easily have a single derivation for that string while
+supporting tanru, descriptions, and elidable terminators. The question
+that determines whether it is context-free is whether or not a
+statement merely has another meaning because of the erroneous elision
+of a terminator, and therefore is still in the language, or is
+ungrammatical for that reason alone.
+
+I have read those pages, and what you've been saying. It just doesn't
+make much sense to me, using what looks to be a contextual parser (if
+not turing-complete, I've been trying to construct a proof one way or
+the other for about a day showing equivalency to the lambda calculus,
+but don't really have the time to dedicate to it) for a language that
+certainly seems context-free to me just because a parser that can only
+handle a very restricted subset of context-free grammars (which is to
+say, LALR(1)) cannot handle it.
+I've seen a whole lot of "I believe" and not much of any "I know", and
+am trying to figure out what the vague references to "The Right Thing"
+you keep making actually mean.
+
+I have also been working on writing a transformation code to go from
+the EBNF that bnf.300 uses to one that fits bison's input format, with
+elidable terminators as optional elements. All that's left to do the
+job of a CFG (which is just determining if a derivation exists) is to
+define a lexer, because I don't want to bother writing what is more
+conveniently described by other expressions in a CFG, and to make a
+program that finds the preferable derivation should just require
+defining a set of precedence and grouping rules. I've been trying to
+figure out how in the world the behavior of elidable terminators is
+non-context-free from the point of view of a parser, and mostly
+failing, unless it is by meaning that some strings are not in the
+language because of grammatical ambiguity, while others are in the
+language regardless of grammatical ambiguity.
 
 
 

@@ -1,0 +1,71 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Tue, 11 Jul 2006 11:35:15 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1G0N4l-0007GT-57	for lojban-beginners-real@lojban.org; Tue, 11 Jul 2006 11:35:15 -0700
+Received: from ug-out-1314.google.com ([66.249.92.175])	by chain.digitalkingdom.org with esmtp (Exim 4.62)	(envelope-from <jonored@gmail.com>)	id 1G0N4k-0007GL-3z	for lojban-beginners@lojban.org; Tue, 11 Jul 2006 11:35:14 -0700
+Received: by ug-out-1314.google.com with SMTP id j40so2013776ugd        for <lojban-beginners@lojban.org>; Tue, 11 Jul 2006 11:35:12 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;        s=beta; d=gmail.com;        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;        b=SAssBa7MopNSHqkfcDCYnZyCk0oD22sAFGpnLEpcwPvbx1JhPOHTjT91NVJ2kcdLySkr89RV+vLt38hfgMnnxF5tVeEUzyf15gpyh9qH7SgVggRKRcbJCSeo3hsXHVOmxbQ2hytcCtxEFboevZ8VhPytCKhtd9GzbClKDnQNKUs=
+Received: by 10.66.220.17 with SMTP id s17mr1361517ugg;        Tue, 11 Jul 2006 11:35:12 -0700 (PDT)
+Received: by 10.67.30.12 with HTTP; Tue, 11 Jul 2006 11:35:12 -0700 (PDT)
+Message-ID: <e202d93c0607111135h90d1cb2t4023fdad74bc7b00@mail.gmail.com>
+Date: Tue, 11 Jul 2006 14:35:12 -0400
+From: "Jonathan Gibbons" <jonored@gmail.com>
+To: lojban-beginners@lojban.org
+Subject: [lojban-beginners] Re: Enumerating in Lojban
+In-Reply-To: <20060711052439.GC10845@chain.digitalkingdom.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <1684503175.20060710193640@mail.ru>	 <925d17560607100826x2a37ffcfi69c9964cabf0b53@mail.gmail.com>	 <537d06d00607100919v70febc62u93929e72b0041c48@mail.gmail.com>	 <20060710164123.GS3440@chain.digitalkingdom.org>	 <e202d93c0607101027w88e0fa5p858d0694a6375a6b@mail.gmail.com>	 <20060710173540.GV3440@chain.digitalkingdom.org>	 <e202d93c0607101841r2f925d26ve483782380a9ab2e@mail.gmail.com>	 <20060711052439.GC10845@chain.digitalkingdom.org>
+X-Spam-Score: -2.2 (--)
+X-archive-position: 3412
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@lojban.org
+Errors-to: lojban-beginners-bounce@lojban.org
+X-original-sender: jonored@gmail.com
+Precedence: bulk
+Reply-to: lojban-beginners@lojban.org
+X-list: lojban-beginners
+Content-Length: 2365
+
+> I'm sorry, I have no idea what you're talking about.  Precedence of
+> "le xekri ckafi" is obviously handleable in CFGs, and has nothing
+> whatever to do with the difficulty of handling elidable terminators
+> in a formal language.
+
+Last I checked, that statement elides "ku", making it such that a
+plain CFG -- not a CFG to describe the language and precedence rules
+for the parser to determine which derivation to associate meaning to
+-- cannot easily have a single derivation for that string while
+supporting tanru, descriptions, and elidable terminators. The question
+that determines whether it is context-free is whether or not a
+statement merely has another meaning because of the erroneous elision
+of a terminator, and therefore is still in the language, or is
+ungrammatical for that reason alone.
+
+I have read those pages, and what you've been saying. It just doesn't
+make much sense to me, using what looks to be a contextual parser (if
+not turing-complete, I've been trying to construct a proof one way or
+the other for about a day showing equivalency to the lambda calculus,
+but don't really have the time to dedicate to it) for a language that
+certainly seems context-free to me just because a parser that can only
+handle a very restricted subset of context-free grammars (which is to
+say, LALR(1)) cannot handle it.
+I've seen a whole lot of "I believe" and not much of any "I know", and
+am trying to figure out what the vague references to "The Right Thing"
+you keep making actually mean.
+
+I have also been working on writing a transformation code to go from
+the EBNF that bnf.300 uses to one that fits bison's input format, with
+elidable terminators as optional elements. All that's left to do the
+job of a CFG (which is just determining if a derivation exists) is to
+define a lexer, because I don't want to bother writing what is more
+conveniently described by other expressions in a CFG, and to make a
+program that finds the preferable derivation should just require
+defining a set of precedence and grouping rules. I've been trying to
+figure out how in the world the behavior of elidable terminators is
+non-context-free from the point of view of a parser, and mostly
+failing, unless it is by meaning that some strings are not in the
+language because of grammatical ambiguity, while others are in the
+language regardless of grammatical ambiguity.
+
+
