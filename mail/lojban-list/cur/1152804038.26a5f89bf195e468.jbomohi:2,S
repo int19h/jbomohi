@@ -1,0 +1,99 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 13 Jul 2006 08:21:09 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1G12zf-0004Jt-Hs	for lojban-list-real@lojban.org; Thu, 13 Jul 2006 08:20:47 -0700
+Received: from silene.metacarta.com ([65.77.47.18])	by chain.digitalkingdom.org with esmtps (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)	(Exim 4.62)	(envelope-from <sethg@ropine.com>)	id 1G12zb-0004Jm-Is	for lojban-list@lojban.org; Thu, 13 Jul 2006 08:20:47 -0700
+Received: from localhost (silene.metacarta.com [65.77.47.18])	by silene.metacarta.com (Postfix) with ESMTP id 6C1B89F754	for <lojban-list@lojban.org>; Thu, 13 Jul 2006 11:20:41 -0400 (EDT)
+Received: from silene.metacarta.com ([65.77.47.18])	by localhost (silene.metacarta.com [65.77.47.18]) (amavisd-new, port 10024)	with ESMTP id 29740-01 for <lojban-list@lojban.org>;	Thu, 13 Jul 2006 11:20:38 -0400 (EDT)
+Received: from [65.77.47.138] (baxter.metacarta.com [65.77.47.138])	by silene.metacarta.com (Postfix) with ESMTP id B94C99F892	for <lojban-list@lojban.org>; Thu, 13 Jul 2006 11:20:38 -0400 (EDT)
+Message-ID: <44B664C6.3010403@ropine.com>
+Date: Thu, 13 Jul 2006 11:20:38 -0400
+From: Seth Gordon <sethg@ropine.com>
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060423)
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Is Lojban a CFG? (was Re: [lojban-beginners] Re: Enumerating in Lojban)
+References: <e202d93c0607112316i783ebc55i9ffdcef01c52b367@mail.gmail.com>	 <20060713003616.GD18359@chain.digitalkingdom.org>	 <e202d93c0607121824l4b973411i3740f1c6dc7bec8d@mail.gmail.com>	 <20060713013545.GF18359@chain.digitalkingdom.org>	 <e202d93c0607121943i2f64eca2y6b1c6cddf9458f6f@mail.gmail.com>	 <20060713025542.GH18359@chain.digitalkingdom.org> <925d17560607130709u3fef60c5ubd8f638c795685c0@mail.gmail.com>
+In-Reply-To: <925d17560607130709u3fef60c5ubd8f638c795685c0@mail.gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at metacarta.com
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+X-Spam-Score: -2.6 (--)
+X-archive-position: 12175
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: sethg@ropine.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 3518
+
+Jorge Llambías wrote:
+> Tell me see if I have this right.
+> 
+> A CFG is a formal grammar with *production* rules of the
+> form X -> x, (for example sumti -> LE BRIVLA), that tell us how
+> to produce the construct on the left from the expression on the right.
+> 
+> A PEG is a formal grammar with *parsing* rules of the form
+> X <- x, (for example sumti <- LE BRIVLA), that tell us how to
+> parse/interpret the expression on the right.
+> 
+> In other words, a CFG is what the speaker needs (I want to produce
+> a sumti, how can I construct it?) and a PEG is what the listener needs
+> (I'm given the expression {LE BRIVLA}, how do I interpret it?)
+
+Both CFGs and PEGs define a grammar to be used in a parser, so they're
+"what the listener needs", but the parsers that use them work in
+different ways.
+
+A PEG-based parser starts by saying to itself, "OK, I want to parse a
+bridi.  Here's the first word of my input... 'le' ... well, that could
+be part of a sumti ... let's see what the next word is ... 'broda' ...
+OK, that's a sumti, now I'm looking for another sumti ... whoops, the
+next word is 'be'...."  It formulates hypotheses as it goes about what
+grammatical construction it's in the middle of.  When it reads a word
+that invalidates its working hypothesis, it goes back to its grammar to
+come up with the next  interpretation of the text that would be
+consistent with the grammar.  This process continues until the whole
+input is parsed (or fails to parse).
+
+A CFG-based parser uses Deep Computer Science Magic to translate its
+input grammar into a state machine, and then processes its input by
+saying "OK, I'm in state 0.  Here's the first word of my input ...
+'le'... that puts me in state 71 ... here's the next word ... 'broda'
+... that puts me in state 96 and by the way, 'le broda' is a sumti ...
+'be ... now I'm in state 32...."  It formulates no hypotheses about what
+grammatical constructions it's in the middle of; it just follows the
+state machine, and the elements of the parse tree pop out of there.
+(See http://en.wikipedia.org/wiki/LR_parser for more grimy details.)
+
+PEG-based parsers are less efficient than CFG-based ones, since the
+parser might have to backtrack at any point up until the entire input
+was read.  (Bryan Ford, in 2002, designed a "packrat parser" for parsing
+with PEGs, which sacrifices memory for speed.)
+
+> If I'm not mistaken, for any CFG, there is a PEG that will accept all and
+> only the strings generated by that CFG. If that's correct, then what
+> Jonathan
+> wants (a CFG for Lojban) is compatible with what Robin wants (a PEG for
+> Lojban). At least in principle, because maybe the required PEG might be
+> way too complicated to write. Or maybe not, we can at least try.
+
+CFG and PEG are not just two different ways to express the same grammar.
+ For example, a pure CFG can't determine how to parse "if a then if b
+then s1 else s2" (is the "else" connected to the first "if", or the
+second?); since PEGs are always unambiguous, they can.
+
+> But I don't know how hard it would be to modify the whole PEG so that it
+> fully corresponds to a CFG.
+
+Another complication is that the tools that build parsers from CFGs
+cannot handle any arbitrary CFG; there are constraints on the
+permissible grammars that are necessary to make the state tables manageable.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
