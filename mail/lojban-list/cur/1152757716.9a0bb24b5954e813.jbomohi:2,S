@@ -1,0 +1,123 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 9245 invoked from network); 13 Jul 2006 02:33:42 -0000
+Received: from unknown (66.218.66.216)
+  by m24.grp.scd.yahoo.com with QMQP; 13 Jul 2006 02:33:42 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta1.grp.scd.yahoo.com with SMTP; 13 Jul 2006 02:33:34 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.62)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1G0qxu-0004O8-Dt
+	for lojban@yahoogroups.com; Wed, 12 Jul 2006 19:30:10 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.62)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1G0qwt-0004Mm-2u; Wed, 12 Jul 2006 19:29:07 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 12 Jul 2006 19:28:58 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1G0qwS-0004Md-9m	for lojban-list-real@lojban.org; Wed, 12 Jul 2006 19:28:40 -0700
+Received: from ug-out-1314.google.com ([66.249.92.169])	by chain.digitalkingdom.org with esmtp (Exim 4.62)	(envelope-from <jonored@gmail.com>)	id 1G0qwQ-0004MV-6b	for lojban-list@lojban.org; Wed, 12 Jul 2006 19:28:40 -0700
+Received: by ug-out-1314.google.com with SMTP id o2so97641uge        for <lojban-list@lojban.org>; Wed, 12 Jul 2006 19:28:36 -0700 (PDT)
+Received: by 10.67.22.2 with SMTP id z2mr80536ugi;        Wed, 12 Jul 2006 19:28:36 -0700 (PDT)
+Received: by 10.67.30.12 with HTTP; Wed, 12 Jul 2006 19:28:36 -0700 (PDT)
+Message-ID: <e202d93c0607121928j4ef8549ap7feb77cefd0b391e@mail.gmail.com>
+Date: Wed, 12 Jul 2006 22:28:36 -0400
+In-Reply-To: <20060713010321.GE18359@chain.digitalkingdom.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <e202d93c0607112316i783ebc55i9ffdcef01c52b367@mail.gmail.com>	 <e202d93c0607112343w56af6421t1fc24541dffd1111@mail.gmail.com>	 <925d17560607120611r6cff869bw3d732846112bf96a@mail.gmail.com>	 <20060713010321.GE18359@chain.digitalkingdom.org>
+X-Spam-Score: -2.3 (--)
+X-archive-position: 12168
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jonored@gmail.com
+X-list: lojban-list
+X-Spam-Score: -2.3 (--)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 1:0:0:0
+X-eGroups-From: "Jonathan Gibbons" <jonored@gmail.com>
+From: "Jonathan Gibbons" <lojban-out@lojban.org>
+Reply-To: jonored@gmail.com
+Subject: [lojban] Re: Is Lojban a CFG? (was Re: [lojban-beginners] Re: Enumerating in Lojban)
+X-Yahoo-Group-Post: member; u=116389790; y=L4WqApC5jBBJ6BhW7gq1MXIR98zpFgG-mCMfHEBWD9dCYUQJAQ
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 26595
+Content-Length: 3337
+
+On 7/12/06, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+
+> > Probably because the alternative can be very unintuitive.
+
+[snip]
+
+> Jonathan, I'd like to see an example of a CFG that would handle
+> the above by any rule at all.  Just out of curiousity.
+
+It'd look exactly like the grammar to handle it now would if you
+replaced all of the "//" pairs with "[]", in the notation of bnf.300,
+and there'd be a seperate mechanism, that by a formalism such as
+associating an ordering and grouping with each rule, defines a
+particular semantic meaning to associate with the string. I'm not up
+to defining the Lojban version for those statements for this email
+(numbers being one of the areas I have not learned very solidly; I'd
+need to be reading out of the bnf for most of it), but it would be the
+same sort of idea as this, for dealing with formulas consisting of
+products and sums, with parens:
+(rule number) nonterminal -> BNF-ish expression
+
+(1) expr -> expr '+' expr
+(2) expr -> expr '*' expr
+(3) expr -> '(' expr ')'
+(4) expr -> NUMBER
+
+Now, that's very ambiguous, so we disambiguate by defining that rules
+(1) (2) and (3) are left-grouping, and imposing a precedence order of
+(1) (2) (3) (4), such that (1) binds first, i.e. preferentially
+matches the most, and (4) binds last, which is to say, the least.
+
+To derive the string "5+3*5" from the CFG, we have either the
+sequence: expr -> expr '+' expr -> NUMBER '+' expr '*' expr -> NUMBER
+'+' NUMBER '*' NUMBER, corresponding to the meaning "5 + (3*5)", or
+expr -> expr '*' expr -> expr '+' expr '*' NUMBER -> NUMBER '+' NUMBER
+'*' NUMBER, corresponding to the meaning "(5 + 3) * 5". The prioritiy
+ordering says to bind (1) before binding (2), so the first derivation
+is the one associated with the semantic meaning of this string.
+
+> I think, though, that most people would rather the parser reject a sentence like:
+[snip - example sentences that would be affected]
+> This (the current behaviour) seems to me to reduce the chances for
+> confusion *substantially*.  But then I haven't thought about it much
+> yet.
+
+Whereas I would have that be a warning (additional information beyond
+accept or reject, sort-of a "hey, that looks like a human making a
+mistake" message) in an acutal parser, to be handled in an
+implementation-dependent manner by whatever sort of program it is
+situated in, rather than a formal reject
+("you-can-stop-parsing-now-it's-not-lojban").
+
+Basically, I'd rather such error-checking behavior be a nice feature
+of a particular parser, possibly extremely widespread, rather than
+part of the definition of the set of strings comprising Lojban and the
+association between the strings in Lojban and particular meanings.
+It'd be an easy feature to add, too; how you'd add it is dependent on
+what algorithm you are using, for instance, if you are using the CYK
+algorithm and then appealing to precedence and grouping rules to
+determine which derivation is associated with meaning, you could just
+send that warning off if you have more than one derivation. I have an
+inkling how to track it in bison's setup, as well.
+
+-Jonathan
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+

@@ -1,4 +1,4 @@
-# mail/lojban-list thread 1191c317188b-is_lojban_a_cfg%3F_%28was_re%3A_%5Blojban-begin | root 925d17560607100826x2a37ffcfi69c9964cabf0b53@mail.gmail.com | 11 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 1191c317188b-is_lojban_a_cfg%3F_%28was_re%3A_%5Blojban-begin | root 925d17560607100826x2a37ffcfi69c9964cabf0b53@mail.gmail.com | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-07-11T22:57:50Z | Robin Lee Powell <lojban-out@lojban.org> | 20060711225750.gm10845@chain.digitalkingdom.org | mail/lojban-list/cur/1152658670.eca7183e2bea0904.jbomohi:2,S
 Moving this to the main list.
@@ -489,7 +489,84 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 9 | 2006-07-13T00:36:16Z | Robin Lee Powell <lojban-out@lojban.org> | 20060713003616.gd18359@chain.digitalkingdom.org | mail/lojban-list/cur/1152750976.0a7261b97cd28103.jbomohi:2,S
+=== 9 | 2006-07-13T02:28:36Z | Jonathan Gibbons <lojban-out@lojban.org> | e202d93c0607121928j4ef8549ap7feb77cefd0b391e@mail.gmail.com | mail/lojban-list/cur/1152757716.9a0bb24b5954e813.jbomohi:2,S
+On 7/12/06, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+
+> > Probably because the alternative can be very unintuitive.
+
+[snip]
+
+> Jonathan, I'd like to see an example of a CFG that would handle
+> the above by any rule at all.  Just out of curiousity.
+
+It'd look exactly like the grammar to handle it now would if you
+replaced all of the "//" pairs with "[]", in the notation of bnf.300,
+and there'd be a seperate mechanism, that by a formalism such as
+associating an ordering and grouping with each rule, defines a
+particular semantic meaning to associate with the string. I'm not up
+to defining the Lojban version for those statements for this email
+(numbers being one of the areas I have not learned very solidly; I'd
+need to be reading out of the bnf for most of it), but it would be the
+same sort of idea as this, for dealing with formulas consisting of
+products and sums, with parens:
+(rule number) nonterminal -> BNF-ish expression
+
+(1) expr -> expr '+' expr
+(2) expr -> expr '*' expr
+(3) expr -> '(' expr ')'
+(4) expr -> NUMBER
+
+Now, that's very ambiguous, so we disambiguate by defining that rules
+(1) (2) and (3) are left-grouping, and imposing a precedence order of
+(1) (2) (3) (4), such that (1) binds first, i.e. preferentially
+matches the most, and (4) binds last, which is to say, the least.
+
+To derive the string "5+3*5" from the CFG, we have either the
+sequence: expr -> expr '+' expr -> NUMBER '+' expr '*' expr -> NUMBER
+'+' NUMBER '*' NUMBER, corresponding to the meaning "5 + (3*5)", or
+expr -> expr '*' expr -> expr '+' expr '*' NUMBER -> NUMBER '+' NUMBER
+'*' NUMBER, corresponding to the meaning "(5 + 3) * 5". The prioritiy
+ordering says to bind (1) before binding (2), so the first derivation
+is the one associated with the semantic meaning of this string.
+
+> I think, though, that most people would rather the parser reject a sentence like:
+[snip - example sentences that would be affected]
+> This (the current behaviour) seems to me to reduce the chances for
+> confusion *substantially*.  But then I haven't thought about it much
+> yet.
+
+Whereas I would have that be a warning (additional information beyond
+accept or reject, sort-of a "hey, that looks like a human making a
+mistake" message) in an acutal parser, to be handled in an
+implementation-dependent manner by whatever sort of program it is
+situated in, rather than a formal reject
+("you-can-stop-parsing-now-it's-not-lojban").
+
+Basically, I'd rather such error-checking behavior be a nice feature
+of a particular parser, possibly extremely widespread, rather than
+part of the definition of the set of strings comprising Lojban and the
+association between the strings in Lojban and particular meanings.
+It'd be an easy feature to add, too; how you'd add it is dependent on
+what algorithm you are using, for instance, if you are using the CYK
+algorithm and then appealing to precedence and grouping rules to
+determine which derivation is associated with meaning, you could just
+send that warning off if you have more than one derivation. I have an
+inkling how to track it in bison's setup, as well.
+
+-Jonathan
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 10 | 2006-07-13T00:36:16Z | Robin Lee Powell <lojban-out@lojban.org> | 20060713003616.gd18359@chain.digitalkingdom.org | mail/lojban-list/cur/1152750976.0a7261b97cd28103.jbomohi:2,S
 On Wed, Jul 12, 2006 at 02:16:06AM -0400, Jonathan Gibbons wrote:
 > Forwarding the message I sent to the beginners list, because I
 > took far too long to catch on to the moved-ness of this thread.
@@ -547,7 +624,7 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 10 | 2006-07-13T01:24:34Z | Jonathan Gibbons <lojban-out@lojban.org> | e202d93c0607121824l4b973411i3740f1c6dc7bec8d@mail.gmail.com | mail/lojban-list/cur/1152753874.734b45f3b0fc1ec7.jbomohi:2,S
+=== 11 | 2006-07-13T01:24:34Z | Jonathan Gibbons <lojban-out@lojban.org> | e202d93c0607121824l4b973411i3740f1c6dc7bec8d@mail.gmail.com | mail/lojban-list/cur/1152753874.734b45f3b0fc1ec7.jbomohi:2,S
 > 1.  "Not a CFG" != "not formalizable".  Lojban is still formalizable
 > and easily machine parseable (witness the PEG formalism, for
 > example).
@@ -607,7 +684,7 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 11 | 2006-07-13T01:35:45Z | Robin Lee Powell <lojban-out@lojban.org> | 20060713013545.gf18359@chain.digitalkingdom.org | mail/lojban-list/cur/1152754545.058c45ac47d5fa0f.jbomohi:2,S
+=== 12 | 2006-07-13T01:35:45Z | Robin Lee Powell <lojban-out@lojban.org> | 20060713013545.gf18359@chain.digitalkingdom.org | mail/lojban-list/cur/1152754545.058c45ac47d5fa0f.jbomohi:2,S
 On Wed, Jul 12, 2006 at 09:24:34PM -0400, Jonathan Gibbons wrote:
 > >3.  The lanugage would be *very* unwieldy as a CFG: way to many
 > >syllables would be expended in required required terminators.
