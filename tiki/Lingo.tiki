@@ -1,0 +1,274 @@
+Lexicon is a game played on [http://waterpoint.moo.mud.org/|Waterpoint] that is sort of like [http://www.wunderland.com/icehouse/Zendo/|Zendo] or [http://en.wikipedia.org/wiki/Mastermind_%28board_game%29|Mastermind], but played with words.
+
+The help from Lexicon is reproduced below, because the last time I (rlpowell) played Lojban Lexicon was 8 months ago and I don't remember the details.
+
+At the first LogFest@PhilCon (in 2005), we played a variant that worked with Lojban sentences, which I will try to describe here, as I say, from memory.  This page will become less tentative as the rules become clearer.
+
+
+
+
+
+
+
+
+~np~
+HELP ON THE LEXICON GAME FEATURE
+================================
+
+This is the Feature Object interface to version 2 of the game of Lexicon.
+
+-------------------------------------------------------------------------------
+The game of Lexicon is a guessing game based on Eleusis (http://www.netaxs.com/people/nerp/eleusis0.html) and Zendo
+(http://www.wunderland.com/WTS/Kory/Games/Zendo/).
+
+One person, the god, invents a lexicon.  A lexicon is a set of words.  The set may be infinite, but there must be a finite rule
+that decides whether a word is in the lexicon or not.  The set must be fixed at the time the rule is chosen (i.e. the rule can't
+involve the outcome of some future event).  A word is any string of characters-- it does not have to be an English word!  (Of
+course, god can make that part of the rule.)  For example, the rule "starts with a 'b'" determines a lexicon that includes the
+words "black", "butter", and "baz", but does not include the words "white", "cob", and "foo".
+
+After god has set a rule for the lexicon, players may test words, and god passes judgement on whether the tested words are in the
+lexicon or not.  There is no turn-taking; players may make tests whenever they like, but may only have up to 3 unjudged words at
+any time.
+
+Players may think they've figured out what the rule is, and make a guess.  If the guess is correct, god declares the guesser to be
+the winner, who becomes the new god.  (Note that the guess does not have to match the rule statement exactly; they just must
+determine exactly the same lexicon.)  If the guess is incorrect, god must provide a counterexample: a word that is either in the
+lexicon but violates the guessed rule, or NOT in the lexicon and satisfies the rule.  If there is no counterexample in the list of
+words already judged, god must judge a new word that is a counterexample.
+
+With Lexicon v2, it is possible (and expected) for the god to provide both positive and negative counterexamples, or declare that
+there is no such counterexample.
+
+The 'ENABLE' word list, which has often been referred to in Lexicon rules, can be found at:
+http://personal.riverusers.com/~thegrendel/software.html
+
+-------------------------------------------------------------------------------
+Original implementation by Ragnar. Current implementation by Marn.
+
+@lexicon-o*ptions @lex-o*ptions @lexo*ptions
+============================================
+
+Set options regarding Lexicon.
+
+@guess
+======
+
+Usage: @guess <what you think the rule is>
+
+@retract-guess @r-guess @unguess @retract-rule @r-rule @unrule
+==============================================================
+
+Usage: @retract-guess [<guess-number>]
+
+Retract a rule guess, thereby declaring that the god need not find a counterexample to it. The guess number is optional if you
+only have one.
+
+@rule*s @guesses
+================
+
+Usage: @rules
+       @rules [retracted] all|<number>
+
+With no argument, displays active rule guesses.
+
+With an argument, displays all or the last <number> rule guesses, including those with counterexamples.
+
+Also displays your rule, if you are god.
+
+@lex*icon
+=========
+
+Usage: @lexicon
+
+Displays judged words, hints, and partially correct guesses.
+
+@lexlist @lexw*ords
+===================
+
+Usage: @lexwords [with*-names] [chron*ological] [<judgement-type> ...|all] [/<pattern>/]
+
+Display judged words.
+
+  o  'with-names': displays who tested each word.
+  o  'chronological': displays words in the order they were tested.
+  o  If no judgement types are specified, defaults to showing only "yes" and "no".
+  o  '/pattern/': displays only matching words (see `help regular-expressions'[1])
+
+@lexs*tatus
+===========
+
+Displays current tests and guesses. If you are not god, displays who is.
+
+@test*s @test1 @testn
+=====================
+
+Usage: @test <word> <word> ...  (if @lexoption -testphrase)
+       @testn <word> <word> ...
+       @test <word or phrase>   (if @lexoption +testphrase)
+       @test1 <word or phrase>
+       @tests
+
+  Test whether the words are in the lexicon, or, with no arguments, see all current tests.
+
+@retract-test @r-test @untest @retract-test1 @r-test1 @untest1 @retract-testn @r-testn @untestn
+===============================================================================================
+
+Usage: @retract-test <word> ...      (same variants as @test)
+
+Retract a test, thereby declaring that the god need not judge it.
+
+@hint*s
+=======
+
+Usage: @hints          Displays all hints.
+       @hint <text>    Provide a hint (if you are god).
+
+@retract-hint @r-hint @unhint
+=============================
+
+Usage: @retract-hint <num>
+
+Remove a hint.
+
+@set-rule @setrule
+==================
+
+Usage: @set-rule <rule>
+
+Set the rule.
+
+@amend-rule @append-rule
+========================
+
+Usage: @amend-rule <text>
+
+Adds further text to the rule. You cannot remove it or change the original rule. Use with care.
+
+@set-test-limit
+===============
+
+Sets the number of simultaneous unjudged tests players may have.
+
+@jy @jn @judge-*
+================
+
+Usage: @judge-yes/@judge-no/@jy/@jn <word1> <word2> ...
+
+Judge that the given words are all in/not in the lexicon.
+
+@program-judge @autojudge-program @autojudge-code
+=================================================
+
+Usage: @program-judge [batch] [<code>]
+
+Specify code to automatically judge words. As with the eval command, the code must be a single expression or start with ";" and
+contain a 'return' statement.
+
+With no argument, displays the current code.
+
+The word to judge will be in the variable "word". The code should return its judgement (e.g. "yes" or "no"), or a non-string to
+make no judgement.
+
+If 'batch' is specified, a list of words will be placed in the variable "words" and the code will be expected to return a list.
+
+The code will be run with the permissions of $nobody.
+
+@reautoj*udge @rej*udge @autoj*udge
+===================================
+
+Usage: @reautojudge [<words>]
+
+Force the specified words to be autojudged. Rejudges all words if none are given.
+
+@counter*example @ce
+====================
+
+Usage: @counterexample <guess-num> with <words>
+
+Provide <words> as counterexamples to the rule guess. You must judge the words before you can use them as counterexamples.
+
+@retract-counter*example @r-ce @uncounter*example @unce @retract-ce
+===================================================================
+
+Usage: @retract-counterexample <guess-num> with <word>
+
+Retract <word> as a counterexample for the rule guess.
+
+@noce @nocounter*example @no-ce
+===============================
+
+Usage: @nocounterexample <guess-num> with <judgement>
+
+Declare that there are no counterexamples of type <judgement> for the specified <guess-num>.
+
+This declaration refers to the complete lexicon, not the subset of tested words. If there is a possible counterexample but it has
+not been judged, you should judge it and use @counterexample.
+
+To retract an incorrect @noce, provide a counterexample.
+
+@winner @deify
+==============
+
+Usage: @winner <guess-num>
+
+Declares the specified guess to be correct, and therefore the player who entered it to be the winner.
+
+@lexabort @lex-abort
+====================
+
+Usage: @lex-abort
+
+For use only in extreme circumstances. Ends the current game and starts a new one with no god.
+
+@abdicate
+=========
+
+Usage: @abdicate to <player>
+
+Make <player> be the new god.  You can't do this once words have been judged.
+
+An accidental "feature": if you set a bad rule, you can abdicate to yourself to enter a new one.
+
+Usage: @abdicate
+
+Allow anyone to become god (by entering a rule).
+
+@lexform @lex-form
+==================
+
+Open a TWin form which provides an alternate interface for playing Lexicon.
+
+@lexicon-his*tory @lex-his*tory @lexhis*tory
+============================================
+
+Usage: @lexicon-history                     - number of games
+       @lexicon-history <game #>            - details of game
+       @lexicon-history <game #>..<game #>  - range of rules
+       @lexicon-history /regex/             - searches rule text
+       @lexicon-history ~player             - game gods
+
+<game #> may be $ (last game) or $-<num> (<num> before last game)
+
+@lexicon-scores @lexscore*s @lexgods @lexwinners
+================================================
+
+Lists those who have been gods of past games.
+
+  o  Players shown (like this) have set the +mute option.
+  o  Players shown ((like this)) have removed the feature.
+
+@lexwho @who-lex*icon @lexplayers
+=================================
+
+Usage: @lexwho [all]
+
+Like @who, but only those who have the Lexicon feature.
+
+lsay lem*ote l:* lthink lthikn l%*
+==================================
+
+Usage: lsay <text>
+
+Talk with other Lexicon players.
+~/np~
