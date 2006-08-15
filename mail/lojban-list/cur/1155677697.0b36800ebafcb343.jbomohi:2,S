@@ -1,0 +1,96 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 38095 invoked from network); 15 Aug 2006 21:36:57 -0000
+Received: from unknown (66.218.66.167)
+  by m39.grp.scd.yahoo.com with QMQP; 15 Aug 2006 21:36:57 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta6.grp.scd.yahoo.com with SMTP; 15 Aug 2006 21:36:57 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.62)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1GD6ac-0007j6-I1
+	for lojban@yahoogroups.com; Tue, 15 Aug 2006 14:36:46 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.62)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1GD6ZP-0007iF-EM; Tue, 15 Aug 2006 14:35:32 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 15 Aug 2006 14:35:21 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1GD6Yu-0007hV-O3	for lojban-list-real@lojban.org; Tue, 15 Aug 2006 14:35:00 -0700
+Received: from wx-out-0506.google.com ([66.249.82.234])	by chain.digitalkingdom.org with esmtp (Exim 4.62)	(envelope-from <pdf23ds@gmail.com>)	id 1GD6Yt-0007hN-Ux	for lojban-list@lojban.org; Tue, 15 Aug 2006 14:35:00 -0700
+Received: by wx-out-0506.google.com with SMTP id r21so1626501wxc        for <lojban-list@lojban.org>; Tue, 15 Aug 2006 14:34:58 -0700 (PDT)
+Received: by 10.49.8.15 with SMTP id l15mr1849194nfi;        Tue, 15 Aug 2006 14:34:58 -0700 (PDT)
+Received: by 10.49.92.8 with HTTP; Tue, 15 Aug 2006 14:34:57 -0700 (PDT)
+Message-ID: <737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com>
+Date: Tue, 15 Aug 2006 16:34:57 -0500
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+X-Spam-Score: -0.8 (/)
+X-archive-position: 12463
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+X-list: lojban-list
+X-Spam-Score: -0.8 (/)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 1:0:0:0
+X-eGroups-From: "Chris Capel" <pdf23ds@gmail.com>
+From: "Chris Capel" <lojban-out@lojban.org>
+Reply-To: pdf23ds@gmail.com
+Subject: [lojban] parsing with error detection and recovery
+X-Yahoo-Group-Post: member; u=116389790; y=UZkrk5_EABjA_hv6KCETpihSTWzwPUrV_ymZ1LeCYM0lclCIkg
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 26892
+Content-Length: 2201
+Lines: 47
+
+I'm looking into implementing a friendly PEG parser. The current PEG
+grammar (and morphology) are very unfriendly, in that invalid lojban
+text is simply not parsable, as opposed to being parsable with
+possible errors listed. But a parser with error detection could be
+easily based on the existing PEG grammars by adding additional rules
+(with lower precedence than any rules for valid Lojban) that are
+specially marked and are associated with descriptive error messages.
+Adding these rules would also add substantial error recovery/tolerance
+to parsers.
+
+For instance, the morphology rules in the BPFK Peg Morphology[1] will
+only parse consonants that don't appear in invalid consonant clusters.
+If a consonant cluster is invalid, it will stop parsing. But by adding
+error rules for consonants that don't check the validity (that only
+get matched if the ones that do check don't match) or that check for
+specific kinds of invalid pairs, the output of the parser could be
+more likely to finish, and could tell the user why the cluster is
+invalid.
+
+Composing a good set of these rules would definitely be quite an art,
+but seems like a good approach.
+
+So, my question is this: is there an easy way to prove the equivalence
+of PEG parser A with the parts of parser B that apply only to valid
+input? My first hunch is that as long as B is derived from A by only
+adding rules where the added rule is an error condition if ever
+matched in an input, and by only modifying existing rules either by
+renaming them (and all references to them) or by adding options to the
+end that point toward error rules, then parser B will return a parse
+tree with no matches on error rules if and only if parser A would be
+able to parse the input at all. But I'm not completely sure that's the
+case.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
