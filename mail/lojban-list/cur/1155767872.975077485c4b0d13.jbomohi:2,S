@@ -1,0 +1,107 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 71665 invoked from network); 16 Aug 2006 10:11:50 -0000
+Received: from unknown (66.218.67.33)
+  by m25.grp.scd.yahoo.com with QMQP; 16 Aug 2006 10:11:50 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta7.grp.scd.yahoo.com with SMTP; 16 Aug 2006 10:11:49 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.62)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1GDIN2-0000Me-IG
+	for lojban@yahoogroups.com; Wed, 16 Aug 2006 03:11:34 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.62)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1GDILe-0000KC-9z; Wed, 16 Aug 2006 03:10:10 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 16 Aug 2006 03:09:58 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1GDIKy-0000Jj-74	for lojban-list-real@lojban.org; Wed, 16 Aug 2006 03:09:25 -0700
+Received: from subvert-the-dominant-paradigm.net ([206.123.113.154])	by chain.digitalkingdom.org with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)	(Exim 4.62)	(envelope-from <jewel@subvert-the-dominant-paradigm.net>)	id 1GDIKr-0000Ja-5W	for lojban-list@lojban.org; Wed, 16 Aug 2006 03:09:22 -0700
+Received: from [59.144.69.200] (helo=[192.168.0.253])	by subvert-the-dominant-paradigm.net with esmtpsa (TLS-1.0:RSA_ARCFOUR_MD5:16)	(Exim 4.60)	(envelope-from <jewel@subvert-the-dominant-paradigm.net>)	id 1GDIKn-00037f-PA	for lojban-list@lojban.org; Wed, 16 Aug 2006 10:09:14 +0000
+In-Reply-To: <737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com>
+References: <737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com>
+Content-Type: text/plain
+Date: Thu, 17 Aug 2006 04:07:52 +0530
+Message-Id: <1155767873.6227.13.camel@localhost.localdomain>
+Mime-Version: 1.0
+X-Mailer: Evolution 2.4.2.1 
+Content-Transfer-Encoding: 7bit
+X-Spam-Score: 0.2 (/)
+X-archive-position: 12465
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jewel@subvert-the-dominant-paradigm.net
+X-list: lojban-list
+X-Spam-Score: 0.2 (/)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 1:0:0:0
+X-eGroups-From: John Leuner <jewel@subvert-the-dominant-paradigm.net>
+From: John Leuner <lojban-out@lojban.org>
+Reply-To: jewel@subvert-the-dominant-paradigm.net
+Subject: [lojban] Re: parsing with error detection and recovery
+X-Yahoo-Group-Post: member; u=116389790; y=y5Dz-dXGd2bUqp_Cg4plUJZsS0LkhnS86Zg7Ps9p2i8YA05VGQ
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 26894
+Content-Length: 2699
+Lines: 58
+
+As a first step you could try modifying an existing PEG parser to
+produce simple error messages. As far as I know none of the existing
+ones do this yet. My parser just tells you that the parse failed and the
+point at which it failed.
+
+Error recovery seems to be quite a hard problem. I'm confused about how
+the parser would distinguish between rules failing "naturally" (in a
+successful parse there will be many points at which various rules
+failed) and those failures which would cause a larger unit to fail, eg a
+"sentence" or a "selbri".
+
+John Leuner
+
+On Tue, 2006-08-15 at 16:34 -0500, Chris Capel wrote:
+> I'm looking into implementing a friendly PEG parser. The current PEG
+> grammar (and morphology) are very unfriendly, in that invalid lojban
+> text is simply not parsable, as opposed to being parsable with
+> possible errors listed. But a parser with error detection could be
+> easily based on the existing PEG grammars by adding additional rules
+> (with lower precedence than any rules for valid Lojban) that are
+> specially marked and are associated with descriptive error messages.
+> Adding these rules would also add substantial error recovery/tolerance
+> to parsers.
+> 
+> For instance, the morphology rules in the BPFK Peg Morphology[1] will
+> only parse consonants that don't appear in invalid consonant clusters.
+> If a consonant cluster is invalid, it will stop parsing. But by adding
+> error rules for consonants that don't check the validity (that only
+> get matched if the ones that do check don't match) or that check for
+> specific kinds of invalid pairs, the output of the parser could be
+> more likely to finish, and could tell the user why the cluster is
+> invalid.
+> 
+> Composing a good set of these rules would definitely be quite an art,
+> but seems like a good approach.
+> 
+> So, my question is this: is there an easy way to prove the equivalence
+> of PEG parser A with the parts of parser B that apply only to valid
+> input? My first hunch is that as long as B is derived from A by only
+> adding rules where the added rule is an error condition if ever
+> matched in an input, and by only modifying existing rules either by
+> renaming them (and all references to them) or by adding options to the
+> end that point toward error rules, then parser B will return a parse
+> tree with no matches on error rules if and only if parser A would be
+> able to parse the input at all. But I'm not completely sure that's the
+> case.
+> 
+> Chris Capel
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
