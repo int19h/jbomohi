@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-08-15T21:34:57Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | mail/lojban-list/cur/1155677697.0b36800ebafcb343.jbomohi:2,S
 I'm looking into implementing a friendly PEG parser. The current PEG
@@ -93,6 +93,74 @@ Chris,
 I applaud your efforts. If you can acheive this, it will be the only
 parser I use!
 -epkat
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 3 | 2006-08-16T12:33:31Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608160533g388659c4v7b8020357f7664c@mail.gmail.com | mail/lojban-list/cur/1155731611.019b21c2a30b8a40.jbomohi:2,S
+On 8/16/06, John Leuner <jewel@subvert-the-dominant-paradigm.net> wrote:
+
+[rearranged a bit]
+
+> I'm confused about how
+> the parser would distinguish between rules failing "naturally" (in a
+> successful parse there will be many points at which various rules
+> failed) and those failures which would cause a larger unit to fail, eg a
+> "sentence" or a "selbri".
+
+Rules failing would never be an error. There would be a group of rules
+that are flagged in the grammar (interpreted by the user of the parse
+tree, not actually affecting the parser) as being error conditions
+when they *suceed*. Actively matching different ways to mess up the
+input. This would require a lot of rules.
+
+> Error recovery seems to be quite a hard problem.
+
+I think it's quite doable, but a tricky and lengthy process. My hunch
+is that a mature set of the error rules will triple or quadruple the
+size of the Lojban grammar.
+
+> As a first step you could try modifying an existing PEG parser to
+> produce simple error messages. As far as I know none of the existing
+> ones do this yet.
+
+Well, there are a couple ways in which PEG parsers themselves can
+produce error messages, but the parsers are extremely simple, so
+there's really not much room there. I think most of the work has to be
+done to the grammar itself. On the other hand, I *am* planning on
+doing a lot of experimenting with simple PEG grammars to prove the
+general concept, and to teach myself how PEG grammars are written,
+before I do anything with Lojban.
+
+> My parser just tells you that the parse failed and the
+> point at which it failed.
+
+What are your criteria for this? Just that the input stream wasn't
+fully eaten? I think that ideally, you'd be able to be confident
+enough in your grammar that you could pick a starting rule that isn't
+supposed to parse to the end of the stream, and use it to repeatedly
+apply to an input stream. And that any errors would result in error
+rules in the grammar rather than an incompletely parsed input. This
+could be a great efficiency optimization (for memory usage) for
+suitable input, becuase the memoization cache can be cleared after
+each substructure is parsed.
+
+For Lojban, this basically amounts to calling the parser with the
+'bridi' rule instead of the 'text' rule.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
