@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-08-15T21:34:57Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | mail/lojban-list/cur/1155677697.0b36800ebafcb343.jbomohi:2,S
 I'm looking into implementing a friendly PEG parser. The current PEG
@@ -39,6 +39,60 @@ Chris Capel
 "What is it like to be a bat? What is it like to bat a bee? What is it
 like to be a bee being batted? What is it like to be a batted bee?"
 -- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 2 | 2006-08-16T03:36:21Z | Matt Arnold <lojban-out@lojban.org> | e6663d200608152036s172df93cgd057e73154aa3b4@mail.gmail.com | mail/lojban-list/cur/1155699381.93dfb6cac8d46cb3.jbomohi:2,S
+On 8/15/06, Chris Capel <pdf23ds@gmail.com> wrote:
+> I'm looking into implementing a friendly PEG parser. The current PEG
+> grammar (and morphology) are very unfriendly, in that invalid lojban
+> text is simply not parsable, as opposed to being parsable with
+> possible errors listed. But a parser with error detection could be
+> easily based on the existing PEG grammars by adding additional rules
+> (with lower precedence than any rules for valid Lojban) that are
+> specially marked and are associated with descriptive error messages.
+> Adding these rules would also add substantial error recovery/tolerance
+> to parsers.
+>
+> For instance, the morphology rules in the BPFK Peg Morphology[1] will
+> only parse consonants that don't appear in invalid consonant clusters.
+> If a consonant cluster is invalid, it will stop parsing. But by adding
+> error rules for consonants that don't check the validity (that only
+> get matched if the ones that do check don't match) or that check for
+> specific kinds of invalid pairs, the output of the parser could be
+> more likely to finish, and could tell the user why the cluster is
+> invalid.
+>
+> Composing a good set of these rules would definitely be quite an art,
+> but seems like a good approach.
+>
+> So, my question is this: is there an easy way to prove the equivalence
+> of PEG parser A with the parts of parser B that apply only to valid
+> input? My first hunch is that as long as B is derived from A by only
+> adding rules where the added rule is an error condition if ever
+> matched in an input, and by only modifying existing rules either by
+> renaming them (and all references to them) or by adding options to the
+> end that point toward error rules, then parser B will return a parse
+> tree with no matches on error rules if and only if parser A would be
+> able to parse the input at all. But I'm not completely sure that's the
+> case.
+>
+> Chris Capel
+>
+
+Chris,
+I applaud your efforts. If you can acheive this, it will be the only
+parser I use!
+-epkat
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
