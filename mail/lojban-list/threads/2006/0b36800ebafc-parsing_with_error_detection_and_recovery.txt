@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-08-15T21:34:57Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | mail/lojban-list/cur/1155677697.0b36800ebafcb343.jbomohi:2,S
 I'm looking into implementing a friendly PEG parser. The current PEG
@@ -223,6 +223,53 @@ Chris Capel
 "What is it like to be a bat? What is it like to bat a bee? What is it
 like to be a bee being batted? What is it like to be a batted bee?"
 -- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 5 | 2006-08-17T12:49:12Z | Jorge Llambías <lojban-out@lojban.org> | 925d17560608170549j7e5e994dydf1e11d877b815aa@mail.gmail.com | mail/lojban-list/cur/1155818952.50f136f3cf4c67b9.jbomohi:2,S
+On 8/15/06, Chris Capel <pdf23ds@gmail.com> wrote:
+>
+> For instance, the morphology rules in the BPFK Peg Morphology[1] will
+> only parse consonants that don't appear in invalid consonant clusters.
+> If a consonant cluster is invalid, it will stop parsing. But by adding
+> error rules for consonants that don't check the validity (that only
+> get matched if the ones that do check don't match) or that check for
+> specific kinds of invalid pairs, the output of the parser could be
+> more likely to finish,
+
+That part seems relatively easy to do:
+
+Define a new top rule:
+
+tolerant-text <- text / text-without-phonotactic-constraints
+
+Make a copy of the full grammar with each rule name tagged with
+"-without-phonotactic-constraints".
+
+Eliminate the phonotactic constraints from the second set of rules.
+These appear only in a few rules. for example, instead of:
+
+ c <- comma* [cC] !h !c !s !x !voiced
+
+you will have:
+
+c-without-phonotactic-constraints <- comma* [cC]
+
+> and could tell the user why the cluster is
+> invalid.
+
+That may be harder to achieve.
+
+mu'o mi'e xorxes
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
