@@ -1,0 +1,108 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 42983 invoked from network); 17 Aug 2006 06:42:37 -0000
+Received: from unknown (66.218.67.33)
+  by m25.grp.scd.yahoo.com with QMQP; 17 Aug 2006 06:42:37 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta7.grp.scd.yahoo.com with SMTP; 17 Aug 2006 06:42:37 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.62)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1GDbaM-0004Bt-O7
+	for lojban@yahoogroups.com; Wed, 16 Aug 2006 23:42:34 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.62)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1GDbZ6-0004Au-Mx; Wed, 16 Aug 2006 23:41:17 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 16 Aug 2006 23:41:08 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1GDbYd-0004Ad-JX	for lojban-list-real@lojban.org; Wed, 16 Aug 2006 23:40:47 -0700
+Received: from subvert-the-dominant-paradigm.net ([206.123.113.154])	by chain.digitalkingdom.org with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)	(Exim 4.62)	(envelope-from <jewel@subvert-the-dominant-paradigm.net>)	id 1GDbYb-0004AW-P3	for lojban-list@lojban.org; Wed, 16 Aug 2006 23:40:47 -0700
+Received: from [59.144.69.200] (helo=[192.168.0.253])	by subvert-the-dominant-paradigm.net with esmtpsa (TLS-1.0:RSA_ARCFOUR_MD5:16)	(Exim 4.60)	(envelope-from <jewel@subvert-the-dominant-paradigm.net>)	id 1GDbYJ-00054G-1A	for lojban-list@lojban.org; Thu, 17 Aug 2006 06:40:28 +0000
+In-Reply-To: <737b61f30608160533g388659c4v7b8020357f7664c@mail.gmail.com>
+References: <737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com>	 <1155767873.6227.13.camel@localhost.localdomain>	 <737b61f30608160533g388659c4v7b8020357f7664c@mail.gmail.com>
+Content-Type: text/plain
+Date: Fri, 18 Aug 2006 00:39:02 +0530
+Message-Id: <1155841743.6227.25.camel@localhost.localdomain>
+Mime-Version: 1.0
+X-Mailer: Evolution 2.4.2.1 
+Content-Transfer-Encoding: 7bit
+X-Spam-Score: 0.2 (/)
+X-archive-position: 12479
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jewel@subvert-the-dominant-paradigm.net
+X-list: lojban-list
+X-Spam-Score: 0.2 (/)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 1:0:0:0
+X-eGroups-From: John Leuner <jewel@subvert-the-dominant-paradigm.net>
+From: John Leuner <lojban-out@lojban.org>
+Reply-To: jewel@subvert-the-dominant-paradigm.net
+Subject: [lojban] Re: parsing with error detection and recovery
+X-Yahoo-Group-Post: member; u=116389790; y=pYF3NLHapHZb-LzW9QtStCp81h8h03TqBmWn9gv9DscwLHNzSg
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 26909
+Content-Length: 2537
+
+> Rules failing would never be an error. There would be a group of rules
+> that are flagged in the grammar (interpreted by the user of the parse
+> tree, not actually affecting the parser) as being error conditions
+> when they *suceed*. Actively matching different ways to mess up the
+> input. This would require a lot of rules.
+
+So if these error rules don't succeed, they will never consume any
+input?
+
+> Well, there are a couple ways in which PEG parsers themselves can
+> produce error messages, but the parsers are extremely simple, so
+> there's really not much room there. I think most of the work has to be
+> done to the grammar itself. On the other hand, I *am* planning on
+> doing a lot of experimenting with simple PEG grammars to prove the
+> general concept, and to teach myself how PEG grammars are written,
+> before I do anything with Lojban.
+
+Do you think simple rules will be enough to control the error
+detection/recovery process? Maybe it will be necessary to write some
+logic in a programming language too.
+
+> > My parser just tells you that the parse failed and the
+> > point at which it failed.
+> 
+> What are your criteria for this? Just that the input stream wasn't
+> fully eaten? I think that ideally, you'd be able to be confident
+> enough in your grammar that you could pick a starting rule that isn't
+> supposed to parse to the end of the stream, and use it to repeatedly
+> apply to an input stream. And that any errors would result in error
+> rules in the grammar rather than an incompletely parsed input. This
+> could be a great efficiency optimization (for memory usage) for
+> suitable input, becuase the memoization cache can be cleared after
+> each substructure is parsed.
+
+If the top-level rule ("text") parses successfully, the parser will
+return the start-index and end-index of the matched text. There is also
+a convenience method to check whether all the input was matched or not.
+
+I don't see how you could just repeatedly apply a rule, you would have
+to skip over stuff that was causing it to fail. Finding out what "is
+causing it to fail" is very difficult.
+
+> For Lojban, this basically amounts to calling the parser with the
+> 'bridi' rule instead of the 'text' rule.
+
+I'm not sure what the implications are of using a rule like "sentence"
+instead of "text".
+
+John
+
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+

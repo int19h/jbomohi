@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 6 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 7 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-08-15T21:34:57Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | mail/lojban-list/cur/1155677697.0b36800ebafcb343.jbomohi:2,S
 I'm looking into implementing a friendly PEG parser. The current PEG
@@ -235,7 +235,71 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 5 | 2006-08-17T12:49:12Z | Jorge Llambías <lojban-out@lojban.org> | 925d17560608170549j7e5e994dydf1e11d877b815aa@mail.gmail.com | mail/lojban-list/cur/1155818952.50f136f3cf4c67b9.jbomohi:2,S
+=== 5 | 2006-08-17T19:09:02Z | John Leuner <lojban-out@lojban.org> | 1155841743.6227.25.camel@localhost.localdomain | mail/lojban-list/cur/1155841742.18c15f169defa2a8.jbomohi:2,S
+> Rules failing would never be an error. There would be a group of rules
+> that are flagged in the grammar (interpreted by the user of the parse
+> tree, not actually affecting the parser) as being error conditions
+> when they *suceed*. Actively matching different ways to mess up the
+> input. This would require a lot of rules.
+
+So if these error rules don't succeed, they will never consume any
+input?
+
+> Well, there are a couple ways in which PEG parsers themselves can
+> produce error messages, but the parsers are extremely simple, so
+> there's really not much room there. I think most of the work has to be
+> done to the grammar itself. On the other hand, I *am* planning on
+> doing a lot of experimenting with simple PEG grammars to prove the
+> general concept, and to teach myself how PEG grammars are written,
+> before I do anything with Lojban.
+
+Do you think simple rules will be enough to control the error
+detection/recovery process? Maybe it will be necessary to write some
+logic in a programming language too.
+
+> > My parser just tells you that the parse failed and the
+> > point at which it failed.
+> 
+> What are your criteria for this? Just that the input stream wasn't
+> fully eaten? I think that ideally, you'd be able to be confident
+> enough in your grammar that you could pick a starting rule that isn't
+> supposed to parse to the end of the stream, and use it to repeatedly
+> apply to an input stream. And that any errors would result in error
+> rules in the grammar rather than an incompletely parsed input. This
+> could be a great efficiency optimization (for memory usage) for
+> suitable input, becuase the memoization cache can be cleared after
+> each substructure is parsed.
+
+If the top-level rule ("text") parses successfully, the parser will
+return the start-index and end-index of the matched text. There is also
+a convenience method to check whether all the input was matched or not.
+
+I don't see how you could just repeatedly apply a rule, you would have
+to skip over stuff that was causing it to fail. Finding out what "is
+causing it to fail" is very difficult.
+
+> For Lojban, this basically amounts to calling the parser with the
+> 'bridi' rule instead of the 'text' rule.
+
+I'm not sure what the implications are of using a rule like "sentence"
+instead of "text".
+
+John
+
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 6 | 2006-08-17T12:49:12Z | Jorge Llambías <lojban-out@lojban.org> | 925d17560608170549j7e5e994dydf1e11d877b815aa@mail.gmail.com | mail/lojban-list/cur/1155818952.50f136f3cf4c67b9.jbomohi:2,S
 On 8/15/06, Chris Capel <pdf23ds@gmail.com> wrote:
 >
 > For instance, the morphology rules in the BPFK Peg Morphology[1] will
@@ -282,7 +346,7 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 6 | 2006-08-17T14:58:09Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608170758jfd3833bo690bc73f2c55b4b1@mail.gmail.com | mail/lojban-list/cur/1155826689.63e6d246d81af48d.jbomohi:2,S
+=== 7 | 2006-08-17T14:58:09Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608170758jfd3833bo690bc73f2c55b4b1@mail.gmail.com | mail/lojban-list/cur/1155826689.63e6d246d81af48d.jbomohi:2,S
 On 8/17/06, Jorge Llambías <jjllambias@gmail.com> wrote:
 > On 8/15/06, Chris Capel <pdf23ds@gmail.com> wrote:
 > >
