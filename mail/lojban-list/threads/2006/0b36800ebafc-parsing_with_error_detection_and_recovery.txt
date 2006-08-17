@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 5 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 6 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-08-15T21:34:57Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | mail/lojban-list/cur/1155677697.0b36800ebafcb343.jbomohi:2,S
 I'm looking into implementing a friendly PEG parser. The current PEG
@@ -270,6 +270,110 @@ c-without-phonotactic-constraints <- comma* [cC]
 That may be harder to achieve.
 
 mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 6 | 2006-08-17T14:58:09Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608170758jfd3833bo690bc73f2c55b4b1@mail.gmail.com | mail/lojban-list/cur/1155826689.63e6d246d81af48d.jbomohi:2,S
+On 8/17/06, Jorge Llambías <jjllambias@gmail.com> wrote:
+> On 8/15/06, Chris Capel <pdf23ds@gmail.com> wrote:
+> >
+> > For instance, the morphology rules in the BPFK Peg Morphology[1] will
+> > only parse consonants that don't appear in invalid consonant clusters.
+> > If a consonant cluster is invalid, it will stop parsing. But by adding
+> > error rules for consonants that don't check the validity (that only
+> > get matched if the ones that do check don't match) or that check for
+> > specific kinds of invalid pairs, the output of the parser could be
+> > more likely to finish,
+>
+> That part seems relatively easy to do:
+>
+> Define a new top rule:
+>
+> tolerant-text <- text / text-without-phonotactic-constraints
+>
+> Make a copy of the full grammar with each rule name tagged with
+> "-without-phonotactic-constraints".
+>
+> Eliminate the phonotactic constraints from the second set of rules.
+> These appear only in a few rules. for example, instead of:
+>
+>  c <- comma* [cC] !h !c !s !x !voiced
+>
+> you will have:
+>
+> c-without-phonotactic-constraints <- comma* [cC]
+
+That seems like much more than is necessary. I think this can be done
+only with local modifications, and then a post-parse scan. I had in
+mind something along the lines of this:
+
+c <- c-valid / c-err
+c-valid <- c-core !h !c !s !x !voiced
+ERR c-err <- c-core
+c-core <- comma* [cC]
+
+(Most of that is folded together by Rats!.) Once parsing is finished,
+all you have to do is walk the parse tree looking for any rule marked
+with ERR, and display an error message written for the rules that are
+found.
+
+> > and could tell the user why the cluster is
+> > invalid.
+>
+> That may be harder to achieve.
+
+Replace c-err in the above with:
+
+c-err <- c-err-unvoiced-voiced / c-err-excluded-pairs / c-err-no-apos
+/ c-err-no-doubles
+ERR c-err-unvoiced-voiced <- c-core voiced
+ERR c-err-excluded-pairs <- c-core s x
+ERR c-err-no-apos <- c-core h
+ERR c-err-no-doubles <- c-core c
+
+Then when you find that one of those rules matched, you can display a
+quite specific message. I actually think that c-err-* except for
+c-err-excluded-pairs should be able to be done once for all
+consonants, so we're not talking about septupling the size of the
+consonant section, either, maybe just doubling or tripling it.
+
+This shouldn't hurt efficiency too much because all the error rules
+can be safely marked transient, and shouldn't normally be invoked
+unless there's actually an error.
+
+This are actually pretty substantial changes, and it raises the
+possibility that some of the changes might change the behavior of the
+grammar on valid texts, which is undesirable. Which is why I was
+asking in my original post about what class of changes can be made
+without risking this.
+
+And I've been reading the papers on Pappy and Rats! recently, and so I
+discovered a few techniques for error reporting without postive error
+rules like I do above. I'm sure there's a way to integrate those into
+the current grammar. (I think one big improvement would be making
+"text -> ... EOF?" into "EOF". That way if you can't finish the input,
+the parser reports some sort of error.)
+
+And, to be clear, I'm not proposing that these should be changes in
+the official grammar. Ideally, there'd be a second file containing
+error rules that's optionally merged into the first one to get all
+this error stuff. But if that's not practical, there'd just be an
+unofficial version of the grammar with this error stuff in it.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org

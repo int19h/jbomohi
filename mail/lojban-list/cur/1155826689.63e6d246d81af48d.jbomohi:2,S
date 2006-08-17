@@ -1,0 +1,152 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 62675 invoked from network); 17 Aug 2006 15:03:51 -0000
+Received: from unknown (66.218.66.216)
+  by m38.grp.scd.yahoo.com with QMQP; 17 Aug 2006 15:03:51 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta1.grp.scd.yahoo.com with SMTP; 17 Aug 2006 15:03:50 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.62)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1GDjLd-0001fw-Ex
+	for lojban@yahoogroups.com; Thu, 17 Aug 2006 07:59:53 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.62)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1GDjKV-0001fD-Sk; Thu, 17 Aug 2006 07:58:46 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 17 Aug 2006 07:58:35 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1GDjK1-0001eo-DP	for lojban-list-real@lojban.org; Thu, 17 Aug 2006 07:58:13 -0700
+Received: from wr-out-0506.google.com ([64.233.184.234])	by chain.digitalkingdom.org with esmtp (Exim 4.62)	(envelope-from <pdf23ds@gmail.com>)	id 1GDjJz-0001eg-DN	for lojban-list@lojban.org; Thu, 17 Aug 2006 07:58:13 -0700
+Received: by wr-out-0506.google.com with SMTP id 55so91064wri        for <lojban-list@lojban.org>; Thu, 17 Aug 2006 07:58:10 -0700 (PDT)
+Received: by 10.49.8.15 with SMTP id l15mr2395719nfi;        Thu, 17 Aug 2006 07:58:09 -0700 (PDT)
+Received: by 10.49.92.8 with HTTP; Thu, 17 Aug 2006 07:58:09 -0700 (PDT)
+Message-ID: <737b61f30608170758jfd3833bo690bc73f2c55b4b1@mail.gmail.com>
+Date: Thu, 17 Aug 2006 09:58:09 -0500
+In-Reply-To: <925d17560608170549j7e5e994dydf1e11d877b815aa@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+Content-Disposition: inline
+References: <737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com>
+	 <925d17560608170549j7e5e994dydf1e11d877b815aa@mail.gmail.com>
+X-Spam-Score: -2.4 (--)
+X-archive-position: 12483
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+X-list: lojban-list
+X-Spam-Score: -2.4 (--)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 1:0:0:0
+X-eGroups-From: "Chris Capel" <pdf23ds@gmail.com>
+From: "Chris Capel" <lojban-out@lojban.org>
+Reply-To: pdf23ds@gmail.com
+Subject: [lojban] Re: parsing with error detection and recovery
+X-Yahoo-Group-Post: member; u=116389790; y=ai1Xc9PoW8_GLnMfhvkc4hik1WGV7YZ5js1EE1BfzijYOdHfmQ
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 26912
+Content-Length: 3862
+
+On 8/17/06, Jorge Llambías <jjllambias@gmail.com> wrote:
+> On 8/15/06, Chris Capel <pdf23ds@gmail.com> wrote:
+> >
+> > For instance, the morphology rules in the BPFK Peg Morphology[1] will
+> > only parse consonants that don't appear in invalid consonant clusters.
+> > If a consonant cluster is invalid, it will stop parsing. But by adding
+> > error rules for consonants that don't check the validity (that only
+> > get matched if the ones that do check don't match) or that check for
+> > specific kinds of invalid pairs, the output of the parser could be
+> > more likely to finish,
+>
+> That part seems relatively easy to do:
+>
+> Define a new top rule:
+>
+> tolerant-text <- text / text-without-phonotactic-constraints
+>
+> Make a copy of the full grammar with each rule name tagged with
+> "-without-phonotactic-constraints".
+>
+> Eliminate the phonotactic constraints from the second set of rules.
+> These appear only in a few rules. for example, instead of:
+>
+>  c <- comma* [cC] !h !c !s !x !voiced
+>
+> you will have:
+>
+> c-without-phonotactic-constraints <- comma* [cC]
+
+That seems like much more than is necessary. I think this can be done
+only with local modifications, and then a post-parse scan. I had in
+mind something along the lines of this:
+
+c <- c-valid / c-err
+c-valid <- c-core !h !c !s !x !voiced
+ERR c-err <- c-core
+c-core <- comma* [cC]
+
+(Most of that is folded together by Rats!.) Once parsing is finished,
+all you have to do is walk the parse tree looking for any rule marked
+with ERR, and display an error message written for the rules that are
+found.
+
+> > and could tell the user why the cluster is
+> > invalid.
+>
+> That may be harder to achieve.
+
+Replace c-err in the above with:
+
+c-err <- c-err-unvoiced-voiced / c-err-excluded-pairs / c-err-no-apos
+/ c-err-no-doubles
+ERR c-err-unvoiced-voiced <- c-core voiced
+ERR c-err-excluded-pairs <- c-core s x
+ERR c-err-no-apos <- c-core h
+ERR c-err-no-doubles <- c-core c
+
+Then when you find that one of those rules matched, you can display a
+quite specific message. I actually think that c-err-* except for
+c-err-excluded-pairs should be able to be done once for all
+consonants, so we're not talking about septupling the size of the
+consonant section, either, maybe just doubling or tripling it.
+
+This shouldn't hurt efficiency too much because all the error rules
+can be safely marked transient, and shouldn't normally be invoked
+unless there's actually an error.
+
+This are actually pretty substantial changes, and it raises the
+possibility that some of the changes might change the behavior of the
+grammar on valid texts, which is undesirable. Which is why I was
+asking in my original post about what class of changes can be made
+without risking this.
+
+And I've been reading the papers on Pappy and Rats! recently, and so I
+discovered a few techniques for error reporting without postive error
+rules like I do above. I'm sure there's a way to integrate those into
+the current grammar. (I think one big improvement would be making
+"text -> ... EOF?" into "EOF". That way if you can't finish the input,
+the parser reports some sort of error.)
+
+And, to be clear, I'm not proposing that these should be changes in
+the official grammar. Ideally, there'd be a second file containing
+error rules that's optionally merged into the first one to get all
+this error stuff. But if that's not practical, there'd just be an
+unofficial version of the grammar with this error stuff in it.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
