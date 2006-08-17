@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 12 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 13 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-08-15T21:34:57Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | mail/lojban-list/cur/1155677697.0b36800ebafcb343.jbomohi:2,S
 I'm looking into implementing a friendly PEG parser. The current PEG
@@ -576,7 +576,57 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 11 | 2006-08-17T21:39:20Z | Jorge Llambías <lojban-out@lojban.org> | 925d17560608171439h43b6194eu88cd63845e984bec@mail.gmail.com | mail/lojban-list/cur/1155850760.8c1e5509e414284e.jbomohi:2,S
+=== 11 | 2006-08-17T22:00:57Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608171500qc0ea1f9y407817563302ebb7@mail.gmail.com | mail/lojban-list/cur/1155852057.c0497c751b568a21.jbomohi:2,S
+On 8/17/06, Chris Capel <pdf23ds@gmail.com> wrote:
+> On 8/17/06, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+> > I'm not aware of any way to prove equivalence of any two PEGs, ever.
+> > I'm not even aware of a way to do that with CFGs.
+>
+> I'm only looking for a way to
+> prove this where B differs from A only in one specific, small,
+> modification. Say, the addition of a rule and one reference to that
+> rule in a new option at the end of an existing rule.
+
+I think this is the same as proving that the added option would never
+be reached on any valid input, which sounds doable to me for some
+rules. Here's one case where it's clear: where the added rule is the
+same as the first part of some earlier rule. For instance, wherever
+you have
+
+x <- y !z
+
+you should be able to add
+
+x <- y !z / x-err
+ERR x-err <- y
+
+without ever changing the result on valid input.
+
+So I think this is one provably safe way (though I'm not sure I've
+proved it here) to add error rules to a PEG grammer, and as a plus,
+one that makes it easy to keep the error stuff separate. (In a
+separate file, you could have "x <- x-err" and have " / x-err"
+appended to the main file when compiling the grammar.) I bet there are
+other ways too.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 12 | 2006-08-17T21:39:20Z | Jorge Llambías <lojban-out@lojban.org> | 925d17560608171439h43b6194eu88cd63845e984bec@mail.gmail.com | mail/lojban-list/cur/1155850760.8c1e5509e414284e.jbomohi:2,S
 On 8/17/06, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
 > On Tue, Aug 15, 2006 at 04:34:57PM -0500, Chris Capel wrote:
 > > So, my question is this: is there an easy way to prove the
@@ -639,7 +689,7 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 12 | 2006-08-17T21:43:32Z | Robin Lee Powell <lojban-out@lojban.org> | 20060817214332.gi17767@chain.digitalkingdom.org | mail/lojban-list/cur/1155851012.5eac8c40a89809de.jbomohi:2,S
+=== 13 | 2006-08-17T21:43:32Z | Robin Lee Powell <lojban-out@lojban.org> | 20060817214332.gi17767@chain.digitalkingdom.org | mail/lojban-list/cur/1155851012.5eac8c40a89809de.jbomohi:2,S
 On Thu, Aug 17, 2006 at 06:39:20PM -0300, Jorge Llamb?as wrote:
 > On 8/17/06, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
 > >On Tue, Aug 15, 2006 at 04:34:57PM -0500, Chris Capel wrote:

@@ -1,0 +1,96 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 9421 invoked from network); 17 Aug 2006 22:08:57 -0000
+Received: from unknown (66.218.66.172)
+  by m41.grp.scd.yahoo.com with QMQP; 17 Aug 2006 22:08:57 -0000
+Received: from unknown (HELO chain.digitalkingdom.org) (64.81.49.134)
+  by mta4.grp.scd.yahoo.com with SMTP; 17 Aug 2006 22:08:57 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.62)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1GDpwY-0003qZ-9o
+	for lojban@yahoogroups.com; Thu, 17 Aug 2006 15:02:28 -0700
+Received: from chain.digitalkingdom.org ([64.81.49.134])
+	by chain.digitalkingdom.org with esmtp (Exim 4.62)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1GDpvu-0003Z5-M7; Thu, 17 Aug 2006 15:01:50 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 17 Aug 2006 15:01:38 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.62)	(envelope-from <nobody@digitalkingdom.org>)	id 1GDpvT-0003Ys-QY	for lojban-list-real@lojban.org; Thu, 17 Aug 2006 15:01:19 -0700
+Received: from nf-out-0910.google.com ([64.233.182.184])	by chain.digitalkingdom.org with esmtp (Exim 4.62)	(envelope-from <pdf23ds@gmail.com>)	id 1GDpv9-0003YT-Fp	for lojban-list@lojban.org; Thu, 17 Aug 2006 15:01:19 -0700
+Received: by nf-out-0910.google.com with SMTP id m19so1237774nfc        for <lojban-list@lojban.org>; Thu, 17 Aug 2006 15:00:58 -0700 (PDT)
+Received: by 10.49.75.2 with SMTP id c2mr3145144nfl;        Thu, 17 Aug 2006 15:00:57 -0700 (PDT)
+Received: by 10.49.92.8 with HTTP; Thu, 17 Aug 2006 15:00:57 -0700 (PDT)
+Message-ID: <737b61f30608171500qc0ea1f9y407817563302ebb7@mail.gmail.com>
+Date: Thu, 17 Aug 2006 17:00:57 -0500
+In-Reply-To: <737b61f30608171437l78935d36s1b1e71b299cf8f91@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com>	 <20060817211332.GH17767@chain.digitalkingdom.org>	 <737b61f30608171437l78935d36s1b1e71b299cf8f91@mail.gmail.com>
+X-Spam-Score: -2.4 (--)
+X-archive-position: 12489
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+X-list: lojban-list
+X-Spam-Score: -2.4 (--)
+To: lojban@yahoogroups.com
+X-Originating-IP: 64.81.49.134
+X-eGroups-Msg-Info: 1:0:0:0
+X-eGroups-From: "Chris Capel" <pdf23ds@gmail.com>
+From: "Chris Capel" <lojban-out@lojban.org>
+Reply-To: pdf23ds@gmail.com
+Subject: [lojban] Re: parsing with error detection and recovery
+X-Yahoo-Group-Post: member; u=116389790; y=HlsNeVLNsoo1MqaB214N0eAFmyPULDmBtjxqqlz2aU7Mq5F-_A
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 26918
+Content-Length: 1649
+
+On 8/17/06, Chris Capel <pdf23ds@gmail.com> wrote:
+> On 8/17/06, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+> > I'm not aware of any way to prove equivalence of any two PEGs, ever.
+> > I'm not even aware of a way to do that with CFGs.
+>
+> I'm only looking for a way to
+> prove this where B differs from A only in one specific, small,
+> modification. Say, the addition of a rule and one reference to that
+> rule in a new option at the end of an existing rule.
+
+I think this is the same as proving that the added option would never
+be reached on any valid input, which sounds doable to me for some
+rules. Here's one case where it's clear: where the added rule is the
+same as the first part of some earlier rule. For instance, wherever
+you have
+
+x <- y !z
+
+you should be able to add
+
+x <- y !z / x-err
+ERR x-err <- y
+
+without ever changing the result on valid input.
+
+So I think this is one provably safe way (though I'm not sure I've
+proved it here) to add error rules to a PEG grammer, and as a plus,
+one that makes it easy to keep the error stuff separate. (In a
+separate file, you could have "x <- x-err" and have " / x-err"
+appended to the main file when compiling the grammar.) I bet there are
+other ways too.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
