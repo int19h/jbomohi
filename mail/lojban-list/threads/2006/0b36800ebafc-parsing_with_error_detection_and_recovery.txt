@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 13 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b36800ebafc-parsing_with_error_detection_and_recovery | root 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | 14 messages | rendered by jbomohi mail-v1
 
 === 1 | 2006-08-15T21:34:57Z | Chris Capel <lojban-out@lojban.org> | 737b61f30608151434h6ed71ec2k123f043c1ad59838@mail.gmail.com | mail/lojban-list/cur/1155677697.0b36800ebafcb343.jbomohi:2,S
 I'm looking into implementing a friendly PEG parser. The current PEG
@@ -626,7 +626,44 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 12 | 2006-08-17T21:39:20Z | Jorge Llambías <lojban-out@lojban.org> | 925d17560608171439h43b6194eu88cd63845e984bec@mail.gmail.com | mail/lojban-list/cur/1155850760.8c1e5509e414284e.jbomohi:2,S
+=== 12 | 2006-08-18T13:23:00Z | Jorge Llambías <lojban-out@lojban.org> | 925d17560608180623w13bcbf88id938b48a4253981e@mail.gmail.com | mail/lojban-list/cur/1155907380.7427894222cbcea4.jbomohi:2,S
+On 8/17/06, Chris Capel <pdf23ds@gmail.com> wrote:
+> For instance, wherever
+> you have
+>
+> x <- y !z
+>
+> you should be able to add
+>
+> x <- y !z / x-err
+> ERR x-err <- y
+>
+> without ever changing the result on valid input.
+
+I don't think that will work in general. Consider this:
+
+a <- x / b
+x <- y !z
+b <- y !c
+
+If you change x as you propose, you might mark something which
+is not an error as an error. You will read something as an erroneous x
+instead of as a correct b.
+
+mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 13 | 2006-08-17T21:39:20Z | Jorge Llambías <lojban-out@lojban.org> | 925d17560608171439h43b6194eu88cd63845e984bec@mail.gmail.com | mail/lojban-list/cur/1155850760.8c1e5509e414284e.jbomohi:2,S
 On 8/17/06, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
 > On Tue, Aug 15, 2006 at 04:34:57PM -0500, Chris Capel wrote:
 > > So, my question is this: is there an easy way to prove the
@@ -689,7 +726,7 @@ you're really stuck, send mail to secretary@lojban.org for help.
 
 
 
-=== 13 | 2006-08-17T21:43:32Z | Robin Lee Powell <lojban-out@lojban.org> | 20060817214332.gi17767@chain.digitalkingdom.org | mail/lojban-list/cur/1155851012.5eac8c40a89809de.jbomohi:2,S
+=== 14 | 2006-08-17T21:43:32Z | Robin Lee Powell <lojban-out@lojban.org> | 20060817214332.gi17767@chain.digitalkingdom.org | mail/lojban-list/cur/1155851012.5eac8c40a89809de.jbomohi:2,S
 On Thu, Aug 17, 2006 at 06:39:20PM -0300, Jorge Llamb?as wrote:
 > On 8/17/06, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
 > >On Tue, Aug 15, 2006 at 04:34:57PM -0500, Chris Capel wrote:
