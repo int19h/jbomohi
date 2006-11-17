@@ -21,3 +21,20 @@ same content, at most corrected or enhanced. I think "edition" here would
 be more misleading than helpful. Perhaps {ckuke'u} would be better for
 "edition".
 
+
+## 2006-11-17T13:40:20Z — arj (comment 281, on definition 15960, in reply to 280)
+
+Re: +edition
+
+xorxes wrote:
+> arj wrote:
+> > Edition should also be a gloss word, as per noralujv. Possibly also
+> > "number".
+> 
+> I added "number" as gloss word, but "edition" has a different meaning.
+
+From Wordnet:
+
+3. edition -- (an issue of a newspaper; "he read it in yesterday's edition
+of the Times")
+
