@@ -5,3 +5,19 @@
 Edition should also be a gloss word, as per noralujv. Possibly also
 "number".
 
+
+## 2006-11-17T13:35:11Z — xorxes (comment 280, on definition 15960, in reply to 278)
+
+Re: +edition
+
+arj wrote:
+> Edition should also be a gloss word, as per noralujv. Possibly also
+> "number".
+
+I added "number" as gloss word, but "edition" has a different meaning.
+Different numbers/issues of a periodical publication have different
+content. Different editions of a book or publication have essentially the
+same content, at most corrected or enhanced. I think "edition" here would
+be more misleading than helpful. Perhaps {ckuke'u} would be better for
+"edition".
+
