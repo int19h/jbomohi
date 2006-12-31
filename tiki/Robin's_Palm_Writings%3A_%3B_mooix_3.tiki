@@ -1,0 +1,102 @@
+Robin's Palm Writings Category: misc
+
+Navigation: ((Robin's Palm Writings: misc|misc Index)) ((Robin's Palm Writings|Robin's Palm Writings Top-Level Index)) 
+
+
+; Find the on-disk file associated with a field - #f if none such (meths local to this mooix Scheme interface return #f).  Handles parent recursion and mixins.
+(define (fieldfile this args)
+    ; This gets a bit complicated - we walk parents, looking for the file or for an object ref that matches the mixin (if any).  If we find the file, great: compose the dir (which we've been appending things to) and the file, and return that.  If we find the mixin, we walk that object and parents in the same way.  Once we've found the mixin, we do not ever return and try further parents of the original object.
+    (define (parent-walk dir file mixin)
+	(if (file-exists? (make-absolute-pathname dir file))
+	    (make-absolute-pathname dir file)
+	    (let* (
+		    (mixin-obj (this (car mixin)))
+		    (mixin-dir (and mixin-obj (procedure? mixin-obj) (mixin-obj "dir")))
+		)
+		(if mixin-dir
+		    (parent-walk mixin-dir file #f)
+		    (parent-walk (make-absolute-pathname dir "/parent") file mixin)
+		)
+	    )
+	)
+    )
+    (let* (
+	    (pbits (decompose-path (car args)))
+	    (file (make-pathname "" (second pbits) (third pbits)))
+	    (mixin (string-match "(.+)_(.+)"  file))
+	    (dir (this "dir"))
+	)
+	(and
+	    ; If implemented here, return #f immediately
+	    (not (this "can" args))
+	    (or
+		; Check for the object itself defining the field - if not, walk up the parents looking for file or mixins to search
+		(this "defines" args)
+		(parent-walk dir mixin)
+	    )
+	)
+    )
+)
+; Returns true if the named method is handled by this mooix Scheme interface or by a file-based method on the object
+(define (implements this args)
+    (or (this "can" args)
+	(let ((file (this "fieldfile" args)))
+	    (and file (file-execute-access?  file))
+	)
+    )
+)
+; Returns true if this object directly defines the field / method in question - no mixins, no inheritance
+(define (defines this args)
+    (let* ((pbits (decompose-path (car args)))
+	(file (make-pathname (this "dir") (second pbits) (third pbits)))
+	)
+	(file-exists? file)
+)
+(define (getfieldtext this args)
+    (let ((file (this "fieldfile" args)))
+	(and file
+		(file-exists? file)
+		(read-string file))
+    )
+)
+(define (fieldfile-lang this args)
+    (define mooix-langs (string-split ((((mooix-root "abstract") "language") "languages") "list") "\n"))
+    ; Walk up the parents using the algorithm at !URL!.  Returns an association list keyed on language code with each of the acceptably specific fields.  The list has the fiels' complete file names as its data.  "" indicates no lang, just the plain field, which always wins
+    (define (walk-parents this field)
+	(let (
+		(parent (this "parent"))
+		(entry (lambda (lang) (let ((file (this (if (not (equal? lang "")) (string-join field "." lang) field)))) (if file (list lang file) (list #f #f)))))
+		(collect (lambda () (alist-delete #f (map (lambda (lang) (entry lang)) (mooix-langs))))
+	    )
+	    (if parent
+		....
+		(
+	    )
+	)
+    )
+    (let (
+	    (alist (walk-parents this (car args)))
+	    (ulang ((cadr args) "langauge"))
+	)
+	(and
+	    ; Try the user's lang first - otherwise just take the first one
+	    (cadr (assoc (ulang "code") alist))
+	    (cadr (car alist))
+	)
+    )
+)
+(define dispatch-table
+	("can" can-dispatch)
+	("hybridgetfield" hybridgetfield)
+	("get" get)
+	("fieldfile" fieldfile)
+	("test" test)
+	("implements" implements)
+	("getfieldtext" getfieldtext)
+	("fieldfile-lang" fieldfile-lang)
+	("fieldfile_lang" fieldfile-lang)
+	.!a!nd so on
+)
+)
+
+
