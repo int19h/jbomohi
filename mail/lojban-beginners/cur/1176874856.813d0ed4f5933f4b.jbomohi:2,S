@@ -1,0 +1,91 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Tue, 17 Apr 2007 22:42:17 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.63)	(envelope-from <nobody@digitalkingdom.org>)	id 1He2vo-0001JM-MM	for lojban-beginners-real@lojban.org; Tue, 17 Apr 2007 22:42:16 -0700
+Received: from smtp.mail.umich.edu ([141.211.14.82] helo=hellskitchen.mr.itd.umich.edu)	by chain.digitalkingdom.org with esmtp (Exim 4.63)	(envelope-from <alexjm@umich.edu>)	id 1He2ve-0001J1-Hz	for lojban-beginners@lojban.org; Tue, 17 Apr 2007 22:42:16 -0700
+Received: FROM [141.213.221.81] (bursley-221-81.reshall.umich.edu [141.213.221.81])	BY hellskitchen.mr.itd.umich.edu ID 4625AF70.59E3A.24992 ; 	18 Apr 2007 01:41:04 -0400
+Mime-Version: 1.0 (Apple Message framework v752.3)
+In-Reply-To: <702226df0704171941l594330cel5f19d45baa9a579d@mail.gmail.com>
+References: <23dc8c770704110631y7f854a50w1c5f7f79b53e929b@mail.gmail.com>	 <1189A858F8918F43BE3F9C7603C73FB4031E7C8B@0456-its-exmp01.us.saic.com>	 <702226df0704170715w7d3b9f4et364ad45230bf299a@mail.gmail.com>	 <068F3D55-EC7C-4255-A42C-CEAC606CB921@umich.edu>	 <702226df0704170956h69729522w9c175271a9674fb@mail.gmail.com>	 <623C7547-38DC-4480-A4BC-F7FC247232F3@umich.edu> <702226df0704171941l594330cel5f19d45baa9a579d@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Message-Id: <CAD6FED7-664D-4F4F-8EBD-B08E49CE7803@umich.edu>
+Content-Transfer-Encoding: 7bit
+From: Alex Martini <alexjm@umich.edu>
+Subject: [lojban-beginners] Re: Now what?
+Date: Wed, 18 Apr 2007 01:40:56 -0400
+To: lojban-beginners@lojban.org
+X-Spam-Score: -2.6
+X-Spam-Score-Int: -25
+X-Spam-Bar: --
+X-archive-position: 4293
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@lojban.org
+Errors-to: lojban-beginners-bounce@lojban.org
+X-original-sender: alexjm@umich.edu
+Precedence: bulk
+Reply-to: lojban-beginners@lojban.org
+X-list: lojban-beginners
+Content-Length: 2640
+
+On Apr 17, 2007, at 10:41 PM, Jon Top Hat Jones wrote:
+> I have both python and pygame installed already- I checked that  
+> before I downloaded the program. The program seems to run, but I  
+> can only get one of the 'levels' to load, and it searches for *.wav  
+> files when I press 'hear', but I downloaded the *.ogg ones.
+>
+> Also, "Lojban Pronunciation.txt" (level 0) causes fatal error.
+>
+> Here's the output of a sample run, first running level 0  
+> (pronunciation), then level 1:
+> [ li'o sai ]
+
+
+I don't have much idea what the output means, but I know that pygame  
+is expecting the wav files.
+
+If you find the line that plays the sounds (should  be 260 or so) and  
+change .wav to .ogg it should work. Assuming that the command to open  
+the file also works.
+
+Here's what my copy looks like around that part:
+
+from line 114
+>         elif el[1]=="`": # In this case, we have the Lojban sentence
+>             counter=string.join(el.split("`")[1].split 
+> ("\x00"),"").strip() # Voodoo for extracting Wav file number from  
+> unicode string
+>             toplay = datadir+os.sep+counter+".wav" # Wav file name
+>             ##toplay = datadir+os.sep+counter+".ogg" # Ogg file name
+
+from line 231
+>                     break
+>                 elif choice == "":
+>                     #os.system("realplay "+el[2][0]+" &") # Play  
+> the wav
+>                     os.system("open "+el[2][0]+" && osascript -e  
+> 'tell application \"Terminal\" to activate'") # Play the wav
+>         else:
+>             #os.system("realplay "+el[2][0]+" &") # Play the wav
+>             #os.system("open "+el[2][0]+" &") # Play the wav
+>             os.system("open "+el[2][0]+" && osascript -e 'tell  
+> application \"Terminal\" to activate'") # Play the wav
+>             time.sleep(el[2][1])
+
+This part from line 231 is where the Mac-specific changes are -- the  
+{open} command and the {osascript} stuff. You won't need that. Since  
+you're getting errors from mPlayer, I'd guess that realplay does work/ 
+exist on your machine.
+
+Try the first one first -- if you have everything you need it should  
+work  if you give it the right extensions for the sound files (.ogg).  
+But if you don't have realplay then you'll have to do some tweaking  
+to the second part.
+
+On a sidenote, you might  give pygame03 a try, if you're not already  
+using it. Actually, if you are using it, that might explain why you  
+were getting errors from mplayer earlier. It's got a better interface  
+and generally works better. Except on my system, where I can't get  
+mplayer to play the wav files because it goes looking for an mp3  
+codec :)
+
+mu'o mi'e .aleks.
+
+
