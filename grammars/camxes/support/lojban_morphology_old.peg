@@ -1,0 +1,599 @@
+
+
+
+THIS FILE IS DEPRECATED.
+
+See
+http://www.lojban.org/tiki/tiki-index.php?page=BPFK+Section%3A+PEG+Morphology+Algorithm&bl
+for the latest version.
+
+
+
+
+
+
+; --- General Morphology ---
+
+; Ignore the -morph bits here if searching for these non-terminals.
+; BU is before spaces in front so we can catch Y + BU before anything else.
+morphology <- (BU-clause-morph / spaces-morph)* (any-word-morph spaces-morph?)* EOF-morph
+
+; --- MORPHOLOGY FILE ---
+; Do *NOT* delete the line above!
+; Everything below here invisibly has "-morph" tacked on the end.
+
+;         any single lexable Lojban words 
+any-word <- CMAVO / BRIVLA / CMENE / non-lojban-word
+
+; If you change this, change ybu in the BY section as well.
+TRANSIENT SPACE spaces <- (space-chars / spaces-hesitation)+
+TRANSIENT SPACE space-chars <- spaces-dot / spaces-space / spaces-newline / spaces-tab / spaces-carriage-return / spaces-question / spaces-exclamation
+
+; --- MORPHOLOGY ---
+; Do *NOT* delete the line above!
+
+TRANSIENT non-lojban-word <- (!space-chars .)+
+
+; The basic 'CMAVO' production is a bit special, in that all single-vowel cmavo are handled by the first section.
+CMAVO <- pre-cmavo known-cmavo / cmavo-by-morphology
+cmavo-by-morphology <- number-char+ / pre-cmavo consonant? vowel (tick-char vowel / vowel)+
+
+; Handling of what can go after a cmavo
+TRANSIENT post-cmavo <- !tick-char !vowel
+pre-cmavo <- !BRIVLA !CMENE
+
+; --- Letters and Spaces ---
+
+;; -- Letter Groups
+NORATS consonant <- [bcdfgjklmnprstvxz]
+NORATS initial-pair <- "bl" /  "br" /  "cf" /  "ck" /  "cl" /  "cm" /  "cn" /  "cp" /  "cr" /  "ct" /  "dj" /  "dr" /  "dz" /  "fl" /  "fr" /  "gl" /  "gr" /  "jb" /  "jd" /  "jg" /  "jm" /  "jv" /  "kl" /  "kr" /  "ml" /  "mr" /  "pl" /  "pr" /  "sf" /  "sk" /  "sl" /  "sm" /  "sn" /  "sp" /  "sr" /  "st" /  "tc" /  "tr" /  "ts" /  "vl" /  "vr" /  "xl" /  "xr" /  "zb" /  "zd" /  "zg" /  "zm" /  "zv"
+NORATS cmene-consonant <- [bcdfgjklmnprstvxz] / [BCDFGJKLMNPRSTVXZ]
+NORATS vowel <- [aeiouy]
+NORATS vowel-not-y <- [aeiou]
+NORATS y-char <- 'y'
+NORATS tick-char <- [']
+NORATS other-letter <- [',]
+NORATS dot-star <- .*
+NORATS other-cmene-letters <- [BCDFGJKLMNPRSTVXZ] / [AEIOU] / [hY]
+NORATS number-char <- [0123456789]
+NORATS EOF <- !.
+
+any-letter <- cmene-letter / number-char
+lojban-letter <- consonant / vowel / otherLetter
+cmene-letter <- lojban-letter / other-cmene-letters
+
+; Characters we recognize as spaces.
+; If you change any of these, change ybu in the BY section as well.
+NORATS spaces-dot <- '.'
+NORATS spaces-space <- ' '
+NORATS spaces-newline <- '\n'
+NORATS spaces-tab <- '\t'
+NORATS spaces-carriage-return <- '\r'
+NORATS spaces-question <- '?'
+NORATS spaces-exclamation <- '!'
+; Y is a space for almost all purposes.
+; If you change this, change BY as well.
+NORATS spaces-hesitation <- ('.' / ' ' / '\n' / '\t' / '\r' / '?' / '!')* 'y'+ ![aeiou] !['] ( ('.' / ' ' / '\n' / '\t' / '\r' / '?' / '!')+ / ![aeiouy] !['] ) !"bu"
+
+known-cmavo <- A-clause / BAI-clause / BAhE-clause / BE-clause / BEI-clause / BEhO-clause / BIhE-clause / BIhI-clause / BO-clause / BOI-clause / BU-clause / BY-clause / CAI-clause / CAhA-clause / CEI-clause / CEhE-clause / CO-clause / COI-clause / CU-clause / CUhE-clause / DAhO-clause / DOI-clause / DOhU-clause / FA-clause / FAhA-clause / FAhO-clause / FEhE-clause / FEhU-clause / FIhO-clause / FOI-clause / FUhA-clause / FUhE-clause / FUhO-clause / GA-clause / GAhO-clause / GEhU-clause / GI-clause / GIhA-clause / GOI-clause / GOhA-clause / GUhA-clause / I-clause / JA-clause / JAI-clause / JOI-clause / JOhI-clause / KE-clause / KEI-clause / KEhE-clause / KI-clause / KOhA-clause / KU-clause / KUhE-clause / KUhO-clause / LA-clause / LAU-clause / LAhE-clause / LE-clause / LEhU-clause / LI-clause / LIhU-clause / LOhO-clause / LOhU-clause / LU-clause / LUhU-clause / MAI-clause / MAhO-clause / ME-clause / MEhU-clause / MOI-clause / MOhE-clause / MOhI-clause / NA-clause / NAI-clause / NAhE-clause / NAhU-clause / NIhE-clause / NIhO-clause / NOI-clause / NU-clause / NUhA-clause / NUhI-clause / NUhU-clause / PA-clause / PEhE-clause / PEhO-clause / PU-clause / RAhO-clause / ROI-clause / SA-clause / SE-clause / SEI-clause / SEhU-clause / SI-clause / SOI-clause / SU-clause / TAhE-clause / TEI-clause / TEhU-clause / TO-clause / TOI-clause / TUhE-clause / TUhU-clause / UI-clause / VA-clause / VAU-clause / VEI-clause / VEhA-clause / VEhO-clause / VIhA-clause / VUhO-clause / VUhU-clause / XI-clause / ZAhO-clause / ZEI-clause / ZEhA-clause / ZI-clause / ZIhE-clause / ZO-clause / ZOI-clause / ZOhU-clause
+
+;         any brivla 
+; For now: gismu pattern.
+; BRIVLA	: /[bcdfgjklmnprstvxz]{2}['a-z]{2,}[aeiou]/
+;		/ /[bcdfgjklmnprstvxz][aeiou][bcdfgjklmnprstvxz]y?[bcdfgjklmnprstvxz]['a-z]*[aeiou]/
+;		/ /[bcdfgjklmnprstvxz][aeiou]'?[aeiou][bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
+;		/ /[aeiou]('?[aeiou]){,2}[bcdfgjklmnprstvxz]{2}['a-z]*[aeiou]/
+
+BRIVLA <- initial-pair lojban-letter lojban-letter brivla-tail / consonant !y-char vowel consonant y-char? consonant brivla-tail / consonant !y-char vowel tick-char? !y-char vowel consonant consonant brivla-tail
+;/ FUHIVLA
+
+; FUHIVLA <- !tick-char consonant consonant brivla-tail / !CMAVO cmene-letter consonant consonant brivla-tail / !CMAVO cmene-letter cmene-letter consonant consonant brivla-tail / cmene-letter cmene-letter consonant y-char consonant (consonant / vowel-not-y) brivla-tail / cmene-letter cmene-letter cmene-letter consonant consonant brivla-tail
+
+brivla-tail <- vowel-not-y &(spaces / EOF) / lojban-letter brivla-tail
+
+; CMENE <- /\.?[,'a-pr-z]+[bcdfgjklmnprstvxz]/
+; Names.  Require consonant end, then pause no LA or DOI selma'o embedded,
+; pause before if vowel initial and preceded by a vowel
+CMENE <- cmene-letter cmene-tail
+
+cmene-tail <- cmene-consonant !y-char &(spaces / EOF) / cmene-letter cmene-tail
+
+; --- SELMAHO ---
+
+; The selma'o section is of type SPACE because the end user does not, in fact, want to see anything of the SA handling and so-on; only the words themselves should be visible.
+
+; Listing of productions for the individual selma'o
+
+;         eks; basic afterthought logical connectives 
+A-clause <- pre-cmavo A post-cmavo
+NORATS A <- "a" / "e" / "ji" / "o" / "u"
+
+;         modal operators 
+BAI-clause <- pre-cmavo BAI post-cmavo
+NORATS BAI <- "du'o" / "si'u" / "zau" / "ki'i" / "du'i" / "cu'u" / "tu'i" / "ti'u" / "di'o" / "ji'u" / "ri'a" / "ni'i" / "mu'i" / "ki'u" / "va'u" / "koi" / "ca'i" / "ta'i" / "pu'e" / "ja'i" / "kai" / "bai" / "fi'e" / "de'i" / "ci'o" / "mau" / "mu'u" / "ri'i" / "ra'i" / "ka'a" / "pa'u" / "pa'a" / "le'a" / "ku'u" / "tai" / "bau" / "ma'i" / "ci'e" / "fau" / "po'i" / "cau" / "ma'e" / "ci'u" / "ra'a" / "pu'a" / "li'e" / "la'u" / "ba'i" / "ka'i" / "sau" / "fa'e" / "be'i" / "ti'i" / "ja'e" / "ga'a" / "va'o" / "ji'o" / "me'a" / "do'e" / "ji'e" / "pi'o" / "gau" / "zu'e" / "me'e" / "rai"
+
+;         next word intensifier 
+BAhE-clause <- pre-cmavo BAhE post-cmavo
+NORATS BAhE <- "ba'e" / "za'e"
+
+;         sumti link to attach sumti to a selbri 
+BE-clause <- pre-cmavo BE post-cmavo
+NORATS BE <- "be"
+
+;         multiple sumti separator between BE, BEI 
+BEI-clause <- pre-cmavo BEI post-cmavo
+NORATS BEI <- "bei"
+
+;         terminates BEBEI specified descriptors 
+BEhO-clause <- pre-cmavo BEhO post-cmavo
+NORATS BEhO <- "be'o"
+
+;         prefix for high-priority MEX operator 
+BIhE-clause <- pre-cmavo BIhE post-cmavo
+NORATS BIhE <- "bi'e"
+
+;         interval component of JOI 
+BIhI-clause <- pre-cmavo BIhI post-cmavo
+NORATS BIhI <- "mi'i" / "bi'o" / "bi'i"
+
+;         joins two units with shortest scope 
+BO-clause <- pre-cmavo BO post-cmavo
+NORATS BO <- "bo"
+
+;         number or lerfu-string terminator 
+BOI-clause <- pre-cmavo BOI post-cmavo
+NORATS BOI <- "boi"
+
+;         turns any word into a BY lerfu word 
+BU-clause <- pre-cmavo BU post-cmavo
+; If you change this, change ybu in the BY section as well.
+NORATS BU <- "bu"
+
+;         individual lerfu words 
+BY-clause <- pre-cmavo BY post-cmavo
+;  *** SPECIAL CASE ****
+; Snarfs "y bu" before anything else sees it.
+NORATS BY <- ('.' / ' ' / '\n' / '\t' / '\r' / '?' / '!')* 'y'+ ('.' / ' ' / '\n' / '\t' / '\r' / '?' / '!')* "bu" / "jo'o" / "ru'o" / "ge'o" / "je'o" / "lo'a" / "na'a" / "se'e" / "to'a" / "ga'e" / "y'y" / "by" / "cy" / "dy" / "fy" / "gy" / "jy" / "ky" / "ly" / "my" / "ny" / "py" / "ry" / "sy" / "ty" / "vy" / "xy" / "zy"
+
+;         specifies actualitypotentiality of tense 
+CAhA-clause <- pre-cmavo CAhA post-cmavo
+NORATS CAhA <- "ca'a" / "pu'i" / "nu'o" / "ka'e"
+
+;         afterthought intensity marker 
+CAI-clause <- pre-cmavo CAI post-cmavo
+NORATS CAI <- "pei" / "cai" / "cu'i" / "sai" / "ru'e"
+
+;         pro-bridi assignment operator 
+CEI-clause <- pre-cmavo CEI post-cmavo
+NORATS CEI <- "cei"
+
+;         afterthought term list connective 
+CEhE-clause <- pre-cmavo CEhE post-cmavo
+NORATS CEhE <- "ce'e"
+
+;         tanru inversion  
+CO-clause <- pre-cmavo CO post-cmavo
+NORATS CO <- "co"
+
+; vocative marker permitted inside names; must always be followed by pause or DOI 
+COI-clause <- pre-cmavo COI post-cmavo
+NORATS COI <- "ju'i" / "coi" / "fi'i" / "ta'a" / "mu'o" / "fe'o" / "co'o" / "pe'u" / "ke'o" / "nu'e" / "re'i" / "be'e" / "je'e" / "mi'e" / "ki'e" / "vi'o"
+
+;         separator between head sumti and selbri 
+CU-clause <- pre-cmavo CU post-cmavo
+NORATS CU <- "cu"
+
+;         tensemodal question 
+CUhE-clause <- pre-cmavo CUhE post-cmavo
+NORATS CUhE <- "cu'e" / "nau"
+
+;         cancel anaphoracataphora assignments 
+DAhO-clause <- pre-cmavo DAhO post-cmavo
+NORATS DAhO <- "da'o"
+
+;         vocative marker 
+DOI-clause <- pre-cmavo DOI post-cmavo
+NORATS DOI <- "doi"
+
+;         terminator for DOI-marked vocatives 
+DOhU-clause <- pre-cmavo DOhU post-cmavo
+NORATS DOhU <- "do'u"
+
+;         modifier head generic case tag 
+FA-clause <- pre-cmavo FA post-cmavo
+NORATS FA <- "fai" / "fa" / "fe" / "fo" / "fu" / "fi'a" / "fi"
+
+;         superdirections in space 
+FAhA-clause <- pre-cmavo FAhA post-cmavo
+NORATS FAhA <- "du'a" / "be'a" / "ne'u" / "vu'a" / "ga'u" / "ti'a" / "ni'a" / "ca'u" / "zu'a" / "ri'u" / "ru'u" / "re'o" / "te'e" / "bu'u" / "ne'a" / "pa'o" / "ne'i" / "to'o" / "zo'i" / "ze'o" / "zo'a" / "fa'a"
+
+; normally elided 'done pause' to indicate end of utterance string 
+FAhO-clause <- pre-cmavo FAhO post-cmavo
+NORATS FAhO <- "fa'o"
+
+;         space interval mod flag 
+FEhE-clause <- pre-cmavo FEhE post-cmavo
+NORATS FEhE <- "fe'e"
+
+;         ends bridi to modal conversion 
+FEhU-clause <- pre-cmavo FEhU post-cmavo
+NORATS FEhU <- "fe'u"
+
+;         marks bridi to modal conversion 
+FIhO-clause <- pre-cmavo FIhO post-cmavo
+NORATS FIhO <- "fi'o"
+
+;         end compound lerfu 
+FOI-clause <- pre-cmavo FOI post-cmavo
+NORATS FOI <- "foi"
+
+;         reverse Polish flag 
+FUhA-clause <- pre-cmavo FUhA post-cmavo
+NORATS FUhA <- "fu'a"
+
+;         open long scope for indicator 
+FUhE-clause <- pre-cmavo FUhE post-cmavo
+NORATS FUhE <- "fu'e"
+
+;         close long scope for indicator 
+FUhO-clause <- pre-cmavo FUhO post-cmavo
+NORATS FUhO <- "fu'o"
+
+;         geks; forethought logical connectives 
+GA-clause <- pre-cmavo GA post-cmavo
+NORATS GA <- "ge'i" / "ge" /  "go" / "ga" / "gu"
+
+;         openclosed interval markers for BIhI 
+GAhO-clause <- pre-cmavo GAhO post-cmavo
+NORATS GAhO <- "ke'i" / "ga'o"
+
+;         marker ending GOI relative clauses 
+GEhU-clause <- pre-cmavo GEhU post-cmavo
+NORATS GEhU <- "ge'u"
+
+;         forethought medial marker 
+GI-clause <- pre-cmavo GI post-cmavo
+NORATS GI <- "gi"
+
+;         logical connectives for bridi-tails 
+GIhA-clause <- pre-cmavo GIhA post-cmavo
+NORATS GIhA <- "gi'e" / "gi'i" / "gi'o" / "gi'a" / "gi'u"
+
+;         attaches a sumti modifier to a sumti 
+GOI-clause <- pre-cmavo GOI post-cmavo
+NORATS GOI <- "no'u" / "ne" / "goi" / "po'u" / "pe" / "po'e" / "po"
+
+;         pro-bridi 
+GOhA-clause <- pre-cmavo GOhA post-cmavo
+NORATS GOhA <- "mo" / "nei" / "go'u" / "go'o" / "go'i" / "no'a" / "go'e" / "go'a" / "du" / "bu'a" / "bu'e" / "bu'i" / "co'e"
+
+;         GEK for tanru units, corresponds to JEKs 
+GUhA-clause <- pre-cmavo GUhA post-cmavo
+NORATS GUhA <- "gu'e" / "gu'i" / "gu'o" / "gu'a" / "gu'u"
+
+;         sentence link 
+I-clause <- pre-cmavo I post-cmavo
+NORATS I <- "i"
+
+;         jeks; logical connectives within tanru 
+JA-clause <- pre-cmavo JA post-cmavo
+NORATS JA <- "je'i" / "je" /  "jo" / "ja" / "ju"
+
+;         modal conversion flag 
+JAI-clause <- pre-cmavo JAI post-cmavo
+NORATS JAI <- "jai"
+
+;         flags an array operand 
+JOhI-clause <- pre-cmavo JOhI post-cmavo
+NORATS JOhI <- "jo'i"
+
+;         non-logical connectives 
+JOI-clause <- pre-cmavo JOI post-cmavo
+NORATS JOI <- "fa'u" / "pi'u" / "joi" / "ce'o" / "ce" / "jo'u" / "ku'a" / "jo'e" / "ju'e"
+
+;         left long scope marker 
+KE-clause <- pre-cmavo KE post-cmavo
+NORATS KE <- "ke"
+
+;         right terminator for KE groups 
+KEhE-clause <- pre-cmavo KEhE post-cmavo
+NORATS KEhE <- "ke'e"
+
+;         right terminator, NU abstractions 
+KEI-clause <- pre-cmavo KEI post-cmavo
+NORATS KEI <- "kei"
+
+;         multiple utterance scope for tenses 
+KI-clause <- pre-cmavo KI post-cmavo
+NORATS KI <- "ki"
+
+;         sumti anaphora 
+KOhA-clause <- pre-cmavo KOhA post-cmavo
+NORATS KOhA <- "da'u" / "da'e" / "di'u" / "di'e" / "de'u" / "de'e" / "dei" / "do'i" / "mi'o" / "ma'a" / "mi'a" / "do'o" / "ko'a" / "fo'u" / "ko'e" / "ko'i" / "ko'o" / "ko'u" / "fo'a" / "fo'e" / "fo'i" / "fo'o" / "vo'a" / "vo'e" / "vo'i" / "vo'o" / "vo'u" / "ru" / "ri" / "ra" / "ta" / "tu" / "ti" / "zi'o" / "ke'a" / "ma" / "zu'i" / "zo'e" / "ce'u" / "da" / "de" / "di" / "ko" / "mi" / "do"
+
+;         right terminator for descriptions, etc. 
+KU-clause <- pre-cmavo KU post-cmavo
+NORATS KU <- "ku"
+
+;         MEX forethought delimiter 
+KUhE-clause <- pre-cmavo KUhE post-cmavo
+NORATS KUhE <- "ku'e"
+
+;         right terminator, NOI relative clauses 
+KUhO-clause <- pre-cmavo KUhO post-cmavo
+NORATS KUhO <- "ku'o"
+
+;         name descriptors 
+LA-clause <- pre-cmavo LA post-cmavo
+NORATS LA <- "lai" / "la'i" / "la"
+
+;         lerfu prefixes 
+LAU-clause <- pre-cmavo LAU post-cmavo
+NORATS LAU <- "ce'a" / "lau" / "zai" / "tau"
+
+;         sumti qualifiers 
+LAhE-clause <- pre-cmavo LAhE post-cmavo
+NORATS LAhE <- "tu'a" / "lu'a" / "lu'o" / "la'e" / "vu'i" / "lu'i" / "lu'e"
+
+;         sumti descriptors 
+LE-clause <- pre-cmavo LE post-cmavo
+NORATS LE <- "lei" / "loi" / "le'i" / "lo'i" / "le'e" / "lo'e" / "lo" / "le"
+
+;         possibly ungrammatical text right quote 
+LEhU-clause <- pre-cmavo LEhU post-cmavo
+NORATS LEhU <- "le'u"
+
+;         convert number to sumti 
+LI-clause <- pre-cmavo LI post-cmavo
+NORATS LI <- "me'o" / "li"
+
+;         grammatical text right quote 
+LIhU-clause <- pre-cmavo LIhU post-cmavo
+NORATS LIhU <- "li'u"
+
+;         elidable terminator for LI 
+LOhO-clause <- pre-cmavo LOhO post-cmavo
+NORATS LOhO <- "lo'o"
+
+;         possibly ungrammatical text left quote 
+LOhU-clause <- pre-cmavo LOhU post-cmavo
+NORATS LOhU <- "lo'u"
+
+;         grammatical text left quote 
+LU-clause <- pre-cmavo LU post-cmavo
+NORATS LU <- "lu"
+
+;         LAhE close delimiter 
+LUhU-clause <- pre-cmavo LUhU post-cmavo
+NORATS LUhU <- "lu'u"
+
+;         change MEX expressions to MEX operators 
+MAhO-clause <- pre-cmavo MAhO post-cmavo
+NORATS MAhO <- "ma'o"
+
+;         change numbers to utterance ordinals 
+MAI-clause <- pre-cmavo MAI post-cmavo
+NORATS MAI <- "mo'o" / "mai"
+
+;         converts a sumti into a tanru_unit 
+ME-clause <- pre-cmavo ME post-cmavo
+NORATS ME <- "me"
+
+;         terminator for ME 
+MEhU-clause <- pre-cmavo MEhU post-cmavo
+NORATS MEhU <- "me'u"
+
+;         change sumti to operand, inverse of LI 
+MOhE-clause <- pre-cmavo MOhE post-cmavo
+NORATS MOhE <- "mo'e"
+
+;         motion tense marker 
+MOhI-clause <- pre-cmavo MOhI post-cmavo
+NORATS MOhI <- "mo'i"
+
+;         change number to selbri 
+MOI-clause <- pre-cmavo MOI post-cmavo
+NORATS MOI <- "mei" / "moi" / "si'e" / "cu'o" / "va'e"
+
+;         bridi negation  
+NA-clause <- pre-cmavo NA post-cmavo
+NORATS NA <- "ja'a" / "na"
+
+;         attached to words to negate them 
+NAI-clause <- pre-cmavo NAI post-cmavo
+NORATS NAI <- "nai"
+
+;         scalar negation  
+NAhE-clause <- pre-cmavo NAhE post-cmavo
+NORATS NAhE <- "to'e" / "je'a" / "na'e" / "no'e"
+
+;         change a selbri into an operator 
+NAhU-clause <- pre-cmavo NAhU post-cmavo
+NORATS NAhU <- "na'u"
+
+;         change selbri to operand; inverse of MOI 
+NIhE-clause <- pre-cmavo NIhE post-cmavo
+NORATS NIhE <- "ni'e"
+
+;         new paragraph; change of subject 
+NIhO-clause <- pre-cmavo NIhO post-cmavo
+NORATS NIhO <- "ni'o" / "no'i"
+
+;         attaches a subordinate clause to a sumti 
+NOI-clause <- pre-cmavo NOI post-cmavo
+NORATS NOI <- "voi" / "noi" / "poi"
+
+;         abstraction  
+NU-clause <- pre-cmavo NU post-cmavo
+NORATS NU <- "ni" / "du'u" / "si'o" / "nu" / "li'i" / "ka" / "jei" / "su'u" / "zu'o" / "mu'e" / "pu'u" / "za'i"
+
+;         change operator to selbri; inverse of MOhE 
+NUhA-clause <- pre-cmavo NUhA post-cmavo
+NORATS NUhA <- "nu'a"
+
+;         marks the start of a termset 
+NUhI-clause <- pre-cmavo NUhI post-cmavo
+NORATS NUhI <- "nu'i"
+
+;         marks the middle and end of a termset 
+NUhU-clause <- pre-cmavo NUhU post-cmavo
+NORATS NUhU <- "nu'u"
+
+;         numbers and numeric punctuation 
+PA-clause <- pre-cmavo PA post-cmavo
+NORATS PA <- "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "pi'e" / "pi" /  "fi'u" / "za'u" / "me'i" / "ni'u" / "ki'o" / "ce'i" / "ma'u" / "ra'e" / "da'a" / "so'a" / "ji'i" / "su'o" / "su'e" / "ro" / "rau" / "so'u" / "so'i" / "so'e" / "so'o" / "mo'a" / "du'e" / "te'o" / "ka'o" / "ci'i" / "tu'o" / "xo" / "pai" / "no'o" / "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9"
+
+;         afterthought termset connective prefix 
+PEhE-clause <- pre-cmavo PEhE post-cmavo
+NORATS PEhE <- "pe'e"
+
+;         forethought (Polish) flag 
+PEhO-clause <- pre-cmavo PEhO post-cmavo
+NORATS PEhO <- "pe'o"
+
+;         directions in time 
+PU-clause <- pre-cmavo PU post-cmavo
+NORATS PU <- "ba" / "pu" / "ca"
+
+;         flag for modified interpretation of GOhI 
+RAhO-clause <- pre-cmavo RAhO post-cmavo
+NORATS RAhO <- "ra'o"
+
+;         converts number to extensional tense 
+ROI-clause <- pre-cmavo ROI post-cmavo
+NORATS ROI <- "re'u" / "roi"
+
+; metalinguistic eraser to the beginning of the current utterance 
+SA-clause <- pre-cmavo SA post-cmavo
+NORATS SA <- "sa"
+
+;         conversions 
+SE-clause <- pre-cmavo SE post-cmavo
+NORATS SE <- "se" / "te" / "ve" / "xe"
+
+;         metalinguistic bridi insert marker 
+SEI-clause <- pre-cmavo SEI post-cmavo
+NORATS SEI <- "sei" / "ti'o"
+
+;         metalinguistic bridi end marker 
+SEhU-clause <- pre-cmavo SEhU post-cmavo
+NORATS SEhU <- "se'u"
+
+;         metalinguistic single word eraser 
+SI-clause <- pre-cmavo SI post-cmavo
+NORATS SI <- "si"
+
+;         reciprocal sumti marker 
+SOI-clause <- pre-cmavo SOI post-cmavo
+NORATS SOI <- "soi"
+
+;         metalinguistic eraser of the entire text 
+SU-clause <- pre-cmavo SU post-cmavo
+NORATS SU <- "su"
+
+;         tense interval properties 
+TAhE-clause <- pre-cmavo TAhE post-cmavo
+NORATS TAhE <- "ru'i" / "ta'e" / "di'i" / "na'o"
+
+;         closing gap for MEX constructs 
+TEhU-clause <- pre-cmavo TEhU post-cmavo
+NORATS TEhU <- "te'u"
+
+;         start compound lerfu 
+TEI-clause <- pre-cmavo TEI post-cmavo
+NORATS TEI <- "tei"
+
+;         left discursive parenthesis 
+TO-clause <- pre-cmavo TO post-cmavo
+NORATS TO <- "to'i" / "to"
+
+;         right discursive parenthesis 
+TOI-clause <- pre-cmavo TOI post-cmavo
+NORATS TOI <- "toi"
+
+;         multiple utterance scope mark 
+TUhE-clause <- pre-cmavo TUhE post-cmavo
+NORATS TUhE <- "tu'e"
+
+;         multiple utterance end scope mark 
+TUhU-clause <- pre-cmavo TUhU post-cmavo
+NORATS TUhU <- "tu'u"
+
+;         attitudinals, observationals, discursives 
+UI-clause <- pre-cmavo UI post-cmavo
+NORATS UI <- "i'a" / "ie" / "a'e" / "u'i" / "i'o" / "i'e" / "a'a" / "ia" / "o'i" / "o'e" / "e'e" / "oi" / "uo" / "e'i" / "u'o" / "au" / "ua" / "a'i" / "i'u" / "ii" / "u'a" / "ui" / "a'o" / "ai" / "a'u" / "iu" / "ei" / "o'o" / "e'a" / "uu" / "o'a" / "o'u" / "u'u" / "e'o" / "io" / "e'u" / "ue" / "i'i" / "u'e" / "ba'a" / "ja'o" / "ca'e" / "su'a" / "ti'e" / "ka'u" / "se'o" / "za'a" / "pe'i" / "ru'a" / "ju'a" / "ta'o" / "ra'u" / "li'a" / "ba'u" / "mu'a" / "do'a" / "to'u" / "va'i" / "pa'e" / "zu'u" / "sa'e" / "la'a" / "ke'u" / "sa'u" / "da'i" / "je'u" / "sa'a" / "kau" / "ta'u" / "na'i" / "jo'a" / "bi'u" / "li'o" / "pau" / "mi'u" / "ku'i" / "ji'a" / "si'a" / "po'o" / "pe'a" / "ro'i" / "ro'e" / "ro'o" / "ro'u" / "ro'a" / "re'e" / "le'o" / "ju'o" / "fu'i" / "dai" / "ga'i" / "zo'o" / "be'u" / "ri'e" / "se'i" / "se'a" / "vu'e" / "ki'a" / "xu" / "ge'e" / "bu'o"
+
+;         distance in space-time 
+VA-clause <- pre-cmavo VA post-cmavo
+NORATS VA <- "vi" / "va" / "vu"
+
+;         end simple bridi or bridi-tail 
+VAU-clause <- pre-cmavo VAU post-cmavo
+NORATS VAU <- "vau"
+
+;         left MEX bracket 
+VEI-clause <- pre-cmavo VEI post-cmavo
+NORATS VEI <- "vei"
+
+;         right MEX bracket 
+VEhO-clause <- pre-cmavo VEhO post-cmavo
+NORATS VEhO <- "ve'o"
+
+;         MEX operator 
+VUhU-clause <- pre-cmavo VUhU post-cmavo
+NORATS VUhU <- "ge'a" / "fu'u" / "pi'i" / "fe'i" / "vu'u" / "su'i" / "ju'u" / "gei" / "pa'i" / "fa'i" / "te'a" / "cu'a" / "va'a" / "ne'o" / "de'o" / "fe'a" / "sa'o" / "re'a" / "ri'o" / "sa'i" / "pi'a" / "si'i"
+
+;         space-time interval size 
+VEhA-clause <- pre-cmavo VEhA post-cmavo
+NORATS VEhA <- "ve'u" / "ve'a" / "ve'i" / "ve'e"
+
+;         space-time dimensionality marker 
+VIhA-clause <- pre-cmavo VIhA post-cmavo
+NORATS VIhA <- "vi'i" / "vi'a" / "vi'u" / "vi'e"
+
+; glue between logically connected sumti and relative clauses 
+VUhO-clause <- pre-cmavo VUhO post-cmavo
+NORATS VUhO <- "vu'o"
+
+;         subscripting operator 
+XI-clause <- pre-cmavo XI post-cmavo
+NORATS XI <- "xi"
+
+;         hesitation 
+; Called only from spaces.
+;Y-clause <- pre-cmavo Y post-cmavo
+; If you change this, change ybu in the BY section as well.
+;NORATS Y <- 'y'+
+
+;         event properties - inchoative, etc. 
+ZAhO-clause <- pre-cmavo ZAhO post-cmavo
+NORATS ZAhO <- "co'i" / "pu'o" / "co'u" / "mo'u" / "ca'o" / "co'a" / "de'a" / "ba'o" / "di'a" / "za'o"
+
+;         time interval size tense 
+ZEhA-clause <- pre-cmavo ZEhA post-cmavo
+NORATS ZEhA <- "ze'u" / "ze'a" / "ze'i" / "ze'e"
+
+;         lujvo glue 
+ZEI-clause <- pre-cmavo ZEI post-cmavo
+NORATS ZEI <- "zei"
+
+;         time distance tense 
+ZI-clause <- pre-cmavo ZI post-cmavo
+NORATS ZI <- "zu" / "za" / "zi"
+
+;         conjoins relative clauses 
+ZIhE-clause <- pre-cmavo ZIhE post-cmavo
+NORATS ZIhE <- "zi'e"
+
+;         single word metalinguistic quote marker 
+ZO-clause <- pre-cmavo ZO post-cmavo
+NORATS ZO <- "zo"
+
+;         delimited quote marker 
+ZOI-clause <- pre-cmavo ZOI post-cmavo
+NORATS ZOI <- "zoi" / "la'o"
+
+;         prenex terminator (not elidable) 
+ZOhU-clause <- pre-cmavo ZOhU post-cmavo
+NORATS ZOhU <- "zo'u"
+
