@@ -20,3 +20,7 @@ $x_{1}$ is a cow/cattle/kine/ox/[bull/steer/calf] [beef-producer/bovine] of spec
 See also {danlu}.
 
 ## Examples
+
+### Example 73
+
+.o'i mu xagji sofybakni cu zvati le purdi
