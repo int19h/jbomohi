@@ -1,0 +1,68 @@
+# mail/lojban-list thread e1ea9f183a3b-sampla_fi_tu'a_lo_nu'o_lojbo_rafsi_%28unused_ra | root 71604ef1-dd37-4098-bc20-30a02c928c0e@mac.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2007-09-28T14:23:51Z | Kevin Reid <lojban-out@lojban.org> | 71604ef1-dd37-4098-bc20-30a02c928c0e@mac.com | mail/lojban-list/cur/1190989431.e1ea9f183a3b7557.jbomohi:2,S
+da poi prenu cu te preti
+   fi lo se du'u kancu lo'i nu'o lojbo rafsi makau kei cei broda
+   fo la'o.u. #jbopre .u.
+
+.i se mu'i bo mi sampla fi lo nu kanji lo se broda fe zoi .ask.
+
+module UnusedRafsi where
+
+import qualified Data.Set as Set
+import Foreign (unsafePerformIO)
+import Control.Monad
+
+possibles = Set.fromList (        liftM3 cat3 mC mV mC
+                           `mplus` liftM2 (++) mCC mV
+                           `mplus` liftM2 (++) mC mVV  )
+
+rafsis = (Set.fromList . concatMap words . map (take 12 . drop 6))  
+gismuLines
+
+mC = map return "bcdfgjklmnprstvxz"
+mCC = words "bl br cf ck cl cm cn cp cr ct dj dr dz fl fr gl gr jb jd  
+jg jm jv kl kr ml mr pl pr sf sk sl sm sn sp sr st tc tr ts vl vr xl  
+xr zb zd zg zm zv"
+mV = map return "aeiou"
+mVV = words "ai ei oi au a'a a'e a'i a'o a'u e'a e'e e'i e'o e'u i'a  
+i'e i'i i'o i'u o'a o'e o'i o'o o'u u'a u'e u'i u'o u'u"
+
+cat3 a b c = a ++ b ++ c
+
+gismuLines = (tail . lines) gismutxt
+gismutxt = unsafePerformIO (readFile "gismu.txt")
+
+.ask.
+
+.i ro lu'a la'o.u. possibles .u. nu'o ja ca'a lojbo rafsi
+.i ro lu'a la'o.u. rafsis .u. ca'a lojbo rafsi
+
+.i kancu lo'i nu'o lojbo rafsi li xa ci re
+
+.i vreji fa zoi .ask.
+
+$ ghci UnusedRafsi.hs
+...
+Ok, modules loaded: UnusedRafsi.
+*UnusedRafsi> Set.size possibles - Set.size rafsis
+632
+*UnusedRafsi>
+
+.ask.
+
+-- 
+Kevin Reid                            <http://homepage.mac.com/kpreid/>
+
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+

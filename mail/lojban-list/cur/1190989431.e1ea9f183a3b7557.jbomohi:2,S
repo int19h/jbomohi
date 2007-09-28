@@ -1,0 +1,118 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+Received: (qmail 84683 invoked from network); 28 Sep 2007 14:25:50 -0000
+Received: from unknown (69.147.108.201)
+  by m50.grp.scd.yahoo.com with QMQP; 28 Sep 2007 14:25:50 -0000
+Received: from unknown (HELO mail3.sea5.speakeasy.net) (69.17.117.5)
+  by mta2.grp.re1.yahoo.com with SMTP; 28 Sep 2007 14:25:50 -0000
+Received: (qmail 11657 invoked from network); 28 Sep 2007 14:25:37 -0000
+Received: from chain.digitalkingdom.org ([64.81.66.169])
+          (envelope-sender <lojban-out@lojban.org>)
+          by mail3.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <lojban@yahoogroups.com>; 28 Sep 2007 14:25:37 -0000
+Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.67)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1IbGmd-000743-FO
+	for lojban@yahoogroups.com; Fri, 28 Sep 2007 07:25:36 -0700
+Received: from chain.digitalkingdom.org ([64.81.66.169])
+	by chain.digitalkingdom.org with esmtp (Exim 4.67)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1IbGmG-000719-NR; Fri, 28 Sep 2007 07:25:14 -0700
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 28 Sep 2007 07:24:04 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.67)	(envelope-from <nobody@digitalkingdom.org>)	id 1IbGl9-000713-Qt	for lojban-list-real@lojban.org; Fri, 28 Sep 2007 07:24:04 -0700
+Received: from kcout01.prserv.net ([12.154.55.31])	by chain.digitalkingdom.org with esmtp (Exim 4.67)	(envelope-from <kpreid@mac.com>)	id 1IbGl7-00070i-Q1	for lojban-list@lojban.org; Fri, 28 Sep 2007 07:24:03 -0700
+Received: from [192.168.0.6] (cpe-24-59-154-165.twcny.res.rr.com[24.59.154.165])          by prserv.net (kcout01) with SMTP          id <20070928142355201003hb68e>          (Authid: usinet.kpreid);          Fri, 28 Sep 2007 14:23:55 +0000
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Transfer-Encoding: 7bit
+Message-Id: <71604EF1-DD37-4098-BC20-30A02C928C0E@mac.com>
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Date: Fri, 28 Sep 2007 10:23:51 -0400
+X-Mailer: Apple Mail (2.752.2)
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 13866
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: kpreid@mac.com
+X-list: lojban-list
+X-Spam-Score: 1.0
+X-Spam-Score-Int: 10
+X-Spam-Bar: +
+To: lojban@yahoogroups.com
+X-Originating-IP: 69.17.117.5
+X-eGroups-Msg-Info: 1:12:0:0:0
+X-eGroups-From: Kevin Reid <kpreid@mac.com>
+From: Kevin Reid <lojban-out@lojban.org>
+Reply-To: kpreid@mac.com
+Subject: [lojban] sampla fi tu'a lo nu'o lojbo rafsi (Unused rafsi counting program)
+X-Yahoo-Group-Post: member; u=116389790; y=T8RuVZrdeb_g0TFIjKSpEFZDkdNPmOTDzJc1swIfVvNhoxnGdw
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 28340
+Content-Length: 1635
+
+da poi prenu cu te preti
+   fi lo se du'u kancu lo'i nu'o lojbo rafsi makau kei cei broda
+   fo la'o.u. #jbopre .u.
+
+.i se mu'i bo mi sampla fi lo nu kanji lo se broda fe zoi .ask.
+
+module UnusedRafsi where
+
+import qualified Data.Set as Set
+import Foreign (unsafePerformIO)
+import Control.Monad
+
+possibles = Set.fromList (        liftM3 cat3 mC mV mC
+                           `mplus` liftM2 (++) mCC mV
+                           `mplus` liftM2 (++) mC mVV  )
+
+rafsis = (Set.fromList . concatMap words . map (take 12 . drop 6))  
+gismuLines
+
+mC = map return "bcdfgjklmnprstvxz"
+mCC = words "bl br cf ck cl cm cn cp cr ct dj dr dz fl fr gl gr jb jd  
+jg jm jv kl kr ml mr pl pr sf sk sl sm sn sp sr st tc tr ts vl vr xl  
+xr zb zd zg zm zv"
+mV = map return "aeiou"
+mVV = words "ai ei oi au a'a a'e a'i a'o a'u e'a e'e e'i e'o e'u i'a  
+i'e i'i i'o i'u o'a o'e o'i o'o o'u u'a u'e u'i u'o u'u"
+
+cat3 a b c = a ++ b ++ c
+
+gismuLines = (tail . lines) gismutxt
+gismutxt = unsafePerformIO (readFile "gismu.txt")
+
+.ask.
+
+.i ro lu'a la'o.u. possibles .u. nu'o ja ca'a lojbo rafsi
+.i ro lu'a la'o.u. rafsis .u. ca'a lojbo rafsi
+
+.i kancu lo'i nu'o lojbo rafsi li xa ci re
+
+.i vreji fa zoi .ask.
+
+$ ghci UnusedRafsi.hs
+...
+Ok, modules loaded: UnusedRafsi.
+*UnusedRafsi> Set.size possibles - Set.size rafsis
+632
+*UnusedRafsi>
+
+.ask.
+
+-- 
+Kevin Reid                            <http://homepage.mac.com/kpreid/>
+
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
