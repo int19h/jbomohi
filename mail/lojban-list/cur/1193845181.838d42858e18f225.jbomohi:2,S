@@ -1,0 +1,128 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+X-Received: (qmail 71294 invoked from network); 31 Oct 2007 15:42:34 -0000
+X-Received: from unknown (66.218.67.96)
+  by m44.grp.scd.yahoo.com with QMQP; 31 Oct 2007 15:42:34 -0000
+X-Received: from unknown (HELO mail8.sea5.speakeasy.net) (69.17.117.10)
+  by mta17.grp.scd.yahoo.com with SMTP; 31 Oct 2007 15:42:34 -0000
+X-Received: (qmail 16258 invoked from network); 31 Oct 2007 15:42:33 -0000
+X-Received: from chain.digitalkingdom.org ([64.81.66.169])
+          (envelope-sender <lojban-out@lojban.org>)
+          by mail8.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <lojban@yahoogroups.com>; 31 Oct 2007 15:42:33 -0000
+X-Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.67)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1InFiB-0004SR-Q0
+	for lojban@yahoogroups.com; Wed, 31 Oct 2007 08:42:32 -0700
+X-Received: from chain.digitalkingdom.org ([64.81.66.169])
+	by chain.digitalkingdom.org with esmtp (Exim 4.67)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1InFhe-0004Mn-S6; Wed, 31 Oct 2007 08:42:02 -0700
+X-Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 31 Oct 2007 08:40:01 -0700 (PDT)
+X-Received: from nobody by chain.digitalkingdom.org with local (Exim 4.67)	(envelope-from <nobody@digitalkingdom.org>)	id 1InFfj-0004Mc-Lg	for lojban-list-real@lojban.org; Wed, 31 Oct 2007 08:40:00 -0700
+X-Received: from wa-out-1112.google.com ([209.85.146.178])	by chain.digitalkingdom.org with esmtp (Exim 4.67)	(envelope-from <pdf23ds@gmail.com>)	id 1InFfh-0004MD-U1	for lojban-list@lojban.org; Wed, 31 Oct 2007 08:39:59 -0700
+X-Received: by wa-out-1112.google.com with SMTP id m16so209694waf        for <lojban-list@lojban.org>; Wed, 31 Oct 2007 08:39:51 -0700 (PDT)
+X-Received: by 10.115.15.1 with SMTP id s1mr6928051wai.1193845181889;        Wed, 31 Oct 2007 08:39:41 -0700 (PDT)
+X-Received: by 10.114.24.4 with HTTP; Wed, 31 Oct 2007 08:39:41 -0700 (PDT)
+Message-ID: <737b61f30710310839w56198f5eid7d5ba0890011812@mail.gmail.com>
+Date: Wed, 31 Oct 2007 10:39:41 -0500
+In-Reply-To: <925d17560710310630te45f3dbs210159dcc8143a6d@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+Content-Disposition: inline
+References: <737b61f30710301744x530646c8q748ccb5190ec3eee@mail.gmail.com>
+	 <925d17560710310630te45f3dbs210159dcc8143a6d@mail.gmail.com>
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 13892
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+X-list: lojban-list
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+To: lojban@yahoogroups.com
+X-Originating-IP: 69.17.117.10
+X-eGroups-Msg-Info: 1:12:0:0:0
+X-eGroups-From: "Chris Capel" <pdf23ds@gmail.com>
+From: "Chris Capel" <lojban-out@lojban.org>
+Reply-To: pdf23ds@gmail.com
+Subject: [lojban] Re: PEG left recursive definitions
+X-Yahoo-Group-Post: member; u=116389790; y=RXlyPK2S60-qJxe2W-yFHR5oK6eUCcIMO6XZHxUZWY0NUlooWw
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 28370
+Content-Length: 2116
+
+On 10/31/07, Jorge Llambías <jjllambias@gmail.com> wrote:
+> On 10/30/07, Chris Capel <pdf23ds@gmail.com> wrote:
+> > If not, would it be helpful if it could?
+>
+> It would be helpful if the parse tree is to show left associativity
+> explicitly.
+
+Hmm... I hadn't thought about the parse tree. Yeah, it would be good
+if the parse tree matched how the definitions look *before* they're
+rewritten to correct left recursion.
+
+Do you not think that the grammar definition itself would be better
+expressed with explicit left-recursion?
+
+> > expr <- tri-cond / x
+> > tri-cond <- expr '?' expr ':' expr
+> > x <- 'x'
+>
+> That's equivalent to:
+>
+>   expr <- expr '?' expr ':' expr / 'x'
+
+Yes, which is directly left-recursive. I'm trying to support direct
+and indirect recursion.
+
+> which would not be allowed in PEG.
+
+Well, "not allowed" in most implementations of PEG. (Although direct
+left recursion *is* rewritten automatically in Pappy.) But since it's
+isomorphic (i.e. identical after rewriting) to a non-left-recursive
+definition, I don't see why you'd say it's not allowed at all.
+
+> > expr-1 <- x
+> > tri-cond <- expr-1 '?' expr ':' expr / expr-1
+> > expr <- tri-cond / expr-1
+> > x <- 'x'
+>
+> This one is equivalent to:
+>
+>   expr <- 'x' '?' expr ':' expr / 'x'
+
+Which is what you would expect, no? I.e., what you "mean" when you
+write "expr <- expr '?' expr ':' expr / 'x'".
+
+> Which is allowed, but does not have an explicitly left associative parse tree.
+
+Correct. All this happens behind the scenes.
+
+
+All this is pretty tangential to my main interest in writing the
+parser, which is (1) to have a cool parser for various purposes, and
+(2) specifically for lojban, to write some cool apps.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+

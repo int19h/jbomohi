@@ -1,4 +1,4 @@
-# mail/lojban-list thread 345f7e267aa8-peg_left_recursive_definitions | root 737b61f30710301744x530646c8q748ccb5190ec3eee@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 345f7e267aa8-peg_left_recursive_definitions | root 737b61f30710301744x530646c8q748ccb5190ec3eee@mail.gmail.com | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2007-10-31T00:44:38Z | Chris Capel <lojban-out@lojban.org> | 737b61f30710301744x530646c8q748ccb5190ec3eee@mail.gmail.com | mail/lojban-list/cur/1193791478.345f7e267aa8a0d3.jbomohi:2,S
 Does the PEG currently use left recursive definitions? If not, would
@@ -178,6 +178,77 @@ This one is equivalent to:
 Which is allowed, but does not have an explicitly left associative parse tree.
 
 mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
+
+
+=== 5 | 2007-10-31T15:39:41Z | Chris Capel <lojban-out@lojban.org> | 737b61f30710310839w56198f5eid7d5ba0890011812@mail.gmail.com | mail/lojban-list/cur/1193845181.838d42858e18f225.jbomohi:2,S
+On 10/31/07, Jorge Llambías <jjllambias@gmail.com> wrote:
+> On 10/30/07, Chris Capel <pdf23ds@gmail.com> wrote:
+> > If not, would it be helpful if it could?
+>
+> It would be helpful if the parse tree is to show left associativity
+> explicitly.
+
+Hmm... I hadn't thought about the parse tree. Yeah, it would be good
+if the parse tree matched how the definitions look *before* they're
+rewritten to correct left recursion.
+
+Do you not think that the grammar definition itself would be better
+expressed with explicit left-recursion?
+
+> > expr <- tri-cond / x
+> > tri-cond <- expr '?' expr ':' expr
+> > x <- 'x'
+>
+> That's equivalent to:
+>
+>   expr <- expr '?' expr ':' expr / 'x'
+
+Yes, which is directly left-recursive. I'm trying to support direct
+and indirect recursion.
+
+> which would not be allowed in PEG.
+
+Well, "not allowed" in most implementations of PEG. (Although direct
+left recursion *is* rewritten automatically in Pappy.) But since it's
+isomorphic (i.e. identical after rewriting) to a non-left-recursive
+definition, I don't see why you'd say it's not allowed at all.
+
+> > expr-1 <- x
+> > tri-cond <- expr-1 '?' expr ':' expr / expr-1
+> > expr <- tri-cond / expr-1
+> > x <- 'x'
+>
+> This one is equivalent to:
+>
+>   expr <- 'x' '?' expr ':' expr / 'x'
+
+Which is what you would expect, no? I.e., what you "mean" when you
+write "expr <- expr '?' expr ':' expr / 'x'".
+
+> Which is allowed, but does not have an explicitly left associative parse tree.
+
+Correct. All this happens behind the scenes.
+
+
+All this is pretty tangential to my main interest in writing the
+parser, which is (1) to have a cool parser for various purposes, and
+(2) specifically for lojban, to write some cool apps.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
