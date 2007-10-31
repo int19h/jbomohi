@@ -1,0 +1,116 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+X-Received: (qmail 38534 invoked from network); 31 Oct 2007 13:33:54 -0000
+X-Received: from unknown (66.218.67.94)
+  by m46.grp.scd.yahoo.com with QMQP; 31 Oct 2007 13:33:54 -0000
+X-Received: from unknown (HELO mail2.sea5.speakeasy.net) (69.17.117.4)
+  by mta15.grp.scd.yahoo.com with SMTP; 31 Oct 2007 13:33:54 -0000
+X-Received: (qmail 10511 invoked from network); 31 Oct 2007 13:33:53 -0000
+X-Received: from chain.digitalkingdom.org ([64.81.66.169])
+          (envelope-sender <lojban-out@lojban.org>)
+          by mail2.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <lojban@yahoogroups.com>; 31 Oct 2007 13:33:51 -0000
+X-Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.67)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1InDhd-00027b-5Q
+	for lojban@yahoogroups.com; Wed, 31 Oct 2007 06:33:49 -0700
+X-Received: from chain.digitalkingdom.org ([64.81.66.169])
+	by chain.digitalkingdom.org with esmtp (Exim 4.67)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1InDgY-00022h-SH; Wed, 31 Oct 2007 06:32:48 -0700
+X-Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 31 Oct 2007 06:30:53 -0700 (PDT)
+X-Received: from nobody by chain.digitalkingdom.org with local (Exim 4.67)	(envelope-from <nobody@digitalkingdom.org>)	id 1InDel-00022a-Cr	for lojban-list-real@lojban.org; Wed, 31 Oct 2007 06:30:51 -0700
+X-Received: from nf-out-0910.google.com ([64.233.182.185])	by chain.digitalkingdom.org with esmtp (Exim 4.67)	(envelope-from <jjllambias@gmail.com>)	id 1InDeg-000223-Di	for lojban-list@lojban.org; Wed, 31 Oct 2007 06:30:48 -0700
+X-Received: by nf-out-0910.google.com with SMTP id 4so100838nfv        for <lojban-list@lojban.org>; Wed, 31 Oct 2007 06:30:40 -0700 (PDT)
+X-Received: by 10.86.79.19 with SMTP id c19mr6588449fgb.1193837440165;        Wed, 31 Oct 2007 06:30:40 -0700 (PDT)
+X-Received: by 10.86.86.13 with HTTP; Wed, 31 Oct 2007 06:30:40 -0700 (PDT)
+Message-ID: <925d17560710310630te45f3dbs210159dcc8143a6d@mail.gmail.com>
+Date: Wed, 31 Oct 2007 10:30:40 -0300
+In-Reply-To: <737b61f30710301744x530646c8q748ccb5190ec3eee@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <737b61f30710301744x530646c8q748ccb5190ec3eee@mail.gmail.com>
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 13890
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias@gmail.com
+X-list: lojban-list
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+To: lojban@yahoogroups.com
+X-Originating-IP: 69.17.117.4
+X-eGroups-Msg-Info: 1:12:0:0:0
+X-eGroups-From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <jjllambias@gmail.com>
+From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <lojban-out@lojban.org>
+Reply-To: jjllambias@gmail.com
+Subject: [lojban] Re: PEG left recursive definitions
+X-Yahoo-Group-Post: member; u=116389790; y=EzHJdBNsEeGQ0Tki5saHrseEB3zSE3hSAJ8nUqVy0Flqiinh3w
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 28369
+Content-Length: 1160
+
+On 10/30/07, Chris Capel <pdf23ds@gmail.com> wrote:
+> Does the PEG currently use left recursive definitions?
+
+Left associativity is handled by rules such as:
+
+ selbri-3 <- selbri-4+
+
+or:
+
+ sumti-2 <- sumti-3 (joik-ek sumti-3)*
+
+so it is left implicit.
+
+> If not, would it be helpful if it could?
+
+It would be helpful if the parse tree is to show left associativity
+explicitly.
+
+> For instance. Example input:
+>
+> x ? x : x
+>
+> To parse this, we could write
+>
+> expr <- tri-cond / x
+> tri-cond <- expr '?' expr ':' expr
+> x <- 'x'
+
+That's equivalent to:
+
+  expr <- expr '?' expr ':' expr / 'x'
+
+which would not be allowed in PEG.
+
+> This would be translated to
+>
+> expr-1 <- x
+> tri-cond <- expr-1 '?' expr ':' expr / expr-1
+> expr <- tri-cond / expr-1
+> x <- 'x'
+
+This one is equivalent to:
+
+  expr <- 'x' '?' expr ':' expr / 'x'
+
+Which is allowed, but does not have an explicitly left associative parse tree.
+
+mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
