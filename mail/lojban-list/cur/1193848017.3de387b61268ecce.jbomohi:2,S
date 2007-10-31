@@ -1,0 +1,96 @@
+Return-Path: <lojban-out@lojban.org>
+X-Sender: lojban-out@lojban.org
+X-Apparently-To: lojban@yahoogroups.com
+X-Received: (qmail 2286 invoked from network); 31 Oct 2007 16:30:24 -0000
+X-Received: from unknown (66.218.67.96)
+  by m47.grp.scd.yahoo.com with QMQP; 31 Oct 2007 16:30:24 -0000
+X-Received: from unknown (HELO mail7.sea5.speakeasy.net) (69.17.117.9)
+  by mta17.grp.scd.yahoo.com with SMTP; 31 Oct 2007 16:30:23 -0000
+X-Received: (qmail 18951 invoked from network); 31 Oct 2007 16:30:23 -0000
+X-Received: from chain.digitalkingdom.org ([64.81.66.169])
+          (envelope-sender <lojban-out@lojban.org>)
+          by mail7.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <lojban@yahoogroups.com>; 31 Oct 2007 16:30:23 -0000
+X-Received: from lojban-out by chain.digitalkingdom.org with local (Exim 4.67)
+	(envelope-from <lojban-out@lojban.org>)
+	id 1InGSP-0006Io-W1
+	for lojban@yahoogroups.com; Wed, 31 Oct 2007 09:30:21 -0700
+X-Received: from chain.digitalkingdom.org ([64.81.66.169])
+	by chain.digitalkingdom.org with esmtp (Exim 4.67)
+	(envelope-from <lojban-list-bounce@lojban.org>)
+	id 1InGRy-00066z-Ed; Wed, 31 Oct 2007 09:29:52 -0700
+X-Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 31 Oct 2007 09:27:10 -0700 (PDT)
+X-Received: from nobody by chain.digitalkingdom.org with local (Exim 4.67)	(envelope-from <nobody@digitalkingdom.org>)	id 1InGPN-00066t-Jd	for lojban-list-real@lojban.org; Wed, 31 Oct 2007 09:27:10 -0700
+X-Received: from nf-out-0910.google.com ([64.233.182.188])	by chain.digitalkingdom.org with esmtp (Exim 4.67)	(envelope-from <jjllambias@gmail.com>)	id 1InGPK-00066a-Ni	for lojban-list@lojban.org; Wed, 31 Oct 2007 09:27:09 -0700
+X-Received: by nf-out-0910.google.com with SMTP id 4so144326nfv        for <lojban-list@lojban.org>; Wed, 31 Oct 2007 09:26:57 -0700 (PDT)
+X-Received: by 10.86.77.5 with SMTP id z5mr6717170fga.1193848017413;        Wed, 31 Oct 2007 09:26:57 -0700 (PDT)
+X-Received: by 10.86.86.13 with HTTP; Wed, 31 Oct 2007 09:26:57 -0700 (PDT)
+Message-ID: <925d17560710310926k5485f82fv9191f290fa7bc807@mail.gmail.com>
+Date: Wed, 31 Oct 2007 13:26:57 -0300
+In-Reply-To: <737b61f30710310839w56198f5eid7d5ba0890011812@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <737b61f30710301744x530646c8q748ccb5190ec3eee@mail.gmail.com>	 <925d17560710310630te45f3dbs210159dcc8143a6d@mail.gmail.com>	 <737b61f30710310839w56198f5eid7d5ba0890011812@mail.gmail.com>
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 13893
+X-ecartis-version: Ecartis v1.0.0
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias@gmail.com
+X-list: lojban-list
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+To: lojban@yahoogroups.com
+X-Originating-IP: 69.17.117.9
+X-eGroups-Msg-Info: 1:12:0:0:0
+X-eGroups-From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <jjllambias@gmail.com>
+From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <lojban-out@lojban.org>
+Reply-To: jjllambias@gmail.com
+Subject: [lojban] Re: PEG left recursive definitions
+X-Yahoo-Group-Post: member; u=116389790; y=GkKtQEiXDeH5c6MoI4yEJmA6jT9hn4CSDK6Xb1AvXNOHpRki9g
+X-Yahoo-Profile: lojban_out
+X-Yahoo-Message-Num: 28371
+Content-Length: 1179
+
+On 10/31/07, Chris Capel <pdf23ds@gmail.com> wrote:
+>
+> Do you not think that the grammar definition itself would be better
+> expressed with explicit left-recursion?
+
+Yes, I do, for the cases of left associativity. So for example the
+left recursive:
+
+   sumti-2 <- (sumti-2 joik-ek)? sumti-3
+
+would reflect the left associativity better than the current:
+
+   sumti-2 <- sumti-3 (joik-ek sumti-3)*
+
+
+> >   expr <- expr '?' expr ':' expr / 'x'
+> > which would not be allowed in PEG.
+>
+> Well, "not allowed" in most implementations of PEG. (Although direct
+> left recursion *is* rewritten automatically in Pappy.) But since it's
+> isomorphic (i.e. identical after rewriting) to a non-left-recursive
+> definition, I don't see why you'd say it's not allowed at all.
+
+I probably used the wrong words. I don't know much more about
+this than what I learned from the Lojban PEG. I meant it would not be
+allowed in Robin's implementation.
+
+mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+
+           
+
