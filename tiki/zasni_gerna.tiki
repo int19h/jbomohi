@@ -1,4 +1,3 @@
-
 This is a version (not official) of the full grammar of Lojban. I intend to make many changes to it, some cosmetic, some not. Don't take the contents of this page too seriously for now. In ((zasni gerna cenba vreji)) I will try to keep a record of the changes as I make them. mi'e ((xorxes))
 
 ; --- GRAMMAR ---
@@ -327,7 +326,7 @@ post-clause <- spaces? si-clause? !ZEI-clause !BU-clause indicators*
 
 pre-clause <- BAhE-clause?
 
-any-word-SA-handling <- BRIVLA-pre / known-cmavo-SA / !known-cmavo-pre CMAVO-pre / CMENE-pre
+any-word-SA-handling <- BRIVLA-pre / known-cmavo-SA / CMAVO-pre / CMENE-pre
 
 known-cmavo-SA <- A-pre / BAI-pre / BAhE-pre / BE-pre / BEI-pre / BEhO-pre / BIhE-pre / BIhI-pre / BO-pre / BOI-pre / BU-pre / BY-pre / CAI-pre / CAhA-pre / CEI-pre / CEhE-pre / CO-pre / COI-pre / CU-pre / CUhE-pre / DAhO-pre / DOI-pre / DOhU-pre / FA-pre / FAhA-pre / FEhE-pre / FEhU-pre / FIhO-pre / FOI-pre / FUhA-pre / FUhE-pre / FUhO-pre / GA-pre / GAhO-pre / GEhU-pre / GI-pre / GIhA-pre / GOI-pre / GOhA-pre / GUhA-pre / I-pre / JA-pre / JAI-pre / JOI-pre / JOhI-pre / KE-pre / KEI-pre / KEhE-pre / KI-pre / KOhA-pre / KU-pre / KUhE-pre / KUhO-pre / LA-pre / LAU-pre / LAhE-pre / LE-pre / LEhU-pre / LI-pre / LIhU-pre / LOhO-pre / LOhU-pre / LU-pre / LUhU-pre / MAI-pre / MAhO-pre / ME-pre / MEhU-pre / MOI-pre / MOhE-pre / MOhI-pre / NA-pre / NAI-pre / NAhE-pre / NAhU-pre / NIhE-pre / NIhO-pre / NOI-pre / NU-pre / NUhA-pre / NUhI-pre / NUhU-pre / PA-pre / PEhE-pre / PEhO-pre / PU-pre / RAhO-pre / ROI-pre / SA-pre / SE-pre / SEI-pre / SEhU-pre / SI-clause / SOI-pre / SU-pre / TAhE-pre / TEI-pre / TEhU-pre / TO-pre / TOI-pre / TUhE-pre / TUhU-pre / UI-pre / VA-pre / VAU-pre / VEI-pre / VEhA-pre / VEhO-pre / VIhA-pre / VUhO-pre / VUhU-pre / XI-pre / ZAhO-pre / ZEI-pre / ZEhA-pre / ZI-pre / ZIhE-pre / ZO-pre / ZOI-pre / ZOhU-pre
 
@@ -1140,430 +1139,21 @@ SPACE ZOhU-no-SA-handling <- pre-clause ZOhU post-clause
 ; A, BAI, ..., ZOhU, zoi-open, zoi-word, zoi-close, spaces, dot-star and EOF.
 ;************************
 
-; inner-word (the stuff inside BRIVLA=( ... ), for example) is an
-; evenly nested, arbitrary length sequence of foo=( ... ) tags with
-; stuff inside them.  Gotta snarf it all.
 
-NORATS inner-word <- space-char (!equals-char !space-char .)+ equals-char open-paren inner-word close-paren inner-word? / inner-word2
-NORATS inner-word2 <- !close-paren-char . inner-word2 / !close-paren-char . &space-char
-NORATS space-char <- ' '
-NORATS equals-char <- '='
-NORATS close-paren-char <- ')'
-NORATS open-paren <- "( "
-NORATS close-paren <- " ) "
+zoi-open <- any-word &{ myAssign( new String(innerWordSEP2.toString()) ) } spaces?
 
-;         any single lexable Lojban words 
-any-word <- any-word-pre inner-word close-paren spaces?
+zoi-word <- any-printable-word &{ ! myCompare( startString, innerWordSEP3 ) } spaces?
 
-SPACE spaces <- (spaces-pre inner-word close-paren)*
-NORATS spaces-pre <- " spaces=( " / " initialSpaces=( "
+zoi-close <- any-word &{ myCompare( startString, innerWordSEP3 ) } spaces?
 
-NORATS dot-star <- .*
-NORATS EOF <- !.
+any-printable-word <- any-word / non-lojban-word
 
-zoi-open <- any-word-pre inner-word &{ myAssign( new String(innerWordSEP2.toString()) ) } close-paren
+any-word <- CMENE / CMAVO / BRIVLA 
 
-zoi-word <- spaces? zoi-printable-pre inner-word &{ ! myCompare( startString, innerWordSEP3 ) } close-paren
-
-zoi-close <- spaces? any-word-pre inner-word &{ myCompare( startString, innerWordSEP3 ) } close-paren spaces?
-
-zoi-printable-pre <- any-word-pre / non-Lojban-word-pre
-
-any-word-pre <- CMAVO-word-pre / CMENE-word-pre / BRIVLA-word-pre
-
-known-cmavo-pre <- A-word-pre / BAI-word-pre / BAhE-word-pre / BE-word-pre / BEI-word-pre / BEhO-word-pre / BIhE-word-pre / BIhI-word-pre / BO-word-pre / BOI-word-pre / BU-word-pre / BY-word-pre / CAI-word-pre / CAhA-word-pre / CEI-word-pre / CEhE-word-pre / CO-word-pre / COI-word-pre / CU-word-pre / CUhE-word-pre / DAhO-word-pre / DOI-word-pre / DOhU-word-pre / FA-word-pre / FAhA-word-pre / FAhO-word-pre / FEhE-word-pre / FEhU-word-pre / FIhO-word-pre / FOI-word-pre / FUhA-word-pre / FUhE-word-pre / FUhO-word-pre / GA-word-pre / GAhO-word-pre / GEhU-word-pre / GI-word-pre / GIhA-word-pre / GOI-word-pre / GOhA-word-pre / GUhA-word-pre / I-word-pre / JA-word-pre / JAI-word-pre / JOI-word-pre / JOhI-word-pre / KE-word-pre / KEI-word-pre / KEhE-word-pre / KI-word-pre / KOhA-word-pre / KU-word-pre / KUhE-word-pre / KUhO-word-pre / LA-word-pre / LAU-word-pre / LAhE-word-pre / LE-word-pre / LEhU-word-pre / LI-word-pre / LIhU-word-pre / LOhO-word-pre / LOhU-word-pre / LU-word-pre / LUhU-word-pre / MAI-word-pre / MAhO-word-pre / ME-word-pre / MEhU-word-pre / MOI-word-pre / MOhE-word-pre / MOhI-word-pre / NA-word-pre / NAI-word-pre / NAhE-word-pre / NAhU-word-pre / NIhE-word-pre / NIhO-word-pre / NOI-word-pre / NU-word-pre / NUhA-word-pre / NUhI-word-pre / NUhU-word-pre / PA-word-pre / PEhE-word-pre / PEhO-word-pre / PU-word-pre / RAhO-word-pre / ROI-word-pre / SA-word-pre / SE-word-pre / SEI-word-pre / SEhU-word-pre / SI-word-pre / SOI-word-pre / SU-word-pre / TAhE-word-pre / TEI-word-pre / TEhU-word-pre / TO-word-pre / TOI-word-pre / TUhE-word-pre / TUhU-word-pre / UI-word-pre / VA-word-pre / VAU-word-pre / VEI-word-pre / VEhA-word-pre / VEhO-word-pre / VIhA-word-pre / VUhO-word-pre / VUhU-word-pre / XI-word-pre / ZAhO-word-pre / ZEI-word-pre / ZEhA-word-pre / ZI-word-pre / ZIhE-word-pre / ZO-word-pre / ZOI-word-pre / ZOhU-word-pre
-
-NORATS non-Lojban-word-pre <- " nonLojbanWord=( "
-
-NORATS CMAVO-word-pre <- " CMAVO=( " 
-NORATS CMAVO <- CMAVO-word-pre inner-word close-paren
-
-NORATS BRIVLA-word-pre <- " BRIVLA=( " 
-NORATS BRIVLA <- BRIVLA-word-pre inner-word close-paren
-
-NORATS CMENE-word-pre <- " CMENE=( " 
-NORATS CMENE <- CMENE-word-pre inner-word close-paren
-
-NORATS A <- A-word-pre inner-word close-paren close-paren
-NORATS A-word-pre <- " CMAVO=(  A=( "
-
-NORATS BAI <- BAI-word-pre inner-word close-paren close-paren
-NORATS BAI-word-pre <- " CMAVO=(  BAI=( "
-
-NORATS BAhE <- BAhE-word-pre inner-word close-paren close-paren
-NORATS BAhE-word-pre <- " CMAVO=(  BAhE=( "
-
-NORATS BE <- BE-word-pre inner-word close-paren close-paren
-NORATS BE-word-pre <- " CMAVO=(  BE=( "
-
-NORATS BEI <- BEI-word-pre inner-word close-paren close-paren
-NORATS BEI-word-pre <- " CMAVO=(  BEI=( "
-
-NORATS BEhO <- BEhO-word-pre inner-word close-paren close-paren
-NORATS BEhO-word-pre <- " CMAVO=(  BEhO=( "
-
-NORATS BIhE <- BIhE-word-pre inner-word close-paren close-paren
-NORATS BIhE-word-pre <- " CMAVO=(  BIhE=( "
-
-NORATS BIhI <- BIhI-word-pre inner-word close-paren close-paren
-NORATS BIhI-word-pre <- " CMAVO=(  BIhI=( "
-
-NORATS BO <- BO-word-pre inner-word close-paren close-paren
-NORATS BO-word-pre <- " CMAVO=(  BO=( "
-
-NORATS BOI <- BOI-word-pre inner-word close-paren close-paren
-NORATS BOI-word-pre <- " CMAVO=(  BOI=( "
-
-NORATS BU <- BU-word-pre inner-word close-paren close-paren
-NORATS BU-word-pre <- " CMAVO=(  BU=( "
-
-NORATS BY <- BY-word-pre inner-word close-paren close-paren
-NORATS BY-word-pre <- " CMAVO=(  BY=( "
-
-NORATS CAhA <- CAhA-word-pre inner-word close-paren close-paren
-NORATS CAhA-word-pre <- " CMAVO=(  CAhA=( "
-
-NORATS CAI <- CAI-word-pre inner-word close-paren close-paren
-NORATS CAI-word-pre <- " CMAVO=(  CAI=( "
-
-NORATS CEI <- CEI-word-pre inner-word close-paren close-paren
-NORATS CEI-word-pre <- " CMAVO=(  CEI=( "
-
-NORATS CEhE <- CEhE-word-pre inner-word close-paren close-paren
-NORATS CEhE-word-pre <- " CMAVO=(  CEhE=( "
-
-NORATS CO <- CO-word-pre inner-word close-paren close-paren
-NORATS CO-word-pre <- " CMAVO=(  CO=( "
-
-NORATS COI <- COI-word-pre inner-word close-paren close-paren
-NORATS COI-word-pre <- " CMAVO=(  COI=( "
-
-NORATS CU <- CU-word-pre inner-word close-paren close-paren
-NORATS CU-word-pre <- " CMAVO=(  CU=( "
-
-NORATS CUhE <- CUhE-word-pre inner-word close-paren close-paren
-NORATS CUhE-word-pre <- " CMAVO=(  CUhE=( "
-
-NORATS DAhO <- DAhO-word-pre inner-word close-paren close-paren
-NORATS DAhO-word-pre <- " CMAVO=(  DAhO=( "
-
-NORATS DOI <- DOI-word-pre inner-word close-paren close-paren
-NORATS DOI-word-pre <- " CMAVO=(  DOI=( "
-
-NORATS DOhU <- DOhU-word-pre inner-word close-paren close-paren
-NORATS DOhU-word-pre <- " CMAVO=(  DOhU=( "
-
-NORATS FA <- FA-word-pre inner-word close-paren close-paren
-NORATS FA-word-pre <- " CMAVO=(  FA=( "
-
-NORATS FAhA <- FAhA-word-pre inner-word close-paren close-paren
-NORATS FAhA-word-pre <- " CMAVO=(  FAhA=( "
-
-NORATS FAhO <- FAhO-word-pre inner-word close-paren close-paren
-NORATS FAhO-word-pre <- " CMAVO=(  FAhO=( "
-
-NORATS FEhE <- FEhE-word-pre inner-word close-paren close-paren
-NORATS FEhE-word-pre <- " CMAVO=(  FEhE=( "
-
-NORATS FEhU <- FEhU-word-pre inner-word close-paren close-paren
-NORATS FEhU-word-pre <- " CMAVO=(  FEhU=( "
-
-NORATS FIhO <- FIhO-word-pre inner-word close-paren close-paren
-NORATS FIhO-word-pre <- " CMAVO=(  FIhO=( "
-
-NORATS FOI <- FOI-word-pre inner-word close-paren close-paren
-NORATS FOI-word-pre <- " CMAVO=(  FOI=( "
-
-NORATS FUhA <- FUhA-word-pre inner-word close-paren close-paren
-NORATS FUhA-word-pre <- " CMAVO=(  FUhA=( "
-
-NORATS FUhE <- FUhE-word-pre inner-word close-paren close-paren
-NORATS FUhE-word-pre <- " CMAVO=(  FUhE=( "
-
-NORATS FUhO <- FUhO-word-pre inner-word close-paren close-paren
-NORATS FUhO-word-pre <- " CMAVO=(  FUhO=( "
-
-NORATS GA <- GA-word-pre inner-word close-paren close-paren
-NORATS GA-word-pre <- " CMAVO=(  GA=( "
-
-NORATS GAhO <- GAhO-word-pre inner-word close-paren close-paren
-NORATS GAhO-word-pre <- " CMAVO=(  GAhO=( "
-
-NORATS GEhU <- GEhU-word-pre inner-word close-paren close-paren
-NORATS GEhU-word-pre <- " CMAVO=(  GEhU=( "
-
-NORATS GI <- GI-word-pre inner-word close-paren close-paren
-NORATS GI-word-pre <- " CMAVO=(  GI=( "
-
-NORATS GIhA <- GIhA-word-pre inner-word close-paren close-paren
-NORATS GIhA-word-pre <- " CMAVO=(  GIhA=( "
-
-NORATS GOI <- GOI-word-pre inner-word close-paren close-paren
-NORATS GOI-word-pre <- " CMAVO=(  GOI=( "
-
-NORATS GOhA <- GOhA-word-pre inner-word close-paren close-paren
-NORATS GOhA-word-pre <- " CMAVO=(  GOhA=( "
-
-NORATS GUhA <- GUhA-word-pre inner-word close-paren close-paren
-NORATS GUhA-word-pre <- " CMAVO=(  GUhA=( "
-
-NORATS I <- I-word-pre inner-word close-paren close-paren
-NORATS I-word-pre <- " CMAVO=(  I=( "
-
-NORATS JA <- JA-word-pre inner-word close-paren close-paren
-NORATS JA-word-pre <- " CMAVO=(  JA=( "
-
-NORATS JAI <- JAI-word-pre inner-word close-paren close-paren
-NORATS JAI-word-pre <- " CMAVO=(  JAI=( "
-
-NORATS JOhI <- JOhI-word-pre inner-word close-paren close-paren
-NORATS JOhI-word-pre <- " CMAVO=(  JOhI=( "
-
-NORATS JOI <- JOI-word-pre inner-word close-paren close-paren
-NORATS JOI-word-pre <- " CMAVO=(  JOI=( "
-
-NORATS KE <- KE-word-pre inner-word close-paren close-paren
-NORATS KE-word-pre <- " CMAVO=(  KE=( "
-
-NORATS KEhE <- KEhE-word-pre inner-word close-paren close-paren
-NORATS KEhE-word-pre <- " CMAVO=(  KEhE=( "
-
-NORATS KEI <- KEI-word-pre inner-word close-paren close-paren
-NORATS KEI-word-pre <- " CMAVO=(  KEI=( "
-
-NORATS KI <- KI-word-pre inner-word close-paren close-paren
-NORATS KI-word-pre <- " CMAVO=(  KI=( "
-
-NORATS KOhA <- KOhA-word-pre inner-word close-paren close-paren
-NORATS KOhA-word-pre <- " CMAVO=(  KOhA=( "
-
-NORATS KU <- KU-word-pre inner-word close-paren close-paren
-NORATS KU-word-pre <- " CMAVO=(  KU=( "
-
-NORATS KUhE <- KUhE-word-pre inner-word close-paren close-paren
-NORATS KUhE-word-pre <- " CMAVO=(  KUhE=( "
-
-NORATS KUhO <- KUhO-word-pre inner-word close-paren close-paren
-NORATS KUhO-word-pre <- " CMAVO=(  KUhO=( "
-
-NORATS LA <- LA-word-pre inner-word close-paren close-paren
-NORATS LA-word-pre <- " CMAVO=(  LA=( "
-
-NORATS LAU <- LAU-word-pre inner-word close-paren close-paren
-NORATS LAU-word-pre <- " CMAVO=(  LAU=( "
-
-NORATS LAhE <- LAhE-word-pre inner-word close-paren close-paren
-NORATS LAhE-word-pre <- " CMAVO=(  LAhE=( "
-
-NORATS LE <- LE-word-pre inner-word close-paren close-paren
-NORATS LE-word-pre <- " CMAVO=(  LE=( "
-
-NORATS LEhU <- LEhU-word-pre inner-word close-paren close-paren
-NORATS LEhU-word-pre <- " CMAVO=(  LEhU=( "
-
-NORATS LI <- LI-word-pre inner-word close-paren close-paren
-NORATS LI-word-pre <- " CMAVO=(  LI=( "
-
-NORATS LIhU <- LIhU-word-pre inner-word close-paren close-paren
-NORATS LIhU-word-pre <- " CMAVO=(  LIhU=( "
-
-NORATS LOhO <- LOhO-word-pre inner-word close-paren close-paren
-NORATS LOhO-word-pre <- " CMAVO=(  LOhO=( "
-
-NORATS LOhU <- LOhU-word-pre inner-word close-paren close-paren
-NORATS LOhU-word-pre <- " CMAVO=(  LOhU=( "
-
-NORATS LU <- LU-word-pre inner-word close-paren close-paren
-NORATS LU-word-pre <- " CMAVO=(  LU=( "
-
-NORATS LUhU <- LUhU-word-pre inner-word close-paren close-paren
-NORATS LUhU-word-pre <- " CMAVO=(  LUhU=( "
-
-NORATS MAhO <- MAhO-word-pre inner-word close-paren close-paren
-NORATS MAhO-word-pre <- " CMAVO=(  MAhO=( "
-
-NORATS MAI <- MAI-word-pre inner-word close-paren close-paren
-NORATS MAI-word-pre <- " CMAVO=(  MAI=( "
-
-NORATS ME <- ME-word-pre inner-word close-paren close-paren
-NORATS ME-word-pre <- " CMAVO=(  ME=( "
-
-NORATS MEhU <- MEhU-word-pre inner-word close-paren close-paren
-NORATS MEhU-word-pre <- " CMAVO=(  MEhU=( "
-
-NORATS MOhE <- MOhE-word-pre inner-word close-paren close-paren
-NORATS MOhE-word-pre <- " CMAVO=(  MOhE=( "
-
-NORATS MOhI <- MOhI-word-pre inner-word close-paren close-paren
-NORATS MOhI-word-pre <- " CMAVO=(  MOhI=( "
-
-NORATS MOI <- MOI-word-pre inner-word close-paren close-paren
-NORATS MOI-word-pre <- " CMAVO=(  MOI=( "
-
-NORATS NA <- NA-word-pre inner-word close-paren close-paren
-NORATS NA-word-pre <- " CMAVO=(  NA=( "
-
-NORATS NAI <- NAI-word-pre inner-word close-paren close-paren
-NORATS NAI-word-pre <- " CMAVO=(  NAI=( "
-
-NORATS NAhE <- NAhE-word-pre inner-word close-paren close-paren
-NORATS NAhE-word-pre <- " CMAVO=(  NAhE=( "
-
-NORATS NAhU <- NAhU-word-pre inner-word close-paren close-paren
-NORATS NAhU-word-pre <- " CMAVO=(  NAhU=( "
-
-NORATS NIhE <- NIhE-word-pre inner-word close-paren close-paren
-NORATS NIhE-word-pre <- " CMAVO=(  NIhE=( "
-
-NORATS NIhO <- NIhO-word-pre inner-word close-paren close-paren
-NORATS NIhO-word-pre <- " CMAVO=(  NIhO=( "
-
-NORATS NOI <- NOI-word-pre inner-word close-paren close-paren
-NORATS NOI-word-pre <- " CMAVO=(  NOI=( "
-
-NORATS NU <- NU-word-pre inner-word close-paren close-paren
-NORATS NU-word-pre <- " CMAVO=(  NU=( "
-
-NORATS NUhA <- NUhA-word-pre inner-word close-paren close-paren
-NORATS NUhA-word-pre <- " CMAVO=(  NUhA=( "
-
-NORATS NUhI <- NUhI-word-pre inner-word close-paren close-paren
-NORATS NUhI-word-pre <- " CMAVO=(  NUhI=( "
-
-NORATS NUhU <- NUhU-word-pre inner-word close-paren close-paren
-NORATS NUhU-word-pre <- " CMAVO=(  NUhU=( "
-
-NORATS PA <- PA-word-pre inner-word close-paren close-paren
-NORATS PA-word-pre <- " CMAVO=(  PA=( "
-
-NORATS PEhE <- PEhE-word-pre inner-word close-paren close-paren
-NORATS PEhE-word-pre <- " CMAVO=(  PEhE=( "
-
-NORATS PEhO <- PEhO-word-pre inner-word close-paren close-paren
-NORATS PEhO-word-pre <- " CMAVO=(  PEhO=( "
-
-NORATS PU <- PU-word-pre inner-word close-paren close-paren
-NORATS PU-word-pre <- " CMAVO=(  PU=( "
-
-NORATS RAhO <- RAhO-word-pre inner-word close-paren close-paren
-NORATS RAhO-word-pre <- " CMAVO=(  RAhO=( "
-
-NORATS ROI <- ROI-word-pre inner-word close-paren close-paren
-NORATS ROI-word-pre <- " CMAVO=(  ROI=( "
-
-NORATS SA <- SA-word-pre inner-word close-paren close-paren
-NORATS SA-word-pre <- " CMAVO=(  SA=( "
-
-NORATS SE <- SE-word-pre inner-word close-paren close-paren
-NORATS SE-word-pre <- " CMAVO=(  SE=( "
-
-NORATS SEI <- SEI-word-pre inner-word close-paren close-paren
-NORATS SEI-word-pre <- " CMAVO=(  SEI=( "
-
-NORATS SEhU <- SEhU-word-pre inner-word close-paren close-paren
-NORATS SEhU-word-pre <- " CMAVO=(  SEhU=( "
-
-NORATS SI <- SI-word-pre inner-word close-paren close-paren
-NORATS SI-word-pre <- " CMAVO=(  SI=( "
-
-NORATS SOI <- SOI-word-pre inner-word close-paren close-paren
-NORATS SOI-word-pre <- " CMAVO=(  SOI=( "
-
-NORATS SU <- SU-word-pre inner-word close-paren close-paren
-NORATS SU-word-pre <- " CMAVO=(  SU=( "
-
-NORATS TAhE <- TAhE-word-pre inner-word close-paren close-paren
-NORATS TAhE-word-pre <- " CMAVO=(  TAhE=( "
-
-NORATS TEhU <- TEhU-word-pre inner-word close-paren close-paren
-NORATS TEhU-word-pre <- " CMAVO=(  TEhU=( "
-
-NORATS TEI <- TEI-word-pre inner-word close-paren close-paren
-NORATS TEI-word-pre <- " CMAVO=(  TEI=( "
-
-NORATS TO <- TO-word-pre inner-word close-paren close-paren
-NORATS TO-word-pre <- " CMAVO=(  TO=( "
-
-NORATS TOI <- TOI-word-pre inner-word close-paren close-paren
-NORATS TOI-word-pre <- " CMAVO=(  TOI=( "
-
-NORATS TUhE <- TUhE-word-pre inner-word close-paren close-paren
-NORATS TUhE-word-pre <- " CMAVO=(  TUhE=( "
-
-NORATS TUhU <- TUhU-word-pre inner-word close-paren close-paren
-NORATS TUhU-word-pre <- " CMAVO=(  TUhU=( "
-
-NORATS UI <- UI-word-pre inner-word close-paren close-paren
-NORATS UI-word-pre <- " CMAVO=(  UI=( "
-
-NORATS VA <- VA-word-pre inner-word close-paren close-paren
-NORATS VA-word-pre <- " CMAVO=(  VA=( "
-
-NORATS VAU <- VAU-word-pre inner-word close-paren close-paren
-NORATS VAU-word-pre <- " CMAVO=(  VAU=( "
-
-NORATS VEI <- VEI-word-pre inner-word close-paren close-paren
-NORATS VEI-word-pre <- " CMAVO=(  VEI=( "
-
-NORATS VEhO <- VEhO-word-pre inner-word close-paren close-paren
-NORATS VEhO-word-pre <- " CMAVO=(  VEhO=( "
-
-NORATS VUhU <- VUhU-word-pre inner-word close-paren close-paren
-NORATS VUhU-word-pre <- " CMAVO=(  VUhU=( "
-
-NORATS VEhA <- VEhA-word-pre inner-word close-paren close-paren
-NORATS VEhA-word-pre <- " CMAVO=(  VEhA=( "
-
-NORATS VIhA <- VIhA-word-pre inner-word close-paren close-paren
-NORATS VIhA-word-pre <- " CMAVO=(  VIhA=( "
-
-NORATS VUhO <- VUhO-word-pre inner-word close-paren close-paren
-NORATS VUhO-word-pre <- " CMAVO=(  VUhO=( "
-
-NORATS XI <- XI-word-pre inner-word close-paren close-paren
-NORATS XI-word-pre <- " CMAVO=(  XI=( "
-
-; NORATS Y <- Y-word-pre inner-word close-paren close-paren
-; NORATS Y-word-pre <- " CMAVO=(  Y=( "
-
-NORATS ZAhO <- ZAhO-word-pre inner-word close-paren close-paren
-NORATS ZAhO-word-pre <- " CMAVO=(  ZAhO=( "
-
-NORATS ZEhA <- ZEhA-word-pre inner-word close-paren close-paren
-NORATS ZEhA-word-pre <- " CMAVO=(  ZEhA=( "
-
-NORATS ZEI <- ZEI-word-pre inner-word close-paren close-paren
-NORATS ZEI-word-pre <- " CMAVO=(  ZEI=( "
-
-NORATS ZI <- ZI-word-pre inner-word close-paren close-paren
-NORATS ZI-word-pre <- " CMAVO=(  ZI=( "
-
-NORATS ZIhE <- ZIhE-word-pre inner-word close-paren close-paren
-NORATS ZIhE-word-pre <- " CMAVO=(  ZIhE=( "
-
-NORATS ZO <- ZO-word-pre inner-word close-paren close-paren
-NORATS ZO-word-pre <- " CMAVO=(  ZO=( "
-
-NORATS ZOI <- ZOI-word-pre inner-word close-paren close-paren
-NORATS ZOI-word-pre <- " CMAVO=(  ZOI=( "
-
-NORATS ZOhU <- ZOhU-word-pre inner-word close-paren close-paren
-NORATS ZOhU-word-pre <- " CMAVO=(  ZOhU=( "
-
-
-
-;-------------------------------------------------------------------
-
-
-words <- pause? (word pause?)* 
-
-word <- lojban-word / non-lojban-word 
-
-lojban-word <- cmene / cmavo / brivla 
 
 ;------------------------------------------------------------------- 
 
-cmene <- jbocme / naljbocme 
+CMENE <- jbocme / naljbocme 
 
 naljbocme <- !h &consonant-final (vowel / y / consonant / digit)* &pause 
 
@@ -1581,7 +1171,7 @@ consonant-final <- (non-space &non-space)* consonant &pause
 
 ;------------------------------------------------------------------- 
 
-cmavo <- !cmene !CVCy-lujvo cmavo-form &post-word 
+CMAVO <- !cmene !CVCy-lujvo cmavo-form &post-word 
 
 CVCy-lujvo <- CVC-rafsi y h? initial-rafsi* brivla-core / stressed-CVC-rafsi y short-final-rafsi 
 
@@ -1589,7 +1179,7 @@ cmavo-form <- !h !cluster onset (nucleus h)* (!stressed nucleus / nucleus !clust
 
 ;------------------------------------------------------------------- 
 
-brivla <- !cmavo initial-rafsi* brivla-core 
+BRIVLA <- !cmavo initial-rafsi* brivla-core 
 
 brivla-core <- fuhivla / gismu / CVV-final-rafsi / stressed-initial-rafsi short-final-rafsi 
 
@@ -1799,246 +1389,246 @@ lujvo <- !gismu !fuhivla brivla
 
 ;------------------------------------------------------------------- 
 
-A <- &cmavo ( a / e / j i / o / u ) &post-word 
+A <- &CMAVO ( a / e / j i / o / u ) &post-word 
 
-BAI <- &cmavo ( d u h o / s i h u / z a u / k i h i / d u h i / c u h u / t u h i / t i h u / d i h o / j i h u / r i h a / n i h i / m u h i / k i h u / v a h u / k o i / c a h i / t a h i / p u h e / j a h i / k a i / b a i / f i h e / d e h i / c i h o / m a u / m u h u / r i h i / r a h i / k a h a / p a h u / p a h a / l e h a / k u h u / t a i / b a u / m a h i / c i h e / f a u / p o h i / c a u / m a h e / c i h u / r a h a / p u h a / l i h e / l a h u / b a h i / k a h i / s a u / f a h e / b e h i / t i h i / j a h e / g a h a / v a h o / j i h o / m e h a / d o h e / j i h e / p i h o / g a u / z u h e / m e h e / r a i ) &post-word 
+BAI <- &CMAVO ( d u h o / s i h u / z a u / k i h i / d u h i / c u h u / t u h i / t i h u / d i h o / j i h u / r i h a / n i h i / m u h i / k i h u / v a h u / k o i / c a h i / t a h i / p u h e / j a h i / k a i / b a i / f i h e / d e h i / c i h o / m a u / m u h u / r i h i / r a h i / k a h a / p a h u / p a h a / l e h a / k u h u / t a i / b a u / m a h i / c i h e / f a u / p o h i / c a u / m a h e / c i h u / r a h a / p u h a / l i h e / l a h u / b a h i / k a h i / s a u / f a h e / b e h i / t i h i / j a h e / g a h a / v a h o / j i h o / m e h a / d o h e / j i h e / p i h o / g a u / z u h e / m e h e / r a i ) &post-word 
 
-BAhE <- &cmavo ( b a h e / z a h e ) &post-word 
+BAhE <- &CMAVO ( b a h e / z a h e ) &post-word 
 
-BE <- &cmavo ( b e ) &post-word 
+BE <- &CMAVO ( b e ) &post-word 
 
-BEI <- &cmavo ( b e i ) &post-word 
+BEI <- &CMAVO ( b e i ) &post-word 
 
-BEhO <- &cmavo ( b e h o ) &post-word 
+BEhO <- &CMAVO ( b e h o ) &post-word 
 
-BIhE <- &cmavo ( b i h e ) &post-word 
+BIhE <- &CMAVO ( b i h e ) &post-word 
 
-BIhI <- &cmavo ( m i h i / b i h o / b i h i ) &post-word 
+BIhI <- &CMAVO ( m i h i / b i h o / b i h i ) &post-word 
 
-BO <- &cmavo ( b o ) &post-word 
+BO <- &CMAVO ( b o ) &post-word 
 
-BOI <- &cmavo ( b o i ) &post-word 
+BOI <- &CMAVO ( b o i ) &post-word 
 
-BU <- &cmavo ( b u ) &post-word 
+BU <- &CMAVO ( b u ) &post-word 
 
-BY <- ybu / &cmavo ( j o h o / r u h o / g e h o / j e h o / l o h a / n a h a / s e h e / t o h a / g a h e / y h y / b y / c y / d y / f y / g y / j y / k y / l y / m y / n y / p y / r y / s y / t y / v y / x y / z y ) &post-word 
+BY <- ybu / &CMAVO ( j o h o / r u h o / g e h o / j e h o / l o h a / n a h a / s e h e / t o h a / g a h e / y h y / b y / c y / d y / f y / g y / j y / k y / l y / m y / n y / p y / r y / s y / t y / v y / x y / z y ) &post-word 
 
-CAhA <- &cmavo ( c a h a / p u h i / n u h o / k a h e ) &post-word 
+CAhA <- &CMAVO ( c a h a / p u h i / n u h o / k a h e ) &post-word 
 
-CAI <- &cmavo ( p e i / c a i / c u h i / s a i / r u h e ) &post-word 
+CAI <- &CMAVO ( p e i / c a i / c u h i / s a i / r u h e ) &post-word 
 
-CEI <- &cmavo ( c e i ) &post-word 
+CEI <- &CMAVO ( c e i ) &post-word 
 
-CEhE <- &cmavo ( c e h e ) &post-word 
+CEhE <- &CMAVO ( c e h e ) &post-word 
 
-CO <- &cmavo ( c o ) &post-word 
+CO <- &CMAVO ( c o ) &post-word 
 
-COI <- &cmavo ( j u h i / c o i / f i h i / t a h a / m u h o / f e h o / c o h o / p e h u / k e h o / n u h e / r e h i / b e h e / j e h e / m i h e / k i h e / v i h o ) &post-word 
+COI <- &CMAVO ( j u h i / c o i / f i h i / t a h a / m u h o / f e h o / c o h o / p e h u / k e h o / n u h e / r e h i / b e h e / j e h e / m i h e / k i h e / v i h o ) &post-word 
 
-CU <- &cmavo ( c u ) &post-word 
+CU <- &CMAVO ( c u ) &post-word 
 
-CUhE <- &cmavo ( c u h e / n a u ) &post-word 
+CUhE <- &CMAVO ( c u h e / n a u ) &post-word 
 
-DAhO <- &cmavo ( d a h o ) &post-word 
+DAhO <- &CMAVO ( d a h o ) &post-word 
 
-DOI <- &cmavo ( d o i ) &post-word 
+DOI <- &CMAVO ( d o i ) &post-word 
 
-DOhU <- &cmavo ( d o h u ) &post-word 
+DOhU <- &CMAVO ( d o h u ) &post-word 
 
-FA <- &cmavo ( f a i / f a / f e / f o / f u / f i h a / f i ) &post-word 
+FA <- &CMAVO ( f a i / f a / f e / f o / f u / f i h a / f i ) &post-word 
 
-FAhA <- &cmavo ( d u h a / b e h a / n e h u / v u h a / g a h u / t i h a / n i h a / c a h u / z u h a / r i h u / r u h u / r e h o / t e h e / b u h u / n e h a / p a h o / n e h i / t o h o / z o h i / z e h o / z o h a / f a h a ) &post-word 
+FAhA <- &CMAVO ( d u h a / b e h a / n e h u / v u h a / g a h u / t i h a / n i h a / c a h u / z u h a / r i h u / r u h u / r e h o / t e h e / b u h u / n e h a / p a h o / n e h i / t o h o / z o h i / z e h o / z o h a / f a h a ) &post-word 
 
-FAhO <- &cmavo ( f a h o ) &post-word 
+FAhO <- &CMAVO ( f a h o ) &post-word 
 
-FEhE <- &cmavo ( f e h e ) &post-word 
+FEhE <- &CMAVO ( f e h e ) &post-word 
 
-FEhU <- &cmavo ( f e h u ) &post-word 
+FEhU <- &CMAVO ( f e h u ) &post-word 
 
-FIhO <- &cmavo ( f i h o ) &post-word 
+FIhO <- &CMAVO ( f i h o ) &post-word 
 
-FOI <- &cmavo ( f o i ) &post-word 
+FOI <- &CMAVO ( f o i ) &post-word 
 
-FUhA <- &cmavo ( f u h a ) &post-word 
+FUhA <- &CMAVO ( f u h a ) &post-word 
 
-FUhE <- &cmavo ( f u h e ) &post-word 
+FUhE <- &CMAVO ( f u h e ) &post-word 
 
-FUhO <- &cmavo ( f u h o ) &post-word 
+FUhO <- &CMAVO ( f u h o ) &post-word 
 
-GA <- &cmavo ( g e h i / g e / g o / g a / g u ) &post-word 
+GA <- &CMAVO ( g e h i / g e / g o / g a / g u ) &post-word 
 
-GAhO <- &cmavo ( k e h i / g a h o ) &post-word 
+GAhO <- &CMAVO ( k e h i / g a h o ) &post-word 
 
-GEhU <- &cmavo ( g e h u ) &post-word 
+GEhU <- &CMAVO ( g e h u ) &post-word 
 
-GI <- &cmavo ( g i ) &post-word 
+GI <- &CMAVO ( g i ) &post-word 
 
-GIhA <- &cmavo ( g i h e / g i h i / g i h o / g i h a / g i h u ) &post-word 
+GIhA <- &CMAVO ( g i h e / g i h i / g i h o / g i h a / g i h u ) &post-word 
 
-GOI <- &cmavo ( n o h u / n e / g o i / p o h u / p e / p o h e / p o ) &post-word 
+GOI <- &CMAVO ( n o h u / n e / g o i / p o h u / p e / p o h e / p o ) &post-word 
 
-GOhA <- &cmavo ( m o / n e i / g o h u / g o h o / g o h i / n o h a / g o h e / g o h a / d u / b u h a / b u h e / b u h i / c o h e ) &post-word 
+GOhA <- &CMAVO ( m o / n e i / g o h u / g o h o / g o h i / n o h a / g o h e / g o h a / d u / b u h a / b u h e / b u h i / c o h e ) &post-word 
 
-GUhA <- &cmavo ( g u h e / g u h i / g u h o / g u h a / g u h u ) &post-word 
+GUhA <- &CMAVO ( g u h e / g u h i / g u h o / g u h a / g u h u ) &post-word 
 
-I <- &cmavo ( i ) &post-word 
+I <- &CMAVO ( i ) &post-word 
 
-JA <- &cmavo ( j e h i / j e / j o / j a / j u ) &post-word 
+JA <- &CMAVO ( j e h i / j e / j o / j a / j u ) &post-word 
 
-JAI <- &cmavo ( j a i ) &post-word 
+JAI <- &CMAVO ( j a i ) &post-word 
 
-JOhI <- &cmavo ( j o h i ) &post-word 
+JOhI <- &CMAVO ( j o h i ) &post-word 
 
-JOI <- &cmavo ( f a h u / p i h u / j o i / c e h o / c e / j o h u / k u h a / j o h e / j u h e ) &post-word 
+JOI <- &CMAVO ( f a h u / p i h u / j o i / c e h o / c e / j o h u / k u h a / j o h e / j u h e ) &post-word 
 
-KE <- &cmavo ( k e ) &post-word 
+KE <- &CMAVO ( k e ) &post-word 
 
-KEhE <- &cmavo ( k e h e ) &post-word 
+KEhE <- &CMAVO ( k e h e ) &post-word 
 
-KEI <- &cmavo ( k e i ) &post-word 
+KEI <- &CMAVO ( k e i ) &post-word 
 
-KI <- &cmavo ( k i ) &post-word 
+KI <- &CMAVO ( k i ) &post-word 
 
-KOhA <- &cmavo ( d a h u / d a h e / d i h u / d i h e / d e h u / d e h e / d e i / d o h i / m i h o / m a h a / m i h a / d o h o / k o h a / f o h u / k o h e / k o h i / k o h o / k o h u / f o h a / f o h e / f o h i / f o h o / v o h a / v o h e / v o h i / v o h o / v o h u / r u / r i / r a / t a / t u / t i / z i h o / k e h a / m a / z u h i / z o h e / c e h u / d a / d e / d i / k o / m i / d o ) &post-word 
+KOhA <- &CMAVO ( d a h u / d a h e / d i h u / d i h e / d e h u / d e h e / d e i / d o h i / m i h o / m a h a / m i h a / d o h o / k o h a / f o h u / k o h e / k o h i / k o h o / k o h u / f o h a / f o h e / f o h i / f o h o / v o h a / v o h e / v o h i / v o h o / v o h u / r u / r i / r a / t a / t u / t i / z i h o / k e h a / m a / z u h i / z o h e / c e h u / d a / d e / d i / k o / m i / d o ) &post-word 
 
-KU <- &cmavo ( k u ) &post-word 
+KU <- &CMAVO ( k u ) &post-word 
 
-KUhE <- &cmavo ( k u h e ) &post-word 
+KUhE <- &CMAVO ( k u h e ) &post-word 
 
-KUhO <- &cmavo ( k u h o ) &post-word 
+KUhO <- &CMAVO ( k u h o ) &post-word 
 
-LA <- &cmavo ( l a i / l a h i / l a ) &post-word 
+LA <- &CMAVO ( l a i / l a h i / l a ) &post-word 
 
-LAU <- &cmavo ( c e h a / l a u / z a i / t a u ) &post-word 
+LAU <- &CMAVO ( c e h a / l a u / z a i / t a u ) &post-word 
 
-LAhE <- &cmavo ( t u h a / l u h a / l u h o / l a h e / v u h i / l u h i / l u h e ) &post-word 
+LAhE <- &CMAVO ( t u h a / l u h a / l u h o / l a h e / v u h i / l u h i / l u h e ) &post-word 
 
-LE <- &cmavo ( l e i / l o i / l e h i / l o h i / l e h e / l o h e / l o / l e ) &post-word 
+LE <- &CMAVO ( l e i / l o i / l e h i / l o h i / l e h e / l o h e / l o / l e ) &post-word 
 
-LEhU <- &cmavo ( l e h u ) &post-word 
+LEhU <- &CMAVO ( l e h u ) &post-word 
 
-LI <- &cmavo ( m e h o / l i ) &post-word 
+LI <- &CMAVO ( m e h o / l i ) &post-word 
 
-LIhU <- &cmavo ( l i h u ) &post-word 
+LIhU <- &CMAVO ( l i h u ) &post-word 
 
-LOhO <- &cmavo ( l o h o ) &post-word 
+LOhO <- &CMAVO ( l o h o ) &post-word 
 
-LOhU <- &cmavo ( l o h u ) &post-word 
+LOhU <- &CMAVO ( l o h u ) &post-word 
 
-LU <- &cmavo ( l u ) &post-word 
+LU <- &CMAVO ( l u ) &post-word 
 
-LUhU <- &cmavo ( l u h u ) &post-word 
+LUhU <- &CMAVO ( l u h u ) &post-word 
 
-MAhO <- &cmavo ( m a h o ) &post-word 
+MAhO <- &CMAVO ( m a h o ) &post-word 
 
-MAI <- &cmavo ( m o h o / m a i ) &post-word 
+MAI <- &CMAVO ( m o h o / m a i ) &post-word 
 
-ME <- &cmavo ( m e ) &post-word 
+ME <- &CMAVO ( m e ) &post-word 
 
-MEhU <- &cmavo ( m e h u ) &post-word 
+MEhU <- &CMAVO ( m e h u ) &post-word 
 
-MOhE <- &cmavo ( m o h e ) &post-word 
+MOhE <- &CMAVO ( m o h e ) &post-word 
 
-MOhI <- &cmavo ( m o h i ) &post-word 
+MOhI <- &CMAVO ( m o h i ) &post-word 
 
-MOI <- &cmavo ( m e i / m o i / s i h e / c u h o / v a h e ) &post-word 
+MOI <- &CMAVO ( m e i / m o i / s i h e / c u h o / v a h e ) &post-word 
 
-NA <- &cmavo ( j a h a / n a ) &post-word 
+NA <- &CMAVO ( j a h a / n a ) &post-word 
 
-NAI <- &cmavo ( n a i ) &post-word 
+NAI <- &CMAVO ( n a i ) &post-word 
 
-NAhE <- &cmavo ( t o h e / j e h a / n a h e / n o h e ) &post-word 
+NAhE <- &CMAVO ( t o h e / j e h a / n a h e / n o h e ) &post-word 
 
-NAhU <- &cmavo ( n a h u ) &post-word 
+NAhU <- &CMAVO ( n a h u ) &post-word 
 
-NIhE <- &cmavo ( n i h e ) &post-word 
+NIhE <- &CMAVO ( n i h e ) &post-word 
 
-NIhO <- &cmavo ( n i h o / n o h i ) &post-word 
+NIhO <- &CMAVO ( n i h o / n o h i ) &post-word 
 
-NOI <- &cmavo ( v o i / n o i / p o i ) &post-word 
+NOI <- &CMAVO ( v o i / n o i / p o i ) &post-word 
 
-NU <- &cmavo ( n i / d u h u / s i h o / n u / l i h i / k a / j e i / s u h u / z u h o / m u h e / p u h u / z a h i ) &post-word 
+NU <- &CMAVO ( n i / d u h u / s i h o / n u / l i h i / k a / j e i / s u h u / z u h o / m u h e / p u h u / z a h i ) &post-word 
 
-NUhA <- &cmavo ( n u h a ) &post-word 
+NUhA <- &CMAVO ( n u h a ) &post-word 
 
-NUhI <- &cmavo ( n u h i ) &post-word 
+NUhI <- &CMAVO ( n u h i ) &post-word 
 
-NUhU <- &cmavo ( n u h u ) &post-word 
+NUhU <- &CMAVO ( n u h u ) &post-word 
 
-PA <- &cmavo ( d a u / f e i / g a i / j a u / r e i / v a i / p i h e / p i / f i h u / z a h u / m e h i / n i h u / k i h o / c e h i / m a h u / r a h e / d a h a / s o h a / j i h i / s u h o / s u h e / r o / r a u / s o h u / s o h i / s o h e / s o h o / m o h a / d u h e / t e h o / k a h o / c i h i / t u h o / x o / p a i / n o h o / n o / p a / r e / c i / v o / m u / x a / z e / b i / s o / digit ) &post-word 
+PA <- &CMAVO ( d a u / f e i / g a i / j a u / r e i / v a i / p i h e / p i / f i h u / z a h u / m e h i / n i h u / k i h o / c e h i / m a h u / r a h e / d a h a / s o h a / j i h i / s u h o / s u h e / r o / r a u / s o h u / s o h i / s o h e / s o h o / m o h a / d u h e / t e h o / k a h o / c i h i / t u h o / x o / p a i / n o h o / n o / p a / r e / c i / v o / m u / x a / z e / b i / s o / digit ) &post-word 
 
-PEhE <- &cmavo ( p e h e ) &post-word 
+PEhE <- &CMAVO ( p e h e ) &post-word 
 
-PEhO <- &cmavo ( p e h o ) &post-word 
+PEhO <- &CMAVO ( p e h o ) &post-word 
 
-PU <- &cmavo ( b a / p u / c a ) &post-word 
+PU <- &CMAVO ( b a / p u / c a ) &post-word 
 
-RAhO <- &cmavo ( r a h o ) &post-word 
+RAhO <- &CMAVO ( r a h o ) &post-word 
 
-ROI <- &cmavo ( r e h u / r o i ) &post-word 
+ROI <- &CMAVO ( r e h u / r o i ) &post-word 
 
-SA <- &cmavo ( s a ) &post-word 
+SA <- &CMAVO ( s a ) &post-word 
 
-SE <- &cmavo ( s e / t e / v e / x e ) &post-word 
+SE <- &CMAVO ( s e / t e / v e / x e ) &post-word 
 
-SEI <- &cmavo ( s e i / t i h o ) &post-word 
+SEI <- &CMAVO ( s e i / t i h o ) &post-word 
 
-SEhU <- &cmavo ( s e h u ) &post-word 
+SEhU <- &CMAVO ( s e h u ) &post-word 
 
-SI <- &cmavo ( s i ) &post-word 
+SI <- &CMAVO ( s i ) &post-word 
 
-SOI <- &cmavo ( s o i ) &post-word 
+SOI <- &CMAVO ( s o i ) &post-word 
 
-SU <- &cmavo ( s u ) &post-word 
+SU <- &CMAVO ( s u ) &post-word 
 
-TAhE <- &cmavo ( r u h i / t a h e / d i h i / n a h o ) &post-word 
+TAhE <- &CMAVO ( r u h i / t a h e / d i h i / n a h o ) &post-word 
 
-TEhU <- &cmavo ( t e h u ) &post-word 
+TEhU <- &CMAVO ( t e h u ) &post-word 
 
-TEI <- &cmavo ( t e i ) &post-word 
+TEI <- &CMAVO ( t e i ) &post-word 
 
-TO <- &cmavo ( t o h i / t o ) &post-word 
+TO <- &CMAVO ( t o h i / t o ) &post-word 
 
-TOI <- &cmavo ( t o i ) &post-word 
+TOI <- &CMAVO ( t o i ) &post-word 
 
-TUhE <- &cmavo ( t u h e ) &post-word 
+TUhE <- &CMAVO ( t u h e ) &post-word 
 
-TUhU <- &cmavo ( t u h u ) &post-word 
+TUhU <- &CMAVO ( t u h u ) &post-word 
 
-UI <- &cmavo ( i h a / i e / a h e / u h i / i h o / i h e / a h a / i a / o h i / o h e / e h e / o i / u o / e h i / u h o / a u / u a / a h i / i h u / i i / u h a / u i / a h o / a i / a h u / i u / e i / o h o / e h a / u u / o h a / o h u / u h u / e h o / i o / e h u / u e / i h i / u h e / b a h a / j a h o / c a h e / s u h a / t i h e / k a h u / s e h o / z a h a / p e h i / r u h a / j u h a / t a h o / r a h u / l i h a / b a h u / m u h a / d o h a / t o h u / v a h i / p a h e / z u h u / s a h e / l a h a / k e h u / s a h u / d a h i / j e h u / s a h a / k a u / t a h u / n a h i / j o h a / b i h u / l i h o / p a u / m i h u / k u h i / j i h a / s i h a / p o h o / p e h a / r o h i / r o h e / r o h o / r o h u / r o h a / r e h e / l e h o / j u h o / f u h i / d a i / g a h i / z o h o / b e h u / r i h e / s e h i / s e h a / v u h e / k i h a / x u / g e h e / b u h o ) &post-word 
+UI <- &CMAVO ( i h a / i e / a h e / u h i / i h o / i h e / a h a / i a / o h i / o h e / e h e / o i / u o / e h i / u h o / a u / u a / a h i / i h u / i i / u h a / u i / a h o / a i / a h u / i u / e i / o h o / e h a / u u / o h a / o h u / u h u / e h o / i o / e h u / u e / i h i / u h e / b a h a / j a h o / c a h e / s u h a / t i h e / k a h u / s e h o / z a h a / p e h i / r u h a / j u h a / t a h o / r a h u / l i h a / b a h u / m u h a / d o h a / t o h u / v a h i / p a h e / z u h u / s a h e / l a h a / k e h u / s a h u / d a h i / j e h u / s a h a / k a u / t a h u / n a h i / j o h a / b i h u / l i h o / p a u / m i h u / k u h i / j i h a / s i h a / p o h o / p e h a / r o h i / r o h e / r o h o / r o h u / r o h a / r e h e / l e h o / j u h o / f u h i / d a i / g a h i / z o h o / b e h u / r i h e / s e h i / s e h a / v u h e / k i h a / x u / g e h e / b u h o ) &post-word 
 
-VA <- &cmavo ( v i / v a / v u ) &post-word 
+VA <- &CMAVO ( v i / v a / v u ) &post-word 
 
-VAU <- &cmavo ( v a u ) &post-word 
+VAU <- &CMAVO ( v a u ) &post-word 
 
-VEI <- &cmavo ( v e i ) &post-word 
+VEI <- &CMAVO ( v e i ) &post-word 
 
-VEhO <- &cmavo ( v e h o ) &post-word 
+VEhO <- &CMAVO ( v e h o ) &post-word 
 
-VUhU <- &cmavo ( g e h a / f u h u / p i h i / f e h i / v u h u / s u h i / j u h u / g e i / p a h i / f a h i / t e h a / c u h a / v a h a / n e h o / d e h o / f e h a / s a h o / r e h a / r i h o / s a h i / p i h a / s i h i ) &post-word 
+VUhU <- &CMAVO ( g e h a / f u h u / p i h i / f e h i / v u h u / s u h i / j u h u / g e i / p a h i / f a h i / t e h a / c u h a / v a h a / n e h o / d e h o / f e h a / s a h o / r e h a / r i h o / s a h i / p i h a / s i h i ) &post-word 
 
-VEhA <- &cmavo ( v e h u / v e h a / v e h i / v e h e ) &post-word 
+VEhA <- &CMAVO ( v e h u / v e h a / v e h i / v e h e ) &post-word 
 
-VIhA <- &cmavo ( v i h i / v i h a / v i h u / v i h e ) &post-word 
+VIhA <- &CMAVO ( v i h i / v i h a / v i h u / v i h e ) &post-word 
 
-VUhO <- &cmavo ( v u h o ) &post-word 
+VUhO <- &CMAVO ( v u h o ) &post-word 
 
-XI <- &cmavo ( x i ) &post-word 
+XI <- &CMAVO ( x i ) &post-word 
 
-Y <- &cmavo ( y+ ) &post-word 
+Y <- &CMAVO ( y+ ) &post-word 
 
-ZAhO <- &cmavo ( c o h i / p u h o / c o h u / m o h u / c a h o / c o h a / d e h a / b a h o / d i h a / z a h o ) &post-word 
+ZAhO <- &CMAVO ( c o h i / p u h o / c o h u / m o h u / c a h o / c o h a / d e h a / b a h o / d i h a / z a h o ) &post-word 
 
-ZEhA <- &cmavo ( z e h u / z e h a / z e h i / z e h e ) &post-word 
+ZEhA <- &CMAVO ( z e h u / z e h a / z e h i / z e h e ) &post-word 
 
-ZEI <- &cmavo ( z e i ) &post-word 
+ZEI <- &CMAVO ( z e i ) &post-word 
 
-ZI <- &cmavo ( z u / z a / z i ) &post-word 
+ZI <- &CMAVO ( z u / z a / z i ) &post-word 
 
-ZIhE <- &cmavo ( z i h e ) &post-word 
+ZIhE <- &CMAVO ( z i h e ) &post-word 
 
-ZO <- &cmavo ( z o ) &post-word 
+ZO <- &CMAVO ( z o ) &post-word 
 
-ZOI <- &cmavo ( z o i / l a h o ) &post-word 
+ZOI <- &CMAVO ( z o i / l a h o ) &post-word 
 
-ZOhU <- &cmavo ( z o h u ) &post-word 
+ZOhU <- &CMAVO ( z o h u ) &post-word 
