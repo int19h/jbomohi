@@ -1,5 +1,7 @@
 This is a version (not official) of the full grammar of Lojban. I intend to make many changes to it, some cosmetic, some not. Don't take the contents of this page too seriously for now. In ((zasni gerna cenba vreji)) I will try to keep a record of the changes as I make them. mi'e ((xorxes))
 
+
+
 ; --- GRAMMAR ---
 
 PUBLIC text <- intro-null NAI-clause* text-part-2 (!text-1 joik-jek)? text-1? faho-clause EOF?
@@ -7,13 +9,10 @@ PUBLIC text <- intro-null NAI-clause* text-part-2 (!text-1 joik-jek)? text-1? fa
 intro-null <- spaces? su-clause* intro-si-clause
 text-part-2 <- (CMENE-clause+ / indicators?) free*
 
-;; SPACE intro-sa-clause <- SA-clause+ / any-word-SA-handling !(ZEI-clause SA-clause) intro-sa-clause
 SPACE intro-si-clause <- si-clause? SI-clause*
 SPACE faho-clause <- (FAhO-clause dot-star)?
 
-; Please note that the "text-1" item in the text-1 production does
-; *not* match the BNF. This is due to a bug in the BNF.  The change
-; here was made to match grammar.300
+
 text-1 <- I-clause (jek / joik)? (stag? BO-clause)? free* text-1? / NIhO-clause+ free* su-clause* paragraphs? / paragraphs
 
 paragraphs <- paragraph (NIhO-clause+ free* su-clause* paragraphs)?
@@ -32,21 +31,11 @@ fragment <- prenex / terms VAU-clause? free* / ek free* / gihek free* / quantifi
 
 prenex <- terms ZOhU-clause free*
 
-;; sentence <- (terms CU-clause? free*)? bridi-tail / bridi-tail
-
-sentence <- (terms bridi-tail-sa* CU-clause? free*)? bridi-tail-sa* bridi-tail
-
-SPACE sentence-sa <- sentence-start (!sentence-start (sa-word / SA-clause !sentence-start ) )* SA-clause &text-1
-
-sentence-start <- I-pre / NIhO-pre
+sentence <- (terms CU-clause? free*)? bridi-tail / bridi-tail
 
 subsentence <- sentence / prenex subsentence
 
 bridi-tail <- bridi-tail-1 (gihek stag? KE-clause free* bridi-tail KEhE-clause? free* tail-terms)?
-
-SPACE bridi-tail-sa <- bridi-tail-start (term / !bridi-tail-start (sa-word / SA-clause !bridi-tail-start ) )* SA-clause &bridi-tail
-
-bridi-tail-start <- ME-clause / NUhA-clause / NU-clause / NA-clause !KU-clause / NAhE-clause !BO-clause / selbri / tag bridi-tail-start / KE-clause bridi-tail-start / bridi-tail
 
 bridi-tail-1 <- bridi-tail-2 (gihek !(stag? BO-clause) !(stag? KE-clause) free* bridi-tail-2 tail-terms)*
 
@@ -60,27 +49,11 @@ tail-terms <- terms? VAU-clause? free*
 
 terms <- terms-1+
 
-;; terms-1 <- terms-2 (PEhE-clause free* joik-jek terms-2)*
+terms-1 <- terms-2 (PEhE-clause free* joik-jek terms-2)*
 
-;; terms-2 <- term (CEhE-clause free* term)*
+terms-2 <- term (CEhE-clause free* term)*
 
-terms-1 <- terms-2 (pehe-sa* PEhE-clause free* joik-jek terms-2)*
-
-terms-2 <- term (cehe-sa* CEhE-clause free* term)*
-
-SPACE pehe-sa <- PEhE-clause (!PEhE-clause (sa-word / SA-clause !PEhE-clause))* SA-clause
-
-SPACE cehe-sa <- CEhE-clause (!CEhE-clause (sa-word / SA-clause !CEhE-clause))* SA-clause
-
-;;term <- sumti / ( !gek (tag / FA-clause free*) (sumti / KU-clause? free*) ) / termset / NA-clause KU-clause free*
-
-term <- term-sa* term-1
-
-term-1 <- sumti / ( !gek (tag / FA-clause free*) (sumti / KU-clause? free*) ) / termset / NA-clause KU-clause free*
-
-SPACE term-sa <- term-start (!term-start (sa-word / SA-clause !term-start ) )* SA-clause &term-1
-
-term-start <- term-1 / LA-clause / LE-clause / LI-clause / LU-clause / LAhE-clause / quantifier term-start / gek sumti gik / FA-clause / tag term-start
+term <- sumti / ( !gek (tag / FA-clause free*) (sumti / KU-clause? free*) ) / termset / NA-clause KU-clause free*
 
 termset <- gek-termset / NUhI-clause free* gek terms NUhU-clause? free* gik terms NUhU-clause? free* / NUhI-clause free* terms NUhU-clause? free*
 
@@ -110,15 +83,7 @@ sumti-tail-1 <- selbri relative-clauses? / quantifier selbri relative-clauses? /
 
 relative-clauses <- relative-clause (ZIhE-clause free* relative-clause)*
 
-;; relative-clause <- GOI-clause free* term GEhU-clause? free* / NOI-clause free* subsentence KUhO-clause? free*
-
-relative-clause <- relative-clause-sa* relative-clause-1
-
-SPACE relative-clause-sa <- relative-clause-start (!relative-clause-start (sa-word / SA-clause !relative-clause-start ) )* SA-clause &relative-clause-1
-
-relative-clause-1 <- GOI-clause free* term GEhU-clause? free* / NOI-clause free* subsentence KUhO-clause? free*
-
-relative-clause-start <- GOI-clause / NOI-clause
+relative-clause <- GOI-clause free* term GEhU-clause? free* / NOI-clause free* subsentence KUhO-clause? free*
 
 selbri <- tag? selbri-1
 
@@ -141,37 +106,13 @@ tanru-unit-1 <- tanru-unit-2 linkargs?
 ; ** zei is part of BRIVLA-clause
 tanru-unit-2 <- BRIVLA-clause free* / GOhA-clause RAhO-clause? free* / KE-clause free* selbri-3 KEhE-clause? free* / ME-clause free* (sumti / lerfu-string) MEhU-clause? free* MOI-clause? free* / (number / lerfu-string) MOI-clause free* / NUhA-clause free* mex-operator / SE-clause free* tanru-unit-2 / JAI-clause free* tag? tanru-unit-2 / NAhE-clause free* tanru-unit-2 / NU-clause NAI-clause? free* (joik-jek NU-clause NAI-clause? free*)* subsentence KEI-clause? free*
 
-;; linkargs <- BE-clause free* term links? BEhO-clause? free*
+linkargs <- BE-clause free* term links? BEhO-clause? free*
 
-linkargs <- linkargs-sa* linkargs-1
-
-linkargs-1 <- BE-clause free* term links? BEhO-clause? free*
-
-SPACE linkargs-sa <- linkargs-start (!linkargs-start (sa-word / SA-clause !linkargs-start ) )* SA-clause &linkargs-1
-
-linkargs-start <- BE-clause
-
-;; links <- BEI-clause free* term links?
-
-links <- links-sa* links-1
-
-links-1 <- BEI-clause free* term links?
-
-SPACE links-sa <- links-start (!links-start (sa-word / SA-clause !links-start ) )* SA-clause &links-1
-
-links-start <- BEI-clause
+links <- BEI-clause free* term links?
 
 quantifier <- number !MOI-clause BOI-clause? free* / VEI-clause free* mex VEhO-clause? free*
 
-;;mex <- mex-1 (operator mex-1)* / rp-clause
-
-mex <- mex-sa* mex-0
-
-mex-0 <- mex-1 (operator mex-1)* / rp-clause
-
-SPACE mex-sa <- mex-start (!mex-start (sa-word / SA-clause !mex-start) )* SA-clause &mex-0
-
-mex-start <- FUhA-clause / PEhO-clause / operand-start
+mex <- mex-1 (operator mex-1)* / rp-clause
 
 rp-clause <- FUhA-clause free* rp-expression
 
@@ -193,15 +134,7 @@ fore-operands <- mex-2+
 rp-expression <- operand rp-expression-tail
 rp-expression-tail <- rp-expression operator rp-expression-tail / ()
 
-;; operator <- operator-1 (joik-jek operator-1 / joik stag? KE-clause free* operator KEhE-clause? free*)*
-
-operator <- operator-sa* operator-0
-
-operator-0 <- operator-1 (joik-jek operator-1 / joik stag? KE-clause free* operator KEhE-clause? free*)*
-
-SPACE operator-sa <- operator-start (!operator-start (sa-word / SA-clause !operator-start) )* SA-clause &operator-0
-
-operator-start <- guhek / KE-clause / SE-clause? NAhE-clause / SE-clause? MAhO-clause / SE-clause? VUhU-clause
+operator <- operator-1 (joik-jek operator-1 / joik stag? KE-clause free* operator KEhE-clause? free*)*
 
 operator-1 <- operator-2 / guhek operator-1 gik operator-2 / operator-2 (jek / joik) stag? BO-clause free* operator-1
 
@@ -209,15 +142,7 @@ operator-2 <- mex-operator / KE-clause free* operator KEhE-clause? free*
 
 mex-operator <- SE-clause free* mex-operator / NAhE-clause free* mex-operator / MAhO-clause free* mex TEhU-clause? free* / NAhU-clause free* selbri TEhU-clause? free* / VUhU-clause free*
 
-;; operand <- operand-1 (joik-ek stag? KE-clause free* operand KEhE-clause? free*)?
-
-operand <- operand-sa* operand-0
-
-operand-0 <- operand-1 (joik-ek stag? KE-clause free* operand KEhE-clause? free*)?
-
-SPACE operand-sa <- operand-start (!operand-start (sa-word / SA-clause !operand-start) )* SA-clause &operand-0
-
-operand-start <- quantifier / lerfu-word / NIhE-clause / MOhE-clause / JOhI-clause / gek / LAhE-clause / NAhE-clause
+operand <- operand-1 (joik-ek stag? KE-clause free* operand KEhE-clause? free*)?
 
 operand-1 <- operand-2 (joik-ek operand-2)*
 
@@ -234,12 +159,7 @@ lerfu-word <- BY-clause / LAU-clause lerfu-word / TEI-clause lerfu-string FOI-cl
 
 ek <- NA-clause? SE-clause? A-clause NAI-clause?
 
-;; gihek <- NA-clause? SE-clause? GIhA-clause NAI-clause?
-gihek <- gihek-sa* gihek-1
-
-gihek-1 <- NA-clause? SE-clause? GIhA-clause NAI-clause?
-
-SPACE gihek-sa <- gihek-1 (!gihek-1 (sa-word / SA-clause !gihek-1 ) )* SA-clause &gihek
+gihek <- NA-clause? SE-clause? GIhA-clause NAI-clause?
 
 jek <- NA-clause? SE-clause? JA-clause NAI-clause?
 
@@ -247,12 +167,7 @@ joik <- SE-clause? JOI-clause NAI-clause? / interval / GAhO-clause interval GAhO
 
 interval <- SE-clause? BIhI-clause NAI-clause?
 
-;; joik-ek <- joik free* / ek free*
-joik-ek <- joik-ek-sa* joik-ek-1
-
-joik-ek-1 <- (joik free* / ek free*)
-
-SPACE joik-ek-sa <- joik-ek-1 (!joik-ek-1 (sa-word / SA-clause !joik-ek-1 ) )* SA-clause &joik-ek
+joik-ek <- joik free* / ek free*
 
 joik-jek <- joik free* / jek free*
 
@@ -264,7 +179,7 @@ gik <- GI-clause NAI-clause? free*
 
 tag <- tense-modal (joik-jek tense-modal)*
 
-;stag <- simple-tense-modal ((jek / joik) simple-tense-modal)*
+;;stag <- simple-tense-modal ((jek / joik) simple-tense-modal)*
 stag <- simple-tense-modal ((jek / joik) simple-tense-modal)* / tense-modal (joik-jek tense-modal)*
 
 tense-modal <- simple-tense-modal free* / FIhO-clause free* selbri FEhU-clause? free*
@@ -312,16 +227,11 @@ zei-tail <- (ZEI-clause any-word)+
 bu-tail <- BU-clause+
 
 pre-zei-bu <- (!BU-clause !ZEI-clause !SI-clause !SA-clause !SU-clause !FAhO-clause any-word-SA-handling) si-clause?
+
 ; LOhU-pre / ZO-pre / ZOI-pre / !ZEI-clause !BU-clause !FAhO-clause !SI-clause !SA-clause !SU-clause any-word-SA-handling si-clause?
+
 pre-zei-bu-no-SA <- LOhU-pre / ZO-pre / ZOI-pre / !ZEI-clause !BU-clause !FAhO-clause !SI-clause !SA-clause !SU-clause any-word si-clause?
 
-; -- General Morphology Issues
-;
-; 1.  Spaces (including '.y') and UI are eaten *after* a word.
-;
-; 3.  BAhE is eaten *before* a word.
-
-; Handling of what can go after a cmavo
 post-clause <- spaces? si-clause? !ZEI-clause !BU-clause indicators*
 
 pre-clause <- BAhE-clause?
@@ -330,14 +240,7 @@ any-word-SA-handling <- BRIVLA-pre / known-cmavo-SA / CMAVO-pre / CMENE-pre
 
 known-cmavo-SA <- A-pre / BAI-pre / BAhE-pre / BE-pre / BEI-pre / BEhO-pre / BIhE-pre / BIhI-pre / BO-pre / BOI-pre / BU-pre / BY-pre / CAI-pre / CAhA-pre / CEI-pre / CEhE-pre / CO-pre / COI-pre / CU-pre / CUhE-pre / DAhO-pre / DOI-pre / DOhU-pre / FA-pre / FAhA-pre / FEhE-pre / FEhU-pre / FIhO-pre / FOI-pre / FUhA-pre / FUhE-pre / FUhO-pre / GA-pre / GAhO-pre / GEhU-pre / GI-pre / GIhA-pre / GOI-pre / GOhA-pre / GUhA-pre / I-pre / JA-pre / JAI-pre / JOI-pre / JOhI-pre / KE-pre / KEI-pre / KEhE-pre / KI-pre / KOhA-pre / KU-pre / KUhE-pre / KUhO-pre / LA-pre / LAU-pre / LAhE-pre / LE-pre / LEhU-pre / LI-pre / LIhU-pre / LOhO-pre / LOhU-pre / LU-pre / LUhU-pre / MAI-pre / MAhO-pre / ME-pre / MEhU-pre / MOI-pre / MOhE-pre / MOhI-pre / NA-pre / NAI-pre / NAhE-pre / NAhU-pre / NIhE-pre / NIhO-pre / NOI-pre / NU-pre / NUhA-pre / NUhI-pre / NUhU-pre / PA-pre / PEhE-pre / PEhO-pre / PU-pre / RAhO-pre / ROI-pre / SA-pre / SE-pre / SEI-pre / SEhU-pre / SI-clause / SOI-pre / SU-pre / TAhE-pre / TEI-pre / TEhU-pre / TO-pre / TOI-pre / TUhE-pre / TUhU-pre / UI-pre / VA-pre / VAU-pre / VEI-pre / VEhA-pre / VEhO-pre / VIhA-pre / VUhO-pre / VUhU-pre / XI-pre / ZAhO-pre / ZEI-pre / ZEhA-pre / ZI-pre / ZIhE-pre / ZO-pre / ZOI-pre / ZOhU-pre
 
-; Handling of spaces and things like spaces.
-; --- SPACE ---
-; Do *NOT* delete the line above!
-
-; SU clauses
 su-clause <- (erasable-clause / su-word)* SU-clause
-
-; Handling of SI and interactions with zo and lo'u...le'u
 
 si-clause <- ((erasable-clause / si-word / SA-clause) si-clause? SI-clause)+
 
@@ -350,83 +253,68 @@ si-word <- pre-zei-bu
 su-word <- !NIhO-clause !LU-clause !TUhE-clause !TO-clause !SU-clause !FAhO-clause any-word-SA-handling
 
 ; --- SELMAHO ---
-; Do *NOT* delete the line above!
 
 BRIVLA-clause <- BRIVLA-pre BRIVLA-post / zei-clause
 BRIVLA-pre <- pre-clause BRIVLA spaces?
 BRIVLA-post <- post-clause
-SPACE BRIVLA-no-SA-handling <- pre-clause BRIVLA post-clause / zei-clause-no-SA
 
 CMENE-clause <- CMENE-pre CMENE-post
 CMENE-pre <- pre-clause CMENE spaces?
 CMENE-post <- post-clause
-SPACE CMENE-no-SA-handling <- pre-clause CMENE post-clause
 
 CMAVO-clause <- CMAVO-pre CMAVO-post
 CMAVO-pre <- pre-clause CMAVO spaces?
 CMAVO-post <- post-clause
-SPACE CMAVO-no-SA-handling <- pre-clause CMAVO post-clause
 
 ;         eks; basic afterthought logical connectives 
 A-clause <- A-pre A-post
 A-pre <- pre-clause A spaces?
 A-post <- post-clause
-SPACE A-no-SA-handling <- pre-clause A post-clause
-
 
 ;         modal operators 
 BAI-clause <- BAI-pre BAI-post
 BAI-pre <- pre-clause BAI spaces?
 BAI-post <- post-clause
-SPACE BAI-no-SA-handling <- pre-clause BAI post-clause
 
 ;         next word intensifier 
 BAhE-clause <- (BAhE-pre BAhE-post)+
 BAhE-pre <- BAhE spaces?
 BAhE-post <- si-clause? !ZEI-clause !BU-clause
-SPACE BAhE-no-SA-handling <- BAhE spaces? BAhE-post
 
 ;         sumti link to attach sumti to a selbri 
 BE-clause <- BE-pre BE-post
 BE-pre <- pre-clause BE spaces?
 BE-post <- post-clause
-SPACE BE-no-SA-handling <- pre-clause BE post-clause
 
 ;         multiple sumti separator between BE, BEI 
 BEI-clause <- BEI-pre BEI-post
 BEI-pre <- pre-clause BEI spaces?
 BEI-post <- post-clause
-SPACE BEI-no-SA-handling <- pre-clause BEI post-clause
 
 ;         terminates BEBEI specified descriptors 
 BEhO-clause <- BEhO-pre BEhO-post
 BEhO-pre <- pre-clause BEhO spaces?
 BEhO-post <- post-clause
-SPACE BEhO-no-SA-handling <- pre-clause BEhO post-clause
 
 ;         prefix for high-priority MEX operator 
 BIhE-clause <- BIhE-pre BIhE-post
 BIhE-pre <- pre-clause BIhE spaces?
 BIhE-post <- post-clause
-SPACE BIhE-no-SA-handling <- pre-clause BIhE post-clause
 
 ;         interval component of JOI 
 BIhI-clause <- BIhI-pre BIhI-post
 BIhI-pre <- pre-clause BIhI spaces?
 BIhI-post <- post-clause
-SPACE BIhI-no-SA-handling <- pre-clause BIhI post-clause
 
 ;         joins two units with shortest scope 
 BO-clause <- BO-pre BO-post
 BO-pre <- pre-clause BO spaces?
 BO-post <- post-clause
-SPACE BO-no-SA-handling <- pre-clause BO post-clause
 
 ;         number or lerfu-string terminator 
 BOI-clause <- BOI-pre BOI-post
 BOI-pre <- pre-clause BOI spaces?
 BOI-post <- post-clause
-SPACE BOI-no-SA-handling <- pre-clause BOI post-clause
 
 ;         turns any word into a BY lerfu word 
 BU-clause <- BU-pre BU-post
@@ -434,103 +322,82 @@ BU-clause-no-SA <- BU-pre-no-SA BU BU-post
 BU-pre <- pre-clause BU spaces?
 BU-pre-no-SA <- pre-clause
 BU-post <- spaces?
-SPACE BU-no-SA-handling <- pre-clause BU spaces?
 
 ;         individual lerfu words 
 BY-clause <- BY-pre BY-post / bu-clause
 BY-pre <- pre-clause BY spaces?
 BY-post <- post-clause
-SPACE BY-no-SA-handling <- pre-clause BY post-clause / bu-clause-no-SA
 
 
 ;         specifies actualitypotentiality of tense 
 CAhA-clause <- CAhA-pre CAhA-post
 CAhA-pre <- pre-clause CAhA spaces?
 CAhA-post <- post-clause
-SPACE CAhA-no-SA-handling <- pre-clause CAhA post-clause
 
 ;         afterthought intensity marker 
 CAI-clause <- CAI-pre CAI-post
 CAI-pre <- pre-clause CAI spaces?
 CAI-post <- post-clause
-SPACE CAI-no-SA-handling <- pre-clause CAI post-clause
 
 ;         pro-bridi assignment operator 
 CEI-clause <- CEI-pre CEI-post
 CEI-pre <- pre-clause CEI spaces?
 CEI-post <- post-clause
-SPACE CEI-no-SA-handling <- pre-clause CEI post-clause
 
 ;         afterthought term list connective 
 CEhE-clause <- CEhE-pre CEhE-post
 CEhE-pre <- pre-clause CEhE spaces?
 CEhE-post <- post-clause
-SPACE CEhE-no-SA-handling <- pre-clause CEhE post-clause
 
-;         names; require consonant end, then pause no
 
-;                                    LA or DOI selma'o embedded, pause before if
-
-;                                    vowel initial and preceded by a vowel 
-
-;         tanru inversion  
 CO-clause <- CO-pre CO-post
 CO-pre <- pre-clause CO spaces?
 CO-post <- post-clause
-SPACE CO-no-SA-handling <- pre-clause CO post-clause
+
+
 COI-clause <- COI-pre COI-post
 COI-pre <- pre-clause COI spaces?
 COI-post <- post-clause
-SPACE COI-no-SA-handling <- pre-clause COI post-clause
+
 
 ;         vocative marker permitted inside names; must
-
 ;                                    always be followed by pause or DOI 
 
 ;         separator between head sumti and selbri 
 CU-clause <- CU-pre CU-post
 CU-pre <- pre-clause CU spaces?
 CU-post <- post-clause
-SPACE CU-no-SA-handling <- pre-clause CU post-clause
 
 ;         tensemodal question 
 CUhE-clause <- CUhE-pre CUhE-post
 CUhE-pre <- pre-clause CUhE spaces?
 CUhE-post <- post-clause
-SPACE CUhE-no-SA-handling <- pre-clause CUhE post-clause
-
 
 ;         cancel anaphoracataphora assignments 
 DAhO-clause <- DAhO-pre DAhO-post
 DAhO-pre <- pre-clause DAhO spaces?
 DAhO-post <- post-clause
-SPACE DAhO-no-SA-handling <- pre-clause DAhO post-clause
 
 ;         vocative marker 
 DOI-clause <- DOI-pre DOI-post
 DOI-pre <- pre-clause DOI spaces?
 DOI-post <- post-clause
-SPACE DOI-no-SA-handling <- pre-clause DOI post-clause
 
 ;         terminator for DOI-marked vocatives 
 DOhU-clause <- DOhU-pre DOhU-post
 DOhU-pre <- pre-clause DOhU spaces?
 DOhU-post <- post-clause
-SPACE DOhU-no-SA-handling <- pre-clause DOhU post-clause
 
 
 ;         modifier head generic case tag 
 FA-clause <- FA-pre FA-post
 FA-pre <- pre-clause FA spaces?
 FA-post <- post-clause
-SPACE FA-no-SA-handling <- pre-clause FA post-clause
 
 ;         superdirections in space 
 FAhA-clause <- FAhA-pre FAhA-post
 FAhA-pre <- pre-clause FAhA spaces?
 FAhA-post <- post-clause
-SPACE FAhA-no-SA-handling <- pre-clause FAhA post-clause
-
 
 ;         normally elided 'done pause' to indicate end
 ;                                    of utterance string 
@@ -541,199 +408,161 @@ FAhO-clause <- pre-clause FAhO spaces?
 FEhE-clause <- FEhE-pre FEhE-post
 FEhE-pre <- pre-clause FEhE spaces?
 FEhE-post <- post-clause
-SPACE FEhE-no-SA-handling <- pre-clause FEhE post-clause
 
 ;         ends bridi to modal conversion 
 FEhU-clause <- FEhU-pre FEhU-post
 FEhU-pre <- pre-clause FEhU spaces?
 FEhU-post <- post-clause
-SPACE FEhU-no-SA-handling <- pre-clause FEhU post-clause
 
 ;         marks bridi to modal conversion 
 FIhO-clause <- FIhO-pre FIhO-post
 FIhO-pre <- pre-clause FIhO spaces?
 FIhO-post <- post-clause
-SPACE FIhO-no-SA-handling <- pre-clause FIhO post-clause
 
 ;         end compound lerfu 
 FOI-clause <- FOI-pre FOI-post
 FOI-pre <- pre-clause FOI spaces?
 FOI-post <- post-clause
-SPACE FOI-no-SA-handling <- pre-clause FOI post-clause
 
 ;         reverse Polish flag 
 FUhA-clause <- FUhA-pre FUhA-post
 FUhA-pre <- pre-clause FUhA spaces?
 FUhA-post <- post-clause
-SPACE FUhA-no-SA-handling <- pre-clause FUhA post-clause
 
 ;         open long scope for indicator 
 FUhE-clause <- FUhE-pre FUhE-post
 FUhE-pre <- pre-clause FUhE spaces?
 FUhE-post <- !BU-clause spaces? !ZEI-clause !BU-clause
-SPACE FUhE-no-SA-handling <- pre-clause FUhE post-clause
 
 ;         close long scope for indicator 
 FUhO-clause <- FUhO-pre FUhO-post
 FUhO-pre <- pre-clause FUhO spaces?
 FUhO-post <- post-clause
-SPACE FUhO-no-SA-handling <- pre-clause FUhO post-clause
-
 
 ;         geks; forethought logical connectives 
 GA-clause <- GA-pre GA-post
 GA-pre <- pre-clause GA spaces?
 GA-post <- post-clause
-SPACE GA-no-SA-handling <- pre-clause GA post-clause
 
 ;         openclosed interval markers for BIhI 
 GAhO-clause <- GAhO-pre GAhO-post
 GAhO-pre <- pre-clause GAhO spaces?
 GAhO-post <- post-clause
-SPACE GAhO-no-SA-handling <- pre-clause GAhO post-clause
 
 ;         marker ending GOI relative clauses 
 GEhU-clause <- GEhU-pre GEhU-post
 GEhU-pre <- pre-clause GEhU spaces?
 GEhU-post <- post-clause
-SPACE GEhU-no-SA-handling <- pre-clause GEhU post-clause
 
 ;         forethought medial marker 
 GI-clause <- GI-pre GI-post
 GI-pre <- pre-clause GI spaces?
 GI-post <- post-clause
-SPACE GI-no-SA-handling <- pre-clause GI post-clause
 
 ;         logical connectives for bridi-tails 
 GIhA-clause <- GIhA-pre GIhA-post
 GIhA-pre <- pre-clause GIhA spaces?
 GIhA-post <- post-clause
-SPACE GIhA-no-SA-handling <- pre-clause GIhA post-clause
 
 ;         attaches a sumti modifier to a sumti 
 GOI-clause <- GOI-pre GOI-post
 GOI-pre <- pre-clause GOI spaces?
 GOI-post <- post-clause
-SPACE GOI-no-SA-handling <- pre-clause GOI post-clause
 
 ;         pro-bridi 
 GOhA-clause <- GOhA-pre GOhA-post
 GOhA-pre <- pre-clause GOhA spaces?
 GOhA-post <- post-clause
-SPACE GOhA-no-SA-handling <- pre-clause GOhA post-clause
 
 ;         GEK for tanru units, corresponds to JEKs 
 GUhA-clause <- GUhA-pre GUhA-post
 GUhA-pre <- pre-clause GUhA spaces?
 GUhA-post <- post-clause
-SPACE GUhA-no-SA-handling <- pre-clause GUhA post-clause
-
 
 ;         sentence link 
-I-clause <- sentence-sa* I-pre I-post
+I-clause <- I-pre I-post
 I-pre <- pre-clause I spaces?
 I-post <- post-clause
-SPACE I-no-SA-handling <- pre-clause I post-clause
-
 
 ;         jeks; logical connectives within tanru 
 JA-clause <- JA-pre JA-post
 JA-pre <- pre-clause JA spaces?
 JA-post <- post-clause
-SPACE JA-no-SA-handling <- pre-clause JA post-clause
 
 ;         modal conversion flag 
 JAI-clause <- JAI-pre JAI-post
 JAI-pre <- pre-clause JAI spaces?
 JAI-post <- post-clause
-SPACE JAI-no-SA-handling <- pre-clause JAI post-clause
 
 ;         flags an array operand 
 JOhI-clause <- JOhI-pre JOhI-post
 JOhI-pre <- pre-clause JOhI spaces?
 JOhI-post <- post-clause
-SPACE JOhI-no-SA-handling <- pre-clause JOhI post-clause
 
 ;         non-logical connectives 
 JOI-clause <- JOI-pre JOI-post
 JOI-pre <- pre-clause JOI spaces?
 JOI-post <- post-clause
-SPACE JOI-no-SA-handling <- pre-clause JOI post-clause
-
 
 ;         left long scope marker 
 KE-clause <- KE-pre KE-post
 KE-pre <- pre-clause KE spaces?
 KE-post <- post-clause
-SPACE KE-no-SA-handling <- pre-clause KE post-clause
 
 ;         right terminator for KE groups 
 KEhE-clause <- KEhE-pre KEhE-post
 KEhE-pre <- pre-clause KEhE spaces?
 KEhE-post <- post-clause
-SPACE KEhE-no-SA-handling <- pre-clause KEhE post-clause
 
 ;         right terminator, NU abstractions 
 KEI-clause <- KEI-pre KEI-post
 KEI-pre <- pre-clause KEI spaces?
 KEI-post <- post-clause
-SPACE KEI-no-SA-handling <- pre-clause KEI post-clause
 
 ;         multiple utterance scope for tenses 
 KI-clause <- KI-pre KI-post
 KI-pre <- pre-clause KI spaces?
 KI-post <- post-clause
-SPACE KI-no-SA-handling <- pre-clause KI post-clause
 
 ;         sumti anaphora 
 KOhA-clause <- KOhA-pre KOhA-post
 KOhA-pre <- pre-clause KOhA spaces?
 KOhA-post <- post-clause
-SPACE KOhA-no-SA-handling <- pre-clause KOhA spaces?
 
 ;         right terminator for descriptions, etc. 
 KU-clause <- KU-pre KU-post
 KU-pre <- pre-clause KU spaces?
 KU-post <- post-clause
-SPACE KU-no-SA-handling <- pre-clause KU post-clause
 
 ;         MEX forethought delimiter 
 KUhE-clause <- KUhE-pre KUhE-post
 KUhE-pre <- pre-clause KUhE spaces?
 KUhE-post <- post-clause
-SPACE KUhE-no-SA-handling <- pre-clause KUhE post-clause
 
 ;         right terminator, NOI relative clauses 
 KUhO-clause <- KUhO-pre KUhO-post
 KUhO-pre <- pre-clause KUhO spaces?
 KUhO-post <- post-clause
-SPACE KUhO-no-SA-handling <- pre-clause KUhO post-clause
-
 
 ;         name descriptors 
 LA-clause <- LA-pre LA-post
 LA-pre <- pre-clause LA spaces?
 LA-post <- post-clause
-SPACE LA-no-SA-handling <- pre-clause LA post-clause
 
 ;         lerfu prefixes 
 LAU-clause <- LAU-pre LAU-post
 LAU-pre <- pre-clause LAU spaces?
 LAU-post <- post-clause
-SPACE LAU-no-SA-handling <- pre-clause LAU post-clause
 
 ;         sumti qualifiers 
 LAhE-clause <- LAhE-pre LAhE-post
 LAhE-pre <- pre-clause LAhE spaces?
 LAhE-post <- post-clause
-SPACE LAhE-no-SA-handling <- pre-clause LAhE post-clause
 
 ;         sumti descriptors 
 LE-clause <- LE-pre LE-post
 LE-pre <- pre-clause LE spaces?
 LE-post <- post-clause
-SPACE LE-no-SA-handling <- pre-clause LE post-clause
-
 
 ;         possibly ungrammatical text right quote 
 LEhU-clause <- LEhU-pre LEhU-post
@@ -741,191 +570,156 @@ LEhU-pre <- pre-clause LEhU spaces?
 LEhU-post <- spaces?
 LEhU-clause-no-SA <- LEhU-pre-no-SA LEhU-post
 LEhU-pre-no-SA <- pre-clause LEhU spaces?
-SPACE LEhU-no-SA-handling <- pre-clause LEhU post-clause
 
 ;         convert number to sumti 
 LI-clause <- LI-pre LI-post
 LI-pre <- pre-clause LI spaces?
 LI-post <- post-clause
-SPACE LI-no-SA-handling <- pre-clause LI post-clause
 
 ;         grammatical text right quote 
 LIhU-clause <- LIhU-pre LIhU-post
 LIhU-pre <- pre-clause LIhU spaces?
 LIhU-post <- post-clause
-SPACE LIhU-no-SA-handling <- pre-clause LIhU post-clause
 
 ;         elidable terminator for LI 
 LOhO-clause <- LOhO-pre LOhO-post
 LOhO-pre <- pre-clause LOhO spaces?
 LOhO-post <- post-clause
-SPACE LOhO-no-SA-handling <- pre-clause LOhO post-clause
 
 ;         possibly ungrammatical text left quote 
 LOhU-clause <- LOhU-pre LOhU-post
 LOhU-pre <- pre-clause LOhU spaces? (!LEhU any-word)* LEhU-clause spaces?
 LOhU-post <- post-clause
-SPACE LOhU-no-SA-handling <- pre-clause LOhU spaces? (!LEhU any-word)* LEhU-clause spaces?
 
 ;         grammatical text left quote 
 LU-clause <- LU-pre LU-post
 LU-pre <- pre-clause LU spaces?
 LU-post <- post-clause
-SPACE LU-no-SA-handling <- pre-clause LU post-clause
 
 ;         LAhE close delimiter 
 LUhU-clause <- LUhU-pre LUhU-post
 LUhU-pre <- pre-clause LUhU spaces?
 LUhU-post <- post-clause
-SPACE LUhU-no-SA-handling <- pre-clause LUhU post-clause
-
 
 ;         change MEX expressions to MEX operators 
 MAhO-clause <- MAhO-pre MAhO-post
 MAhO-pre <- pre-clause MAhO spaces?
 MAhO-post <- post-clause
-SPACE MAhO-no-SA-handling <- pre-clause MAhO post-clause
 
 ;         change numbers to utterance ordinals 
 MAI-clause <- MAI-pre MAI-post
 MAI-pre <- pre-clause MAI spaces?
 MAI-post <- post-clause
-SPACE MAI-no-SA-handling <- pre-clause MAI post-clause
 
 ;         converts a sumti into a tanru_unit 
 ME-clause <- ME-pre ME-post
 ME-pre <- pre-clause ME spaces?
 ME-post <- post-clause
-SPACE ME-no-SA-handling <- pre-clause ME post-clause
 
 ;         terminator for ME 
 MEhU-clause <- MEhU-pre MEhU-post
 MEhU-pre <- pre-clause MEhU spaces?
 MEhU-post <- post-clause
-SPACE MEhU-no-SA-handling <- pre-clause MEhU post-clause
 
 ;         change sumti to operand, inverse of LI 
 MOhE-clause <- MOhE-pre MOhE-post
 MOhE-pre <- pre-clause MOhE spaces?
 MOhE-post <- post-clause
-SPACE MOhE-no-SA-handling <- pre-clause MOhE post-clause
 
 ;         motion tense marker 
 MOhI-clause <- MOhI-pre MOhI-post
 MOhI-pre <- pre-clause MOhI spaces?
 MOhI-post <- post-clause
-SPACE MOhI-no-SA-handling <- pre-clause MOhI post-clause
 
 ;         change number to selbri 
 MOI-clause <- MOI-pre MOI-post
 MOI-pre <- pre-clause MOI spaces?
 MOI-post <- post-clause
-SPACE MOI-no-SA-handling <- pre-clause MOI post-clause
-
 
 ;         bridi negation  
 NA-clause <- NA-pre NA-post
 NA-pre <- pre-clause NA spaces?
 NA-post <- post-clause
-SPACE NA-no-SA-handling <- pre-clause NA post-clause
 
 ;         attached to words to negate them 
 NAI-clause <- NAI-pre NAI-post
 NAI-pre <- pre-clause NAI spaces?
 NAI-post <- post-clause
-SPACE NAI-no-SA-handling <- pre-clause NAI post-clause
 
 ;         scalar negation  
 NAhE-clause <- NAhE-pre NAhE-post
 NAhE-pre <- pre-clause NAhE spaces?
 NAhE-post <- post-clause
-SPACE NAhE-no-SA-handling <- pre-clause NAhE post-clause
 
 ;         change a selbri into an operator 
 NAhU-clause <- NAhU-pre NAhU-post
 NAhU-pre <- pre-clause NAhU spaces?
 NAhU-post <- post-clause
-SPACE NAhU-no-SA-handling <- pre-clause NAhU post-clause
 
 ;         change selbri to operand; inverse of MOI 
 NIhE-clause <- NIhE-pre NIhE-post
 NIhE-pre <- pre-clause NIhE spaces?
 NIhE-post <- post-clause
-SPACE NIhE-no-SA-handling <- pre-clause NIhE post-clause
 
 ;         new paragraph; change of subject 
-NIhO-clause <- sentence-sa* NIhO-pre NIhO-post
+NIhO-clause <- NIhO-pre NIhO-post
 NIhO-pre <- pre-clause NIhO spaces?
 NIhO-post <- su-clause* post-clause
-SPACE NIhO-no-SA-handling <- pre-clause NIhO su-clause* post-clause
 
 ;         attaches a subordinate clause to a sumti 
 NOI-clause <- NOI-pre NOI-post
 NOI-pre <- pre-clause NOI spaces?
 NOI-post <- post-clause
-SPACE NOI-no-SA-handling <- pre-clause NOI post-clause
 
 ;         abstraction  
 NU-clause <- NU-pre NU-post
 NU-pre <- pre-clause NU spaces?
 NU-post <- post-clause
-SPACE NU-no-SA-handling <- pre-clause NU post-clause
 
 ;         change operator to selbri; inverse of MOhE 
 NUhA-clause <- NUhA-pre NUhA-post
 NUhA-pre <- pre-clause NUhA spaces?
 NUhA-post <- post-clause
-SPACE NUhA-no-SA-handling <- pre-clause NUhA post-clause
 
 ;         marks the start of a termset 
 NUhI-clause <- NUhI-pre NUhI-post
 NUhI-pre <- pre-clause NUhI spaces?
 NUhI-post <- post-clause
-SPACE NUhI-no-SA-handling <- pre-clause NUhI post-clause
 
 ;         marks the middle and end of a termset 
 NUhU-clause <- NUhU-pre NUhU-post
 NUhU-pre <- pre-clause NUhU spaces?
 NUhU-post <- post-clause
-SPACE NUhU-no-SA-handling <- pre-clause NUhU post-clause
-
 
 ;         numbers and numeric punctuation 
 PA-clause <- PA-pre PA-post
 PA-pre <- pre-clause PA spaces?
 PA-post <- post-clause
-SPACE PA-no-SA-handling <- pre-clause PA post-clause
 
 ;         afterthought termset connective prefix 
 PEhE-clause <- PEhE-pre PEhE-post
 PEhE-pre <- pre-clause PEhE spaces?
 PEhE-post <- post-clause
-SPACE PEhE-no-SA-handling <- pre-clause PEhE post-clause
 
 ;         forethought (Polish) flag 
 PEhO-clause <- PEhO-pre PEhO-post
 PEhO-pre <- pre-clause PEhO spaces?
 PEhO-post <- post-clause
-SPACE PEhO-no-SA-handling <- pre-clause PEhO post-clause
 
 ;         directions in time 
 PU-clause <- PU-pre PU-post
 PU-pre <- pre-clause PU spaces?
 PU-post <- post-clause
-SPACE PU-no-SA-handling <- pre-clause PU post-clause
-
 
 ;         flag for modified interpretation of GOhI 
 RAhO-clause <- RAhO-pre RAhO-post
 RAhO-pre <- pre-clause RAhO spaces?
 RAhO-post <- post-clause
-SPACE RAhO-no-SA-handling <- pre-clause RAhO post-clause
 
 ;         converts number to extensional tense 
 ROI-clause <- ROI-pre ROI-post
 ROI-pre <- pre-clause ROI spaces?
 ROI-post <- post-clause
-SPACE ROI-no-SA-handling <- pre-clause ROI post-clause
 
 SA-clause <- SA-pre SA-post
 SA-pre <- pre-clause SA spaces?
@@ -939,19 +733,16 @@ SA-post <- spaces?
 SE-clause <- SE-pre SE-post
 SE-pre <- pre-clause SE spaces?
 SE-post <- post-clause
-SPACE SE-no-SA-handling <- pre-clause SE post-clause
 
 ;         metalinguistic bridi insert marker 
 SEI-clause <- SEI-pre SEI-post
 SEI-pre <- pre-clause SEI spaces?
 SEI-post <- post-clause
-SPACE SEI-no-SA-handling <- pre-clause SEI post-clause
 
 ;         metalinguistic bridi end marker 
 SEhU-clause <- SEhU-pre SEhU-post
 SEhU-pre <- pre-clause SEhU spaces?
 SEhU-post <- post-clause
-SPACE SEhU-no-SA-handling <- pre-clause SEhU post-clause
 
 ;         metalinguistic single word eraser 
 SI-clause <- spaces? SI spaces?
@@ -960,7 +751,6 @@ SI-clause <- spaces? SI spaces?
 SOI-clause <- SOI-pre SOI-post
 SOI-pre <- pre-clause SOI spaces?
 SOI-post <- post-clause
-SPACE SOI-no-SA-handling <- pre-clause SOI post-clause
 
 ;         metalinguistic eraser of the entire text 
 SU-clause <- SU-pre SU-post
@@ -972,87 +762,71 @@ SU-post <- post-clause
 TAhE-clause <- TAhE-pre TAhE-post
 TAhE-pre <- pre-clause TAhE spaces?
 TAhE-post <- post-clause
-SPACE TAhE-no-SA-handling <- pre-clause TAhE post-clause
 
 ;         closing gap for MEX constructs 
 TEhU-clause <- TEhU-pre TEhU-post
 TEhU-pre <- pre-clause TEhU spaces?
 TEhU-post <- post-clause
-SPACE TEhU-no-SA-handling <- pre-clause TEhU post-clause
 
 ;         start compound lerfu 
 TEI-clause <- TEI-pre TEI-post
 TEI-pre <- pre-clause TEI spaces?
 TEI-post <- post-clause
-SPACE TEI-no-SA-handling <- pre-clause TEI post-clause
 
 ;         left discursive parenthesis 
 TO-clause <- TO-pre TO-post
 TO-pre <- pre-clause TO spaces?
 TO-post <- post-clause
-SPACE TO-no-SA-handling <- pre-clause TO post-clause
 
 ;         right discursive parenthesis 
 TOI-clause <- TOI-pre TOI-post
 TOI-pre <- pre-clause TOI spaces?
 TOI-post <- post-clause
-SPACE TOI-no-SA-handling <- pre-clause TOI post-clause
 
 ;         multiple utterance scope mark 
 TUhE-clause <- TUhE-pre TUhE-post
 TUhE-pre <- pre-clause TUhE spaces?
 TUhE-post <- su-clause* post-clause
-SPACE TUhE-no-SA-handling <- pre-clause TUhE su-clause* post-clause
 
 ;         multiple utterance end scope mark 
 TUhU-clause <- TUhU-pre TUhU-post
 TUhU-pre <- pre-clause TUhU spaces?
 TUhU-post <- post-clause
-SPACE TUhU-no-SA-handling <- pre-clause TUhU post-clause
-
 
 ;         attitudinals, observationals, discursives 
 UI-clause <- UI-pre UI-post
 UI-pre <- pre-clause UI spaces?
 UI-post <- post-clause
-SPACE UI-no-SA-handling <- pre-clause UI post-clause
-
 
 ;         distance in space-time 
 VA-clause <- VA-pre VA-post
 VA-pre <- pre-clause VA spaces?
 VA-post <- post-clause
-SPACE VA-no-SA-handling <- pre-clause VA post-clause
 
 ;         end simple bridi or bridi-tail 
 VAU-clause <- VAU-pre VAU-post
 VAU-pre <- pre-clause VAU spaces?
 VAU-post <- post-clause
-SPACE VAU-no-SA-handling <- pre-clause VAU post-clause
 
 ;         left MEX bracket 
 VEI-clause <- VEI-pre VEI-post
 VEI-pre <- pre-clause VEI spaces?
 VEI-post <- post-clause
-SPACE VEI-no-SA-handling <- pre-clause VEI post-clause
 
 ;         right MEX bracket 
 VEhO-clause <- VEhO-pre VEhO-post
 VEhO-pre <- pre-clause VEhO spaces?
 VEhO-post <- post-clause
-SPACE VEhO-no-SA-handling <- pre-clause VEhO post-clause
 
 ;         MEX operator 
 VUhU-clause <- VUhU-pre VUhU-post
 VUhU-pre <- pre-clause VUhU spaces?
 VUhU-post <- post-clause
-SPACE VUhU-no-SA-handling <- pre-clause VUhU post-clause
 
 ;         space-time interval size 
 VEhA-clause <- VEhA-pre VEhA-post
 VEhA-pre <- pre-clause VEhA spaces?
 VEhA-post <- post-clause
-SPACE VEhA-no-SA-handling <- pre-clause VEhA post-clause
 
 ;         space-time dimensionality marker 
 VIhA-clause <- VIhA-pre VIhA-post
@@ -1062,7 +836,6 @@ SPACE VIhA-no-SA-handling <- pre-clause VIhA post-clause
 VUhO-clause <- VUhO-pre VUhO-post
 VUhO-pre <- pre-clause VUhO spaces?
 VUhO-post <- post-clause
-SPACE VUhO-no-SA-handling <- pre-clause VUhO post-clause
 
 ; glue between logically connected sumti and relative clauses 
 
@@ -1071,7 +844,6 @@ SPACE VUhO-no-SA-handling <- pre-clause VUhO post-clause
 XI-clause <- XI-pre XI-post
 XI-pre <- pre-clause XI spaces?
 XI-post <- post-clause
-SPACE XI-no-SA-handling <- pre-clause XI post-clause
 
 
 ;         hesitation 
@@ -1083,13 +855,11 @@ SPACE XI-no-SA-handling <- pre-clause XI post-clause
 ZAhO-clause <- ZAhO-pre ZAhO-post
 ZAhO-pre <- pre-clause ZAhO spaces?
 ZAhO-post <- post-clause
-SPACE ZAhO-no-SA-handling <- pre-clause ZAhO post-clause
 
 ;         time interval size tense 
 ZEhA-clause <- ZEhA-pre ZEhA-post
 ZEhA-pre <- pre-clause ZEhA spaces?
 ZEhA-post <- post-clause
-SPACE ZEhA-no-SA-handling <- pre-clause ZEhA post-clause
 
 ;         lujvo glue 
 ZEI-clause <- ZEI-pre ZEI-post
@@ -1097,37 +867,31 @@ ZEI-clause-no-SA <- ZEI-pre-no-SA ZEI ZEI-post
 ZEI-pre <- pre-clause ZEI spaces?
 ZEI-pre-no-SA <- pre-clause
 ZEI-post <- spaces?
-SPACE ZEI-no-SA-handling <- pre-clause ZEI post-clause
 
 ;         time distance tense 
 ZI-clause <- ZI-pre ZI-post
 ZI-pre <- pre-clause ZI spaces?
 ZI-post <- post-clause
-SPACE ZI-no-SA-handling <- pre-clause ZI post-clause
 
 ;         conjoins relative clauses 
 ZIhE-clause <- ZIhE-pre ZIhE-post
 ZIhE-pre <- pre-clause ZIhE spaces?
 ZIhE-post <- post-clause
-SPACE ZIhE-no-SA-handling <- pre-clause ZIhE post-clause
 
 ;         single word metalinguistic quote marker 
 ZO-clause <- ZO-pre ZO-post
 ZO-pre <- pre-clause ZO spaces? any-word spaces?
 ZO-post <- post-clause
-SPACE ZO-no-SA-handling <- pre-clause ZO spaces? any-word spaces?
 
 ;         delimited quote marker 
 ZOI-clause <- ZOI-pre ZOI-post
 ZOI-pre <- pre-clause ZOI spaces? zoi-open zoi-word* zoi-close spaces?
 ZOI-post <- post-clause
-SPACE ZOI-no-SA-handling <- pre-clause ZOI spaces? zoi-open zoi-word* zoi-close spaces?
 
 ;         prenex terminator (not elidable) 
 ZOhU-clause <- ZOhU-pre ZOhU-post
 ZOhU-pre <- pre-clause ZOhU spaces?
 ZOhU-post <- post-clause
-SPACE ZOhU-no-SA-handling <- pre-clause ZOhU post-clause
 
 
 ;************************
