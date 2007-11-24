@@ -1,33 +1,30 @@
 This is a version (not official) of the full grammar of Lojban. I intend to make many changes to it, some cosmetic, some not. Don't take the contents of this page too seriously for now. In ((zasni gerna cenba vreji)) I will try to keep a record of the changes as I make them. mi'e ((xorxes))
 
 
+
 ; --- GRAMMAR --- 
 
-PUBLIC text <- intro-null NAI#* text-part-2 (!text-1 joik-jek)? text-1? faho# EOF? 
+PUBLIC text <- intro-null NAI#* (CMENE#+ / indicators?) (!text-1 joik-jek)? text-1? faho# EOF? 
 
-intro-null <- spaces? su#* intro-si# 
-
-text-part-2 <- (CMENE#+ / indicators? free*) 
-
-SPACE intro-si# <- si#? SI#* 
+SPACE intro-null <- spaces? su#* si#? SI#* 
 
 SPACE faho# <- (FAhO# dot-star)? 
 
-text-1 <- I# (jek / joik)? (stag? BO#)? free* text-1? / NIhO#+ su#* paragraphs? / paragraphs 
+text-1 <- I# joik-jek? (tag? BO#)? text-1? / NIhO#+ su#* paragraphs? / paragraphs 
 
 paragraphs <- paragraph (NIhO#+ su#* paragraphs)? 
 
-paragraph <- (statement / fragment) (I# !jek !joik !joik-jek free* (statement / fragment)?)* 
+paragraph <- (statement / fragment) (I# !jek !joik !joik-jek (statement / fragment)?)* 
 
 statement <- statement-1 / prenex statement 
 
 statement-1 <- statement-2 (I# joik-jek statement-2?)* 
 
-statement-2 <- statement-3 (I# (jek / joik)? stag? BO# statement-2)? / statement-3 (I# (jek / joik)? stag? BO#)? 
+statement-2 <- statement-3 (I# joik-jek? tag? BO# statement-2)? / statement-3 (I# joik-jek? tag? BO#)? 
 
 statement-3 <- sentence / tag? TUhE# text-1 TUhU#? 
 
-fragment <- prenex / terms VAU#? / ek free* / gihek free* / quantifier / NA# !JA# free* / relative-clauses / links / linkargs 
+fragment <- prenex / terms VAU#? / ek / gihek / quantifier / NA# !JA# / relative-clauses / links / linkargs 
 
 prenex <- terms ZOhU# 
 
@@ -35,15 +32,15 @@ sentence <- (terms CU#?)? bridi-tail / bridi-tail
 
 subsentence <- sentence / prenex subsentence 
 
-bridi-tail <- bridi-tail-1 (gihek stag? KE# bridi-tail KEhE#? tail-terms)? 
+bridi-tail <- bridi-tail-1 (gihek tag? KE# bridi-tail KEhE#? tail-terms)? 
 
-bridi-tail-1 <- bridi-tail-2 (gihek !(stag? BO#) !(stag? KE#) free* bridi-tail-2 tail-terms)* 
+bridi-tail-1 <- bridi-tail-2 (gihek !(tag? BO#) !(tag? KE#) bridi-tail-2 tail-terms)* 
 
-bridi-tail-2 <- bridi-tail-3 (gihek stag? BO# bridi-tail-2 tail-terms)? 
+bridi-tail-2 <- bridi-tail-3 (gihek tag? BO# bridi-tail-2 tail-terms)? 
 
 bridi-tail-3 <- selbri tail-terms / gek-sentence 
 
-gek-sentence <- gek subsentence gik subsentence tail-terms / tag? KE# gek-sentence KEhE#? / NA# free* gek-sentence 
+gek-sentence <- gek subsentence gik subsentence tail-terms / tag? KE# gek-sentence KEhE#? / NA# gek-sentence 
 
 tail-terms <- terms? VAU#?
 
@@ -63,17 +60,17 @@ terms-gik-terms <- term (gik / terms-gik-terms) term
 
 sumti <- sumti-1 (VUhO# relative-clauses)? 
 
-sumti-1 <- sumti-2 (joik-ek stag? KE# sumti KEhE#?)? 
+sumti-1 <- sumti-2 (joik-ek tag? KE# sumti KEhE#?)? 
 
 sumti-2 <- sumti-3 (joik-ek sumti-3)* 
 
-sumti-3 <- sumti-4 (joik-ek stag? BO# sumti-3)? 
+sumti-3 <- sumti-4 (joik-ek tag? BO# sumti-3)? 
 
 sumti-4 <- sumti-5 / gek sumti gik sumti-4 
 
 sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri KU#? relative-clauses? 
 
-sumti-6 <- ZO# / ZOI# / LOhU# / lerfu-string !MOI# BOI#? free* / LU# text LIhU#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? / KOhA# / LA# relative-clauses? CMENE#+ / (LA# / LE#) sumti-tail KU#? / LI# mex LOhO#? 
+sumti-6 <- ZO# / ZOI# / LOhU# / lerfu-string !MOI# BOI#? / LU# text LIhU#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? / KOhA# / LA# relative-clauses? CMENE#+ / (LA# / LE#) sumti-tail KU#? / LI# mex LOhO#? 
 
 sumti-tail <- (sumti-6 relative-clauses?)? sumti-tail-1 / relative-clauses sumti-tail-1 
 
@@ -85,29 +82,29 @@ relative-clause <- GOI# term GEhU#? / NOI# subsentence KUhO#?
 
 selbri <- tag? selbri-1 
 
-selbri-1 <- selbri-2 / NA# free* selbri 
+selbri-1 <- selbri-2 / NA# selbri 
 
 selbri-2 <- selbri-3 (CO# selbri-2)? 
 
 selbri-3 <- selbri-4+ 
 
-selbri-4 <- selbri-5 (joik-jek selbri-5 / joik stag? KE# selbri-3 KEhE#?)* 
+selbri-4 <- selbri-5 (joik-jek selbri-5 / joik tag? KE# selbri-3 KEhE#?)* 
 
-selbri-5 <- selbri-6 ((jek / joik) stag? BO# selbri-5)? 
+selbri-5 <- selbri-6 (joik-jek tag? BO# selbri-5)? 
 
-selbri-6 <- tanru-unit (BO# selbri-6)? / NAhE#? free* guhek selbri gik selbri-6 
+selbri-6 <- tanru-unit (BO# selbri-6)? / NAhE#? guhek selbri gik selbri-6 
 
 tanru-unit <- tanru-unit-1 (CEI# tanru-unit-1)* 
 
 tanru-unit-1 <- tanru-unit-2 linkargs? 
 
-tanru-unit-2 <- BRIVLA# / GOhA# RAhO#? free* / KE# selbri-3 KEhE#? / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / SE# free* tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# free* tanru-unit-2 / NU# NAI#? free* (joik-jek NU# NAI#? free*)* subsentence KEI#? 
+tanru-unit-2 <- BRIVLA# / GOhA# RAhO#? / KE# selbri-3 KEhE#? / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# NAI#? (joik-jek NU# NAI#?)* subsentence KEI#? 
 
 linkargs <- BE# term links? BEhO#?
 
 links <- BEI# term links? 
 
-quantifier <- number !MOI# BOI#? free* / VEI# mex VEhO#? free* 
+quantifier <- number !MOI# BOI#? / VEI# mex VEhO#? 
 
 mex <- mex-1 (operator mex-1)* / rp# 
 
@@ -123,21 +120,21 @@ fore-operands <- mex-2+
 
 rp-expression <- operand (rp-expression operator)*  
 
-operator <- operator-1 (joik-jek operator-1 / joik stag? KE# operator KEhE#?)* 
+operator <- operator-1 (joik-jek operator-1 / joik tag? KE# operator KEhE#?)* 
 
-operator-1 <- operator-2 / guhek operator-1 gik operator-2 / operator-2 (jek / joik) stag? BO# operator-1 
+operator-1 <- operator-2 / guhek operator-1 gik operator-2 / operator-2 joik-jek tag? BO# operator-1 
 
 operator-2 <- mex-operator / KE# operator KEhE#?
 
-mex-operator <- SE# free* mex-operator / NAhE# free* mex-operator / MAhO# mex TEhU#? / NAhU# selbri TEhU#? / VUhU# 
+mex-operator <- SE# mex-operator / NAhE# mex-operator / MAhO# mex TEhU#? / NAhU# selbri TEhU#? / VUhU# 
 
-operand <- operand-1 (joik-ek stag? KE# operand KEhE#?)? 
+operand <- operand-1 (joik-ek tag? KE# operand KEhE#?)? 
 
 operand-1 <- operand-2 (joik-ek operand-2)* 
 
-operand-2 <- operand-3 (joik-ek stag? BO# operand-2)? 
+operand-2 <- operand-3 (joik-ek tag? BO# operand-2)? 
 
-operand-3 <- quantifier / lerfu-string !MOI# BOI#? free* / NIhE# selbri TEhU#? / MOhE# sumti TEhU#? / JOhI# mex-2+ TEhU#? / gek operand gik operand-3 / (LAhE# / NAhE# BO#) operand LUhU#?
+operand-3 <- quantifier / lerfu-string !MOI# BOI#? / NIhE# selbri TEhU#? / MOhE# sumti TEhU#? / JOhI# mex-2+ TEhU#? / gek operand gik operand-3 / (LAhE# / NAhE# BO#) operand LUhU#?
 
 number <- PA# (PA# / lerfu-word)* 
 
@@ -155,25 +152,19 @@ joik <- SE#? JOI# NAI#? / interval / GAhO# interval GAhO#
 
 interval <- SE#? BIhI# NAI#? 
 
-joik-ek <- joik free* / ek free* 
+joik-ek <- joik / ek 
 
-joik-jek <- joik free* / jek free* 
+joik-jek <- joik / jek 
 
-gek <- SE#? GA# NAI#? free* / joik GI# free* / stag gik 
+gek <- SE#? GA# NAI#? / joik GI# / tag gik 
 
-guhek <- SE#? GUhA# NAI#? free* 
+guhek <- SE#? GUhA# NAI#? 
 
-gik <- GI# NAI#? free* 
+gik <- GI# NAI#? 
 
 tag <- tense-modal (joik-jek tense-modal)* 
 
-;;stag <- simple-tense-modal ((jek / joik) simple-tense-modal)* 
-
-stag <- simple-tense-modal ((jek / joik) simple-tense-modal)* / tense-modal (joik-jek tense-modal)* 
-
-tense-modal <- simple-tense-modal free* / FIhO# selbri FEhU#?
-
-simple-tense-modal <- NAhE#? SE#? BAI# NAI#? KI#? / NAhE#? ( ((time space? / space time?) CAhA#) / (time space? / space time?) / CAhA# ) KI#? / KI# / CUhE# 
+tense-modal <- NAhE#? SE#? BAI# NAI#? KI#? / NAhE#? ( ((time space? / space time?) CAhA#) / (time space? / space time?) / CAhA# ) KI#? / KI# / CUhE# / FIhO# selbri FEhU#?
 
 time <- ZI# time-offset* (ZEhA# (PU# NAI#?)?)? interval-property* / ZI#? time-offset+ (ZEhA# (PU# NAI#?)?)? interval-property* / ZI#? time-offset* ZEhA# (PU# NAI#?)? interval-property* / ZI#? time-offset* (ZEhA# (PU# NAI#?)?)? interval-property+ 
 
@@ -197,17 +188,17 @@ vocative <- (COI# NAI#?)+ DOI# / (COI# NAI#?) (COI# NAI#?)* / DOI#
 
 indicators <- FUhE#? indicator+ 
 
-indicator <- ((UI# / CAI#) NAI#? / DAhO# / FUhO#) !BU# 
+indicator <- (UI# / CAI#) NAI#? / DAhO# / FUhO# / free
 
 ; **************** ; Magic Words ; **************** 
 
 zei# <- pre# zei#-no-pre 
 
-zei#-no-pre <- pre-zei-bu (zei-tail? bu-tail)* zei-tail post# free* 
+zei#-no-pre <- pre-zei-bu (zei-tail? bu-tail)* zei-tail post# 
 
 bu# <- pre# bu#-no-pre 
 
-bu#-no-pre <- pre-zei-bu (bu-tail? zei-tail)* bu-tail post# 
+bu#-no-pre <- pre-zei-bu (bu-tail? zei-tail)* bu-tail !number !lerfu-string post# 
 
 zei-tail <- (ZEI# any-word)+ 
 
@@ -215,7 +206,7 @@ bu-tail <- BU#+
 
 pre-zei-bu <- (!BU# !ZEI# !SI# !SA# !SU# !FAhO# any-word-SA-handling) si#? 
 
-post# <- spaces? si#? !ZEI# !BU# indicators* 
+post# <- spaces? si#? !ZEI# !BU# indicators?
 
 pre# <- BAhE#? 
 
@@ -241,19 +232,19 @@ BRIVLA# <- BRIVLA-pre BRIVLA-post / zei#
 
 BRIVLA-pre <- pre# BRIVLA spaces? 
 
-BRIVLA-post <- post# free* 
+BRIVLA-post <- post# 
 
 CMENE# <- CMENE-pre CMENE-post 
 
 CMENE-pre <- pre# CMENE spaces? 
 
-CMENE-post <- post# free* 
+CMENE-post <- post# 
 
 CMAVO# <- CMAVO-pre CMAVO-post 
 
 CMAVO-pre <- pre# CMAVO spaces? 
 
-CMAVO-post <- post# free*
+CMAVO-post <- post#
 
 ; eks; basic afterthought logical connectives 
 
@@ -285,7 +276,7 @@ BE# <- BE-pre BE-post
 
 BE-pre <- pre# BE spaces? 
 
-BE-post <- post# free* 
+BE-post <- post# 
 
 ; multiple sumti separator between BE, BEI 
 
@@ -293,7 +284,7 @@ BEI# <- BEI-pre BEI-post
 
 BEI-pre <- pre# BEI spaces? 
 
-BEI-post <- post# free* 
+BEI-post <- post# 
 
 ; terminates BEBEI specified descriptors 
 
@@ -301,7 +292,7 @@ BEhO# <- BEhO-pre BEhO-post
 
 BEhO-pre <- pre# BEhO spaces? 
 
-BEhO-post <- post# free*
+BEhO-post <- post#
 
 ; prefix for high-priority MEX operator 
 
@@ -309,7 +300,7 @@ BIhE# <- BIhE-pre BIhE-post
 
 BIhE-pre <- pre# BIhE spaces? 
 
-BIhE-post <- post# free* 
+BIhE-post <- post# 
 
 ; interval component of JOI 
 
@@ -325,7 +316,7 @@ BO# <- BO-pre BO-post
 
 BO-pre <- pre# BO spaces? 
 
-BO-post <- post# free* 
+BO-post <- post# 
 
 ; number or lerfu-string terminator 
 
@@ -349,7 +340,7 @@ BY# <- BY-pre BY-post / bu#
 
 BY-pre <- pre# BY spaces? 
 
-BY-post <- post# 
+BY-post <- !number !lerfu-strig post# 
 
 ; specifies actualitypotentiality of tense 
 
@@ -373,7 +364,7 @@ CEI# <- CEI-pre CEI-post
 
 CEI-pre <- pre# CEI spaces? 
 
-CEI-post <- post# free* 
+CEI-post <- post# 
 
 ; afterthought term list connective 
 
@@ -381,13 +372,13 @@ CEhE# <- CEhE-pre CEhE-post
 
 CEhE-pre <- pre# CEhE spaces? 
 
-CEhE-post <- post# free* 
+CEhE-post <- post# 
 
 CO# <- CO-pre CO-post 
 
 CO-pre <- pre# CO spaces? 
 
-CO-post <- post# free* 
+CO-post <- post# 
 
 ; vocative marker 
 
@@ -395,7 +386,7 @@ COI# <- COI-pre COI-post
 
 COI-pre <- pre# COI spaces? 
 
-COI-post <- post# 
+COI-post <- !vocative post# 
 
 ; separator between head sumti and selbri
 
@@ -403,7 +394,7 @@ CU# <- CU-pre CU-post
 
 CU-pre <- pre# CU spaces? 
 
-CU-post <- post# free*
+CU-post <- post#
 
 ; tensemodal question 
 
@@ -427,7 +418,7 @@ DOI# <- DOI-pre DOI-post
 
 DOI-pre <- pre# DOI spaces? 
 
-DOI-post <- post# 
+DOI-post <- !vocative post# 
 
 ; terminator for DOI-marked vocatives 
 
@@ -443,7 +434,7 @@ FA# <- FA-pre FA-post
 
 FA-pre <- pre# FA spaces? 
 
-FA-post <- post# free* 
+FA-post <- post# 
 
 ; superdirections in space 
 
@@ -471,7 +462,7 @@ FEhU# <- FEhU-pre FEhU-post
 
 FEhU-pre <- pre# FEhU spaces? 
 
-FEhU-post <- post# free*
+FEhU-post <- post#
 
 ; marks bridi to modal conversion 
 
@@ -479,7 +470,7 @@ FIhO# <- FIhO-pre FIhO-post
 
 FIhO-pre <- pre# FIhO spaces? 
 
-FIhO-post <- post# free* 
+FIhO-post <- post# 
 
 ; end compound lerfu 
 
@@ -495,7 +486,7 @@ FUhA# <- FUhA-pre FUhA-post
 
 FUhA-pre <- pre# FUhA spaces? 
 
-FUhA-post <- post# free* 
+FUhA-post <- post# 
 
 ; open long scope for indicator 
 
@@ -535,7 +526,7 @@ GEhU# <- GEhU-pre GEhU-post
 
 GEhU-pre <- pre# GEhU spaces? 
 
-GEhU-post <- post# free*
+GEhU-post <- post#
 
 ; forethought medial marker 
 
@@ -559,7 +550,7 @@ GOI# <- GOI-pre GOI-post
 
 GOI-pre <- pre# GOI spaces? 
 
-GOI-post <- post# free* 
+GOI-post <- post# 
 
 ; pro-bridi 
 
@@ -583,7 +574,7 @@ I# <- I-pre I-post
 
 I-pre <- pre# I spaces? 
 
-I-post <- post# 
+I-post <- post#
 
 ; jeks; logical connectives within tanru 
 
@@ -599,7 +590,7 @@ JAI# <- JAI-pre JAI-post
 
 JAI-pre <- pre# JAI spaces? 
 
-JAI-post <- post# free* 
+JAI-post <- post# 
 
 ; flags an array operand 
 
@@ -607,7 +598,7 @@ JOhI# <- JOhI-pre JOhI-post
 
 JOhI-pre <- pre# JOhI spaces? 
 
-JOhI-post <- post# free* 
+JOhI-post <- post# 
 
 ; non-logical connectives 
 
@@ -623,7 +614,7 @@ KE# <- KE-pre KE-post
 
 KE-pre <- pre# KE spaces? 
 
-KE-post <- post# free* 
+KE-post <- post# 
 
 ; right terminator for KE groups 
 
@@ -631,7 +622,7 @@ KEhE# <- KEhE-pre KEhE-post
 
 KEhE-pre <- pre# KEhE spaces? 
 
-KEhE-post <- post# free*
+KEhE-post <- post#
 
 ; right terminator, NU abstractions 
 
@@ -639,7 +630,7 @@ KEI# <- KEI-pre KEI-post
 
 KEI-pre <- pre# KEI spaces? 
 
-KEI-post <- post# free*
+KEI-post <- post#
 
 ; multiple utterance scope for tenses 
 
@@ -655,7 +646,7 @@ KOhA# <- KOhA-pre KOhA-post
 
 KOhA-pre <- pre# KOhA spaces? 
 
-KOhA-post <- post# free* 
+KOhA-post <- post# 
 
 ; right terminator for descriptions, etc. 
 
@@ -663,7 +654,7 @@ KU# <- KU-pre KU-post
 
 KU-pre <- pre# KU spaces? 
 
-KU-post <- post# free*
+KU-post <- post#
 
 ; MEX forethought delimiter 
 
@@ -671,7 +662,7 @@ KUhE# <- KUhE-pre KUhE-post
 
 KUhE-pre <- pre# KUhE spaces? 
 
-KUhE-post <- post# free*
+KUhE-post <- post#
 
 ; right terminator, NOI relative clauses 
 
@@ -679,7 +670,7 @@ KUhO# <- KUhO-pre KUhO-post
 
 KUhO-pre <- pre# KUhO spaces? 
 
-KUhO-post <- post# free*
+KUhO-post <- post#
 
 ; name descriptors 
 
@@ -687,7 +678,7 @@ LA# <- LA-pre LA-post
 
 LA-pre <- pre# LA spaces? 
 
-LA-post <- post# free* 
+LA-post <- post# 
 
 ; lerfu prefixes 
 
@@ -703,7 +694,7 @@ LAhE# <- LAhE-pre LAhE-post
 
 LAhE-pre <- pre# LAhE spaces? 
 
-LAhE-post <- post# free* 
+LAhE-post <- post# 
 
 ; sumti descriptors 
 
@@ -711,7 +702,7 @@ LE# <- LE-pre LE-post
 
 LE-pre <- pre# LE spaces? 
 
-LE-post <- post# free* 
+LE-post <- post# 
 
 ; possibly ungrammatical text right quote 
 
@@ -719,7 +710,7 @@ LEhU# <- LEhU-pre LEhU-post
 
 LEhU-pre <- pre# LEhU spaces? 
 
-LEhU-post <- spaces? free*
+LEhU-post <- post#
 
 ; convert number to sumti 
 
@@ -727,7 +718,7 @@ LI# <- LI-pre LI-post
 
 LI-pre <- pre# LI spaces? 
 
-LI-post <- post# free* 
+LI-post <- post# 
 
 ; grammatical text right quote 
 
@@ -735,7 +726,7 @@ LIhU# <- LIhU-pre LIhU-post
 
 LIhU-pre <- pre# LIhU spaces? 
 
-LIhU-post <- post# free*
+LIhU-post <- post#
 
 ; elidable terminator for LI 
 
@@ -743,7 +734,7 @@ LOhO# <- LOhO-pre LOhO-post
 
 LOhO-pre <- pre# LOhO spaces? 
 
-LOhO-post <- post# free*
+LOhO-post <- post#
 
 ; possibly ungrammatical text left quote 
 
@@ -751,7 +742,7 @@ LOhU# <- LOhU-pre LOhU-post
 
 LOhU-pre <- pre# LOhU spaces? (!LEhU any-word)* LEhU#
 
-LOhU-post <- post# free* 
+LOhU-post <- post# 
 
 ; grammatical text left quote 
 
@@ -759,7 +750,7 @@ LU# <- LU-pre LU-post
 
 LU-pre <- pre# LU spaces? 
 
-LU-post <- post# free*
+LU-post <- post#
 
 ; LAhE close delimiter 
 
@@ -767,7 +758,7 @@ LUhU# <- LUhU-pre LUhU-post
 
 LUhU-pre <- pre# LUhU spaces? 
 
-LUhU-post <- post# free*
+LUhU-post <- post#
 
 ; change MEX expressions to MEX operators 
 
@@ -775,7 +766,7 @@ MAhO# <- MAhO-pre MAhO-post
 
 MAhO-pre <- pre# MAhO spaces? 
 
-MAhO-post <- post# free* 
+MAhO-post <- post# 
 
 ; change numbers to utterance ordinals 
 
@@ -791,7 +782,7 @@ ME# <- ME-pre ME-post
 
 ME-pre <- pre# ME spaces? 
 
-ME-post <- post# free* 
+ME-post <- post# 
 
 ; terminator for ME 
 
@@ -799,7 +790,7 @@ MEhU# <- MEhU-pre MEhU-post
 
 MEhU-pre <- pre# MEhU spaces? 
 
-MEhU-post <- post# free*
+MEhU-post <- post#
 
 ; change sumti to operand, inverse of LI 
 
@@ -807,7 +798,7 @@ MOhE# <- MOhE-pre MOhE-post
 
 MOhE-pre <- pre# MOhE spaces? 
 
-MOhE-post <- post# free* 
+MOhE-post <- post# 
 
 ; motion tense marker 
 
@@ -823,7 +814,7 @@ MOI# <- MOI-pre MOI-post
 
 MOI-pre <- pre# MOI spaces? 
 
-MOI-post <- post# free* 
+MOI-post <- post# 
 
 ; bridi negation 
 
@@ -855,7 +846,7 @@ NAhU# <- NAhU-pre NAhU-post
 
 NAhU-pre <- pre# NAhU spaces? 
 
-NAhU-post <- post# free* 
+NAhU-post <- post# 
 
 ; change selbri to operand; inverse of MOI 
 
@@ -863,7 +854,7 @@ NIhE# <- NIhE-pre NIhE-post
 
 NIhE-pre <- pre# NIhE spaces? 
 
-NIhE-post <- post# free* 
+NIhE-post <- post# 
 
 ; new paragraph; change of subject 
 
@@ -871,7 +862,7 @@ NIhO# <- NIhO-pre NIhO-post
 
 NIhO-pre <- pre# NIhO spaces? 
 
-NIhO-post <- su#* post# free* 
+NIhO-post <- su#* post# 
 
 ; attaches a subordinate clause to a sumti 
 
@@ -879,7 +870,7 @@ NOI# <- NOI-pre NOI-post
 
 NOI-pre <- pre# NOI spaces? 
 
-NOI-post <- post# free* 
+NOI-post <- post# 
 
 ; abstraction 
 
@@ -895,7 +886,7 @@ NUhA# <- NUhA-pre NUhA-post
 
 NUhA-pre <- pre# NUhA spaces? 
 
-NUhA-post <- post# free* 
+NUhA-post <- post# 
 
 ; marks the start of a termset 
 
@@ -903,7 +894,7 @@ NUhI# <- NUhI-pre NUhI-post
 
 NUhI-pre <- pre# NUhI spaces? 
 
-NUhI-post <- post# free* 
+NUhI-post <- post# 
 
 ; marks the middle and end of a termset 
 
@@ -911,7 +902,7 @@ NUhU# <- NUhU-pre NUhU-post
 
 NUhU-pre <- pre# NUhU spaces? 
 
-NUhU-post <- post# free*
+NUhU-post <- post#
 
 ; numbers and numeric punctuation 
 
@@ -919,7 +910,7 @@ PA# <- PA-pre PA-post
 
 PA-pre <- pre# PA spaces? 
 
-PA-post <- post# 
+PA-post <- !number !lerfu-string post# 
 
 ; afterthought termset connective prefix 
 
@@ -927,7 +918,7 @@ PEhE# <- PEhE-pre PEhE-post
 
 PEhE-pre <- pre# PEhE spaces? 
 
-PEhE-post <- post# free* 
+PEhE-post <- post# 
 
 ; forethought (Polish) flag 
 
@@ -935,7 +926,7 @@ PEhO# <- PEhO-pre PEhO-post
 
 PEhO-pre <- pre# PEhO spaces? 
 
-PEhO-post <- post# free*
+PEhO-post <- post#
 
 ; directions in time 
 
@@ -975,7 +966,7 @@ SEI# <- SEI-pre SEI-post
 
 SEI-pre <- pre# SEI spaces? 
 
-SEI-post <- post# free* 
+SEI-post <- post# 
 
 ; metalinguistic bridi end marker 
 
@@ -995,7 +986,7 @@ SOI# <- SOI-pre SOI-post
 
 SOI-pre <- pre# SOI spaces? 
 
-SOI-post <- post# free* 
+SOI-post <- post# 
 
 ; metalinguistic eraser of the entire text 
 
@@ -1019,7 +1010,7 @@ TEhU# <- TEhU-pre TEhU-post
 
 TEhU-pre <- pre# TEhU spaces? 
 
-TEhU-post <- post# free*
+TEhU-post <- post#
 
 ; start compound lerfu 
 
@@ -1035,7 +1026,7 @@ TO# <- TO-pre TO-post
 
 TO-pre <- pre# TO spaces? 
 
-TO-post <- post# free*
+TO-post <- post#
 
 ; right discursive parenthesis 
 
@@ -1051,7 +1042,7 @@ TUhE# <- TUhE-pre TUhE-post
 
 TUhE-pre <- pre# TUhE spaces? 
 
-TUhE-post <- su#* post# free* 
+TUhE-post <- su#* post# 
 
 ; multiple utterance end scope mark 
 
@@ -1059,7 +1050,7 @@ TUhU# <- TUhU-pre TUhU-post
 
 TUhU-pre <- pre# TUhU spaces? 
 
-TUhU-post <- post# free*
+TUhU-post <- post#
 
 ; attitudinals, observationals, discursives 
 
@@ -1083,7 +1074,7 @@ VAU# <- VAU-pre VAU-post
 
 VAU-pre <- pre# VAU spaces? 
 
-VAU-post <- post# free*
+VAU-post <- post#
 
 ; left MEX bracket 
 
@@ -1091,7 +1082,7 @@ VEI# <- VEI-pre VEI-post
 
 VEI-pre <- pre# VEI spaces? 
 
-VEI-post <- post# free* 
+VEI-post <- post# 
 
 ; right MEX bracket 
 
@@ -1107,7 +1098,7 @@ VUhU# <- VUhU-pre VUhU-post
 
 VUhU-pre <- pre# VUhU spaces? 
 
-VUhU-post <- post# free* 
+VUhU-post <- post# 
 
 ; space-time interval size 
 
@@ -1131,7 +1122,7 @@ VUhO# <- VUhO-pre VUhO-post
 
 VUhO-pre <- pre# VUhO spaces? 
 
-VUhO-post <- post# free* 
+VUhO-post <- post# 
 
 ; subscripting operator 
 
@@ -1139,7 +1130,7 @@ XI# <- XI-pre XI-post
 
 XI-pre <- pre# XI spaces? 
 
-XI-post <- post# free* 
+XI-post <- post# 
 
 ; event properties - inchoative, etc. 
 
@@ -1179,7 +1170,7 @@ ZIhE# <- ZIhE-pre ZIhE-post
 
 ZIhE-pre <- pre# ZIhE spaces? 
 
-ZIhE-post <- post# free* 
+ZIhE-post <- post# 
 
 ; single word metalinguistic quote marker 
 
@@ -1187,7 +1178,7 @@ ZO# <- ZO-pre ZO-post
 
 ZO-pre <- pre# ZO spaces? any-word spaces? 
 
-ZO-post <- post# free* 
+ZO-post <- post# 
 
 ; delimited quote marker 
 
@@ -1195,7 +1186,7 @@ ZOI# <- ZOI-pre ZOI-post
 
 ZOI-pre <- pre# ZOI spaces? zoi-open zoi-word* zoi-close spaces? 
 
-ZOI-post <- post# free* 
+ZOI-post <- post# 
 
 ; prenex terminator (not elidable) 
 
@@ -1203,7 +1194,7 @@ ZOhU# <- ZOhU-pre ZOhU-post
 
 ZOhU-pre <- pre# ZOhU spaces? 
 
-ZOhU-post <- post# free* 
+ZOhU-post <- post# 
 
 ;************************ 
 
