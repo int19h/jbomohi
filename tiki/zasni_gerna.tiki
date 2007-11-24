@@ -4,7 +4,7 @@ This is a version (not official) of the full grammar of Lojban. I intend to make
 
 ; --- GRAMMAR --- 
 
-PUBLIC text <- intro-null NAI#* (CMENE#+ / indicators?) (!text-1 joik-jek)? text-1? faho# EOF? 
+PUBLIC text <- intro-null (CMENE#+ / indicators?) (!text-1 joik-jek)? text-1? faho# EOF? 
 
 SPACE intro-null <- spaces? su#* si#? SI#* 
 
@@ -98,7 +98,7 @@ tanru-unit <- tanru-unit-1 (CEI# tanru-unit-1)*
 
 tanru-unit-1 <- tanru-unit-2 linkargs? 
 
-tanru-unit-2 <- BRIVLA# / GOhA# RAhO#? / KE# selbri-3 KEhE#? / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# NAI#? (joik-jek NU# NAI#?)* subsentence KEI#? 
+tanru-unit-2 <- BRIVLA# / GOhA# RAhO#? / KE# selbri-3 KEhE#? / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# (joik-jek NU#)* subsentence KEI#? 
 
 linkargs <- BE# term links? BEhO#?
 
@@ -142,53 +142,39 @@ lerfu-string <- lerfu-word (PA# / lerfu-word)*
 
 lerfu-word <- BY# / LAU# lerfu-word / TEI# lerfu-string FOI# 
 
-ek <- NA#? SE#? A# NAI#? 
+ek <- NA#? SE#? A#
 
-gihek <- NA#? SE#? GIhA# NAI#? 
+gihek <- NA#? SE#? GIhA#
 
-jek <- NA#? SE#? JA# NAI#? 
+jek <- NA#? SE#? JA#
 
-joik <- SE#? JOI# NAI#? / interval / GAhO# interval GAhO# 
+joik <- SE#? JOI# / interval / GAhO# interval GAhO# 
 
-interval <- SE#? BIhI# NAI#? 
+interval <- SE#? BIhI# 
 
 joik-ek <- joik / ek 
 
 joik-jek <- joik / jek 
 
-gek <- SE#? GA# NAI#? / joik GI# / tag gik 
+gek <- SE#? GA# / joik GI# / tag gik 
 
-guhek <- SE#? GUhA# NAI#? 
+guhek <- SE#? GUhA#
 
-gik <- GI# NAI#? 
+gik <- GI# 
 
-tag <- tense-modal (joik-jek tense-modal)* 
+tag <- tag-unit+ (joik-jek tag-unit+)* 
 
-tense-modal <- NAhE#? SE#? BAI# NAI#? KI#? / NAhE#? ( ((time space? / space time?) CAhA#) / (time space? / space time?) / CAhA# ) KI#? / KI# / CUhE# / FIhO# selbri FEhU#?
-
-time <- ZI# time-offset* (ZEhA# (PU# NAI#?)?)? interval-property* / ZI#? time-offset+ (ZEhA# (PU# NAI#?)?)? interval-property* / ZI#? time-offset* ZEhA# (PU# NAI#?)? interval-property* / ZI#? time-offset* (ZEhA# (PU# NAI#?)?)? interval-property+ 
-
-time-offset <- PU# NAI#? ZI#? 
-
-space <- VA# space-offset* space-interval? (MOhI# space-offset)? / VA#? space-offset+ space-interval? (MOhI# space-offset)? / VA#? space-offset* space-interval (MOhI# space-offset)? / VA#? space-offset* space-interval? MOhI# space-offset 
-
-space-offset <- FAhA# NAI#? VA#? 
-
-space-interval <- (VEhA# / VIhA# / VEhA# VIhA#) (FAhA# NAI#?)? space-int-props / (VEhA# / VIhA# / VEhA# VIhA#) (FAhA# NAI#?)? / space-int-props 
-
-space-int-props <- (FEhE# interval-property)+ 
-
-interval-property <- number ROI# NAI#? / TAhE# NAI#? / ZAhO# NAI#? 
+tag-unit <- KI# / BAI# / PU# / ZI# / ZEhA# / FAhA# / VA# / VEhA# / VIhA# / TAhE# / ZAhO# / CAhA# / CUhE# / number ROI# / FIhO# selbri FEhU# / (FEhE# / MOhI# / SE# / NAhE#) tag-unit
 
 free <- SEI# (terms CU#?)? selbri SEhU#? / SOI# sumti sumti? SEhU#? / vocative relative-clauses? selbri relative-clauses? DOhU#? / vocative relative-clauses? CMENE#+ relative-clauses? DOhU#? / vocative sumti? DOhU#? / (number / lerfu-string) MAI# / TO# text TOI#? / xi# 
 
 xi# <- XI# (number / lerfu-string) BOI#? / XI# VEI# mex VEhO#? 
 
-vocative <- (COI# NAI#?)+ DOI# / (COI# NAI#?) (COI# NAI#?)* / DOI# 
+vocative <- COI#+ DOI# / COI# COI#* / DOI# 
 
 indicators <- FUhE#? indicator+ 
 
-indicator <- (UI# / CAI#) NAI#? / DAhO# / FUhO# / free
+indicator <- UI# / CAI# / NAI# / DAhO# / FUhO# / free
 
 ; **************** ; Magic Words ; **************** 
 
@@ -1705,3 +1691,4 @@ ZO <- &CMAVO ( z o ) &post-word
 ZOI <- &CMAVO ( z o i / l a h o ) &post-word 
 
 ZOhU <- &CMAVO ( z o h u ) &post-word 
+
