@@ -4,19 +4,17 @@ This is a version (not official) of the full grammar of Lojban. I intend to make
 
 ; --- GRAMMAR --- 
 
-PUBLIC text <- intro-null (CMENE#+ / indicators?) (!text-1 joik-jek)? text-1? faho# EOF? 
+PUBLIC text <- intro-null indicators? (!gek joik-jek)? text-1? FAhO#? EOF? 
 
 SPACE intro-null <- spaces? su#* si#? SI#* 
 
-SPACE faho# <- (FAhO# dot-star)? 
-
 text-1 <- I# joik-jek? (tag? BO#)? text-1? / NIhO#+ su#* paragraphs? / paragraphs 
 
-paragraphs <- paragraph (NIhO#+ su#* paragraphs)? 
+paragraphs <- paragraph (NIhO#+ su#* paragraph)* 
 
-paragraph <- (statement / fragment) (I# !jek !joik !joik-jek (statement / fragment)?)* 
+paragraph <- statement (I# statement?)* 
 
-statement <- statement-1 / prenex statement 
+statement <- statement-1 / prenex statement / fragment
 
 statement-1 <- statement-2 (I# joik-jek statement-2?)* 
 
@@ -28,13 +26,13 @@ fragment <- prenex / terms VAU#? / ek / gihek / quantifier / NA# !JA# / relative
 
 prenex <- terms ZOhU# 
 
-sentence <- (terms CU#?)? bridi-tail / bridi-tail 
+sentence <- (terms CU#?)? bridi-tail
 
 subsentence <- sentence / prenex subsentence 
 
 bridi-tail <- bridi-tail-1 (gihek tag? KE# bridi-tail KEhE#? tail-terms)? 
 
-bridi-tail-1 <- bridi-tail-2 (gihek !(tag? BO#) !(tag? KE#) bridi-tail-2 tail-terms)* 
+bridi-tail-1 <- bridi-tail-2 (gihek !(tag? KE#) bridi-tail-2 tail-terms)* 
 
 bridi-tail-2 <- bridi-tail-3 (gihek tag? BO# bridi-tail-2 tail-terms)? 
 
@@ -50,7 +48,7 @@ terms-1 <- terms-2 (PEhE# joik-jek terms-2)*
 
 terms-2 <- term (CEhE# term)* 
 
-term <- sumti / ( !gek (tag / FA#) (sumti / KU#?) ) / termset / NA# KU# 
+term <- FA#? sumti / tag? sumti / tag KU#? / FA# KU#? / NA# KU# / termset
 
 termset <- gek-termset / NUhI# gek terms NUhU#? gik terms NUhU#? / NUhI# terms NUhU#? 
 
@@ -70,25 +68,19 @@ sumti-4 <- sumti-5 / gek sumti gik sumti-4
 
 sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri KU#? relative-clauses? 
 
-sumti-6 <- ZO# / ZOI# / LOhU# / lerfu-string !MOI# BOI#? / LU# text LIhU#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? / KOhA# / LA# relative-clauses? CMENE#+ / (LA# / LE#) sumti-tail KU#? / LI# mex LOhO#? 
+sumti-6 <- ZO# / ZOI# / LOhU# / lerfu-string !MOI# BOI#? / LU# text LIhU#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? / KOhA# / (LA# / LE#) sumti-tail KU#? / LI# mex LOhO#? 
 
-sumti-tail <- (sumti-6 relative-clauses?)? sumti-tail-1 / relative-clauses sumti-tail-1 
-
-sumti-tail-1 <- selbri relative-clauses? / quantifier selbri relative-clauses? / quantifier sumti 
+sumti-tail <- sumti-6? relative-clauses? (quantifier? selbri relative-clauses? / quantifier sumti) 
 
 relative-clauses <- relative-clause (ZIhE# relative-clause)* 
 
 relative-clause <- GOI# term GEhU#? / NOI# subsentence KUhO#?
 
-selbri <- tag? selbri-1 
+selbri <- (tag / NA#)* selbri-2 
 
-selbri-1 <- selbri-2 / NA# selbri 
+selbri-2 <- selbri-4+ (CO# selbri-2)? 
 
-selbri-2 <- selbri-3 (CO# selbri-2)? 
-
-selbri-3 <- selbri-4+ 
-
-selbri-4 <- selbri-5 (joik-jek selbri-5 / joik tag? KE# selbri-3 KEhE#?)* 
+selbri-4 <- selbri-5 (joik-jek selbri-5 / joik-jek tag? KE# selbri-4+ KEhE#?)* 
 
 selbri-5 <- selbri-6 (joik-jek tag? BO# selbri-5)? 
 
@@ -98,7 +90,7 @@ tanru-unit <- tanru-unit-1 (CEI# tanru-unit-1)*
 
 tanru-unit-1 <- tanru-unit-2 linkargs? 
 
-tanru-unit-2 <- BRIVLA# / GOhA# RAhO#? / KE# selbri-3 KEhE#? / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# (joik-jek NU#)* subsentence KEI#? 
+tanru-unit-2 <- BRIVLA# / CMENE# / GOhA# / KE# selbri-4+ KEhE#? / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# (joik-jek NU#)* subsentence KEI#? 
 
 linkargs <- BE# term links? BEhO#?
 
@@ -120,7 +112,7 @@ fore-operands <- mex-2+
 
 rp-expression <- operand (rp-expression operator)*  
 
-operator <- operator-1 (joik-jek operator-1 / joik tag? KE# operator KEhE#?)* 
+operator <- operator-1 (joik-jek operator-1 / joik-jek tag? KE# operator KEhE#?)* 
 
 operator-1 <- operator-2 / guhek operator-1 gik operator-2 / operator-2 joik-jek tag? BO# operator-1 
 
@@ -136,9 +128,9 @@ operand-2 <- operand-3 (joik-ek tag? BO# operand-2)?
 
 operand-3 <- quantifier / lerfu-string !MOI# BOI#? / NIhE# selbri TEhU#? / MOhE# sumti TEhU#? / JOhI# mex-2+ TEhU#? / gek operand gik operand-3 / (LAhE# / NAhE# BO#) operand LUhU#?
 
-number <- PA# (PA# / lerfu-word)* 
+number <- PA#+ 
 
-lerfu-string <- lerfu-word (PA# / lerfu-word)* 
+lerfu-string <- lerfu-word+ 
 
 lerfu-word <- BY# / LAU# lerfu-word / TEI# lerfu-string FOI# 
 
@@ -146,17 +138,11 @@ ek <- NA#? SE#? A#
 
 gihek <- NA#? SE#? GIhA#
 
-jek <- NA#? SE#? JA#
+joik-jek <- NA#? SE#? (JOI# / JA# / BIhI#)   
 
-joik <- SE#? JOI# / interval / GAhO# interval GAhO# 
+joik-ek <- joik-jek / ek 
 
-interval <- SE#? BIhI# 
-
-joik-ek <- joik / ek 
-
-joik-jek <- joik / jek 
-
-gek <- SE#? GA# / joik GI# / tag gik 
+gek <- SE#? GA# / joik-jek GI# / tag GI# 
 
 guhek <- SE#? GUhA#
 
@@ -166,7 +152,7 @@ tag <- tag-unit+ (joik-jek tag-unit+)*
 
 tag-unit <- KI# / BAI# / PU# / ZI# / ZEhA# / FAhA# / VA# / VEhA# / VIhA# / TAhE# / ZAhO# / CAhA# / CUhE# / number ROI# / FIhO# selbri FEhU# / (FEhE# / MOhI# / SE# / NAhE#) tag-unit
 
-free <- SEI# (terms CU#?)? selbri SEhU#? / SOI# sumti sumti? SEhU#? / vocative relative-clauses? selbri relative-clauses? DOhU#? / vocative relative-clauses? CMENE#+ relative-clauses? DOhU#? / vocative sumti? DOhU#? / (number / lerfu-string) MAI# / TO# text TOI#? / xi# 
+free <- SEI# (terms CU#?)? selbri SEhU#? / SOI# sumti sumti? SEhU#? / vocative relative-clauses? selbri relative-clauses? DOhU#? / vocative sumti? DOhU#? / (number / lerfu-string) MAI# / TO# text TOI#? / xi# 
 
 xi# <- XI# (number / lerfu-string) BOI#? / XI# VEI# mex VEhO#? 
 
@@ -174,7 +160,7 @@ vocative <- COI#+ DOI# / COI# COI#* / DOI#
 
 indicators <- FUhE#? indicator+ 
 
-indicator <- UI# / CAI# / NAI# / DAhO# / FUhO# / free
+indicator <- UI# / CAI# / NAI# / DAhO# / FUhO# / RAhO# / GAhO# / free
 
 ; **************** ; Magic Words ; **************** 
 
@@ -326,7 +312,7 @@ BY# <- BY-pre BY-post / bu#
 
 BY-pre <- pre# BY spaces? 
 
-BY-post <- !number !lerfu-strig post# 
+BY-post <- !lerfu-string post# 
 
 ; specifies actualitypotentiality of tense 
 
@@ -432,7 +418,7 @@ FAhA-post <- post#
 
 ; normally elided 'done pause' to indicate end of utterance string 
 
-FAhO# <- pre# FAhO spaces? 
+FAhO# <- pre# FAhO dot-star
 
 ; space interval mod flag 
 
@@ -896,7 +882,7 @@ PA# <- PA-pre PA-post
 
 PA-pre <- pre# PA spaces? 
 
-PA-post <- !number !lerfu-string post# 
+PA-post <- !number post# 
 
 ; afterthought termset connective prefix 
 
@@ -1426,7 +1412,7 @@ pause <- comma* space-char+ / EOF
 
 EOF <- comma* !. 
 
-dot-star <- .* 
+SPACE dot-star <- .* 
 
 comma <- [[,] 
 
@@ -1691,4 +1677,3 @@ ZO <- &CMAVO ( z o ) &post-word
 ZOI <- &CMAVO ( z o i / l a h o ) &post-word 
 
 ZOhU <- &CMAVO ( z o h u ) &post-word 
-
