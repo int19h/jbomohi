@@ -1,9 +1,8 @@
 This is a version (not official) of the full grammar of Lojban. I intend to make many changes to it, some cosmetic, some not. Don't take the contents of this page too seriously for now. In ((zasni gerna cenba vreji)) I will try to keep a record of the changes as I make them. mi'e ((xorxes))
 
-
 ; --- GRAMMAR --- 
 
-PUBLIC text <- intro? text-1? FAhO#? 
+text <- intro? text-1? FAhO#? 
 
 text-1 <- I# joik-jek? (tag? BO#)? text-1? / NIhO#* paragraphs 
 
@@ -165,7 +164,7 @@ tag-unit <- KI# / BAI# / PU# / ZI# / ZEhA# / FAhA# / VA# / VEhA# / VIhA# / TAhE#
 
 ; ---------------------------- 
 
-intro <- su-null* si-null* SI#* post# (!gek joik-jek)? 
+intro <- initial-spaces? su-null* si-null* SI#* post# (!gek joik-jek)? 
 
 su-null <- SI#* su-word* SU# 
 
@@ -201,7 +200,7 @@ SI# <- si-null* SI
 
 SU# <- si-null* SU 
 
-FAhO# <- pre# FAhO NON-LOJBAN* 
+FAhO# <- pre# FAhO 
 
 COI# <- pre# COI !vocative post# 
 
@@ -473,7 +472,7 @@ ZO-word <- ZO any-word
 
 LOhU-words-LEhU <- LOhU (!LEhU any-word)* LEhU 
 
-ZOI-expression <- ZOI ZOI (!ZOI NON-LOJBAN)* ZOI 
+ZOI-expression <- ZOI ZOI (!ZOI anything)* ZOI 
 
 any-word <- CMENE / BRIVLA / A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / BY / CAI / CAhA / CEI / CEhE / CO / COI / CU / CUhE / DAhO / DOI / DOhU / FA / FAhA / FAhO / FEhE / FEhU / FIhO / FOI / FUhA / FUhE / FUhO / GA / GAhO / GEhU / GI / GIhA / GOI / GOhA / GUhA / I / JA / JAI / JOI / JOhI / KE / KEI / KEhE / KI / KOhA / KU / KUhE / KUhO / LA / LAU / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / MAhO / ME / MEhU / MOI / MOhE / MOhI / NA / NAI / NAhE / NAhU / NIhE / NIhO / NOI / NU / NUhA / NUhI / NUhU / PA / PEhE / PEhO / PU / RAhO / ROI / SA / SE / SEI / SEhU / SI / SOI / SU / TAhE / TEI / TEhU / TO / TOI / TUhE / TUhU / UI / VA / VAU / VEI / VEhA / VEhO / VIhA / VUhO / VUhU / XI / ZAhO / ZEI / ZEhA / ZI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
 
@@ -481,11 +480,9 @@ any-word <- CMENE / BRIVLA / A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO
 
 ; MORPHOLOGY 
 
-; the above has terminals NON-LOJBAN, BRIVLA, CMENE, CMAVO, A, BAI, ..., ZOhU. 
+; the above has terminals BRIVLA, CMENE, CMAVO, A, BAI, ..., ZOhU, anything. 
 
 ;************************ 
-
-NON-LOJBAN <- non-space+ spaces 
 
 ;------------------------------------------------------------------- 
 
@@ -511,7 +508,7 @@ BOI <- &CMAVO ( b o i ) &post-cmavo spaces?
 
 BU <- &CMAVO ( b u ) &post-cmavo spaces? 
 
-BY <- ybu / &CMAVO ( j o h o / r u h o / g e h o / j e h o / l o h a / n a h a / s e h e / t o h a / g a h e / y h y / b y / c y / d y / f y / g y / j y / k y / l y / m y / n y / p y / r y / s y / t y / v y / x y / z y ) &post-cmavo spaces? 
+BY <- y BU / &CMAVO ( j o h o / r u h o / g e h o / j e h o / l o h a / n a h a / s e h e / t o h a / g a h e / y h y / b y / c y / d y / f y / g y / j y / k y / l y / m y / n y / p y / r y / s y / t y / v y / x y / z y ) &post-cmavo spaces? 
 
 CAhA <- &CMAVO ( c a h a / p u h i / n u h o / k a h e ) &post-cmavo spaces? 
 
@@ -715,7 +712,7 @@ VUhO <- &CMAVO ( v u h o ) &post-cmavo spaces?
 
 XI <- &CMAVO ( x i ) &post-cmavo spaces? 
 
-Y <- &CMAVO ( y+ ) &post-cmavo spaces? 
+Y <- &CMAVO ( y ) &post-cmavo spaces? 
 
 ZAhO <- &CMAVO ( c o h i / p u h o / c o h u / m o h u / c a h o / c o h a / d e h a / b a h o / d i h a / z a h o ) &post-cmavo spaces? 
 
@@ -737,57 +734,55 @@ ZOhU <- &CMAVO ( z o h u ) &post-cmavo spaces?
 
 CMENE <- jbocme / zifcme 
 
-jbocme <- &zifcme (syllable / y-syllable)+ spaces 
+jbocme <- &zifcme (onset nucleus coda?)+ spaces 
 
 zifcme <- !h (nucleus / glide / h / C !spaces)* C spaces 
 
 ;------------------------------------------------------------------- 
 
-CMAVO <- !cmene !CVCy-lujvo C? glide? (nucleus h)* nucleus &post-cmavo spaces? / y+ 
+CMAVO <- !cmene !CVCy-lujvo C? glide? nucleus (h nucleus)* &post-cmavo spaces?
 
-CVCy-lujvo <- C V C y h? initial-rafsi* (type-3 / fuhivla / gismu / end-rafsi)
+CVCy-lujvo <- C V C y initial-rafsi* (type-3 / fuhivla / gismu / end-rafsi)
 
 post-cmavo <- spaces / !nucleus (CMAVO / BRIVLA) 
 
 ;------------------------------------------------------------------- 
 
-BRIVLA <- gismu / fuhivla / type-3 / lujvo 
+BRIVLA <- gismu / !h fuhivla / type-3 / lujvo 
+
+lujvo <- !cmene !cmavo !h initial-rafsi+ (end-rafsi / gismu / fuhivla / type-3) 
+
+type-3 <- !cmene (classifier / y-rafsi R) syllable+ spaces 
+
+fuhivla <- !cmene !cmavo !rafsi-string !slinkuhi syllable syllable+ spaces 
+
+gismu <- full-rafsi spaces 
+
+end-rafsi <- !cmene short-rafsi spaces 
 
 ;----------------------------------- 
-
-lujvo <- !cmavo initial-rafsi+ (type-3 / fuhivla / gismu / end-rafsi) 
 
 initial-rafsi <- y-less-rafsi / y-rafsi / fuhivla-rafsi / type-3-rafsi / brivla-rafsi 
 
-brivla-rafsi <- !cmene !cmavo !slinkuhi !h syllable syllable+ h y !nucleus h? 
+brivla-rafsi <- !cmavo !slinkuhi syllable syllable+ h y  
 
-;----------------------------------- 
+type-3-rafsi <- (classifier / y-rafsi R) syllable* onset y 
 
-type-3 <- !cmene (C V C CR / CC V CR / C V CR / y-rafsi R) syllable+ spaces 
-
-type-3-rafsi <- !cmene (C V C CR / CC V CR / C V CR / y-rafsi R) syllable* y-syllable h? 
-
-;----------------------------------- 
-
-fuhivla <- !cmene !cmavo !rafsi-string !slinkuhi !h syllable syllable+ spaces 
-
-fuhivla-rafsi <- !cmene !cmavo !rafsi-string !slinkuhi !h syllable+ y-syllable h? 
+fuhivla-rafsi <- !cmavo !rafsi-string !slinkuhi syllable+ onset y 
 
 slinkuhi <- C rafsi-string 
 
-rafsi-string <- y-less-rafsi* (gismu / end-rafsi / y-rafsi / CC y / h y / C V C C V h y / CC V C V h y) 
+rafsi-string <- y-less-rafsi* (gismu / end-rafsi / y-rafsi / CC y / h y / full-rafsi h y) 
 
-;----------------------------------- 
+y-less-rafsi <- short-rafsi &rafsi-string 
 
-gismu <- (C V C C V / CC V C V) spaces 
+classifier <- C V C CR / CC V CR / C V CR
 
-end-rafsi <- (C V h V / C VV / CC V) spaces 
+full-rafsi <- C V C C V / CC V C V
 
-y-rafsi <- (C V C C / CC V C / C V C) y !nucleus h? 
+y-rafsi <- C V C C y / CC V C y / C V C y 
 
-y-less-rafsi <- (C V C / CC V / C VV R? / C V h V R?) &rafsi-string 
-
-
+short-rafsi <- C V C / CC V / C VV R? / C V h V R?
 
 ;------------------------------------------------------------------- 
 
@@ -797,35 +792,31 @@ y-less-rafsi <- (C V C / CC V / C VV R? / C V h V R?) &rafsi-string
 
 ; the above has terminals a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, r, s, t, u, v, x, y, z, 
 
-; V, VV, nucleus, glide, C, CC, R, CR, syllable, y-syllable, spaces, dot-star and EOF ... 
+; V, VV, glide, C, CC, R, CR, onset, nucleus, coda, syllable, and spaces. 
 
 ;************************ 
 
-;--------------------------------------------------------------- 
+;------------------------------------ 
 
 syllable <- onset !y nucleus coda? 
 
-y-syllable <- onset &y nucleus coda? 
-
-;------------------------------------ 
-
-CR <- C R / n l &r / r l &n / r l &affricate
-
-R <- r &C / n &r 
-
-CC <- &onset C C 
-
-C <- voiced / unvoiced / l / m / n / r 
-
-coda <- !syllable C / liquid !liquid C 
+coda <- !onset C
 
 onset <- (h / C? glide / affricate / sibilant? middle? liquid?) &nucleus 
 
-sibilant <- c / s !x / (j / z) !n !l !r 
+sibilant <- c / s !x / j !n !liquid / z !n !liquid 
 
-middle <- p / t !l / k / f / x / b / d !l / g / v / m / n !l !r 
+middle <- f / p / t !l / k / x / v / b / d !l / g / m / n !liquid 
 
 liquid <- l / r 
+
+CC <- &onset C C 
+
+CR <- C R / r n &C / r l &n / r l &affricate / n l &r 
+
+R <- r &C / n &r 
+
+C <- voiced / unvoiced / l / m / n / r 
 
 affricate <- t c / t s / d j / d z 
 
@@ -833,79 +824,80 @@ voiced <- b / d / g / j / v / z
 
 unvoiced <- c / f / k / p / s / t / x 
 
-l <- [[l] !h !l 
+l <- "l" !h !l 
 
-m <- [[m] !h !m !z 
+m <- "m" !h !m !z 
 
-n <- [[n] !h !n !affricate 
+n <- "n" !h !n !affricate 
 
-r <- [[r] !h !r 
+r <- "r" !h !r 
 
-b <- [[b] !h !b !unvoiced 
+b <- "b" !h !b !unvoiced 
 
-d <- [[d] !h !d !unvoiced 
+d <- "d" !h !d !unvoiced 
 
-g <- [[g] !h !g !unvoiced 
+g <- "g" !h !g !unvoiced 
 
-v <- [[v] !h !v !unvoiced 
+v <- "v" !h !v !unvoiced 
 
-j <- [[j] !h !j !z !unvoiced 
+j <- "j" !h !j !z !unvoiced 
 
-z <- [[z] !h !z !j !unvoiced 
+z <- "z" !h !z !j !unvoiced 
 
-s <- [[s] !h !s !c !voiced 
+s <- "s" !h !s !c !voiced 
 
-c <- [[c] !h !c !s !x !voiced 
+c <- "c" !h !c !s !x !voiced 
 
-x <- [[x] !h !x !c !k !voiced 
+x <- "x" !h !x !c !k !voiced 
 
-k <- [[k] !h !k !x !voiced 
+k <- "k" !h !k !x !voiced 
 
-f <- [[f] !h !f !voiced 
+f <- "f" !h !f !voiced 
 
-p <- [[p] !h !p !voiced 
+p <- "p" !h !p !voiced 
 
-t <- [[t !h !t !voiced 
+t <- "t" !h !t !voiced 
 
-h <- [['h] &nucleus 
+h <- "'" &nucleus 
 
 ;---------------------------------------- 
 
 glide <- (i / u) &nucleus 
 
-nucleus <- V / VV / y !nucleus 
+nucleus <- V / VV / y  
 
 VV <- (a i / a u / e i / o i) !nucleus !glide 
 
 V <- (a / e / i / o / u) !nucleus 
 
-a <- [[a] 
+a <- "a" 
 
-e <- [[e] 
+e <- "e" 
 
-i <- [[i] 
+i <- "i" 
 
-o <- [[o] 
+o <- "o" 
 
-u <- [[u] 
+u <- "u" 
 
-y <- [[y] 
+y <- "y" !nucleus
+
+hesitation <- "y" !BU
+
 
 ;------------------------------------------------------------------- 
 
-ybu <- Y space-char* BU 
+anything <- non-space+ spaces? 
 
-spaces <- !Y initial-spaces 
+initial-spaces <- hesitation* spaces 
 
-initial-spaces <- (space-char / !ybu Y)+ EOF? / EOF 
+spaces <- space-char hesitation* spaces / EOF 
 
-NORATS non-space <- !space-char . 
+non-space <- !space-char . 
 
-NORATS space-char <- [[.\t\n\r?!\u0020] 
+space-char <- [[.\t\n\r?!\u0020] 
 
 EOF <- !. 
-
-SPACE dot-star <- .* 
 
 
 
