@@ -3,7 +3,7 @@ This is a version (not official) of the full grammar of Lojban. I intend to make
 
 ; --- GRAMMAR --- 
 
-PUBLIC text <- intro? text-1? FAhO#?
+PUBLIC text <- intro? text-1? FAhO#? 
 
 text-1 <- I# joik-jek? (tag? BO#)? text-1? / NIhO#* paragraphs 
 
@@ -163,13 +163,13 @@ tag <- tag-unit+ (joik-jek tag-unit+)*
 
 tag-unit <- KI# / BAI# / PU# / ZI# / ZEhA# / FAhA# / VA# / VEhA# / VIhA# / TAhE# / ZAhO# / CAhA# / CUhE# / number ROI# / FIhO# selbri FEhU# / (FEhE# / MOhI# / SE# / NAhE#) tag-unit 
 
-; ----------------------------
+; ---------------------------- 
 
-intro <- su-null* si-null* SI#* post# (!gek joik-jek)?
+intro <- su-null* si-null* SI#* post# (!gek joik-jek)? 
 
 su-null <- SI#* su-word* SU# 
 
-si-null <- si-word SI#
+si-null <- si-word SI# 
 
 ; --- Word Modifiers --- 
 
@@ -449,12 +449,11 @@ ZOhU# <- pre# ZOhU post#
 
 ; ************************** 
 
-; MAGIC WORD CONSTRUCTS
+; MAGIC WORD CONSTRUCTS 
 
 ; ************************** 
 
 ; (ZOI-delimiters not fully implemented here.) 
-
 
 su-word <- ZEI-lujvo / BU-lerfu / zei-bu-word 
 
@@ -482,13 +481,11 @@ any-word <- CMENE / BRIVLA / A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO
 
 ; MORPHOLOGY 
 
-; the above has terminals NON-LOJBAN, BRIVLA, CMENE, CMAVO, A, BAI, ..., ZOhU.
-
+; the above has terminals NON-LOJBAN, BRIVLA, CMENE, CMAVO, A, BAI, ..., ZOhU. 
 
 ;************************ 
 
-
-NON-LOJBAN <- non-space+ spaces
+NON-LOJBAN <- non-space+ spaces 
 
 ;------------------------------------------------------------------- 
 
@@ -748,7 +745,7 @@ zifcme <- !h (nucleus / glide / h / C !spaces)* C spaces
 
 CMAVO <- !cmene !CVCy-lujvo C? glide? (nucleus h)* nucleus &post-cmavo spaces? / y+ 
 
-CVCy-lujvo <- C V C y h? initial-rafsi* (type-3 / fuhivla / gismu / end-rafsi) 
+CVCy-lujvo <- C V C y h? initial-rafsi* (type-3 / fuhivla / gismu / end-rafsi)
 
 post-cmavo <- spaces / !nucleus (CMAVO / BRIVLA) 
 
@@ -766,9 +763,9 @@ brivla-rafsi <- !cmene !cmavo !slinkuhi !h syllable syllable+ h y !nucleus h?
 
 ;----------------------------------- 
 
-type-3 <- !cmene (C V C C / CC V C / C V C) y? (r / n / l) &C syllable+ spaces 
+type-3 <- !cmene (C V C CR / CC V CR / C V CR / y-rafsi R) syllable+ spaces 
 
-type-3-rafsi <- !cmene (C V C C / CC V C / C V C) y? (r / n / l) &C syllable* y-syllable h? 
+type-3-rafsi <- !cmene (C V C CR / CC V CR / C V CR / y-rafsi R) syllable* y-syllable h? 
 
 ;----------------------------------- 
 
@@ -790,7 +787,7 @@ y-rafsi <- (C V C C / CC V C / C V C) y !nucleus h?
 
 y-less-rafsi <- (C V C / CC V / C VV R? / C V h V R?) &rafsi-string 
 
-R <- r &C / n &r 
+
 
 ;------------------------------------------------------------------- 
 
@@ -800,7 +797,7 @@ R <- r &C / n &r
 
 ; the above has terminals a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, r, s, t, u, v, x, y, z, 
 
-; V, VV, nucleus, glide, C, CC, syllable, y-syllable, spaces, dot-star and EOF ... 
+; V, VV, nucleus, glide, C, CC, R, CR, syllable, y-syllable, spaces, dot-star and EOF ... 
 
 ;************************ 
 
@@ -811,6 +808,10 @@ syllable <- onset !y nucleus coda?
 y-syllable <- onset &y nucleus coda? 
 
 ;------------------------------------ 
+
+CR <- C R / n l &r / r l &n / r l &affricate
+
+R <- r &C / n &r 
 
 CC <- &onset C C 
 
@@ -832,41 +833,41 @@ voiced <- b / d / g / j / v / z
 
 unvoiced <- c / f / k / p / s / t / x 
 
-l <- [l] !h !l 
+l <- [[l] !h !l 
 
-m <- [m] !h !m !z 
+m <- [[m] !h !m !z 
 
-n <- [n] !h !n !affricate 
+n <- [[n] !h !n !affricate 
 
-r <- [r] !h !r 
+r <- [[r] !h !r 
 
-b <- [b] !h !b !unvoiced 
+b <- [[b] !h !b !unvoiced 
 
-d <- [d] !h !d !unvoiced 
+d <- [[d] !h !d !unvoiced 
 
-g <- [g] !h !g !unvoiced 
+g <- [[g] !h !g !unvoiced 
 
-v <- [v] !h !v !unvoiced 
+v <- [[v] !h !v !unvoiced 
 
-j <- [j] !h !j !z !unvoiced 
+j <- [[j] !h !j !z !unvoiced 
 
-z <- [z] !h !z !j !unvoiced 
+z <- [[z] !h !z !j !unvoiced 
 
-s <- [s] !h !s !c !voiced 
+s <- [[s] !h !s !c !voiced 
 
-c <- [c] !h !c !s !x !voiced 
+c <- [[c] !h !c !s !x !voiced 
 
-x <- [x] !h !x !c !k !voiced 
+x <- [[x] !h !x !c !k !voiced 
 
-k <- [k] !h !k !x !voiced 
+k <- [[k] !h !k !x !voiced 
 
-f <- [f] !h !f !voiced 
+f <- [[f] !h !f !voiced 
 
-p <- [p] !h !p !voiced 
+p <- [[p] !h !p !voiced 
 
-t <- [t] !h !t !voiced 
+t <- [[t !h !t !voiced 
 
-h <- ['h] &nucleus 
+h <- [['h] &nucleus 
 
 ;---------------------------------------- 
 
@@ -878,17 +879,17 @@ VV <- (a i / a u / e i / o i) !nucleus !glide
 
 V <- (a / e / i / o / u) !nucleus 
 
-a <- [a] 
+a <- [[a] 
 
-e <- [e] 
+e <- [[e] 
 
-i <- [i] 
+i <- [[i] 
 
-o <- [o] 
+o <- [[o] 
 
-u <- [u] 
+u <- [[u] 
 
-y <- [y] 
+y <- [[y] 
 
 ;------------------------------------------------------------------- 
 
@@ -900,9 +901,11 @@ initial-spaces <- (space-char / !ybu Y)+ EOF? / EOF
 
 NORATS non-space <- !space-char . 
 
-NORATS space-char <- [.\t\n\r?!\u0020] 
+NORATS space-char <- [[.\t\n\r?!\u0020] 
 
 EOF <- !. 
 
 SPACE dot-star <- .* 
+
+
 
