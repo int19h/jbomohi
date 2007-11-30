@@ -2,7 +2,7 @@ This is a version (not official) of the full grammar of Lojban. I intend to make
 
 ; --- GRAMMAR --- 
 
-text <- intro? text-1? FAhO#? 
+text <- intro-null? free? (!gek joik-jek)? text-1? FAhO#? 
 
 text-1 <- I# joik-jek? (tag? BO#)? text-1? / NIhO#* paragraphs 
 
@@ -18,7 +18,7 @@ statement-2 <- statement-3 (I# joik-jek? tag? BO# statement-2?)?
 
 statement-3 <- sentence / tag? TUhE# text-1 TUhU#? 
 
-fragment <- prenex / terms VAU#? / ek / gihek / quantifier / NA# !JA# / relative-clauses / links / linkargs 
+fragment <- prenex / terms VAU#? / ek / gihek / quantifier / NA# !JA# 
 
 ; ---------------------------------------------- 
 
@@ -38,9 +38,9 @@ bridi-tail-3 <- selbri tail-terms / gek-sentence
 
 gek-sentence <- gek subsentence gik subsentence tail-terms / tag? KE# gek-sentence KEhE#? / NA# gek-sentence 
 
-; -------------------------------- 
-
 tail-terms <- terms? VAU#? 
+
+; -------------------------------- 
 
 terms <- terms-1+ 
 
@@ -70,9 +70,9 @@ sumti-4 <- sumti-5 / gek sumti gik sumti-4
 
 sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri KU#? relative-clauses? 
 
-sumti-6 <- ZO-word# / ZOI-expression# / LOhU-words-LEhU# / lerfu-string !MOI# BOI#? / LU# text LIhU#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? / KOhA# / (LA# / LE#) sumti-tail KU#? / LI# mex LOhO#? 
+sumti-6 <- ZO-word# / ZOI-expression# / LOhU-words-LEhU# / lerfu-string !MOI# BOI#? / LU# text LIhU#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? / KOhA# / (LA# / LE#) sumti-tail / LI# mex LOhO#? 
 
-sumti-tail <- sumti-6? relative-clauses? (quantifier? selbri relative-clauses? / quantifier sumti) 
+sumti-tail <- sumti-6? relative-clauses? (quantifier? selbri relative-clauses? / quantifier sumti) KU#?
 
 relative-clauses <- relative-clause (ZIhE# relative-clause)* 
 
@@ -94,27 +94,19 @@ tanru-unit <- tanru-unit-1 (CEI# tanru-unit-1)*
 
 tanru-unit-1 <- tanru-unit-2 linkargs? 
 
-tanru-unit-2 <- BRIVLA# / word-ZEI-word# / CMENE# / GOhA# / KE# selbri-4+ KEhE#? / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# (joik-jek NU#)* subsentence KEI#? 
+tanru-unit-2 <- BRIVLA# / word-ZEI-word# / CMEVLA# / GOhA# / KE# selbri-4+ KEhE#? / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# subsentence KEI#? 
 
-linkargs <- BE# term links? BEhO#? 
-
-links <- BEI# term links? 
+linkargs <- BE# term (BEI# term)* BEhO#? 
 
 ; ----------------------------- 
 
 quantifier <- number !MOI# BOI#? / VEI# mex VEhO#? 
 
-mex <- mex-1 (operator mex-1)* / rp# 
-
-rp# <- FUhA# rp-expression 
+mex <- mex-1 (operator mex-1)* / FUhA# rp-expression 
 
 mex-1 <- mex-2 (BIhE# operator mex-1)? 
 
-mex-2 <- operand / mex-forethought 
-
-mex-forethought <- PEhO#? operator fore-operands KUhE#? 
-
-fore-operands <- mex-2+ 
+mex-2 <- operand / PEhO#? operator mex-2+ KUhE#? 
 
 rp-expression <- operand (rp-expression operator)* 
 
@@ -142,17 +134,15 @@ lerfu-word <- BY# / word-BU# / LAU# lerfu-word / TEI# lerfu-string FOI#
 
 ; ---------------------- 
 
-ek <- NA#? SE#? A# 
-
-gihek <- NA#? SE#? GIhA# 
+joik-ek <- joik-jek / NA#? SE#? A# 
 
 joik-jek <- NA#? SE#? (JOI# / JA# / BIhI#) 
 
-joik-ek <- joik-jek / ek 
-
-gek <- SE#? GA# / joik-jek GI# / tag GI# 
+gihek <- NA#? SE#? GIhA# 
 
 guhek <- SE#? GUhA# 
+
+gek <- SE#? GA# / joik-jek GI# / tag GI# 
 
 gik <- GI# 
 
@@ -160,11 +150,9 @@ tag <- tag-unit+ (joik-jek tag-unit+)*
 
 tag-unit <- KI# / BAI# / PU# / ZI# / ZEhA# / FAhA# / VA# / VEhA# / VIhA# / TAhE# / ZAhO# / CAhA# / CUhE# / number ROI# / FIhO# selbri FEhU# / (FEhE# / MOhI# / SE# / NAhE#) tag-unit 
 
-; --- Word Modifiers --- 
+; ----------------------------------------------------- 
 
-pre# <- BAhE#* word-SI* 
-
-post# <- !BU# !ZEI# (vocative / parenthetical / number-mai / lerfu-mai / subscript / indicator)? 
+free <- vocative / parenthetical / number-mai / lerfu-mai / subscript / indicator
 
 vocative <- (COI#+ DOI#? / DOI#) (relative-clauses? selbri relative-clauses? / sumti?) DOhU#? 
 
@@ -178,49 +166,27 @@ subscript <- XI# (number BOI#? / lerfu-string BOI#? / VEI# mex VEhO#?)
 
 indicator <- FUhE# / UI# / CAI# / NAI# / DAhO# / FUhO# / RAhO# / GAhO# 
 
-intro <- y? spaces? words-SU* SI#* post# (!gek joik-jek)? 
-
 ; --- Special SELMAHO --- 
 
-BAhE# <- word-SI* BAhE !BU# !ZEI# 
+FAhO# <- pre# FAhO anything*
 
-BU# <- word-SI* BU 
+COI# <- pre# COI vocative-post# 
 
-ZEI# <- word-SI* ZEI 
+PA# <- pre# PA number-post# 
 
-SI# <- word-SI* SI 
+BY# <- pre# BY lerfu-post# 
 
-FAhO# <- pre# FAhO 
+LAU# <- pre# LAU lerfu-post# 
 
-COI# <- pre# COI !vocative post# 
+TEI# <- pre# TEI lerfu-post# 
 
-PA# <- pre# PA !number-mai post# 
-
-BY# <- pre# BY !lerfu-mai post# 
-
-LAU# <- pre# LAU !lerfu-mai post# 
-
-TEI# <- pre# TEI !lerfu-mai post# 
-
-FOI# <- pre# FOI !lerfu-mai post# 
-
-; --- Pseudo SELMAHO --- 
-
-word-BU# <- pre# word-BU !lerfu-mai post# 
-
-word-ZEI-word# <- pre# word-ZEI-word post# 
-
-ZO-word# <- pre# ZO-word post# 
-
-LOhU-words-LEhU# <- pre# LOhU-words-LEhU post# 
-
-ZOI-expression# <- pre# ZOI-expression post# 
+FOI# <- pre# FOI lerfu-post# 
 
 ; --- Normal SELMAHO --- 
 
 BRIVLA# <- pre# BRIVLA post# 
 
-CMENE# <- pre# CMENE post# 
+CMEVLA# <- pre# CMEVLA post# 
 
 CMAVO# <- pre# CMAVO post# 
 
@@ -436,27 +402,60 @@ ZIhE# <- pre# ZIhE post#
 
 ZOhU# <- pre# ZOhU post# 
 
+; ---- Pseudo SELMAHO ---------------
+
+ZO-word# <- pre# ZO-word post# 
+
+LOhU-words-LEhU# <- pre# LOhU-words-LEhU post# 
+
+ZOI-expression# <- pre# ZOI-expression post# 
+
+word-ZEI-word# <- pre# word-ZEI-word post# 
+
+word-BU# <- pre# word-BU lerfu-post# 
+
+; ---- Word Modifiers --------------- 
+
+pre# <- BAhE#* word-SI* 
+
+BAhE# <- word-SI* BAhE !BU# !ZEI# 
+
+number-post# <- !BU# !ZEI# (!number-mai free)?
+
+lerfu-post# <- !BU# !ZEI# (!lerfu-mai free)?
+
+vocative-post# <- !BU# !ZEI# (!vocative free)?
+
+post# <- !BU# !ZEI# free?
+
+
 ; ************************** 
 
-; MAGIC WORD CONSTRUCTS 
+; MAGIC WORD CONSTRUCTS (ZOI-delimiters not fully implemented here.) 
 
 ; ************************** 
 
-; (ZOI-delimiters not fully implemented here.) 
+intro-null <- Y? spaces? words-SU* SI#* !BU# !ZEI#  
 
-; ---------------------------- 
+words-SU <- (word-ZEI-word / word-BU / base-word)* SU# 
 
-words-SU <- si-word* SU 
+word-SI <- (word-ZEI-word / word-BU / base-word) SI# 
 
-word-SI <- si-word word-SI SI 
+word-BU <- base-word (BU#* ZEI-word#+)* BU#+ 
 
-word-BU <- zei-bu-word (bu-tail? zei-tail)* bu-tail 
+word-ZEI-word <- base-word (ZEI-word#* BU#+)* ZEI-word#+ 
 
-word-ZEI-word <- zei-bu-word (zei-tail? bu-tail)* zei-tail 
+ZEI-word# <- word-SI* ZEI-word
 
-bu-tail <- (word-SI BU)+ 
+ZEI# <- word-SI* ZEI 
 
-zei-tail <- (word-SI ZEI any-word)+ 
+BU# <- word-SI* BU 
+
+SI# <- word-SI* SI 
+
+base-word <- ZO-word / LOhU-words-LEhU / ZOI-expression / !FAhO any-word 
+
+ZEI-word <- ZEI any-word 
 
 ZO-word <- ZO any-word 
 
@@ -464,19 +463,19 @@ LOhU-words-LEhU <- LOhU (!LEhU any-word)* LEhU
 
 ZOI-expression <- ZOI ZOI (!ZOI anything)* ZOI 
 
-si-word <- word-ZEI-word / word-BU / zei-bu-word 
-
-zei-bu-word <- ZO-word / LOhU-words-LEhU / ZOI-expression / !FAhO any-word 
-
-any-word <- CMENE / BRIVLA / A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / BY / CAI / CAhA / CEI / CEhE / CO / COI / CU / CUhE / DAhO / DOI / DOhU / FA / FAhA / FAhO / FEhE / FEhU / FIhO / FOI / FUhA / FUhE / FUhO / GA / GAhO / GEhU / GI / GIhA / GOI / GOhA / GUhA / I / JA / JAI / JOI / JOhI / KE / KEI / KEhE / KI / KOhA / KU / KUhE / KUhO / LA / LAU / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / MAhO / ME / MEhU / MOI / MOhE / MOhI / NA / NAI / NAhE / NAhU / NIhE / NIhO / NOI / NU / NUhA / NUhI / NUhU / PA / PEhE / PEhO / PU / RAhO / ROI / SA / SE / SEI / SEhU / SI / SOI / SU / TAhE / TEI / TEhU / TO / TOI / TUhE / TUhU / UI / VA / VAU / VEI / VEhA / VEhO / VIhA / VUhO / VUhU / XI / ZAhO / ZEI / ZEhA / ZI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
+any-word <- CMEVLA / BRIVLA / A / BAI / BAhE / BE / BEI / BEhO / BIhE / BIhI / BO / BOI / BU / BY / CAI / CAhA / CEI / CEhE / CO / COI / CU / CUhE / DAhO / DOI / DOhU / FA / FAhA / FAhO / FEhE / FEhU / FIhO / FOI / FUhA / FUhE / FUhO / GA / GAhO / GEhU / GI / GIhA / GOI / GOhA / GUhA / I / JA / JAI / JOI / JOhI / KE / KEI / KEhE / KI / KOhA / KU / KUhE / KUhO / LA / LAU / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / MAhO / ME / MEhU / MOI / MOhE / MOhI / NA / NAI / NAhE / NAhU / NIhE / NIhO / NOI / NU / NUhA / NUhI / NUhU / PA / PEhE / PEhO / PU / RAhO / ROI / SA / SE / SEI / SEhU / SI / SOI / SU / TAhE / TEI / TEhU / TO / TOI / TUhE / TUhU / UI / VA / VAU / VEI / VEhA / VEhO / VIhA / VUhO / VUhU / XI / ZAhO / ZEI / ZEhA / ZI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
 
 ;************************ 
 
 ; MORPHOLOGY 
 
-; the above has terminals BRIVLA, CMENE, CMAVO, A, BAI, ..., ZOhU, anything. 
+; the above has terminals BRIVLA, CMEVLA, CMAVO, A, BAI, ..., ZOhU, anything, and spaces. 
 
 ;************************ 
+
+;------------------------------------------------------------------- 
+
+anything <- non-space+ spaces? 
 
 ;------------------------------------------------------------------- 
 
@@ -706,6 +705,8 @@ VUhO <- &CMAVO ( v u h o ) post-cmavo
 
 XI <- &CMAVO ( x i ) post-cmavo 
 
+Y <- &CMAVO ( y ) post-cmavo 
+
 ZAhO <- &CMAVO ( c o h i / p u h o / c o h u / m o h u / c a h o / c o h a / d e h a / b a h o / d i h a / z a h o ) post-cmavo 
 
 ZEhA <- &CMAVO ( z e h u / z e h a / z e h i / z e h e ) post-cmavo 
@@ -724,43 +725,43 @@ ZOhU <- &CMAVO ( z o h u ) post-cmavo
 
 ;------------------------------------------------------------------- 
 
-CMENE <- jbocme / zifcme 
+CMEVLA <- jbocme / zifcme 
 
 jbocme <- &zifcme (onset nucleus coda?)+ spaces 
 
-zifcme <- !h (nucleus / glide / h / !spaces C)* C spaces 
+zifcme <- !h (nucleus / glide / h / C !spaces)* C spaces 
 
 ;------------------------------------------------------------------- 
 
-CMAVO <- !cmene !CVCy-lujvo C? glide? nucleus (h nucleus)* post-cmavo
+CMAVO <- !CMEVLA !CVCy-lujvo C? glide? nucleus (h nucleus)* post-cmavo
 
-CVCy-lujvo <- C V C y initial-rafsi* (type-3 / fuhivla / gismu / end-rafsi)
+CVCy-lujvo <- C V C y initial-rafsi* (end-rafsi / gismu / fuhivla / type-3-fuhivla)
 
-post-cmavo <- spaces / !nucleus &CMAVO / !nucleus &BRIVLA 
+post-cmavo <- spaces / &CMAVO / &BRIVLA 
 
 ;------------------------------------------------------------------- 
 
-BRIVLA <- gismu / !h fuhivla / type-3 / lujvo 
+BRIVLA <- gismu / !h fuhivla / type-3-fuhivla / lujvo 
 
-lujvo <- !cmene !cmavo !h initial-rafsi+ (end-rafsi / gismu / fuhivla / type-3) 
+lujvo <- !CMEVLA !CMAVO !h initial-rafsi+ (end-rafsi / gismu / fuhivla / type-3-fuhivla) 
 
-type-3 <- !cmene classifier syllable+ spaces 
+type-3-fuhivla <- !CMEVLA classifier syllable+ spaces 
 
-fuhivla <- !cmene !cmavo !rafsi-string !slinkuhi syllable syllable+ spaces 
+fuhivla <- !CMEVLA !CMAVO !rafsi-string !slinkuhi syllable syllable+ spaces 
 
 gismu <- full-rafsi spaces 
 
-end-rafsi <- !cmene short-rafsi spaces 
+end-rafsi <- !CMEVLA short-rafsi spaces 
 
 ;----------------------------------- 
 
 initial-rafsi <- y-less-rafsi / y-rafsi / fuhivla-rafsi / type-3-rafsi / brivla-rafsi 
 
-brivla-rafsi <- !cmavo !slinkuhi syllable syllable+ h y  
+brivla-rafsi <- !CMAVO !slinkuhi syllable syllable+ h y  
 
 type-3-rafsi <- classifier syllable* onset y 
 
-fuhivla-rafsi <- !cmavo !rafsi-string !slinkuhi syllable+ onset y 
+fuhivla-rafsi <- !CMAVO !rafsi-string !slinkuhi syllable+ onset y 
 
 slinkuhi <- C rafsi-string 
 
@@ -784,7 +785,7 @@ short-rafsi <- C V C / CC V / C VV R? / C V h V R?
 
 ; the above has terminals a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, r, s, t, u, v, x, y, z, 
 
-; V, VV, glide, C, CC, R, CR, onset, nucleus, coda, syllable, and spaces. 
+; V, VV, glide, C, CC, R, CR, onset, nucleus, coda, syllable, non-space and spaces. 
 
 ;************************ 
 
@@ -877,9 +878,7 @@ y <- "y"+ !nucleus
 
 ;------------------------------------------------------------------- 
 
-anything <- non-space+ spaces? 
-
-spaces <- space-char y? spaces / EOF 
+spaces <- space-char Y? spaces / EOF 
 
 non-space <- !space-char . 
 
