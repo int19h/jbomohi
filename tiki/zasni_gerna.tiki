@@ -6,41 +6,37 @@ text <- intro-null? free? (!gek joik)? text-1? FAhO#?
 
 intro-null <- spaces? Y? words-SU* SI#* !BU# !ZEI# 
 
-text-1 <- I# joik? (tag? BO#)? text-1? / NIhO#* paragraphs 
-
-paragraphs <- paragraph (NIhO#+ paragraph)* 
+text-1 <- I# joik? (tag? BO#)? text-1? / NIhO#* paragraph (NIhO#+ paragraph)* 
 
 paragraph <- statement (I# statement?)* 
 
-statement <- statement-1 / prenex statement / fragment 
+statement <- statement-1 / fragment 
 
 statement-1 <- statement-2 (I# joik statement-2?)* 
 
 statement-2 <- statement-3 (I# joik? tag? BO# statement-2?)? 
 
-statement-3 <- sentence / TUhE# text-1 TUhU#? 
+statement-3 <- sentence / TUhE# text TUhU#? 
 
-fragment <- prenex / terms VAU#? / ek / gihek / quantifier / NA# !JA# 
+fragment <- prenex / terms VAU#? / mex / ek / gihek 
 
 ; ---------------------------------------------- 
 
+sentence <- prenex* (terms CU#?)? bridi-tail 
+
 prenex <- terms ZOhU# 
-
-sentence <- (terms CU#?)? bridi-tail 
-
-subsentence <- sentence / prenex subsentence 
 
 bridi-tail <- bridi-tail-2 (gihek bridi-tail-2 tail-terms)* 
 
 bridi-tail-2 <- bridi-tail-3 (gihek tag? BO# bridi-tail-2 tail-terms)? 
 
-bridi-tail-3 <- selbri tail-terms / (!gek tag / NA#)* gek subsentence gik subsentence tail-terms 
+bridi-tail-3 <- selbri tail-terms / (!gek tag / NA#)* gek sentence gik sentence tail-terms 
 
 tail-terms <- terms? VAU#? 
 
 terms <- term+ 
 
-term <- FA#? sumti / tag? sumti / tag KU#? / FA# KU#? / NA# KU# / gek terms gik tail-terms 
+term <- FA#? sumti / tag? sumti / gek terms gik tail-terms / !selbri tag KU#? / !selbri !gihek NA# KU#? / FA# KU#? 
 
 ; ------------------------------- 
 
@@ -50,17 +46,17 @@ sumti-1 <- sumti-3 (joik sumti-3)*
 
 sumti-3 <- sumti-4 (joik tag? BO# sumti-3)? 
 
-sumti-4 <- sumti-5 / gek sumti gik sumti-4 
+sumti-4 <- sumti-5 / gek sumti gik sumti
 
 sumti-5 <- quantifier? sumti-6 relative-clauses? / quantifier selbri KU#? relative-clauses? 
 
-sumti-6 <- ZO-word# / ZOI-expression# / LOhU-words-LEhU# / lerfu-string !MOI# BOI#? / LU# text LIhU#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? / KOhA# / (LA# / LE#) sumti-tail / LI# number LOhO#? 
+sumti-6 <- ZO-word# / ZOI-expression# / LOhU-words-LEhU# / LU# text LIhU#? / lerfu-string !MOI# BOI#? / KOhA# / description / LI# mex LOhO#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#?
 
-sumti-tail <- sumti-6? relative-clauses? (quantifier? selbri relative-clauses? / quantifier sumti) KU#? 
+description <- (LA# / LE#) sumti-6? relative-clauses? (quantifier? selbri / quantifier sumti-6) relative-clauses? KU#? 
 
 relative-clauses <- relative-clause (ZIhE# relative-clause)* 
 
-relative-clause <- GOI# term GEhU#? / NOI# subsentence KUhO#? 
+relative-clause <- GOI# term GEhU#? / NOI# sentence KUhO#? 
 
 ; ------------------------------ 
 
@@ -78,21 +74,23 @@ tanru-unit <- tanru-unit-1 (CEI# tanru-unit-1)*
 
 tanru-unit-1 <- tanru-unit-2 linkargs? 
 
-tanru-unit-2 <- BRIVLA# / word-ZEI-word# / CMEVLA# / GOhA# / KE# selbri-4+ KEhE#? / ME# (sumti / lerfu-string / joik) MEhU#? MOI#? / number MOI# / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# subsentence KEI#? 
+tanru-unit-2 <- BRIVLA# / word-ZEI-word# / CMEVLA# / GOhA# / KE# selbri-4+ KEhE#? / ME# (sumti / lerfu-string / joik) MEhU#? MOI#? / mex MOI# / SE# tanru-unit-2 / JAI# tag? tanru-unit-2 / NAhE# tanru-unit-2 / NU# sentence KEI#? 
 
 linkargs <- BE# term (BEI# term)* BEhO#? 
 
 ; ----------------------------- 
 
-quantifier <- !sumti-6 number
+quantifier <- !sumti-6 !selbri mex 
 
-number <- number-1 (joik number)* 
+mex <- mex-1 (joik mex)* 
 
-number-1 <- number-2 (joik tag? BO# number-1)?  
+mex-1 <- mex-2 (joik tag? BO# mex-1)? 
 
-number-2 <- PA#+ !MOI# BOI#? / NIhE# (selbri / sumti) BOI#? / lerfu-string !MOI# BOI#? / (LAhE# / NAhE# BO#) number LUhU#? / VEI# number VEhO#? / PEhO#? joik number+ KUhE#? / FUhA# rp-expression
- 
-rp-expression <- number (rp-expression joik)* 
+mex-2 <- number  / (LAhE# / NAhE# BO#) mex LUhU#? / VEI# mex VEhO#? / PEhO#? joik mex+ KUhE#? / FUhA# rp-expression 
+
+rp-expression <- mex (rp-expression joik)* 
+
+number <- PA#+ BOI#? / lerfu-string BOI#? / NIhE# (selbri / sumti) BOI#?
 
 lerfu-string <- lerfu-word+ 
 
@@ -100,7 +98,7 @@ lerfu-word <- BY# / word-BU# / LAU# lerfu-word / TEI# lerfu-string FOI#
 
 ; ---------------------- 
 
-joik <- NA#? SE#? (JOI# / JA# / A# / BIhI# / VUhU# / JOhI# / NAhU# selbri TEhU#? / MAhO# number TEhU#?) 
+joik <- NA#? SE#? (JOI# / JA# / A# / BIhI# / VUhU# / JOhI# / NAhU# selbri TEhU#? / MAhO# mex TEhU#?) 
 
 gihek <- NA#? SE#? GIhA# 
 
@@ -112,11 +110,11 @@ gik <- GI#
 
 tag <- tag-unit+ (joik tag-unit+)* 
 
-tag-unit <- KI# / BAI# / PU# / ZI# / ZEhA# / FAhA# / VA# / VEhA# / VIhA# / TAhE# / ZAhO# / CAhA# / CUhE# / number ROI# / FIhO# selbri FEhU# / (FEhE# / MOhI# / SE# / NAhE#) tag-unit 
+tag-unit <- KI# / BAI# / PU# / ZI# / ZEhA# / FAhA# / VA# / VEhA# / VIhA# / TAhE# / ZAhO# / CAhA# / CUhE# / mex ROI# / FIhO# selbri FEhU# / (FEhE# / MOhI# / SE# / NAhE#) tag-unit 
 
 ; ----------------------------------------------------- 
 
-free <- vocative / parenthetical / number MAI# / XI# number / indicator 
+free <- vocative / parenthetical / mex MAI# / XI# mex / indicator 
 
 vocative <- (COI#+ DOI#? / DOI#) (relative-clauses? selbri relative-clauses? / sumti?) DOhU#? 
 
@@ -835,4 +833,3 @@ spaces <- space-char Y? spaces?
 non-space <- !space-char . 
 
 space-char <- [[.\t\n\r?!\u0020] 
-
