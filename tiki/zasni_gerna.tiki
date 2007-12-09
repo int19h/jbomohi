@@ -40,7 +40,7 @@ sumti-2 <- quantifier? bare-sumti relative-clauses? / quantifier selbri KU#? rel
 
 bare-sumti <- pronoun / description / quotation / LI# mex LOhO#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? 
 
-quotation <- ZO-word# / LU# paragraphs LIhU#? / LOhU-words-LEhU# / ZOI-expression# 
+quotation <- ZO-word# / LU# paragraphs LIhU#? / LOhU-words-LEhU# / ZOI-anything# 
 
 description <- LE# bare-sumti? relative-clauses? quantifier? (selbri / bare-sumti) relative-clauses? KU#? 
 
@@ -235,9 +235,7 @@ SE# <- pre# SE post#
 
 SEI# <- pre# SEI post# 
 
-SEhU# <- pre# SEhU post# 
-
-SOI# <- pre# SOI post#  
+SEhU# <- pre# SEhU post#  
 
 TEhU# <- pre# TEhU post# 
 
@@ -275,7 +273,7 @@ ZO-word# <- pre# ZO-word post#
 
 LOhU-words-LEhU# <- pre# LOhU-words-LEhU post# 
 
-ZOI-expression# <- pre# ZOI-expression post# 
+ZOI-anything# <- pre# ZOI-anything post# 
 
 ; ---- Special SELMAHO --------------- 
 
@@ -303,7 +301,7 @@ lerfu-post# <- !BU# !ZEI# (!lerfu free)?
 
 vocative-post# <- !BU# !ZEI# (!vocative free)? 
 
-intro <- initial-spaces? words-SU* word-SI* SI#* !BU# !ZEI# free?
+intro <- initial-spaces? words-SU* word-SI* SI#? !BU# !ZEI# free?
 
 
 ; ************************** 
@@ -312,23 +310,25 @@ intro <- initial-spaces? words-SU* word-SI* SI#* !BU# !ZEI# free?
 
 ; ************************** 
 
-words-SU <- (word-ZEI-word / word-BU / ZO-word / LOhU-words-LEhU / ZOI-expression / any-word)* SU# 
+words-SU <- (word-ZEI-word / word-BU / ZO-word / LOhU-words-LEhU / ZOI-anything / !SU any-word)* SU# 
 
-word-SI <- (word-ZEI-word / word-BU / ZO-word / LOhU-words-LEhU / ZOI-expression / any-word) SI# 
+word-SI <- (word-ZEI-word / word-BU / ZO-word / LOhU-words-LEhU / ZOI-anything / any-word) SI# 
 
-word-BU <- (ZO-word / LOhU-words-LEhU / ZOI-expression / any-word) (BU#* ZEI-word#+)* BU#+ 
+word-BU <- (ZO-word / LOhU-words-LEhU / ZOI-anything / any-word) (BU#* ZEI-word#+)* BU#+ 
 
-word-ZEI-word <- (ZO-word / LOhU-words-LEhU / ZOI-expression / any-word) (ZEI-word#* BU#+)* ZEI-word#+ 
+word-ZEI-word <- (ZO-word / LOhU-words-LEhU / ZOI-anything / any-word) (ZEI-word#* BU#+)* ZEI-word#+ 
 
 ZEI-word <- ZEI any-word 
 
 ZO-word <- ZO any-word 
 
-LOhU-words-LEhU <- LOhU (!LEhU any-word)* LEhU 
+LOhU-words-LEhU <- LOhU (!LEhU any-word)* LEhU?
 
-ZOI-expression <- ZOI ZOI (!ZOI anything)* ZOI 
+ZOI-anything <- ZOI FAhO (!FAhO anything)* FAhO? 
 
-any-word <- CMEVLA / BRIVLA / BAI / BAhE / BE / BEI / BEhO / BO / BOI / BU / BY / CEI / CO / COI / CU / DOI / DOhU / FA / FAhO / FEhU / FIhO / FUhA / GA / GEhU / GI / GIhA / GOI / GOhA / I / JAI / JOI / KE / KEI / KEhE / KOhA / KU / KUhE / KUhO / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / ME / MOI / NA / NAhE / NAhU / NIhO / NOI / NU / PA / PEhO / ROI / SE / SEI / SEhU / SI / SOI / SU / TEhU / TO / TOI / TUhE / TUhU / UI / VAU / VEI / VEhO / VUhO / XI / ZEI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
+magic-word <- ZOI / LOhU / ZO / ZEI / BU / SI / SU
+
+any-word <- CMEVLA / BRIVLA / BAI / BAhE / BE / BEI / BEhO / BO / BOI / BU / BY / CEI / CO / COI / CU / DOI / DOhU / FA / FAhO / FEhU / FIhO / FUhA / GA / GEhU / GI / GIhA / GOI / GOhA / I / JAI / JOI / KE / KEI / KEhE / KOhA / KU / KUhE / KUhO / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / ME / MOI / NA / NAhE / NAhU / NIhO / NOI / NU / PA / PEhO / ROI / SE / SEI / SEhU / SI / SU / TEhU / TO / TOI / TUhE / TUhU / UI / VAU / VEI / VEhO / VUhO / XI / ZEI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
 
 ;************************ 
 
@@ -459,8 +459,6 @@ SEI <- &CMAVO ( s e i / t i h o ) post-cmavo
 SEhU <- &CMAVO ( s e h u ) post-cmavo 
 
 SI <- &CMAVO ( s i ) post-cmavo 
-
-SOI <- &CMAVO ( s o i ) post-cmavo 
 
 SU <- &CMAVO ( s u ) post-cmavo 
 
