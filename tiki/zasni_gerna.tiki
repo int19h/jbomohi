@@ -20,7 +20,7 @@ bridi-tail <- bridi-tail-1 (gihek bridi-tail-1 tail-terms)*
 
 bridi-tail-1 <- bridi-tail-2 (gihek tag? BO# bridi-tail-2 tail-terms)* 
 
-bridi-tail-2 <- selbri tail-terms / (!gek tag / NA#)* gek bridi-tail gik bridi-tail tail-terms 
+bridi-tail-2 <- selbri tail-terms / (tag / NA#)* gek bridi-tail gik bridi-tail tail-terms 
 
 tail-terms <- term* VAU#? 
 
@@ -28,7 +28,7 @@ head-terms <- term+ CU#?
 
 prenex <- term+ ZOhU# 
 
-term <- FA#? sumti / (!gek tag)? sumti / FA# KU#? / !selbri !gek tag KU#? / NA# KU# / gek term+ gik term+ VAU#? 
+term <- FA#? sumti / tag? sumti / FA# KU#? / tag KU#? / NA# KU#? / gek term+ gik term+ VAU#? 
 
 ; ------------------------------- 
 
@@ -52,7 +52,7 @@ relative-clause <- GOI# term GEhU#? / NOI# sentence KUhO#?
 
 ; ------------------------------ 
 
-selbri <- (!gek tag / NA#)* selbri-1 (CEI# selbri)?
+selbri <- (tag / NA#)* selbri-1 (CEI# selbri)?
 
 selbri-1 <- selbri-2+ (CO# selbri-2)* 
 
@@ -76,43 +76,39 @@ linkargs <- BE# term (BEI# term)* BEhO#?
 
 ; ----------------------------- 
 
-quantifier <- !sumti-6 !selbri mex 
+quantifier <- !bare-sumti !selbri mex 
 
 mex <- mex-1 (joik mex-1)* 
 
 mex-1 <- mex-2 (joik tag? BO# mex-2)* 
 
-mex-2 <- number / (LAhE# / NAhE# BO#) mex LUhU#? / gek mex gik mex / PEhO#? joik mex+ KUhE#? / FUhA# rp-expression 
-
-rp-expression <- mex (rp-expression joik)* 
-
-number <- PA#+ BOI#? / lerfu+ BOI#? / VEI# (selbri / sumti / mex) VEhO#? 
+mex-2 <- PA#+ BOI#? / lerfu+ BOI#? / selbri BOI#? / VEI# mex VEhO#? / (LAhE# / NAhE# BO#) mex LUhU#? / gek mex gik mex 
 
 lerfu <- BY# / word-BU# 
 
 ; ---------------------- 
 
-tag <- tag-unit+ (joik tag-unit+)* 
+tag <- tag-1 !GI#
+
+tag-1 <- tag-unit+ (joik tag-unit+)*
 
 tag-unit <- NAhE#* SE#? (BAI# / mex ROI# / FIhO# selbri FEhU#) 
 
 ; ---------------------- 
 
-joik <- NA#? SE#? JOI# / NA#? SE#? NAhU# (selbri / sumti / mex) TEhU#?
+joik <- NA#? SE#? JOI# 
 
 gihek <- NA#? SE#? GIhA# 
 
-gek <- SE#? GA# / joik GI# / tag GI# 
+gek <- SE#? GA# / !NA# joik GI# / tag-1 GI# 
 
 gik <- GI# 
 
 ; ----------------------------------------------------- 
 
-free <- vocative / parenthetical / mex MAI# / XI# mex / UI# 
-
+free <- UI# / XI# mex / PA#+ MAI# / lerfu+ MAI# / vocative / SEI# head-terms? selbri SEhU#? / TO# paragraphs TOI#? 
+ 
 vocative <- (COI#+ DOI#? / DOI#) (relative-clauses? selbri relative-clauses? / sumti?) DOhU#? 
-
-parenthetical <- SEI# head-terms? selbri SEhU#? / TO# paragraphs TOI#? 
 
 
 ;    --- SELMAhO ---
@@ -159,8 +155,6 @@ FEhU# <- pre# FEhU post#
 
 FIhO# <- pre# FIhO post# 
 
-FUhA# <- pre# FUhA post# 
-
 GA# <- pre# GA post# 
 
 GEhU# <- pre# GEhU post# 
@@ -188,8 +182,6 @@ KEI# <- pre# KEI post#
 KOhA# <- pre# KOhA post# 
 
 KU# <- pre# KU post# 
-
-KUhE# <- pre# KUhE post# 
 
 KUhO# <- pre# KUhO post# 
 
@@ -219,15 +211,11 @@ NA# <- pre# NA post#
 
 NAhE# <- pre# NAhE post# 
 
-NAhU# <- pre# NAhU post# 
-
 NIhO# <- pre# NIhO post# 
 
 NOI# <- pre# NOI post# 
 
 NU# <- pre# NU post# 
-
-PEhO# <- pre# PEhO post# 
 
 ROI# <- pre# ROI post# 
 
@@ -235,9 +223,7 @@ SE# <- pre# SE post#
 
 SEI# <- pre# SEI post# 
 
-SEhU# <- pre# SEhU post#  
-
-TEhU# <- pre# TEhU post# 
+SEhU# <- pre# SEhU post#   
 
 TO# <- pre# TO post# 
 
@@ -328,7 +314,7 @@ ZOI-anything <- ZOI FAhO (!FAhO anything)* FAhO?
 
 magic-word <- ZOI / LOhU / ZO / ZEI / BU / SI / SU
 
-any-word <- CMEVLA / BRIVLA / BAI / BAhE / BE / BEI / BEhO / BO / BOI / BU / BY / CEI / CO / COI / CU / DOI / DOhU / FA / FAhO / FEhU / FIhO / FUhA / GA / GEhU / GI / GIhA / GOI / GOhA / I / JAI / JOI / KE / KEI / KEhE / KOhA / KU / KUhE / KUhO / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / ME / MOI / NA / NAhE / NAhU / NIhO / NOI / NU / PA / PEhO / ROI / SE / SEI / SEhU / SI / SU / TEhU / TO / TOI / TUhE / TUhU / UI / VAU / VEI / VEhO / VUhO / XI / ZEI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
+any-word <- CMEVLA / BRIVLA / BAI / BAhE / BE / BEI / BEhO / BO / BOI / BU / BY / CEI / CO / COI / CU / DOI / DOhU / FA / FAhO / FEhU / FIhO / GA / GEhU / GI / GIhA / GOI / GOhA / I / JAI / JOI / KE / KEI / KEhE / KOhA / KU / KUhO / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / ME / MOI / NA / NAhE / NIhO / NOI / NU / PA / ROI / SE / SEI / SEhU / SI / SU / TO / TOI / TUhE / TUhU / UI / VAU / VEI / VEhO / VUhO / XI / ZEI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
 
 ;************************ 
 
@@ -376,8 +362,6 @@ FEhU <- &CMAVO ( f e h u ) post-cmavo
 
 FIhO <- &CMAVO ( f i h o ) post-cmavo 
 
-FUhA <- &CMAVO ( f u h a ) post-cmavo 
-
 GA <- &CMAVO ( g e h i / g e / g o / g a / g u / g u h e / g u h i / g u h o / g u h a / g u h u ) post-cmavo 
 
 GEhU <- &CMAVO ( g e h u ) post-cmavo 
@@ -405,8 +389,6 @@ KEI <- &CMAVO ( k e i ) post-cmavo
 KOhA <- &CMAVO ( d a h u / d a h e / d i h u / d i h e / d e h u / d e h e / d e i / d o h i / m i h o / m a h a / m i h a / d o h o / k o h a / f o h u / k o h e / k o h i / k o h o / k o h u / f o h a / f o h e / f o h i / f o h o / v o h a / v o h e / v o h i / v o h o / v o h u / r u / r i / r a / t a / t u / t i / z i h o / k e h a / m a / z u h i / z o h e / c e h u / d a / d e / d i / k o / m i / d o ) post-cmavo 
 
 KU <- &CMAVO ( k u ) post-cmavo 
-
-KUhE <- &CMAVO ( k u h e ) post-cmavo 
 
 KUhO <- &CMAVO ( k u h o ) post-cmavo  
 
@@ -438,8 +420,6 @@ NA <- &CMAVO ( j a h a / n a ) post-cmavo
 
 NAhE <- &CMAVO ( f e h e / m o h i / t o h e / j e h a / n a h e / n o h e ) post-cmavo 
 
-NAhU <- &CMAVO ( n a h u / m a h o ) post-cmavo 
-
 NIhO <- &CMAVO ( n i h o / n o h i ) post-cmavo 
 
 NOI <- &CMAVO ( v o i / n o i / p o i ) post-cmavo 
@@ -447,8 +427,6 @@ NOI <- &CMAVO ( v o i / n o i / p o i ) post-cmavo
 NU <- &CMAVO ( n i / d u h u / s i h o / n u / l i h i / k a / j e i / s u h u / z u h o / m u h e / p u h u / z a h i ) post-cmavo 
 
 PA <- &CMAVO ( d a u / f e i / g a i / j a u / r e i / v a i / p i h e / p i / f i h u / z a h u / m e h i / n i h u / k i h o / c e h i / m a h u / r a h e / d a h a / s o h a / j i h i / s u h o / s u h e / r o / r a u / s o h u / s o h i / s o h e / s o h o / m o h a / d u h e / t e h o / k a h o / c i h i / t u h o / x o / p a i / n o h o / n o / p a / r e / c i / v o / m u / x a / z e / b i / s o ) post-cmavo 
-
-PEhO <- &CMAVO ( p e h o ) post-cmavo  
 
 ROI <- &CMAVO ( r e h u / r o i ) post-cmavo 
 
@@ -462,8 +440,6 @@ SI <- &CMAVO ( s i ) post-cmavo
 
 SU <- &CMAVO ( s u ) post-cmavo 
 
-TEhU <- &CMAVO ( t e h u ) post-cmavo 
-
 TO <- &CMAVO ( t o h i / t o ) post-cmavo 
 
 TOI <- &CMAVO ( t o i ) post-cmavo 
@@ -476,7 +452,7 @@ UI <- &CMAVO ( r a h o / k e h i / g a h o / n a i / p e i / c a i / c u h i / s
 
 VAU <- &CMAVO ( v a u ) post-cmavo 
 
-VEI <- &CMAVO ( v e i / n i h e / m o h e ) post-cmavo 
+VEI <- &CMAVO ( v e i ) post-cmavo 
 
 VEhO <- &CMAVO ( v e h o ) post-cmavo 
 
