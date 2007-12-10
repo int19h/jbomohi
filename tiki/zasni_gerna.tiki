@@ -12,15 +12,15 @@ statement <- statement-1 (I# joik statement-1)*
 
 statement-1 <- sentence (I# joik? tag? BO# sentence)* 
 
-sentence <- head-terms? bridi-tail / TUhE# paragraphs TUhU#? / gek sentence gik sentence / prenex sentence / tail-terms
-
 ; ---------------------------------------------- 
+
+sentence <- head-terms? bridi-tail / TUhE# paragraphs TUhU#? / gek sentence GI# sentence / prenex sentence / tail-terms
 
 bridi-tail <- bridi-tail-1 (gihek bridi-tail-1 tail-terms)* 
 
 bridi-tail-1 <- bridi-tail-2 (gihek tag? BO# bridi-tail-2 tail-terms)* 
 
-bridi-tail-2 <- selbri tail-terms / (tag / NA#)* gek bridi-tail gik bridi-tail tail-terms 
+bridi-tail-2 <- selbri tail-terms / (tag / NA#)* gek bridi-tail GI# bridi-tail tail-terms 
 
 tail-terms <- term* VAU#? 
 
@@ -28,23 +28,19 @@ head-terms <- term+ CU#?
 
 prenex <- term+ ZOhU# 
 
-term <- FA#? sumti / tag? sumti / FA# KU#? / tag KU#? / NA# KU#? / gek term+ gik term+ VAU#? 
-
 ; ------------------------------- 
+
+term <- FA#? sumti / tag? sumti / FA# KU#? / tag KU#? / NA# KU#? / gek term+ GI# term+ VAU#? 
 
 sumti <- sumti-1 (joik sumti-1)* (VUhO# relative-clauses)? 
 
 sumti-1 <- sumti-2 (joik tag? BO# sumti-2)* 
 
-sumti-2 <- gek sumti gik sumti / quantifier? bare-sumti relative-clauses? / quantifier selbri KU#? relative-clauses? 
+sumti-2 <- quantifier? bare-sumti relative-clauses? / quantifier selbri KU#? relative-clauses? / gek sumti GI# sumti 
 
-bare-sumti <- pronoun / description / quotation / LI# mex LOhO#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? 
-
-quotation <- ZO-word# / LU# paragraphs LIhU#? / LOhU-words-LEhU# / ZOI-anything# 
+bare-sumti <- description / LI# mex LOhO#? / ZO-word# / LU# paragraphs LIhU#? / LOhU-words-LEhU# / ZOI-anything# / KOhA# / !tag !selbri lerfu+ BOI#? / !tag !selbri (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? 
 
 description <- LE# bare-sumti? relative-clauses? quantifier? (selbri / bare-sumti) relative-clauses? KU#? 
-
-pronoun <- KOhA# / lerfu+ !MOI# BOI#? 
 
 relative-clauses <- relative-clause (ZIhE# relative-clause)* 
 
@@ -52,23 +48,17 @@ relative-clause <- GOI# term GEhU#? / NOI# sentence KUhO#?
 
 ; ------------------------------ 
 
-selbri <- (tag / NA#)* selbri-1 (CEI# selbri)?
+selbri <- (tag / NA#)* selbri-1+ (CO# selbri-1)* (CEI# selbri)?
 
-selbri-1 <- selbri-2+ (CO# selbri-2)* 
+selbri-1 <- selbri-2 (joik selbri-2)* 
 
-selbri-2 <- selbri-3 (joik selbri-3)* 
+selbri-2 <- selbri-3 (joik tag? BO# selbri-3)* 
 
-selbri-3 <- selbri-4 (joik tag? BO# selbri-4)* 
-
-selbri-4 <- tanru-unit (BO# tanru-unit)* / gek selbri gik selbri
+selbri-3 <- tanru-unit (BO# tanru-unit)* / gek selbri GI# selbri
 
 tanru-unit <- tanru-unit-1 linkargs? 
 
-tanru-unit-1 <- brivla / me-moi / NU# sentence KEI#? / KE# selbri KEhE#? / (SE# / JAI# tag? / NAhE#) tanru-unit-1 
-
-me-moi <- mex MOI# / ME# (sumti / mex) MOI#? 
-
-brivla <- BRIVLA# / word-ZEI-word# / CMEVLA# / GOhA# 
+tanru-unit-1 <- BRIVLA# / word-ZEI-word# / CMEVLA# / GOhA# / mex MOI# / ME# (sumti / mex / joik) MEhU#? MOI#? / NU# sentence KEI#? / KE# selbri KEhE#? / (SE# / JAI# tag? / NAhE#) tanru-unit-1 
 
 linkargs <- BE# term (BEI# term)* BEhO#? 
 
@@ -84,25 +74,19 @@ lerfu <- BY# / word-BU#
 
 ; ---------------------- 
 
-tag <- tag-1 !GI#
-
-tag-1 <- tag-unit+ (joik tag-unit+)*
-
-tag-unit <- NAhE#* SE#? (BAI# / mex ROI# / FIhO# selbri FEhU#) 
-
-; ---------------------- 
-
 joik <- NA#? SE#? JOI# 
 
 gihek <- NA#? SE#? GIhA# 
 
-gek <- SE#? GA# / SE#? JOI# GI# / tag-1 GI# 
+gek <- SE#? GA# / SE#? JOI# GI# / tag-unit+ (joik tag-unit+)* GI#
 
-gik <- GI# 
+tag <- tag-unit+ (joik tag-unit+)* !GI#
+
+tag-unit <- BAI# / mex ROI# / FIhO# selbri FEhU# / (NAhE# / SE#) tag-unit
 
 ; ----------------------------------------------------- 
 
-free <- UI# / XI# mex / PA#+ MAI# / lerfu+ MAI# / vocative / SEI# head-terms? selbri SEhU#? / TO# paragraphs TOI#? 
+free <- UI# / XI# mex / mex MAI# / vocative / SEI# head-terms? selbri SEhU#? / TO# paragraphs TOI#? 
  
 vocative <- (COI#+ DOI#? / DOI#) (relative-clauses? selbri relative-clauses? / sumti?) DOhU#? 
 
@@ -200,6 +184,8 @@ LUhU# <- pre# LUhU post#
 MAI# <- pre# MAI post# 
 
 ME# <- pre# ME post# 
+
+MEhU# <- pre# MEhU post# 
 
 MOI# <- pre# MOI post# 
 
@@ -312,7 +298,7 @@ LOhU-words-LEhU <- LOhU (!LEhU any-word)* LEhU?
 
 ZOI-anything <- ZOI FAhO (!FAhO anything)* FAhO? 
 
-any-word <- CMEVLA / BRIVLA / BAI / BAhE / BE / BEI / BEhO / BO / BOI / BU / BY / CEI / CO / COI / CU / DOI / DOhU / FA / FAhO / FEhU / FIhO / GA / GEhU / GI / GIhA / GOI / GOhA / I / JAI / JOI / KE / KEI / KEhE / KOhA / KU / KUhO / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / ME / MOI / NA / NAhE / NIhE / NIhO / NOI / NU / PA / ROI / SE / SEI / SEhU / SI / SU / TEhU / TO / TOI / TUhE / TUhU / UI / VAU / VEI / VEhO / VUhO / XI / ZEI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
+any-word <- CMEVLA / BRIVLA / BAI / BAhE / BE / BEI / BEhO / BO / BOI / BU / BY / CEI / CO / COI / CU / DOI / DOhU / FA / FAhO / FEhU / FIhO / GA / GEhU / GI / GIhA / GOI / GOhA / I / JAI / JOI / KE / KEI / KEhE / KOhA / KU / KUhO / LAhE / LE / LEhU / LI / LIhU / LOhO / LOhU / LU / LUhU / MAI / ME / MEhU / MOI / NA / NAhE / NIhE / NIhO / NOI / NU / PA / ROI / SE / SEI / SEhU / SI / SU / TEhU / TO / TOI / TUhE / TUhU / UI / VAU / VEI / VEhO / VUhO / XI / ZEI / ZIhE / ZO / ZOI / ZOhU / CMAVO 
 
 ;************************ 
 
@@ -411,6 +397,8 @@ LUhU <- &CMAVO ( l u h u ) post-cmavo
 MAI <- &CMAVO ( m o h o / m a i ) post-cmavo 
 
 ME <- &CMAVO ( m e / n u h a ) post-cmavo 
+
+MEhU <- &CMAVO ( m e h u ) post-cmavo 
 
 MOI <- &CMAVO ( m e h u / m e i / m o i / s i h e / c u h o / v a h e ) post-cmavo 
 
