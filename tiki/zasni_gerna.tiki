@@ -12,31 +12,33 @@ statement <- statement-1 (I# joik statement-1)*
 
 statement-1 <- sentence (I# joik? tag? BO# sentence)* 
 
-sentence <- head-terms? bridi-tail / TUhE# paragraphs TUhU#? / gek sentence GI# sentence / prenex sentence / tail-terms 
+sentence <- (term+ CU#?)? bridi-tail / TUhE# paragraphs TUhU#? / gek sentence GI# sentence / term+ ZOhU# sentence / term* VAU#? 
 
-bridi-tail <- bridi-tail-1 (gihek bridi-tail-1 tail-terms)* 
+bridi-tail <- bridi-tail-1 (gihek bridi-tail-1 term* VAU#?)* 
 
-bridi-tail-1 <- bridi-tail-2 (gihek tag? BO# bridi-tail-2 tail-terms)* 
+bridi-tail-1 <- bridi-tail-2 (gihek tag? BO# bridi-tail-2 term* VAU#?)* 
 
-bridi-tail-2 <- selbri tail-terms / (tag / NA#)* gek bridi-tail GI# bridi-tail tail-terms 
+bridi-tail-2 <- selbri term* VAU#? / (tag / NA#)* gek bridi-tail GI# bridi-tail term* VAU#? 
 
-tail-terms <- term* VAU#? 
-
-head-terms <- term+ CU#? 
-
-prenex <- term+ ZOhU# 
-
-term <- FA#? sumti / tag? sumti / FA# KU#? / tag KU#? / NA# KU#? / gek term+ GI# term+ VAU#? 
+term <- FA#? sumti / tag? sumti / FA# KU#? / tag KU#? / NA# KU#? / gek term+ VAU#? GI# term+ VAU#? 
 
 sumti <- sumti-1 (joik sumti-1)* (VUhO# rels)? 
 
 sumti-1 <- sumti-2 (joik tag? BO# sumti-2)* 
 
-sumti-2 <- quantifier? bare-sumti rels? / quantifier selbri KU#? rels? / gek sumti GI# sumti 
+sumti-2 <- quantifier? bare-sumti rels? / quantifier selbri rels? KU#? rels? / gek sumti GI# sumti 
 
 bare-sumti <- description / LI# mex LOhO#? / ZO-word# / LU# paragraphs LIhU#? / LOhU-words-LEhU# / ZOI-anything# / KOhA# / !tag !selbri lerfu+ BOI#? / !tag !selbri (LAhE# / NAhE# BO#) rels? sumti LUhU#? 
 
 description <- LE# bare-sumti? rels? quantifier? (selbri / bare-sumti) rels? KU#? 
+
+quantifier <- !bare-sumti !selbri mex rels?
+
+mex <- mex-1 (joik mex-1)* 
+
+mex-1 <- PA#+ BOI#? / lerfu+ BOI#? / NIhE# selbri TEhU#? / VEI# mex VEhO#? / (LAhE# / NAhE# BO#) mex LUhU#? 
+
+lerfu <- BY# / word-BU# 
 
 rels <- rel (ZIhE# rel)* 
 
@@ -56,14 +58,6 @@ tanru-unit-1 <- BRIVLA# / word-ZEI-word# / CMEVLA# / GOhA# / mex MOI# / ME# (sum
 
 linkargs <- BE# term (BEI# term)* BEhO#? 
 
-quantifier <- !bare-sumti !selbri mex 
-
-mex <- mex-1 (joik mex-1)* 
-
-mex-1 <- PA#+ BOI#? / lerfu+ BOI#? / NIhE# selbri TEhU#? / VEI# mex VEhO#? / (LAhE# / NAhE# BO#) mex LUhU#? 
-
-lerfu <- BY# / word-BU# 
-
 joik <- NA#? SE#? JOI# 
 
 gihek <- NA#? SE#? GIhA# 
@@ -74,7 +68,7 @@ tag <- tag-unit+ (joik tag-unit+)* !GI#
 
 tag-unit <- BAI# / mex ROI# / FIhO# selbri FEhU# / (NAhE# / SE#) tag-unit 
 
-free <- UI# / XI# mex-1 / mex-1 MAI# / SEI# head-terms? selbri SEhU#? / TO# paragraphs TOI#? / vocative
+free <- UI# / XI# mex-1 / mex-1 MAI# / SEI# (term+ CU#?)? selbri SEhU#? / TO# paragraphs TOI#? / vocative 
 
 vocative <- (COI#+ DOI#? / DOI#) (rels? selbri rels? / sumti?) DOhU#? 
 
@@ -274,9 +268,9 @@ ZOI-anything <- ZOI FAhO (!FAhO anything)* FAhO?
 
 ; ****** WORDS ****** 
 
-any-word <- CMEVLA / BRIVLA / CMAVO 
-
 anything <- Y* non-space+ 
+
+any-word <- CMEVLA / BRIVLA / CMAVO 
 
 CMEVLA <- Y* cmevla 
 
