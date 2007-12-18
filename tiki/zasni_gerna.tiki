@@ -2,7 +2,7 @@ This is a version (not official) of the full grammar of Lojban. I intend to make
 
 ; ****** GRAMMAR ****** 
 
-text <- words-SU* SI-tail* # paragraphs FAhO#? 
+text <- words-SU* SI-tail* post paragraphs FAhO#? 
 
 paragraphs <- paragraph (NIhO# paragraph)* 
 
@@ -26,13 +26,13 @@ sumti <- sumti-1 (joik sumti-1)* (VUhO# rels)?
 
 sumti-1 <- sumti-2 (joik tag? BO# sumti-2)* 
 
-sumti-2 <- quantifier? bare-sumti rels? / quantifier selbri rels? KU#? rels? / gek sumti GI# sumti 
+sumti-2 <- quantifier? bare-sumti / quantifier selbri KU#? rels? / gek sumti GI# sumti 
 
-bare-sumti <- description / LI# mex LOhO#? / ZO-word# / LU# paragraphs LIhU#? / LOhU-words-LEhU# / ZOI-anything# / KOhA# / !tag !selbri lerfu+ BOI#? / !tag !selbri (LAhE# / NAhE# BO#) rels? sumti LUhU#? 
+bare-sumti <- (description / LI# mex LOhO#? / ZO-word# / LU# paragraphs LIhU#? / LOhU-words-LEhU# / ZOI-anything# / KOhA# / !tag !selbri lerfu+ BOI#? / !tag !selbri (LAhE# / NAhE# BO#) rels? sumti LUhU#?) rels?
 
-description <- LE# bare-sumti? rels? quantifier? (selbri / bare-sumti) rels? KU#? 
+description <- LE# (rels / bare-sumti)? quantifier? (selbri / bare-sumti) KU#? 
 
-quantifier <- !bare-sumti !selbri mex rels?
+quantifier <- !bare-sumti !selbri mex rels? 
 
 mex <- mex-1 (joik mex-1)* 
 
@@ -44,7 +44,7 @@ rels <- rel (ZIhE# rel)*
 
 rel <- GOI# term GEhU#? / NOI# sentence KUhO#? 
 
-selbri <- (tag / NA#)* selbri-1+ (CO# selbri-1)* (CEI# selbri)? 
+selbri <- selbri-1+ (CO# selbri-1)* rels? (CEI# selbri)? / tag selbri / NA# selbri
 
 selbri-1 <- selbri-2 (joik selbri-2)* 
 
@@ -70,175 +70,175 @@ tag-unit <- BAI# / mex ROI# / FIhO# selbri FEhU# / (NAhE# / SE#) tag-unit
 
 free <- UI# / XI# mex-1 / mex-1 MAI# / SEI# (term+ CU#?)? selbri SEhU#? / TO# paragraphs TOI#? / vocative 
 
-vocative <- (COI#+ DOI#? / DOI#) (rels? selbri rels? / sumti?) DOhU#? 
+vocative <- (COI#+ DOI#? / DOI#) (rels? selbri / sumti?) DOhU#? 
 
 ; --- SELMAhO --- 
 
-COI# <- pre COI vocative-# 
+COI# <- pre COI vocative-post 
 
-PA# <- pre PA number-# 
+PA# <- pre PA number-post 
 
-BY# <- pre BY lerfu-# 
+BY# <- pre BY lerfu-post 
 
-BRIVLA# <- pre BRIVLA # 
+BRIVLA# <- pre BRIVLA post 
 
-CMEVLA# <- pre CMEVLA # 
+CMEVLA# <- pre CMEVLA post 
 
-CMAVO# <- pre CMAVO # 
+CMAVO# <- pre CMAVO post 
 
-BAI# <- pre BAI # 
+BAI# <- pre BAI post 
 
-BE# <- pre BE # 
+BE# <- pre BE post 
 
-BEI# <- pre BEI # 
+BEI# <- pre BEI post 
 
-BEhO# <- pre BEhO # 
+BEhO# <- pre BEhO post 
 
-BO# <- pre BO # 
+BO# <- pre BO post 
 
-BOI# <- pre BOI # 
+BOI# <- pre BOI post 
 
-CEI# <- pre CEI # 
+CEI# <- pre CEI post 
 
-CO# <- pre CO # 
+CO# <- pre CO post 
 
-CU# <- pre CU # 
+CU# <- pre CU post 
 
-DOhU# <- pre DOhU # 
+DOhU# <- pre DOhU post 
 
-DOI# <- pre DOI # 
+DOI# <- pre DOI post 
 
-FA# <- pre FA # 
+FA# <- pre FA post 
 
-FAhO# <- pre FAhO # 
+FAhO# <- pre FAhO post 
 
-FEhU# <- pre FEhU # 
+FEhU# <- pre FEhU post 
 
-FIhO# <- pre FIhO # 
+FIhO# <- pre FIhO post 
 
-GA# <- pre GA # 
+GA# <- pre GA post 
 
-GEhU# <- pre GEhU # 
+GEhU# <- pre GEhU post 
 
-GI# <- pre GI # 
+GI# <- pre GI post 
 
-GIhA# <- pre GIhA # 
+GIhA# <- pre GIhA post 
 
-GOI# <- pre GOI # 
+GOI# <- pre GOI post 
 
-GOhA# <- pre GOhA # 
+GOhA# <- pre GOhA post 
 
-I# <- pre I # 
+I# <- pre I post 
 
-JAI# <- pre JAI # 
+JAI# <- pre JAI post 
 
-JOI# <- pre JOI # 
+JOI# <- pre JOI post 
 
-KE# <- pre KE # 
+KE# <- pre KE post 
 
-KEhE# <- pre KEhE # 
+KEhE# <- pre KEhE post 
 
-KEI# <- pre KEI # 
+KEI# <- pre KEI post 
 
-KOhA# <- pre KOhA # 
+KOhA# <- pre KOhA post 
 
-KU# <- pre KU # 
+KU# <- pre KU post 
 
-KUhO# <- pre KUhO # 
+KUhO# <- pre KUhO post 
 
-LAhE# <- pre LAhE # 
+LAhE# <- pre LAhE post 
 
-LE# <- pre LE # 
+LE# <- pre LE post 
 
-LEhU# <- pre LEhU # 
+LEhU# <- pre LEhU post 
 
-LI# <- pre LI # 
+LI# <- pre LI post 
 
-LIhU# <- pre LIhU # 
+LIhU# <- pre LIhU post 
 
-LOhO# <- pre LOhO # 
+LOhO# <- pre LOhO post 
 
-LU# <- pre LU # 
+LU# <- pre LU post 
 
-LUhU# <- pre LUhU # 
+LUhU# <- pre LUhU post 
 
-MAI# <- pre MAI # 
+MAI# <- pre MAI post 
 
-ME# <- pre ME # 
+ME# <- pre ME post 
 
-MEhU# <- pre MEhU # 
+MEhU# <- pre MEhU post 
 
-MOI# <- pre MOI # 
+MOI# <- pre MOI post 
 
-NA# <- pre NA # 
+NA# <- pre NA post 
 
-NAhE# <- pre NAhE # 
+NAhE# <- pre NAhE post 
 
-NIhE# <- pre NIhE # 
+NIhE# <- pre NIhE post 
 
-NIhO# <- pre NIhO # 
+NIhO# <- pre NIhO post 
 
-NOI# <- pre NOI # 
+NOI# <- pre NOI post 
 
-NU# <- pre NU # 
+NU# <- pre NU post 
 
-ROI# <- pre ROI # 
+ROI# <- pre ROI post 
 
-SE# <- pre SE # 
+SE# <- pre SE post 
 
-SEI# <- pre SEI # 
+SEI# <- pre SEI post 
 
-SEhU# <- pre SEhU # 
+SEhU# <- pre SEhU post 
 
-TEhU# <- pre TEhU # 
+TEhU# <- pre TEhU post 
 
-TO# <- pre TO # 
+TO# <- pre TO post 
 
-TOI# <- pre TOI # 
+TOI# <- pre TOI post 
 
-TUhE# <- pre TUhE # 
+TUhE# <- pre TUhE post 
 
-TUhU# <- pre TUhU # 
+TUhU# <- pre TUhU post 
 
-UI# <- pre UI # 
+UI# <- pre UI post 
 
-VAU# <- pre VAU # 
+VAU# <- pre VAU post 
 
-VEI# <- pre VEI # 
+VEI# <- pre VEI post 
 
-VEhO# <- pre VEhO # 
+VEhO# <- pre VEhO post 
 
-VUhO# <- pre VUhO # 
+VUhO# <- pre VUhO post 
 
-XI# <- pre XI # 
+XI# <- pre XI post 
 
-ZIhE# <- pre ZIhE # 
+ZIhE# <- pre ZIhE post 
 
-ZOhU# <- pre ZOhU # 
+ZOhU# <- pre ZOhU post 
 
 ; --- Pseudo SELMAHO --- 
 
-word-ZEI-word# <- pre word-ZEI-word # 
+word-ZEI-word# <- pre word-ZEI-word post 
 
-word-BU# <- pre word-BU lerfu-# 
+word-BU# <- pre word-BU lerfu-post 
 
-ZO-word# <- pre ZO-word # 
+ZO-word# <- pre ZO-word post 
 
-LOhU-words-LEhU# <- pre LOhU-words-LEhU # 
+LOhU-words-LEhU# <- pre LOhU-words-LEhU post 
 
-ZOI-anything# <- pre ZOI-anything # 
+ZOI-anything# <- pre ZOI-anything post 
 
 ; --- Word Modifiers --- 
 
 pre <- (word-SI* BAhE)* word-SI* 
 
- # <- !BU-tail !ZEI-tail free? 
+post <- !BU-tail !ZEI-tail free? 
 
-number-# <- !BU-tail !ZEI-tail (!PA# free)? 
+number-post <- !BU-tail !ZEI-tail (!PA# free)? 
 
-lerfu-# <- !BU-tail !ZEI-tail (!lerfu free)? 
+lerfu-post <- !BU-tail !ZEI-tail (!lerfu free)? 
 
-vocative-# <- !BU-tail !ZEI-tail (!vocative free)? 
+vocative-post <- !BU-tail !ZEI-tail (!vocative free)? 
 
 ; ****** MAGIC WORD CONSTRUCTS ****** 
 
@@ -567,3 +567,4 @@ Y <- "y"+ !nucleus / space
 non-space <- !space . 
 
 space <- [[.\t\n\r?!\u0020] 
+
