@@ -1,0 +1,74 @@
+!!Current grammar:
+
+^
+
+sumti-6 <- ... / lerfu-string !MOI# BOI#? / (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? /...
+
+tanru-unit-2 <- ... / ME# (sumti / lerfu-string) MEhU#? MOI#? / (number / lerfu-string) MOI# / NUhA# mex-operator / ...
+
+interval-property <- number ROI# NAI#? / ...
+
+free <- ... / (number / lerfu-string) MAI# / XI# (number BOI# / lerfu-string BOI# / VEI# mex VEhO#?) 
+
+quantifier <- number !MOI# BOI#? / VEI# mex VEhO#?
+
+mex <- mex-1 (operator mex-1)* / FUhA# rp-expression
+
+mex-1 <- mex-2 (BIhE# operator mex-1)?
+
+mex-2 <- operand / PEhO#? operator mex-2+ KUhE#?
+
+rp-expression <- operand (rp-expression operator)* 
+
+operator <- operator-1 (joik-jek operator-1 / joik stag? KE# operator KEhE#?)*
+
+operator-1 <- operator-2 / guhek operator-1 gik operator-2 / operator-2 (jek / joik) stag? BO# operator-1
+
+operator-2 <- mex-operator / KE# operator KEhE#? 
+
+mex-operator <- SE# mex-operator / NAhE# mex-operator / MAhO# mex TEhU#? / NAhU# selbri TEhU#? / VUhU#
+
+operand <- operand-1 (joik-ek stag? KE# operand KEhE#?)?
+
+operand-1 <- operand-2 (joik-ek operand-2)*
+
+operand-2 <- operand-3 (joik-ek stag? BO# operand-2)?
+
+operand-3 <- quantifier / lerfu-string !MOI# BOI#? / NIhE# selbri TEhU#? / MOhE# sumti TEhU#? / JOhI# mex-2+ TEhU#? / gek operand gik operand-3 / (LAhE# / NAhE# BO#) operand LUhU#?
+
+joik <- SE#? JOI# NAI#? / interval / GAhO# interval GAhO#
+
+^
+
+!!Proposed grammar:
+
+^
+
+sumti-6 <- ... / !tag !selbri lerfu-string BOI#? / !tag !selbri (LAhE# / NAhE# BO#) relative-clauses? sumti LUhU#? / ...
+
+tanru-unit-2 <- ... / ME# (sumti / mex) MEhU#? MOI#? / mex MOI# / NUhA# operator / ...
+
+interval-property <- mex ROI# NAI#? / ...
+
+free <- ... / mex-2 MAI# / XI# mex-2 
+
+quantifier <- !selbri !sumti-6 mex 
+
+mex <- mex-1 (operator mex-1)* 
+
+mex-1 <- mex-2 (operator stag? BO# mex-1)?
+
+mex-2 <- number BOI#? / lerfu-string BOI#? / VEI# mex VEhO#? / NIhE# selbri TEhU#? / MOhE# sumti TEhU#? / gek mex gik mex-2 / (LAhE# / NAhE# BO#) mex LUhU#? / PEhO# operator mex+ KUhE#? / FUhA# rp-expression 
+
+rp-expression <- mex (rp-expression operator)* 
+
+operator <- SE# operator / NAhE# operator / MAhO# mex TEhU#? / NAhU# selbri TEhU#? / VUhU# / JOhI# / joik-jek
+
+^
+
+!!Rationale
+
+It makes sense to unify conjunctions with operators because conjunctions ''are'' binary operators. Everything else basicaly follows from that.
+
+There is more freedom for "quantifier", "mex MOI", "mex ROI", "mex-2 MAI" and "XI mex-2".
+   
