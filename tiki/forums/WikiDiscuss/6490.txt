@@ -4,3 +4,43 @@ Title: Lojval
 Message-Id: namor-0-1ac83513b3@www.lojban.org
 
 Use this thread to discuss the page:: [tiki-index.php?page=Lojval|Lojval]
+
+## 2008-05-10T21:35:26Z — namor (@namor) (post 6491)
+
+Title: Aw: Lojval error with Pauker [FIX included]
+Message-Id: namor-6490-e06e475c90@www.lojban.org
+In-Reply-To: namor-0-1ac83513b3@www.lojban.org
+
+The script doesn't find words you already learned in the Pauker-Vocabulary-File, so it adds them again as unlearned. :-\
+(This is because the Pauker Software adds a timestamp when the Voc. has been learned, so the 'stupid search routine' doesn't recognize the Voc. anymore as the one we've just searched for.)
+
+I made a rather dirty fix on this.:
+
+simply replace (line 163 or so): [CODE]
+                if card_search_term in lojbancards:
+                    print "\nThat card is already in your flashcard deck."
+                    return
+
+[/CODE]with:[CODE]
+
+card_search_term = """%s
+        
+      
+      
+        %s
+        
+      
+    """ % (front, back)
+
+                if card_search_term in lojbancards:
+                    print "\nThat card is already in your flashcard deck."
+                    return
+
+[/CODE]
+
+As you can see, this simply doesn't search for the first line of the xml-entry, which contains the timestamp. Quick and dirty, but it works. :-)
+
+Best regards,
+namor
+
+> Use this thread to discuss the page:: [tiki-index.php?page=Lojval|Lojval]
