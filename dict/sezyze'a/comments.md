@@ -13,3 +13,18 @@ sezyzengau: x1 makes themself increase in property x2
 desirable, which zenba doesn't strictly have. It could also be used for
 worsen or deteriorate. 
 
+
+## 2008-05-23T18:34:24Z — arj (comment 304, on definition 15843, in reply to 303)
+
+Re: sezyzengau
+
+xorxes wrote:
+> Shouldn't this be sezyzengau?
+
+Actually, after mulling over this for a bit, I agree. It does imply that
+all sezyzengau are volitional entities, but in the context where this is
+used (recursive self-improvement of artificial general intelligence) I
+think this may be appropriate.
+
+Robin?
+
