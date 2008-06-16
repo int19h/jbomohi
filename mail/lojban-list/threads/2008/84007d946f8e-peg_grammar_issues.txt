@@ -1,4 +1,4 @@
-# mail/lojban-list thread 84007d946f8e-peg_grammar_issues | root 737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 84007d946f8e-peg_grammar_issues | root 737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-06-16T02:39:09Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com | mail/lojban-list/cur/1213583949.84007d946f8e03f7.jbomohi:2,S
 I've found a few minor issues with the PEG grammar over the course of
@@ -142,6 +142,82 @@ How about "!gek !selbri" instead of just "!gek" in the original rule?
 SA ought to be ditched or completely reformulated, IMHO.
 
 mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 3 | 2008-06-16T23:10:41Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30806161610q69ae0539kf5627d78dac3d6b8@mail.gmail.com | mail/lojban-list/cur/1213657841.0a35050c08339a08.jbomohi:2,S
+On Mon, Jun 16, 2008 at 11:34 AM, Jorge Llambías <jjllambias@gmail.com> wrote:
+> On Sun, Jun 15, 2008 at 11:39 PM, Chris Capel <pdf23ds@gmail.com> wrote:
+>>
+>> First, the top-level production should fail if it can't parse the
+>> whole string. Currently 'text' ends with an EOF?, which makes it never
+>> fail.
+>
+> I think that was on purpose: parse as much as you can parse, and
+> discard anything unparsable that follows.
+
+Sure, but I think that both behaviors are needed in different
+contexts. But it doesn't really matter much--individual parsers will
+do what they will.
+
+>> Second, selbri-3 should parse its child selbri-4 into left-associative
+>> groups.
+>
+> The same applies to statement-1, bridi-tail-1 and sumti-2, right?
+
+Don't think so, maybe, and maybe, except that in the last two cases,
+the parse tree actually shows them as right-associative, which would
+make it harder to fix. But I'm not terribly clear on the grammar (in
+the wider sense) here. No to 'statement-1' because I don't think
+statement-2's really have associativity, so the correct parse tree
+would be flat, and the current parse tree is flat, so it's not broken.
+Same thing for bridi-tail-1 and sumti-2--do those really have
+associativity? Does it matter which order you interpret the giheks or
+jeks?
+
+>> Third, tenses that probably ought to be parsed as part of the bridi
+>> are currently being parsed as head terms, because of the term-1
+>> production:
+
+>> I'm not exactly sure how this one needs to be
+>> fixed, but what about this:
+>>
+>>   term-1 <- sumti / term-2 / termset / NA-clause KU-clause free*
+>>
+>>   term-2 <- !gek (tag (sumti / KU-clause free*) / FA-clause free*
+>> (sumti / KU-clause? free*) )
+>
+> That makes it impossible to omit {ku} in other positions as well.
+> For example, {mi ka'e pu klama} would fail.
+>
+> How about "!gek !selbri" instead of just "!gek" in the original rule?
+
+Sounds good to me.
+
+>> Fourth, 'term-sa' only appears to match one term sa under some
+>> conditions. For instance, it doesn't match this:
+>>
+>>   mi ba klama lo sa lo sa do
+>>
+>> which one might imagine could be said by someone with a stutter.
+>> Here's one possible fix:
+>>
+>>   term-sa <- term-start (!term-1 (sa-word / SA-clause !term-1) )*
+>> SA-clause &term-1
+>
+> SA ought to be ditched or completely reformulated, IMHO.
+
+Well, my suggestion's there for posterity's sake.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
