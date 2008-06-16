@@ -1,4 +1,4 @@
-# mail/lojban-list thread 84007d946f8e-peg_grammar_issues | root 737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 84007d946f8e-peg_grammar_issues | root 737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-06-16T02:39:09Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com | mail/lojban-list/cur/1213583949.84007d946f8e03f7.jbomohi:2,S
 I've found a few minor issues with the PEG grammar over the course of
@@ -71,6 +71,77 @@ Chris Capel
 "What is it like to be a bat? What is it like to bat a bee? What is it
 like to be a bee being batted? What is it like to be a batted bee?"
 -- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 2 | 2008-06-16T16:34:33Z | Jorge Llambías <jjllambias@gmail.com> | 925d17560806160934x6ebb01fayca3ddaddfca5c401@mail.gmail.com | mail/lojban-list/cur/1213634073.21eda177a5207fff.jbomohi:2,S
+On Sun, Jun 15, 2008 at 11:39 PM, Chris Capel <pdf23ds@gmail.com> wrote:
+>
+> First, the top-level production should fail if it can't parse the
+> whole string. Currently 'text' ends with an EOF?, which makes it never
+> fail.
+
+I think that was on purpose: parse as much as you can parse, and
+discard anything unparsable that follows.
+
+> Second, selbri-3 should parse its child selbri-4 into left-associative
+> groups. Currently it just parses them all into one group, which is
+> misleading and possibly wrong, depending on your interpretation. I
+> tried to figure out a way to fix this, but couldn't find a way to do
+> so and avoid left recursion in the definition. So I gave up and added
+> a post-parsing step in my own parser to group them properly.
+
+The same applies to statement-1, bridi-tail-1 and sumti-2, right?
+
+> Third, tenses that probably ought to be parsed as part of the bridi
+> are currently being parsed as head terms, because of the term-1
+> production:
+>
+>   term-1 <- sumti / ( !gek (tag / FA-clause free*) (sumti /
+> KU-clause? free*) ) / termset / NA-clause KU-clause free*
+>
+>   {mi} {pu} <klama le zarci>
+>
+> (In braces are term-1 matches, and in angle brackets is the
+> bridi-tail.) 'term-1' matches "mi", and then it matches "pu". 'sumti'
+> fails on "pu", but '!gek' and 'tag' succeed, and then since
+> 'KU-clause' and 'free' are both optional, the second option of
+> 'term-1' succeeds. I'm not exactly sure how this one needs to be
+> fixed, but what about this:
+>
+>   term-1 <- sumti / term-2 / termset / NA-clause KU-clause free*
+>
+>   term-2 <- !gek (tag (sumti / KU-clause free*) / FA-clause free*
+> (sumti / KU-clause? free*) )
+>
+> Here, 'term-2' is the second option of the original 'term-1', except
+> that the third item in the sequence has been factored into the second,
+> and the ? removed from 'KU-clause' after 'tag'. It seems to work in my
+> parser!
+
+That makes it impossible to omit {ku} in other positions as well.
+For example, {mi ka'e pu klama} would fail.
+
+How about "!gek !selbri" instead of just "!gek" in the original rule?
+
+> Fourth, 'term-sa' only appears to match one term sa under some
+> conditions. For instance, it doesn't match this:
+>
+>   mi ba klama lo sa lo sa do
+>
+> which one might imagine could be said by someone with a stutter.
+> Here's one possible fix:
+>
+>   term-sa <- term-start (!term-1 (sa-word / SA-clause !term-1) )*
+> SA-clause &term-1
+
+SA ought to be ditched or completely reformulated, IMHO.
+
+mu'o mi'e xorxes
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org

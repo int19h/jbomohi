@@ -1,0 +1,100 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 16 Jun 2008 09:34:48 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1K8HfK-0003Mt-QP	for lojban-list-real@lojban.org; Mon, 16 Jun 2008 09:34:47 -0700
+Received: from fg-out-1718.google.com ([72.14.220.155])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jjllambias@gmail.com>)	id 1K8Hf9-0003Lx-Rl	for lojban-list@lojban.org; Mon, 16 Jun 2008 09:34:46 -0700
+Received: by fg-out-1718.google.com with SMTP id e12so3375781fga.0        for <lojban-list@lojban.org>; Mon, 16 Jun 2008 09:34:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=wrPM+bCV+25ZVjL0ea23ZUvp3LKdQYJCCFTkXDDgPvA=;        b=kWg32PzdotUzX6YmiduoWiBHNWtB3MlA9P/JYUoG/zsItKzjc8Md0ejLF659u+7n0C         k08HA9Y1ZvS/fNENF80r9zL3nQWnHEEgR3SOLXyMqbngP/+/LKBb4lb96VHdYDXOUdwx         QzrxjV/PbXFAY9WF0Hj/UbzAdpRMLiTzo6XtM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=LAVDDPjEIFFNcu4+Vdpa1K7xhMtko7uXK0tfzibEY691wL8OvKU5WHzJuyI+o+ECs1         PVzOlTuMrveV0TSLS2MOGCcrLqVadS9/ZWsTnWbdeZREtu4To4AO4eZGxchsR+cRvv6C         AwHYLLCe1C/g39669ov1QK5q7f/4h7yalccRA=
+Received: by 10.86.87.13 with SMTP id k13mr7996960fgb.38.1213634073152;        Mon, 16 Jun 2008 09:34:33 -0700 (PDT)
+Received: by 10.86.89.11 with HTTP; Mon, 16 Jun 2008 09:34:33 -0700 (PDT)
+Message-ID: <925d17560806160934x6ebb01fayca3ddaddfca5c401@mail.gmail.com>
+Date: Mon, 16 Jun 2008 13:34:33 -0300
+From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <jjllambias@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: PEG grammar issues
+In-Reply-To: <737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com>
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 14503
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2694
+
+On Sun, Jun 15, 2008 at 11:39 PM, Chris Capel <pdf23ds@gmail.com> wrote:
+>
+> First, the top-level production should fail if it can't parse the
+> whole string. Currently 'text' ends with an EOF?, which makes it never
+> fail.
+
+I think that was on purpose: parse as much as you can parse, and
+discard anything unparsable that follows.
+
+> Second, selbri-3 should parse its child selbri-4 into left-associative
+> groups. Currently it just parses them all into one group, which is
+> misleading and possibly wrong, depending on your interpretation. I
+> tried to figure out a way to fix this, but couldn't find a way to do
+> so and avoid left recursion in the definition. So I gave up and added
+> a post-parsing step in my own parser to group them properly.
+
+The same applies to statement-1, bridi-tail-1 and sumti-2, right?
+
+> Third, tenses that probably ought to be parsed as part of the bridi
+> are currently being parsed as head terms, because of the term-1
+> production:
+>
+>   term-1 <- sumti / ( !gek (tag / FA-clause free*) (sumti /
+> KU-clause? free*) ) / termset / NA-clause KU-clause free*
+>
+>   {mi} {pu} <klama le zarci>
+>
+> (In braces are term-1 matches, and in angle brackets is the
+> bridi-tail.) 'term-1' matches "mi", and then it matches "pu". 'sumti'
+> fails on "pu", but '!gek' and 'tag' succeed, and then since
+> 'KU-clause' and 'free' are both optional, the second option of
+> 'term-1' succeeds. I'm not exactly sure how this one needs to be
+> fixed, but what about this:
+>
+>   term-1 <- sumti / term-2 / termset / NA-clause KU-clause free*
+>
+>   term-2 <- !gek (tag (sumti / KU-clause free*) / FA-clause free*
+> (sumti / KU-clause? free*) )
+>
+> Here, 'term-2' is the second option of the original 'term-1', except
+> that the third item in the sequence has been factored into the second,
+> and the ? removed from 'KU-clause' after 'tag'. It seems to work in my
+> parser!
+
+That makes it impossible to omit {ku} in other positions as well.
+For example, {mi ka'e pu klama} would fail.
+
+How about "!gek !selbri" instead of just "!gek" in the original rule?
+
+> Fourth, 'term-sa' only appears to match one term sa under some
+> conditions. For instance, it doesn't match this:
+>
+>   mi ba klama lo sa lo sa do
+>
+> which one might imagine could be said by someone with a stutter.
+> Here's one possible fix:
+>
+>   term-sa <- term-start (!term-1 (sa-word / SA-clause !term-1) )*
+> SA-clause &term-1
+
+SA ought to be ditched or completely reformulated, IMHO.
+
+mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
