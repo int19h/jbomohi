@@ -1,0 +1,105 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 15 Jun 2008 19:39:27 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1K84cv-0006AT-VE	for lojban-list-real@lojban.org; Sun, 15 Jun 2008 19:39:26 -0700
+Received: from wf-out-1314.google.com ([209.85.200.168])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <pdf23ds@gmail.com>)	id 1K84cm-00068Q-7j	for lojban-list@lojban.org; Sun, 15 Jun 2008 19:39:25 -0700
+Received: by wf-out-1314.google.com with SMTP id 23so5141683wfg.25        for <lojban-list@lojban.org>; Sun, 15 Jun 2008 19:39:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:mime-version:content-type:content-transfer-encoding         :content-disposition;        bh=IZlQvLftt7YvZizOWmHIgOLjYuFiyRm7lmIcyRAzuYw=;        b=GM33Wd7Aw/yDdPI7iwsPOYRdmm4SlCBmstfbV7uczhzoLZl32EZuOduZgidhPDIFvP         bj9SS7s9wP3OEI/0PbEmIM88ukCcD0iU6JjFlbWs9O+CONqCc05gV/xQ8UVHqxkK7Tki         CW8/jO73UT6f4+6fvY+M5IHQFp3flGNIwoEXI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:mime-version:content-type         :content-transfer-encoding:content-disposition;        b=t/qWvWEjYTFHBf+zvQPFqjvVBMPJmNxGnsTlE1VfDya+eW847NnXUTGzs/Hemfar7N         y7BwTThO7xaafKgj/hYEmx3sTIWaQS83Ibz6UfVIFqKjniupANBEQZiMTGLkpLp3OZUk         Cn18fj9Cdmy0tPt1ldJvmq8Bil3ZfX8CAGa0A=
+Received: by 10.142.210.4 with SMTP id i4mr2117403wfg.240.1213583949457;        Sun, 15 Jun 2008 19:39:09 -0700 (PDT)
+Received: by 10.142.50.21 with HTTP; Sun, 15 Jun 2008 19:39:09 -0700 (PDT)
+Message-ID: <737b61f30806151939g53bbd8a1s3480b51573d433a1@mail.gmail.com>
+Date: Sun, 15 Jun 2008 21:39:09 -0500
+From: "Chris Capel" <pdf23ds@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] PEG grammar issues
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 14501
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 3017
+
+I've found a few minor issues with the PEG grammar over the course of
+working on it, and I thought I'd start to tell people about them in
+case I forget them.
+
+First, the top-level production should fail if it can't parse the
+whole string. Currently 'text' ends with an EOF?, which makes it never
+fail. However, it can't be EOF, because LU references the text
+production, and doesn't require an EOF before "li'u". 'text' should be
+changed to something like
+
+text-eof <- text EOF
+
+text <- intro-null NAI-clause* text-part-2 (!text-1 joik-jek)? text-1?
+faho-clause
+
+I made this change in my parser in the first release, and it seems to work fine.
+
+Second, selbri-3 should parse its child selbri-4 into left-associative
+groups. Currently it just parses them all into one group, which is
+misleading and possibly wrong, depending on your interpretation. I
+tried to figure out a way to fix this, but couldn't find a way to do
+so and avoid left recursion in the definition. So I gave up and added
+a post-parsing step in my own parser to group them properly.
+
+Third, tenses that probably ought to be parsed as part of the bridi
+are currently being parsed as head terms, because of the term-1
+production:
+
+   term-1 <- sumti / ( !gek (tag / FA-clause free*) (sumti /
+KU-clause? free*) ) / termset / NA-clause KU-clause free*
+
+   {mi} {pu} <klama le zarci>
+
+(In braces are term-1 matches, and in angle brackets is the
+bridi-tail.) 'term-1' matches "mi", and then it matches "pu". 'sumti'
+fails on "pu", but '!gek' and 'tag' succeed, and then since
+'KU-clause' and 'free' are both optional, the second option of
+'term-1' succeeds. I'm not exactly sure how this one needs to be
+fixed, but what about this:
+
+   term-1 <- sumti / term-2 / termset / NA-clause KU-clause free*
+
+   term-2 <- !gek (tag (sumti / KU-clause free*) / FA-clause free*
+(sumti / KU-clause? free*) )
+
+Here, 'term-2' is the second option of the original 'term-1', except
+that the third item in the sequence has been factored into the second,
+and the ? removed from 'KU-clause' after 'tag'. It seems to work in my
+parser!
+
+Fourth, 'term-sa' only appears to match one term sa under some
+conditions. For instance, it doesn't match this:
+
+   mi ba klama lo sa lo sa do
+
+which one might imagine could be said by someone with a stutter.
+Here's one possible fix:
+
+   term-sa <- term-start (!term-1 (sa-word / SA-clause !term-1) )*
+SA-clause &term-1
+
+Well, that's about it for now. Number 3 is currently a problem for my
+parser, as it makes it hard for me to correctly gloss tense cmavo in
+context. So if anyone sees a problem with my correction, let me know.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
