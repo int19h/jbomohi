@@ -1,0 +1,63 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 17 Jun 2008 09:40:52 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1K8eEl-0005qP-SA	for lojban-list-real@lojban.org; Tue, 17 Jun 2008 09:40:52 -0700
+Received: from py-out-1112.google.com ([64.233.166.176])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <pdf23ds@gmail.com>)	id 1K8eEh-0005py-1g	for lojban-list@lojban.org; Tue, 17 Jun 2008 09:40:51 -0700
+Received: by py-out-1112.google.com with SMTP id b50so1933685pyh.30        for <lojban-list@lojban.org>; Tue, 17 Jun 2008 09:40:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:mime-version:content-type:content-transfer-encoding         :content-disposition;        bh=3B7DAyFJFfhW/NRS6I362+TwIbQxWHMFl/Z6z1HL6iY=;        b=Td/DlbRJmoJJfkYS5OkuQggPv9qKdap+5ud2ysClEnYGgs9X2m0TwhcAM+f9xohLKi         J7LjIIbmgld22FLkdlo5dy021V5QIxAyRecBlmPDtH0omixFeNVRjr6rSjhNOyaQE2bK         +iVR+XFShA2bVBPyClxDEjez+0y6rM7u56nnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:mime-version:content-type         :content-transfer-encoding:content-disposition;        b=OSdePHx48GrpT1Fin05jw4yfrHTVtBT9Q9ACM/mmwi8h1eYFMQn2rWDACFfmz9FT94         6t69tpU/Nkq5m6/UQqTKrESsKhPze5eE9gzaaKHmimpsr/POtRP3Sp6zwph2Q3UoQr30         UttnBDkgSCCaQZReYWQGTxeXmr0JTyYuLsKcg=
+Received: by 10.142.229.5 with SMTP id b5mr3098595wfh.50.1213720845526;        Tue, 17 Jun 2008 09:40:45 -0700 (PDT)
+Received: by 10.142.50.21 with HTTP; Tue, 17 Jun 2008 09:40:45 -0700 (PDT)
+Message-ID: <737b61f30806170940m4f6dffc9u2b27b2ac5747ae9a@mail.gmail.com>
+Date: Tue, 17 Jun 2008 11:40:45 -0500
+From: "Chris Capel" <pdf23ds@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] PEG left recursion
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 14508
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1555
+
+The PEG grammar has some left-recursion issues that could be taken
+care of if I implement support for left recursion in my parser. On the
+other hand, Rats!, which is what the grammar was initially written
+toward, and *many* other PEG parsers/parsegens don't support real
+left-recursion. So I don't know if we want the (eventual) official
+grammar to use a non-standard feature of a tool. But it wouldn't be a
+feature unique to my parser:
+
+http://www.mail-archive.com/peg@lists.csail.mit.edu/msg00096.html
+
+Left recursion is a very desirable feature to have, even though it's
+hard to implement, so other parsers have it and will have it.
+(Rewriting doesn't count (ever, I think), because it creates parse
+trees that group things right-associatively even though they match the
+same inputs.)
+
+Another worry would be that you actually have to change PEG semantics
+to do left recursion like this, and the change that needs to be made
+isn't obvious or unique, so it could end up that different PEG parsers
+implement different left recursion semantics that require slight
+modifications to lojban's grammar to use with it, which would be less
+than ideal.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
