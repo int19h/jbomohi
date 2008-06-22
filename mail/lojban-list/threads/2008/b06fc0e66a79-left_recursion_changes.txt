@@ -1,0 +1,75 @@
+# mail/lojban-list thread b06fc0e66a79-left_recursion_changes | root 737b61f30806221515x6b48dde9w5fc9cd790011d3db@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2008-06-22T22:15:46Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30806221515x6b48dde9w5fc9cd790011d3db@mail.gmail.com | mail/lojban-list/cur/1214172946.b06fc0e66a79b531.jbomohi:2,S
+OK, I caved and implemented a subset of left recursion. It was
+surprisingly easy. The PEG now checks to see if the first item in the
+first sequence in the first option is a reference to itself. If so,
+that production will try to match the other, non-recursing options
+first, and if it finds a match, will try to match the first option
+using the match from the other option as the value of the recursive
+item. It repeats this until it can't eat any more text. The changes I
+made to the grammar to use this feature follow. They're quite
+regular--decrement the number in the first item, remove asterisk, and
+add an option for the next production.
+
+-statement-1 <- statement-2 (I-clause joik-jek statement-2?)*
++statement-1 <- statement-1 I-clause joik-jek statement-2? / statement-2
+
+-bridi-tail-1 <- bridi-tail-2 (gihek !(stag? BO-clause) !(stag?
+KE-clause) free* bridi-tail-2 tail-terms)*
++bridi-tail-1 <- bridi-tail-1 gihek !(stag? BO-clause) !(stag?
+KE-clause) free* bridi-tail-2 tail-terms / bridi-tail-2
+
+-terms-1 <- terms-2 (pehe-sa* PEhE-clause free* joik-jek terms-2)*
++terms-1 <- terms-1 pehe-sa* PEhE-clause free* joik-jek terms-2 / terms-2
+
+-sumti-2 <- sumti-3 (joik-ek sumti-3)*
++sumti-2 <- sumti-2 joik-ek sumti-3 / sumti-3
+
+-selbri-3 <- selbri-4+
++selbri-3 <- selbri-3 selbri-4 / selbri-4
+
+-selbri-4 <- selbri-5 (joik-jek selbri-5 / joik stag? KE-clause free*
+selbri-3 KEhE-clause? free*)*
++selbri-4 <- selbri-4 (joik-jek selbri-5 / joik stag? KE-clause free*
+selbri-3 KEhE-clause? free*) / selbri-5
+
+tanru-unit-2 <- blah blah blah blah ... /
+-	NU-clause NAI-clause? free* (joik-jek NU-clause NAI-clause? free*)*
+subsentence KEI-clause? free*
++	nu-clauses subsentence KEI-clause? free*
++
++nu-clauses <- nu-clauses joik-jek nu-nai / nu-nai
++
++nu-nai <- NU-clause NAI-clause? free*
+
+I'm planning on using this feature, xorxes. i mi ba nelci lo nu je ka
+jo du'u palci pilno .ui
+
+-tag <- tense-modal (joik-jek tense-modal)*
++tag <- tag joik-jek tense-modal / tense-modal
+
+-stag <- simple-tense-modal ((jek / joik) simple-tense-modal)* /
+tense-modal (joik-jek tense-modal)*
++stag <- stag (jek / joik) simple-tense-modal / simple-tense-modal / tag
+
+Now these two I'm not entirely sure about. But I don't think it hurts
+anything too much. On 'stag', besides the recursion I also changed the
+last option to just be a reference to 'tag', since the sequences were
+identical.
+
+I made these changes several days ago and haven't seen any problems
+yet, though that's not a sure indicator of anything. So I don't think
+there are any gross errors in here.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
