@@ -1,0 +1,60 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 22 Jun 2008 16:08:33 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1KAYfh-0002UB-8h	for lojban-list-real@lojban.org; Sun, 22 Jun 2008 16:08:33 -0700
+Received: from fg-out-1718.google.com ([72.14.220.155])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jjllambias@gmail.com>)	id 1KAYfd-0002Ty-00	for lojban-list@lojban.org; Sun, 22 Jun 2008 16:08:33 -0700
+Received: by fg-out-1718.google.com with SMTP id e12so1074193fga.0        for <lojban-list@lojban.org>; Sun, 22 Jun 2008 16:08:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=0PaXbvw10bCMGH6MdcNlq4SmO5OTfDsQFMiEKqQdxVQ=;        b=T8FJAlN7L+o3zkwMsQUXETDELunb/ByR52JZtvJkmOifOdW4ei9vlEzGkYL8u4MEvP         lMSMGl26DGM/TDvLSVYoW6RLasI4OGBYstbY9J61GuvVCJFhAmpIcII1Ny2/ryGU3XUU         E10fujmWn2Ff5VXMIM4Ec/0YO6ItSzP2CzEsQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=FJ9GKrEXJY4U7AAikT6GHP7bHOV6GrLB7cmN0L2+t3jDhnUrvEtb2sCR8q84CP6Y1Y         jOZ6LhFeTwmIl72TvhvxrcA/L6MSQA4PwVywZn9+VPX1rROBHxPqvAf9gjm+0EOxqOEb         s6aDhC/WQrVGDZejmxoYc/vyhG36ljdFIxzsE=
+Received: by 10.86.9.8 with SMTP id 8mr7509589fgi.22.1214176107736;        Sun, 22 Jun 2008 16:08:27 -0700 (PDT)
+Received: by 10.86.89.11 with HTTP; Sun, 22 Jun 2008 16:08:27 -0700 (PDT)
+Message-ID: <925d17560806221608y1270c688h68dc5f0ad105f588@mail.gmail.com>
+Date: Sun, 22 Jun 2008 20:08:27 -0300
+From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <jjllambias@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: left recursion changes
+In-Reply-To: <737b61f30806221515x6b48dde9w5fc9cd790011d3db@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <737b61f30806221515x6b48dde9w5fc9cd790011d3db@mail.gmail.com>
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 14540
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1048
+
+On Sun, Jun 22, 2008 at 7:15 PM, Chris Capel <pdf23ds@gmail.com> wrote:
+>
+> -tag <- tense-modal (joik-jek tense-modal)*
+> +tag <- tag joik-jek tense-modal / tense-modal
+>
+> -stag <- simple-tense-modal ((jek / joik) simple-tense-modal)* /
+> tense-modal (joik-jek tense-modal)*
+> +stag <- stag (jek / joik) simple-tense-modal / simple-tense-modal / tag
+>
+> Now these two I'm not entirely sure about. But I don't think it hurts
+> anything too much. On 'stag', besides the recursion I also changed the
+> last option to just be a reference to 'tag', since the sequences were
+> identical.
+
+In fact, you could just do:
+
+stag <- tag
+
+or just remove "stag" from the grammar and replace everywhere with "tag".
+The PEG eliminated the distinction that existed between them, as it was
+a consequence of the LALR(1) restriction.
+
+mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
