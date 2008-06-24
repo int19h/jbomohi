@@ -1,4 +1,4 @@
-# mail/lojban-list thread b06fc0e66a79-left_recursion_changes | root 737b61f30806221515x6b48dde9w5fc9cd790011d3db@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread b06fc0e66a79-left_recursion_changes | root 737b61f30806221515x6b48dde9w5fc9cd790011d3db@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-06-22T22:15:46Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30806221515x6b48dde9w5fc9cd790011d3db@mail.gmail.com | mail/lojban-list/cur/1214172946.b06fc0e66a79b531.jbomohi:2,S
 OK, I caved and implemented a subset of left recursion. It was
@@ -121,6 +121,40 @@ The PEG eliminated the distinction that existed between them, as it was
 a consequence of the LALR(1) restriction.
 
 mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 4 | 2008-06-24T05:21:35Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20080624052135.gz318@digitalkingdom.org | mail/lojban-list/cur/1214284895.fc53f68c65b56d13.jbomohi:2,S
+On Sun, Jun 22, 2008 at 05:15:46PM -0500, Chris Capel wrote:
+> OK, I caved and implemented a subset of left recursion. It was
+> surprisingly easy. The PEG now checks to see if the first item in
+> the first sequence in the first option is a reference to itself.
+> If so, that production will try to match the other, non-recursing
+> options first, and if it finds a match, will try to match the
+> first option using the match from the other option as the value of
+> the recursive item. It repeats this until it can't eat any more
+> text. The changes I made to the grammar to use this feature
+> follow. They're quite regular--decrement the number in the first
+> item, remove asterisk, and add an option for the next production.
+
+This would be your own PEG parser generator, then?  Sorry, I haven't
+been following the thread.
+
+You might want to look at whatever the Rats! guy did; his stuff also
+automatically deals with left-recursion, but I think maybe in a
+slightly more structured fashion?  He's pretty approachable, you
+might want to ask him.
+
+-Robin
+
+-- 
+Lojban Reason #17: http://en.wikipedia.org/wiki/Buffalo_buffalo
+Proud Supporter of the Singularity Institute - http://singinst.org/
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
