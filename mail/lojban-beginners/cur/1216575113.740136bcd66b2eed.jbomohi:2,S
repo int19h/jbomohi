@@ -1,0 +1,77 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Sun, 20 Jul 2008 10:32:01 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1KKclM-0003o9-Ht	for lojban-beginners-real@lojban.org; Sun, 20 Jul 2008 10:32:00 -0700
+Received: from fg-out-1718.google.com ([72.14.220.159])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jjllambias@gmail.com>)	id 1KKclH-0003nt-Ce	for lojban-beginners@chain.digitalkingdom.org; Sun, 20 Jul 2008 10:32:00 -0700
+Received: by fg-out-1718.google.com with SMTP id l26so491111fgb.26        for <lojban-beginners@chain.digitalkingdom.org>; Sun, 20 Jul 2008 10:31:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:cc:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=66rRsQvVtV7eG+qE/BXni1oPtH3Je3GDXshN/Vkzf3U=;        b=X1qXfpE/oMi3fyeOaG4U6TQOp/B705VC9mP5QBBWGpNrUJ2vMedZ7niK2TVH6LQOkL         XnRMjs73gdMEJBGAmmEcGX0mrnZ1beDhzeV5rLTHlY8NMoIgvVHz4yC0LeM4vKBiYuQC         fhpUqDIIqhTMQu2ePN620NcZpk79LORxzILXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=OkTnnNKt0yN7Df5XmvaHL4KIwQRfLGuCyWxHMmHjr3gUkCFdaGoyhzGyQSoainB4Tk         bLIXpAT7pEiqW/TM2wnf2LnObpIlTy1/oIqXTxjb+NRAFNiocudZat+PSo1kUsMdoA4a         7pKhOtM+w9Cl6dnbRfZZuZFYMobZOpggfuyEs=
+Received: by 10.86.99.9 with SMTP id w9mr3641524fgb.70.1216575113789;        Sun, 20 Jul 2008 10:31:53 -0700 (PDT)
+Received: by 10.86.28.10 with HTTP; Sun, 20 Jul 2008 10:31:53 -0700 (PDT)
+Message-ID: <925d17560807201031l25d62a75wcb2c44cc0910863b@mail.gmail.com>
+Date: Sun, 20 Jul 2008 14:31:53 -0300
+From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <jjllambias@gmail.com>
+To: lojban-beginners@lojban.org
+Subject: [lojban-beginners] Re: welcome and question about brivla recognizing
+Cc: lojban-beginners@chain.digitalkingdom.org
+In-Reply-To: <4882EF4F.9020509@poczta.onet.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <4882EF4F.9020509@poczta.onet.pl>
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 684
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@lojban.org
+Errors-to: lojban-beginners-bounce@lojban.org
+X-original-sender: jjllambias@gmail.com
+Precedence: bulk
+Reply-to: lojban-beginners@lojban.org
+X-list: lojban-beginners
+Content-Length: 1709
+
+On Sun, Jul 20, 2008 at 4:54 AM, Mateusz Grotek
+<unoduetre@poczta.onet.pl> wrote:
+> Hello.
+> I'm new to lojban, recently started reading CLL, but have some questions
+> about brivla recognition from speech stream.
+> What is exact algorithm for doing it? I tried to create one, but it looks
+> like i have to count letters before stress, what i don't wanna do. Is it
+> really needed? (Because of something what is called "tosmabru failure" in
+> book). And point 5b) in draft look for me somehow wrong, but  maybe it's my
+> fault. Could you explain it to me please?
+
+You can find the (an) algorithm here:
+< http://www.lojban.org/tiki/tiki-index.php?page=BPFK%20Section%3A%20PEG%20Morphology%20Algorithm>
+
+Basically it works as follows:
+
+(1) If the speech stream that you are considering (from the start up
+to the first pause)
+contains some non-Lojban phoneme or an impermissibe cluster then it is
+a non-Lojban
+word.
+
+(2) Otherwise, if it ends with a consonant, it is a cmevla.
+
+(3) Otherwise, if it starts with something that could be a cmavo, and
+what remains
+is a possible word or words, that first part is indeed a cmavo.
+(That's for example
+what happens with "tosmabru", "to" is a cmavo because "smabru" is a possible
+word.) But there is one exception here: if it starts with CVCy and it
+is a lujvo, then
+CV cannot be a cmavo (so "tosymabru" is not "to sy mabru").
+
+(4) Otherwise, unless it is a "slinku'i", it is a brivla. A "slinku'i"
+consists of a
+consonant followed by a string of rafsi. A slinku'i is also a non-Lojban word.
+
+Unfortunately, it is not possible to characterize brivla without
+recourse to rafsi.
+Both the slinku'i rule, and the tosymabru rule make use of rafsi strings.
+
+mu'o mi'e xorxes
+
+
