@@ -17,3 +17,19 @@ Dude, it's a crappy-ass noralujv entry; feel free to make it suck less.
 
 -Robin
 
+
+## 2008-08-09T00:41:58Z — donri (comment 313, on definition 8491, in reply to 312)
+
+Re: bangu2
+
+rlpowell wrote:
+> Eimi wrote:
+> > Is there a reason this drops the bangu2 place?	I don't see any.
+> 
+> 
+> Dude, it's a crappy-ass noralujv entry; feel free to make it suck less.
+> 
+> -Robin
+
+I went ahead and made it suck less. I hope.
+
