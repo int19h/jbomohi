@@ -1,0 +1,178 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Mon, 25 Aug 2008 22:21:50 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1KXr01-0004UW-Fl	for lojban-beginners-real@lojban.org; Mon, 25 Aug 2008 22:21:49 -0700
+Received: from wf-out-1314.google.com ([209.85.200.175])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <stephen.pollei@gmail.com>)	id 1KXqzl-0004S9-SH	for lojban-beginners@lojban.org; Mon, 25 Aug 2008 22:21:49 -0700
+Received: by wf-out-1314.google.com with SMTP id 28so1926996wfa.25        for <lojban-beginners@lojban.org>; Mon, 25 Aug 2008 22:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:mime-version:content-type:content-transfer-encoding         :content-disposition;        bh=KAFu7LVNaGQO6uQ7/TWfjgjUaGwhhk6Wa2OS+iWH4mM=;        b=gvB84orDskAARSO8fGg3gMYIDencbTZpnFNx0qyWLa+H8oFk3vq91eOg687bWR8EzQ         833WH3f37HuJHUusP99wRXVHtObp7qVOLPNBZoVWMCCKA87UGw6FpGZGNqY6mDKciu4Q         SV/8mtuC5OZ79LuPiy0AN0hx0yZBmfHqyWqHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:mime-version:content-type         :content-transfer-encoding:content-disposition;        b=CI8k5vqv5ymfARXawIZh9b0ylFWvKWP/c1W81I4acGeVJcOcvZnAiegPXKlueXV1Fz         tUSbeSWHYtCL/ml/Vp3l61AtCExzP3/jSIHcwJRrC3KUj0O5v6n59J6WCwkFpONEBaYJ         hQLGB7jeO7mrdVhh8krPR1FKtR5YlS+0z1+1U=
+Received: by 10.143.159.9 with SMTP id l9mr1845482wfo.100.1219728092545;        Mon, 25 Aug 2008 22:21:32 -0700 (PDT)
+Received: by 10.142.52.1 with HTTP; Mon, 25 Aug 2008 22:21:32 -0700 (PDT)
+Message-ID: <feed8cdd0808252221n14f63657m2ea2f6a7e40f4c87@mail.gmail.com>
+Date: Mon, 25 Aug 2008 22:21:32 -0700
+From: "Stephen Pollei" <stephen.pollei@gmail.com>
+To: lojban-beginners@lojban.org, jonsd@users.sourceforge.net
+Subject: [lojban-beginners] espeak text to speech for lojban
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 842
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@lojban.org
+Errors-to: lojban-beginners-bounce@lojban.org
+X-original-sender: stephen.pollei@gmail.com
+Precedence: bulk
+Reply-to: lojban-beginners@lojban.org
+X-list: lojban-beginners
+Content-Length: 3163
+
+I looked into the report at
+http://www.lojban.org/tiki/tiki-view_forum_thread.php?forumId=5&comments_parentId=6701
+that espeak was mispronouncing certain letters. I downloaded
+espeak-1.38-source and altered
+espeak-1.38-source/dictsource/jbo_rules and
+espeak-1.38-source/dictsource/jbo_list .
+
+for jbo_list the fix was easy I simply deleted most of it.
+_0      no
+_1      pa
+_2      Re
+_3      Si
+_4      vo
+_5      mu
+_6      xa
+_7      ze
+_8      bi
+_9      so
+_dpt    pi
+
+was all that was maybe needed. lojban should be a phometic language so
+all the other things probably was just causing issues.
+
+for jbo_rules I simply added pausing rules for things that begin with
+vowels. dj and tc shouldn't need special rules . gi'V shouldn't need
+extra help . l and r should need the extra stuff they have and n
+doesn't change based on if g or k follows it. the pausing rules and
+word boundary rules for lojban are probably complex enough that a
+special front end should be created to split words and insert
+mandatory pauses(".") were needed. Also stress in lojban is based on
+brivla Vs cmavo Vs. cmene , and if a capital letter is put in there.
+special front end should probably do stress markings as well.
+
+Truth be told I didn't compile or test any of these changes and I
+wanted opinion from some who are more knowlegdable than me to comment
+and test.
+
+--- jbo_rules.orig      2008-01-17 17:08:21.000000000 -0800
++++ jbo_rules   2008-08-25 22:12:55.000000000 -0700
+@@ -9,8 +9,12 @@
+        ai      aI
+        au      aU
+      X) a (_   %a      // single-syllable cmavo are unstressed
++                       //  probably needs better way to do stressed/unstressed
+      X) ai (_  %aI
+      X) au (_  %aU
++     _) a      _a
++     _) ai     _aI
++     _) au     _aU
+
+ .group b
+        b       b
+@@ -20,13 +24,15 @@
+
+ .group d
+        d       d
+-       dj      dZ
++//     dj      dZ
+
+ .group e
+        e       e
+        ei      eI
+      X) e (_   %e
+      X) ei (_  %eI
++     _)e       _e
++     _)ei      _eI
+
+ .group f
+        f       f
+@@ -34,7 +40,7 @@
+ .group g
+        g       g
+
+-     _) gi ('A_  _;_gi
++//     _) gi ('A_  _;_gi
+
+ .group h
+        h       h
+@@ -44,6 +50,8 @@
+        i (A    j
+      X) i (_   %i
+      X) i (A_  %j
++     _)i       _i
++     _)i (A    _j
+
+ .group j
+        j       Z
+@@ -55,20 +63,23 @@
+        l       l-
+      A) l       l
+        l (A    l
++// not sure why this is stuff is here for l
+
+ .group m
+        m       m
+
+ .group n
+        n       n
+-       n (g    N
+-       n (k    N
++//     n (g    N
++//     n (k    N
+
+ .group o
+        o       o
+        oi      OI
+      X) o (_   %o
+      X) oi (_  %OI
++     _)o       _o
++     _)oi      _OI
+
+ .group p
+        p       p
+@@ -80,6 +91,7 @@
+        r       r-
+      A) r      R
+        r (A    R
++// not sure what to do here
+
+
+ .group s
+@@ -87,13 +99,15 @@
+
+ .group t
+        t       t
+-       tc      tS
++//     tc      tS
+
+ .group u
+        u       u
+        u (A    w
+      X) u (_   %u
+      X) u (A_  %w
++     _)u       _u
++     _)u (A    _w
+
+ .group v
+        v       v
+@@ -106,6 +120,7 @@
+
+ .group y
+        y       @
++     _)        y       _@
+
+ .group z
+        z       z
+
+
