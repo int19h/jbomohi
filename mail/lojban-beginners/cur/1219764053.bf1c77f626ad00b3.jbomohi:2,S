@@ -1,157 +1,36 @@
-# mail/lojban-beginners thread 2c8338fb3ff0-espeak_text_to_speech_for_lojban | root feed8cdd0808252221n14f63657m2ea2f6a7e40f4c87@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Tue, 26 Aug 2008 08:21:19 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1KY0M8-0007A1-TR	for lojban-beginners-real@lojban.org; Tue, 26 Aug 2008 08:21:18 -0700
+Received: from mail-gx0-f19.google.com ([209.85.217.19])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <stephen.pollei@gmail.com>)	id 1KY0Ls-00076f-DD	for lojban-beginners@lojban.org; Tue, 26 Aug 2008 08:21:16 -0700
+Received: by gxk12 with SMTP id 12so3129167gxk.10        for <lojban-beginners@lojban.org>; Tue, 26 Aug 2008 08:20:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:cc:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=bbT0k96N25Y7eDEx4Rm43YS46gXA1rPhol+0rBvMYcQ=;        b=CHsdMjUVyNuzXiL8jpKu5Ue2ofINNyAkqkYBxbY5NGyKBgYPVK45Cj+LQw1fZieMDP         gcJSkZXkorDG/owOs66QS4zY9u+qYt0QZRiroBn35yB5S1zyYLrIotVsULqdSnKywnD/         SX6cDCjR/p+ZwaU+u4iTV0Lha2xR2zQFnFyWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=SKI9GrLVujC3QIvPk9aEwAd8HBTk4ykKCAALjM4g9Kp2r6EyEIN9TOdbecxVRvr7Rm         9jlc0HDVaPAWG8LnGsq3z22lq8vY+n2zwXH3nuKB3iN7t5b1CEE+UyjJn8AtFqzx8GvZ         Jj3PTtGT6Pn4lUafivppNiq7HBgEwFVF8/XQg=
+Received: by 10.150.146.1 with SMTP id t1mr5896291ybd.176.1219764053969;        Tue, 26 Aug 2008 08:20:53 -0700 (PDT)
+Received: by 10.150.218.18 with HTTP; Tue, 26 Aug 2008 08:20:53 -0700 (PDT)
+Message-ID: <feed8cdd0808260820l2abae054gb0cc4a85186904fe@mail.gmail.com>
+Date: Tue, 26 Aug 2008 08:20:53 -0700
+From: "Stephen Pollei" <stephen.pollei@gmail.com>
+To: "Jonathan Duddington" <jonsd@jsd.clara.co.uk>
+Subject: [lojban-beginners] Re: espeak text to speech for lojban
+Cc: lojban-beginners@lojban.org
+In-Reply-To: <4fd4ef447bjonsd@jsd.clara.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <feed8cdd0808252221n14f63657m2ea2f6a7e40f4c87@mail.gmail.com>	 <4fd4ef447bjonsd@jsd.clara.co.uk>
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 846
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@lojban.org
+Errors-to: lojban-beginners-bounce@lojban.org
+X-original-sender: stephen.pollei@gmail.com
+Precedence: bulk
+Reply-to: lojban-beginners@lojban.org
+X-list: lojban-beginners
+Content-Length: 4195
 
-=== 1 | 2008-08-26T05:21:32Z | Stephen Pollei <stephen.pollei@gmail.com> | feed8cdd0808252221n14f63657m2ea2f6a7e40f4c87@mail.gmail.com | mail/lojban-beginners/cur/1219728092.2c8338fb3ff043e0.jbomohi:2,S
-I looked into the report at
-http://www.lojban.org/tiki/tiki-view_forum_thread.php?forumId=5&comments_parentId=6701
-that espeak was mispronouncing certain letters. I downloaded
-espeak-1.38-source and altered
-espeak-1.38-source/dictsource/jbo_rules and
-espeak-1.38-source/dictsource/jbo_list .
-
-for jbo_list the fix was easy I simply deleted most of it.
-_0      no
-_1      pa
-_2      Re
-_3      Si
-_4      vo
-_5      mu
-_6      xa
-_7      ze
-_8      bi
-_9      so
-_dpt    pi
-
-was all that was maybe needed. lojban should be a phometic language so
-all the other things probably was just causing issues.
-
-for jbo_rules I simply added pausing rules for things that begin with
-vowels. dj and tc shouldn't need special rules . gi'V shouldn't need
-extra help . l and r should need the extra stuff they have and n
-doesn't change based on if g or k follows it. the pausing rules and
-word boundary rules for lojban are probably complex enough that a
-special front end should be created to split words and insert
-mandatory pauses(".") were needed. Also stress in lojban is based on
-brivla Vs cmavo Vs. cmene , and if a capital letter is put in there.
-special front end should probably do stress markings as well.
-
-Truth be told I didn't compile or test any of these changes and I
-wanted opinion from some who are more knowlegdable than me to comment
-and test.
-
---- jbo_rules.orig      2008-01-17 17:08:21.000000000 -0800
-+++ jbo_rules   2008-08-25 22:12:55.000000000 -0700
-@@ -9,8 +9,12 @@
-        ai      aI
-        au      aU
-      X) a (_   %a      // single-syllable cmavo are unstressed
-+                       //  probably needs better way to do stressed/unstressed
-      X) ai (_  %aI
-      X) au (_  %aU
-+     _) a      _a
-+     _) ai     _aI
-+     _) au     _aU
-
- .group b
-        b       b
-@@ -20,13 +24,15 @@
-
- .group d
-        d       d
--       dj      dZ
-+//     dj      dZ
-
- .group e
-        e       e
-        ei      eI
-      X) e (_   %e
-      X) ei (_  %eI
-+     _)e       _e
-+     _)ei      _eI
-
- .group f
-        f       f
-@@ -34,7 +40,7 @@
- .group g
-        g       g
-
--     _) gi ('A_  _;_gi
-+//     _) gi ('A_  _;_gi
-
- .group h
-        h       h
-@@ -44,6 +50,8 @@
-        i (A    j
-      X) i (_   %i
-      X) i (A_  %j
-+     _)i       _i
-+     _)i (A    _j
-
- .group j
-        j       Z
-@@ -55,20 +63,23 @@
-        l       l-
-      A) l       l
-        l (A    l
-+// not sure why this is stuff is here for l
-
- .group m
-        m       m
-
- .group n
-        n       n
--       n (g    N
--       n (k    N
-+//     n (g    N
-+//     n (k    N
-
- .group o
-        o       o
-        oi      OI
-      X) o (_   %o
-      X) oi (_  %OI
-+     _)o       _o
-+     _)oi      _OI
-
- .group p
-        p       p
-@@ -80,6 +91,7 @@
-        r       r-
-      A) r      R
-        r (A    R
-+// not sure what to do here
-
-
- .group s
-@@ -87,13 +99,15 @@
-
- .group t
-        t       t
--       tc      tS
-+//     tc      tS
-
- .group u
-        u       u
-        u (A    w
-      X) u (_   %u
-      X) u (A_  %w
-+     _)u       _u
-+     _)u (A    _w
-
- .group v
-        v       v
-@@ -106,6 +120,7 @@
-
- .group y
-        y       @
-+     _)        y       _@
-
- .group z
-        z       z
-
-
-
-
-=== 2 | 2008-08-26T15:20:53Z | Stephen Pollei <stephen.pollei@gmail.com> | feed8cdd0808260820l2abae054gb0cc4a85186904fe@mail.gmail.com | mail/lojban-beginners/cur/1219764053.bf1c77f626ad00b3.jbomohi:2,S
 On 8/26/08, Jonathan Duddington <jonsd@jsd.clara.co.uk> wrote:
 > On 26 Aug, Stephen Pollei <stephen.pollei@gmail.com> wrote:
 
@@ -251,6 +130,5 @@ have words not pauses associated with them.
 
 yes that might be helpful, even if the lojban rules don't stricly need
 them. I will ask what the opinion of the lojban experts are on that.
-
 
 
