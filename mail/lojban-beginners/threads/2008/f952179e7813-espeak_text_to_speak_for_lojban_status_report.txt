@@ -1,0 +1,130 @@
+# mail/lojban-beginners thread f952179e7813-espeak_text_to_speak_for_lojban_status_report | root feed8cdd0809041432t79faa9ebg7101c6281f125f15@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2008-09-04T21:32:33Z | Stephen Pollei <stephen.pollei@gmail.com> | feed8cdd0809041432t79faa9ebg7101c6281f125f15@mail.gmail.com | mail/lojban-beginners/cur/1220563953.f952179e7813a851.jbomohi:2,S
+http://www.lojban.org/tiki/tiki-view_forum_thread.php?forumId=5&comments_parentId=6701
+was the initial problem report.
+
+I made a few changes and tested them and got feedback on it, with the
+help of Chris Done hosting a few files at
+http://www.jbotcan.org/jbo_test/ .
+I received lots of useful feedback from that test, and I looked more
+into espeaks c++ internals. I want to thank the people on the mailing
+list and on irc for their assistance.
+
+Some of the problems from that test was a general consensus that it
+was too fast, and had other prosody issues like not honoring dot
+pauses enough. Some thought it sounded like weird techno.
+The "z" was usually not able to be heard correctly and many disliked
+the "x" sound.
+The lerfu pairs cyfy, syky, zydy, etc. sound all alike.
+
+At least person also thought that my test text needed more sensible
+sentences to test with.
+
+I thought part of the reason it sounded bad was because espeak didn't
+know word boundaries based on word morphology. That's where most of my
+efforts since the time 2008-Aug-28 have been spent. I created a
+preprocessing program named lihertadji.pl that splits words up and
+puts in dots everywhere they are required. It should correctly handle
+the test file jbo_test.txt .
+However it is not complete and it has some hairy regexs that should
+probably be double checked for correctness. `./lihertadji.pl <
+jbo_test.txt > jbo_test0.txt` . I will include the file jbo_test0.txt
+just in case someone doesn't want to run the script but still wants to
+see it's output . I also made some more minor changes to jbo_list and
+possible jbo_rules .
+
+Splitting the words up should slow it down some plus I am trying to
+give espeak an argument of 115 words per minute so it doesn't use
+default 170 .
+speak -f jbo_test0.txt -v jbo -w jbo_test.wav -s 115
+that created a file with size around 32 GiB and 12 minutes long. I
+won't ship it or any ogg speex files at this time because of size
+issues and I have few more problems to solve before it again ready for
+general testing. Maybe Chris Done will again host some files, I don't
+know.
+
+It might still have bad rhythm or prosody issues that will need more
+testing and feedback.
+
+I did nothing to fix 'z' or 'x' as of yet. I'm not exactly sure how to
+proceed. z can be "z", "Z", "z." , "z;" or "Z;" afaik . I don't which
+is z   [z]        a voiced alveolar sibilant . phoneme z claims to be
+a "vcd alv frc sibilant" , I don't think the others match as well just
+based on the label. Maybe it's now frictive when it shouldn't be??
+``zoo'', ``hazard'', or ``fizz' . [½] is allowed z variant.
+x   [x]        an unvoiced velar fricative -- not sure how to deal
+with that at all.
+phoneme x claims to be "vls vel frc" which is right on the money.
+Maybe it just sounds odd to Americans. Maybe some of the other details
+are wrong about it. I don't know.
+
+phonemetable eo base
+include ph_esperanto
+phonemetable jbo eo
+include ph_lojban
+
+I think it uses esperanto to change the vowel sounds.
+
+http://espeak.sourceforge.net/phontab.html mentions "phsource" and
+"phonemes" files which is in espeakedit-1.38.zip I assume.
+
+{cyfy} and friends get expanded to {. cy fy .} that might make them
+clearer to hear. That being the case I added {la cyfyl e la sykyl e la
+zydyl e la fybyzim e la cyzizam e la  kygybyr cu jecta girzu} to the
+test file to make sure I continue to give espeak a headache there.
+However to my listening it still isn't always very clear, I think it
+says the "by" lefru forms way too quickly.
+
+As for sensible sentences I added lojban anthem into the test. If
+anyone has some other suggestions as to what to add please be very
+specific. I might also simply make another test file . This one has a
+lot of synthetic word lists that tries to cover most of the sounds. It
+aims for decent coverage more than being a realistic sample for
+typical lojban speech.
+
+http://allalone.org/cizra/ is where I got all letters test sentence
+and the beginnings of the per letter tests and initial pairs test. I
+wrapped many of those in {u'u lo'u ... y y le'u na gendra} so that the
+whole file might be gendra .
+
+http://allalone.org/cizra/sofybakni_slow.spx {.o'i mu xagji sofybakni
+cu zvati le purdi } has all the letters from the lojban language.
+speex 73K , 6 seconds . Look out! Five hungry Soviet cows are in the
+garden!
+http://allalone.org/cizra/sofybakni.spx speex 45K , 4 seconds.
+
+http://allalone.org/cizra/rec.py the word list
+
+alfas to zulus I got from Complete Lojban Language chapter 17
+http://www.lojban.org/tiki/tiki-download_wiki_attachment.php?attId=181&page=The+Lojban+Reference+Grammar
+.
+
+I added a few words just to test a few things.
+I added {a'o so'i da xamgu ma'a ma'a} just as another test sentence
+which I used like the soviet cows one to see how it handles having the
+space squeezed out of it.
+
+http://www.lojban.org/tiki/tiki-index.php?page=Lojban%20Anthem is just
+a slightly more realistic sample. The other stuff is from
+http://stephen_pollei.home.comcast.net/~stephen_pollei/lojban/cilre_valsi/jeftu01.txt
+, I changed some of the stuff that was quoting English, because I
+didn't want to test mixing languages just yet.
+
+Foot-notes:
+
+http://video.google.com/videoplay?docid=-4507856202235021576 dead parrot
+http://www.youtube.com/watch?v=J_nKJW_KuK4 fanmo jimte episode 1
+http://www.youtube.com/watch?v=ZvODnSl7V3w fanmo jimte episode 2
+http://www.youtube.com/watch?v=jvFRWpbZcWA u'icai .i ti bisli
+http://selkik.podbean.com/
+http://jbobac.lojban.org/
+
+http://jbotcan.org/bacru/la-.an.-bebna.html
+http://www.lojban.org/tiki/tiki-index.php?page=Multimedia
+
+http://espeak.sourceforge.net/
+http://espeak.sourceforge.net/add_language.html
+http://espeak.sourceforge.net/editor_if.html
+http://espeak.sourceforge.net/analyse.html
+

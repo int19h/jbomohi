@@ -1,0 +1,370 @@
+Received: with ECARTIS (v1.0.0; list lojban-beginners); Thu, 04 Sep 2008 14:32:41 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1KbMRU-0008UU-V0	for lojban-beginners-real@lojban.org; Thu, 04 Sep 2008 14:32:41 -0700
+Received: from yx-out-1718.google.com ([74.125.44.158])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <stephen.pollei@gmail.com>)	id 1KbMRP-0008U4-BQ	for lojban-beginners@lojban.org; Thu, 04 Sep 2008 14:32:40 -0700
+Received: by yx-out-1718.google.com with SMTP id 4so96343yxp.46        for <lojban-beginners@lojban.org>; Thu, 04 Sep 2008 14:32:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:mime-version:content-type;        bh=wSZZhm+mJgU5+dBdi5uOEB7PZBlFJ9vIAXyCAPgJW6M=;        b=ouXzH5IE19IVDas5FI26tMwbE2eHYOD9WstxsMSEObK4RUg7n2aMlfXlhB25RW8/Dz         uyJAY52x/ejhA3OD1KXot1d6Ch0tOJu5ttOWRvpTWOwKowGYAnuyyx93myLvpne7+im/         pXYThIh2sD5PRKsLAzLdPTkk/woiZaFo7+hdk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:mime-version:content-type;        b=oKg1O6wN+S3lCu7IHDg0CNWs93nyqn79lrnWJxRt/LF22mX+/3JvtJGcKsLrqsn8FG         LrPmeiY/6CkRywMs32/4jlENnLyz+DxTwj/yG7XA2gITmyMnTqZoCHRP7Ll1wzsXE7Ar         1ADOucw8/sbh00TEZCPXDXiupAOn6ZbshTMlU=
+Received: by 10.151.107.8 with SMTP id j8mr15129464ybm.163.1220563953840;        Thu, 04 Sep 2008 14:32:33 -0700 (PDT)
+Received: by 10.150.218.18 with HTTP; Thu, 4 Sep 2008 14:32:33 -0700 (PDT)
+Message-ID: <feed8cdd0809041432t79faa9ebg7101c6281f125f15@mail.gmail.com>
+Date: Thu, 4 Sep 2008 14:32:33 -0700
+From: "Stephen Pollei" <stephen.pollei@gmail.com>
+To: lojban-beginners@lojban.org, jonsd@users.sourceforge.net
+Subject: [lojban-beginners] espeak text to speak for lojban status report
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="----=_Part_54440_14968435.1220563953859"
+X-Spam-Score: 0.3
+X-Spam-Score-Int: 3
+X-Spam-Bar: /
+X-archive-position: 856
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-beginners-bounce@lojban.org
+Errors-to: lojban-beginners-bounce@lojban.org
+X-original-sender: stephen.pollei@gmail.com
+Precedence: bulk
+Reply-to: lojban-beginners@lojban.org
+X-list: lojban-beginners
+Content-Length: 21460
+
+------=_Part_54440_14968435.1220563953859
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+http://www.lojban.org/tiki/tiki-view_forum_thread.php?forumId=3D5&comments_=
+parentId=3D6701
+was the initial problem report.
+
+I made a few changes and tested them and got feedback on it, with the
+help of Chris Done hosting a few files at
+http://www.jbotcan.org/jbo_test/ .
+I received lots of useful feedback from that test, and I looked more
+into espeaks c++ internals. I want to thank the people on the mailing
+list and on irc for their assistance.
+
+Some of the problems from that test was a general consensus that it
+was too fast, and had other prosody issues like not honoring dot
+pauses enough. Some thought it sounded like weird techno.
+The "z" was usually not able to be heard correctly and many disliked
+the "x" sound.
+The lerfu pairs cyfy, syky, zydy, etc. sound all alike.
+
+At least person also thought that my test text needed more sensible
+sentences to test with.
+
+I thought part of the reason it sounded bad was because espeak didn't
+know word boundaries based on word morphology. That's where most of my
+efforts since the time 2008-Aug-28 have been spent. I created a
+preprocessing program named lihertadji.pl that splits words up and
+puts in dots everywhere they are required. It should correctly handle
+the test file jbo_test.txt .
+However it is not complete and it has some hairy regexs that should
+probably be double checked for correctness. `./lihertadji.pl <
+jbo_test.txt > jbo_test0.txt` . I will include the file jbo_test0.txt
+just in case someone doesn't want to run the script but still wants to
+see it's output . I also made some more minor changes to jbo_list and
+possible jbo_rules .
+
+Splitting the words up should slow it down some plus I am trying to
+give espeak an argument of 115 words per minute so it doesn't use
+default 170 .
+speak -f jbo_test0.txt -v jbo -w jbo_test.wav -s 115
+that created a file with size around 32 GiB and 12 minutes long. I
+won't ship it or any ogg speex files at this time because of size
+issues and I have few more problems to solve before it again ready for
+general testing. Maybe Chris Done will again host some files, I don't
+know.
+
+It might still have bad rhythm or prosody issues that will need more
+testing and feedback.
+
+I did nothing to fix 'z' or 'x' as of yet. I'm not exactly sure how to
+proceed. z can be "z", "Z", "z." , "z;" or "Z;" afaik . I don't which
+is z   [z]        a voiced alveolar sibilant . phoneme z claims to be
+a "vcd alv frc sibilant" , I don't think the others match as well just
+based on the label. Maybe it's now frictive when it shouldn't be??
+``zoo'', ``hazard'', or ``fizz' . [=BD] is allowed z variant.
+x   [x]        an unvoiced velar fricative -- not sure how to deal
+with that at all.
+phoneme x claims to be "vls vel frc" which is right on the money.
+Maybe it just sounds odd to Americans. Maybe some of the other details
+are wrong about it. I don't know.
+
+phonemetable eo base
+include ph_esperanto
+phonemetable jbo eo
+include ph_lojban
+
+I think it uses esperanto to change the vowel sounds.
+
+http://espeak.sourceforge.net/phontab.html mentions "phsource" and
+"phonemes" files which is in espeakedit-1.38.zip I assume.
+
+{cyfy} and friends get expanded to {. cy fy .} that might make them
+clearer to hear. That being the case I added {la cyfyl e la sykyl e la
+zydyl e la fybyzim e la cyzizam e la  kygybyr cu jecta girzu} to the
+test file to make sure I continue to give espeak a headache there.
+However to my listening it still isn't always very clear, I think it
+says the "by" lefru forms way too quickly.
+
+As for sensible sentences I added lojban anthem into the test. If
+anyone has some other suggestions as to what to add please be very
+specific. I might also simply make another test file . This one has a
+lot of synthetic word lists that tries to cover most of the sounds. It
+aims for decent coverage more than being a realistic sample for
+typical lojban speech.
+
+http://allalone.org/cizra/ is where I got all letters test sentence
+and the beginnings of the per letter tests and initial pairs test. I
+wrapped many of those in {u'u lo'u ... y y le'u na gendra} so that the
+whole file might be gendra .
+
+http://allalone.org/cizra/sofybakni_slow.spx {.o'i mu xagji sofybakni
+cu zvati le purdi } has all the letters from the lojban language.
+speex 73K , 6 seconds . Look out! Five hungry Soviet cows are in the
+garden!
+http://allalone.org/cizra/sofybakni.spx speex 45K , 4 seconds.
+
+http://allalone.org/cizra/rec.py the word list
+
+alfas to zulus I got from Complete Lojban Language chapter 17
+http://www.lojban.org/tiki/tiki-download_wiki_attachment.php?attId=3D181&pa=
+ge=3DThe+Lojban+Reference+Grammar
+.
+
+I added a few words just to test a few things.
+I added {a'o so'i da xamgu ma'a ma'a} just as another test sentence
+which I used like the soviet cows one to see how it handles having the
+space squeezed out of it.
+
+http://www.lojban.org/tiki/tiki-index.php?page=3DLojban%20Anthem is just
+a slightly more realistic sample. The other stuff is from
+http://stephen_pollei.home.comcast.net/~stephen_pollei/lojban/cilre_valsi/j=
+eftu01.txt
+, I changed some of the stuff that was quoting English, because I
+didn't want to test mixing languages just yet.
+
+Foot-notes:
+
+http://video.google.com/videoplay?docid=3D-4507856202235021576 dead parrot
+http://www.youtube.com/watch?v=3DJ_nKJW_KuK4 fanmo jimte episode 1
+http://www.youtube.com/watch?v=3DZvODnSl7V3w fanmo jimte episode 2
+http://www.youtube.com/watch?v=3DjvFRWpbZcWA u'icai .i ti bisli
+http://selkik.podbean.com/
+http://jbobac.lojban.org/
+
+http://jbotcan.org/bacru/la-.an.-bebna.html
+http://www.lojban.org/tiki/tiki-index.php?page=3DMultimedia
+
+http://espeak.sourceforge.net/
+http://espeak.sourceforge.net/add_language.html
+http://espeak.sourceforge.net/editor_if.html
+http://espeak.sourceforge.net/analyse.html
+
+------=_Part_54440_14968435.1220563953859
+Content-Type: application/x-gzip; name=jbo_dictsource_2008-09-04.tar.gz
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fkpwazz8
+Content-Disposition: attachment; filename=jbo_dictsource_2008-09-04.tar.gz
+
+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
+------=_Part_54440_14968435.1220563953859--
+
+
