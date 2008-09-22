@@ -1,0 +1,240 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 22 Sep 2008 15:46:12 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1KhuAW-0007KC-IC	for lojban-list-real@lojban.org; Mon, 22 Sep 2008 15:46:12 -0700
+Received: from bay0-omc1-s36.bay0.hotmail.com ([65.54.246.108])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <geometricamente@hotmail.com>)	id 1KhuAT-0007Jq-Lt	for lojban-list@chain.digitalkingdom.org; Mon, 22 Sep 2008 15:46:12 -0700
+Received: from BAY144-W39 ([65.55.155.74]) by bay0-omc1-s36.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);	 Mon, 22 Sep 2008 15:46:03 -0700
+Message-ID: <BAY144-W39D506406B682B3D22CF3EB04B0@phx.gbl>
+Content-Type: multipart/alternative; boundary="_67a6a803-dc91-43cc-bf07-5b7e94e6965c_"
+X-Originating-IP: [189.151.13.31]
+From: Oscar Lazo <geometricamente@hotmail.com>
+To: <lojban-list@chain.digitalkingdom.org>
+Subject: [lojban] Parsers won't compile in Linux
+Date: Mon, 22 Sep 2008 17:46:02 -0500
+Importance: Normal
+MIME-Version: 1.0
+X-OriginalArrivalTime: 22 Sep 2008 22:46:03.0738 (UTC) FILETIME=[FE2063A0:01C91D04]
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 14782
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: geometricamente@hotmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 8596
+
+--_67a6a803-dc91-43cc-bf07-5b7e94e6965c_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+
+Hello every body
+
+I just signed up for this list. I have some trouble with the parsers availa=
+ble in lojban.org.
+
+I use Ubuntu 8.10 and when I downloaded the .gz file and unziped it=2C then=
+ I went in to the directory of the unziped file and gave the command mentio=
+ned in the description page of the parser. Here I put the text of my screen=
+:
+
+cc -o parser *.c
+cc: *.c: No existe el fichero =F3 directorio
+cc: no hay ficheros de entrada
+
+This would translate as:
+
+cc -o parser *.c
+
+cc: *.c: There is no such file or directory
+
+cc: There are no input files
+
+Then I tried to compile jbofi'e but that was harder and it didn't work eith=
+er. I downloaded the packages the author says are needed (the ones recommen=
+ded):
+
+- bison (yacc probably OK=2C edit the makefile)
+- flex (lex probably OK=2C ditto)
+- an ANSI C compiler (gcc recommended)
+- perl
+- make (GNU make recommended)
+
+then gave the commands detailed for a default installation
+
+perl config.pl --prefix=3D/usr/local
+make all
+make install
+
+
+But I got the following output:
+
+oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofihe-0.38$ sudo perl config.pl --p=
+refix=3D/usr/local
+oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofihe-0.38$ sudo make all
+sed -e 's/[$]Name: \(.*\) [$]/\1/=3B' < version.txt > version.h
+gcc -O2  -DHAVE_MMAP=3D1 -DDEFAULT_DICTIONARY=3D\"/usr/local/lib/jbofihe/sm=
+ujmaji.dat\" -c smujajgau.c
+perl canonluj.pl < reduced_gismu > canonluj.inc
+gcc -O2  -DHAVE_MMAP=3D1 -DDEFAULT_DICTIONARY=3D\"/usr/local/lib/jbofihe/sm=
+ujmaji.dat\" -c canonluj.c
+gcc -O2  -DHAVE_MMAP=3D1 -DDEFAULT_DICTIONARY=3D\"/usr/local/lib/jbofihe/sm=
+ujmaji.dat\" -o smujajgau smujajgau.o canonluj.o
+perl mkdict.pl > gismu_cmavo.dict
+rm -f smujmaji.dat
+./smujajgau smujmaji.dat gismu_cmavo.dict
+Reading file gismu_cmavo.dict ...=20
+Building transaction array from list ...
+Sorting transaction array ...
+Crunching transaction array ...
+Write database ...
+if [ -r lujvo-list ]=3B then \
+        perl lujvod.pl < ./lujvo-list > lujvo.dict =3B\
+        ./smujajgau smujmaji.dat lujvo.dict =3B\
+    fi
+if [ -r NORALUJV.txt ]=3B then \
+        perl noralujv.pl > noralujv.dict =3B\
+        ./smujajgau smujmaji.dat noralujv.dict =3B\
+    fi
+./smujajgau smujmaji.dat extradict places.dat patterns
+Reading existing database ...
+Reading file extradict ...=20
+Reading file places.dat ...=20
+Reading file patterns ...=20
+Building transaction array from list ...
+Sorting transaction array ...
+Crunching transaction array ...
+Write database ...
+flex -t uncom.l > uncom.c
+gcc -O2 -c uncom.c
+<stdout>:536:25: error: la macro "yywrap" recibi=F3 1 argumentos=2C pero so=
+lamente tom=F3 0
+make: *** [uncom.o] Error 1
+oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofihe-0.38$ sudo make install
+gcc -O2 -c uncom.c
+<stdout>:536:25: error: la macro "yywrap" recibi=F3 1 argumentos=2C pero so=
+lamente tom=F3 0
+make: *** [uncom.o] Error 1
+oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofihe-0.38$=20
+
+That last part seems to translate as:
+
+gcc -O2 -c uncom.c
+
+<stdout>:536:25: error: the macro "yywrap" recieved 1 arguments=2C but only=
+ took 0
+
+make: *** [uncom.o] Error 1
+
+oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofihe-0.38$ sudo make install
+
+gcc -O2 -c uncom.c
+
+<stdout>:536:25: error: the macro "yywrap" recieved 1 arguments=2C but only=
+ took 0
+
+make: *** [uncom.o] Error 1
+
+oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofihe-0.38$=20
+
+
+Please Help! these parsers would be realy useful to have.
+
+Oscar
+
+_________________________________________________________________
+Es tu =FAltima oportunidad para ganar premios por el simple hecho de buscar=
+ en internet.=20
+http://www.ganabuscando.com/Default.aspx=
+
+--_67a6a803-dc91-43cc-bf07-5b7e94e6965c_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<style>
+.hmmessage P
+{
+margin:0px=3B
+padding:0px
+}
+body.hmmessage
+{
+FONT-SIZE: 10pt=3B
+FONT-FAMILY:Tahoma
+}
+</style>
+</head>
+<body class=3D'hmmessage'>
+Hello every body<br><br>I just signed up for this list. I have some trouble=
+ with the parsers available in lojban.org.<br><br>I use Ubuntu 8.10 and whe=
+n I downloaded the .gz file and unziped it=2C then I went in to the directo=
+ry of the unziped file and gave the command mentioned in the description pa=
+ge of the parser. Here I put the text of my screen:<br><br>cc -o parser *.c=
+<br>cc: *.c: No existe el fichero =F3 directorio<br>cc: no hay ficheros de =
+entrada<br><br>This would translate as:<br><br>cc -o parser *.c<br>
+cc: *.c: There is no such file or directory<br>
+cc: There are no input files<br><br>Then I tried to compile jbofi'e but tha=
+t was harder and it didn't work either. I downloaded the packages the autho=
+r says are needed (the ones recommended):<br><br>- bison (yacc probably OK=
+=2C edit the makefile)<br>- flex (lex probably OK=2C ditto)<br>- an ANSI C =
+compiler (gcc recommended)<br>- perl<br>- make (GNU make recommended)<br><b=
+r>then gave the commands detailed for a default installation<br><br>perl co=
+nfig.pl --prefix=3D/usr/local<br>make all<br>make install<br>
+<br>But I got the following output:<br><br>oscar@OSCAR-MOVIL:~/Documentos/l=
+ojban/jbofihe-0.38$ sudo perl config.pl --prefix=3D/usr/local<br>oscar@OSCA=
+R-MOVIL:~/Documentos/lojban/jbofihe-0.38$ sudo make all<br>sed -e 's/[$]Nam=
+e: \(.*\) [$]/\1/=3B' &lt=3B version.txt &gt=3B version.h<br>gcc -O2&nbsp=
+=3B -DHAVE_MMAP=3D1 -DDEFAULT_DICTIONARY=3D\"/usr/local/lib/jbofihe/smujmaj=
+i.dat\" -c smujajgau.c<br>perl canonluj.pl &lt=3B reduced_gismu &gt=3B cano=
+nluj.inc<br>gcc -O2&nbsp=3B -DHAVE_MMAP=3D1 -DDEFAULT_DICTIONARY=3D\"/usr/l=
+ocal/lib/jbofihe/smujmaji.dat\" -c canonluj.c<br>gcc -O2&nbsp=3B -DHAVE_MMA=
+P=3D1 -DDEFAULT_DICTIONARY=3D\"/usr/local/lib/jbofihe/smujmaji.dat\" -o smu=
+jajgau smujajgau.o canonluj.o<br>perl mkdict.pl &gt=3B gismu_cmavo.dict<br>=
+rm -f smujmaji.dat<br>./smujajgau smujmaji.dat gismu_cmavo.dict<br>Reading =
+file gismu_cmavo.dict ... <br>Building transaction array from list ...<br>S=
+orting transaction array ...<br>Crunching transaction array ...<br>Write da=
+tabase ...<br>if [ -r lujvo-list ]=3B then \<br>&nbsp=3B&nbsp=3B&nbsp=3B&nb=
+sp=3B&nbsp=3B&nbsp=3B&nbsp=3B perl lujvod.pl &lt=3B ./lujvo-list &gt=3B luj=
+vo.dict =3B\<br>&nbsp=3B&nbsp=3B&nbsp=3B&nbsp=3B&nbsp=3B&nbsp=3B&nbsp=3B ./=
+smujajgau smujmaji.dat lujvo.dict =3B\<br>&nbsp=3B&nbsp=3B&nbsp=3B fi<br>if=
+ [ -r NORALUJV.txt ]=3B then \<br>&nbsp=3B&nbsp=3B&nbsp=3B&nbsp=3B&nbsp=3B&=
+nbsp=3B&nbsp=3B perl noralujv.pl &gt=3B noralujv.dict =3B\<br>&nbsp=3B&nbsp=
+=3B&nbsp=3B&nbsp=3B&nbsp=3B&nbsp=3B&nbsp=3B ./smujajgau smujmaji.dat noralu=
+jv.dict =3B\<br>&nbsp=3B&nbsp=3B&nbsp=3B fi<br>./smujajgau smujmaji.dat ext=
+radict places.dat patterns<br>Reading existing database ...<br>Reading file=
+ extradict ... <br>Reading file places.dat ... <br>Reading file patterns ..=
+. <br>Building transaction array from list ...<br>Sorting transaction array=
+ ...<br>Crunching transaction array ...<br>Write database ...<br>flex -t un=
+com.l &gt=3B uncom.c<br>gcc -O2 -c uncom.c<br>&lt=3Bstdout&gt=3B:536:25: er=
+ror: la macro "yywrap" recibi=F3 1 argumentos=2C pero solamente tom=F3 0<br=
+>make: *** [uncom.o] Error 1<br>oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofi=
+he-0.38$ sudo make install<br>gcc -O2 -c uncom.c<br>&lt=3Bstdout&gt=3B:536:=
+25: error: la macro "yywrap" recibi=F3 1 argumentos=2C pero solamente tom=
+=F3 0<br>make: *** [uncom.o] Error 1<br>oscar@OSCAR-MOVIL:~/Documentos/lojb=
+an/jbofihe-0.38$ <br><br>That last part seems to translate as:<br><br>gcc -=
+O2 -c uncom.c<br>
+&lt=3Bstdout&gt=3B:536:25: error: the macro "yywrap" recieved 1 arguments=
+=2C but only took 0<br>
+make: *** [uncom.o] Error 1<br>
+oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofihe-0.38$ sudo make install<br>
+gcc -O2 -c uncom.c<br>
+&lt=3Bstdout&gt=3B:536:25: error: the macro "yywrap" recieved 1 arguments=
+=2C but only took 0<br>
+make: *** [uncom.o] Error 1<br>
+oscar@OSCAR-MOVIL:~/Documentos/lojban/jbofihe-0.38$ <br>
+<br>Please Help! these parsers would be realy useful to have.<br><br>Oscar<=
+br><br /><hr />Madonna=2C Avril Lavigne=2C Maroon 5 y muchos m=E1s=2C En Vi=
+vo=2C s=F3lo por  <a href=3D'http://video.msn.com/video.aspx?mkt=3Des-mx' t=
+arget=3D'_new'>Prodigy/MSN en concierto.</a></body>
+</html>=
+
+--_67a6a803-dc91-43cc-bf07-5b7e94e6965c_--
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
