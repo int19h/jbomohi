@@ -1,0 +1,96 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 24 Sep 2008 17:50:28 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1Kif3r-0002Tw-KB	for lojban-list-real@lojban.org; Wed, 24 Sep 2008 17:50:27 -0700
+Received: from fg-out-1718.google.com ([72.14.220.158])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <cyril.slobin@gmail.com>)	id 1Kif3n-0002TU-U6	for lojban-list@lojban.org; Wed, 24 Sep 2008 17:50:27 -0700
+Received: by fg-out-1718.google.com with SMTP id e12so135195fga.0        for <lojban-list@lojban.org>; Wed, 24 Sep 2008 17:50:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:sender         :to:subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references         :x-google-sender-auth;        bh=DHWnLWfHosnwnIKSFp6gXmw3sqj0ClvtO8VR1foCTjY=;        b=xGgJ4mMInyWrq08RmhFKpLM/ISN47/VZxUNXQ/f+umjSESNg936hXxUaDo0/fHJuRW         NaNgN1g7rgWwK6/oGsFlb7546Ryrt1fE8Yvg/SMNq0t4xwcHyI6Tb8EyOnCdN5zF5Mc0         82jzak1jSO++LDCc6V4QO4oGksKh1ADLIYiwA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references:x-google-sender-auth;        b=a82JU14fwNrKW8EQzpN/YG6IBv0wvx3kYL9rOp0liZ8MSeDG8xKabUioloU454ZTXM         0X06zqkuO7xiQgeUV3yPUcdpOoYgaskROeD4U0awlB97wO/k69KbQEpAt5Ew2gM29bfj         /ZnVqa5vM7md3DrnzWIBGy/OGknu0Gk5Ynkkc=
+Received: by 10.103.249.7 with SMTP id b7mr5401659mus.2.1222303821507;        Wed, 24 Sep 2008 17:50:21 -0700 (PDT)
+Received: by 10.103.134.6 with HTTP; Wed, 24 Sep 2008 17:50:21 -0700 (PDT)
+Message-ID: <3ccac5f10809241750q7d099390r9ad2e8605cbe6451@mail.gmail.com>
+Date: Thu, 25 Sep 2008 04:50:21 +0400
+From: "Cyril Slobin" <cyril@slobin.pp.ru>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Parsers won't compile in Linux
+In-Reply-To: <537d06d00809232121q326f1c89l4caba1008f80d423@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <BAY144-W1417CFA02B1C95F70DEFA0B04A0@phx.gbl>	 <537d06d00809232121q326f1c89l4caba1008f80d423@mail.gmail.com>
+X-Google-Sender-Auth: 7360099440346f2b
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 14794
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: cyril@slobin.pp.ru
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2271
+
+On 9/24/08, Philip Newton <philip.newton@gmail.com> wrote:
+
+> > It took me a long time to realize that the lojban sentence was
+> > not supposed to be typed along with the command as in: "jbofihe
+> > sentence". Instead you have to give "jbofihe filename", where
+> > filename is the name of a textfile containing the lojban text
+> > jbofi'e will parse.
+
+> Or just "jbofihe", then type Lojban at the program, then Ctrl-D.
+> (My preferred method.)
+>
+>  Or "echo 'mi klama le zarci' | jbofihe".
+
+Long ago I have written a short python script that adds the readline
+capabilities to jbofihe: you can type the lojban text, recall the text
+previously typed by the up arrow, edit it and so on. Very handy if you
+are trying to say something in lojban and are not sure about the
+correct way to do this. Because some lojban sentences are very long
+(and because you are often paste them from some other window), "end of
+sentence" is not the one newline, but two in a row (like a paragraph).
+
+Alas script was debugged with Win32 python, not with Linux one, but it
+seems like there is nothing Win32-specific in it. Anyway it is short,
+and you can give a try to it -- if it doesn't work, you lose nothing.
+Script text follows:
+
+import atexit, os, readline, sys
+
+histfilename = "citri.jbo"
+
+def input_para(ps1 = "", ps2 = ""):
+    para = ""
+    line = raw_input(ps1)
+    while line != "":
+        para += line + "\n"
+        line = raw_input(ps2)
+    return para
+
+readline.read_history_file(histfilename)
+readline.set_history_length(500)
+atexit.register(readline.write_history_file, histfilename)
+
+try:
+    while 1:
+        text = input_para(">> ", ".. ")
+        inpipe, outpipe, errpipe = os.popen3("jbofihe -b -x")
+        inpipe.write(text)
+        inpipe.close()
+        sys.stdout.write(outpipe.read())
+        outpipe.close()
+        sys.stdout.write(errpipe.read())
+        errpipe.close()
+except EOFError:
+    sys.stdout.write("co'o")
+
+-- 
+http://slobin.pp.ru/ `When I use a word,' Humpty Dumpty said,
+<cyril@slobin.pp.ru> `it means just what I choose it to mean'
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.

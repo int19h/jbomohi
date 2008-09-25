@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4257617386d2-parsers_won't_compile_in_linux | root bay144-w39d506406b682b3d22cf3eb04b0@phx.gbl | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4257617386d2-parsers_won't_compile_in_linux | root bay144-w39d506406b682b3d22cf3eb04b0@phx.gbl | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-09-22T22:46:02Z | Oscar Lazo <geometricamente@hotmail.com> | bay144-w39d506406b682b3d22cf3eb04b0@phx.gbl | mail/lojban-list/cur/1222123562.4257617386d2bb47.jbomohi:2,S
 
@@ -261,6 +261,72 @@ Or "echo 'mi klama le zarci' | jbofihe".
 mu'o mi'e .filip.
 -- 
 Philip Newton <philip.newton@gmail.com>
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 9 | 2008-09-25T00:50:21Z | Cyril Slobin <cyril@slobin.pp.ru> | 3ccac5f10809241750q7d099390r9ad2e8605cbe6451@mail.gmail.com | mail/lojban-list/cur/1222303821.3c6d2c45b8e78a09.jbomohi:2,S
+On 9/24/08, Philip Newton <philip.newton@gmail.com> wrote:
+
+> > It took me a long time to realize that the lojban sentence was
+> > not supposed to be typed along with the command as in: "jbofihe
+> > sentence". Instead you have to give "jbofihe filename", where
+> > filename is the name of a textfile containing the lojban text
+> > jbofi'e will parse.
+
+> Or just "jbofihe", then type Lojban at the program, then Ctrl-D.
+> (My preferred method.)
+>
+>  Or "echo 'mi klama le zarci' | jbofihe".
+
+Long ago I have written a short python script that adds the readline
+capabilities to jbofihe: you can type the lojban text, recall the text
+previously typed by the up arrow, edit it and so on. Very handy if you
+are trying to say something in lojban and are not sure about the
+correct way to do this. Because some lojban sentences are very long
+(and because you are often paste them from some other window), "end of
+sentence" is not the one newline, but two in a row (like a paragraph).
+
+Alas script was debugged with Win32 python, not with Linux one, but it
+seems like there is nothing Win32-specific in it. Anyway it is short,
+and you can give a try to it -- if it doesn't work, you lose nothing.
+Script text follows:
+
+import atexit, os, readline, sys
+
+histfilename = "citri.jbo"
+
+def input_para(ps1 = "", ps2 = ""):
+    para = ""
+    line = raw_input(ps1)
+    while line != "":
+        para += line + "\n"
+        line = raw_input(ps2)
+    return para
+
+readline.read_history_file(histfilename)
+readline.set_history_length(500)
+atexit.register(readline.write_history_file, histfilename)
+
+try:
+    while 1:
+        text = input_para(">> ", ".. ")
+        inpipe, outpipe, errpipe = os.popen3("jbofihe -b -x")
+        inpipe.write(text)
+        inpipe.close()
+        sys.stdout.write(outpipe.read())
+        outpipe.close()
+        sys.stdout.write(errpipe.read())
+        errpipe.close()
+except EOFError:
+    sys.stdout.write("co'o")
+
+-- 
+http://slobin.pp.ru/ `When I use a word,' Humpty Dumpty said,
+<cyril@slobin.pp.ru> `it means just what I choose it to mean'
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
