@@ -1,0 +1,84 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 29 Oct 2008 01:53:37 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1Kv6o5-0005DH-Di	for lojban-list-real@lojban.org; Wed, 29 Oct 2008 01:53:37 -0700
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <rlpowell@digitalkingdom.org>)	id 1Kv6o5-0005DA-B6	for lojban-list@lojban.org; Wed, 29 Oct 2008 01:53:37 -0700
+Date: Wed, 29 Oct 2008 01:53:37 -0700
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: [llg-members] A challenge for computer	science/programming geeks: The LLG wants to give you $500!
+Message-ID: <20081029085337.GX26657@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20081028215134.GK31434@digitalkingdom.org> <925d17560810281730t6ab2f3c3i860e7b086de5aa4c@mail.gmail.com> <20081029005927.GH26657@digitalkingdom.org> <925d17560810281820m5bf3844ey27fd29da6e44a716@mail.gmail.com> <20081029012419.GM26657@digitalkingdom.org> <3ccac5f10810290134m72624d3ch3dfb5f4084e3c044@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3ccac5f10810290134m72624d3ch3dfb5f4084e3c044@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-archive-position: 14877
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2420
+
+On Wed, Oct 29, 2008 at 11:34:37AM +0300, Cyril Slobin wrote:
+> On 10/29/08, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+> 
+> >  > A machine that generated its output from such a grammar would
+> >  > generate valid Lojban. If you want an unambiguous CFG (which
+> >  > is obviously a somewhat harder problem) I think you need to
+> >  > specify it.
+> >
+> >  Then please, everyone, consider it so specified.  Apologies for
+> >  triple posting again, but if xorxes is right this is important.
+> 
+> Correct me if I mislook something, but without this clarification
+> the task seems to be trivial, isn't it? If we don't care about
+> parsing tree, we can just make all elidable terminators optional
+> and get the solution. Look at a very tiny subset of the language:
+> 
+> <bridi> ::= broda | <bridi> <bridi> | nu <bridi> | nu <bridi> kei
+> 
+> The string "nu broda broda" can be generated in two ways:
+> 
+> ((nu broda) broda) and (nu (broda broda))
+> 
+> , but the grammar generates all good strings and only good strings.
+> Therefore unambiguity is the central difficulty there.
+
+Fair warning: it's been a *long* time since I worked on this.
+
+Your example is too simple to show the problem.
+
+sentence ::= <sumti> <selbri> | <sumti> <selbri> <sumti>
+sumti ::= le <selbri> ku | le <selbri>
+selbri ::= <brivla> | <brivla> <selbri>
+brivla ::= klama
+
+This will generate the *incorrect* sentence "le klama klama".
+That's a valid utterance, but it's *not* a Lojban sentence, and
+a parser based on this grammar will mark it as such.
+
+The definition of an elidable terminator is that it can be dropped
+when no ambiguity (or significant change to the parse tree) results.
+In this case, the ku is not elidable, but it is not obvious how to
+make a CFG that refuses "le klama klama" but accepts "le klama ku
+klama le klama"
+
+If you think you've found a way, try adding another elidable
+terminator that interacts directly with ku.
+
+-Robin
+
+-- 
+They say:  "The first AIs will be built by the military as weapons."
+And I'm thinking:  "Does it even occur to you to try for something
+other than the default outcome?" -- http://shorl.com/tydruhedufogre
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
