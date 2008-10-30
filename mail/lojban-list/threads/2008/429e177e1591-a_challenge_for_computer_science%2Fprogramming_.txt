@@ -1,4 +1,4 @@
-# mail/lojban-list thread 429e177e1591-a_challenge_for_computer_science%2Fprogramming_ | root 20081028215134.gk31434@digitalkingdom.org | 21 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 429e177e1591-a_challenge_for_computer_science%2Fprogramming_ | root 20081028215134.gk31434@digitalkingdom.org | 22 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-10-28T21:51:34Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20081028215134.gk31434@digitalkingdom.org | mail/lojban-list/cur/1225230694.429e177e1591b292.jbomohi:2,S
 
@@ -842,6 +842,75 @@ They say:  "The first AIs will be built by the military as weapons."
 And I'm thinking:  "Does it even occur to you to try for something
 other than the default outcome?" -- http://shorl.com/tydruhedufogre
 http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 22 | 2008-10-30T20:00:35Z | Stephen Pollei <stephen.pollei@gmail.com> | feed8cdd0810301300r2112dbb9u66f345d242490ccf@mail.gmail.com | mail/lojban-list/cur/1225396835.a137db24c0eb53a8.jbomohi:2,S
+On 10/30/08, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+> On Thu, Oct 30, 2008 at 11:21:45AM -0800, Stephen Pollei wrote:
+>  > On 10/28/08, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+
+>
+> You're wrong, I'm afraid.
+>
+>  http://en.wikipedia.org/wiki/Parsing_expression_grammar#Examples
+>
+>  Look for "The following parsing expression grammar describes the
+>  classic non-context-free language".
+    S ← &(A !b) a+ B !c
+    A ← a A? b
+    B ← b B? c
+would will my transformations become
+    S ←  a+ B
+    A ← a A? b
+    B ← b B? c
+all since I specified that ?, *, and + would be non greedy than this
+cfg grammar would match whatever that peg grammar matches, only
+problem is that it would over match, and would possible have multiple
+matches.
+By over match I mean the validation would be much weaker, there might
+exist strings the cfg would match that the peg would not.
+By multiple matches I mean where the peg might have only one valid
+match, the cfg might have more than one.
+However as I stated before a peg grammar matched then if you weaken
+that peg into a cfg uses the methods I specified then that cfg will
+have a non-empty set of matches which includes the same match the peg
+had.
+
+for instance the weakened cfg would match "abcc" and "aaaabc" for S
+which the peg would reject.
+for "aaabbbccc" and others it looks like the parse tree would be
+similar, so it's bad example for ambiguity. However it is clearer the
+case that when you weaken a peg to a cfg that it can cause ambiquity
+issues.
+
+In any case for any peg, you can build a cfg that finds the same
+matchs that the peg found.
+Only problem is that it is likely to find other matches in addition.
+
+>
+>  PEGs can encode things that CFGs simply cannot, ambiguously or
+>  otherwise.  This is why Lojban's status is an interesting open
+>  question: we can do elidable terminators in PEG, but haven't been
+>  able to in CFGs.
+and I mentioned that you can weaken a peg into a cfg that handles them
+ambiguously and likely over matches. Also I never claimed that cfg
+could be effciently used.
+PEGs can do extra validation and resolve ambiquity, both are wonderful things.
+
+[[The following recursive rule matches standard C-style if/then/else
+statements in such a way that the optional "else" clause always binds
+to the innermost "if", because of the implicit prioritization of the
+'/' operator. (In a context-free grammar, this construct yields the
+classic dangling else ambiguity.)]]
+
+I also don't say that the weaker cfg won't have ambiguity, in fact I
+claim they most likely will. I also claimed that cfg can't handle boi
+without issues.
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
