@@ -1,0 +1,111 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 30 Oct 2008 12:21:54 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1Kvd5d-0006Ki-Gd	for lojban-list-real@lojban.org; Thu, 30 Oct 2008 12:21:53 -0700
+Received: from yw-out-1718.google.com ([74.125.46.156])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <stephen.pollei@gmail.com>)	id 1Kvd5X-0006Jx-8m; Thu, 30 Oct 2008 12:21:50 -0700
+Received: by yw-out-1718.google.com with SMTP id 5so360113ywm.46        for <multiple recipients>; Thu, 30 Oct 2008 12:21:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=Ao/AKAqkWNHkSIpnR+Il1H6bYsTLR3mMb6ceE2rXiJc=;        b=oTJlXZY4CMfeu9sIIZgiqkBkApYOFXPFtu7WQ4+12YyfpbQ15PswqdcAJWuCQ9Dm0U         f2qZzihStZeQymvMgTwXSN3wNckB0GVfuHYlx5hTb54tUa6G24pMMgI8F5nAk6UQyikd         acfh2pURe+ZpNkypSNFux+sH84ONQgrJ1pe2U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=NpwdGv49TZSHm1dTJ7m7s3pbPzd1mGK5gOD+qrkT6dkLlv5YaMu8akGvwVE6qosDlw         cXQABIXNbpiscVKvsiOZyZ0Ny04C165uLgMK2NDkFauQfopW0L9TUQ7uaH4djj3kjERF         gpgAuirJrYfotglMBdMrIWVw4OpJIlg/O+Fp4=
+Received: by 10.150.228.2 with SMTP id a2mr4010900ybh.111.1225394505929;        Thu, 30 Oct 2008 12:21:45 -0700 (PDT)
+Received: by 10.150.218.18 with HTTP; Thu, 30 Oct 2008 12:21:45 -0700 (PDT)
+Message-ID: <feed8cdd0810301221l626d5ae9l178ad88ec6fb1576@mail.gmail.com>
+Date: Thu, 30 Oct 2008 11:21:45 -0800
+From: "Stephen Pollei" <stephen.pollei@gmail.com>
+To: lojban-beginners@lojban.org, lojban-list@lojban.org, llg-members@lojban.org
+Subject: [lojban] Re: [lojban-beginners] A challenge for computer science/programming geeks: The LLG wants to give you $500!
+In-Reply-To: <20081028215134.GK31434@digitalkingdom.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <20081028215134.GK31434@digitalkingdom.org>
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 14887
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: stephen.pollei@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 3761
+
+On 10/28/08, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+>
+>  Your mission, should you choose to accept it, is to create a CFG for
+>  Lojban.  There are three options, with different monetary values
+>  attached, in order of what we in the LLG board would prefer to get.
+
+>  For $100: Formally prove that encoding Lojban's elidable terminators
+>  is not possible in a CFG.
+
+I've been thinking about the problem as well as I think the issue is
+the ambiguity. For instance
+I beleive that any peg grammar can be reduced into a most likely
+weaker cfg grammar that has potentialy multiple parse trees for the
+same valid statement in the grammar. If you get rid of all things that
+are of the form &pattern or !pattern and relax the greadyness
+contraint so that ? matches zero or one nongreadily, and * matches
+zero or more non greadily than the result of that transformation
+should be a cfg. So any proof that shows lojbo gerna can't be encoded
+with or without ambiguity in cfg is also a proof that a peg can't do
+it either. What a peg can do that a cfg can is provide one unique
+parse; if you weaken a peg into a cfg then if there was a peg parse
+the cfg will have a nonempty set of valid parses which includes the
+one that the peg found. That set is not guarentied to include one and
+only one element though. so if you take the first one it finds then it
+might not be the right one you wanted.
+
+http://en.wikipedia.org/wiki/Context-free_grammar
+Strickly speaking a cfg can't even handle the boi eildiable terminator
+correctly without ambiguity.
+
+BOI := [bB][oO][iI] | [ ][bB][oO][iI] | [bB][oO][iI][ ]
+COhE := [cC][oO]['h][eE] | [ ][cC][oO]['h][eE] | [cC][oO]['h][eE][ ]
+CY := [bcdfgjspBCDFGJSP][yY] | [ ][bcdfgjspBCDFGJSP][yY] |
+[bcdfgjspBCDFGJSP][yY][ ]
+CYC := CY | CYC CY
+SUMTI := CYC | CYC BOI
+SUMTIS := SUMTI | SUMTIS SUMTI
+DONE := SUMTIS | SUMTIS COhE | COhE SUMTIS | SUMTIS COhE SUMTIS
+
+This is a very minimal cfg grammar that is ambiguouis for both [ ] and SUMTI
+if you parse "sypy co'e" with it then it can be parsed four different ways.
+SUMTI(sy) SUMTI(py ) COhE(co'e)
+SUMTI(sypy) COhE( co'e)
+SUMTI(sy) SUMTI(py) COhE( co'e)
+SUMTI(sypy ) COhE(co'e)
+
+whitespace is semanticly insignificant. adding one boi still doesn't matter.
+"sypy boi co'e bycy" produces a whole bunch of valid trees among them
+SUMTI(sy) SUMTI(py boi ) COhE(co'e) SUMTI(bycy)
+SUMTI(sypyboi) COhE( co'e) SUMTI(bycy)
+SUMTI(sy) SUMTI(py boi ) COhE(co'e) SUMTI(by) SUMTI(cy)
+SUMTI(sypyboi) COhE( co'e) SUMTI(by) SUMTI(cy)
+
+[[the widely used LR and LL parsers are more efficient algorithms that
+deal only with more restrictive subsets of context-free grammars.]]
+it's trivial to see that cfg isn't powerful enough to handle many of
+lojban's eildiable terminators without ambiguity, but maybe you really
+meant one of it's subsets like lalr(1) like what yacc uses.
+
+It is also interesting to me that if you change:
+    "SUMTI := CYC | CYC BOI" in to "SUMTI := CYC BOI"
+then it's no longer semanticly ambigous but it requires you to use
+boi, which is the exact behavior jbofi'e seems to have.
+
+The rule to me for elidable terminators seems to me that the addition
+of the least amount of terminators at the most delayed spot is the
+correct answer. Assuming another version of the grammar that requires
+all terminators.
+
+{broda gi'e brode le brodi ku le brodo ku}
+is {broda gi'e brode le brodi ku le brodo ku vau vau}
+even though {broda gi'e brode le brodi vau ku le brodo ku vau} and
+{broda gi'e brode vau le brodi ku le brodo ku vau} have the same
+number of additions.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.

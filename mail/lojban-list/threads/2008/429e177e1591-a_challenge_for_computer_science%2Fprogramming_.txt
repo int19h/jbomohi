@@ -1,4 +1,4 @@
-# mail/lojban-list thread 429e177e1591-a_challenge_for_computer_science%2Fprogramming_ | root 20081028215134.gk31434@digitalkingdom.org | 19 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 429e177e1591-a_challenge_for_computer_science%2Fprogramming_ | root 20081028215134.gk31434@digitalkingdom.org | 20 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-10-28T21:51:34Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20081028215134.gk31434@digitalkingdom.org | mail/lojban-list/cur/1225230694.429e177e1591b292.jbomohi:2,S
 
@@ -716,6 +716,88 @@ uninformed guesses about established conventions in a field of study with
 which familiarity is limited, it is sometimes better to stick to merely
 observing the usage and listening to the explanations offered, inserting
 only questions as needed to fill in gaps in understanding. --Peter Constable
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 20 | 2008-10-30T19:21:45Z | Stephen Pollei <stephen.pollei@gmail.com> | feed8cdd0810301221l626d5ae9l178ad88ec6fb1576@mail.gmail.com | mail/lojban-list/cur/1225394505.72b1c13fbcb4b47f.jbomohi:2,S
+On 10/28/08, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+>
+>  Your mission, should you choose to accept it, is to create a CFG for
+>  Lojban.  There are three options, with different monetary values
+>  attached, in order of what we in the LLG board would prefer to get.
+
+>  For $100: Formally prove that encoding Lojban's elidable terminators
+>  is not possible in a CFG.
+
+I've been thinking about the problem as well as I think the issue is
+the ambiguity. For instance
+I beleive that any peg grammar can be reduced into a most likely
+weaker cfg grammar that has potentialy multiple parse trees for the
+same valid statement in the grammar. If you get rid of all things that
+are of the form &pattern or !pattern and relax the greadyness
+contraint so that ? matches zero or one nongreadily, and * matches
+zero or more non greadily than the result of that transformation
+should be a cfg. So any proof that shows lojbo gerna can't be encoded
+with or without ambiguity in cfg is also a proof that a peg can't do
+it either. What a peg can do that a cfg can is provide one unique
+parse; if you weaken a peg into a cfg then if there was a peg parse
+the cfg will have a nonempty set of valid parses which includes the
+one that the peg found. That set is not guarentied to include one and
+only one element though. so if you take the first one it finds then it
+might not be the right one you wanted.
+
+http://en.wikipedia.org/wiki/Context-free_grammar
+Strickly speaking a cfg can't even handle the boi eildiable terminator
+correctly without ambiguity.
+
+BOI := [bB][oO][iI] | [ ][bB][oO][iI] | [bB][oO][iI][ ]
+COhE := [cC][oO]['h][eE] | [ ][cC][oO]['h][eE] | [cC][oO]['h][eE][ ]
+CY := [bcdfgjspBCDFGJSP][yY] | [ ][bcdfgjspBCDFGJSP][yY] |
+[bcdfgjspBCDFGJSP][yY][ ]
+CYC := CY | CYC CY
+SUMTI := CYC | CYC BOI
+SUMTIS := SUMTI | SUMTIS SUMTI
+DONE := SUMTIS | SUMTIS COhE | COhE SUMTIS | SUMTIS COhE SUMTIS
+
+This is a very minimal cfg grammar that is ambiguouis for both [ ] and SUMTI
+if you parse "sypy co'e" with it then it can be parsed four different ways.
+SUMTI(sy) SUMTI(py ) COhE(co'e)
+SUMTI(sypy) COhE( co'e)
+SUMTI(sy) SUMTI(py) COhE( co'e)
+SUMTI(sypy ) COhE(co'e)
+
+whitespace is semanticly insignificant. adding one boi still doesn't matter.
+"sypy boi co'e bycy" produces a whole bunch of valid trees among them
+SUMTI(sy) SUMTI(py boi ) COhE(co'e) SUMTI(bycy)
+SUMTI(sypyboi) COhE( co'e) SUMTI(bycy)
+SUMTI(sy) SUMTI(py boi ) COhE(co'e) SUMTI(by) SUMTI(cy)
+SUMTI(sypyboi) COhE( co'e) SUMTI(by) SUMTI(cy)
+
+[[the widely used LR and LL parsers are more efficient algorithms that
+deal only with more restrictive subsets of context-free grammars.]]
+it's trivial to see that cfg isn't powerful enough to handle many of
+lojban's eildiable terminators without ambiguity, but maybe you really
+meant one of it's subsets like lalr(1) like what yacc uses.
+
+It is also interesting to me that if you change:
+    "SUMTI := CYC | CYC BOI" in to "SUMTI := CYC BOI"
+then it's no longer semanticly ambigous but it requires you to use
+boi, which is the exact behavior jbofi'e seems to have.
+
+The rule to me for elidable terminators seems to me that the addition
+of the least amount of terminators at the most delayed spot is the
+correct answer. Assuming another version of the grammar that requires
+all terminators.
+
+{broda gi'e brode le brodi ku le brodo ku}
+is {broda gi'e brode le brodi ku le brodo ku vau vau}
+even though {broda gi'e brode le brodi vau ku le brodo ku vau} and
+{broda gi'e brode vau le brodi ku le brodo ku vau} have the same
+number of additions.
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
