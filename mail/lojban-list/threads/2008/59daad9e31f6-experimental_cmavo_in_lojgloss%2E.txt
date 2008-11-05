@@ -1,4 +1,4 @@
-# mail/lojban-list thread 59daad9e31f6-experimental_cmavo_in_lojgloss%2E | root 737b61f30811022128n9e8692evefaa820062d2a652@mail.gmail.com | 11 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 59daad9e31f6-experimental_cmavo_in_lojgloss%2E | root 737b61f30811022128n9e8692evefaa820062d2a652@mail.gmail.com | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-11-03T05:28:15Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30811022128n9e8692evefaa820062d2a652@mail.gmail.com | mail/lojban-list/cur/1225690095.59daad9e31f6044e.jbomohi:2,S
 I'm wondering how to handle experimental cmavo in Lojgloss. As I see
@@ -255,7 +255,60 @@ Daniel Brockman
 daniel@brockman.se
 
 
-=== 10 | 2008-11-03T19:53:11Z | Arnt Richard Johansen <arj@nvg.org> | 20081103195311.gk2447@nvg.org | mail/lojban-list/cur/1225741991.a7bed6c287778eb8.jbomohi:2,S
+=== 10 | 2008-11-05T13:34:43Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30811050534i514b3fddv197b2a07a47655f9@mail.gmail.com | mail/lojban-list/cur/1225892083.4cb3e8bb6280120b.jbomohi:2,S
+On Wed, Nov 5, 2008 at 03:58, Daniel Brockman <daniel@brockman.se> wrote:
+> On Wed, Nov 5, 2008 at 12:23 AM, Chris Capel <pdf23ds@gmail.com> wrote:
+>> Right, but it would still be unparsable. The problem is that the text
+>> before it is ungrammatical, and so has to be ignored by the parser to
+>> get the whole thing to parse, which requires that the parser
+>> understand which words the lo'ai is nulling out. It can't be treated
+>> half-way and have things still parse.
+>
+> The obvious way to implement {lo'ai .. sa'ai .. le'ai} in a parser is to
+> just treat it as a self-contained construct that requires morphologically
+> correct Lojban inside it, just like {lo'u .. le'u'}, and syntactically
+> correct Lojban before it (just like everything else).
+
+How far before it? Up to the beginning of the sentence? The statement?
+
+> Of course it would require extraordinary methods to get things like {kwama
+> lo'ai kwama sa'ai klama le'ai} --- or why not {fsen.45ynl5tnerg98ehg4n su
+> coi} --- to parse.  It's not practical and not cost-efficient.  The {kjama}
+> example falls in this category because {kj} is morphologically invalid.
+
+Hmm. I think you overestimate the difference in effort between the two
+implementations. They both require the same tricks, just at a slightly
+different level in the grammar.
+
+> What _would_ be useful and cost-efficient would be to get things like {.i
+> .ai mi cakla sa'ai ckakla le'ai} to parse.
+
+Actually, this is the only useful one I can think of. If the text
+isn't grammatical before the le'ai clause, then the user is probably
+going to want to manually correct it anyway before feeding it to the
+parser. This example happens to be both grammatical, and having nearly
+the same parse tree as the corrected version (since the before and
+after words are both brivla).
+
+> The parser shouldn't try to
+> actually replace anything at the parser level.  It should just parse the
+> {le'ai} construct and report its syntax tree to the client.
+
+Right, I'm with you on that.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 11 | 2008-11-03T19:53:11Z | Arnt Richard Johansen <arj@nvg.org> | 20081103195311.gk2447@nvg.org | mail/lojban-list/cur/1225741991.a7bed6c287778eb8.jbomohi:2,S
 On Sun, Nov 02, 2008 at 11:28:15PM -0600, Chris Capel wrote:
 > I'm wondering how to handle experimental cmavo in Lojgloss. As I see
 > it, they probably fall into at least two catogories.
@@ -288,7 +341,7 @@ with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
 you're really stuck, send mail to secretary@lojban.org for help.
 
 
-=== 11 | 2008-11-03T20:34:55Z | Jorge Llambías <jjllambias@gmail.com> | 925d17560811031234x2bf89df1i11eecb308041ec37@mail.gmail.com | mail/lojban-list/cur/1225744495.dc50d6e46f2d764f.jbomohi:2,S
+=== 12 | 2008-11-03T20:34:55Z | Jorge Llambías <jjllambias@gmail.com> | 925d17560811031234x2bf89df1i11eecb308041ec37@mail.gmail.com | mail/lojban-list/cur/1225744495.dc50d6e46f2d764f.jbomohi:2,S
 On Mon, Nov 3, 2008 at 4:53 PM, Arnt Richard Johansen <arj@nvg.org> wrote:
 >
 >  Camxes (the candidate for the next official parser) does not recognize experimental cmavo at all.
