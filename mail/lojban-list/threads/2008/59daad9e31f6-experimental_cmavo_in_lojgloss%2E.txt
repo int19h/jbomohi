@@ -1,4 +1,4 @@
-# mail/lojban-list thread 59daad9e31f6-experimental_cmavo_in_lojgloss%2E | root 737b61f30811022128n9e8692evefaa820062d2a652@mail.gmail.com | 10 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 59daad9e31f6-experimental_cmavo_in_lojgloss%2E | root 737b61f30811022128n9e8692evefaa820062d2a652@mail.gmail.com | 11 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-11-03T05:28:15Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30811022128n9e8692evefaa820062d2a652@mail.gmail.com | mail/lojban-list/cur/1225690095.59daad9e31f6044e.jbomohi:2,S
 I'm wondering how to handle experimental cmavo in Lojgloss. As I see
@@ -209,7 +209,53 @@ with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
 you're really stuck, send mail to secretary@lojban.org for help.
 
 
-=== 9 | 2008-11-03T19:53:11Z | Arnt Richard Johansen <arj@nvg.org> | 20081103195311.gk2447@nvg.org | mail/lojban-list/cur/1225741991.a7bed6c287778eb8.jbomohi:2,S
+=== 9 | 2008-11-05T09:58:21Z | Daniel Brockman <daniel@brockman.se> | a36d16c80811050158h616ec382x404d43a69a5063d4@mail.gmail.com | mail/lojban-list/cur/1225879101.c97d9ada8ae5728f.jbomohi:2,S
+On Wed, Nov 5, 2008 at 12:23 AM, Chris Capel <pdf23ds@gmail.com> wrote:
+
+> On Tue, Nov 4, 2008 at 07:36, Daniel Brockman <daniel@brockman.se> wrote:
+> > On Tue, Nov 4, 2008 at 12:50 PM, Jorge Llambías <jjllambias@gmail.com>
+> > wrote:
+> >> But in that case it won't be
+> >> of help for fixing something that is grammatically broken, like
+> >> SI/SA/SU are meant to do. For example {mi kjama le zarji lo'ai kjama
+> >> sa'ai klama le'ai} will parse as "{mi} followed by uninterpretable
+> >> gibberish", so it will never get to a higher level for interpretation.
+> >
+> > It will when you are talking to a human.
+>
+> Right, but it would still be unparsable. The problem is that the text
+> before it is ungrammatical, and so has to be ignored by the parser to
+> get the whole thing to parse, which requires that the parser
+> understand which words the lo'ai is nulling out. It can't be treated
+> half-way and have things still parse.
+
+
+The obvious way to implement {lo'ai .. sa'ai .. le'ai} in a parser is to
+just treat it as a self-contained construct that requires morphologically
+correct Lojban inside it, just like {lo'u .. le'u'}, and syntactically
+correct Lojban before it (just like everything else).  Anything more
+advanced than that is, well, more advanced.
+
+Of course it would require extraordinary methods to get things like {kwama
+lo'ai kwama sa'ai klama le'ai} --- or why not {fsen.45ynl5tnerg98ehg4n su
+coi} --- to parse.  It's not practical and not cost-efficient.  The {kjama}
+example falls in this category because {kj} is morphologically invalid.
+
+What _would_ be useful and cost-efficient would be to get things like {.i
+.ai mi cakla sa'ai ckakla le'ai} to parse.  The parser shouldn't try to
+actually replace anything at the parser level.  It should just parse the
+{le'ai} construct and report its syntax tree to the client.
+
+A first approximation would be to just put {lo'ai} and {sa'ai} in LOhU and
+{le'ai} in LEhU.  The next step would be to give this construct its own,
+specifically appropriate, syntax.
+
+-- 
+Daniel Brockman
+daniel@brockman.se
+
+
+=== 10 | 2008-11-03T19:53:11Z | Arnt Richard Johansen <arj@nvg.org> | 20081103195311.gk2447@nvg.org | mail/lojban-list/cur/1225741991.a7bed6c287778eb8.jbomohi:2,S
 On Sun, Nov 02, 2008 at 11:28:15PM -0600, Chris Capel wrote:
 > I'm wondering how to handle experimental cmavo in Lojgloss. As I see
 > it, they probably fall into at least two catogories.
@@ -242,7 +288,7 @@ with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
 you're really stuck, send mail to secretary@lojban.org for help.
 
 
-=== 10 | 2008-11-03T20:34:55Z | Jorge Llambías <jjllambias@gmail.com> | 925d17560811031234x2bf89df1i11eecb308041ec37@mail.gmail.com | mail/lojban-list/cur/1225744495.dc50d6e46f2d764f.jbomohi:2,S
+=== 11 | 2008-11-03T20:34:55Z | Jorge Llambías <jjllambias@gmail.com> | 925d17560811031234x2bf89df1i11eecb308041ec37@mail.gmail.com | mail/lojban-list/cur/1225744495.dc50d6e46f2d764f.jbomohi:2,S
 On Mon, Nov 3, 2008 at 4:53 PM, Arnt Richard Johansen <arj@nvg.org> wrote:
 >
 >  Camxes (the candidate for the next official parser) does not recognize experimental cmavo at all.
