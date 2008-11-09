@@ -1,0 +1,175 @@
+# mail/lojban-list thread ee50c6d9c989-espeak_and_lojban | root feed8cdd0811082315s5da6d4d9u99cd61890f90079@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2008-11-09T07:15:49Z | Stephen Pollei <stephen.pollei@gmail.com> | feed8cdd0811082315s5da6d4d9u99cd61890f90079@mail.gmail.com | mail/lojban-list/cur/1226214949.ee50c6d9c989cffc.jbomohi:2,S
+On 11/8/08, A. PIEKARSKI <totus@rogers.com> wrote:
+>  I just installed eSpeak and tried it out.  It is interesting, but has
+>  enough problems to limit its usefulness.
+>
+>  Then I discovered some relevent messages in the mail archives with
+>  your name appended - sounds like you were trying to make some
+>  improvements in September.
+>
+>  Can you let me know the current status, please?  By the way, the thing
+>  that I found most awkward is the way it races through without pausing
+>  before the {ni'o}s.
+
+I'm not sure of it's current status as a version 1.39 has been
+released while I tried modifying version 1.38 and I'm not sure if the
+upstream author made any changes based on what I was experimenting
+with. I should check. I also have done very little as I'm not sure
+what to do about the x and z phomemes. I was completely stuck on
+those.
+
+I did make some updates to lihertadji.pl , including some incomplete
+stuff to add commas to words. I also want to beef up the fixup
+function so only valid pronounceable lojban words make it through into
+the output. Some of that I'm worried that the definition of what is
+and isn't a valid syllable, isn't well defined and agreed upon. I
+thought that adding the commas would help espeak pronounce syllable
+boundaries a little better; I haven't tested how espeak actually
+respondes to having commas all over the place.
+
+I also have long time goal of having li'ertadji output SSML so you can
+mix lojban and other languages with zoi , la'o and la'oi . I'm
+attaching what I have even though it's ugly and has known errors and
+incomplete spots in it. Yes I know some of it is embarrassing, but
+it's a work-in-progress .
+
+I will check to see what if anything got changed for version 1.39 .
+
+Ok just downloaded it and checked and it looks the exactly the same.
+
+espeak-1.39-source]$ sha1sum dictsource/jbo_*
+15e2321ccc869369e70bf5cf358261187d40598b  dictsource/jbo_list
+4081ab03f16a9e1bd75c47146f8b7a844216dbe2  dictsource/jbo_rules
+
+  espeak-1.38-source]$ sha1sum dictsource/jbo_*
+15e2321ccc869369e70bf5cf358261187d40598b  dictsource/jbo_list.orig
+4081ab03f16a9e1bd75c47146f8b7a844216dbe2  dictsource/jbo_rules.orig
+
+I think the upstream guy thought that some of my changes were too extreme.
+I will redo some of my work and only fix things that are clearly
+wrong, some of it wasn't wrong persay, just not really needed.
+
+short to do list:
+1) get rid of { a } to { abu }, { e } to { ebu }, etc from jbo_list
+That's obviously and clearly a proper fix. espeak would change {le
+broda e le brode} into {le broda ebu le brode} and { u bu co'e} into {
+ubu bu co'e} which goes without saying is bogus.
+
+2) get rid of { m } to { my }, { l } to { ly } from jbo_list
+espeak shouldn't be touching any of the single consonants words, l,m,
+n, and r should be syllabics and according to at least some lojbanists
+should be valid cmevla.
+  { b } to { by } shouldn't really be that harmful . The cll would
+classify them as cmevla , but they aren't really made up of any
+syllables . I would prefer if they got altered to be { b } to { yb } ,
+I think I will made li'ertadji do that in the future. the preprocessor
+should be able to handle more invalid words then what espeak tries to
+do.
+The reason I prefer { b } to { yb } over { by } is because it
+preserves it's cmevla status and doesn't change the word into a lerfu
+valsi . I need feedback from others on if they should be considered
+valid one letter click names and thus be left alone, or whether they
+are invalid words that the cll underspecified on.
+As far as I know nobody use single letter cmevla in real life, so it's
+not a big deal.
+
+The upstream maintainer was reluctant to take a patch from me that got
+rid of them all, because he said some of the consonants would sound
+merely like a click noise; I think that is valid concern, but it
+should be the responsibility of the writer not to give bogus input to
+espeak. Using the preprocesser with fixups will hopefully ensure that
+little to no invalid input reaches espeak in the first place.
+Also I am not sure; I didn't test whether the syllabics sound like
+clicks or if the if they are recongizable.
+
+3) Get rid of the stuff which stresses cmavo from jbo_list but leave
+the upstream authors pausing in place . cmavo should never be stressed
+unless someone capitalized some of it's letters. The stress doesn't
+invalidate the meaning of the words, so isn't critically wrong, but
+isn't strictly correct either.
+
+It also will stress cmevla without capital letters which also isn't
+wrong really, it might even be the right thing to do according to some
+I've talked to. I'd prefer if it didn't stress cmevla  and leave that
+up to the writer, but I could be wrong about that. I request feedback.
+
+maybe nice to have but dropped:
+1)  in jbo_rules h, q, and w aren't really legal lojban characters,
+pause if they occur at the ends of a word ; y always needs pausing if
+it occurs at the end of words .. li'ertadji foreign word detection and
+fixup routines should handle the h,q,and w stuff even better than
+these espeak rules. The preproccesor also handles y stuff very well .
+2) dj and tc but not ts and dz has special support in jbo_rules, my
+earlier patch had dropped that not sure if that's an improvement or
+not. Someone who knows better should figure out of affricitives are at
+their best.
+3) Someone should check to see if the rules that change the sounds for
+l, n , r based on adjacent letters make sense. My earlier patch just
+made them more consistent.
+4) Give extra pause to lo'u and le'u the error quote stuff and zo and
+zoi the regular quote stuff
+
+I had also just ripped out some pausing stuff as the rules didn't
+really require them, and they don't hurt anything AFAIK. Unless anyone
+complains about too much pause; I won't touch them again. I'm more
+likely to push for a few more things to get pauses.
+
+Also I did nothing to change the x and the z, I doubt the upstream
+espeak maintainer did anything either. I haven't tested yet and
+hopefully I'm wrong.
+
+Not sure how much pause you want before ni'o and no'i . It shouldn't
+be that fast especially since most people put newlines before sections
+as well as using ni'o, and I think espeak is whitespace sensitive
+enough to do extra pause if you have a few newlines in place.
+
+The critical fix is getting rid of the { .a } to { .abu } snafu. If
+1.40 had nothing else but that, it would be a significant improvement.
+Getting rid of the stressing of some cmavo and not adding "y" to
+single consonant cmevla would be nice, but the x and z issue is more
+important, but sadly I don't think I can do anything about it.
+
+I also have no idea what the upstreams schedule is like.
+
+Anyway it's getting late and tomorrow I'm traveling out of town with
+some friends, so I won't be able to do anything 'till Monday afternoon
+anyway.
+
+I attached the simple but critical patch. Something like the below
+should be done before 1.40 is released.
+
+diff -U2 jbo_list jbo_list.crit
+--- jbo_list    2008-05-16 09:46:20.000000000 -0700
++++ jbo_list.crit       2008-11-08 23:17:52.000000000 -0800
+@@ -19,23 +19,14 @@
+
+
+-_a     abu
+ b      b@
+ c      S@
+ d      d@
+-_e     ebu
+ f      f@
+ g      g@
+-_i     ibu
+ j      Z@
+ k      k@
+-l      l@
+-m      m@
+-n      n@
+-_o     obu
+ p      p@
+-r      R@
+ s      s@
+ t      t@
+-_u     ubu
+ v      v@
+ x      x@
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
