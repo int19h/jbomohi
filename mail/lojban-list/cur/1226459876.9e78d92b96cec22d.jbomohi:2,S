@@ -1,0 +1,225 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 11 Nov 2008 19:21:10 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L06I2-0008Fo-37	for lojban-list-real@lojban.org; Tue, 11 Nov 2008 19:21:10 -0800
+Received: from relay14.mail.uk.clara.net ([80.168.70.194])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jsd@clara.co.uk>)	id 1L06Ht-0008FM-J1	for lojban-list@lojban.org; Tue, 11 Nov 2008 19:21:10 -0800
+Received: from adsl-solo-80-168-224-109.claranet.co.uk ([80.168.224.109]:1051 helo=pcr)	by relay14.mail.uk.clara.net with smtp (Exim 4.69)	(envelope-from <jsd@clara.co.uk>)	id 1L06Hq-00039l-K9	for lojban-list@lojban.org; Wed, 12 Nov 2008 03:20:59 +0000
+MIME-Version: 1.0
+From: Jonathan Duddington <jsd@clara.co.uk>
+To: lojban-list@lojban.org
+Date: Wed, 12 Nov 2008 03:17:56 +0000 (GMT)
+Subject: [lojban] Re: eSpeak and lojban
+Message-ID: <4ffcdeab53jsd@clara.co.uk>
+In-Reply-To: <feed8cdd0811082315s5da6d4d9u99cd61890f90079@mail.gmail.com>
+References: <feed8cdd0811082315s5da6d4d9u99cd61890f90079@mail.gmail.com>
+User-Agent: Pluto/3.04e (RISC-OS/4.02) POPstar/2.02
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15005
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jsd@clara.co.uk
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 8210
+
+On 09 Nov, Stephen Pollei <stephen.pollei@gmail.com> wrote:
+> On 11/8/08, A. PIEKARSKI <totus@rogers.com> wrote:
+
+> >  I just installed eSpeak and tried it out.  It is interesting, but
+> >  has enough problems to limit its usefulness.
+
+Hello, I'm the author of eSpeak.  But I don't know much about lojban.
+
+The latest version (currently 1.39.23) is at:
+http://espeak.sf.net/test/latest.html
+
+> >  By the way, the thing that I found most awkward is the way it
+> >  races through without pausing before the {ni'o}s.
+
+There is a list of words in  dictsource/jbo_list  which have a pause
+before them.  Since lojban doesn't use commas to indicate pauses and
+clause boundaries, we must rely on words.  Please amend the list and
+give me the updates.
+
+This seems to be a problem with lojban, long sentences with no
+punctuation.  How to know where to pause and where the intonation
+should indicate end-of-clause.  Pauses and intonation are important to
+indicate structure.  You can't read a long sentence out aloud without
+pauses and intonation.
+
+In the jbo_list file, you can specify for a word (or a phrase) that it
+has a pause before or after the word, or that it has an end-of-clause
+pause (which also changes the intonation).  With English and other
+natural languages, eSpeak uses a pause before conjunctions such as
+"and", "if", "which", and to indicate brackets and quotation marks. 
+The end-of-clause pause is used for a comma or semicolon.
+
+With lojban, it should be possible to determine the structure and
+therefore where pauses should occur (but not by me, because I don't
+know lojban).  Can this be done simply by associating pauses with
+certain words? 
+
+> I also have done very little as I'm not sure what to do about the x
+> and z phomemes. I was completely stuck on those.
+
+I've changed the sound of [x] phoneme recently, so try the latest
+version.  You previously said that it was difficult to distinguish
+between 'c', 's', 'z' (phonemes [S] [s] [z]).  These are the same
+phoneme sounds which eSpeak uses for English and most other languages,
+and I've not heard of any problem distinguishing them.  For example,
+English "ship, sip, zip" sound distinct, as are "gash, gas, gaz". 
+Perhaps the problem occurs with certain combinations of consonants? 
+
+> I thought that adding the commas would help espeak pronounce syllable
+> boundaries a little better; I haven't tested how espeak actually
+> respondes to having commas all over the place.
+
+What do you mean by "pronounce syllable boundaries correctly"?
+
+> 1) get rid of { a } to { abu }, { e } to { ebu }, etc from jbo_list
+
+This has been done.  eSpeak will only pronounce 'a','e','i','o','u' as
+"abu" etc, if a program (such as a screen-reader) explicitly asks for
+the letter name.
+
+> 2) get rid of { m } to { my }, { l } to { ly } from jbo_list
+> espeak shouldn't be touching any of the single consonants words, l,m,
+> n, and r should be syllabics and according to at least some lojbanists
+> should be valid cmevla.
+
+Changed now.
+
+>   { b } to { by } shouldn't really be that harmful . The cll would
+> classify them as cmevla , but they aren't really made up of any
+> syllables . I would prefer if they got altered to be { b } to { yb } ,
+
+That's a simple change, when you decide.
+
+> The upstream maintainer was reluctant to take a patch from me that got
+> rid of them all, because he said some of the consonants would sound
+> merely like a click noise; I think that is valid concern, but it
+> should be the responsibility of the writer not to give bogus input to
+> espeak.
+
+Yes, but it's also the responsibility of eSpeak to try to pronounce
+text even if it's not valid language.  A single lone letter is a common
+typo error.
+
+> 3) Get rid of the stuff which stresses cmavo from jbo_list but leave
+> the upstream authors pausing in place . cmavo should never be stressed
+> unless someone capitalized some of it's letters.
+
+Are you sure?
+"Stress" here doesn't mean "emphasized".  It just means that eSpeak
+will give them the same stress as other words.  jbo_list contains a few
+cmavo which are "not unstressed".  I don't know what they mean ("cai"
+"cu'i", "pei" etc), but someone told me to include them because they
+may carry more stress in normal speech than others.  
+
+The important question is not, "is it strictly correct", but rather
+"does it sound right" and "does it help intelligibility".
+
+> It also will stress cmevla without capital letters which also isn't
+> wrong really, it might even be the right thing to do according to some
+> I've talked to. I'd prefer if it didn't stress cmevla  and leave that
+> up to the writer, but I could be wrong about that. I request feedback.
+
+Again, I think you misunderstand what eSpeak means here by "stress". 
+It's just the normal stress on the penultimate syllable of most words. 
+Not "special emphasis".  I think the lojban capital letter convention
+is used when the stressed syllable is other than the default.  So no
+capital letter means "stress on the penultimate syllable".
+
+If there is a way in lojban text to indicate an emphasized word in a
+sentence, then you can indicate that to eSpeak by using SSML (speech
+synthesis markup language).
+
+
+> maybe nice to have but dropped:
+> 1)  in jbo_rules h, q, and w aren't really legal lojban characters,
+
+They may occur in foreign names.
+Accented characters such as 'ö' and ñ are not in the English alphabet,
+but eSpeak should cope if it sees them.
+
+> pause if they occur at the ends of a word ; y always needs pausing if
+> it occurs at the end of words
+
+> .. li'ertadji foreign word detection and
+> fixup routines should handle the h,q,and w stuff even better than
+> these espeak rules. The preproccesor also handles y stuff very well .
+
+> 2) dj and tc but not ts and dz has special support in jbo_rules, my
+> earlier patch had dropped that not sure if that's an improvement or
+> not. Someone who knows better should figure out of affricitives are at
+> their best.
+
+The "dj" and "tc" sounds are nearly always considered as single
+phonemes ([tS] and [dZ]) in other languages. "ts" and "dz" are often
+not (eg. in English).  Listen for which sounds better.
+
+> 3) Someone should check to see if the rules that change the sounds for
+> l, n , r based on adjacent letters make sense. My earlier patch just
+> made them more consistent.
+
+> 4) Give extra pause to lo'u and le'u the error quote stuff and zo and
+> zoi the regular quote stuff
+
+I don't understand that one.
+
+> I had also just ripped out some pausing stuff as the rules didn't
+> really require them, and they don't hurt anything AFAIK.
+
+Better to keep pauses if they help listening.  Human speakers need to
+breath occasionally even if the semantics don't require it.
+
+In English eSpeak, I put short pauses before words such as "if",
+"which", "since", "as".
+
+> Also I did nothing to change the x and the z,
+
+What did you want to change?
+
+> The critical fix is getting rid of the { .a } to { .abu } snafu.
+
+Fixed since eSpeak 1.38
+
+> Getting rid of the stressing of some cmavo 
+
+Consider how they are spoken in real speech.
+
+> and not adding "y" to single consonant cmevla would be nice,
+
+I doubt it, if the consonant can't be a syllable by itself.
+
+> but the x and z issue is more important, but sadly I don't think I
+> can do anything about it.
+
+I don't know what the problem is.
+
+You wrote earlier that eSpeak is too fast.  Most blind users of other
+languages say that eSpeak is too slow, even at its fastest speed!  But
+with lojban, people are not native speakers and are not fluent.  Just
+use a slower speed ( -s option if you are using the command line, or
+the speed slider if you are using a GUI application).
+
+Another idea is to add the following line to the end of the file
+espeak-data/voices/jbo  (or if it's not there, then
+espeak-data/voices/test/jbo):
+
+words 1
+
+That will speak words separately, not merged together.  The speech
+won't flow as smoothly, but it's probably easier to listen to.  You can
+use larger values in the range 1 to 4 to give longer gaps between words.
+
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
