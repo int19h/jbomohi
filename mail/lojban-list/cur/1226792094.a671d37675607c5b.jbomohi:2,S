@@ -1,0 +1,126 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sat, 15 Nov 2008 15:34:58 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L1UfJ-0001Tm-Pl	for lojban-list-real@lojban.org; Sat, 15 Nov 2008 15:34:58 -0800
+Received: from rv-out-0708.google.com ([209.85.198.241])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jjllambias@gmail.com>)	id 1L1UfH-0001Td-CI	for lojban-list@lojban.org; Sat, 15 Nov 2008 15:34:57 -0800
+Received: by rv-out-0708.google.com with SMTP id b17so2110235rvf.46        for <lojban-list@lojban.org>; Sat, 15 Nov 2008 15:34:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=RgQ/DX71B0vTpdJMRpxpsfSgUptOkKZQ4iuOvCeujwo=;        b=qp81WOlXdrUKLsvwla5yGx7nBPm4FEPku5f+BX8LzXmLPw5OiueL76XyewS8IWjVnl         ySGurvlPjxQzOtnDepio8XZZdn0Co4+i6wJOlykZ9y0U9KDKp9XL0WO7z28paGloKYlG         Oe3OUmVy0XRL4xnNjcAqr6AE1KjpkIkWxfpNU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=pSuwCILasbrIunE7O7sxxzjgSEbwdMcVh7DdJD2EjYJLAplg1xyCDPisiwNetqkzXf         8grwvb29DrrLaCybxyR794qK3gBBhTAq9VzQokj6CPBX6Ie+WnzWScAcI143gNr8SpgO         0vbteC6bqS1ov2z5vWN9pQzRaOlJCujTyXlYQ=
+Received: by 10.140.188.10 with SMTP id l10mr1385497rvf.125.1226792094173;        Sat, 15 Nov 2008 15:34:54 -0800 (PST)
+Received: by 10.141.194.15 with HTTP; Sat, 15 Nov 2008 15:34:54 -0800 (PST)
+Message-ID: <925d17560811151534s39dcd5aeq729c56f1e30282b9@mail.gmail.com>
+Date: Sat, 15 Nov 2008 20:34:54 -0300
+From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <jjllambias@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Annotated PEG grammar
+In-Reply-To: <feed8cdd0811151521q6e55ece1qdd6f3c69bd24570f@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+Content-Disposition: inline
+References: <737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com>
+	 <925d17560811151405j69b216b5g1b2fdaed51244418@mail.gmail.com>
+	 <feed8cdd0811151521q6e55ece1qdd6f3c69bd24570f@mail.gmail.com>
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15026
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 3675
+
+On Sat, Nov 15, 2008 at 8:21 PM, Stephen Pollei
+<stephen.pollei@gmail.com> wrote:
+>
+> Yes I think that maybe making sure that the grammar can handle things
+> like the magic words in a way most can agree on would be great.
+
+Those are already handled properly by Robin's grammar:
+<http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/lojban.peg.txt>
+
+(Except for SA, which is still a big mess.)
+
+> Also there might be minor things that could be changed that don't
+> really change things much.
+> {paragraph <- (statement / fragment) (I !jek !joik !joik-jek free*
+> (statement / fragment)?)*}
+> could be changed to
+> {paragraph <- (statement / fragment) (I  !joik-jek free* (statement /
+> fragment)?)*}
+> or {paragraph <- (statement / fragment) (I !jek !joik  free*
+> (statement / fragment)?)*} .
+>
+> given {joik-jek <- joik free* / jek free*} it's slightly redundant.
+
+Yes. In fact that !joik-jek in front of free* is extremely weird. If
+it's needed at all, it has to go after free*, otherwise it looks like
+the presence of a free (which itself can never begin with joik-jek)
+would license a "statement" that begins with joik-jek (I suppose
+somethig that begins with joi gi... gi ...). And that would be a
+really weird function for "free".
+
+mu'o mi'e xorxes
+
+>
+>>
+>>  For example, why is joik-jek up there in the text rule instead of
+>>  being a fragment?
+>
+> I can't really speak to Jorge Llambías's suggestions about fragments.
+> It seems sensible to me, but I lack the experience and knowlege to
+> really evaluate his suggestion properly.
+>
+>>
+>>  BTW, the comment about free* and UI is not exactly rght. In fact UI is
+>>  not an instance of free, and can occur in a few more places than
+>>  free*. For example, UI can occur between CMENE and free can't. That's
+>>  another thing that should be changed, free should be able to appear
+>>  anywhere that it doesn't cause a problem.
+>
+> "text-part-2" , "sumti-6" , and "free" all have CMENE+ rules and there
+> is a indicators rule that might be appropriate or not.
+>    indicators <- FUhE? indicator+
+>    indicator <- ((UI / CAI) NAI? / DAhO / FUhO) !BU
+> If you created a rule like:
+> names <- CMENE+ indicators? (CMENE+ indicators?)*
+> and then used "names" instead of "CMENE+" inside those three rules
+> would that be close to what you suggest?
+>
+> names <- (CMENE+ indicators / )* CMENE+
+> hmm you did say between, not sure if you can do a zero-width match like that.
+>
+> text-part-2 <- (CMENE+ / indicators?) free*
+> sumti-6 <- ... / LA free* relatives? CMENE+ free* / ...
+> free <- ... / vocative relatives? CMENE+ free* relatives? DOhU? / ...
+>
+> text-part-2 <- (names / indicators)? free*
+> sumti-6 <- ... / LA free* relatives? names free* / ...
+> free <- ... / vocative relatives? names free* relatives? DOhU? / ...
+>
+> Hmm now that I look at it free also doesn't seem to list UI either.
+>
+> post-clause <- spaces? si-clause? !ZEI-clause !BU-clause indicators*
+> that probably does much of the UI usage soak up.
+>
+> CMENE-clause <- CMENE-pre CMENE-post
+> CMENE-pre <- pre-clause CMENE spaces?
+> CMENE-post <- post-clause
+> SPACE CMENE-no-SA-handling <- pre-clause CMENE post-clause
+>
+> And it looks like the CMENE stuff already might soak up indicators. Not sure.
+>
+>
+> To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+> with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+> you're really stuck, send mail to secretary@lojban.org for help.
+>
+>
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
