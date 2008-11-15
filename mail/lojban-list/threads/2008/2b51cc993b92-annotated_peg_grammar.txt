@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2b51cc993b92-annotated_peg_grammar | root 737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com | 5 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2b51cc993b92-annotated_peg_grammar | root 737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com | 6 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-11-15T20:45:23Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com | mail/lojban-list/cur/1226781923.2b51cc993b922c00.jbomohi:2,S
 http://pdf23ds.net/lojban/Annotated%20Grammar.html
@@ -131,6 +131,92 @@ Chris Capel
 "What is it like to be a bat? What is it like to bat a bee? What is it
 like to be a bee being batted? What is it like to be a batted bee?"
 -- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 6 | 2008-11-15T23:21:25Z | Stephen Pollei <stephen.pollei@gmail.com> | feed8cdd0811151521q6e55ece1qdd6f3c69bd24570f@mail.gmail.com | mail/lojban-list/cur/1226791285.3ca4ec40f6158a40.jbomohi:2,S
+On 11/15/08, Jorge Llambías <jjllambias@gmail.com> wrote:
+> On Sat, Nov 15, 2008 at 5:45 PM, Chris Capel <pdf23ds@gmail.com> wrote:
+>  > http://pdf23ds.net/lojban/Annotated%20Grammar.html
+
+>  > Here's a very unfinished version of an annotated grammar. Anybody want
+>  > to see it finished?
+> I wouldn't mind seeing the annotations finished
+
+<aol>me too</aol>
+
+> I think that's a
+>  useful thing to have, but what I would really want is seeing the rules
+>  cleaned up, including some minor adjustments to the grammar.  This
+>  grammar is not official yet so we do have some room to tinker.
+
+Yes I think that maybe making sure that the grammar can handle things
+like the magic words in a way most can agree on would be great.
+http://www.lojban.org/tiki/tiki-index.php?page=Magic+Words&bl
+I'm not sure what other proposed changes might need a tiny bit of tweaking.
+
+Also there might be minor things that could be changed that don't
+really change things much.
+{paragraph <- (statement / fragment) (I !jek !joik !joik-jek free*
+(statement / fragment)?)*}
+could be changed to
+{paragraph <- (statement / fragment) (I  !joik-jek free* (statement /
+fragment)?)*}
+or {paragraph <- (statement / fragment) (I !jek !joik  free*
+(statement / fragment)?)*} .
+
+given {joik-jek <- joik free* / jek free*} it's slightly redundant.
+
+>
+>  For example, why is joik-jek up there in the text rule instead of
+>  being a fragment?
+
+I can't really speak to Jorge Llambías's suggestions about fragments.
+It seems sensible to me, but I lack the experience and knowlege to
+really evaluate his suggestion properly.
+
+>
+>  BTW, the comment about free* and UI is not exactly rght. In fact UI is
+>  not an instance of free, and can occur in a few more places than
+>  free*. For example, UI can occur between CMENE and free can't. That's
+>  another thing that should be changed, free should be able to appear
+>  anywhere that it doesn't cause a problem.
+
+"text-part-2" , "sumti-6" , and "free" all have CMENE+ rules and there
+is a indicators rule that might be appropriate or not.
+    indicators <- FUhE? indicator+
+    indicator <- ((UI / CAI) NAI? / DAhO / FUhO) !BU
+If you created a rule like:
+names <- CMENE+ indicators? (CMENE+ indicators?)*
+and then used "names" instead of "CMENE+" inside those three rules
+would that be close to what you suggest?
+
+names <- (CMENE+ indicators / )* CMENE+
+hmm you did say between, not sure if you can do a zero-width match like that.
+
+text-part-2 <- (CMENE+ / indicators?) free*
+sumti-6 <- ... / LA free* relatives? CMENE+ free* / ...
+free <- ... / vocative relatives? CMENE+ free* relatives? DOhU? / ...
+
+text-part-2 <- (names / indicators)? free*
+sumti-6 <- ... / LA free* relatives? names free* / ...
+free <- ... / vocative relatives? names free* relatives? DOhU? / ...
+
+Hmm now that I look at it free also doesn't seem to list UI either.
+
+post-clause <- spaces? si-clause? !ZEI-clause !BU-clause indicators*
+that probably does much of the UI usage soak up.
+
+CMENE-clause <- CMENE-pre CMENE-post
+CMENE-pre <- pre-clause CMENE spaces?
+CMENE-post <- post-clause
+SPACE CMENE-no-SA-handling <- pre-clause CMENE post-clause
+
+And it looks like the CMENE stuff already might soak up indicators. Not sure.
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
