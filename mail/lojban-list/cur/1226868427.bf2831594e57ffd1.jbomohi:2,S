@@ -1,0 +1,102 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 16 Nov 2008 12:47:12 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L1oWW-0001rM-C2	for lojban-list-real@lojban.org; Sun, 16 Nov 2008 12:47:12 -0800
+Received: from rv-out-0708.google.com ([209.85.198.248])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <pdf23ds@gmail.com>)	id 1L1oWS-0001r3-VD	for lojban-list@lojban.org; Sun, 16 Nov 2008 12:47:12 -0800
+Received: by rv-out-0708.google.com with SMTP id b17so2371038rvf.46        for <lojban-list@lojban.org>; Sun, 16 Nov 2008 12:47:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=qNKYXPw8113xSjLYyp3Mcwn7kdcBmaGkWibSCu05rRo=;        b=IiY6ddM2Xv3WVmSfbgWuQgx8cLZhpaw1Jz2Lfhg4wDjt4znTQYpuCuu7+oXPHzmzzS         0aM9pkR+W87ItP4NmsDUdIvGtAr9hWDeVqXAlI6w9LZMILUrFRvBIguTlAJAgoHOWG8w         v4AiZA8iAB4fc6K84hmgOQ44FAZ52QjEFFmAA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=DgVzMMVtSc+SrXAhR7e9eHnjSlIBXylqO71oAqBh+/Arx8vv+nP/g6oaG4IU6V1Ktp         uWm4f/E6/f4kqjzdROpROVNwqjws2iHseRBAcquXVFfJ8L98IxQbLb6+YhA8VgWkM/gg         1uTx+GAH098REYm4/PA3jwyQgGQnZTrIBNlZw=
+Received: by 10.140.157.4 with SMTP id f4mr1832125rve.84.1226868427804;        Sun, 16 Nov 2008 12:47:07 -0800 (PST)
+Received: by 10.140.202.10 with HTTP; Sun, 16 Nov 2008 12:47:07 -0800 (PST)
+Message-ID: <737b61f30811161247p755b43b7l48b8097fcd6101c9@mail.gmail.com>
+Date: Sun, 16 Nov 2008 14:47:07 -0600
+From: "Chris Capel" <pdf23ds@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Annotated PEG grammar
+In-Reply-To: <925d17560811161224t47f45b18kdfe93232f633d724@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+Content-Disposition: inline
+References: <737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com>
+	 <925d17560811161138y3b7b1639odca190168d1c0f95@mail.gmail.com>
+	 <737b61f30811161208l375083ddi7a809ad087911e8e@mail.gmail.com>
+	 <925d17560811161224t47f45b18kdfe93232f633d724@mail.gmail.com>
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15047
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2740
+
+On Sun, Nov 16, 2008 at 14:24, Jorge Llambías <jjllambias@gmail.com> wrote:
+> On Sun, Nov 16, 2008 at 5:08 PM, Chris Capel <pdf23ds@gmail.com> wrote:
+>> On Sun, Nov 16, 2008 at 13:38, Jorge Llambías <jjllambias@gmail.com> wrote:
+>>>> bridi-tail-1 <- bridi-tail-1 gihek !(tag? BO) !(tag? KE) free* bridi-tail-2 tail-terms / bridi-tail-2
+>>>>
+>>>> This production parses undecorated giheks. To ensure that no BO or KE are used, the lookahead symbol is used.
+>>>
+>>> Neither a free* nor a bridi-tail-2 can start with (tag? BO), so that
+>>> restriction is doing nothing.
+>>
+>> I think it is, because bridi-tail-2 requires a BO in its gihek clause.
+>
+> But it can never _start_ with "tag? BO", which is all !(tag? BO) cares about.
+
+The BO (by which I mean tag? BO) is going to be after the gihek in any
+case, not at the beginning of the production. The beginning of the
+stuff inside the latter part of the gihek, you mean?
+
+The !BO keeps "broda gi'e bo brode" from matching the first option of
+bridi-tail-1, instead matching the optional part of bridi-tail-2
+(instead of two bridi-tail-2's for broda and brode each).
+
+>>> And the !(tag? KE) seems wrong there. Why is "broda gi'e ke ge brode
+>>> gi brodi" disallowed, while "broda gi'e xi pa ke ge brode gi brodi"
+>>> allowed by this rule?
+>>
+>> Is it disallowed?
+>
+> As a "bridi-tail-1", it's disallowed. (It's allowed as a "bridi-tail".)
+
+Which is sort of the defining difference between the two. I think the
+real issue here is the handling of the frees in bridi-tail. Both of
+your examples parse, but the latter as a bridi-tail-1, and there's no
+reason for it to parse differently just because of a free.
+
+>> It seems to me your second example would still parse
+>> passing through bridi-tail-1 and matching the second alternative of
+>> gek-sentence.
+>
+> "broda gi'e ke ge brode gi brodi" will match bridi-tail (but not bridi-tail-1)
+>
+> "broda gi'e xi pa ke ge brode gi brodi", OTOH, will match bridi-tail-1.
+>
+> That's inconsistent.
+
+Oh, I see I have duplicated your effort. Scientific method! Yay!
+
+>> In which case the only question is whether the !KE is
+>> superfluous.
+>
+> I suspect it's simply wrong, in order to get the right precedences.
+> But in an case, if it belongs there at all, it must go after free*,
+> not before.
+
+But what would removing the !KE do? Would it fix it?
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
