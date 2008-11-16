@@ -1,0 +1,80 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 16 Nov 2008 12:24:42 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L1oAk-0001A1-98	for lojban-list-real@lojban.org; Sun, 16 Nov 2008 12:24:42 -0800
+Received: from rv-out-0708.google.com ([209.85.198.240])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jjllambias@gmail.com>)	id 1L1oAc-00019f-0o	for lojban-list@lojban.org; Sun, 16 Nov 2008 12:24:42 -0800
+Received: by rv-out-0708.google.com with SMTP id b17so2365164rvf.46        for <lojban-list@lojban.org>; Sun, 16 Nov 2008 12:24:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=9+5IMa265EPW8VR4WbXiTZCIDi0jTb7trXQiynpmHy8=;        b=be/1HnBtN/VKMku8prnsnw8TOqZoLxJrGlbVLe7iU6Kt4QIoxlNVPXgRrISuKyJEjU         BpDLWoS5XW3OD/SLxdQNkKh8KL+IQnOv0BOR2ImkSQ9NiBeV1qu3m1c/xxdrPJtOZuIq         C91MKc1qS+o+OSHGc7juM2hejtinIGHhaAQDM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=CMk+ISx0G78Z9ihdiAjm8j4nxLCpXpdq7GeVdpIfcQT7EwSeHUcXhG6c/x6cSkRue6         fNx5L8eiwy3u9U7IY2SsmEewqo9zk0qJL442olTxt0fgCjYlWJcIQ/FAGIYOw4RzzIsZ         ORfYSnH9zBOEm4TJvhnSZiYlOxpFYJnzZp4dA=
+Received: by 10.140.157.1 with SMTP id f1mr1814314rve.196.1226867072240;        Sun, 16 Nov 2008 12:24:32 -0800 (PST)
+Received: by 10.141.194.15 with HTTP; Sun, 16 Nov 2008 12:24:32 -0800 (PST)
+Message-ID: <925d17560811161224t47f45b18kdfe93232f633d724@mail.gmail.com>
+Date: Sun, 16 Nov 2008 17:24:32 -0300
+From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <jjllambias@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Annotated PEG grammar
+In-Reply-To: <737b61f30811161208l375083ddi7a809ad087911e8e@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+Content-Disposition: inline
+References: <737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com>
+	 <925d17560811161138y3b7b1639odca190168d1c0f95@mail.gmail.com>
+	 <737b61f30811161208l375083ddi7a809ad087911e8e@mail.gmail.com>
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15045
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1677
+
+On Sun, Nov 16, 2008 at 5:08 PM, Chris Capel <pdf23ds@gmail.com> wrote:
+> On Sun, Nov 16, 2008 at 13:38, Jorge Llambías <jjllambias@gmail.com> wrote:
+>
+>>>> bridi-tail-1 <- bridi-tail-1 gihek !(tag? BO) !(tag? KE) free* bridi-tail-2 tail-terms / bridi-tail-2
+>>>>
+>>>> This production parses undecorated giheks. To ensure that no BO or KE are used, the lookahead symbol is used.
+>>
+>> Neither a free* nor a bridi-tail-2 can start with (tag? BO), so that
+>> restriction is doing nothing.
+>
+> I think it is, because bridi-tail-2 requires a BO in its gihek clause.
+
+But it can never _start_ with "tag? BO", which is all !(tag? BO) cares about.
+
+>> And the !(tag? KE) seems wrong there. Why is "broda gi'e ke ge brode
+>> gi brodi" disallowed, while "broda gi'e xi pa ke ge brode gi brodi"
+>> allowed by this rule?
+>
+> Is it disallowed?
+
+As a "bridi-tail-1", it's disallowed. (It's allowed as a "bridi-tail".)
+
+> It seems to me your second example would still parse
+> passing through bridi-tail-1 and matching the second alternative of
+> gek-sentence.
+
+"broda gi'e ke ge brode gi brodi" will match bridi-tail (but not bridi-tail-1)
+
+"broda gi'e xi pa ke ge brode gi brodi", OTOH, will match bridi-tail-1.
+
+That's inconsistent.
+
+> In which case the only question is whether the !KE is
+> superfluous.
+
+I suspect it's simply wrong, in order to get the right precedences.
+But in an case, if it belongs there at all, it must go after free*,
+not before.
+
+mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
