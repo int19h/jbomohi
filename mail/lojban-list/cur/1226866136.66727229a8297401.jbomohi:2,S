@@ -1,0 +1,67 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 16 Nov 2008 12:09:02 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L1nva-0000gK-Fi	for lojban-list-real@lojban.org; Sun, 16 Nov 2008 12:09:02 -0800
+Received: from rv-out-0708.google.com ([209.85.198.251])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <pdf23ds@gmail.com>)	id 1L1nvW-0000fj-HT	for lojban-list@lojban.org; Sun, 16 Nov 2008 12:09:02 -0800
+Received: by rv-out-0708.google.com with SMTP id b17so2360990rvf.46        for <lojban-list@lojban.org>; Sun, 16 Nov 2008 12:08:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=jktTcNwG/91wPoeCzSvbsQIcsIRGGVjlu1TQ+SBQlww=;        b=BrOwQpBa9WtAvFMEO7k6lLGhQ6DUtSZAFULGvqIYSytSeJNupBmbtf2nV6D0XKPbN4         CpYNkR9ug1ebIp0oAAQQuekOR5JPdvkpUo9DWUBr0nFSA46W1COmFnSgXZzHeXS+HTWh         fWF46ZbhjoOfVFBCG26nFhPo4lVPTTXNg+sKg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=AoeweTAGl/vykkXp6uVIJDjW/Sca7uVmkkssLuCtlK8SpX+jDLRitYHOaKPawSFqEB         0jIC0xpaT7lKYQdKFUWyGZBqdPqWZSs3JpTUvbYCwcHftKofqnWPMlMXBiJGHG1br3OB         hqI59yfOlZaHkh71ufKpSxzrmmRFHlv3eo27E=
+Received: by 10.140.171.18 with SMTP id t18mr1825390rve.10.1226866136453;        Sun, 16 Nov 2008 12:08:56 -0800 (PST)
+Received: by 10.140.202.10 with HTTP; Sun, 16 Nov 2008 12:08:56 -0800 (PST)
+Message-ID: <737b61f30811161208l375083ddi7a809ad087911e8e@mail.gmail.com>
+Date: Sun, 16 Nov 2008 14:08:56 -0600
+From: "Chris Capel" <pdf23ds@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Annotated PEG grammar
+In-Reply-To: <925d17560811161138y3b7b1639odca190168d1c0f95@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+Content-Disposition: inline
+References: <737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com>
+	 <925d17560811161138y3b7b1639odca190168d1c0f95@mail.gmail.com>
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15042
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1490
+
+On Sun, Nov 16, 2008 at 13:38, Jorge Llambías <jjllambias@gmail.com> wrote:
+>>> bridi-tail-1 <- bridi-tail-1 gihek !(tag? BO) !(tag? KE) free* bridi-tail-2 tail-terms / bridi-tail-2
+>>>
+>>> This production parses undecorated giheks. To ensure that no BO or KE are used, the lookahead symbol is used.
+>
+> Neither a free* nor a bridi-tail-2 can start with (tag? BO), so that
+> restriction is doing nothing.
+
+I think it is, because bridi-tail-2 requires a BO in its gihek clause.
+So bridi-tail-1 will fail because of this lookahead if there's a BO
+there, and will get matched by bridi-tail-2. OTOH, it might work just
+fine without the !BO, because nothing in "free" parses BO, right? Or
+could it?
+
+> And the !(tag? KE) seems wrong there. Why is "broda gi'e ke ge brode
+> gi brodi" disallowed, while "broda gi'e xi pa ke ge brode gi brodi"
+> allowed by this rule?
+
+Is it disallowed? It seems to me your second example would still parse
+passing through bridi-tail-1 and matching the second alternative of
+gek-sentence. In which case the only question is whether the !KE is
+superfluous.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
