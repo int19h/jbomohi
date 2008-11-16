@@ -1,0 +1,63 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 16 Nov 2008 10:48:19 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L1mfS-0005T0-UA	for lojban-list-real@lojban.org; Sun, 16 Nov 2008 10:48:18 -0800
+Received: from rv-out-0708.google.com ([209.85.198.248])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jjllambias@gmail.com>)	id 1L1mfF-0005S8-RQ	for lojban-list@lojban.org; Sun, 16 Nov 2008 10:48:18 -0800
+Received: by rv-out-0708.google.com with SMTP id b17so2339786rvf.46        for <lojban-list@lojban.org>; Sun, 16 Nov 2008 10:48:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=VpRvuDigUODw5ZQHZVSYpe2DJaauumnNg41gOYSCW2w=;        b=sVQyiPHsQ+GavQfE4KsALj5xL+/L5KP3KwL6vQb7WhjgrkD+6UZKWmvAOQ1xTUE9be         ssL4cGzkqi0JwefCwD12XleojlJ/TwAQotZjKwvn8emR+ItgdqJ0YY/+FA2DL8T0oi3N         Rqw31Re0etecuenUpdkIn+dnr9Twnnz4F27wc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=AHEY6WKXAtoSB4z1kEZ4nJTA+fzXQEMKsNG/PGS5YfoavA+8Hgbbsd5Umk0lZR7n2I         BtDtTmMtUcwCFQMurX/VXUD2B0KnliGAhb44lVSBYaCMOAwiz7bma/Jv61C6JhK4F7dv         LM48A3PjBz8+vkhDCsFyo/K6cgkFYPhlUhsl0=
+Received: by 10.140.203.9 with SMTP id a9mr1785543rvg.64.1226861282499;        Sun, 16 Nov 2008 10:48:02 -0800 (PST)
+Received: by 10.141.194.15 with HTTP; Sun, 16 Nov 2008 10:48:02 -0800 (PST)
+Message-ID: <925d17560811161048l4313ccf8pd3b091e9ddf633b@mail.gmail.com>
+Date: Sun, 16 Nov 2008 15:48:02 -0300
+From: "=?ISO-8859-1?Q?Jorge_Llamb=EDas?=" <jjllambias@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Annotated PEG grammar
+In-Reply-To: <737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com>
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15034
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: jjllambias@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1362
+
+> http://pdf23ds.net/lojban/Annotated%20Grammar.html
+
+>>paragraph <- (statement / fragment) (I !jek !joik !joik-jek free* (statement / fragment)?)*
+>>
+>>Jeks and joiks are disallowed after the I clause because to match them here would give them lower precedence than they actually have.
+
+There ae three problems with that:
+
+(1) As Stephen points ot, "!jek !joik" duplicates "!joik-jek".
+
+(2) Putting the restriction in front of "free*" makes no sense,
+because that would mean that for example ".i je broda" is blocked, but
+".i pamai je broda" is allowed. That makes no sense.
+
+(3) In fact "!jek !joik !joik-jek" is just wrong here, even if placed
+after "free*". It's true that we don't want this pat of the rule to
+grab "i je broda" because of precedence, but there is no danger of
+that happening because "statement" will already have grabed them. On
+the other hand, this rule is blocking things like "broda .i joi gi da
+gi de brode" for no apparent reason.  (While "broda .i pa mai joi gi
+da gi de brode" is accepted!)
+
+Conclusion: we must get rid of that "!jek !joik !joik-jek", or else
+explain better what it is doing there.
+
+mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.

@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2b51cc993b92-annotated_peg_grammar | root 737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com | 13 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2b51cc993b92-annotated_peg_grammar | root 737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com | 14 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-11-15T20:45:23Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com | mail/lojban-list/cur/1226781923.2b51cc993b922c00.jbomohi:2,S
 http://pdf23ds.net/lojban/Annotated%20Grammar.html
@@ -573,6 +573,40 @@ Well I don't have any ideas on how to optimize things in that way, the
 peg is fairly thinish.
 I have an idea for the sa thing, but that would most likely make
 things bigger not smaller.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 14 | 2008-11-16T18:48:02Z | Jorge Llambías <jjllambias@gmail.com> | 925d17560811161048l4313ccf8pd3b091e9ddf633b@mail.gmail.com | mail/lojban-list/cur/1226861282.a031b6088b36ea4a.jbomohi:2,S
+> http://pdf23ds.net/lojban/Annotated%20Grammar.html
+
+>>paragraph <- (statement / fragment) (I !jek !joik !joik-jek free* (statement / fragment)?)*
+>>
+>>Jeks and joiks are disallowed after the I clause because to match them here would give them lower precedence than they actually have.
+
+There ae three problems with that:
+
+(1) As Stephen points ot, "!jek !joik" duplicates "!joik-jek".
+
+(2) Putting the restriction in front of "free*" makes no sense,
+because that would mean that for example ".i je broda" is blocked, but
+".i pamai je broda" is allowed. That makes no sense.
+
+(3) In fact "!jek !joik !joik-jek" is just wrong here, even if placed
+after "free*". It's true that we don't want this pat of the rule to
+grab "i je broda" because of precedence, but there is no danger of
+that happening because "statement" will already have grabed them. On
+the other hand, this rule is blocking things like "broda .i joi gi da
+gi de brode" for no apparent reason.  (While "broda .i pa mai joi gi
+da gi de brode" is accepted!)
+
+Conclusion: we must get rid of that "!jek !joik !joik-jek", or else
+explain better what it is doing there.
+
+mu'o mi'e xorxes
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
