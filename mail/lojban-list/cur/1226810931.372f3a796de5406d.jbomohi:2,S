@@ -1,0 +1,86 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sat, 15 Nov 2008 20:48:56 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L1ZZ9-0002kT-Kp	for lojban-list-real@lojban.org; Sat, 15 Nov 2008 20:48:55 -0800
+Received: from wf-out-1314.google.com ([209.85.200.175])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <stephen.pollei@gmail.com>)	id 1L1ZZ6-0002kM-4r	for lojban-list@lojban.org; Sat, 15 Nov 2008 20:48:55 -0800
+Received: by wf-out-1314.google.com with SMTP id 28so2200394wfa.25        for <lojban-list@lojban.org>; Sat, 15 Nov 2008 20:48:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=uJrug7pndjNXbVmXp9/qlEW5SqFtyd2jgZZkVJ570DY=;        b=O8zCe7rtZrEm0d5TTsKGO9Yx5xP5IpFq6wuebmF7FaeAie25ITb23weF5UNjX0DNB5         DwdPVHM6NOkqHi0qTOqWzs7nSeGWlkGUshQhuTIwhBS2peFyJBXFkvGtWTWD2t5alCZa         xpnSBR/6fWN9T/YUQ+EGISgt11aa3WwqDzG18=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=qab307lPAq4DzSs3fVRLVuR5AIgCDHuf5zQQOJjfqF0gdBDF5bl2d3m/fOeEMoTNLp         CAtH2Kc19/Z8OzjnznZLY0XbclZ8J261ZhsCCwKvn15pKqTXOqcv+KsGrizRoV4ptrfx         R9PnW68TmF5P6w863e0j0cD6jQ0+DNmTegt3A=
+Received: by 10.142.68.2 with SMTP id q2mr271206wfa.243.1226810931226;        Sat, 15 Nov 2008 20:48:51 -0800 (PST)
+Received: by 10.142.11.8 with HTTP; Sat, 15 Nov 2008 20:48:51 -0800 (PST)
+Message-ID: <feed8cdd0811152048t67b118c8h4622e647dfc5b3fe@mail.gmail.com>
+Date: Sat, 15 Nov 2008 20:48:51 -0800
+From: "Stephen Pollei" <stephen.pollei@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Annotated PEG grammar
+In-Reply-To: <737b61f30811151921w27a624e6wd2587fdb14b2a3ec@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+References: <737b61f30811151245n352f23dala9685c894d991550@mail.gmail.com>	 <925d17560811151405j69b216b5g1b2fdaed51244418@mail.gmail.com>	 <feed8cdd0811151521q6e55ece1qdd6f3c69bd24570f@mail.gmail.com>	 <925d17560811151534s39dcd5aeq729c56f1e30282b9@mail.gmail.com>	 <feed8cdd0811151623i2ea53ccah579e6ac6b1b95c89@mail.gmail.com>	 <737b61f30811151653g1b29ebe8ibf7a14e25628b46d@mail.gmail.com>	 <feed8cdd0811151908p7c8ae20bl64ffdb940b1696db@mail.gmail.com>	 <737b61f30811151921w27a624e6wd2587fdb14b2a3ec@mail.gmail.com>
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15031
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: stephen.pollei@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2289
+
+On 11/15/08, Chris Capel <pdf23ds@gmail.com> wrote:
+> On Sat, Nov 15, 2008 at 21:08, Stephen Pollei <stephen.pollei@gmail.com> wrote:
+>  > On 11/15/08, Chris Capel <pdf23ds@gmail.com> wrote:
+
+> No doubt they're important, but the goal of my document is to provide
+>  an overview of how lojban works from the perspective of its grammar. I
+>  think the -clause details and magic words would distract too much from
+>  that purpose. I don't plan on filling out mesko either. (But someone
+>  can contribute descriptions if they like.)
+
+That's fair enough
+
+>  > I do think that the whole foo-clause stuff could use some real clean up.
+>  > A lot of it is schematic and those should likely be collected into one
+>  > place, and the things which get special handling should all be grouped
+
+> > together; right now it's all mixed together by just using an alphabetic
+>  > order.
+
+
+>  I don't think it can be done in pure PEG, alas. Perhaps a source file
+>  that generates a peg could be created. :)
+
+Well I mostly meant that a lot of it is like:
+BAI-clause <- BAI-pre BAI-post
+BAI-pre <- pre-clause BAI spaces?
+BAI-post <- post-clause
+
+${cmavo}-clause <- ${cmavo}-pre post-clause
+${cmavo}-pre <- BAhE-clause? ${cmavo} spaces?
+
+A little shorter as nobody uses ${cmavo}-post afaik.
+All those can be grouped in alphabetical order one after another.
+
+Then there are the special ones which correspond with the magic words,
+all those clause ones could be grouped togheter in alphabetical(or
+other) order: SI SA SU ZO ZOI LOhU LEhU ZEI BU LAhO and FAhO . I think
+the Y-clause is called spaces;-) NIhO, LU, TUhE, and TO might also be
+different because of how su interacts with them.
+BRIVLA and CMENE might also get specialy written clause stuff.
+
+>  The source file could also
+>  output a Rats! version that would be more compact and efficient than
+>  the current version, which is quite huge dll-wise.
+
+Well I don't have any ideas on how to optimize things in that way, the
+peg is fairly thinish.
+I have an idea for the sa thing, but that would most likely make
+things bigger not smaller.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
