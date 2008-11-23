@@ -1,0 +1,210 @@
+# mail/lojban-list thread ef80c2a78019-peg_experiment_with_changing_clauses_to_better_ | root feed8cdd0811230028y4a583ccfu68b0fa17aa66c0ab@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2008-11-23T08:28:40Z | Stephen Pollei <stephen.pollei@gmail.com> | feed8cdd0811230028y4a583ccfu68b0fa17aa66c0ab@mail.gmail.com | mail/lojban-list/cur/1227428920.ef80c2a780199c28.jbomohi:2,S
+I haven't actually used "rats" on this and I'm sure that other parts
+of the peg parser file would have to be tweaked in minor ways. This is
+just something to show an approach I thought might be helpful.
+
+I am also sure the below has at least one error and/or ommision.
+
+;have the clause chew up it's own sa and su junk
+
+; http://www.lojban.org/tiki/tiki-index.php?page=Magic+Words&bl
+; http://digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/
+; http://digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/lojban.peg.txt
+
+; the selma'o types not explicitly listed can use the same template
+; sm varible being the selma'o
+; maybe split up those that can have nai following and those that can't
+
+${sm}-clause1 <- spaces? (${sm}-SA)* (spaces? SA)* spaces? !anticmavo ${sm}
+${sm}-SA <- spaces? !anticmavo ${sm} (quote-clauses / !${sm} !SA !FAhO
+any-word)*    ${sm}-SA? SA &( (spaces? SA)* spaces? ${sm})
+${sm}-clause <- BAhE-clause?  ${sm}-clause1 spaces? post-clause
+
+
+;anticmavo is misnamed, maybe anti valsi is better, but even that
+isn't quite right
+quote-clauses <- ZOI-clause1 / LOhU-clause1 / LAhO-clause1 /
+ZO-clause1 / anticmavo
+anticmavo <-  SI-clause / BU-clause1 / ZEI-clause1
+
+;SI SA SU ZO ZOI LOhU LEhU ZEI BU LAhO and FAhO
+; do some "magic" words by hand
+; http://www.lojban.org/tiki/tiki-index.php?page=Magic+Words&bl
+
+anti-quote <- SI / SA / SU / Y / ZEI / BU / FAhO
+atomic-word <- BU-clause1 / ZEI-clause1 / ZO-clause1 / any-word
+anti-SU <- NIhO / LU / TUhE / TO / SU / FAhO
+
+SI-clause <- spaces? atomic-word SI-clause spaces? SI / spaces?
+atomic-word spaces? SI
+SU-clause <- (spaces? quote-clauses / spaces? !anti-SU any-word)*
+spaces? !anticmavo SU
+
+;SA-clause <- BAhE-SA / .... /  ZOhU-SA / BRIVLA-SA / CMEVLA-SA
+; each clause that needs SA support can directly use the one tailored
+to it's needs
+; so SA-clause shouldn't be needed
+
+;erasure-clause <- SU-clause / SA-clause / SI-clause
+; I don't know what order these should go in for an erasure clause
+; I also don't think it will be needed
+
+;the pre erasure clause will be needed, I don't think order matters
+pre-I-SA <- spaces? (quote-clauses / !I !SA !FAhO any-word)* (spaces? SA)+ &I
+pre-NIhO-SA <- spaces? (quote-clauses / !NIhO !SA !FAhO any-word)*
+(spaces? SA)+ &NIhO
+pre-erasure-clause <- (SU-clause / spaces? SI+ / pre-I-SA / pre-NIhO-SA)*
+
+ZO-word <- ZEI-clause1 / BU-clause1 / any-word
+ZO-clause0 <- spaces? ZO spaces? !anti-quote ZO-word
+ZO-clause1 <- (ZO-SA)* (spaces? SA)* ZO-clause0
+ZO-SA <- ZO-clause0 spaces? ( !ZO-clause1 quote-clauses / !ZO !SA
+!FAhO any-word)* spaces? ZO-SA? SA &( (spaces? SA)* spaces? ZO)
+ZO-clause <- BAhE-clause? ZO-clause1 post-clause
+
+; zoi and la'o can't use strict peg beause it has to remember the word
+; ZOI-for-${word} <- spaces?  ZOI spaces? !anti-quote ${word} (spaces?
+!${word} any-word)* ${word}
+; ZOI-clause0 <- ZOI-for-a / ZOI-for-by / .... / ZOI-for-zvati
+; otherwise you can use an infinite size rule set using a schema
+
+ZOI-clause0 <- spaces?  ZOI spaces? !anti-quote ${word} (spaces?
+!${word} any-word)* ${word}
+ZOI-clause1 <- (ZOI-SA)* (spaces? SA)* ZOI-clause0
+ZOI-SA <- ZOI-clause0 spaces? ( !ZOI-clause1 quote-clauses / !ZOI !SA
+!FAhO any-word)* spaces? SA spaces? ZOI-SA? SA &( (spaces? SA)*
+spaces? ZOI)
+ZOI-clause <- BAhE-clause? ZOI-clause1 post-clause
+
+LAhO-clause0 <- spaces?  LAhO spaces? !anti-quote ${word} (spaces?
+!${word} any-word)* ${word}
+LAhO-clause1 <- (LAhO-SA)* (spaces? SA)* LAhO-clause0
+LAhO-SA <- LAhO-clause0 spaces? ( !LAhO-clause1 quote-clauses / !LAhO
+!SA !FAhO any-word)* spaces? SA spaces? LAhO-SA? SA &( (spaces? SA)*
+spaces? LAhO)
+LAhO-clause <- BAhE-clause? LAhO-clause1 post-clause
+
+
+
+LOhU-clause0 <- spaces? LOhU spaces? (spaces? !LEhU any-word)* LEhU-clause1
+LOhU-clause1 <- (LOhU-SA)* (spaces? SA)* LOhU-clause0
+LOhU-SA <- LOhU-clause0 spaces? ( !LOhU-clause1 quote-clauses / !LOhU
+!SA !FAhO any-word)* spaces? SA spaces? LOhU-SA? SA &( (spaces? SA)*
+spaces? LOhU)
+LOhU-clause <- BAhE-clause? LOhU-clause1 post-clause
+
+LEhU-clause0 <- spaces? LEhU
+LEhU-clause1 <- (LEhU-SA)* (spaces? SA)* LEhU-clause0
+LEhU-SA <- LEhU-clause0 spaces? ( !LOhU-clause1 quote-clauses / !LOhU
+!LEhU !SA !FAhO any-word)* spaces? SA spaces? LEhU-SA? SA &( (spaces?
+SA)* spaces? LEhU)
+LEhU-clause <-  LEhU-clause1 post-clause
+
+; using sa into a zei-ified word is more limited
+ZEI-word <- BU-clause1 / ZO-clause1 / anyword
+ZEI-clause0 <- spaces? ZEI-word spaces? ZEI spaces? ZEI-word
+ZEI-clause1 <- ZEI-word (ZEI-SA)* (spaces? SA)* ZEI ZEI-word
+ZEI-SA <- spaces? ZEI spaces? (spaces? !quote-clauses !ZEI !SA !FAhO
+any-word)* spaces? SA spaces? &ZEI
+ZEI-clause <- BAhE-clause? !ZEI-clause1 post-clause
+
+; using sa into a bu-ified word is more limited
+BU-word <- ZO-clause1 / ZEI-clause1 / anyword
+BU-clause0 <- spaces? BU-word spaces? BU
+BU-clause1 <- spaces? BU-word (BU-SA)* spaces? BU
+BU-SA <- spaces? BU spaces? (spaces? !quote-clauses !BU !SA !FAhO
+any-word)* spaces? SA spaces? &BU
+BU-clause0 <- !BU-anticlause any-word BU (( quote-clauses / !BU anyword) SA BU)*
+BU-clause <- BAhE-clause? BU-clause1 post-clause
+
+FAhO-clause0 <- space? !anticmavo FAhO .*
+FAhO-clause <- BAhE-clause? FAhO-clause0
+
+
+
+;Y
+
+;NIhO, LU, TUhE, and TO
+
+anti-SU <- NIhO / LU / TUhE / TO
+
+; these four are all so similar that I just did a template again that
+just adds "spaces? SU-clause?"
+
+${sm}-clause1 <- spaces? (${sm}-SA)* (spaces? SA)* spaces? !anticmavo
+${sm} spaces? SU-clause?
+${sm}-SA <- spaces? !anticmavo ${sm} (quote-clauses / !${sm} !SA !FAhO
+any-word)* ${sm}-SA? SA &( (spaces? SA)* spaces? ${sm})
+${sm}-clause <- BAhE-clause?  ${sm}-clause1 spaces? post-clause
+
+
+;BRIVLA and CMENE
+
+BRIVLA-atom <- !SI-clause !BU-clause1 (ZEI-clause1 / BRIVLA)
+BRIVLA-clause0 <- spaces? BRIVLA-atom
+BRIVLA-clause1 <- spaces? (BRIVLA-SA)* (spaces? SA)* BRIVLA-clause0
+BRIVLA-SA <- BRIVLA-clause0 (quote-clauses / !BRIVLA-clause0 !SA !FAhO
+any-word)* BRIVLA-SA? SA &( (spaces? SA)* BRIVLA-clause0)
+BRIVLA-clause <- (BAhE-clause? BRIVLA-clause1 post-clause)+
+
+${sm}-clause1 <- spaces? (${sm}-SA)* (spaces? SA)* spaces? !anticmavo ${sm}
+
+CMEVLA-clause0 <- !CMEVLA-anticlause CMEVLA
+CMEVLA-anticlause <- CMEVLA-SA / SI-clause / BU-clause
+CMEVLA-SA <- CMEVLA (quote-clauses / !CMEVLA any-word)* SA &CMEVLA
+CMEVLA-clause <- BAhE-clause? CMEVLA-clause0 post-clause
+
+CMEVLA-clause0 <- spaces? !anticmavo CMEVLA
+CMEVLA-clause1 <- spaces? (CMEVLA-SA)* (spaces? SA)* CMEVLA-clause0
+CMEVLA-SA <- CMEVLA (quote-clauses / !CMEVLA !SA !FAhO any-word)*
+CMEVLA-SA? SA &( (spaces? SA)* CMEVLA-clause0)
+CMEVLA-clause <- (BAhE-clause? CMEVLA-clause1 post-clause)+
+
+;post-clause <- spaces? SI-clause* !anticmavo indicators*
+post-clause <- (spaces? SI-clause* / spaces? indicators*)*
+indicator <-  !anticmavo (UI-clause / CAI-clause / DAhO-clause / FUhO-clause)
+
+;make custom clauses for each of ui, cai, nai, da'o, and fu'o
+
+
+NAI-clause1 <- spaces? (NAI-SA)* (spaces? SA)* spaces? !anticmavo NAI
+NAI-SA <- spaces? !anticmavo NAI (quote-clauses / !NAI !SA !FAhO
+any-word)* $NAI-SA? SA &( (spaces? SA)* spaces? NAI)
+NAI-clause <- BAhE-clause?  NAI-clause1 post-clause
+
+UI-clause1 <- spaces? (UI-SA)* (spaces? SA)* spaces? !anticmavo UI
+UI-SA <- spaces? !anticmavo UI (quote-clauses / !UI !SA !FAhO
+any-word)* UI-SA? SA &( (spaces? SA)* spaces? UI)
+UI-clause <- BAhE-clause?  UI-clause1 NAI-clause1?
+
+CAI-clause1 <- spaces? (CAI-SA)* (spaces? SA)* spaces? !anticmavo CAI
+CAI-SA <- spaces? !anticmavo CAI (quote-clauses / !CAI !SA !FAhO
+any-word)* CAI-SA? SA &( (spaces? SA)* spaces? CAI)
+CAI-clause <- BAhE-clause?  CAI-clause1 NAI-clause1?
+
+DAhO-clause1 <- spaces? (DAhO-SA)* (spaces? SA)* spaces? !anticmavo DAhO
+DAhO-SA <- spaces? !anticmavo DAhO (quote-clauses / !DAhO !SA !FAhO
+any-word)* DAhO-SA? SA &( (spaces? SA)* spaces? DAhO)
+DAhO-clause <- BAhE-clause?  DAhO-clause1
+
+FUhO-clause1 <- spaces? (FUhO-SA)* (spaces? SA)* spaces? !anticmavo FUhO
+FUhO-SA <- spaces? !anticmavo FUhO (quote-clauses / !FUhO !SA !FAhO
+any-word)* FUhO-SA? SA &( (spaces? SA)* spaces? FUhO)
+FUhO-clause <- BAhE-clause?  FUhO-clause1
+
+; and finally ba'e
+BAhE-clause1 <- spaces? (BAhE-SA)* (spaces? SA)* spaces? !anticmavo  BAhE
+BAhE-SA <- spaces? !anticmavo BAhE (quote-clauses / !BAhE !SA !FAhO
+any-word)* BAhE-SA? SA &( (spaces? SA)* spaces? BAhE)
+BAhE-clause <- BAhE-clause1+ (spaces? SI-clause* )*
+
+; also BY-clause needs a custom one written similar in spirit to the
+brivla with zei, bu is like zei in a way.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
