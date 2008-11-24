@@ -1,0 +1,129 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Mon, 24 Nov 2008 15:15:15 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L4keB-0001QT-Ax	for lojban-list-real@lojban.org; Mon, 24 Nov 2008 15:15:15 -0800
+Received: from yw-out-1718.google.com ([74.125.46.153])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <stephen.pollei@gmail.com>)	id 1L4kdx-0001OM-58	for lojban-list@lojban.org; Mon, 24 Nov 2008 15:15:15 -0800
+Received: by yw-out-1718.google.com with SMTP id 5so992092ywm.46        for <lojban-list@lojban.org>; Mon, 24 Nov 2008 15:14:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:received:received:message-id:date:from:to         :subject:in-reply-to:mime-version:content-type         :content-transfer-encoding:content-disposition:references;        bh=8usnuEKkq0dKoTde7QzWs8qjoDFuA3gspj/ObGz/KZs=;        b=dB/UQEGdJZFpU45V3NEL2JE/MkkDS3jAIQ33vI5onEgVAW9HK5tKdBrOwRQd8BUHS4         T+TGLrGLclBGmrSnj46mzte1SA5eTAwMgM8Z49U/x4mffCMQbBjGP9zeerCTjzZiet/R         LNWBjd1uXfGpWLA5kZxO5zoj7Lst7BlHB/0I0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=message-id:date:from:to:subject:in-reply-to:mime-version         :content-type:content-transfer-encoding:content-disposition         :references;        b=XsIhWN+20tk/1+QCwxSMviyXqm42LPaa9I3iAtN0eRv9rA/9sZ9x/+3PQptIiRnnQ0         vCnJwYFdx3+5I3Std9RsRwcNlA7qXn+MBtueen1Jbq4/Wmxh4/nkUCBgopHSlJjKdWoL         6rsMl2toe/D4nsmcSmT3nprnNCiGSlLbywlec=
+Received: by 10.142.173.14 with SMTP id v14mr1891202wfe.20.1227568496955;        Mon, 24 Nov 2008 15:14:56 -0800 (PST)
+Received: by 10.142.11.8 with HTTP; Mon, 24 Nov 2008 15:14:56 -0800 (PST)
+Message-ID: <feed8cdd0811241514i24ffd886la7c022273160b87e@mail.gmail.com>
+Date: Mon, 24 Nov 2008 15:14:56 -0800
+From: "Stephen Pollei" <stephen.pollei@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: peg experiment with changing clauses to better support sa
+In-Reply-To: <925d17560811230724h69cf1497q66302b98045002ba@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+Content-Disposition: inline
+References: <feed8cdd0811230028y4a583ccfu68b0fa17aa66c0ab@mail.gmail.com>
+	 <925d17560811230724h69cf1497q66302b98045002ba@mail.gmail.com>
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15069
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: stephen.pollei@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 4743
+
+On 11/23/08, Jorge Llambías <jjllambias@gmail.com> wrote:
+> I didn't check the details, but if what you are doing is a SA that
+>  erases everything to the previous appearance of the same selma'o,
+>  Robin already had that working in a previous version of his PEG.
+
+Yes mostly that because I noticed in his notes that he didn't have
+BRIVLA+SA or CMENE+SA working. In addition, by inspection and testing,
+he doesn't have many others working either . Like in #jbosnu : " i sa
+i" worked but " ui sa ui" failed.
+I didn't know about any earlier working version. I also don't know any
+url where I can find earlier working versions.
+
+>  The main problem with SA is not how to write the grammar though, the
+>  problem is deciding what exactly we want it to do. SA-selma'o is not
+>  very pretty. SA-construct (where "construct" can be "sumti", "selbri",
+>  and a few others) is only slightly better.
+
+If I understand you; Yes my approach is basicly SA-selma'o, except my
+naming is backwards of that -- ${sm}-SA . I decomposed the problem
+into about 124 easier subproblems(hopefully my selma'o count is right)
+; about 100 of the 124 subproblems share the same template. So I have
+A-SA, BAhE-SA, BAI-SA, BE-SA, BEhO-SA, BEI-SA, ... , ... , ...,
+ZEI-SA, ZI-SA, ZIhE-SA, ZO-SA, ZOhU-SA, ZOI-SA, BRIVLA-SA, and
+CMEVLA-SA . Not sure why you would have sumti-SA and selbri-SA, so I
+think we are maybe talking about completely different things. Also for
+me "SA-selma'o" isn't one rule it's over a hundred. ${sm} is the
+varible that you substitute in for each selma'o that can use the
+template.
+
+Each selma'o-SA is only used in two spots:
+1) In selma'o-clause stuff
+2)recursively to allow " x ... x ... sa sa x" and friends.
+If it wasn't for the recursive definition then each selma'o or
+pseudo-selma'o  could just put it's relevant selma'o-SA directly into
+it's self; Each selma'o clause handles it's own sa and su issues.
+Other reasons to have it separate is maybe readability, and if you
+wanted to have a SA-clause by recomposing the rule from the decomposed
+subproblems. I, in the comments, gave an example of how you could
+reform a universal "SA-clause" but noted that you don't really ever
+need the answer to the general question if a piece of text is part of
+*any* SA clause just one of the particular subproblems.
+
+I also noted that most(about 100/124 or about 80%) of the $[sm}-clause
+and $[sm}-SA can be formed by using the same template. ${sm}-clause is
+already very boiler plate stuff in rlpowell's peg grammar. The ones
+which were not able to use the same template were SI, SA, SU, ZO, ZOI,
+LOhU, LEhU, ZEI, BU, LAhO, FAhO,  NIhO, LU, TUhE, TO, ui, cai, nai,
+da'o, fu'o , BY, and ba'e . A lot of those are the so called "magic"
+words. That also leaves around 100 selma'o that can use the same
+template. Another change slightly unrelated to the sa fixes is that
+some of the magic words clauses that quote stuff, now also match and
+consume the text so quoted.
+
+Also I think correctness over prettyness, might be a priority;  at
+least have a complete but ugly version and a pretty but incomplete
+version. Also the peg grammar is a more exacting specification for
+"deciding what exactly we want it to do". Right now there is some hand
+waving imho.
+
+PS I noticed that the first version of the below should probably be
+changed into the second version of the below. So that "x ... z .... sa
+z .... sa x" works. That should allow some SA nesting.
+
+;old nonnested
+${sm}-clause1 <- spaces? (${sm}-SA)* (spaces? SA)* spaces? !anticmavo ${sm}
+${sm}-SA <- spaces? !anticmavo ${sm} (quote-clauses / !${sm} !SA !FAhO
+any-word)* ${sm}-SA? SA &( (spaces? SA)* spaces? ${sm})
+${sm}-clause <- BAhE-clause?  ${sm}-clause1 spaces? post-clause
+
+;should be nestable
+;can maybe be slightly optimized in case of
+;      hopefully rare multiple sa's in row within a inner sa thing
+that should be skipped over
+${sm}-clause1 <- spaces? (${sm}-SA)* (spaces? SA)* spaces? !anticmavo ${sm}
+${sm}-SA-end <- (spaces? SA)* spaces? ${sm}
+${sm}-SA <- spaces? !anticmavo ${sm} (quote-clauses / spaces?
+!${sm}-SA-end !FAhO any-word)* ${sm}-SA? SA &(${sm}-SA-end)
+${sm}-clause <- BAhE-clause?  ${sm}-clause1 spaces? post-clause
+
+I'll also have to fix up the other one which don't follow the
+template, and finish the BY-clause, BY-SA stuff. plus do more review
+to see what else I've missed.
+
+PPS
+
+wc cmavo_selmaho.txt
+ 122  122 1213 cmavo_selmaho.txt
+
+122 + the brivla pseudo selma'o and the cmevla pseudo selma'o is how I
+derived the number 124. I might be off a tiny bit.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
