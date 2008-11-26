@@ -1,0 +1,63 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 26 Nov 2008 15:13:07 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1L5TZC-0005aT-SN	for lojban-list-real@lojban.org; Wed, 26 Nov 2008 15:13:06 -0800
+Received: from mx.freeshell.org	([192.94.73.19] helo=sdf.lonestar.org ident=root)	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jwodder@sdf.lonestar.org>)	id 1L5TYw-0005Zz-NN	for lojban-list@lojban.org; Wed, 26 Nov 2008 15:13:06 -0800
+Received: from sdf.lonestar.org (IDENT:jwodder@sverige.freeshell.org [192.94.73.4])	by sdf.lonestar.org (8.14.2/8.13.8) with ESMTP id mAQNCbBd019624	for <lojban-list@lojban.org>; Wed, 26 Nov 2008 23:12:37 GMT
+Received: (from jwodder@localhost)	by sdf.lonestar.org (8.14.2/8.12.8/Submit) id mAQNCbI2006586	for lojban-list@lojban.org; Wed, 26 Nov 2008 23:12:37 GMT
+Date: Wed, 26 Nov 2008 23:12:37 +0000
+From: Minimiscience <minimiscience@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Superfluous {tosmabru} check?
+Message-ID: <20081126231234.GA21340@sdf.lonestar.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Organization: SDF Public Access UNIX System <http://sdf.lonestar.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15073
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: minimiscience@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1913
+
+coi logji jbopre
+
+I was just reading the {lujvo} creation algorithm in the Lojban Reference
+Grammar, attempting to convert it to Perl, when I noticed something that seemed
+to be unnecessary.  CLL chapter 4, section 11, item 5 says:
+
+  Test all forms with one or more initial CVC-form rafsi --- with the pattern
+  ``CVC ... CVC + X'' --- for ``tosmabru failure''.  X must either be a CVCCV
+  long rafsi that happens to have a permissible initial pair as the consonant
+  cluster, or is ***something which has caused a ``y''-hyphen to be installed
+  between the previous CVC and itself by one of the above rules.***
+
+Note the highlighted part.  The only two reasons that a 'y' hyphen would have
+been inserted was if (a) it came after a four-letter {rafsi}, in which case it
+would not be at the end of a sequence of CVC {rafsi}, or (b) it came in the
+middle of an impermissible consonant pair.  However, an impermissible consonant
+pair clearly cannot be a valid initial consonant pair, and so the "joint" at
+that location would always cause no further hyphens in the word to be needed.
+Item 5a even explicitly states that the last joint is the last consonant of the
+CVC sequence plus the first consonant of the 'X' part, "*ignoring any
+``y''-hyphen before the X*", and so it can never be true in such a {lujvo} that
+all joints are initial consonant pairs.  Thus, the {tosmabru} test will always
+indicate that a {lujvo} of the form "(CVC)* + 'y' + X" does not need any
+further hyphens, and so applying the test to such a {lujvo} in the first place
+is completely pointless.  Is this true, or am I missing something very basic?
+
+la'o gy. Minimiscience .gy.
+
+-- 
+do ganai ka'e tcidu dei gi djuno lo dukse
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
