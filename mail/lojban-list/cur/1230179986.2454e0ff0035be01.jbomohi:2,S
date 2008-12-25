@@ -1,0 +1,97 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Wed, 24 Dec 2008 20:40:07 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1LFi10-0005pf-Da	for lojban-list-real@lojban.org; Wed, 24 Dec 2008 20:40:06 -0800
+Received: from mx.freeshell.org	([192.94.73.19] helo=sdf.lonestar.org ident=root)	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jwodder@sdf.lonestar.org>)	id 1LFi0w-0005nC-JT	for lojban-list@lojban.org; Wed, 24 Dec 2008 20:40:06 -0800
+Received: from sdf.lonestar.org (IDENT:jwodder@ukato.freeshell.org [192.94.73.7])	by sdf.lonestar.org (8.14.2/8.13.8) with ESMTP id mBP4dkGJ010396	for <lojban-list@lojban.org>; Thu, 25 Dec 2008 04:39:46 GMT
+Received: (from jwodder@localhost)	by sdf.lonestar.org (8.14.2/8.12.8/Submit) id mBP4dk4N018929	for lojban-list@lojban.org; Thu, 25 Dec 2008 04:39:46 GMT
+Date: Thu, 25 Dec 2008 04:39:46 +0000
+From: Minimiscience <minimiscience@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] gleki xisri'i
+Message-ID: <20081225043944.GA29775@sdf.lonestar.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Organization: SDF Public Access UNIX System <http://sdf.lonestar.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: 0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15143
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: minimiscience@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 4053
+
+coi rodo
+
+It is said (I think) that the spirit of the holiday season brings out the best
+in us; however, the best is not always entirely goodwill.  In my case, I
+sometimes find myself programming more at this time of year, and this year I
+finally turned to a program that concerns us all: the context-free grammar for
+Lojban.  It turns out that the solution is quite simple, yet if you are locked
+in to the idea of strict BNF grammars and the like, it probably wouldn't have
+occurred to you.  The solution lies in the format of Yacc input, the most
+common implementation of BNFs and the format in which the current official
+attempt at a Lojban grammar is written.
+
+First, the problem: as I understand the rules, a Lojban parser must absorb as
+many tokens as possible into the current (innermost) grammatical construct,
+stopping only when it encounters either a terminator or a token that cannot
+continue the construct.  When a terminator is encountered that could seemingly
+terminate more than one construct (as in "{lonu djica lonu le gerna cu mulno
+kei}"), it terminates the innermost one, and parsing of the containing
+construct resumes.  In discussion of parsers, this behavior is described by
+saying that shift/reduce conflicts are resolved via shifting.  However,
+shift/reduce conflicts in Yacc can only be resolved by examining the precedence
+rules set forth in the input file, and it is not possible to force Yacc to
+shift for all of them with just a single command.  (Note that, although Yacc's
+default resolution of shift/reduce conflicts is to shift, this rule is only
+needed when the input rules are insufficient, in which case the grammar is
+considered ambiguous and generates errors from Yacc.)  The solution is to
+indicate for those rules that have shift/reduce conflicts that shifting should
+be performed, and in Yacc this is usually done by assigning precedences to the
+relevant terminal symbols.  However, the official grammar's abstraction around
+terminals in order to handle free modifiers means that the rules that have
+shift/reduce conflicts consist solely of non-terminals.  This can be solved
+through the use of the %prec keyword, which changes the precedence of the rule
+it is attached to.  When a shift/reduce conflict is encountered, the parser
+compares the precedences of the rule and the current look-ahead token; if the
+rule's precedence is higher, reduction is chosen, and shifting is chosen if the
+token's precedence is higher.  The solution now becomes: assign all ambiguous
+rules a precedence value lower than that of the terminal symbols, and this is
+what I have done.
+
+I am quite certain that the rules that now have precedences assigned to them
+are the minimum amount necessary to eliminate all ambiguity; I tested removing
+most of them, one at a time, and those that remain should all be necessary to
+avoid conflicts.  I only found one problem in the official grammar that could
+not be solved with precedence alone; the rule on line 733 (747 in my completed
+version) that read "MEX_310 : FUhA_441 rp_expression_330" caused reduce/reduce
+conflicts and had to be changed to "MEX_310 : FUhA_441 rp_operand_332 %prec
+shiftPrec".
+
+Regardless of how I developed it, my patch for the official grammar is
+available at <http://jwodder.freeshell.org/downloads/jbogeha.diff> and was made
+against the grammar at
+<http://www.lojban.org/publications/formal-grammars/grammar.300.txt>.  I admit
+that there could be places in which constructs are parsed incorrectly, but this
+is based on my somewhat average understanding of Lojban grammar, and a
+half-right unambiguous fix to the parser should at least be a step in the right
+direction.
+
+To Powell and Cowan: I await your judgment.
+
+mu'omi'e la'o gy. Minimiscience .gy.
+  me'e ji'a zoi gy. John T. Wodder II .gy.
+
+-- 
+mi klama .i mi viska .i mi fanva fi la lojban.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
