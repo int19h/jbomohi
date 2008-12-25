@@ -1,0 +1,87 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 25 Dec 2008 12:24:58 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1LFwlN-000844-PP	for lojban-list-real@lojban.org; Thu, 25 Dec 2008 12:24:57 -0800
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <rlpowell@digitalkingdom.org>)	id 1LFwlN-00083x-If	for lojban-list@lojban.org; Thu, 25 Dec 2008 12:24:57 -0800
+Date: Thu, 25 Dec 2008 12:24:57 -0800
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: gleki xisri'i
+Message-ID: <20081225202457.GJ10930@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20081225043944.GA29775@sdf.lonestar.org> <20081225094052.GH10930@digitalkingdom.org> <20081225194149.GA28595@sdf.lonestar.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20081225194149.GA28595@sdf.lonestar.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-archive-position: 15147
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2621
+
+On Thu, Dec 25, 2008 at 07:41:52PM +0000, Minimiscience wrote:
+> > It looks like a yacc-specific trick.
+> 
+> I wouldn't call it a "trick"; it's a documented & well-known
+> feature.  Besides, so what if it's Yacc-specific?  
+
+We asked for a general CFG, not something that only works in some
+specific grammar generator.
+
+> So, I guess I have two questions: what makes you think that %prec
+> makes the grammar non-context-free, 
+
+Because there is no formal definition of it, for one thing.  It's
+not nearly as obvious as you seem to think; there have been serious
+papers written on the topic:
+
+http://shrunklink.com/bkop
+
+Furthermore, and this is much more important, unless I'm really
+missing something you're *changing the precedence as the grammar is
+parsed*.  That is, if a parse doesn't work without a particular
+terminator you drop the precedence of that terminator-free
+production to zero *at parse time*.  If that's reducable to a
+4-tuple a la http://en.wikipedia.org/wiki/Context_free_grammar I'd
+be *really* surprised indeed!
+
+> and if you were to somehow get a working context-sensitive grammar
+> for a parser generator that is only expected to work for CFGs,
+> what would be the problem, 
+
+We already have one; that's exactly what the official parser is.
+The only difference is that you use %prec to modify precedence
+during parsing, whereas the current official parser uses the error
+production to do the same thing.
+
+Such a thing cannot be formally reasoned about, and (much more
+importantly) is hard to port to other parser generators.  A pure CFG
+should be trivially portable to (picking one at random here) say,
+ANTLR, but that's not true with %prec, since every grammar generator
+that has such a thing, if it does, will do it differently.
+
+> other than being kept from showing that Lojban grammar is
+> context-free, which seems to be nothing more than a personal goal
+> of yours?
+
+Well, that was the point of the contest, so it matters in as much as
+you seemed to be asking John and I to judge this as an entry to the
+contest.  I'm afraid I have to say that it fails.  John may
+disagree, but I doubt it.
+
+-Robin
+
+-- 
+They say:  "The first AIs will be built by the military as weapons."
+And I'm thinking:  "Does it even occur to you to try for something
+other than the default outcome?" -- http://shorl.com/tydruhedufogre
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.

@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2454e0ff0035-gleki_xisri'i | root 20081225043944.ga29775@sdf.lonestar.org | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2454e0ff0035-gleki_xisri'i | root 20081225043944.ga29775@sdf.lonestar.org | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-12-25T04:39:46Z | Minimiscience <minimiscience@gmail.com> | 20081225043944.ga29775@sdf.lonestar.org | mail/lojban-list/cur/1230179986.2454e0ff0035be01.jbomohi:2,S
 coi rodo
@@ -192,6 +192,71 @@ mu'omi'e la'o gy. Minimiscience .gy.
 
 -- 
 ko senpi lo du'u do bilga lonu senpi
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 5 | 2008-12-25T20:24:57Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20081225202457.gj10930@digitalkingdom.org | mail/lojban-list/cur/1230236697.5d417d2ce47b4a85.jbomohi:2,S
+On Thu, Dec 25, 2008 at 07:41:52PM +0000, Minimiscience wrote:
+> > It looks like a yacc-specific trick.
+> 
+> I wouldn't call it a "trick"; it's a documented & well-known
+> feature.  Besides, so what if it's Yacc-specific?  
+
+We asked for a general CFG, not something that only works in some
+specific grammar generator.
+
+> So, I guess I have two questions: what makes you think that %prec
+> makes the grammar non-context-free, 
+
+Because there is no formal definition of it, for one thing.  It's
+not nearly as obvious as you seem to think; there have been serious
+papers written on the topic:
+
+http://shrunklink.com/bkop
+
+Furthermore, and this is much more important, unless I'm really
+missing something you're *changing the precedence as the grammar is
+parsed*.  That is, if a parse doesn't work without a particular
+terminator you drop the precedence of that terminator-free
+production to zero *at parse time*.  If that's reducable to a
+4-tuple a la http://en.wikipedia.org/wiki/Context_free_grammar I'd
+be *really* surprised indeed!
+
+> and if you were to somehow get a working context-sensitive grammar
+> for a parser generator that is only expected to work for CFGs,
+> what would be the problem, 
+
+We already have one; that's exactly what the official parser is.
+The only difference is that you use %prec to modify precedence
+during parsing, whereas the current official parser uses the error
+production to do the same thing.
+
+Such a thing cannot be formally reasoned about, and (much more
+importantly) is hard to port to other parser generators.  A pure CFG
+should be trivially portable to (picking one at random here) say,
+ANTLR, but that's not true with %prec, since every grammar generator
+that has such a thing, if it does, will do it differently.
+
+> other than being kept from showing that Lojban grammar is
+> context-free, which seems to be nothing more than a personal goal
+> of yours?
+
+Well, that was the point of the contest, so it matters in as much as
+you seemed to be asking John and I to judge this as an entry to the
+contest.  I'm afraid I have to say that it fails.  John may
+disagree, but I doubt it.
+
+-Robin
+
+-- 
+They say:  "The first AIs will be built by the military as weapons."
+And I'm thinking:  "Does it even occur to you to try for something
+other than the default outcome?" -- http://shorl.com/tydruhedufogre
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
