@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2454e0ff0035-gleki_xisri'i | root 20081225043944.ga29775@sdf.lonestar.org | 5 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2454e0ff0035-gleki_xisri'i | root 20081225043944.ga29775@sdf.lonestar.org | 6 messages | rendered by jbomohi mail-v1
 
 === 1 | 2008-12-25T04:39:46Z | Minimiscience <minimiscience@gmail.com> | 20081225043944.ga29775@sdf.lonestar.org | mail/lojban-list/cur/1230179986.2454e0ff0035be01.jbomohi:2,S
 coi rodo
@@ -257,6 +257,55 @@ They say:  "The first AIs will be built by the military as weapons."
 And I'm thinking:  "Does it even occur to you to try for something
 other than the default outcome?" -- http://shorl.com/tydruhedufogre
 http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 6 | 2008-12-25T22:04:05Z | Minimiscience <minimiscience@gmail.com> | 20081225220403.ga29347@sdf.lonestar.org | mail/lojban-list/cur/1230242645.8bd3b4ddc7898d7a.jbomohi:2,S
+de'i li 25 pi'e 12 pi'e 2008 la'o fy. Robin Lee Powell .fy. cusku zoi
+skamyxatra.
+> We asked for a general CFG, not something that only works in some
+> specific grammar generator.
+.skamyxatra
+
+When did you say that?  In your original e-mail
+(<http://www.lojban.org/lists/lojban-beginners/msg06812.html>) you said, in
+addition to the passage quoted earlier, "Produce a working CFG for Lojban, in
+any format that some parser generator somewhere can accept...".  I don't see
+any restriction to a general CFG anywhere in that thread.
+
+> Furthermore, and this is much more important, unless I'm really
+> missing something you're *changing the precedence as the grammar is
+> parsed*.  That is, if a parse doesn't work without a particular
+> terminator you drop the precedence of that terminator-free
+> production to zero *at parse time*.  If that's reducable to a
+> 4-tuple a la http://en.wikipedia.org/wiki/Context_free_grammar I'd
+> be *really* surprised indeed!
+
+That's not how it works.  If the parser must choose between reducing the
+current construct and shifting the next terminal before reducing, it uses the
+precedence rules to determine which action to take, and these precedence rules
+are set in stone when Yacc parses its input.  In the case of the Lojban
+grammar, if a construct can be terminated and the terminator is the next input
+symbol, the terminator is shifted onto the stack, and then the entire construct
+is reduced.  This takes place regardless of whether it leads to a valid parse
+tree.  See <http://www.opengroup.org/onlinepubs/000095399/utilities/yacc.html
+#tag_04_174_13_07> for more information.
+
+I also feel it worth pointing out that since most implementations of Yacc
+(including the ones I tested this with), when given the -v option, generate a
+file describing every state of the parsing automaton for the given grammar in
+all of its deterministic glory, any actions that the parser takes at runtime
+must be foreseeable and have results that can be predetermined in a
+context-free manner.
+
+mu'omi'e la'o gy. Minimiscience .gy.
+
+-- 
+mi klama .i mi viska .i mi fanva fi la lojban.
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
