@@ -1,0 +1,84 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 25 Dec 2008 16:12:41 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1LG0Jl-00065J-4k	for lojban-list-real@lojban.org; Thu, 25 Dec 2008 16:12:41 -0800
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <rlpowell@digitalkingdom.org>)	id 1LG0Jl-00065C-2A	for lojban-list@lojban.org; Thu, 25 Dec 2008 16:12:41 -0800
+Date: Thu, 25 Dec 2008 16:12:41 -0800
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: gleki xisri'i
+Message-ID: <20081226001241.GK10930@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <20081225043944.GA29775@sdf.lonestar.org> <20081225094052.GH10930@digitalkingdom.org> <20081225194149.GA28595@sdf.lonestar.org> <20081225202457.GJ10930@digitalkingdom.org> <20081225220403.GA29347@sdf.lonestar.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20081225220403.GA29347@sdf.lonestar.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-archive-position: 15149
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2638
+
+On Thu, Dec 25, 2008 at 10:04:05PM +0000, Minimiscience wrote:
+> de'i li 25 pi'e 12 pi'e 2008 la'o fy. Robin Lee Powell .fy. cusku
+> zoi skamyxatra.
+> > We asked for a general CFG, not something that only works in
+> > some specific grammar generator.
+> .skamyxatra
+> 
+> When did you say that?  In your original e-mail
+> (<http://www.lojban.org/lists/lojban-beginners/msg06812.html>) you
+> said, in addition to the passage quoted earlier, "Produce a
+> working CFG for Lojban, in any format that some parser generator
+> somewhere can accept...".  I don't see any restriction to a
+> general CFG anywhere in that thread.
+
+What part of "working CFG" was unclear?  What you produced isn't
+one, as far as I can tell.
+
+What you produced is exactly the same as the current official
+parser: a yacc grammar that uses hard-to-port tricks to deal with
+elidable terminators.
+
+> > Furthermore, and this is much more important, unless I'm really
+> > missing something you're *changing the precedence as the grammar
+> > is parsed*.  That is, if a parse doesn't work without a
+> > particular terminator you drop the precedence of that
+> > terminator-free production to zero *at parse time*.  If that's
+> > reducable to a 4-tuple a la
+> > http://en.wikipedia.org/wiki/Context_free_grammar I'd be
+> > *really* surprised indeed!
+> 
+> That's not how it works.  If the parser must choose between
+> reducing the current construct and shifting the next terminal
+> before reducing, it uses the precedence rules to determine which
+> action to take, and these precedence rules are set in stone when
+> Yacc parses its input.  In the case of the Lojban grammar, if a
+> construct can be terminated and the terminator is the next input
+> symbol, the terminator is shifted onto the stack, and then the
+> entire construct is reduced.  This takes place regardless of
+> whether it leads to a valid parse tree.  
+
+OK.  That's not how I read the page; I read it that %prec isn't
+processed until that point in the tree is reached.
+
+Regardless, I can't verify any of this myself because I haven't been
+able to run it, as I said in another mail.  Some help there would be
+nice.
+
+-Robin
+
+-- 
+They say:  "The first AIs will be built by the military as weapons."
+And I'm thinking:  "Does it even occur to you to try for something
+other than the default outcome?" -- http://shorl.com/tydruhedufogre
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
