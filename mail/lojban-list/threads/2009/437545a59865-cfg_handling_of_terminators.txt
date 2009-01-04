@@ -1,0 +1,129 @@
+# mail/lojban-list thread 437545a59865-cfg_handling_of_terminators | root 925d17560901041058x7dcb1937x9defa28b3e54e905@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2009-01-04T18:58:49Z | Jorge Llambías <jjllambias@gmail.com> | 925d17560901041058x7dcb1937x9defa28b3e54e905@mail.gmail.com | mail/lojban-list/cur/1231095529.437545a598652667.jbomohi:2,S
+Consider this small subset of Lojban, with elidable terminators /VAU/,
+/KU/ and /KEI/:
+
+----------------------------------
+
+text = sentence
+
+sentence = [terms [CU]] selbri [terms] /VAU/
+
+terms = [terms] sumti
+
+sumti = KOhA | LE selbri /KU/
+
+selbri = [selbri] tanru-unit
+
+tanru-unit = BRIVLA | NU sentence /KEI/
+
+-------------------------------------
+
+Here is a way to handle those terminators with a CFG. The same
+principles can be applied to the whole grammar (but the result will be
+thousands and thousands of rules):
+
+-----------------------------------
+
+text = sentence | sentence-no-VAU | sentence-no-VAU-no-KU |
+sentence-no-VAU-no-KU-no-KEI | sentence-no-VAU-no-terms |
+sentence-no-VAU-no-terms-no-KEI |
+sentence-no-VAU-no-terms-no-KEI-no-KU
+
+
+sentence = [head-terms] (selbri | selbri-no-KEI) [terms | terms-no-KU
+| terms-no-KU-no-KEI | terms-no-KU-no-KEI-no-terms] VAU
+
+sentence-no-VAU = [head-terms] (selbri | selbri-no-KEI) terms
+
+sentence-no-VAU-no-KU = [head-terms] (selbri | selbri-no-KEI) terms-no-KU
+
+sentence-no-VAU-no-KU-no-KEI = [head-terms] (selbri | selbri-no-KEI)
+(terms-no-KU-no-KEI | terms-no-KU-no-KEI-no-VAU)
+
+sentence-no-VAU-no-terms = [head-terms] selbri
+
+sentence-no-VAU-no-terms-no-KEI = [head-terms] (selbri-no-KEI |
+selbri-no-KEI-no-VAU)
+
+sentence-no-VAU-no-terms-no-KEI-no-KU = [head-terms]
+(selbri-no-KEI-no-VAU-no-KU | selbri-no-KEI-no-VAU-no-terms-no-KU)
+
+
+head-terms = terms [CU] | (terms-no-KU | terms-no-KU-no-KEI |
+terms-no-KU-no-KEI-no-VAU | terms-no-KU-no-KEI-no-terms) CU
+
+
+terms = [terms | terms-no-KU] sumti
+
+terms-no-KU = [terms | terms-no-KU] sumti-no-KU
+
+terms-no-KU-no-KEI = [terms | terms-no-KU] sumti-no-KU-no-KEI
+
+terms-no-KU-no-KEI-no-VAU = [terms | terms-no-KU] sumti-no-KU-no-KEI-no-VAU
+
+terms-no-KU-no-KEI-no-terms = [terms | terms-no-KU] sumti-no-KU-no-KEI-no-terms
+
+
+sumti = KOhA | LE (selbri | selbri-no-KEI | selbri-no-KEI-no-VAU |
+selbri-no-KEI-no-VAU-no-terms) KU
+
+sumti-no-KU = LE selbri
+
+sumti-no-KU-no-KEI = LE selbri-no-KEI
+
+sumti-no-KU-no-KEI-no-VAU = LE (selbri-no-KEI-no-VAU |
+selbri-no-KEI-no-VAU-no-KU)
+
+sumti-no-KU-no-KEI-no-terms = LE (selbri-no-KEI-no-VAU-no-terms |
+selbri-no-KEI-no-VAU-no-terms-no-KU)
+
+
+selbri = [selbri | selbri-no-KEI | selbri-no-KEI-no-VAU |
+selbri-no-KEI-no-VAU-no-KU] tanru-unit
+
+selbri-no-KEI = [selbri | selbri-no-KEI | selbri-no-KEI-no-VAU |
+selbri-no-KEI-no-VAU-no-KU] tanru-unit-no-KEI
+
+selbri-no-KEI-no-VAU = [selbri | selbri-no-KEI | selbri-no-KEI-no-VAU
+| selbri-no-KEI-no-VAU-no-KU] tanru-unit-no-KEI-no-VAU
+
+selbri-no-KEI-no-VAU-no-KU = [selbri | selbri-no-KEI |
+selbri-no-KEI-no-VAU | selbri-no-KEI-no-VAU-no-KU]
+tanru-unit-no-KEI-no-VAU-no-KU
+
+selbri-no-KEI-no-VAU-no-terms = [selbri | selbri-no-KEI |
+selbri-no-KEI-no-VAU | selbri-no-KEI-no-VAU-no-KU]
+tanru-unit-no-KEI-no-VAU-no-terms
+
+selbri-no-KEI-no-VAU-no-terms-no-KU = [selbri | selbri-no-KEI |
+selbri-no-KEI-no-VAU | selbri-no-KEI-no-VAU-no-KU]
+tanru-unit-no-KEI-no-VAU-no-terms-no-KU
+
+
+tanru-unit = BRIVLA | NU (sentence | sentence-no-VAU |
+sentence-no-VAU-no-KU | sentence-no-VAU-no-terms) KEI
+
+tanru-unit-no-KEI = NU sentence
+
+tanru-unit-no-KEI-no-VAU = NU sentence-no-VAU
+
+tanru-unit-no-KEI-no-VAU-no-KU = NU sentence-no-VAU-no-KU
+
+tanru-unit-no-KEI-no-VAU-no-terms = NU (sentence-no-VAU-no-terms |
+sentence-no-VAU-no-terms-no-KEI)
+
+tanru-unit-no-KEI-no-VAU-no-terms-no-KU = NU
+(sentence-no-VAU-no-terms-no-KU |
+sentence-no-VAU-no-terms-no-KEI-no-KU)
+
+-------------------------
+
+mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
