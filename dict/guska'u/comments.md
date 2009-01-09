@@ -4,3 +4,13 @@ Wrong veljvo
 
 gusku'a is gusni kumfa, not gusni kantu.
 
+
+## 2009-01-09T20:16:10Z — totus (comment 332, in reply to 331)
+
+Re: Wrong veljvo
+
+arj wrote:
+> gusku'a is gusni kumfa, not gusni kantu.
+
+Oops!
+
