@@ -29,3 +29,16 @@ Fixed.
 
 -Robin
 
+
+## 2009-01-10T03:35:28Z — phma (comment 334, in reply to 332)
+
+Re: Wrong veljvo
+
+totus wrote:
+> arj wrote:
+> > gusku'a is gusni kumfa, not gusni kantu.
+> 
+> Oops!
+
+There are darkrooms, so why not lightrooms?
+
