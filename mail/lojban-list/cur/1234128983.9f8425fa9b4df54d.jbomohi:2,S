@@ -1,0 +1,104 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sun, 08 Feb 2009 13:36:29 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1LWHKG-0001DF-Mg	for lojban-list-real@lojban.org; Sun, 08 Feb 2009 13:36:28 -0800
+Received: from el-out-1112.google.com ([209.85.162.179])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <pdf23ds@gmail.com>)	id 1LWHKC-0001D5-Oh	for lojban-list@lojban.org; Sun, 08 Feb 2009 13:36:28 -0800
+Received: by el-out-1112.google.com with SMTP id b25so766372elf.1        for <lojban-list@lojban.org>; Sun, 08 Feb 2009 13:36:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:mime-version:received:date:message-id:subject         :from:to:content-type:content-transfer-encoding;        bh=bocXcr+eYoztwPGhMReNjuGgBq2Gw9y4sq47+wKwpao=;        b=rCX5DhDCo/Kq/eOWuzEup6r/1RJjcfVxoo97HgdSUnXVW9SmmFpgbFjQWVz/4a3yoA         tYu/2WLZ0CrBeOVfgSlP6uDFrnlwMmDRSul7WhZbIwTDPMA3GR43ab3X/a0d1sPKXHET         Djb9mK8JN60eqprvYWlmOYZ8D2QOMdELY77DI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=mime-version:date:message-id:subject:from:to:content-type         :content-transfer-encoding;        b=FprTQEX46Jrb2L+cE3b54yVY5l4hXPYJD9Q9UN/lNHMljAH2oVf67+HVGJhkWJGOxI         VbzGSrh6HckiwCla2zUUMe2HJwODCTVgpMxHPPCEYfGIJ9VSndtGlZ9DzWYitpbMb2zt         H//+uAtzIREgddweAD8Nt78elRk2FzhbC6vTs=
+MIME-Version: 1.0
+Received: by 10.150.98.18 with SMTP id v18mr2540502ybb.231.1234128983631; Sun, 	08 Feb 2009 13:36:23 -0800 (PST)
+Date: Sun, 8 Feb 2009 15:36:23 -0600
+Message-ID: <737b61f30902081336g2818a979sf6a6db307e512c75@mail.gmail.com>
+Subject: [lojban] CFG prize challenge question
+From: Chris Capel <pdf23ds@gmail.com>
+To: lojban-list@lojban.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15263
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 3417
+
+I'm currently trying to prove that a CFG can't parse grammars with
+elidable terminators without a blowup in productions. I'd like to
+verify that the formalism I'm using is satisfactory to the judges.
+
+The set of valid phrases to be parsed, P, is a set of lists of tokens.
+There are two types of tokens: start and terminator. Each token is
+paired with a number identifying the type of phrase it starts or
+terminates. The terminator is also paired with a boolean value
+indicating whether it is elided. (This, rather than simply leaving out
+the terminator token for elided ones, makes constructing the set much
+easier.) Tokens are written as tuples in angle brackets.
+
+MapPhPh is a function that maps a phrase identifier (natural number)
+to a set of phrase identifiers. The returned identifiers are exactly
+those allowed to be nested under the passed in phrase in the grammar.
+
+The contents of P is defined as follows.
+
+For some natural x and bool y, [<Start x>, <Trm x y>] is in P. (y is
+whether the terminator is elided.)
+
+Adjacent phrases: If p is in P,
+-  and at some position pos in p two successive tokens are terminators
+of the form <Trm aID el1>, <Trm oID el2> (read "adjacent ID", "outer
+ID"),
+-  and some number newID is a member of mapPhPh(oID),
+-  and and for the list p_1 consisting of the first pos members of p,
+the boolean function canAppend(p_1, newID) is true (canAppend is
+defined below),
+-  then for some bool elided, the list formed by inserting <Start
+newID>, <Terminator newID elided> into p at (pos + 1) is in P.
+
+Nested phrases: If p is in P,
+-  and for some number pos > 0, every token at or after position pos
+in p is a terminator,
+-  and the two successive tokens at (pos - 1) in p are of the form
+<Start oldID>, <Trm oldID oldEl>,
+-  and for some number newID, newID is a member of mapPhPh(oldID)
+-  then p with <Start newID>, <Trm newID, newEl> inserted at pos is a
+member of P.
+
+Not done yet!
+
+canAppend(p, pID):
+Let lastEl be the last element of the list p.
+If lastEl is a start token, canAppend is true.
+Let p_1 be p without its last element.
+If lastEl is a terminator of the form <Trm tid el>, canAppend is true iff:
+-  pID is a member of mapPhPh(tid)
+-  and either el is false or canAppend(p_1, pID) is true.
+
+
+
+That's it. I *think* that represents the salient aspects of phrases
+with elidable terminators in Lojban. The reason I don't have a token
+for the contents of phrases is that I think they're adequately
+represented by a Start and Trm token where the Trm is never elided and
+it has no contents itself. phrases that always have non-elided
+terminators. By the way, I'm using the Isabelle system to formulate
+this (the above is a semi-formal version of the completely formal
+version I've written), and I've done a few proofs that show that some
+of the desired properties hold (actually just constructing specific
+token lists and proving they're in P), so my description ought to be
+completely rigorous and consistent, even if it doesn't correctly model
+lojban's phrases.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
