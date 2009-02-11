@@ -1,4 +1,4 @@
-# mail/lojban-list thread 9f8425fa9b4d-cfg_prize_challenge_question | root 737b61f30902081336g2818a979sf6a6db307e512c75@mail.gmail.com | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 9f8425fa9b4d-cfg_prize_challenge_question | root 737b61f30902081336g2818a979sf6a6db307e512c75@mail.gmail.com | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2009-02-08T21:36:23Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30902081336g2818a979sf6a6db307e512c75@mail.gmail.com | mail/lojban-list/cur/1234128983.9f8425fa9b4df54d.jbomohi:2,S
 I'm currently trying to prove that a CFG can't parse grammars with
@@ -500,6 +500,54 @@ non-elidable to the elidable case?
 (Sorry if I'm being too dense.)
 
 mu'o mi'e xorxes
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 9 | 2009-02-11T04:33:07Z | Chris Capel <pdf23ds@gmail.com> | 737b61f30902102033q6e6bde53l659b817d2eb3883b@mail.gmail.com | mail/lojban-list/cur/1234326787.28fddbc51beedd59.jbomohi:2,S
+On Tue, Feb 10, 2009 at 11:23, Jorge Llambías <jjllambias@gmail.com> wrote:
+> OK, let me try a different approach, because I really don't understand
+> how this formalism is supposed to work. Suppose we have this small
+> grammar with three elidable terminators VAU, KU and KEI:
+>
+> sentence = [terms [CU]] selbri [terms] /VAU/
+>
+> terms = [terms] sumti
+>
+> sumti = KOhA | LE selbri /KU/
+>
+> selbri = [selbri] tanru-unit
+>
+> tanru-unit = BRIVLA | NU sentence /KEI/
+>
+> How many start and terminator tokens do we need (if there is a small
+> number, what are they, if there are too many to list, what are some
+> examples) and what is it that blows up when moving from the
+> non-elidable to the elidable case?
+
+You'd need three pairs of tokens, for sentence/vau, le/ku, and nu/kei.
+Actually, maybe five. KOhA and BRIVLA probably need to be represented
+explicitly so that elided terminators before them don't eat following
+subphrases when they're not supposed to. Their terminators would never
+be elided.
+
+So making 1=sentence, 2 = le, 3 = KOhA, 4 = nu, 5 = BRIVLA, the
+allowable nestings (parent--child) would be 1--2, 1--3, 2--4, 2--5,
+4--1.
+
+The blowup isn't actually represented in this part of the system--I
+have other parts representing CFG productions and their correspondence
+to phrases. The blowup is in the minimum number of productions in the
+CFG necessary to parse a given set of tokens and their nestings.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org

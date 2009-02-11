@@ -1,0 +1,76 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Tue, 10 Feb 2009 20:33:11 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1LX6md-0000bd-Il	for lojban-list-real@lojban.org; Tue, 10 Feb 2009 20:33:11 -0800
+Received: from rn-out-0910.google.com ([64.233.170.187])	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <pdf23ds@gmail.com>)	id 1LX6ma-0000bU-BJ	for lojban-list@lojban.org; Tue, 10 Feb 2009 20:33:11 -0800
+Received: by rn-out-0910.google.com with SMTP id k43so12439rnd.0        for <lojban-list@lojban.org>; Tue, 10 Feb 2009 20:33:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;        d=gmail.com; s=gamma;        h=domainkey-signature:mime-version:received:in-reply-to:references         :date:message-id:subject:from:to:content-type         :content-transfer-encoding;        bh=ukIfPAc8Gozoq+uj23iPoBHq8WMlzBFmRPI8fprcQZU=;        b=SdUx5BiXk2PYVtn488ayhOQ9UFopSvGI+5xNv6dh/FE1XtDnF9R3ASpb6+e9YIiXdY         +Tq2G0VY8pOpiY2KhvEEq5HfjltoZswrnhd44/nvRkXdFcI/yM4Tf03haFQudayM19xw         6Ohs9J9h75NfB9KyYSS2sTquAlFZihR5cls+c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;        d=gmail.com; s=gamma;        h=mime-version:in-reply-to:references:date:message-id:subject:from:to         :content-type:content-transfer-encoding;        b=le3cKnTDSZgJZXNo7VXA/eOo0gyA7Z0nrm3FdzXI61MvPX4HXMl4VUQorP+qgQS7xn         orniCdbmPD2cEq5yL/EKtp+Dytn+JJ8hJVUlZbLUQ3TR8eqyEZ0lSbbZc+lrImQ722Ze         9J3D10WSjamsNc9xqw5jDLBUW4vxlYxYao2pc=
+MIME-Version: 1.0
+Received: by 10.151.41.21 with SMTP id t21mr407095ybj.101.1234326787077; Tue, 	10 Feb 2009 20:33:07 -0800 (PST)
+In-Reply-To: <925d17560902100923x15068ee0pbf72da0f1220ac01@mail.gmail.com>
+References: <737b61f30902081336g2818a979sf6a6db307e512c75@mail.gmail.com>	 <925d17560902091531k16bf93efk7113996d5f786767@mail.gmail.com>	 <737b61f30902091642h7e41234ufc1bdd8e7ddb5f6c@mail.gmail.com>	 <925d17560902100411mc814179h1930114009ce8641@mail.gmail.com>	 <737b61f30902100846g265c604ard1706b5924b4636@mail.gmail.com>	 <925d17560902100923x15068ee0pbf72da0f1220ac01@mail.gmail.com>
+Date: Tue, 10 Feb 2009 22:33:07 -0600
+Message-ID: <737b61f30902102033q6e6bde53l659b817d2eb3883b@mail.gmail.com>
+Subject: [lojban] Re: CFG prize challenge question
+From: Chris Capel <pdf23ds@gmail.com>
+To: lojban-list@lojban.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-MIME-Autoconverted: from quoted-printable to 8bit by Ecartis
+X-Spam-Score: -0.0
+X-Spam-Score-Int: 0
+X-Spam-Bar: /
+X-archive-position: 15291
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: pdf23ds@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1822
+
+On Tue, Feb 10, 2009 at 11:23, Jorge Llambías <jjllambias@gmail.com> wrote:
+> OK, let me try a different approach, because I really don't understand
+> how this formalism is supposed to work. Suppose we have this small
+> grammar with three elidable terminators VAU, KU and KEI:
+>
+> sentence = [terms [CU]] selbri [terms] /VAU/
+>
+> terms = [terms] sumti
+>
+> sumti = KOhA | LE selbri /KU/
+>
+> selbri = [selbri] tanru-unit
+>
+> tanru-unit = BRIVLA | NU sentence /KEI/
+>
+> How many start and terminator tokens do we need (if there is a small
+> number, what are they, if there are too many to list, what are some
+> examples) and what is it that blows up when moving from the
+> non-elidable to the elidable case?
+
+You'd need three pairs of tokens, for sentence/vau, le/ku, and nu/kei.
+Actually, maybe five. KOhA and BRIVLA probably need to be represented
+explicitly so that elided terminators before them don't eat following
+subphrases when they're not supposed to. Their terminators would never
+be elided.
+
+So making 1=sentence, 2 = le, 3 = KOhA, 4 = nu, 5 = BRIVLA, the
+allowable nestings (parent--child) would be 1--2, 1--3, 2--4, 2--5,
+4--1.
+
+The blowup isn't actually represented in this part of the system--I
+have other parts representing CFG productions and their correspondence
+to phrases. The blowup is in the minimum number of productions in the
+CFG necessary to parse a given set of tokens and their nestings.
+
+Chris Capel
+-- 
+"What is it like to be a bat? What is it like to bat a bee? What is it
+like to be a bee being batted? What is it like to be a batted bee?"
+-- The Mind's I (Hofstadter, Dennet)
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
