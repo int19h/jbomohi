@@ -4,3 +4,14 @@ tertoi
 
 I don't see the difference between this and {tertoi}/{te troci}.  
 
+
+## 2009-02-14T17:00:46Z — totus (comment 339, on definition 16526, in reply to 338)
+
+Re: tertoi
+
+Eimi wrote:
+> I don't see the difference between this and {tertoi}/{te troci}.  
+
+{nuntoi} is the effort required by the actions {tertoi} needed to attain
+{seltoi}.  Various actions could still require the same effort.
+
