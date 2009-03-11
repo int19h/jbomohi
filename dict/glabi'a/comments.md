@@ -14,3 +14,17 @@ arj wrote:
 
 {glabi'a} already exists in The Little Prince by Xorxes.  No other reason.
 
+
+## 2009-03-11T08:23:49Z — arj (comment 352, in reply to 351)
+
+Re: Rationale
+
+totus wrote:
+> arj wrote:
+> > Why this instead of/in addition to bi'agla?
+> 
+> {glabi'a} already exists in The Little Prince by Xorxes.  No other
+reason.
+
+An excellent reason. Thanks.
+
