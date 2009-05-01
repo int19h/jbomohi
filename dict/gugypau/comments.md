@@ -89,3 +89,39 @@ It would probably be a good idea to have two different lujvo for those two
 concepts, but I don't see anything in the composition of {gugypau} that
 implies autonomy, or lack thereof.
 
+
+## 2009-05-01T22:32:09Z — totus (comment 363, on definition 14540, in reply to 361)
+
+Re: Redefinition for gugpau?
+
+arj wrote:
+> totus wrote:
+> > The issue
+> > is their degree of autonomy, not their 'level'.  All the languages I
+> know
+> > have different words to describe the two types - why not lojban?
+> 
+> It would probably be a good idea to have two different lujvo for those
+two
+> concepts, but I don't see anything in the composition of {gugypau} that
+> implies autonomy, or lack thereof.
+
+Actually, on reflection, it would be a godd thing to have a lojban word
+for second-level sub-division (not 'partition', as that is usually applied
+to 'involuntary' divisions such as the 1796 Partition of Poland).  But to
+avoid confusion I would change the defintion of gugpau to:
+
+p1 is a second-level sub-division of country p2=g1
+
+gloss:
+state
+province
+region
+
+That means, of course, that all vipygu'e are gugypau, but only some
+gugypau are vipygu'e.
+
+I hate the sound, but I guess third-level subdivisions can be gugypaupau.
+
+totus
+
