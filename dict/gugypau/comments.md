@@ -74,3 +74,18 @@ have different words to describe the two types - why not lojban?
 
 totus
 
+
+## 2009-05-01T20:52:09Z — arj (comment 361, on definition 14540, in reply to 359)
+
+Re: Redefinition for gugpau?
+
+totus wrote:
+> The issue
+> is their degree of autonomy, not their 'level'.  All the languages I
+know
+> have different words to describe the two types - why not lojban?
+
+It would probably be a good idea to have two different lujvo for those two
+concepts, but I don't see anything in the composition of {gugypau} that
+implies autonomy, or lack thereof.
+
