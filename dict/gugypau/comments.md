@@ -35,3 +35,42 @@ What you are referring to seems to be a third-level partition. I'm not
 sure what the correct word for this is or should be (perhaps gugypaupau,
 by anology with ckupau/ckupaupau), but I'm pretty sure gugypau is not it.
 
+
+## 2009-05-01T20:15:55Z — totus (comment 359, on definition 14540, in reply to 358)
+
+Re: Redefinition for gugpau?
+
+arj wrote:
+> totus wrote:
+> > Just a suggestion.	How would you feel about redefining gugpau to be a
+> > 'county/district/department'? Generally states, provinces and cantons
+> have
+> > autonomous governments, and are part of federations or confederations.
+> > These could be vipygu'e (already in use). Counties (as in USA, Canada,
+> > Australia), districts (as in India, Switzerland)and departments
+> > (France)typically have a low degree of autonomy and are subdivisions
+of
+> > either non-federal countries or states/provinces/cantons.
+> 
+> Usage seems to indicate that gugypau refers to the second-level
+> organisation of a country (state/province/canton/Bundesland.
+> 
+>
+http://www.google.com/cse?cx=014107847567658722055%3A3enx_7t3upo&q=gugypau
+> +OR+gu'erpau+OR+gugdypau+OR+gugypagbu+OR+gu'erpagbu+OR+gugdypagbu
+> 
+> What you are referring to seems to be a third-level partition. I'm not
+> sure what the correct word for this is or should be (perhaps gugypaupau,
+> by anology with ckupau/ckupaupau), but I'm pretty sure gugypau is not
+it.
+
+My point was (maybe badly explained) that there are two distinctly
+different types of second-level organizations:	states/provinces/cantons
+which have governments and a broad range of powers, and
+counties/districts/departments which have few powers (relatively).
+Counties/districts/departments may be second- or third-level.  The issue
+is their degree of autonomy, not their 'level'.  All the languages I know
+have different words to describe the two types - why not lojban?
+
+totus
+
