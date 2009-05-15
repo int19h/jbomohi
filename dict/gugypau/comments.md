@@ -184,3 +184,24 @@ district; part of state/province/canton
 
 totus
 
+
+## 2009-05-15T19:43:29Z — arj (comment 367, on definition 14540, in reply to 365)
+
+Re: Redefinition for gugpau?
+
+totus wrote:
+> More reflection.  I suggest:
+> 
+> p1 is a second-level administrative division of country p2=g1
+>
+> Third-level: gugypausle
+> p1 is a third-level administrative division of country p2=g1
+
+"Second-level (third-level) administrative sub-division" etc. is fine as a
+clarificational note, but as the sole part of a definition it is somewhat
+fraught with ambiguity. I think I'll try to add a note to {gugypau} soon
+to that effect.
+
+Re gugypausle: I can't find any google hits on it except in this very
+discussion. Where is it from?
+
