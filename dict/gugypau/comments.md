@@ -236,3 +236,40 @@ A province in Italy or Chile is third-level whereas in Canada it's
 second-level.  Without a third-level definition, an Italian/Chilean
 province may end up as a gugypau.
 
+
+## 2009-05-31T17:53:16Z — arj (comment 371, on definition 14540, in reply to 365)
+
+Re: Redefinition for gugpau?
+
+I thought that this would be a straightforward change, but social science
+is hard. :-/
+
+When we say "second-level/third-level etc. administrative division", do we
+mean relative to a sovereign country, or relative to any political entity?
+
+Assume that we have the following two definitions:
+
+gugypau: p1 is a second-level administrative division of country p2=g1.
+
+gugypausle: p1 is a third-level administrative division of country p2=g1.
+
+Further assume that we have the following hierarchical relationships:
+
+* Livingstone County, (la LIVinston.), which is part of Missouri (la
+misuris.), which is part of the United States (le mergu'e).
+* Oberpfalz (la .Oberpfalts.), which is part of Bavaria (la baiern.),
+which is part of Germany (le dotygu'e)
+
+Given the above, which of the following statements are true?
+
+* la LIVinston. gugypau la misuris.
+* la LIVinston. gugypau le mergu'e
+* la LIVinston. gugypausle la misuris.
+* la LIVinston. gugypausle le mergu'e
+* la .Oberpfalts. gugypau la baiern.
+* la .Oberpfalts. gugypau le dotygu'e
+* la .Oberpfalts. gugypausle la baiern.
+* la .Oberpfalts. gugypausle le dotygu'e
+
+Does it matter that Germany is a part of the European Union?
+
