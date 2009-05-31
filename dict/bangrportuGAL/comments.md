@@ -4,3 +4,14 @@ Not a brivla
 
 This is a cmevla, not a fu'ivla.
 
+
+## 2009-05-31T14:36:35Z — totus (comment 370, in reply to 369)
+
+Re: Not a brivla
+
+donri wrote:
+> This is a cmevla, not a fu'ivla.
+
+You are right, of course.  I asked the Administrator (Robin?) to remove it
+almost immediately, but I guess he is unavailable to do it.
+
