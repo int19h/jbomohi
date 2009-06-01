@@ -273,3 +273,65 @@ Given the above, which of the following statements are true?
 
 Does it matter that Germany is a part of the European Union?
 
+
+## 2009-06-01T15:01:55Z — totus (comment 372, on definition 14540, in reply to 371)
+
+Re: Redefinition for gugpau?
+
+arj wrote:
+> I thought that this would be a straightforward change, but social
+science
+> is hard. :-/
+> 
+> When we say "second-level/third-level etc. administrative division", do
+we
+> mean relative to a sovereign country, or relative to any political
+entity?
+> 
+> Assume that we have the following two definitions:
+> 
+> gugypau: p1 is a second-level administrative division of country p2=g1.
+> 
+> gugypausle: p1 is a third-level administrative division of country
+p2=g1.
+> 
+> Further assume that we have the following hierarchical relationships:
+> 
+> * Livingstone County, (la LIVinston.), which is part of Missouri (la
+> misuris.), which is part of the United States (le mergu'e).
+> * Oberpfalz (la .Oberpfalts.), which is part of Bavaria (la baiern.),
+> which is part of Germany (le dotygu'e)
+> 
+> Given the above, which of the following statements are true?
+> 
+> * la LIVinston. gugypau la misuris.
+> * la LIVinston. gugypau le mergu'e
+> * la LIVinston. gugypausle la misuris.
+> * la LIVinston. gugypausle le mergu'e
+> * la .Oberpfalts. gugypau la baiern.
+> * la .Oberpfalts. gugypau le dotygu'e
+> * la .Oberpfalts. gugypausle la baiern.
+> * la .Oberpfalts. gugypausle le dotygu'e
+> 
+> Does it matter that Germany is a part of the European Union?
+
+I don't really see a problem here. The definitions I have proposed use the
+word 'country'.  This introduces no more ambiguity into the definition
+than is already present in {gugde}. In 99% of all situations, people are
+clear on what is a country and what isn't.  The remaining 1% we will never
+get rid of because that is an outcome of politics and culture - not
+language.  Prefacing with 'sovereign' doesn't help, because there are many
+interpretations of 'sovereign' (e.g. in the dispute between Canada and
+Quebec 'sovereignists').
+
+In English, the USA and Germany are countries; Bavaria, Missouri and the
+EU are not.  So the only true statements in your list are:
+
+* la LIVinston. gugypausle le mergu'e
+* la .Oberpfalts. gugypausle le dotygu'e
+
+Also true are:
+
+* la misuris. gugypau le mergu'e
+* la baiern. gugypau le dotygu'e
+
