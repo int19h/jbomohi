@@ -372,3 +372,22 @@ totus wrote:
 We can't just change a Noralujv entry just because we need a word for a
 new meaning.
 
+
+## 2009-06-01T19:38:38Z — totus (comment 376, on definition 14540, in reply to 375)
+
+Re: Redefinition for gugpau?
+
+arj wrote:
+> totus wrote:
+> > For that and other more general cases, I suggest we
+> > change the NORALUJV {jecpau} to 'p1 is a second-level administrative
+> > division of polity p2=j1.  I will do it, unless you do first.
+> 
+> We can't just change a Noralujv entry just because we need a word for a
+> new meaning.
+
+The NORALUJV entry doesn't mean anything in English anyway.  No matter
+what, it needs to be changed.  I'm suggesting it is changed (or more
+precisley 'clarified') to communicate what probably it was meant to do in
+the first place.  What would you change it to?
+
