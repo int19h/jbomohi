@@ -359,3 +359,16 @@ saying 'Livingstone County is a part of Missouri'.  Neither {gugypau} nor
 change the NORALUJV {jecpau} to 'p1 is a second-level administrative
 division of polity p2=j1.  I will do it, unless you do first.
 
+
+## 2009-06-01T19:02:37Z — arj (comment 375, on definition 14540, in reply to 374)
+
+Re: Redefinition for gugpau?
+
+totus wrote:
+> For that and other more general cases, I suggest we
+> change the NORALUJV {jecpau} to 'p1 is a second-level administrative
+> division of polity p2=j1.  I will do it, unless you do first.
+
+We can't just change a Noralujv entry just because we need a word for a
+new meaning.
+
