@@ -342,3 +342,20 @@ Re: Redefinition for gugpau?
 
 That is a good analysis. Please check on the new definitions.
 
+
+## 2009-06-01T18:24:21Z — totus (comment 374, on definition 14540, in reply to 373)
+
+Re: Redefinition for gugpau?
+
+arj wrote:
+> That is a good analysis. Please check on the new definitions.
+
+The changes look OK.  I've added some more words to the c.f. and examples
+to clear up inevitable misunderstandings as to what 'second-level' means.
+
+Actually, your comments did uncover a problem.	We still need a way of
+saying 'Livingstone County is a part of Missouri'.  Neither {gugypau} nor
+{gugypausle} will do.  For that and other more general cases, I suggest we
+change the NORALUJV {jecpau} to 'p1 is a second-level administrative
+division of polity p2=j1.  I will do it, unless you do first.
+
