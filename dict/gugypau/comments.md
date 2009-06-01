@@ -335,3 +335,10 @@ Also true are:
 * la misuris. gugypau le mergu'e
 * la baiern. gugypau le dotygu'e
 
+
+## 2009-06-01T16:46:50Z — arj (comment 373, on definition 14540, in reply to 372)
+
+Re: Redefinition for gugpau?
+
+That is a good analysis. Please check on the new definitions.
+
