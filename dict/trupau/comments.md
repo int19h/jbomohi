@@ -12,3 +12,15 @@ l.8000 ...nebreak[0]department $t_2$ (from (turni}
 
 ?
 
+
+## 2009-06-02T16:41:18Z — arj (comment 380, on definition 16702, in reply to 379)
+
+Re: Fixing Latex error
+
+arj wrote:
+> I edited the notes field, because, surprisingly, it appears that LaTeX
+> can't handle that many braces.
+
+Oops. Turns out that was the wrong entry. I should have fixed {trupauja'a}
+instead.
+
