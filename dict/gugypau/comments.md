@@ -449,3 +449,62 @@ Right!	And isn't  'p1 is a second-level administrative
 The only difference is that instead of 'country' we have 'polity', so now
 we can say  'la LIVinston. jecpau la misuris.'
 
+
+## 2009-06-03T16:17:12Z — totus (comment 382, on definition 14540, in reply to 378)
+
+Re: Redefinition for gugpau?
+
+totus wrote:
+> arj wrote:
+> > totus wrote:
+> > > arj wrote:
+> > > > totus wrote:
+> > > > > For that and other more general cases, I suggest we
+> > > > > change the NORALUJV {jecpau} to 'p1 is a second-level
+> administrative
+> > > > > division of polity p2=j1.  I will do it, unless you do first.
+> > > > 
+> > > > We can't just change a Noralujv entry just because we need a word
+> for
+> > a
+> > > > new meaning.
+> > > 
+> > > The NORALUJV entry doesn't mean anything in English anyway.  No
+matter
+> > > what, it needs to be changed.  I'm suggesting it is changed (or more
+> > > precisley 'clarified') to communicate what probably it was meant to
+do
+> > in
+> > > the first place.	What would you change it to?
+> > 
+> > Probably something very close to gugypau. See the keyword, and
+existing
+> > usage.
+> 
+> Right!	And isn't  'p1 is a second-level administrative
+> > > > division of polity p2=j1' very close to the definition of gugypau? 
+> The only difference is that instead of 'country' we have 'polity', so
+now
+> we can say  'la LIVinston. jecpau la misuris.'
+
+I look forward to your response to my latest comment (above) on {jejcpau}.
+ But in the meantime, I see we have a more serious problem.  I'm afraid I
+was a little hasty in saying that your changes to {gugypau} looked OK.
+
+Here are the problems:
+1) I don't know how we missed this but our levels are mixed up. 
+'Second-level administrative division' should be 'First-level
+administrative division'. Likewise for {gugypausle}, 'Third-level
+administrative division' should be 'Second-level administrative division'.
+See http://en.wikipedia.org/wiki/Political_divisions_of_China.
+2) Gloss for 'Province' should be qualified by 'First-level administrative
+division'.  Why?  Because provinces can also be second-level as in Italy
+and Chile.  So for these two countries, and possibly others {gugupaysle}
+would be the one to use.
+3) Gloss for 'State'.  As above.  Even a sixth-level village is a 'part'
+of a country.
+4) Add third gloss word 'Region; First-level administrative division'. 
+Without that, we have nothing for Italy, Belgium, Chile and many others.
+5) In {gugypaysle} we have the same issues with the use of 'part' in the
+gloss words.
+
