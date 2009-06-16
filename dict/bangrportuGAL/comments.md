@@ -26,3 +26,16 @@ contribution there.
 
 Thanks.
 
+
+## 2009-06-16T12:51:35Z — totus (comment 389, on definition 16740, in reply to 388)
+
+Re: Wrong valsi
+
+totus wrote:
+> I have asked for this valsi to be removed (see commnets in English) as
+we
+> already have {potybau} for Portuguese language.  I suggest you make your
+> contribution there.
+> 
+> Thanks.
+
