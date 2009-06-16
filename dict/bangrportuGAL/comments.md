@@ -15,3 +15,14 @@ donri wrote:
 You are right, of course.  I asked the Administrator (Robin?) to remove it
 almost immediately, but I guess he is unavailable to do it.
 
+
+## 2009-06-16T12:45:13Z — totus (comment 388, on definition 16740)
+
+Wrong valsi
+
+I have asked for this valsi to be removed (see commnets in English) as we
+already have {potygau} for Portuguese language.  I suggest you make your
+contribution there.
+
+Thanks.
+
