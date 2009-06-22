@@ -508,3 +508,17 @@ Without that, we have nothing for Italy, Belgium, Chile and many others.
 5) In {gugypaysle} we have the same issues with the use of 'part' in the
 gloss words.
 
+
+## 2009-06-22T15:28:47Z — totus (comment 391, on definition 14540)
+
+Further clarification
+
+I made changes to the definition and gloss words consistent with the last
+comments.  After my entering "first-level administrative division of
+country" in the 'In Sense' fields, an error message appeared and the gloss
+keywords and place keywords disappeared.
+
+The same happened with {gugypausle} when I entered "second-level
+administrative division of country".  I have sent an appropriate Admin
+Request.
+
