@@ -1,0 +1,96 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Sat, 01 Aug 2009 06:56:29 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1MXF4U-0002Ze-FZ	for lojban-list-real@lojban.org; Sat, 01 Aug 2009 06:56:26 -0700
+Received: from dsl.zenzebra.mv.com ([207.22.49.29] helo=cmarib.ramside)	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <VirginSnow@vfemail.net>)	id 1MXF4J-0002Yw-1f	for lojban-list@lojban.org; Sat, 01 Aug 2009 06:56:25 -0700
+Received: from cmarib.ramside (localhost [127.0.0.1])	by cmarib.ramside (8.13.4/8.13.4) with ESMTP id n71DttZ5014871	for <lojban-list@lojban.org>; Sat, 1 Aug 2009 13:55:55 GMT
+Received: (from rusat@localhost)	by cmarib.ramside (8.13.4/8.13.4/Submit) id n71DtrIi014868;	Sat, 1 Aug 2009 13:55:54 GMT
+X-Authentication-Warning: cmarib.ramside: rusat set sender to VirginSnow@vfemail.net using -f
+To: lojban-list@lojban.org
+Subject: [lojban] Ordering of time/space tenses?
+From: sunrise2000@comcast.net
+Date: 01 Aug 2009 13:55:50 +0000
+Message-ID: <867hxnwsd5.fsf@cmarib.ramside>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-archive-position: 15850
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: sunrise2000@comcast.net
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2835
+Lines: 66
+
+coi rodo
+
+I have a question about the space/time tense system.  When specifying
+both spatial and temporal tense in the same tense construct (with no
+intervening connectives), does it matter in what order the spatial
+tense and temporal tenses are specified?
+
+>From Chapter 10. Imaginary Journeys: The Lojban Space/Time Tense
+System, Section 4. Temporal tenses: PU and ZI:
+
+: when both spatial and temporal tense cmavo are given in a single
+: tense construct, the temporal tense is expressed first. (If space
+: were expressed before time, then certain constructions would be
+: ambiguous.)
+
+However, the 3rd baseline EBNF grammar (bnf.300) allows space and time
+in either order:
+
+: simple-tense-modal<972> = [NAhE] [SE] BAI [NAI] [KI] |
+:         [NAhE] (time [space] | space [time]) & CAhA [KI] | KI | CUhE
+
+And the 3rd baseline YACC grammar (grammar.300) agrees with the EBNF:
+
+: tense_C_979             :  time_1030
+:    /* time-only */
+:    /* space defaults to time-space reference space */
+: 
+:                         |  space_1040
+:    /* can include time if specified with VIhA */
+:    /* otherwise time defaults to the time-space reference time */
+: 
+:                         |  time_1030  space_1040
+:    /* time and space - If space_1040 is marked with
+:    VIhA for space-time the tense may be self-contradictory */
+:    /* interval prop before space_time is for time distribution */
+:                         |  space_1040  time_1030
+:                         ;
+
+Is 3rd baseline January 10, 1997 still the most recent official
+version of the formal grammars?  Have I found a mistake in the Lojban
+Reference Grammar?  There doesn't seem to be any mention of this in
+the CLL errata at
+http://www.lojban.org/tiki/tiki-index.php?page=CLL%2C+aka+Reference+Grammar%2C+Errata
+Is this statement in the CLL a holdover from a previous version of the
+grammar?
+
+I was thinking that the CLL's remark might have been a reference to
+the fact that space interval properties look just like time interval
+properties.  Specifically, a space interval property consist of {fe'e}
+followed by a time interval property.  However, the grammar for
+space-int-props is:
+
+: space-int-props<1049> = (FEhE interval-property) ...
+
+and not
+
+: space-int-props<1049> = FEhE interval-property ...
+
+Each interval-property is immediately preceeded by {fe'e}.  So, in fact,
+{fe'e ta'e ta'enai} would correctly parse as {fe'e ta'e} {ta'enai}.
+
+It looks, to me, like spatial and temporal tenses may appear in either
+order (space time, or time space) without ambiguity.  Is the Reference
+Grammar in error, or am I missing something?
+
+mi'e brablonau
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.

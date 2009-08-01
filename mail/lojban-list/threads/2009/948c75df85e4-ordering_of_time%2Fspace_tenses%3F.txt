@@ -1,0 +1,75 @@
+# mail/lojban-list thread 948c75df85e4-ordering_of_time%2Fspace_tenses%3F | root 867hxnwsd5.fsf@cmarib.ramside | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2009-08-01T13:55:50Z | sunrise2000@comcast.net | 867hxnwsd5.fsf@cmarib.ramside | mail/lojban-list/cur/1249134950.948c75df85e412c4.jbomohi:2,S
+coi rodo
+
+I have a question about the space/time tense system.  When specifying
+both spatial and temporal tense in the same tense construct (with no
+intervening connectives), does it matter in what order the spatial
+tense and temporal tenses are specified?
+
+>From Chapter 10. Imaginary Journeys: The Lojban Space/Time Tense
+System, Section 4. Temporal tenses: PU and ZI:
+
+: when both spatial and temporal tense cmavo are given in a single
+: tense construct, the temporal tense is expressed first. (If space
+: were expressed before time, then certain constructions would be
+: ambiguous.)
+
+However, the 3rd baseline EBNF grammar (bnf.300) allows space and time
+in either order:
+
+: simple-tense-modal<972> = [NAhE] [SE] BAI [NAI] [KI] |
+:         [NAhE] (time [space] | space [time]) & CAhA [KI] | KI | CUhE
+
+And the 3rd baseline YACC grammar (grammar.300) agrees with the EBNF:
+
+: tense_C_979             :  time_1030
+:    /* time-only */
+:    /* space defaults to time-space reference space */
+: 
+:                         |  space_1040
+:    /* can include time if specified with VIhA */
+:    /* otherwise time defaults to the time-space reference time */
+: 
+:                         |  time_1030  space_1040
+:    /* time and space - If space_1040 is marked with
+:    VIhA for space-time the tense may be self-contradictory */
+:    /* interval prop before space_time is for time distribution */
+:                         |  space_1040  time_1030
+:                         ;
+
+Is 3rd baseline January 10, 1997 still the most recent official
+version of the formal grammars?  Have I found a mistake in the Lojban
+Reference Grammar?  There doesn't seem to be any mention of this in
+the CLL errata at
+http://www.lojban.org/tiki/tiki-index.php?page=CLL%2C+aka+Reference+Grammar%2C+Errata
+Is this statement in the CLL a holdover from a previous version of the
+grammar?
+
+I was thinking that the CLL's remark might have been a reference to
+the fact that space interval properties look just like time interval
+properties.  Specifically, a space interval property consist of {fe'e}
+followed by a time interval property.  However, the grammar for
+space-int-props is:
+
+: space-int-props<1049> = (FEhE interval-property) ...
+
+and not
+
+: space-int-props<1049> = FEhE interval-property ...
+
+Each interval-property is immediately preceeded by {fe'e}.  So, in fact,
+{fe'e ta'e ta'enai} would correctly parse as {fe'e ta'e} {ta'enai}.
+
+It looks, to me, like spatial and temporal tenses may appear in either
+order (space time, or time space) without ambiguity.  Is the Reference
+Grammar in error, or am I missing something?
+
+mi'e brablonau
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
