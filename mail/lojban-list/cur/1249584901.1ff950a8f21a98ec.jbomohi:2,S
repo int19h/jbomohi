@@ -1,0 +1,107 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 06 Aug 2009 11:55:22 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1MZ87V-0005KA-HG	for lojban-list-real@lojban.org; Thu, 06 Aug 2009 11:55:22 -0700
+Received: from dsl.zenzebra.mv.com ([207.22.49.29] helo=cmarib.ramside)	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <sunrise2000@comcast.net>)	id 1MZ87Q-0005J5-GC	for lojban-list@lojban.org; Thu, 06 Aug 2009 11:55:21 -0700
+Received: from cmarib.ramside (localhost [127.0.0.1])	by cmarib.ramside (8.13.4/8.13.4) with ESMTP id n76It4tS014527	for <lojban-list@lojban.org>; Thu, 6 Aug 2009 18:55:04 GMT
+Received: (from rusat@localhost)	by cmarib.ramside (8.13.4/8.13.4/Submit) id n76It2ve014524;	Thu, 6 Aug 2009 18:55:03 GMT
+X-Authentication-Warning: cmarib.ramside: rusat set sender to sunrise2000@comcast.net using -f
+To: lojban-list@lojban.org
+Subject: [lojban] Parsing NIhO sections of text
+From: sunrise2000@comcast.net
+Date: 06 Aug 2009 18:55:01 +0000
+Message-ID: <86my6csrga.fsf@cmarib.ramside>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-archive-position: 15930
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: sunrise2000@comcast.net
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2644
+Lines: 77
+
+coi rodo,
+
+I'm trying to parse out sections of Lojban text delimited by sequences
+of NIhO cmavo into their respective paragraphs, sections, chapters,
+etc.
+
+So, if I have:
+
+ni'o ni'o
+broda
+ni'o
+broda
+ni'o ni'o
+broda
+
+I would like to get something like:
+
+[[broda,broda],[broda]]
+
+where the inner brackets represent paragraphs, the outer brackets
+represent sections, and further containing brackets would designate
+chapters, parts, volumes, etc.
+
+I'm trying to use the DCG facilities of Prolog to do this.  For
+simplicity, I'm using "p" to represent a paragraph and "n" to
+represent a cmavo from NIhO.
+
+The CLL states that a text utilizing NIhO should start with a string
+of NIhOs as long as any other NIhO string in the text.  I managed to
+create grammar rules to parse paragraph structure, AS LONG AS the
+above condition is met.  The following DCG clauses do this well:
+
+parse(0,p) --> [p].
+parse(_,[]) --> [].
+parse([O|N],[H|T]) --> [n], parse(N,H), {H \= []}, parse([O|N],T).
+
+They find the correct parse, and only the correct parse. (i.e.,
+backtracking always terminates and never finds any more solutions.)
+
+Here's an example of the parser in action:
+
+| ?- phrase(parse(Depth,Parse),[n,n,p,n,p,n,n,p]).
+
+Depth = [_,_|0]
+Parse = [[p,p],[p]] ?
+
+This is the same structure as in the {broda} example above.  (Note:
+the Depth returned is in Peano form: 1 = [_|0], 2 = [_,_|0], etc.)
+
+The problem I'm having is that when the CLL condition is NOT
+met... that is, when a longer string of NIhOs appears somewhere down
+the line, the text will fail to parse.  For example:
+
+| ?- phrase(parse(Depth,Parse),[n,n,p,n,n,n,p,n,n,p]).
+
+no
+
+That "no" is Prolog's way of saying that the phrase
+"[n,n,p,n,n,n,p,n,n,p]" doesn't satisfy the grammar defined for
+"parse".  That's because the text starts with NIhO NIhO (two NIhOs)
+but has NIhO NIhO NIhO (three NIhOs) further along in it.
+
+I've tried two different approaches, now, to infer how many NIhOs are
+missing at the front of the text.  One of these approaches worked
+correctly, but it required the use of cuts(!) to prevent infinite
+recursion.  While that's fine for parsing, using cuts really is
+cheating when it comes to writing grammar rules.
+
+Does anyone here know how I could use contetx-free grammar rules to
+parse the different sections separated by NIhO sequences?
+
+Any ideas (expressed in EBNF, Prolog, YACC, or whatever you speak)
+would be much appreciated!
+
+ki'e
+
+mi'e brablonau
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.

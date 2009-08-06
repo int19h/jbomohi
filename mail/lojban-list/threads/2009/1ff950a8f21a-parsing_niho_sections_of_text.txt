@@ -1,0 +1,86 @@
+# mail/lojban-list thread 1ff950a8f21a-parsing_niho_sections_of_text | root 86my6csrga.fsf@cmarib.ramside | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2009-08-06T18:55:01Z | sunrise2000@comcast.net | 86my6csrga.fsf@cmarib.ramside | mail/lojban-list/cur/1249584901.1ff950a8f21a98ec.jbomohi:2,S
+coi rodo,
+
+I'm trying to parse out sections of Lojban text delimited by sequences
+of NIhO cmavo into their respective paragraphs, sections, chapters,
+etc.
+
+So, if I have:
+
+ni'o ni'o
+broda
+ni'o
+broda
+ni'o ni'o
+broda
+
+I would like to get something like:
+
+[[broda,broda],[broda]]
+
+where the inner brackets represent paragraphs, the outer brackets
+represent sections, and further containing brackets would designate
+chapters, parts, volumes, etc.
+
+I'm trying to use the DCG facilities of Prolog to do this.  For
+simplicity, I'm using "p" to represent a paragraph and "n" to
+represent a cmavo from NIhO.
+
+The CLL states that a text utilizing NIhO should start with a string
+of NIhOs as long as any other NIhO string in the text.  I managed to
+create grammar rules to parse paragraph structure, AS LONG AS the
+above condition is met.  The following DCG clauses do this well:
+
+parse(0,p) --> [p].
+parse(_,[]) --> [].
+parse([O|N],[H|T]) --> [n], parse(N,H), {H \= []}, parse([O|N],T).
+
+They find the correct parse, and only the correct parse. (i.e.,
+backtracking always terminates and never finds any more solutions.)
+
+Here's an example of the parser in action:
+
+| ?- phrase(parse(Depth,Parse),[n,n,p,n,p,n,n,p]).
+
+Depth = [_,_|0]
+Parse = [[p,p],[p]] ?
+
+This is the same structure as in the {broda} example above.  (Note:
+the Depth returned is in Peano form: 1 = [_|0], 2 = [_,_|0], etc.)
+
+The problem I'm having is that when the CLL condition is NOT
+met... that is, when a longer string of NIhOs appears somewhere down
+the line, the text will fail to parse.  For example:
+
+| ?- phrase(parse(Depth,Parse),[n,n,p,n,n,n,p,n,n,p]).
+
+no
+
+That "no" is Prolog's way of saying that the phrase
+"[n,n,p,n,n,n,p,n,n,p]" doesn't satisfy the grammar defined for
+"parse".  That's because the text starts with NIhO NIhO (two NIhOs)
+but has NIhO NIhO NIhO (three NIhOs) further along in it.
+
+I've tried two different approaches, now, to infer how many NIhOs are
+missing at the front of the text.  One of these approaches worked
+correctly, but it required the use of cuts(!) to prevent infinite
+recursion.  While that's fine for parsing, using cuts really is
+cheating when it comes to writing grammar rules.
+
+Does anyone here know how I could use contetx-free grammar rules to
+parse the different sections separated by NIhO sequences?
+
+Any ideas (expressed in EBNF, Prolog, YACC, or whatever you speak)
+would be much appreciated!
+
+ki'e
+
+mi'e brablonau
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
