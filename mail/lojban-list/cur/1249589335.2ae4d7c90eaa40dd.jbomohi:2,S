@@ -1,0 +1,63 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 06 Aug 2009 13:09:08 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1MZ9Gt-0002hN-Nu	for lojban-list-real@lojban.org; Thu, 06 Aug 2009 13:09:08 -0700
+Received: from ol.freeshell.org ([192.94.73.20] helo=sdf.lonestar.org)	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <jwodder@sdf.lonestar.org>)	id 1MZ9Gp-0002hA-41	for lojban-list@lojban.org; Thu, 06 Aug 2009 13:09:07 -0700
+Received: from sdf.lonestar.org (IDENT:jwodder@iceland.freeshell.org [192.94.73.5])	by sdf.lonestar.org (8.14.3/8.14.3) with ESMTP id n76K8uvp005799	for <lojban-list@lojban.org>; Thu, 6 Aug 2009 20:08:56 GMT
+Received: (from jwodder@localhost)	by sdf.lonestar.org (8.14.3/8.12.8/Submit) id n76K8tY6000678	for lojban-list@lojban.org; Thu, 6 Aug 2009 20:08:55 GMT
+Date: Thu, 6 Aug 2009 20:08:55 +0000
+From: Minimiscience <minimiscience@gmail.com>
+To: lojban-list@lojban.org
+Subject: [lojban] Re: Parsing NIhO sections of text
+Message-ID: <20090806200854.GA9738@sdf.lonestar.org>
+Mail-Followup-To: lojban-list@lojban.org
+References: <86my6csrga.fsf@cmarib.ramside>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86my6csrga.fsf@cmarib.ramside>
+Organization: SDF Public Access UNIX System <http://sdf.lonestar.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-archive-position: 15931
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: minimiscience@gmail.com
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 1506
+
+de'i li 06 pi'e 08 pi'e 2009 la'o fy. sunrise2000@comcast.net .fy. cusku zoi
+skamyxatra.
+> I'm trying to parse out sections of Lojban text delimited by sequences
+> of NIhO cmavo into their respective paragraphs, sections, chapters,
+> etc.
+...
+> Does anyone here know how I could use contetx-free grammar rules to
+> parse the different sections separated by NIhO sequences?
+> 
+> Any ideas (expressed in EBNF, Prolog, YACC, or whatever you speak)
+> would be much appreciated!
+.skamyxatra
+
+If the length of a NIhO sequence exceeds the maximum depth of the parse
+tree/list/structure, can't you just enclose the list in another list until the
+depths match?  E.g., when you have the list X=[[broda, broda], [broda]], and
+you encounter four NIhOs in a row, let X=[[X]] (two levels of lists because
+four minus the depth of X is two), and then append to X whatever comes after
+that.
+
+I don't think this can be handled by a CFG without encoding the lengths of the
+NIhO strings into the productions, which would lead to an infinitely large
+grammar.  Note that the official Yacc and BNF grammars treat a sequence of
+NIhOs as a single NIhO and leave the structuring of the text to whatever
+semantic engine comes after.
+
+mu'omi'e .kamymecraijun.
+
+-- 
+li'a .e'i ca vondei .i mi na'e pu'i kufra loi vondei
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
