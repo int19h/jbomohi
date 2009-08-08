@@ -1,4 +1,4 @@
-# mail/lojban-list thread 1ff950a8f21a-parsing_niho_sections_of_text | root 86my6csrga.fsf@cmarib.ramside | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 1ff950a8f21a-parsing_niho_sections_of_text | root 86my6csrga.fsf@cmarib.ramside | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2009-08-06T18:55:01Z | sunrise2000@comcast.net | 86my6csrga.fsf@cmarib.ramside | mail/lojban-list/cur/1249584901.1ff950a8f21a98ec.jbomohi:2,S
 coi rodo,
@@ -116,6 +116,117 @@ mu'omi'e .kamymecraijun.
 
 -- 
 li'a .e'i ca vondei .i mi na'e pu'i kufra loi vondei
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 3 | 2009-08-08T04:30:52Z | sunrise2000@comcast.net | 86prb7sz9f.fsf@cmarib.ramside | mail/lojban-list/cur/1249705852.b85c2ca3aaeb4a56.jbomohi:2,S
+Minimiscience <minimiscience@gmail.com> writes:
+
+> de'i li 06 pi'e 08 pi'e 2009 la'o fy. sunrise2000@comcast.net .fy. cusku zoi
+> skamyxatra.
+> > I'm trying to parse out sections of Lojban text delimited by sequences
+> > of NIhO cmavo into their respective paragraphs, sections, chapters,
+> > etc.
+> ...
+> > Does anyone here know how I could use contetx-free grammar rules to
+> > parse the different sections separated by NIhO sequences?
+>
+> If the length of a NIhO sequence exceeds the maximum depth of the parse
+> tree/list/structure, can't you just enclose the list in another list until the
+> depths match?  E.g., when you have the list X=[[broda, broda], [broda]], and
+> you encounter four NIhOs in a row, let X=[[X]] (two levels of lists because
+> four minus the depth of X is two), and then append to X whatever comes after
+> that.
+
+The code I included in my original post used a recursive approach to
+parsing.  Following your advice, I transformed the code to use an
+iterative approach, and have come up with a series of clauses that
+will parse NIhO-delimited text properly in (I think) all cases.
+
+It's interesting to note that the original (recursive) code consisted
+of just three lines of Prolog.  The iterative version is 53 lines long
+(including comments), about 15 times the size!  The code is, however,
+well behaved and written with zero cuts.  (That's the important part!)
+It finds the correct parse, doesn't find any incorrect solutions, and
+is guaranteed to terminate, even when backtracking.  In other words,
+it works like it should. :D
+
+Thanks for the suggestion!
+
+/*  ++ HERE IS WHAT I CAME UP WITH ++  */
+
+/* Prolog code to parse NIhO-delimited text into paragraphs, sections,
+   chapters, etc.  This code is relased under the GNU General Public
+   License, Version 3.0. */
+
+/* For simplicity, this code uses "p" to represent a paragraph, and
+   "n" to represent a member of selma'o NIhO. */
+
+para(p) --> [p].
+
+'n*'(0) --> [].
+'n*'(N) --> [n], 'n*'(M), {N is M+1}.
+
+/* repackage tree Tree of depth Depth to be at least N levels deep */
+deepen(Depth,N,Tree,Tails,Tree,Tails) --> {N =< Depth}.
+deepen(Depth,N,TreeIn,TailsIn,TreeOut,TailsOut) -->
+	{N > Depth,
+	TreeTmp = [TreeIn|NewTail],
+	TailsTmp = [NewTail|TailsIn],
+	NewDepth is Depth + 1},
+	deepen(NewDepth,N,TreeTmp,TailsTmp,TreeOut,TailsOut).
+
+/* unifies each member of a list with [].  this is used to terminate
+lists in a nested list. */
+closelists([]) --> [].
+closelists([H|T]) --> {H = []}, closelists(T).
+
+/* if the number of NIhOs is no greater than the depth of the parse
+tree, then deepen P to depth N-1, install it at level N in the tail
+list, find all lower tails in the tail list, close them, and replace
+them with the tails from the deepening */
+
+niho(TreeIn, TailList, TreeOut) --> 'n*'(N), para(P),
+	{length(TailList,Depth),
+	N =< Depth,
+	length(NTails,N),
+	suffix(NTails,TailList),
+	append(Prefix,NTails,TailList),
+	append([ThisTail],TgtTails,NTails),
+	TgtDepth is N - 1},
+	closelists(TgtTails),
+	deepen(0,TgtDepth,P,[],SubTree,DeepTails),
+	{ThisTail = [SubTree|NewTail],
+	append(Prefix,[NewTail|DeepTails],NewTailList)},
+	niho(TreeIn, NewTailList, TreeOut).
+
+/* if the number of NIhOs is greater than the depth of the parse tree,
+then add levels to the parse tree until the depth equals the number of
+NIhOs, then proceed as above */
+
+niho(TreeIn, TailList, TreeOut) --> 'n*'(N), para(P),
+	{length(TailList,Depth),
+	N > Depth,
+	N2 is N - 1},
+	deepen(Depth,N,TreeIn,TailList,NewTree,[ThisTail|CloseTails]),
+	closelists(CloseTails),
+	deepen(0,N2,P,[],SubTree,TailsTmp),
+	{ThisTail = [SubTree|NewTail],
+	NewTailList = [NewTail|TailsTmp]},
+	niho(NewTree, NewTailList, TreeOut).
+
+/* termination case */
+niho(Tree, TailList, Tree) --> closelists(TailList).
+
+/* the actual top level non-terminal for parsing a NIhO tree */
+niho(Tree) --> 'n*'(N), para(P),
+	deepen(0,N,P,[],TreeTmp,TailsTmp),
+	niho(TreeTmp, TailsTmp, Tree).
+
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
