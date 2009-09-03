@@ -1,0 +1,159 @@
+Return-Path: <grbounce-1SmKRQUAAADb_R2oRU4VvVPYnC2H_cF3=phma=phma.optus.nu@googlegroups.com>
+X-Original-To: phma@localhost
+Delivered-To: phma@localhost
+Received: from chausie.ixazon.lan (localhost [127.0.0.1]) 	by chausie
+ (Postfix) with ESMTP id 63E16E3BF 	for <phma@localhost>; Thu,
+ 3 Sep 2009 18:51:19 -0400 (EDT)
+Delivered-To: phma@phma.optus.nu
+Received: from 192.168.7.2 [192.168.7.2] 	by chausie.ixazon.lan with IMAP
+ (fetchmail-6.3.8) 	for <phma@localhost> (single-drop); Thu, 03 Sep 2009
+ 18:51:19 -0400 (EDT)
+Received: from mail-yw0-f144.google.com (mail-yw0-f144.google.com
+ [209.85.211.144]) 	by ixazon.dynip.com (Postfix) with ESMTP id 81AE2CE79B
+ for <phma@phma.optus.nu>; Thu,  3 Sep 2009 18:47:17 -0400 (EDT)
+Received: by ywh8 with SMTP id 8so485935ywh.15         for
+ <phma@phma.optus.nu>; Thu, 03 Sep 2009 15:47:16 -0700 (PDT)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;         
+ d=googlegroups.com; s=beta;         h=domainkey-signature:received:received:x-sender:x-apparently-to
+ :received:received:received:received-spf:received:dkim-signature          
+ :domainkey-signature:mime-version:received:in-reply-to:references         
+ :date:message-id:subject:from:to:content-type          :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
+ :mailing-list:list-id:list-post:list-help:list-unsubscribe          
+ :x-beenthere-env:x-beenthere;         bh=aw+6Qv+2AH8SxHPGPxz24z5FmggfANXQI9vDvu8+VHc=;
+ b=O3X9OkAmGUb5if74xveI9Xl+vUthoP7t0g6rFZTuSieTLp/MLSWUmA7/cQoBVxG3Nu      
+ 4DtFIMLaZLLGG0Dw4v6As3HASxtsUylJqfqgUvaPve1tC3035f4lzwyezgRvgHeUD3kb      
+ aigedftJ+lxlM0TZSOpPsYEG2/PznSmPtJJYc=
+Domainkey-Signature: a=rsa-sha1; c=nofws;         d=googlegroups.com; 
+ s=beta;         h=x-sender:x-apparently-to:received-spf:authentication-results
+ :dkim-signature:domainkey-signature:mime-version:in-reply-to          
+ :references:date:message-id:subject:from:to:content-type          
+ :content-transfer-encoding:reply-to:sender:precedence:x-google-loop       
+ :mailing-list:list-id:list-post:list-help:list-unsubscribe          
+ :x-beenthere-env:x-beenthere;         b=4lqHM//42nvvyKVtIlWeg651ZV8cpVwsWfTG7S1xVL5XfQhJjrVqfeQpv1AiuPG8AL
+ o2ivT4xs9CRGhRliq/27f9Lewb4uH61ufz0C0QipuXbiMtIqhsJ6iwNtlQMeCrBCHIBm      
+ 91szdMVgK2f7iui3YQtXEqlgXH0xcogdyhb5E=
+Received: by 10.150.238.16 with SMTP id l16mr685518ybh.29.1252018035925;
+ Thu, 03 Sep 2009 15:47:15 -0700 (PDT)
+Received: by 10.177.38.34 with SMTP id q34gr18yqj.0; 	Thu, 03 Sep 2009
+ 15:47:15 -0700 (PDT)
+X-Sender: jjllambias@gmail.com
+X-Apparently-To: lojban-lbck@googlegroups.com
+Received: by 10.150.1.13 with SMTP id 13mr7119939yba.8.1252018035293;
+ Thu, 03 Sep 2009 15:47:15 -0700 (PDT)
+Received: by 10.150.1.13 with SMTP id 13mr7119938yba.8.1252018035260;
+ Thu, 03 Sep 2009 15:47:15 -0700 (PDT)
+Received: from mail-yw0-f184.google.com (mail-yw0-f184.google.com
+ [209.85.211.184]) by gmr-mx.google.com with ESMTP id
+ 19si52945ywh.14.2009.09.03.15.47.14; Thu, 03 Sep 2009 15:47:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jjllambias@gmail.com designates 
+ 209.85.211.184 as permitted sender) client-ip=209.85.211.184;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of
+ jjllambias@gmail.com designates 209.85.211.184 as permitted sender) 
+ smtp.mail=jjllambias@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by ywh14 with SMTP id 14so739134ywh.24 for
+ <lojban-lbck@googlegroups.com>; Thu, 03 Sep 2009 15:47:14 -0700 (PDT)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; 
+ s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references
+ :date:message-id:subject:from:to:content-type :content-transfer-encoding; 
+ bh=aZoFxddvPSyb0Tevsrh22FL8WWm19c2aLCA/upgPfTM=; b=oNxCBj6NX23qstbVoI1NMG8B+zFt/UCVnb8ccETiNf4XdoxTpZ9F1JBKlXW6lozXl0
+ NCGG1Y8XW4WRQ6kfz/Ij7X0j1Yyqb/hv1eNW8yNvoOGCKItfhO1cDzA+mfVEY95aGzdO 
+ RvA+vGpFdmIG2AnfYyo1J7gOkX7Bw3AJ6nhX8=
+Domainkey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; 
+ h=mime-version:in-reply-to:references:date:message-id:subject:from:to 
+ :content-type:content-transfer-encoding; b=hdvnG3IEc48A1NwGJBz+tqs6rPNZP+8aV6TDUqwIV6xtJtZWO63x0SzgaFB3Mw2URh
+ MedZ7dMUHIa+GGxGP9S9hZ+MZMNUGU2vNBksbEUb4rjFBAiPQ2HnVdXMTl8RGIfrSEFL 
+ /zCuCXu6c4DIJxJp6MFJqNwd5et5H2GQDhHkE=
+MIME-Version: 1.0
+Received: by 10.91.95.5 with SMTP id x5mr7581311agl.28.1252018033414;
+ Thu, 03  Sep 2009 15:47:13 -0700 (PDT)
+In-Reply-To: <e6663d200909031357s6b151765h453db67eba9296b8@mail.gmail.com>
+References: <e6663d200909021236h3e524716s47ef3826e2a4f4ba@mail.gmail.com>
+ <925d17560909030537u5261074ar2bdd3dd392aaffbb@mail.gmail.com>
+ <e6663d200909031007g31628c04k706a0cc090c969c8@mail.gmail.com>
+ <925d17560909031101s2c9e6a09y1a874417aedd65e1@mail.gmail.com>
+ <e6663d200909031357s6b151765h453db67eba9296b8@mail.gmail.com>
+Date: Thu, 3 Sep 2009 19:47:13 -0300
+Message-ID: <925d17560909031547k4bc76072x1ab4d5df1abae4ad@mail.gmail.com>
+Subject: Re: How many levels
+From: =?ISO-8859-1?Q?Jorge_Llamb=EDas?= <jjllambias@gmail.com>
+To: lojban-lbck@googlegroups.com
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Reply-To: lojban-lbck@googlegroups.com
+Sender: lojban-lbck@googlegroups.com
+Precedence: bulk
+X-Google-Loop: groups
+Mailing-List: list lojban-lbck@googlegroups.com; 	contact
+ lojban-lbck+owner@googlegroups.com
+List-ID: <lojban-lbck.googlegroups.com>
+List-Post: <mailto:lojban-lbck@googlegroups.com>
+List-Help: <mailto:lojban-lbck+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/lojban-lbck/subscribe>,
+ <mailto:lojban-lbck+unsubscribe@googlegroups.com>
+X-Beenthere-Env: lojban-lbck@googlegroups.com
+X-Beenthere: lojban-lbck@googlegroups.com
+Content-Length: 2831
+
+
+On Thu, Sep 3, 2009 at 5:57 PM, Matt Arnold<matt.mattarn@gmail.com> wrote:
+>
+> How can we certify advanced Lojbanists on easy material if we
+> haven't tested them on easy material? =A0I mean, if you want to have an
+> advanced certification but lack an elementary certification, I suppose
+> you can, but that never occurred to me.
+
+If you get an advanced certification, the elementary one becomes somewhat m=
+oot.
+
+> Are you talking about us
+> granting an "honorary" certification of some kind? That's hardly fair.
+
+No, you would only get the certifications for the tests you take, but
+the only really relevant one is the most advanced you have taken.
+
+> We should avoid a lot of repetition in the tests. My level one
+> thousand certification should not have to repeat level 100 remedial
+> material to make sure that I know that range of the vocabulary as
+> well.
+
+I agree, you wouldn't be tested on the basic material, it would just
+be taken for granted in the test that you already know it. For example
+a reading comprehension text for the advanced level will most likely
+include many words from the basic level, since they are the most
+frequent ones and can hardly be avoided. But the questions won=B4t focus
+on understanding those basic words, they will just assume that you do.
+If you don't, you won't be able to do well on that test.
+
+> I take the level 100 test first, and that's how we officially
+> certify that I know the material. Then I qualify to take the next one,
+> then the next. Think of it this way: In other words, it's one long
+> test that gets harder and harder until you can't do it any more, then
+> you know your level. Just like any game.
+
+Many games allow you to choose your starting difficulty level so that
+you don't get bored playing something that is unchallenging for you.
+
+The only reason I can see for forcing people to start at the most
+basic level is to collect more money, but maybe that also discourages
+some people from taking any test at all if they are too basic for
+them, I don't know.
+
+Anyways, personally I am most interested in the development of the
+tests themselves and not so much on the policies for how to take them,
+so if it's decided that all tests must be taken in order to get to the
+most advanced ones that's fine with me.
+
+>> I think we should count cmavo and gismu separately, because of the 100
+>> most frequent words only 18 are gismu and the rest are cmavo. I don't
+>> think a test based on that makes a lot of sense. Maybe a breakdown
+>> like 40 cmavo - 60 gismu would make more sense.
+>
+> Yeah, I strongly agree. In fact, I'd agree to 30 cmavo - 70 gismu.
+> Either way, this formula should gradually invert around the 500th-word
+> mark.
+
+I would expect the ratio of cmavo to gismu and other brivla to always
+keep decreasing, not inverting at any point.
+
+mu'o mi'e xorxes
+
