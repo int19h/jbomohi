@@ -1,0 +1,41 @@
+# mail/lbck thread 9c72b689ff50-database | root 200909022249.57041.phma@phma.optus.nu | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2009-09-03T02:49:55Z | Pierre Abbat <phma@phma.optus.nu> | 200909022249.57041.phma@phma.optus.nu | mail/lbck/cur/1251946195.9c72b689ff5012fb.jbomohi:2,S
+
+Here's a rough draft of the database structure:
+
+table preti (
+nacycme int autoincrement;
+retygri int foreign key retygri;
+jufra text; -- HTML (in case we want to add italics or fonts) in UTF8 (in case 
+we want to zoi-quote a foreign word)
+danfu1 text; -- HTML in UTF8
+danfu2 text;
+danfu3 text;
+danfu4 text;
+danfu5 text;
+drani char; -- A through E
+jufydrani text; -- for fill-in-blank questions
+cunpoi boolean; -- true if the answers should be randomized
+);
+
+table retygri (
+nacycme int autoincrement;
+nilnandu short; -- or real, or maybe several of these
+finti int foreign key cipfihi;
+zgana int foreign key cipfihi; -- Who reviewed the question group.
+jarco_namcu short; -- Number of questions to ask. The number of questions in 
+the group you can get by a count query.
+jufra text; -- HTML in UTF8; may contain img tags.
+);
+
+The number of questions to ask is normally either 1 or the same as the number 
+of questions in the group. If it's 1, retygri.jufra is normally empty, but it 
+could be not. jarco_namcu=1 with several questions is used for alternative 
+versions of a question, such as the same sentence with any of several errors. 
+jarco_namcu>1 is used for reading comprehension stories with several 
+questions.
+
+Pierre
+
+
