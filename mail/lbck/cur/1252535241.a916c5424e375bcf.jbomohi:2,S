@@ -1,0 +1,141 @@
+Return-Path: <grbounce-1SmKRQUAAADb_R2oRU4VvVPYnC2H_cF3=phma=phma.optus.nu@googlegroups.com>
+X-Original-To: phma@localhost
+Delivered-To: phma@localhost
+Received: from chausie.ixazon.lan (localhost [127.0.0.1]) 	by chausie
+ (Postfix) with ESMTP id 5FA87660 	for <phma@localhost>; Wed,
+ 9 Sep 2009 18:32:21 -0400 (EDT)
+Delivered-To: phma@phma.optus.nu
+Received: from 192.168.7.2 [192.168.7.2] 	by chausie.ixazon.lan with IMAP
+ (fetchmail-6.3.8) 	for <phma@localhost> (single-drop); Wed, 09 Sep 2009
+ 18:32:21 -0400 (EDT)
+Received: from mail-pz0-f140.google.com (mail-pz0-f140.google.com
+ [209.85.222.140]) 	by ixazon.dynip.com (Postfix) with ESMTP id B0055CE79B
+ for <phma@phma.optus.nu>; Wed,  9 Sep 2009 18:27:24 -0400 (EDT)
+Received: by pzk4 with SMTP id 4so1314965pzk.9         for
+ <phma@phma.optus.nu>; Wed, 09 Sep 2009 15:27:23 -0700 (PDT)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;         
+ d=googlegroups.com; s=beta;         h=domainkey-signature:received:received:x-sender:x-apparently-to
+ :received:received:received:received-spf:received:dkim-signature          
+ :domainkey-signature:mime-version:received:in-reply-to:references         
+ :date:message-id:subject:from:to:content-type          :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
+ :mailing-list:list-id:list-post:list-help:list-unsubscribe          
+ :x-beenthere-env:x-beenthere;         bh=olIBggNi8Wq8f/3xtKenN9TZ2Vdbl2u7MTkE0BPAd40=;
+ b=aKRC2mdc6Vx/fisTlTFsPWbPRhxeytTU8i25m0RqMAPiu2LuOCR1V7/KWMDTPTr9Da      
+ aRnbPwNKnH2k7FTBHTCG84W8a7H5RPpGieb5+dNcP2Xv18Fu/+28dq0cFLvt4NxKvMfd      
+ rV3phyobvqozsik80rnXT7GBG67VzOGCtBh70=
+Domainkey-Signature: a=rsa-sha1; c=nofws;         d=googlegroups.com; 
+ s=beta;         h=x-sender:x-apparently-to:received-spf:authentication-results
+ :dkim-signature:domainkey-signature:mime-version:in-reply-to          
+ :references:date:message-id:subject:from:to:content-type          
+ :content-transfer-encoding:reply-to:sender:precedence:x-google-loop       
+ :mailing-list:list-id:list-post:list-help:list-unsubscribe          
+ :x-beenthere-env:x-beenthere;         b=EfHyY/A5CYpyomSoB8UYGp8BHylrlBT4e5PdQs78uu6lbSy/PyecdOsRIgZYExGNso
+ AFT/g9IuCLpmJannrneKBgC6TQxLDWbwAsfn/GWCa7zqIkRqY6dNEGQPjyaTJV2p7YQ1      
+ YA386mmk1JsykzWC4Xv1P0iFxnrgPSor/rWtk=
+Received: by 10.142.3.31 with SMTP id 31mr60778wfc.5.1252535243806;
+ Wed, 09 Sep 2009 15:27:23 -0700 (PDT)
+Received: by 10.107.100.3 with SMTP id c3gr28prm.0; 	Wed, 09 Sep 2009
+ 15:27:23 -0700 (PDT)
+X-Sender: matt.mattarn@gmail.com
+X-Apparently-To: lojban-lbck@googlegroups.com
+Received: by 10.150.62.6 with SMTP id k6mr462763yba.27.1252535242718;
+ Wed, 09 Sep 2009 15:27:22 -0700 (PDT)
+Received: by 10.150.62.6 with SMTP id k6mr462762yba.27.1252535242655;
+ Wed, 09 Sep 2009 15:27:22 -0700 (PDT)
+Received: from mail-yx0-f185.google.com (mail-yx0-f185.google.com
+ [209.85.210.185]) by gmr-mx.google.com with ESMTP id
+ 19si129164yxe.10.2009.09.09.15.27.21; Wed, 09 Sep 2009 15:27:21 -0700
+ (PDT)
+Received-SPF: pass (google.com: domain of matt.mattarn@gmail.com 
+ designates 209.85.210.185 as permitted sender) client-ip=209.85.210.185;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of
+ matt.mattarn@gmail.com designates 209.85.210.185 as permitted sender) 
+ smtp.mail=matt.mattarn@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by mail-yx0-f185.google.com with SMTP id 15so1719347yxe.13 for
+ <lojban-lbck@googlegroups.com>; Wed, 09 Sep 2009 15:27:21 -0700 (PDT)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; 
+ s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references
+ :date:message-id:subject:from:to:content-type :content-transfer-encoding; 
+ bh=nlihFwZ6SzFAPIIh+nLo25b7gulFLVRoBO8bX5QjMBw=; b=PWRFeTWrZdlWSM+Sh3YRfn3dSUfRU0TjEqKmlpg8gDaSkkyWxrPaahXSMwQgPIxKDU
+ +t2RqKLIuUqslECeC01VZ1I6ZnFN4JuiFr75J7eFYcY+J5cBCSO0YdncQBlPopK27c0c 
+ omT7afRQrnIdWsu9nooQDs8PCmQIyREKG/Xf8=
+Domainkey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; 
+ h=mime-version:in-reply-to:references:date:message-id:subject:from:to 
+ :content-type:content-transfer-encoding; b=sm1q4OXhvkfHIA1tEiisZ9cQfnHKDVBjPg27KbHZhHsbGw6G62exROhdV+r/mzImig
+ O2zSh04zro1yQ4yp8EJzn7pvIVRrFwPtGmyDy1VKd26tcA1D2wlx+iAdMAs8y4jcs5hk 
+ h2UB/byvgA6lC/dlTO2/fMRZFrPY+r9WzX9TI=
+MIME-Version: 1.0
+Received: by 10.150.44.28 with SMTP id r28mr1475898ybr.36.1252535241577;
+ Wed,  09 Sep 2009 15:27:21 -0700 (PDT)
+In-Reply-To: <925d17560909091446u2c0208bch132e704f35f6948b@mail.gmail.com>
+References: <200909090027.38831.phma@phma.optus.nu>
+ <925d17560909090823l2e6a698fw53c97206ac7b20e4@mail.gmail.com>
+ <200909091626.12318.phma@phma.optus.nu>
+ <925d17560909091446u2c0208bch132e704f35f6948b@mail.gmail.com>
+Date: Wed, 9 Sep 2009 18:27:21 -0400
+Message-ID: <e6663d200909091527q2da04a20h29c4b6a1da19c222@mail.gmail.com>
+Subject: Re: number of alternatives?
+From: Matt Arnold <matt.mattarn@gmail.com>
+To: lojban-lbck@googlegroups.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Reply-To: lojban-lbck@googlegroups.com
+Sender: lojban-lbck@googlegroups.com
+Precedence: bulk
+X-Google-Loop: groups
+Mailing-List: list lojban-lbck@googlegroups.com; 	contact
+ lojban-lbck+owner@googlegroups.com
+List-ID: <lojban-lbck.googlegroups.com>
+List-Post: <mailto:lojban-lbck@googlegroups.com>
+List-Help: <mailto:lojban-lbck+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/lojban-lbck/subscribe>,
+ <mailto:lojban-lbck+unsubscribe@googlegroups.com>
+X-Beenthere-Env: lojban-lbck@googlegroups.com
+X-Beenthere: lojban-lbck@googlegroups.com
+Content-Length: 1572
+
+
+Well, it could be a Google Spreadsheet, at least at first. -Matt
+
+2009/9/9 Jorge Llamb=C3=ADas <jjllambias@gmail.com>:
+>
+> On Wed, Sep 9, 2009 at 5:26 PM, Pierre Abbat <phma@phma.optus.nu> wrote:
+>>
+>> 1. cnoblo
+>> 2. conlo'i
+>> 3. coiblo
+>> A. ro di'u dunsi'u
+>> B. le pamoi cu frica le remoi .e le cimoi
+>> C. le remoi cu frica le cimoi .e le pamoi
+>> D. le cimoi cu frica le pamoi .e le remoi
+>> E. ro di'u ficysi'u
+>
+> ("ro di'u" should be "lo ro di'u" or "lo'i ro di'u", otherwise you get
+> "each of them".)
+> Without knowing any of the rafsi, we know that if they were all
+> different, B, C, D and E would all be true, therefore they can't all
+> be different, therefore we can eliminate E. I think you need to change
+> "frica" to "dunli" and ".e" to ".enai" in B, C, D.
+>
+>> I think that questions should be organized into sections, so that instru=
+ctions
+>> can be given once per section. So we have:
+> [...]
+>> You pick at random a subset of the question groups whose numbers of ques=
+tions
+>> add up to the section's number of questions, then pick at random questio=
+ns
+>> from each section group.
+>
+> Sounds good.
+>
+> Is there some convenient way of storing the database online someplace
+> so that authorized people can add questions to the base and then
+> reviewers can revise them, add comments, etc, before the question gets
+> approved for testing? Also, each question should have some indication
+> of which level test it is for, which could be revised in case the
+> question turns out to be too easy or too difficult for that level.
+>
+> mu'o mi'e xorxes
+>
+
