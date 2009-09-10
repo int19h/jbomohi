@@ -1,4 +1,4 @@
-# mail/announce thread daa375eef277-number_of_alternatives%3F | root 200909090027.38831.phma@phma.optus.nu | 6 messages | rendered by jbomohi mail-v1
+# mail/announce thread daa375eef277-number_of_alternatives%3F | root 200909090027.38831.phma@phma.optus.nu | 7 messages | rendered by jbomohi mail-v1
 
 === 1 | 2009-09-09T04:27:55Z | Pierre Abbat <phma@phma.optus.nu> | 200909090027.38831.phma@phma.optus.nu | mail/announce/cur/1252470475.daa375eef277b2f0.jbomohi:2,S
 What's the most we should allow in multiple-choice questions? Usually the max 
@@ -234,4 +234,50 @@ same box as lojban.org when it goes into production. What DBMSs are available
 there?
 
 Pierre
+
+
+=== 7 | 2009-09-10T02:17:48Z | Pierre Abbat <phma@phma.optus.nu> | 200909092217.32444.phma@phma.optus.nu | mail/announce/cur/1252549068.c1b751a2e0a06854.jbomohi:2,S
+On Wednesday 09 September 2009 21:49:32 Pierre Abbat wrote:
+> The database doesn't exist yet. I posted a tentative tarmi of it a week
+> ago. I can put it on my box for testing, but it should, I think, be hosted
+> on the same box as lojban.org when it goes into production. What DBMSs are
+> available there?
+
+The database now exists. The attached file is valid in both MySQL and 
+PostgreSQL.
+
+Pierre
+drop table preti;
+drop table retygri;
+drop table cipfihi;
+
+create table cipfihi
+(nacycme serial primary key,
+ cmene text
+ );
+
+create table retygri
+(nacycme serial primary key,
+ nilnandu int2, -- or real, or maybe several of these
+ pagbu int2, -- which part of the test this goes in, e.g. 
+ finti int references cipfihi,
+ zgana int references cipfihi, -- Who reviewed the question group.
+ jarco_namcu int2, -- Number of questions to ask. The number of questions in the group you can get by a count query.
+ jufra text -- HTML in UTF8; may contain img tags.
+ );
+
+create table preti
+(nacycme serial primary key,
+ retygri int references retygri,
+ jufra text, -- HTML (in case we want to add italics or fonts) in UTF8 (in case we want to zoi-quote a foreign word)
+ xo_tercuha int2,
+ danfu1 text, -- HTML in UTF8
+ danfu2 text,
+ danfu3 text,
+ danfu4 text,
+ danfu5 text,
+ drani char, -- A through E
+ jufydrani text, -- for fill-in-blank questions
+ cunpoi boolean -- true if the answers should be randomized
+ );
 
