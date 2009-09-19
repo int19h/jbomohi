@@ -1,0 +1,267 @@
+Return-Path: <grbounce-1SmKRQUAAADb_R2oRU4VvVPYnC2H_cF3=phma=phma.optus.nu@googlegroups.com>
+X-Original-To: phma@localhost
+Delivered-To: phma@localhost
+Received: from chausie.ixazon.lan (localhost [127.0.0.1]) 	by chausie
+ (Postfix) with ESMTP id 9692E2F33 	for <phma@localhost>; Fri,
+ 18 Sep 2009 21:30:24 -0400 (EDT)
+Delivered-To: phma@phma.optus.nu
+Received: from 192.168.7.2 [192.168.7.2] 	by chausie.ixazon.lan with IMAP
+ (fetchmail-6.3.8) 	for <phma@localhost> (single-drop); Fri, 18 Sep 2009
+ 21:30:24 -0400 (EDT)
+Received: from mail-yx0-f161.google.com (mail-yx0-f161.google.com
+ [209.85.210.161]) 	by ixazon.dynip.com (Postfix) with ESMTP id D0446CE85D
+ for <phma@phma.optus.nu>; Fri, 18 Sep 2009 21:30:12 -0400 (EDT)
+Received: by yxe33 with SMTP id 33so389282yxe.17         for
+ <phma@phma.optus.nu>; Fri, 18 Sep 2009 18:30:12 -0700 (PDT)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;         
+ d=googlegroups.com; s=beta;         h=domainkey-signature:received:received:x-sender:x-apparently-to
+ :received:received:received:received-spf:received:dkim-signature          
+ :domainkey-signature:mime-version:received:in-reply-to:references         
+ :date:message-id:subject:from:to:content-type          :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
+ :mailing-list:list-id:list-post:list-help:list-unsubscribe          
+ :x-beenthere-env:x-beenthere;         bh=J4bfzi/0zbZHz1r36ywxImmqZY8BspHWOr+B6E58ZzY=;
+ b=2jQY+9MntJuQ1GEwA+wC8soDuEY9EfafZm27Fk6y9C5ekvfS7fMrzzrc6Q7kBK0Jw6      
+ TlM8P9QEeyvma7VRR1g+DAgPgOpIJiZ87HUTYB2e90qjVJPkaKnViZ0CFHL0Dl4Ha+A2      
+ mJE9UNYkoWGCPSRE/CAgA1JlG0XLzB5ALC+8s=
+Domainkey-Signature: a=rsa-sha1; c=nofws;         d=googlegroups.com; 
+ s=beta;         h=x-sender:x-apparently-to:received-spf:authentication-results
+ :dkim-signature:domainkey-signature:mime-version:in-reply-to          
+ :references:date:message-id:subject:from:to:content-type          
+ :content-transfer-encoding:reply-to:sender:precedence:x-google-loop       
+ :mailing-list:list-id:list-post:list-help:list-unsubscribe          
+ :x-beenthere-env:x-beenthere;         b=cIIU4q24V8JIRE20ZKAIWgdz3w+3j2fDyYAB4yq/HMbVPRxYPkEgdU4WPzk9Rjd+SD
+ 9GNP80Y4xGJ7J1gGmBd94sSEP/auf8WnnOxRAe5awB6A5U2Yrk++qFm8P4j+U/JjZ1dx      
+ FQB02xxRI1Xxaui9A7c0NN5sylvnOpQZHv/lA=
+Received: by 10.150.19.3 with SMTP id 3mr649836ybs.12.1253323812029;
+ Fri, 18 Sep 2009 18:30:12 -0700 (PDT)
+Received: by 10.177.108.35 with SMTP id k35gr38yqm.0; 	Fri, 18 Sep 2009
+ 18:30:12 -0700 (PDT)
+X-Sender: matt.mattarn@gmail.com
+X-Apparently-To: lojban-lbck@googlegroups.com
+Received: by 10.91.100.11 with SMTP id c11mr919694agm.1.1253323811486;
+ Fri, 18 Sep 2009 18:30:11 -0700 (PDT)
+Received: by 10.91.100.11 with SMTP id c11mr919693agm.1.1253323811455;
+ Fri, 18 Sep 2009 18:30:11 -0700 (PDT)
+Received: from mail-yx0-f198.google.com (mail-yx0-f198.google.com
+ [209.85.210.198]) by gmr-mx.google.com with ESMTP id
+ 18si176927yxe.8.2009.09.18.18.30.10; Fri, 18 Sep 2009 18:30:10 -0700 (PDT)
+Received-SPF: pass (google.com: domain of matt.mattarn@gmail.com 
+ designates 209.85.210.198 as permitted sender) client-ip=209.85.210.198;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of
+ matt.mattarn@gmail.com designates 209.85.210.198 as permitted sender) 
+ smtp.mail=matt.mattarn@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by yxe36 with SMTP id 36so1954036yxe.11 for
+ <lojban-lbck@googlegroups.com>; Fri, 18 Sep 2009 18:30:10 -0700 (PDT)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; 
+ s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references
+ :date:message-id:subject:from:to:content-type :content-transfer-encoding; 
+ bh=S9aUOSnJ6DBZVPwSGr1F4dJmgwhioIqO4vH82EdLkTw=; b=RQBo8PHWi+BCT3NNSteLkY7YRULAzH3Gs3ncZNCXdDEkRh6Xy2/TBYScqZEVaTH4DX
+ 1RC3r2BbMGKVqqLcyv1Hd4+TXZyOk6qFCcwfMsgfI2nf4yBdjXQTd82wExfVzsWEc7Gn 
+ OaWfZUgzGizqv33dUk+IKIaW5TNev6X+b59FA=
+Domainkey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; 
+ h=mime-version:in-reply-to:references:date:message-id:subject:from:to 
+ :content-type:content-transfer-encoding; b=YETg+0B/S9BWOmqnUs6EGjopRffYZoT+5L1N1psA9eVV4WylmUDPalzoRWHr8xKpK2
+ t4onNKS9vOa80tgqkLXqKYRNC0mSdZ6mVEQ8WeKYUxo8GcfI47YUCeoMM9vLPNdsOz9+ 
+ svuGq34jf5jd+OVDYhN7S8S+2yRHyEduCjyKE=
+MIME-Version: 1.0
+Received: by 10.150.36.1 with SMTP id j1mr4332135ybj.321.1253323810320;
+ Fri,  18 Sep 2009 18:30:10 -0700 (PDT)
+In-Reply-To: <925d17560909181435td22d924gcfb8369991515d4b@mail.gmail.com>
+References: <00c09f99e242d97fd6047299a5fa@google.com>
+ <925d17560909021123w55db2248xb498ff9fae0bfcc1@mail.gmail.com>
+ <e6663d200909181030w216b8aa1p3b1f23b987056de5@mail.gmail.com>
+ <925d17560909181435td22d924gcfb8369991515d4b@mail.gmail.com>
+Date: Fri, 18 Sep 2009 21:30:10 -0400
+Message-ID: <e6663d200909181830tc505a45mb9d3d363c0dc21cb@mail.gmail.com>
+Subject: Re: Lojban Certification Program
+From: Matt Arnold <matt.mattarn@gmail.com>
+To: lojban-lbck@googlegroups.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Reply-To: lojban-lbck@googlegroups.com
+Sender: lojban-lbck@googlegroups.com
+Precedence: bulk
+X-Google-Loop: groups
+Mailing-List: list lojban-lbck@googlegroups.com; 	contact
+ lojban-lbck+owner@googlegroups.com
+List-ID: <lojban-lbck.googlegroups.com>
+List-Post: <mailto:lojban-lbck@googlegroups.com>
+List-Help: <mailto:lojban-lbck+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/lojban-lbck/subscribe>,
+ <mailto:lojban-lbck+unsubscribe@googlegroups.com>
+X-Beenthere-Env: lojban-lbck@googlegroups.com
+X-Beenthere: lojban-lbck@googlegroups.com
+Content-Length: 5296
+
+
+Oops, I keep doing that. Sorry. I meant weighted against cmavo.
+
+I agree about including those related sets in the same level. I would
+like to see:
+
+no/pa/re/ci/vo/mu/xa/ze/bi/so in level 1
+fi/fe/fa/fo/fu in level 2
+se/te/ve/xe in level 2
+
+-Matt
+
+
+2009/9/18 Jorge Llamb=C3=ADas <jjllambias@gmail.com>:
+>
+> On Fri, Sep 18, 2009 at 2:30 PM, Matt Arnold <matt.mattarn@gmail.com> wro=
+te:
+>>
+>> I think the question is whether to use the most common 500 words, or
+>> weight it in favor of cmavo.
+>
+> In favor or against cmavo? I think it is cmavo that are
+> overrepresented in the initial segment. In the first 100 words there
+> are only 18 gismu. It's pretty hard to construct sentences which use
+> 82 cmavo but are constrained to only 18 gismu.
+>
+>> I still think 500 is too many. How many of you agree?
+>
+> These are the top 50 cmavo from
+> http://teddyb.org/~rlpowell/hobbies/lojban/flashcards/cmavo_freq
+>
+> le =C2=A0 =C2=A0 =C2=A011208
+> .i =C2=A0 =C2=A0 =C2=A07438
+> mi =C2=A0 =C2=A0 =C2=A03324
+> cu =C2=A0 =C2=A0 =C2=A03253
+> nu =C2=A0 =C2=A0 =C2=A03034
+> do =C2=A0 =C2=A0 =C2=A02470
+> la =C2=A0 =C2=A0 =C2=A02319
+> se =C2=A0 =C2=A0 =C2=A02057
+> lo =C2=A0 =C2=A0 =C2=A02034
+> lu =C2=A0 =C2=A0 =C2=A01944
+> li'u =C2=A0 =C2=A01933
+> coi =C2=A0 =C2=A0 1669
+> na =C2=A0 =C2=A0 =C2=A01398
+> be =C2=A0 =C2=A0 =C2=A01199
+> gi'e =C2=A0 =C2=A01161
+> sei =C2=A0 =C2=A0 1154
+> ca =C2=A0 =C2=A0 =C2=A01098
+> ro =C2=A0 =C2=A0 =C2=A0967
+> ma =C2=A0 =C2=A0 =C2=A0751
+> go'i =C2=A0 =C2=A0749
+> noi =C2=A0 =C2=A0 725
+> ku'i =C2=A0 =C2=A0644
+> nai =C2=A0 =C2=A0 640
+> fi =C2=A0 =C2=A0 =C2=A0633
+> lei =C2=A0 =C2=A0 631
+> kei =C2=A0 =C2=A0 624
+> da =C2=A0 =C2=A0 =C2=A0614
+> .a =C2=A0 =C2=A0 =C2=A0613
+> du'u =C2=A0 =C2=A0568
+> xu =C2=A0 =C2=A0 =C2=A0567
+> pu =C2=A0 =C2=A0 =C2=A0561
+> ko =C2=A0 =C2=A0 =C2=A0542
+> bu =C2=A0 =C2=A0 =C2=A0528
+> .e =C2=A0 =C2=A0 =C2=A0525
+> ka =C2=A0 =C2=A0 =C2=A0522
+> ba =C2=A0 =C2=A0 =C2=A0516
+> je =C2=A0 =C2=A0 =C2=A0506
+> loi =C2=A0 =C2=A0 487
+> zo =C2=A0 =C2=A0 =C2=A0463
+> doi =C2=A0 =C2=A0 449
+> poi =C2=A0 =C2=A0 447
+> je'e =C2=A0 =C2=A0380
+> te =C2=A0 =C2=A0 =C2=A0374
+> di'u =C2=A0 =C2=A0367
+> no =C2=A0 =C2=A0 =C2=A0365
+> pa =C2=A0 =C2=A0 =C2=A0361
+> bo =C2=A0 =C2=A0 =C2=A0345
+> pe =C2=A0 =C2=A0 =C2=A0340
+> vi =C2=A0 =C2=A0 =C2=A0337
+> co'a =C2=A0 =C2=A0336
+>
+> But we probably need to do some fiddling. For example, "no" and "pa"
+> are the only numbers that made it to the top 50, but I think all
+> numbers should be tested in the first level. The only FA that made it
+> is "fi". It's reasonable that "fi" is the most frequent, but
+> fa/fe/fi/fo/fu are learned together and should be tested together, so
+> if "fi" is included they should all be (they might be left for the
+> second level). Similarly for se/te/ve/xe. Some of them I think we can
+> safely exclude, like "sei", which is there because of the frequent
+> "sei X cusku" especially in the Alice translation. Also lu-li'u maybe
+> need not be included. (But I would include "zo", especially if we
+> include "cmene". We can't use "cmene" without "zo".)
+>
+> Mark's proposed list also has about 50 cmavo by my count, and it has
+> much overlap with the above list, as expected, but also some
+> differences:
+> <<
+> lo, la, cu, mi, do, ti, ta, tu, and some other KOhA, nu, ka, ni, all
+> of SE, ca, pu, ba, NOI, GOI, .i, A,...
+> ku, kei and when they're needed, and cu as mentioned above.
+> A small selection of UI/CAI and COI (and DOI)
+> Numerals no-so and base-10 construction, perhaps also ro.
+>>>
+>
+> I think some 50 cmavo is about right for the first level. Then there
+> should be some cmevla, not too many but in any case cmevla are easy as
+> they don't need to be memorized, just recognized, and they are one of
+> the first things people learn anyway, so I don't think we need to
+> worry about how many of them we include. And then some reasonable
+> number of gismu that allow us to write meaningful sentences.
+>
+> These are the top 50 gismu from
+> http://teddyb.org/~rlpowell/hobbies/lojban/flashcards/gismu_freq
+>
+> cusku =C2=A0 1295
+> mutce =C2=A0 388
+> klama =C2=A0 305
+> zvati =C2=A0 287
+> cmalu =C2=A0 277
+> tavla =C2=A0 250
+> viska =C2=A0 241
+> drata =C2=A0 236
+> djuno =C2=A0 219
+> pensi =C2=A0 219
+> catlu =C2=A0 217
+> nelci =C2=A0 202
+> barda =C2=A0 200
+> djica =C2=A0 197
+> gunka =C2=A0 193
+> cliva =C2=A0 190
+> pilno =C2=A0 171
+> cmene =C2=A0 168
+> jimpe =C2=A0 166
+> prenu =C2=A0 164
+> troci =C2=A0 151
+> xamgu =C2=A0 146
+> kumfa =C2=A0 143
+> citka =C2=A0 136
+> valsi =C2=A0 136
+> tirna =C2=A0 129
+> sutra =C2=A0 127
+> zdani =C2=A0 126
+> facki =C2=A0 125
+> ciska =C2=A0 124
+> stedu =C2=A0 124
+> pluta =C2=A0 123
+> nenri =C2=A0 122
+> cizra =C2=A0 120
+> ractu =C2=A0 119
+> simlu =C2=A0 118
+> xruti =C2=A0 118
+> drani =C2=A0 116
+> jitfa =C2=A0 111
+> voksa =C2=A0 111
+> dukse =C2=A0 109
+> krixa =C2=A0 109
+> tsali =C2=A0 109
+> jundi =C2=A0 108
+>
+> Again we will probably need to do adjustements, but we won't know
+> which ones until we start producing the questions. We could start with
+> that list and then add/substract words as needed.
+>
+> I would not include fu'ivla in the first level. A few lujvo perhaps
+> yes, but unfortunately I can't open the lujvo frequency list to get
+> some idea what the most frequent are. Probably things with sel-, nun-,
+> -gau, and such.
+>
+> mu'o mi'e xorxes
+>
+
