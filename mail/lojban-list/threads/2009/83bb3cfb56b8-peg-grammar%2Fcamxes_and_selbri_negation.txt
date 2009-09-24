@@ -1,0 +1,89 @@
+# mail/lojban-list thread 83bb3cfb56b8-peg-grammar%2Fcamxes_and_selbri_negation | root 20090924202740.gj5992@vs244023.vserver.de | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2009-09-24T20:27:41Z | florolf@devbraindump.de | 20090924202740.gj5992@vs244023.vserver.de | mail/lojban-list/cur/1253824061.83bb3cfb56b81e84.jbomohi:2,S
+When discussing selbri negation on IRC, we noticed the following:
+
+The CLL states:
+> Negations made with "na'e" or "na'eke" also
+> include within their scope any sumti attached to the brivla or tanru
+> with "be" or "bei". Such attached sumti are
+> considered part of the brivla or tanru
+
+Therefore, a sentence like {mi na'e klama be fu lo birka lo zarci}
+should be grouped someway similar to {mi (na'e (klama be fu lo birka))
+lo zarci}. camxes however outputs the follwing parse tree:
+>   sentence
+>   |- CMAVO
+>   |     KOhA: mi
+>   |- bridiTail3
+>      |- tanruUnit1
+>      |  |- tanruUnit2
+>      |  |  |- CMAVO
+>      |  |  |     NAhE: na'e
+>      |  |  |- BRIVLA
+>      |  |        gismu: klama
+>      |  |- linkargs1
+>      |     |- CMAVO
+>      |     |     BE: be
+>      |     |- term1
+>      |        |- CMAVO
+>      |        |     FA: fu
+>      |        |- sumti6
+>      |           |- CMAVO
+>      |           |     LE: lo
+>      |           |- BRIVLA
+>      |                 gismu: birka
+>      |- sumti6
+>         |- CMAVO
+>         |     LE: lo
+>         |- BRIVLA
+>               gismu: zarci
+
+Adding a {ke} ({mi na'e ke klama be fu lo birka lo zarci}) yields:
+>   sentence
+>   |- CMAVO
+>   |     KOhA: mi
+>   |- bridiTail3
+>      |- tanruUnit2
+>      |  |- CMAVO
+>      |  |     NAhE: na'e
+>      |  |- tanruUnit2
+>      |     |- CMAVO
+>      |     |     KE: ke
+>      |     |- tanruUnit1
+>      |        |- BRIVLA
+>      |        |     gismu: klama
+>      |        |- linkargs1
+>      |           |- CMAVO
+>      |           |     BE: be
+>      |           |- term1
+>      |              |- CMAVO
+>      |              |     FA: fu
+>      |              |- sumti6
+>      |                 |- CMAVO
+>      |                 |     LE: lo
+>      |                 |- BRIVLA
+>      |                       gismu: birka
+>      |- sumti6
+>         |- CMAVO
+>         |     LE: lo
+>         |- BRIVLA
+>               gismu: zarci
+Which seems to be more accurate with respect to to what the CLL says.
+
+While this probably isn't a bug per se, it might still hint at some
+faulty handling of precedence.
+
+Maybe somebody who is more familiar with the PEG grammar can comment on
+this?
+
+mu'o mi'e florolf
+
+PS: In case this turns out to be significant, it was xalbo (Adam) who
+pointed this out in the first place.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+

@@ -1,0 +1,108 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Thu, 24 Sep 2009 13:27:52 -0700 (PDT)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.69)	(envelope-from <nobody@digitalkingdom.org>)	id 1Mquuu-0001p2-6t	for lojban-list-real@lojban.org; Thu, 24 Sep 2009 13:27:52 -0700
+Received: from devbraindump.de ([62.75.244.23] helo=nyx.devbraindump.de)	by chain.digitalkingdom.org with esmtp (Exim 4.69)	(envelope-from <florolf@devbraindump.de>)	id 1Mquul-0001ns-BF	for lojban-list@lojban.org; Thu, 24 Sep 2009 13:27:52 -0700
+Received: by nyx.devbraindump.de (Postfix, from userid 1000)	id 33E32495827E; Thu, 24 Sep 2009 22:27:41 +0200 (CEST)
+Date: Thu, 24 Sep 2009 22:27:41 +0200
+To: lojban-list@lojban.org
+Subject: [lojban] PEG-grammar/camxes and selbri negation
+Message-ID: <20090924202740.GJ5992@vs244023.vserver.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+From: florolf@devbraindump.de (Florian Larysch)
+X-archive-position: 16246
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: florolf@devbraindump.de
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 2532
+
+When discussing selbri negation on IRC, we noticed the following:
+
+The CLL states:
+> Negations made with "na'e" or "na'eke" also
+> include within their scope any sumti attached to the brivla or tanru
+> with "be" or "bei". Such attached sumti are
+> considered part of the brivla or tanru
+
+Therefore, a sentence like {mi na'e klama be fu lo birka lo zarci}
+should be grouped someway similar to {mi (na'e (klama be fu lo birka))
+lo zarci}. camxes however outputs the follwing parse tree:
+>   sentence
+>   |- CMAVO
+>   |     KOhA: mi
+>   |- bridiTail3
+>      |- tanruUnit1
+>      |  |- tanruUnit2
+>      |  |  |- CMAVO
+>      |  |  |     NAhE: na'e
+>      |  |  |- BRIVLA
+>      |  |        gismu: klama
+>      |  |- linkargs1
+>      |     |- CMAVO
+>      |     |     BE: be
+>      |     |- term1
+>      |        |- CMAVO
+>      |        |     FA: fu
+>      |        |- sumti6
+>      |           |- CMAVO
+>      |           |     LE: lo
+>      |           |- BRIVLA
+>      |                 gismu: birka
+>      |- sumti6
+>         |- CMAVO
+>         |     LE: lo
+>         |- BRIVLA
+>               gismu: zarci
+
+Adding a {ke} ({mi na'e ke klama be fu lo birka lo zarci}) yields:
+>   sentence
+>   |- CMAVO
+>   |     KOhA: mi
+>   |- bridiTail3
+>      |- tanruUnit2
+>      |  |- CMAVO
+>      |  |     NAhE: na'e
+>      |  |- tanruUnit2
+>      |     |- CMAVO
+>      |     |     KE: ke
+>      |     |- tanruUnit1
+>      |        |- BRIVLA
+>      |        |     gismu: klama
+>      |        |- linkargs1
+>      |           |- CMAVO
+>      |           |     BE: be
+>      |           |- term1
+>      |              |- CMAVO
+>      |              |     FA: fu
+>      |              |- sumti6
+>      |                 |- CMAVO
+>      |                 |     LE: lo
+>      |                 |- BRIVLA
+>      |                       gismu: birka
+>      |- sumti6
+>         |- CMAVO
+>         |     LE: lo
+>         |- BRIVLA
+>               gismu: zarci
+Which seems to be more accurate with respect to to what the CLL says.
+
+While this probably isn't a bug per se, it might still hint at some
+faulty handling of precedence.
+
+Maybe somebody who is more familiar with the PEG grammar can comment on
+this?
+
+mu'o mi'e florolf
+
+PS: In case this turns out to be significant, it was xalbo (Adam) who
+pointed this out in the first place.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
