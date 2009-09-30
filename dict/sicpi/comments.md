@@ -14,3 +14,10 @@ sarefo wrote:
 
 Read the definition. {carvi} isn't necessarily rain.
 
+
+## 2009-09-30T11:29:55Z — arj (comment 463, on definition 15069)
+
+zoi ly lunba ly ki'a
+
+zoi ly lunba ly la'a na jai drani
+
