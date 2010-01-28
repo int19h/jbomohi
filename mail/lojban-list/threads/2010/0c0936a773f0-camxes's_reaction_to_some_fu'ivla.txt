@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0c0936a773f0-camxes's_reaction_to_some_fu'ivla | root 201001222242.21483.phma@phma.optus.nu | 6 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0c0936a773f0-camxes's_reaction_to_some_fu'ivla | root 201001222242.21483.phma@phma.optus.nu | 7 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-01-23T03:42:19Z | Pierre Abbat <phma@phma.optus.nu> | 201001222242.21483.phma@phma.optus.nu | mail/lojban-list/cur/1264218139.0c0936a773f07e0c.jbomohi:2,S
 I installed camxes (the compiled jar) and ran it on some words. I gave it all 
@@ -294,6 +294,127 @@ Pierre
 
 -- 
 I believe in Yellow when I'm in Sweden and in Black when I'm in Wales.
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
+
+
+=== 7 | 2010-01-28T19:15:25Z | Jorge Llambías <jjllambias@gmail.com> | 925d17561001281115w4c831da7lda733ba44757a92b@mail.gmail.com | mail/lojban-list/cur/1264706125.bad923b339f8459f.jbomohi:2,S
+On Thu, Jan 28, 2010 at 3:14 PM, Pierre Abbat <phma@phma.optus.nu> wrote:
+> On Monday 25 January 2010 08:46:54 Jorge Llambías wrote:
+>
+>> (1) Syllable onsets:
+>>
+>> (a) Is the empty onset allowed or not? This affects vowel clusters
+>> such as "oa", "aa", etc. in fu'ivla, which require an empty onset for
+>> the second vowel.
+>
+> I think it should be. The example "bangrkorea" is in the refgram.
+
+Yes, though John Cowan has said he regrets having included it, so we
+could eventually consider it an erratum.
+
+The argument against such clusters is the very existence of the
+apostrophe in Lojban: Loglan allowed those clusters, Lojban introduced
+the apostrophe for the sole purpose of breaking up those clusters, and
+then Lojban reintroduces those clusters again, such as "ea" to compete
+against "e'a" and "eia"? It doesn't make a lot of sense.
+
+>> (b) Are Ci/Cu onsets permitted in fu'ivla? Are CCi/CCu onsets
+>> permitted? Are CCCi/CCCu onsets permitted? Are 'i/'u onsets permitted?
+
+Some examples from jbovlaste:
+
+ab,nie,na
+sar,gue,ia
+per,vu,'ui
+krio,fla
+
+I don't find any example with CCCi/CCCu but I only made a superficial check.
+camxes should accept the first two, but not the last two.
+
+
+>> (c) Can i/u be onsets if the nucleus is a diphthong? (a.k.a. are
+>> triphthongs allowed?)
+>
+> There's one occurrence of a triphthong in the refgram, but no list of valid
+> triphthongs.
+
+The list in any case is limited to the eight: iai, iau, iei, ioi, uai,
+uau, uei, uoi.
+It wouldn't make sense to allow some but not all of them, or to allow
+any more than those, given the list of diphthongs already allowed. For
+example allowing "iai" but not "iau" would not make sense, or allowing
+"ieu" as a triphthong given that "eu" is not allowed as a diphthong
+would not make sense.
+
+>> (2) Syllable codas:  how many consonants are allowed in a syllable
+>> coda? If more than one, are there any special restrictions?
+>
+> I think it should be two, with the restriction that if there are two, the
+> first has to be in the set {r,n,l,m}. My made-up example is "tarksako"; the
+> one in the Book is "bongnanba". If "tarksako" is disallowed, I could go
+> with "traksako" or "tarsako" (or "cinfydenspa").
+>
+> I tried various versions of these and could not figure out what rule camxes is
+> using. It allows "tarkmako" but not "tarksako", even though both "ks"
+> and "km" are allowed medially but not initially. Similarly "bongnanba" but
+> not "bongbanba".
+
+That's odd indeed. It should disallow all of them. It appears as if it
+was allowing tar,km,a,ko and bon,gn,an,ba but I don't see why. A
+consonantal syllable should not be able to be followed by a syllable
+without an onset.
+
+Maybe the implementation of camxes you are using is not based on the
+current morphology as it appears in
+http://www.lojban.org/tiki/BPFK+Section:+PEG+Morphology+Algorithm
+(or maybe I'm missing something there.)
+
+>> (3) Syllable nuclei: (I don't think there are any issues here.)
+>>
+>> (4) cmevla: Are the constraints for cmevla less strict than for
+>> fu'ivla (the ones mentioned above in particular.)
+>
+> I think that a cmevla should be allowed to end with any consonant cluster that
+> is permitted medially in a brivla.
+
+If weird codas are allowed for the last syllable, shouldn't they be
+allowed for any syllable, rather than just the last one?
+
+
+>> Anything else?
+>
+> damskrima: vlatai rejects this, both camxes and valfendi allow it.
+
+Right, three valid syllables: dam,skri,ma
+
+> Max length of consonant clusters. It is possible to make an infinitely long
+> string of consonants, all pairs of which are initial, such as "ststst...".
+
+camxes does not allow the combination of ts/tc/dz/dj with other
+consonants in an onset. The only consonant-cluster onsets that it
+accepts (besides those four) must fall within the pattern:
+
+   (s,c,z,j) (p,t,k,f,x,b,d,g,v,m,n) (r,l)
+
+so the maximum length for an onset is three consonants.
+
+> What should be counted as a cmavo for purposes of falling off the head of a
+> brivla? I consider it to be any sequence consisting of at least one vowel,
+> possibly with apostrophes between vowels, and possibly preceded by a
+> consonant. Thus "tioprano" breaks up, even though there is no actual
+> cmavo "tio".
+
+camxes does the same thing, it considers "tio" a cmavo form even
+though there are no actual such cmavo. A good argument could be made
+against considering these as valid cmavo forms though, since otherwise
+they would seem to be preferrable over the longer CVhV forms. (That is
+in fact the reason camxes does not consider "tio" a valid rafsi form.)
+
+mu'o mi'e xorxes
 
 
 To unsubscribe from this list, send mail to lojban-list-request@lojban.org
