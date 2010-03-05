@@ -1,0 +1,113 @@
+Received: with ECARTIS (v1.0.0; list lojban-list); Fri, 05 Mar 2010 10:19:25 -0800 (PST)
+Received: from nobody by chain.digitalkingdom.org with local (Exim 4.71)	(envelope-from <nobody@digitalkingdom.org>)	id 1Nnc7Q-0002f9-3c	for lojban-list-real@lojban.org; Fri, 05 Mar 2010 10:19:24 -0800
+Received: from rlpowell by chain.digitalkingdom.org with local (Exim 4.71)	(envelope-from <rlpowell@digitalkingdom.org>)	id 1Nnc7M-0002eL-QL; Fri, 05 Mar 2010 10:19:21 -0800
+Date: Fri, 5 Mar 2010 10:19:20 -0800
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+To: lojban-list@lojban.org
+Cc: jbovlaste@lojban.org
+Subject: [lojban] jbovlaste errors (was Re: Re: Translation of the dictionary)
+Message-ID: <20100305181920.GQ1159@digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org, jbovlaste@lojban.org
+References: <20100303220721.GX1159@digitalkingdom.org> <20100304000922.GF1159@digitalkingdom.org> <262254.87263.qm@web113312.mail.gq1.yahoo.com> <201003041105.09058.phma@phma.optus.nu> <20100304190219.GG1159@digitalkingdom.org> <20100305012349.GM1159@digitalkingdom.org> <377435.12997.qm@web113302.mail.gq1.yahoo.com> <f5d9f4491003050622y1a9d87c6qe8fe68f8bf186e43@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f5d9f4491003050622y1a9d87c6qe8fe68f8bf186e43@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-archive-position: 17100
+X-ecartis-version: Ecartis v1.0.0
+Sender: lojban-list-bounce@lojban.org
+Errors-to: lojban-list-bounce@lojban.org
+X-original-sender: rlpowell@digitalkingdom.org
+Precedence: bulk
+Reply-to: lojban-list@lojban.org
+X-list: lojban-list
+Content-Length: 7120
+
+On Fri, Mar 05, 2010 at 10:22:30AM -0400, Efrain Caro wrote:
+> I tried to generate an English-Lojban dictionary. Generated it,
+> did a "Save As" on the pdf link, and it told me that the webpage
+> doesn't exist.
+
+So, whenever someone does something in the definitions that LaTeX
+doesn't like, the dictionary export breaks.
+
+People *should* be testing dictionary export after all their
+changes, if possible, but they don't.
+
+English is the worst because people who have no idea what they're
+doing but make jbovlaste accounts anyways are almost always working
+on the English definitions.
+
+Anyways, here's the changes I had to make to make the English export
+work; except for the UTF-8 problems (the euro symbol (which I was
+able to support) and the hundredth/tenth stuff (which I wasn't)), if
+you made these changes please feel guilty and learn from them.  :)
+
+I haven't updated the words yet, but give me about half an hour and
+the English export should be working.
+
+-Robin
+
+5a6
+> \usepackage{eurosym}
+1221c1222
+< {\sffamily\bfseries centi}\markboth{centi}{centi}\enspace {\ttfamily\bfseries[cen]}  $x_{1}$ is a hundredth [1/100; 1 ⨉ $10^{-2}$] of $x_{2}$ in dimension/aspect $x_{3}$ (default is units). (See also {grake}, {mitre}, {snidu}, {stero}, {delno}, {molro}, {kelvo}, {xampo}, {gradu}, {litce}, {merli}, {decti}, {dekto}, {femti}, {gigdo}, {gocti}, {gotro}, {kilto}, {megdo}, {mikri}, {milti}, {nanvi}, {petso}, {picti}, {terto}, {xatsi}, {xecto}, {xexso}, {zepti}, {zetro}.)
+---
+> {\sffamily\bfseries centi}\markboth{centi}{centi}\enspace {\ttfamily\bfseries[cen]}  $x_{1}$ is a hundredth [1/100; 1*$10^{-2}$] of $x_{2}$ in dimension/aspect $x_{3}$ (default is units). (See also {grake}, {mitre}, {snidu}, {stero}, {delno}, {molro}, {kelvo}, {xampo}, {gradu}, {litce}, {merli}, {decti}, {dekto}, {femti}, {gigdo}, {gocti}, {gotro}, {kilto}, {megdo}, {mikri}, {milti}, {nanvi}, {petso}, {picti}, {terto}, {xatsi}, {xecto}, {xexso}, {zepti}, {zetro}.)
+2129c2130
+< {\sffamily\bfseries daskycizborda'u}\markboth{daskycizborda'u}{daskycizborda'u} $c1=$da1 is a Pokémon/Pocket Monster of species $da2
+---
+> {\sffamily\bfseries daskycizborda'u}\markboth{daskycizborda'u}{daskycizborda'u} $c1=da1$ is a Pokémon/Pocket Monster of species $da2$
+2197c2198
+< {\sffamily\bfseries decti}\markboth{decti}{decti}\enspace {\ttfamily\bfseries[dec]}  $x_{1}$ is a tenth [1/10; 1 ⨉ $10^{-1}$] of $x_{2}$ in dimension/aspect $x_{3}$ (default is units). ((cf. grake, mitre, snidu, stero, delno, molro, kelvo, xampo, gradu. litce, merli, centi, dekto, femti, gigdo, gocti, gotro, kilto, megdo, mikri, milti, nanvi, petso, picti, terto, xatsi, xecto, xexso, zepti, zetro))
+---
+> {\sffamily\bfseries decti}\markboth{decti}{decti}\enspace {\ttfamily\bfseries[dec]}  $x_{1}$ is a tenth [1/10; 1*$10^{-1}$] of $x_{2}$ in dimension/aspect $x_{3}$ (default is units). ((cf. grake, mitre, snidu, stero, delno, molro, kelvo, xampo, gradu. litce, merli, centi, dekto, femti, gigdo, gocti, gotro, kilto, megdo, mikri, milti, nanvi, petso, picti, terto, xatsi, xecto, xexso, zepti, zetro))
+2221c2222
+< {\sffamily\bfseries dekto}\markboth{dekto}{dekto}\enspace {\ttfamily\bfseries[dek]}  $x_{1}$ is ten [10; 1 ⨉ $10^1$] of $x_{2}$ in dimension/aspect $x_{3}$ (default is units). ((cf. grake, mitre, snidu, stero, delno, molro, kelvo, xampo, gradu. litce, merli, centi, decti, femti, gigdo, gocti, gotro, kilto, megdo, mikri, milti, nanvi, petso, picti, terto, xatsi, xecto, xexso, zepti, zetro))
+---
+> {\sffamily\bfseries dekto}\markboth{dekto}{dekto}\enspace {\ttfamily\bfseries[dek]}  $x_{1}$ is ten [10; 1*$10^1$] of $x_{2}$ in dimension/aspect $x_{3}$ (default is units). ((cf. grake, mitre, snidu, stero, delno, molro, kelvo, xampo, gradu. litce, merli, centi, decti, femti, gigdo, gocti, gotro, kilto, megdo, mikri, milti, nanvi, petso, picti, terto, xatsi, xecto, xexso, zepti, zetro))
+4441c4442
+< {\sffamily\bfseries kelkubli}\markboth{kelkubli}{kelkubli} $ku_1$ is a die/are dice for game $x_2$ with surfaces/sides $ku_3$ (default 6). (Shortened from ke nu kelci ke'e kubli. Omitted ku_2 (dice have always three dimensions). Cf. {cu'arkubli}.)
+---
+> {\sffamily\bfseries kelkubli}\markboth{kelkubli}{kelkubli} $ku_1$ is a die/are dice for game $x_2$ with surfaces/sides $ku_3$ (default 6). (Shortened from ke nu kelci ke'e kubli. Omitted $ku_2$ (dice have always three dimensions). Cf. {cu'arkubli}.)
+4577c4578
+< {\sffamily\bfseries klaunji}\markboth{klaunji}{klaunji} $x_1$ is blackseed/nigella of species/variety $x_2\#
+---
+> {\sffamily\bfseries klaunji}\markboth{klaunji}{klaunji} $x_1$ is blackseed/nigella of species/variety $x_2$
+5576c5577
+< {\sffamily\bfseries milgra}\markboth{milgra}{milgra} $g1 is $g2 milligrams in mass by standard $g3
+---
+> {\sffamily\bfseries milgra}\markboth{milgra}{milgra} $g1 is $g2 milligrams in mass by standard $g3$
+6623c6624
+< {\sffamily\bfseries paltylu'i}\markboth{paltylu'i}{paltylu'i} $l_1$ (agent) washes dishes $l_2$ of soil/contaminant $l_3$ with cleaning material(s) $l_4. (Cf. {paltylumca'a}, {zbabu}, {ctitcilu'i}.)
+---
+> {\sffamily\bfseries paltylu'i}\markboth{paltylu'i}{paltylu'i} $l_1$ (agent) washes dishes $l_2$ of soil/contaminant $l_3$ with cleaning material(s) $l_4$. (Cf. {paltylumca'a}, {zbabu}, {ctitcilu'i}.)
+6635c6636
+< {\sffamily\bfseries pamjai}\markboth{pamjai}{pamjai} $j_1$ hugs/embraces $j_2$ with $j_3$ (part of j_1) at locus $j_4$ (part of j_2).
+---
+> {\sffamily\bfseries pamjai}\markboth{pamjai}{pamjai} $j_1$ hugs/embraces $j_2$ with $j_3$ (part of $j_1$) at locus $j_4$ (part of $j_2$).
+8960c8961
+< {\sffamily\bfseries stagnrafanu}\markboth{stagnrafanu}{stagnrafanu} $x_1$ is a radish (root/bulb) of variety $x_2$ (from (stagi} and 'Rapharus sativus' c.f. {spatnrafanu})
+---
+> {\sffamily\bfseries stagnrafanu}\markboth{stagnrafanu}{stagnrafanu} $x_1$ is a radish (root/bulb) of variety $x_2$ (from {stagi} and 'Rapharus sativus' c.f. {spatnrafanu})
+9000c9001
+< {\sffamily\bfseries stogau}\markboth{stogau}{stogau} $g_1$ maintains/preserves/keeps up/conserves  $s_1$ in condition $s_2$ (ka) under (external) conditions $s_3
+---
+> {\sffamily\bfseries stogau}\markboth{stogau}{stogau} $g_1$ maintains/preserves/keeps up/conserves  $s_1$ in condition $s_2$ (ka) under (external) conditions $s_3$
+10949c10950
+< {\sffamily\bfseries zbagundi}\markboth{zbagundi}{zbagundi} $g_1$ is a/the industry sector of $z_1$ building/assembling/constructing $g_2=z_2 $z_3=g_3$ (From {zbasu}, {gundi}.)
+---
+> {\sffamily\bfseries zbagundi}\markboth{zbagundi}{zbagundi} $g_1$ is a/the industry sector of $z_1$ building/assembling/constructing $g_2=z_2$ $z_3=g_3$ (From {zbasu}, {gundi}.)
+
+-- 
+They say:  "The first AIs will be built by the military as weapons."
+And I'm  thinking:  "Does it even occur to you to try for something
+other  than  the default  outcome?"  See http://shrunklink.com/cdiz
+http://www.digitalkingdom.org/~rlpowell/ *** http://www.lojban.org/
+
+
+To unsubscribe from this list, send mail to lojban-list-request@lojban.org
+with the subject unsubscribe, or go to http://www.lojban.org/lsg2/, or if
+you're really stuck, send mail to secretary@lojban.org for help.
