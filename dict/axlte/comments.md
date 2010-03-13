@@ -73,3 +73,22 @@ I made some changes based on the explanation. Thanks.
 
 mu'o mi'e leos
 
+
+## 2010-03-13T16:15:32Z — xorxes (comment 487, on definition 17302, in reply to 483)
+
+Re: ajolote
+
+tijlan wrote:
+> 
+> "species" and "breed" are quite a significant difference: reproduction
+> cannot occur between different species, but it can between different
+> breeds. It would be reasonable to not be ambiguous about which rank you
+> mean when you add one of these sumti. That is to say that
+"species/breed"
+> as an x2 is inadequate.
+
+Every single animal gismu has a "species/breed x2" place (the only
+exception is perhaps "remna", if we consider it an animal gismu). It is
+only reasonable to maintain this regularity for animal fu'ivla. 
+
+
