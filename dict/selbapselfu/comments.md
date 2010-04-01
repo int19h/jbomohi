@@ -11,3 +11,13 @@ Non canonical
 
 shouldn't this rather be selbapse'u?
 
+
+## 2010-04-01T16:05:28Z — arj (comment 494, on definition 15365, in reply to 492)
+
+Re: Non canonical
+
+gejyspa wrote:
+> Shouldn't this rather be selbapse'u?
+
+Actually, the lowest-scoring form is selbaise'u.
+
