@@ -14,6 +14,7 @@
 ** function
 * If an operator is applied to operands of a type which its definition does not address, the expression is undefined.
 * The operand ''tu'o'' is polymorphic; its type in an expression is determined by its surrounding context.
+* Operator-specific type information (currently in the "Notes" subsections) needs to be included in the main definitions somehow without being too clunky.
 
 
 ! Proposed Definitions And Examples
@@ -44,17 +45,46 @@ elliptical/unspecified mathematical operator
 
 !!! Examples of ''ge'a'' Usage
 
-!! Proposed Definition of ''fe'i''
+!! cmavo: fe'i (VUhU1)
 
-;__fe'i__ (VUhU1): divided by -- n-ary mathematical operator: divided by; division operator; [(((a / b) / c) / ...)] --
-** Keywords:
+!!! Current definition
+
+divided by -- n-ary mathematical operator: divided by; division operator; [(((a / b) / c) / ...)] --
+
+!!! Proposed definition
+
+mathematical division operator, n-ary, left-associative
+
+!!! Proposed keyword
+* division
+
+!!! Notes
+
+* The operands of ''fe'i'' are numbers, and a ''fe'i'' expression evaluates to a number.
+* When ''fe'i'' has only one operand, it is the identity function.
 
 !!! Examples of ''fe'i'' Usage
 
-!! Proposed Definition of ''pi'i''
+!! cmavo: pi'i (VUhU1)
 
-;__pi'i__ (VUhU1): times -- n-ary mathematical operator: times; multiplication operator; [(((a * b) * c) * ...)] --
-** Keywords:
+!!! Current definition
+
+times -- n-ary mathematical operator: times; multiplication operator; [(((a * b) * c) * ...)] --
+
+!!! Proposed definition
+mathematical multiplication operator, n-ary, left-associative
+
+!!! Proposed keywords
+* multiplication
+
+!!! Notes
+* When reducing a ''pi'i'' expression from left to right, the types of the two operands considered at each point must take one of the two forms:
+** number and number -- standard mathematical multiplication; evalutes to a number
+** number and matrix ''or'' matrix and number -- scaling the elements of a matrix by a factor; evaluates to a matrix
+** number and array of numbers ''or'' array of numbers and number -- scaling the elements of an array by a factor; evaluates to an array of numbers
+** matrix and matrix -- standard matrix multiplication; the number of columns in the first matrix must equal the number of rows in the right matrix, otherwise the result is undefined; evaluates to a matrix
+** matrix and array of numbers -- The operator ''sa'i'' is implicitly applied to the array, and the expression is then evaluated as a matrix-matrix multiplication, yielding a one-column matrix that is then implicitly converted to an array of the numbers in its column.
+* When ''pi'i'' has only one operand, it is the identity function.
 
 !!! Examples of ''pi'i'' Usage
 
