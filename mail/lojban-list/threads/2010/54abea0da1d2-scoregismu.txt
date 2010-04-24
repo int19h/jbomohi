@@ -1,4 +1,4 @@
-# mail/lojban-list thread 54abea0da1d2-scoregismu | root l2q4de8c3931004231852sa8277439n79894be934f24f68@mail.gmail.com | 10 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 54abea0da1d2-scoregismu | root l2q4de8c3931004231852sa8277439n79894be934f24f68@mail.gmail.com | 11 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-04-24T01:52:33Z | tijlan <jbotijlan@gmail.com> | l2q4de8c3931004231852sa8277439n79894be934f24f68@mail.gmail.com | mail/lojban-list/cur/1272073953.54abea0da1d2bfce.jbomohi:2,S
 This may well sound a very newbie question to experienced programmers.
@@ -306,7 +306,49 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 10 | 2010-04-24T04:02:20Z | István Lakatos <lakatos.isti@gmail.com> | u2xda9f6c711004232102w7c48277dyb87515459e338500@mail.gmail.com | mail/lojban-list/cur/1272081740.6f37b7bd2eacbe8e.jbomohi:2,S
+=== 10 | 2010-04-24T22:43:17Z | Minimiscience <minimiscience@gmail.com> | 20100424224315.ga24822@sdf.lonestar.org | mail/lojban-list/cur/1272148997.0e7b0d69c7664c23.jbomohi:2,S
+de'i li 24 pi'e 04 pi'e 2010 la'o fy. tijlan .fy. cusku zoi skamyxatra.
+> It doesn't always score with the same result as for an official gismu. For
+> instance, the gismu with the highest score of 0.4767... in regard to the
+> above source words is "mlino" according to this program, not "pilno", even
+> with the older weighting:
+> 
+>  iun 0.36 emploi 0.21 upiog 0.16 us 0.11 primin 0.09 amal 0.07
+.skamyxatra
+
+That's because the script doesn't implement step 2b of the {gismu} creation
+algorithm correctly.  This can be fixed by changing lines 114-118 from:
+
+>    if($gismu =~ /$lcs[0].?$lcs[1]/) {
+>     if($word =~ /$lcs[0].?$lcs[1]/) {
+>      $score += $weight * 2 / @wordSequence;
+>     }
+>    }
+
+to:
+
+>    $score += $weight * 2 / @wordSequence
+>     if $gismu =~ /$lcs[0]$lcs[1]/ && $word =~ /$lcs[0]$lcs[1]/
+>     || $gismu =~ /$lcs[0].$lcs[1]/ && $word =~ /$lcs[0].$lcs[1]/
+
+You'll also need to have an empty file in place of gismu.txt in order for
+extant {gismu} (and anything they conflict with) to be considered for scoring.
+
+mu'omi'e .kamymecraijun.
+
+-- 
+mi na se finti fi tu'a lo vi munje
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 11 | 2010-04-24T04:02:20Z | István Lakatos <lakatos.isti@gmail.com> | u2xda9f6c711004232102w7c48277dyb87515459e338500@mail.gmail.com | mail/lojban-list/cur/1272081740.6f37b7bd2eacbe8e.jbomohi:2,S
 I think you wrote the command in the wrong order. It should be scoreGismu.pl
 filename.txt
 
