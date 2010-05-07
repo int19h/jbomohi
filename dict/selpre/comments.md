@@ -53,3 +53,18 @@ from the conventional definition of {prenu}. This is not so much changing
 the place structure as defining the place of an already officially
 identified argument within the established definition.
 
+
+## 2010-05-07T17:00:03Z — arj (comment 506, in reply to 505)
+
+Re: Place structure
+
+tijlan wrote:
+> so, if {prenu} were ever to have an explicit x2, it would be
+> this argument.
+
+But you agree that {prenu} does not currently have an x2?
+
+That would mean changing the definition of {prenu}, and Jbovlaste is IMHO
+not the right place to argue about that. I suggest you bring it up on
+http://www.lojban.org/tiki/BPFK+Section:+gismu+Issues.
+
