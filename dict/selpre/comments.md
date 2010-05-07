@@ -33,3 +33,23 @@ I'm not sure I understand you right. What is it about {prenu} that is
 officially recognized as "personality/a persona"? And we can't "give"
 something a place; the place structure of a gismu is fixed.
 
+
+## 2010-05-07T16:36:57Z — tijlan (comment 505, in reply to 504)
+
+Re: Place structure
+
+arj wrote:
+> I'm not sure I understand you right. What is it about {prenu} that is
+> officially recognized as "personality/a persona"? And we can't "give"
+> something a place; the place structure of a gismu is fixed.
+
+One of the official definitions of {prenu} is "x1 displays personality/a
+persona". Two arguments are officially recognized/identified here: the
+displayer, and the displayed. This "personality/a persona" is not defined
+for its place, but it's the second argument mentioned in the very official
+definition; so, if {prenu} were ever to have an explicit x2, it would be
+this argument. The meaning of {selpre} should be sufficiently predictable
+from the conventional definition of {prenu}. This is not so much changing
+the place structure as defining the place of an already officially
+identified argument within the established definition.
+
