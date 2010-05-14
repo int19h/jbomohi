@@ -34,6 +34,8 @@ All the options I can think of:
 *  zo .bab. i
 **    If you're cutting and pasting, you might miss one! That would be terrible! No one could ever implement special software to detect this!
 
+An option would be to remove the spaces from next to the pauses. So a certain text might look like, ".ue lo cmene be do cu mu'a na.uo du la.bab.i.y.lo ci xu denpa ku sarcu.i".
+
 I suppose I must recommend, for now, "zo .bab .i". This all seems pretty ridiculous. Next topic.
 !!Periods in ZOI
 There must always always be a pause between the delimiter and its content. 
@@ -46,15 +48,19 @@ If using "dilema":
 *  zoi dilema. content .dilema.
 
 !!Encoding Files Inside ZOI (vreji zei zoi)
-It's a totally cool idea. But there is no implementation of it. (I might have zirsam do something with it) The content of the ZOI is done as the "data:" protocol in browsers is done. See http://tools.ietf.org/html/rfc2397 . The specifications of RFC 2397 for the formatting of data URIs are much better than any description here.
+It's a totally cool idea. But there is no implementation of it. (I might have zirsam do something with it) The content of the ZOI is done as the "data:" URI in browsers is done. See http://tools.ietf.org/html/rfc2397 . The specifications of RFC 2397 for the formatting of data URIs are much better than any description here.
 Format:
 *  zoi vreji.data:mimetype-and-encoding,content.vreji
 
 It'd be preferable to use only "vreji" for ZOI's delimiters. If the delimiter appears in the file, then there should be added to it enough PA's and a consonant. If base64 encoding is being used, then there should be spaces between the delimiters and the content.
 
-Data encoded this way is very likely, except only in the cases of lojbanic text files, to be unpronounceable. Data using base64 and URL character encoding might use upper and lower case characters and symbols never found in Lojban. Indeed, the dataurl prefix itself contains unpronounceable characters. To get around this, an alternate encoding form for the entire ZOI quote might be used, a 'jbocoding', which would jbocode data (at most) in base 28, and make use of the consonants and numerals. Actually reading out files would be incredibly ridiculous and error prone.
+Data encoded this way is very likely, except only in the cases of lojbanic text files, to be unpronounceable. Data using base64 and URL character encoding might use upper and lower case characters and symbols never found in Lojban. Indeed, the dataurl prefix itself contains unpronounceable characters. To get around this, an alternate encoding form for the entire ZOI quote might be used, a 'jbocoding', which would jbocode data in (at most) base 28, and make use of only the consonants and numerals. Actually reading out files would be incredibly ridiculous and error prone.
 
 A ZOI quote is a vreji zei zoi if these two conditions are met:
 # The delimiter starts with 'vreji'
 # The content of the zoi quote starts with "data:"
 If a system encounters  a vreji zei zoi quote, it should attempt to render it. 
+
+Example (data copied from http://en.wikipedia.org/wiki/Data_URI_scheme#CSS )
+zoi vreji. data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8yw83NDDeNGe4Ug9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC .vreji
