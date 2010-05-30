@@ -31,3 +31,18 @@ site
 But I need a word for maylily. So I added veslelxe.
 Is such action prohibited ? How we should call the flower then ?
 
+
+## 2010-05-30T16:32:03Z — arj (comment 510, in reply to 509)
+
+Re: -
+
+VesRul wrote:
+
+> But I need a word for maylily. So I added veslelxe.
+> Is such action prohibited ? How we should call the flower then ?
+
+This looks like a prime candidate for a fu'ivla.
+http://dag.github.com/cll/4/7/
+
+Maybe you can ask Pierre Abbat for help? He is good with species names.
+
