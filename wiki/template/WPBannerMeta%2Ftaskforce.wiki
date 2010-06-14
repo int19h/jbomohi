@@ -1,0 +1,47 @@
+{{#ifeq:{{{TEXT}}}|none|
+|<tr>
+<td>{{#if:{{{IMAGE|}}}|[[File:{{{IMAGE}}}|{{#if:{{{SIZE|}}}|{{{SIZE}}}|x25px}}|center|alt=Taskforce icon]]}}</td>
+<td class="mbox-text" colspan="2">{{#if:{{{PORTAL|}}}
+  |{{portal|{{{PORTAL}}}|height=15|margin=0}}
+}}{{#if:{{{TEXT|}}}
+  |{{{TEXT}}}
+  |This {{pagetype|{{{class|}}}}} is supported by '''[[{{{LINK}}}|{{{NAME}}}]]'''{{#switch:{{{importance|¬}}}
+    |¬
+    |NA
+    |Unknown  = <!-- Don't display -->
+    |#default = &#32;(marked as [[:Category:{{{importance}}}-{{{IMPN}}} {{#if:{{{ASSESSMENT_CAT|}}}
+      |{{{ASSESSMENT_CAT}}}
+      |{{{NAME|}}} articles
+    }}|{{{importance}}}-{{{IMPN}}}]])
+  }}.
+}}</td>
+</tr>}}{{#if:{{{QUALITY|}}}|{{#ifeq:{{{class|¬}}}|¬
+    |<!--Quality scale not used-->
+    |{{WPBannerMeta/qualityscale
+      |class={{{class|}}}
+      |BANNER_NAME={{{BANNER_NAME}}}
+      |ASSESSMENT_CAT={{#if:{{{ASSESSMENT_CAT|}}}
+       |{{{ASSESSMENT_CAT}}}
+       |{{{NAME|}}} articles
+      }}
+      |category={{{category|¬}}}
+    }}
+  }}
+}}{{#ifeq:{{{importance|¬}}}|¬
+  |<!--Importance scale not used-->
+  |{{WPBannerMeta/importancescale
+    |class={{{class|}}}
+    |importance={{{importance|}}}
+    |BANNER_NAME={{{BANNER_NAME}}}
+    |ASSESSMENT_CAT={{#if:{{{ASSESSMENT_CAT|}}}
+     |{{{ASSESSMENT_CAT}}}
+     |{{{NAME|}}} articles
+    }}
+    |IMPN={{{IMPN}}}
+    |category={{{category|¬}}}
+  }}
+}}{{#if:{{{MAIN_CAT|}}}
+  |{{#ifeq:{{{category|¬}}}|¬
+    |[[Category:{{{MAIN_CAT}}}]]
+  }}
+}}{{{HOOK|}}}
