@@ -12,3 +12,13 @@ culturally neutral where possible!
 
 totus
 
+
+## 2010-07-15T16:25:46Z — totus (comment 533, in reply to 532)
+
+Re: Another valsi for December?
+
+totus wrote:
+> We already have {celma'i}, {gaimast}, {gairmasti}, {pavrelamsti}. 
+
+That should have been {pavrelmasti}!
+
