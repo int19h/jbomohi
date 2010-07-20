@@ -22,3 +22,20 @@ totus wrote:
 
 That should have been {pavrelmasti}!
 
+
+## 2010-07-20T06:54:23Z — kakuas (comment 534, in reply to 533)
+
+Re: Another valsi for December?
+
+totus wrote:
+> totus wrote:
+> > We already have {celma'i}, {gaimast}, {gairmasti}, {pavrelamsti}. 
+> 
+> That should have been {pavrelmasti}!
+
+I created it because theere is {septembero}, {oktobero}...
+
+Do you want to vote down all these words ?
+Let's do it together. 
+Either all of them or none.
+
