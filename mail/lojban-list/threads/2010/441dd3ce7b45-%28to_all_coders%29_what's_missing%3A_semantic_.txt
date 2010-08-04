@@ -1,0 +1,112 @@
+# mail/lojban-list thread 441dd3ce7b45-%28to_all_coders%29_what's_missing%3A_semantic_ | root aanlktin-gwlamgcdsnjm1keyrpry=u4u8g3xsscjlbfi@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2010-08-04T09:57:55Z | purpleposeidon <purpleposeidon@gmail.com> | aanlktin-gwlamgcdsnjm1keyrpry=u4u8g3xsscjlbfi@mail.gmail.com | mail/lojban-list/cur/1280915875.441dd3ce7b459e51.jbomohi:2,S
+A Dandy Gentleman Wrote:
+> I've got somewhere a list of what
+> selma'o I think are atomic. Will share later.
+
+I can't find the list, so I'll make it up.
+
+  I, IJE, SE, tanru, TUhE, TUhU, atomic sumti
+
+tanru: would have JE broken up, and also BE ripped out. CO might be
+untangled, but would be kind of useless because tanru are pretty vague
+anyways. But it might be nice to determine that "le slaka lerfu" and
+"le lerfu co slaka" could refer to the same thing.
+
+atomic sumti: zo ratni, da, zoi gy. Canada! .gy., and lots of other
+stuff for things like joi-masses.
+
+
+
+
+In Timo's examples:
+> mi pinxe ki'u lo du'u mi taske <-> mi pinxe i ki'u bo mi taske
+
+the decomposition na gerna. (And also, I don't really know how to use
+bo.)  What I'd go for is {mi pinxe .i krinu go'ixi-1 .i <a selbri for
+du'u (I don't know if one exists. A pseudo-gismu might be needed)>
+go'ixi-1 .i mi taske}
+
+
+> lo gerku e mi e do cu klama lo ricfoi <-> lo gerku cu klama lo ricfoi i
+> je mi klama lo ricfoi i je do klama lo ricfoi
+{
+  .i daxi0 ricfoi
+  .itu'u daxi1 gerku .i daxi1 klama .i daxi0 se klama tu'e
+  .ijetu'u mi klama .i daxi0 se klama tu'e
+  .ijetu'u do klama .i daxi0 se klama tu'e
+}
+(do and friends actually wouldn't be used that way, they'd be a
+daxiny. to current listener or whoever -- that's how I'd do it,
+anyways)
+
+
+
+So, actually implementing it.
+.ysai Some preprocessing *may* be required. This might involve some
+portion of daxiny.-ing atomic sumti, untangling FA and SE, ... . I'm
+not certain how much of this is necessary.
+For doing the Action step, I'm pretty sure the best thing to do is to
+have an Annotated Grammar. I'll attempt to make some pseudo-code out
+of a few complicated rules. The <> apply to the previous construct.
+
+selbri-4 =
+    (selbri-5 [
+        (joik-jek selbri-5
+        )<create a new semantoid, using joik-jek as its JE, and
+selbri-5 as its tanru>
+      | (joik [stag] KE # selbri-3 /KEhE#/
+        )<create a new semantoid, using joik as its JE, and selbri-3
+as its tanru. [stag] would be filed away under some misc bit. >
+    ] ...
+    )<selbri-3 would have a list of semantoids. Any semantoids created
+would be added to that list.>
+
+bridi-tail =
+    bridi-tail-1 <Using the inherited semantoid-cluster, and a new
+list of terms that would be applied to that semantoid>
+    [gihek [stag] KE # bridi-tail /KEhE#/ tail-terms]
+    <Create a new semantoid-cluster. Any terms created prior to selbri
+in bridi-tail-1 would be included. [stag] goes to misc. Create a
+semantoid-cluster, give it to bridi-tail and tail-terms.>
+
+sumti-tail =
+      ([sumti-6 [relative-clauses]] sumti-tail-1
+      )<create a new semantoid-cluster. Pass it to sumti-tail-1.
+Create a daxiny., assign it to the new SC's x1. Give the daxiny. to
+the parent. If sumti-6: Create a semantoid-cluster. The selbri is
+"<association>". Put sumti-tail-1 into the x1, and sumti-6 into the
+x2. And if relative-clauses: Define sumti-6 as ke'a and let it run
+wild>
+    | (relative-clauses sumti-tail-1
+      )<create semantoid-cluster. Set the hypothetical x1 to ke'a (or
+make up a daxiny for ke'a and latter merge it with the x1). Run
+relative-clauses. Run sumti-tail-1>
+
+
+A semantoid-cluster seems to be something that has a bunch of terms,
+and a tanru; whereas a vanilla semantoid would have only a single term
+and a SE tanru. They'll have to be written with much more care than
+I've put into them. For example, sumti-6 must certainly work when
+accessed via sumti-5, but it also must work from sumti-tail. I was
+hoping that some simple markup could go inside the <>'s, but it will
+probably have to be code.
+
+
+ALSO: I have a question for jbocevni and jbosampla: BNF or PEG? Camxes
+is PEG, and everybody loves camxes. But it is in Java, and I don't
+know Java (and I think timos doesn't either; I dunno about other
+Lojbanists). However, ba'e zirsam .o'a uses BNF, so I am much more
+familiar with the BNF.
+
+mu'o mi'e .timos. si .djeims.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
