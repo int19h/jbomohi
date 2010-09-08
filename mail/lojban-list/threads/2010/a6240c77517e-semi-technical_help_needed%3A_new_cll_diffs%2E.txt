@@ -1,4 +1,4 @@
-# mail/lojban-list thread a6240c77517e-semi-technical_help_needed%3A_new_cll_diffs%2E | root 20100611173115.gm7321@digitalkingdom.org | 20 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a6240c77517e-semi-technical_help_needed%3A_new_cll_diffs%2E | root 20100611173115.gm7321@digitalkingdom.org | 21 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-06-11T17:31:16Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20100611173115.gm7321@digitalkingdom.org | mail/lojban-list/cur/1276277476.a6240c77517ee8d0.jbomohi:2,S
 
@@ -1313,6 +1313,161 @@ characters '?', but I could be seeing an effect of not having full
 UTF support in my terminal/editor too.
 
 -Alan
+-- 
+ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 21 | 2010-09-08T04:19:49Z | Alan Post <alanpost@sunflowerriver.org> | 20100908041949.gb55480@alice.local | mail/lojban-list/cur/1283919589.4093776f2fddaac1.jbomohi:2,S
+On Tue, Sep 07, 2010 at 09:08:43PM -0700, Robin Lee Powell wrote:
+> Not sure how I can help, but if you want to send me the two things
+> you're working from I can try my own hand at the encoding problems.
+> 
+
+Please take the CLL word document and convert it to a text-based
+format.  I'd like to see if you could create a better version of
+that than I could.  After I got it in a roughly working form, I had to
+ strip poorly formatted html (particularly index tags).  I think my
+sed command (below) was an attempt to work around character encoding
+(and can therefor be ignored), and I had to remove some internal
+markers (the mkhtml stuff).  I publish that part of my pipeline
+below, but only for documentation over what I'm *not* having trouble
+with:
+
+<++> Makefile
+CLL.2.txt: CLL.1.txt
+        grep -v -e 'Revision:' -e 'mkhtml' < CLL.1.txt > CLL.2.txt
+
+CLL.1.txt: CLL.0.txt
+        sed "s/\\?\\([a-zA-Z \']*\\)\\?/\\\"\\1\\\"/g" < CLL.0.txt > CLL.1.txt
+
+CLL.0.txt: strip CLL.txt
+        ./strip CLL.txt > CLL.0.txt
+
+strip: main.o strip.o
+        csc -o strip main.o strip.o
+
+main.o: main.scm
+        csc -c -o main.o main.scm
+
+strip.o: strip.scm
+        csc -c -o strip.o strip.scm
+<-->
+
+Excuse my lisp code written like C code.  This strips html tags from
+an input file, which I needed to do to clean up the .doc file.
+
+<++> strip.scm
+(declare (unit main))
+(use srfi-13)
+(use extras)
+
+(define-syntax 1+
+  (syntax-rules ()
+    ((1+ n)
+     (+ 1 n))))
+
+(define-syntax 1-
+  (syntax-rules ()
+    ((1- n)
+     (- n 1))))
+
+(define *i* 0)
+(define *n* 4096)
+(define *buffer* (make-string (1+ *n*) #\nul))
+
+(define (lex port)
+  (string-set! *buffer*
+               (read-string! *n* *buffer* port)
+               #\nul))
+
+;; move any characters in the buffer to the front,
+;; and fill the rest of the buffer from |port|. 
+;;
+(define (fill port)
+  (string-copy! *buffer* 0
+                *buffer* *i* *n*)
+  (string-set! *buffer*
+               (read-string! *i* *buffer* port (- *n* *i*))
+               #\nul)
+  (set! *i* 0))
+
+;; return the next character from |buffer|.
+;;
+;; |fill| must be called before |getc| will return
+;; a value.  if |getc| returns |#\null|, |fill| may
+;; be called to refill the buffer.
+;;
+(define (peek)
+  (string-ref *buffer* *i*))
+
+(define (getc)
+  (let ((i *i*))
+    (set! *i* (1+ *i*))
+    (string-ref *buffer* i)))
+
+(define (ungetc)
+  (set! *i* (1- *i*)))
+
+;;
+;;
+(define (next port)
+  (let ((ch (getc)))
+    (case ch
+      ((#\nul)                   ; eof
+       (ungetc)
+       (fill port)
+       (if (not (char=? #\nul (peek)))
+           (next port)))
+      ((#\<)
+       (next-tag port (getc)))
+      (else                      ; text
+       (print* ch)
+       (next port)))))
+
+(define (next-tag port ch)
+  (case ch
+    ((#\>)
+     (next port))
+    ((#\nul)
+     (ungetc)
+     (fill port)
+     (if (not (char=? #\nul (peek)))
+         (next-tag port (getc))))
+    (else
+     (next-tag port (getc)))))
+
+(define (html port)
+  (lex port)
+  (next port))
+
+(define (main file)
+  (call-with-input-file file html))
+<-->
+
+
+> -Robin
+> 
+> -- 
+> http://singinst.org/ :  Our last, best hope for a fantastic future.
+> Lojban (http://www.lojban.org/): The language in which "this parrot
+> is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
+> is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
+> 
+> -- 
+> You received this message because you are subscribed to the Google Groups "lojban" group.
+> To post to this group, send email to lojban@googlegroups.com.
+> To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+> For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+> 
+
 -- 
 ko djuno fi le do sevzi
 
