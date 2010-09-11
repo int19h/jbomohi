@@ -1,0 +1,111 @@
+# mail/lojban-list thread 60f131365a44-technical,_help_request%3A_what_information_%2A | root 20100911215035.gg13937@digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2010-09-11T21:50:35Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20100911215035.gg13937@digitalkingdom.org | mail/lojban-list/cur/1284241835.60f131365a449e88.jbomohi:2,S
+
+(*Please* redirect all followups to the main list (I'd say the
+jbovlaste list, but that's a lot harder to get on, so...))
+
+Some of us have had brief chats about what a re-done jbovlaste would
+look like.  The UI part is pretty well understood, in as much as web
+UIs are decently consistent these days and besides, people like
+http://vlasisku.lojban.org/, so that provides a good starting point.
+
+Much more interesting to me is the back-end data: What sorts of
+things *should* a Lojbanic dictionary store, ideally?
+
+What got this started is the realization that Lojban isn't English,
+and that, in particular, the brivla definitions seem anti-Lojbanic.
+When I see
+
+  x1 gets/procures/acquires/obtains/accepts x2 from source x3
+
+that kind of looks to me like a verb; I see the big thing in the
+middle as being "the meaning" of "the verb".
+
+Lojban isn't like that: brivla are as much or more about the
+*places* than about the central meaning-concept.
+
+This lead to me wondering what a definition format that really
+focused on the places would look like; I don't really have an answer
+yet, but this in turn lead to a lot of other stuff.
+
+In particular, it seemed to me that if you had the right kind of
+information about the places, you could generate the sort of
+definiton I pasted above automatically from that.
+
+Then we had the smart.fm thing, which made it obvious that not all
+definitions suit all situations; it was very important there to pare
+the definitions down to bare essentials.  It was also a giant pain.
+So I got to thinking about what sort of data we'd have to have to
+generate different levels of detail in the definitions.
+
+As part of that, I ended up extracting some data from jbofihe, some
+of the data it uses to generate English glosses, like this:
+
+  [([klama1 (go-er(s)):] mi /I, me/) /[is, does]/ <<klama /go-ing/>> ([klama2 (destination(s)):] le /the/ zarci /trading place(s)/)]
+
+Which is kind of ugly, but if you strip out anything that's not
+between /.../, you get:
+
+  I, me [is, does] go-ing the trading place(s)
+
+which is really rather good.  Good enough that one of my
+girlfriends, who has never studied a word of Lojban, reads my blog
+posts that way.
+
+So this left me thinking that I want dictionary software which
+could, given the right data, serve *all* of these purposes: formal
+dictionary definitons, casual definitions, and glossing (which
+implies very detailed information about the individual places).
+
+I don't know exactly what this looks like, but I *think* we can get
+all that by just talking about the places themselvles.  The
+resulting formal definiton might look a bit different; I'm not sure
+yet, which is why I'm posting this: I want help coming up with
+something awesome.
+
+A reasonable starting point for discussion is what jbovlaste uses to
+generate its glosses, I think:
+
+# x1 gets/procures/acquires/obtains/accepts x2 from source x3 [previous possessor not implied]
+cpacu1:A;acquire
+cpacu2:P;acquired
+cpacu3:D;source* of acquisition
+cpacu3t:source
+
+And here's what the letters mean:
+
+       │             ││                 │           │           │
+Letter │    Type     ││      Noun       │   Verb    │ Qualifier │       Tag
+───────┼─────────────┼┼─────────────────┼───────────┼───────────┼─────────────────
+  A    │     Act     ││    X-er(s)      │   X-ing   │   X-ing   │     X-er(s)
+  D    │  Discrete   ││      X(s)       │  being X  │     X     │        X
+  S    │  Substance  ││       X         │  being X  │     X     │        X
+  P    │  Property   ││   X thing(s)    │  being X  │     X     │    X thing(s)
+  R    │  Rev. prop  ││   thing(s) X    │  being X  │     X     │   things(s) X
+  I    │  Idiomatic  ││ thing(s) X-ing  │   X-ing   │   X-ing   │  thing(s) X-ing
+  E    │    Event    ││      X(s)       │  being X  │     X     │        X
+
+That actual format is .. not great :), but the information is
+fantastic.
+
+How can we expand that so that we could, in theory, have enough
+information to serve all masters?  What would the resulting
+dictionary definitions look like?
+
+-Robin
+
+-- 
+http://singinst.org/ :  Our last, best hope for a fantastic future.
+Lojban (http://www.lojban.org/): The language in which "this parrot
+is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
+is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
