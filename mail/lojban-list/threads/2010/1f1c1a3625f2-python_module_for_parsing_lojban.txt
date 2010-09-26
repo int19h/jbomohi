@@ -1,4 +1,4 @@
-# mail/lojban-list thread 1f1c1a3625f2-python_module_for_parsing_lojban | root 1fe1c053-2fdc-486a-81a2-bf6f6fad234f@q9g2000vbd.googlegroups.com | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 1f1c1a3625f2-python_module_for_parsing_lojban | root 1fe1c053-2fdc-486a-81a2-bf6f6fad234f@q9g2000vbd.googlegroups.com | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-09-23T20:00:37Z | Marek Rogalski <mafikpl@gmail.com> | 1fe1c053-2fdc-486a-81a2-bf6f6fad234f@q9g2000vbd.googlegroups.com | mail/lojban-list/cur/1285272037.1f1c1a3625f2bdf0.jbomohi:2,S
 Here are bindings of parser-3.0.00 (found it somewhere on wiki) to the
@@ -132,5 +132,54 @@ You received this message because you are subscribed to the Google Groups "lojba
 To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+=== 5 | 2010-09-26T13:07:51Z | Marek Rogalski <mafikpl@gmail.com> | 07d58603-39c3-494f-874e-9288aae0ae3e@d17g2000yqm.googlegroups.com | mail/lojban-list/cur/1285506471.b7e84419d301d7c8.jbomohi:2,S
+I have added some macros, so it builds also under python2.
+http://stud.ics.p.lodz.pl/~mafik/pylojban-1.0.1.tar.bz2
+
+On Sep 26, 6:17 am, purpleposeidon <purpleposei...@gmail.com> wrote:
+> Bugs!
+> * It can only parse once
+
+Yes. It stores a lot of its parsing state in global and static
+variables. Also some garbage stays in the memory. After parsing one
+string its state needs to be reversed.
+
+> * Can't parse "dabrOda"
+> * Doesn't support erasures
+> * Most gregarious of all: It's written in C! It'll probably run faster
+> than mine in python! This is a very bad bug! It makes zirsam look
+> bad....
+>
+
+99,9% (or something like that) of c code is taken from parser-3.0.00.
+As far as i know it was using different approach than zirsam (faster
+but a lot less clean).
+
+Parser-3.0.00 seemed to me a lot cleaner and faultless two days ago...
+It seems to have been bad choice.
+
+> Could you give the parse a better interface than a dict?
+>
+
+I am currently writing other utility (peg parser) which hopefully
+might be used as backend for zirsam. I think that pylojban is too
+buggy to fix it in reasonable amount of time. Only possible use for
+it, I can imagine, are short command-line utilities for which one
+parsing will be enough.
+
+> mu'omi'e.djeims.
+
+--
+Marek Rogalski
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
 
 

@@ -1,0 +1,109 @@
+Received: from mail-gy0-f189.google.com ([209.85.160.189])
+	by chain.digitalkingdom.org with esmtp (Exim 4.72)
+	(envelope-from <lojban+bncCPT9voDQFhCoi_3kBBoEop1fBQ@googlegroups.com>)
+	id 1OzqxX-0006Vc-Sk; Sun, 26 Sep 2010 06:08:07 -0700
+Received: by gya1 with SMTP id 1sf3260430gya.16
+        for <multiple recipients>; Sun, 26 Sep 2010 06:07:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:mime-version
+         :received:received:date:in-reply-to:x-ip:references:user-agent
+         :x-http-useragent:message-id:subject:from:to:x-original-sender
+         :reply-to:precedence:mailing-list:list-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=VqwxmZmGQPKlKIrVyQSiRQqpcl8sXb1dDcL6D7oQnSo=;
+        b=jfJXuaD53VM8w9dBi1OVx+KyzoA+JuqtGnlTB0zdKNLBt6z2NJpgpIbg4g0L8SKzE8
+         y92HpKH3UoBIP9RijHzTAua0img5Qq9JKqlSrd91eskyTKr2k/sJSZkrGfA3ovbqMMnf
+         CYpexILpN1plKvjVej1gpXb1lc56EwrefHQJs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:mime-version:date:in-reply-to:x-ip:references
+         :user-agent:x-http-useragent:message-id:subject:from:to
+         :x-original-sender:reply-to:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        b=yEKLhr0Y70Gn8yPdSkelgBji32JvvZll6rnS/NASv/5ZD4xSzoNqbZbiXareP5eRCZ
+         OxM8C9Jq8BbLhEm+QLH3zlVKBZvVBTHwREp/klbocXlyIx9x5LLdA778fybmlvQCvE+X
+         DzOzAQ7ZO00NT6vIQVuni9yRkIQlyI9v/DMhg=
+Received: by 10.91.107.14 with SMTP id j14mr890635agm.41.1285506472592;
+        Sun, 26 Sep 2010 06:07:52 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 10.91.215.10 with SMTP id s10ls1913345agq.5.p; Sun, 26 Sep 2010
+ 06:07:51 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.91.196.10 with SMTP id y10mr903036agp.7.1285506471888; Sun, 26
+ Sep 2010 06:07:51 -0700 (PDT)
+Received: by d17g2000yqm.googlegroups.com with HTTP; Sun, 26 Sep 2010 06:07:51
+ -0700 (PDT)
+Date: Sun, 26 Sep 2010 06:07:51 -0700 (PDT)
+In-Reply-To: <AANLkTinBPDJ9mc9Q5xZ=N75xcoEMT-SW8KkmeH2rQL92@mail.gmail.com>
+X-IP: 89.174.125.162
+References: <1fe1c053-2fdc-486a-81a2-bf6f6fad234f@q9g2000vbd.googlegroups.com>
+ <AANLkTimRhYr=862FP61Atxv47XO-jxWivwFFqQ+8afwm@mail.gmail.com> <AANLkTinBPDJ9mc9Q5xZ=N75xcoEMT-SW8KkmeH2rQL92@mail.gmail.com>
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; Linux x86_64; rv:2.0b7pre) Gecko/20100923
+ Firefox-4.0/4.0b7pre Ubuntu/10.04,gzip(gfe)
+Message-ID: <07d58603-39c3-494f-874e-9288aae0ae3e@d17g2000yqm.googlegroups.com>
+Subject: [lojban] Re: Python module for parsing lojban
+From: Marek Rogalski <mafikpl@gmail.com>
+To: lojban <lojban@googlegroups.com>
+X-Original-Sender: mafikpl@gmail.com
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+List-Post: <http://groups.google.com/group/lojban/post?hl=en_US>, <mailto:lojban@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/lojban?hl=en_US>
+Sender: lojban@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+unsubscribe@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Length: 1586
+
+I have added some macros, so it builds also under python2.
+http://stud.ics.p.lodz.pl/~mafik/pylojban-1.0.1.tar.bz2
+
+On Sep 26, 6:17 am, purpleposeidon <purpleposei...@gmail.com> wrote:
+> Bugs!
+> * It can only parse once
+
+Yes. It stores a lot of its parsing state in global and static
+variables. Also some garbage stays in the memory. After parsing one
+string its state needs to be reversed.
+
+> * Can't parse "dabrOda"
+> * Doesn't support erasures
+> * Most gregarious of all: It's written in C! It'll probably run faster
+> than mine in python! This is a very bad bug! It makes zirsam look
+> bad....
+>
+
+99,9% (or something like that) of c code is taken from parser-3.0.00.
+As far as i know it was using different approach than zirsam (faster
+but a lot less clean).
+
+Parser-3.0.00 seemed to me a lot cleaner and faultless two days ago...
+It seems to have been bad choice.
+
+> Could you give the parse a better interface than a dict?
+>
+
+I am currently writing other utility (peg parser) which hopefully
+might be used as backend for zirsam. I think that pylojban is too
+buggy to fix it in reasonable amount of time. Only possible use for
+it, I can imagine, are short command-line utilities for which one
+parsing will be enough.
+
+> mu'omi'e.djeims.
+
+--
+Marek Rogalski
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
