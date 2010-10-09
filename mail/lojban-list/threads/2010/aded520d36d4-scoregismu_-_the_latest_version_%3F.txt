@@ -1,4 +1,4 @@
-# mail/lojban-list thread aded520d36d4-scoregismu_-_the_latest_version_%3F | root d3669879-d238-4518-b876-0f80879be5f3@e14g2000yqe.googlegroups.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread aded520d36d4-scoregismu_-_the_latest_version_%3F | root d3669879-d238-4518-b876-0f80879be5f3@e14g2000yqe.googlegroups.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-08T14:50:37Z | najrut <ruler11post@gmail.com> | d3669879-d238-4518-b876-0f80879be5f3@e14g2000yqe.googlegroups.com | mail/lojban-list/cur/1286549437.aded520d36d40164.jbomohi:2,S
 http://jbotcan.org/en/res/1219.html talks about some bug fixes to
@@ -47,6 +47,55 @@ mu'omi'e .kamymecraijun.
 
 -- 
 ko na xalni
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 3 | 2010-10-09T11:23:46Z | najrut <ruler11post@gmail.com> | f04df5db-095b-4720-ae96-f01b97dbbedc@x7g2000yqg.googlegroups.com | mail/lojban-list/cur/1286623426.71ce611f6c733e70.jbomohi:2,S
+OK, I replaced those lines with yours. Then I created empty gismu.txt
+file, "1.txt" file with "iun 0.36 emploi 0.21 upiog 0.16 us 0.11
+primin 0.09 amal 0.07" text and typed the command "perl scoreGismu.pl
+1.txt"
+And again it results in "Top score is 0.489. mlino"
+What's wrong ?
+
+On Oct 8, 7:28 pm, Minimiscience <minimiscie...@gmail.com> wrote:
+> de'i li 08 pi'e 10 pi'e 2010 la'o fy. najrut .fy. cusku zoi skamyxatra.>http://jbotcan.org/en/res/1219.htmltalks about some bug fixes to
+> > scoreGismu. But where is the latest version stored indeed ?
+>
+> > Is it fixed now so that it gives the best score to pilno instead of
+> > mlino ?
+>
+> .skamyxatra
+>
+> I don't know if there's any "official" fix, but the pilno/mlino problem can be
+> solved by changing lines 114-118 from:
+>
+> >  if($gismu =~ /$lcs[0].?$lcs[1]/) {
+> >   if($word =~ /$lcs[0].?$lcs[1]/) {
+> >    $score += $weight * 2 / @wordSequence;
+> >   }
+> >  }
+>
+> to:
+>
+> >  $score += $weight * 2 / @wordSequence
+> >   if $gismu =~ /$lcs[0]$lcs[1]/ && $word =~ /$lcs[0]$lcs[1]/
+> >   || $gismu =~ /$lcs[0].$lcs[1]/ && $word =~ /$lcs[0].$lcs[1]/
+>
+> You'll also need to have an empty file in place of gismu.txt in order for
+> extant {gismu} (and anything they conflict with) to be considered for scoring.
+>
+> mu'omi'e .kamymecraijun.
+>
+> --
+> ko na xalni
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
