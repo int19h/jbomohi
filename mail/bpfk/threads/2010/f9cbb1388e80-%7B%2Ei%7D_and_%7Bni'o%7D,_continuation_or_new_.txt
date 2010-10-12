@@ -1,4 +1,4 @@
-# mail/bpfk thread f9cbb1388e80-%7B%2Ei%7D_and_%7Bni'o%7D,_continuation_or_new_ | root aanlktiknncm2ordom3de_znzkh1zadt9-z-_f0v+vyzw@mail.gmail.com | 11 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread f9cbb1388e80-%7B%2Ei%7D_and_%7Bni'o%7D,_continuation_or_new_ | root aanlktiknncm2ordom3de_znzkh1zadt9-z-_f0v+vyzw@mail.gmail.com | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-10T20:58:29Z | Jonathan Jones <eyeonus@gmail.com> | aanlktiknncm2ordom3de_znzkh1zadt9-z-_f0v+vyzw@mail.gmail.com | mail/bpfk/cur/1286744309.f9cbb1388e80c47a.jbomohi:2,S
 This thread is so completely unrelated to BPFK work that I feel we really
@@ -759,6 +759,69 @@ mu'o mi'e .aionys.
 .i.a'o.e'e ko cmima le bende pe lo pilno be denpa bu .i doi luk. mi patfu do
 zo'o
 (Come to the Dot Side! Luke, I am your father. :D )
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
+=== 12 | 2010-10-12T17:20:10Z | Adam Lopresto <adamlopresto@gmail.com> | aanlktimvw=rd0nt7iujybucrxfjk0zdphzchv5dyru3m@mail.gmail.com | mail/bpfk/cur/1286904010.47ccad9332257c67.jbomohi:2,S
+Long, long conversation here.
+
+What follows is a proposal, not a description of the current state of
+affairs. i believe that it is backwards compatible with most uses, although
+possibly not all edge cases.
+
+A "text" is everything produced by the current rule named "text" in the
+formal grammar. This is a single chunk of input, and can be fed to a parser
+by itself. It has an elidible terminator ({fa'u}) to explicitly indicate
+where it ends. It also has a new initiator to explicitly mark the beginning
+of parseable text. I'll use {fa'ai}, mnemonic {cfari}, but I don't care what
+word it is. In the end, it may end up analyzed out, but for now it's helpful
+to have it. {fa'ai} is of its own selma'o.
+
+A "conversation" is a sequence of zero or more texts, optionally with
+non-lojban garbage between them.
+
+There is also a new continuation word (tentatively {di'ai}, since that's
+what was used earlier) of its own selma'o. if it occurs at the beginning of
+a text (after optional {fa'ai}), we treat the text as a continuation of the
+preceding text (ignoring everything between them).
+
+"conversation" is the new top-level rule in the parser. it gracefully
+degrades to just a single text.
+
+So given an exchange in IRC
+
+A: do klama ma
+B: lo zarci
+
+We can either parse each line completely independently, or we can make our
+logs in a parseable format thus:
+
+A: fa'ai do klama ma fa'o
+B: fa'ai lo zarci fa'o
+
+That entire block is a single lojban conversation, and can be parsed.
+
+Potential issues:
+
+The conversation rule should ignore leading garbage before the first
+{fa'ai}, but {fa'ai} should be optional. This may mean that we misparse text
+or parse what we shouldn't, only to throw it away. I don't know whether
+that's workable or not, but it seems similar to issues {su} has.
+
+This view holds with the idea that continuations are always explicit. If you
+want a new text to be treated as part of an old text, start it with {di'ai}.
+If you want to be explicit that it is *not* part of the preceding text,
+{fa'ai} will do that. Otherwise, it will implicitly be a new text, but if
+context is strong enough people may ignore that for practical reasons.
+
+How these work with other Magic Words is left as an exercise for someone
+else, for now.
 
 -- 
 You received this message because you are subscribed to the Google Groups "BPFK" group.
