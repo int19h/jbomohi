@@ -1,0 +1,135 @@
+Received: from mail-pz0-f61.google.com ([209.85.210.61])
+	by chain.digitalkingdom.org with esmtp (Exim 4.72)
+	(envelope-from <lojban+bncCKatz7nFHBCund7lBBoEO1NMdQ@googlegroups.com>)
+	id 1P6Wzs-0006zR-9d; Thu, 14 Oct 2010 16:14:07 -0700
+Received: by pzk2 with SMTP id 2sf68064pzk.16
+        for <multiple recipients>; Thu, 14 Oct 2010 16:13:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:mime-version
+         :received:received:date:x-ip:user-agent:x-http-useragent:message-id
+         :subject:from:to:x-original-sender:reply-to:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=kl3mmR6LL/QO7jFdUH8cwOkxspowCnSoEI1/QXI/pC0=;
+        b=XTsE0c5hgnBGcVnPBOqNIMHVienxrh0bEu/WlafYA8618a6gFPEP8JK6fRfNHhW9wH
+         lFa7It/oB7PybpQFC4lP0wyy7e8eyngMwM2bjBkRL/9bVGTcOjlTCC108vPvDdAx7CF9
+         /G8Wo4W/u1UrZL0l+HAMT0zr5xxCsSxvoVgEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:mime-version:date:x-ip:user-agent:x-http-useragent
+         :message-id:subject:from:to:x-original-sender:reply-to:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        b=xW3a4vDp4FfZEAcCeoLpK+tKcKJ8nghEPMyIn3X53B8bDhI7CbHDs4HPHzuS6koYN5
+         9CvL8ty0lDCa4YSJJ1z7ltEwcV5zd4Nrrqxv3M8K1B12TOi8WTbJ4DNjURFgE72X3xew
+         f2/33/DMKg31hOxxbeKaqTvVOEQFVw4czQqOs=
+Received: by 10.142.9.9 with SMTP id 9mr507093wfi.47.1287098030078;
+        Thu, 14 Oct 2010 16:13:50 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 10.142.70.10 with SMTP id s10ls1625950wfa.1.p; Thu, 14 Oct 2010
+ 16:13:49 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.142.249.30 with SMTP id w30mr549196wfh.55.1287098029353; Thu,
+ 14 Oct 2010 16:13:49 -0700 (PDT)
+Received: by p20g2000prf.googlegroups.com with HTTP; Thu, 14 Oct 2010 16:13:49
+ -0700 (PDT)
+Date: Thu, 14 Oct 2010 16:13:49 -0700 (PDT)
+X-IP: 70.162.0.8
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us)
+ AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5,gzip(gfe)
+Message-ID: <385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com>
+Subject: [lojban] Questions on isolating utterances before completely parsing
+From: symuyn <rbysamppi@gmail.com>
+To: lojban <lojban@googlegroups.com>
+X-Original-Sender: rbysamppi@gmail.com
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+List-Post: <http://groups.google.com/group/lojban/post?hl=en_US>, <mailto:lojban@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/lojban?hl=en_US>
+Sender: lojban@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+unsubscribe@googlegroups.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Length: 3089
+
+I've got a hypothetical problem. It's pretty long, but please bear
+with me.
+
+Let's say that, hypothetically, someone is creating a text editor for
+Lojban, one which shows the syntactical structure of whatever you've
+typed *while you type*. The text would be displayed somewhat like
+this:
+
+   =E2=80=B9mi =E2=80=B9=E2=80=B9klama klama=E2=80=BA =E2=80=B9klama bo kla=
+ma=E2=80=BA=E2=80=BA=E2=80=BA
+
+Let's also imagine, hypothetically, that this person has made the
+editor pre-parse all whitespace/dot-separated chunks of text into the
+valsi that the chunks correspond to, identifying their selma'o and all
+that (e.g. "melo" =E2=86=92 [<"me" in ME> <"lo" in LE>]). This is before
+checking the grammar of the text.
+
+So this hypothetical text editor uses two parsers right now: a chunks-
+of-text-to-valsi parser and a sequence-of-valsi-to-textual-structures
+parser.
+
+Let's also say that, hypothetically, in testing this text editor, that
+this person encountered a problem.
+
+The hypothetical text editor becomes slower and slower when the text
+grows in size. This is because, unfortunately, the entire text has to
+be parsed whenever a new word is added or existing text is deleted.
+
+What to do? The person hypothetically comes up with an idea! There
+could be a *third* parser between the already existing two parsers,
+one that converts sequences of valsi into unparsed utterances! The
+third parser would ignore everything except I, NIhO, LU, LIhU, TO,
+TOI, TUhE, and TUhU, using those selma'o to create a tree of unparsed
+utterances.
+
+For instance, the third parser would convert the sequence of valsi [i
+cusku lu klama i klama li'u to mi cusku toi i cusku] into [[i cusku lu
+[[klama] [i klama]] li'u to [mi cusku] toi] [i cusku]].
+
+Therefore, with this new parser, the hypothetical editor can keep
+track of what the boundaries of the utterance *currently being edited*
+is, and re-parse *only the current utterance* when it's edited.
+
+But then, the person finds a problem with that solution! A fatal flaw:
+*LIhU, TOI, and TUhE are elidable*.
+
+Because of that, it seems that it's impossible to isolate an utterance
+from the text it is in without parsing the whole text for complete
+grammar.
+
+That's the end of the hypothetical situation. My questions are as
+following:
+
+* Is it true that the fact that LIhU, TOI, and TUhE are elidable makes
+isolating an utterance impossible without completely parsing the text
+the utterance is in? (Just making sure.)
+* Should the person make the third parser anyway while making LIhU,
+TOI, and TUhE *required and non-elidable*?
+* Is there another practical solution for the editor?
+
+Remember, the problem is that the hypothetical text editor is getting
+slow because otherwise it needs to parse the entire text for every
+edit.
+
+--=20
+You received this message because you are subscribed to the Google Groups "=
+lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegrou=
+ps.com.
+For more options, visit this group at http://groups.google.com/group/lojban=
+?hl=3Den.
+
+

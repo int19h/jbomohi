@@ -1,0 +1,74 @@
+# mail/lojban-list thread e02faf92077e-questions_on_isolating_utterances_before_comple | root 385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2010-10-14T23:13:49Z | symuyn <rbysamppi@gmail.com> | 385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com | mail/lojban-list/cur/1287098029.e02faf92077ebe4a.jbomohi:2,S
+I've got a hypothetical problem. It's pretty long, but please bear
+with me.
+
+Let's say that, hypothetically, someone is creating a text editor for
+Lojban, one which shows the syntactical structure of whatever you've
+typed *while you type*. The text would be displayed somewhat like
+this:
+
+   ‹mi ‹‹klama klama› ‹klama bo klama›››
+
+Let's also imagine, hypothetically, that this person has made the
+editor pre-parse all whitespace/dot-separated chunks of text into the
+valsi that the chunks correspond to, identifying their selma'o and all
+that (e.g. "melo" → [<"me" in ME> <"lo" in LE>]). This is before
+checking the grammar of the text.
+
+So this hypothetical text editor uses two parsers right now: a chunks-
+of-text-to-valsi parser and a sequence-of-valsi-to-textual-structures
+parser.
+
+Let's also say that, hypothetically, in testing this text editor, that
+this person encountered a problem.
+
+The hypothetical text editor becomes slower and slower when the text
+grows in size. This is because, unfortunately, the entire text has to
+be parsed whenever a new word is added or existing text is deleted.
+
+What to do? The person hypothetically comes up with an idea! There
+could be a *third* parser between the already existing two parsers,
+one that converts sequences of valsi into unparsed utterances! The
+third parser would ignore everything except I, NIhO, LU, LIhU, TO,
+TOI, TUhE, and TUhU, using those selma'o to create a tree of unparsed
+utterances.
+
+For instance, the third parser would convert the sequence of valsi [i
+cusku lu klama i klama li'u to mi cusku toi i cusku] into [[i cusku lu
+[[klama] [i klama]] li'u to [mi cusku] toi] [i cusku]].
+
+Therefore, with this new parser, the hypothetical editor can keep
+track of what the boundaries of the utterance *currently being edited*
+is, and re-parse *only the current utterance* when it's edited.
+
+But then, the person finds a problem with that solution! A fatal flaw:
+*LIhU, TOI, and TUhE are elidable*.
+
+Because of that, it seems that it's impossible to isolate an utterance
+from the text it is in without parsing the whole text for complete
+grammar.
+
+That's the end of the hypothetical situation. My questions are as
+following:
+
+* Is it true that the fact that LIhU, TOI, and TUhE are elidable makes
+isolating an utterance impossible without completely parsing the text
+the utterance is in? (Just making sure.)
+* Should the person make the third parser anyway while making LIhU,
+TOI, and TUhE *required and non-elidable*?
+* Is there another practical solution for the editor?
+
+Remember, the problem is that the hypothetical text editor is getting
+slow because otherwise it needs to parse the entire text for every
+edit.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
