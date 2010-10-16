@@ -1,4 +1,4 @@
-# mail/lojban-list thread e02faf92077e-questions_on_isolating_utterances_before_comple | root 385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com | 9 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread e02faf92077e-questions_on_isolating_utterances_before_comple | root 385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com | 10 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-14T23:13:49Z | symuyn <rbysamppi@gmail.com> | 385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com | mail/lojban-list/cur/1287098029.e02faf92077ebe4a.jbomohi:2,S
 I've got a hypothetical problem. It's pretty long, but please bear
@@ -194,7 +194,209 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 3 | 2010-10-14T23:53:39Z | Jonathan Jones <eyeonus@gmail.com> | aanlktinzf+_jsq82afkqrm71dyz-7ji4++curtgu_=0z@mail.gmail.com | mail/lojban-list/cur/1287100419.b33fbb23f24708b3.jbomohi:2,S
+=== 3 | 2010-10-16T16:46:00Z | symuyn <rbysamppi@gmail.com> | d555294f-7d33-4c29-89e8-9fdf5f745b1f@e22g2000prj.googlegroups.com | mail/lojban-list/cur/1287247560.fd16aed0060c43fe.jbomohi:2,S
+On Oct 14, 4:42 pm, ".alyn.post." <alyn.p...@lodockikumazvati.org>
+wrote:
+> On Thu, Oct 14, 2010 at 04:13:49PM -0700, symuyn wrote:
+> > I've got a hypothetical problem. It's pretty long, but please bear
+> > with me.
+>
+> > Let's say that, hypothetically, someone is creating a text editor for
+> > Lojban, one which shows the syntactical structure of whatever you've
+> > typed *while you type*. The text would be displayed somewhat like
+> > this:
+>
+> >    ‹mi ‹‹klama klama› ‹klama bo klama›››
+>
+> > Let's also imagine, hypothetically, that this person has made the
+> > editor pre-parse all whitespace/dot-separated chunks of text into the
+> > valsi that the chunks correspond to, identifying their selma'o and all
+> > that (e.g. "melo" → [<"me" in ME> <"lo" in LE>]). This is before
+> > checking the grammar of the text.
+>
+> > So this hypothetical text editor uses two parsers right now: a chunks-
+> > of-text-to-valsi parser and a sequence-of-valsi-to-textual-structures
+> > parser.
+>
+> > Let's also say that, hypothetically, in testing this text editor, that
+> > this person encountered a problem.
+>
+> > The hypothetical text editor becomes slower and slower when the text
+> > grows in size. This is because, unfortunately, the entire text has to
+> > be parsed whenever a new word is added or existing text is deleted.
+>
+> > What to do? The person hypothetically comes up with an idea! There
+> > could be a *third* parser between the already existing two parsers,
+> > one that converts sequences of valsi into unparsed utterances! The
+> > third parser would ignore everything except I, NIhO, LU, LIhU, TO,
+> > TOI, TUhE, and TUhU, using those selma'o to create a tree of unparsed
+> > utterances.
+>
+> > For instance, the third parser would convert the sequence of valsi [i
+> > cusku lu klama i klama li'u to mi cusku toi i cusku] into [[i cusku lu
+> > [[klama] [i klama]] li'u to [mi cusku] toi] [i cusku]].
+>
+> > Therefore, with this new parser, the hypothetical editor can keep
+> > track of what the boundaries of the utterance *currently being edited*
+> > is, and re-parse *only the current utterance* when it's edited.
+>
+> > But then, the person finds a problem with that solution! A fatal flaw:
+> > *LIhU, TOI, and TUhE are elidable*.
+>
+> > Because of that, it seems that it's impossible to isolate an utterance
+> > from the text it is in without parsing the whole text for complete
+> > grammar.
+>
+> > That's the end of the hypothetical situation. My questions are as
+> > following:
+>
+> > * Is it true that the fact that LIhU, TOI, and TUhE are elidable makes
+> > isolating an utterance impossible without completely parsing the text
+> > the utterance is in? (Just making sure.)
+> > * Should the person make the third parser anyway while making LIhU,
+> > TOI, and TUhE *required and non-elidable*?
+> > * Is there another practical solution for the editor?
+>
+> > Remember, the problem is that the hypothetical text editor is getting
+> > slow because otherwise it needs to parse the entire text for every
+> > edit.
+>
+> My first thought, in reading this, is that what you really want is
+> to have the state of the program (parse tree and token stream) saved
+> at the place right before the place the person makes the edit.
+>
+> Then, after the edit is made, you restore the program to the state
+> it was right before it parsed the text just edited, and continue
+> parsing, picking up the newly edited text.  This is called a
+> continuation.[1]
+>
+> Of course, you don't know where the user is going to be editing, so
+> you have to save multiple continuations during the parse, and restart
+> whichever one is closest and earlier than the edit, and throw away
+> the continuations that are now invalid because they occured later in
+> the text.
+>
+> This doesn't have to be an excessive number of continuations.  You only
+> have to save as many continuations as you need to make your program fast
+> enough.  You should have some idea about how much text is "too much" for
+> performance--how much text makes your parser too slow.  So you can
+> create continuations every N bytes knowing you'll only have to parse M
+> bytes (where M<=N) after any edit.
+>
+> This saves you the work of having three different parsers in
+> exchange for whatever overhead the continuation has.  That is going to
+> depend on other factors in your design, but you'd essentially be
+> trading memory for speed.
+>
+> Edits early in the document are of course going to need to reparse
+> everything after the edit, but:
+>
+>  * you'll parse the most recently changed text first, and you can
+>    provide feedback on this before the parse fully finishes.
+>  * Once you get to the next N boundary in your text (accounting for
+>    additions and deletions made, of course), you can compare the results
+>    from the current parse to the parse tree you got last time, and decide
+>    to stop once they start being identical.
+>
+> I can't really imagine implementing this in any other way, but I'm
+> curious to read everyone else's ideas.
+>
+> 1:http://en.wikipedia.org/wiki/Continuation
+>
+> -Alan
+> --
+> .i ko djuno fi le do sevzi
+
+Thanks for the replies, everyone.
+
+***
+
+In reply to Mr. Post, saving and using continuations is a very
+interesting idea, but unfortunately, I don't see how it would be
+practically usable when it comes to editing near the beginning—or even
+middle!—of the document. Hypothetically, if you have a long document,
+editing it even in the middle would take a long time to process for
+each re-parse.
+
+The two points that you give at the end to ameliorate continuations'
+problems are interesting but very difficult, as far as I can tell.
+Perhaps you can give some answers—
+
+Providing feedback during parsing of text downstream of the editing is
+impossible as far as I can tell—every PEG library I know—including the
+ones that I've written—is a sealed black box: once you plug something
+in, you must wait until it finishes getting the result out.
+
+Comparing parse trees and stopping re-parsing when they're
+sufficiently similar is risky, if there is no way to guarantee that
+the syntax tree is exactly the same all the way to the end *without re-
+parsing the whole thing anyway*. As far as I can tell, just because a
+new parse tree starts to look similar to the original tree, the new
+parse tree is not necessarily identical till the end. (Or is that
+actually a property of the Lojban grammar? If it is, only then should
+early stopping by comparison be used.)
+
+However, continuations *are* indeed the only way that I can now think
+of to implement practically such a text editor *without* requiring
+LIhU, etc. to be at the end of multi-utterance texts.
+
+***
+
+In reply to Mr. Jones, I'd love to hear from xorxes, and other people,
+if eliding LIhU, etc. is "looked down upon". That would definitely
+shift my deciding toward prohibiting eliding LIhU, etc. But, if LIhU,
+etc. are elided *a lot*, then the text editor ought to be able to
+handle that.
+
+The hypothetical text editor really is hypothetical. I have a
+rudimentary Lojban parser written in a parser library that I wrote
+(and need to finish, bleh), but I am currently still planning it.
+
+***
+
+In reply to Mr. Lopresto, my earlier second question doesn't dispute
+that eliding LIhU, etc. is grammatically valid. The second question
+asks if, hypothetically, it is *worth* the sacrifice to make them non-
+elidable to be able to isolate utterances and re-parse only them
+during editing.
+
+You gave an interesting suggestion: "it seems completely fair
+(hypothetically) to make a parser that exhibits sub-optimal
+performance in those unusual cases (reparsing all of the above bridi,
+instead of just the {mi prami do} part, for instance)." Unfortunately,
+as far as I can tell it is not practically possible to be able to
+parse with elidable LIhU, etc. and have sub-optimal performance in
+*only* those unusual cases. The person making the hypothetical text
+editor can't switch between a fast parser that can't elide them to a
+slow parser that can, because in order to detect when LIhU, etc. has
+been elided, you need to parse with the slow parser anyway!
+
+***
+
+I'm still struggling over if continuations vs. non-elidable text
+terminators are worth it. Lojbanic robustness vs. performance
+robustness.
+
+Using continuations—the only apparent way—would make the text editor a
+lot more complex. But, is it worth making a text editor *at all* if it
+can't parse *all* Lojban, including Lojban that validly elides LIhU,
+etc.?
+
+I just don't know.
+
+(There is a third option, of course: not implementing LU…LIhU, TU…
+TUhE, etc. at all! But that's definitely unacceptable.)
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 4 | 2010-10-14T23:53:39Z | Jonathan Jones <eyeonus@gmail.com> | aanlktinzf+_jsq82afkqrm71dyz-7ji4++curtgu_=0z@mail.gmail.com | mail/lojban-list/cur/1287100419.b33fbb23f24708b3.jbomohi:2,S
 On Thu, Oct 14, 2010 at 5:13 PM, symuyn <rbysamppi@gmail.com> wrote:
 
 > I've got a hypothetical problem. It's pretty long, but please bear
@@ -308,7 +510,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 4 | 2010-10-15T16:40:06Z | Adam Lopresto <adamlopresto@gmail.com> | aanlktimk6vbmmwb=5kszy2l48urgpxrlvcg-2hzkudet@mail.gmail.com | mail/lojban-list/cur/1287160806.04a87fe7a6c8ed56.jbomohi:2,S
+=== 5 | 2010-10-15T16:40:06Z | Adam Lopresto <adamlopresto@gmail.com> | aanlktimk6vbmmwb=5kszy2l48urgpxrlvcg-2hzkudet@mail.gmail.com | mail/lojban-list/cur/1287160806.04a87fe7a6c8ed56.jbomohi:2,S
 >> * Is it true that the fact that LIhU, TOI, and TUhE are elidable makes
 >> isolating an utterance impossible without completely parsing the text
 >> the utterance is in? (Just making sure.)
@@ -397,7 +599,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 5 | 2010-10-15T18:13:49Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinm8qczadzigox+x0unq0uyde_dfdhctvc9a-bw@mail.gmail.com | mail/lojban-list/cur/1287166429.6598d748fd1560ae.jbomohi:2,S
+=== 6 | 2010-10-15T18:13:49Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinm8qczadzigox+x0unq0uyde_dfdhctvc9a-bw@mail.gmail.com | mail/lojban-list/cur/1287166429.6598d748fd1560ae.jbomohi:2,S
 >
 > .i mi lu mi prami do cusku
 
@@ -523,7 +725,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 6 | 2010-10-16T00:00:48Z | Stela Selckiku <selckiku@gmail.com> | aanlktimhy6gne8hiduu7vvy=9tqlg7d2+dk7ta-rc6af@mail.gmail.com | mail/lojban-list/cur/1287187248.5f1bf158032398e0.jbomohi:2,S
+=== 7 | 2010-10-16T00:00:48Z | Stela Selckiku <selckiku@gmail.com> | aanlktimhy6gne8hiduu7vvy=9tqlg7d2+dk7ta-rc6af@mail.gmail.com | mail/lojban-list/cur/1287187248.5f1bf158032398e0.jbomohi:2,S
 On Fri, Oct 15, 2010 at 12:40 PM, Adam Lopresto <adamlopresto@gmail.com> wrote:
 >
 > .i mi lu mi prami do cusku
@@ -552,7 +754,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 7 | 2010-10-16T03:50:47Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinp8sxgmrnytufnnzdvy7jtxhuhbx3cx9hvy6eh@mail.gmail.com | mail/lojban-list/cur/1287201047.10a4d24a516297d8.jbomohi:2,S
+=== 8 | 2010-10-16T03:50:47Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinp8sxgmrnytufnnzdvy7jtxhuhbx3cx9hvy6eh@mail.gmail.com | mail/lojban-list/cur/1287201047.10a4d24a516297d8.jbomohi:2,S
 oh wow, that sounds like a potentially really fun forum.
 
 And what is this "rite of passage" of which you speak, and how would one go
@@ -600,7 +802,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 8 | 2010-10-16T05:34:06Z | Stela Selckiku <selckiku@gmail.com> | aanlktikkuogbhqb2+wgqovqsscfavauqdqxxqdrutr4u@mail.gmail.com | mail/lojban-list/cur/1287207246.b7366bb11e6b4d56.jbomohi:2,S
+=== 9 | 2010-10-16T05:34:06Z | Stela Selckiku <selckiku@gmail.com> | aanlktikkuogbhqb2+wgqovqsscfavauqdqxxqdrutr4u@mail.gmail.com | mail/lojban-list/cur/1287207246.b7366bb11e6b4d56.jbomohi:2,S
 On Fri, Oct 15, 2010 at 11:50 PM, Luke Bergen <lukeabergen@gmail.com> wrote:
 > oh wow, that sounds like a potentially really fun
 > forum.
@@ -627,7 +829,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 9 | 2010-10-16T06:02:11Z | Jonathan Jones <eyeonus@gmail.com> | aanlktintqv4kdxuupi=5+6jp5a_m1suqo1xzzctcgd+y@mail.gmail.com | mail/lojban-list/cur/1287208931.1ae5d4bb619b9518.jbomohi:2,S
+=== 10 | 2010-10-16T06:02:11Z | Jonathan Jones <eyeonus@gmail.com> | aanlktintqv4kdxuupi=5+6jp5a_m1suqo1xzzctcgd+y@mail.gmail.com | mail/lojban-list/cur/1287208931.1ae5d4bb619b9518.jbomohi:2,S
 On Fri, Oct 15, 2010 at 11:34 PM, Stela Selckiku <selckiku@gmail.com> wrote:
 
 > On Fri, Oct 15, 2010 at 11:50 PM, Luke Bergen <lukeabergen@gmail.com>
