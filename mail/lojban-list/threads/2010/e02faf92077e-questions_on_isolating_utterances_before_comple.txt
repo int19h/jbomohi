@@ -1,4 +1,4 @@
-# mail/lojban-list thread e02faf92077e-questions_on_isolating_utterances_before_comple | root 385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com | 13 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread e02faf92077e-questions_on_isolating_utterances_before_comple | root 385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com | 14 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-14T23:13:49Z | symuyn <rbysamppi@gmail.com> | 385d6b2f-c484-494b-9241-6d7429ce0ec3@p20g2000prf.googlegroups.com | mail/lojban-list/cur/1287098029.e02faf92077ebe4a.jbomohi:2,S
 I've got a hypothetical problem. It's pretty long, but please bear
@@ -431,7 +431,119 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 5 | 2010-10-14T23:53:39Z | Jonathan Jones <eyeonus@gmail.com> | aanlktinzf+_jsq82afkqrm71dyz-7ji4++curtgu_=0z@mail.gmail.com | mail/lojban-list/cur/1287100419.b33fbb23f24708b3.jbomohi:2,S
+=== 5 | 2010-10-16T18:57:01Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101016185701.gb10877@alice.local | mail/lojban-list/cur/1287255421.28f460275443838d.jbomohi:2,S
+On Sat, Oct 16, 2010 at 09:46:00AM -0700, symuyn wrote:
+> In reply to Mr. Post, saving and using continuations is a very
+> interesting idea, but unfortunately, I don't see how it would be
+> practically usable when it comes to editing near the beginning—or even
+> middle!—of the document. Hypothetically, if you have a long document,
+> editing it even in the middle would take a long time to process for
+> each re-parse.
+> 
+> The two points that you give at the end to ameliorate continuations'
+> problems are interesting but very difficult, as far as I can tell.
+> Perhaps you can give some answers—
+> 
+> Providing feedback during parsing of text downstream of the editing is
+> impossible as far as I can tell—every PEG library I know—including the
+> ones that I've written—is a sealed black box: once you plug something
+> in, you must wait until it finishes getting the result out.
+> 
+
+The PEG parser I'm using requires you to write a generator for token
+input, which is the first place I'd try putting continuations:
+
+  http://gazette.call-cc.org/issues/5.html
+
+Meaning, I'd manage my continuations on the input side, rather than
+the output side, because you're right--stuff pops out fully formed.
+
+I suspect I'd have to hack at the parser some after this to make
+continuations work as I expected, but I already expected I'd be
+learning and fixing this particular parser anyway.
+
+If you can save to and seek back to the input position for a
+particular parse, save the state variables of the parser, and save
+the syntax tree, it really should be possible.
+
+While I have extensive experience with parsers, I have very little
+experience with PEG parsers, so I accept that something about these
+parsers may make that difficult.  I wouldn't try to do something
+like this with a recursive descent parser, because it saves state on
+the stack.  I might be motivated enough to convert a recursive descent
+parser into a continuation passing style parser, which would allow
+me to save the stack-based representation of the parse on the heap
+if I needed to create a continuation.
+
+
+> Comparing parse trees and stopping re-parsing when they're
+> sufficiently similar is risky, if there is no way to guarantee that
+> the syntax tree is exactly the same all the way to the end *without re-
+> parsing the whole thing anyway*. As far as I can tell, just because a
+> new parse tree starts to look similar to the original tree, the new
+> parse tree is not necessarily identical till the end. (Or is that
+> actually a property of the Lojban grammar? If it is, only then should
+> early stopping by comparison be used.)
+> 
+
+You're correct.  Sufficiently similar is a heuristic that won't work
+for all cases.  I was suggesting that this trade-off was better than
+the other suggested trade-offs for solving this problem.  As you're
+the one writing this thing, you get to decide which trade-off you
+want to deal with.  ;-)
+
+What I was thinking is the the parser would run as a separate
+thread, and the parse tree in the main thread would contain in it a
+marshall object at the current parse location.  Occassionally this
+marshall object would receive more of the parse tree and a new
+marshall object, replacing the old marshall object with the new bit
+of parse tree and the place it was still working.
+
+I wasn't thinking of the "all-or-nothing" property of PEG parsers,
+as this idea does require the PEG parser to check back in with the
+caller from time to time.
+
+
+> However, continuations *are* indeed the only way that I can now think
+> of to implement practically such a text editor *without* requiring
+> LIhU, etc. to be at the end of multi-utterance texts.
+> 
+
+I don't personally elide LIhU, LUhU, TOI, &c myself.
+
+I know that Eclipse can parse python (and presumably other languages)
+in its editor.  I also know that this parser is not identical to the
+way that python parsers itself, as my coworkers have complained to
+me that Eclipse flagged a perfectly valid python construct as
+invalid when in fact python did something quite useful with the same
+construct.
+
+This doesn't stop people from using Eclipse to write python, and
+serves as prior art on how people cope (and programs don't cope) with
+this sort of thing.
+
+In our case we add little tokens in the code that Eclipse recognizes 
+but python doesn't, so Eclipse will shut up and python will work.
+
+I am curious to hear how this project goes for you.  What platform
+are you targeting?  What language are you using?  What PEG parser
+are you trying?  No one has tried doing anything like this with
+Lojban before, which makes me quite excited.
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 6 | 2010-10-14T23:53:39Z | Jonathan Jones <eyeonus@gmail.com> | aanlktinzf+_jsq82afkqrm71dyz-7ji4++curtgu_=0z@mail.gmail.com | mail/lojban-list/cur/1287100419.b33fbb23f24708b3.jbomohi:2,S
 On Thu, Oct 14, 2010 at 5:13 PM, symuyn <rbysamppi@gmail.com> wrote:
 
 > I've got a hypothetical problem. It's pretty long, but please bear
@@ -545,7 +657,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 6 | 2010-10-15T16:40:06Z | Adam Lopresto <adamlopresto@gmail.com> | aanlktimk6vbmmwb=5kszy2l48urgpxrlvcg-2hzkudet@mail.gmail.com | mail/lojban-list/cur/1287160806.04a87fe7a6c8ed56.jbomohi:2,S
+=== 7 | 2010-10-15T16:40:06Z | Adam Lopresto <adamlopresto@gmail.com> | aanlktimk6vbmmwb=5kszy2l48urgpxrlvcg-2hzkudet@mail.gmail.com | mail/lojban-list/cur/1287160806.04a87fe7a6c8ed56.jbomohi:2,S
 >> * Is it true that the fact that LIhU, TOI, and TUhE are elidable makes
 >> isolating an utterance impossible without completely parsing the text
 >> the utterance is in? (Just making sure.)
@@ -634,7 +746,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 7 | 2010-10-15T18:13:49Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinm8qczadzigox+x0unq0uyde_dfdhctvc9a-bw@mail.gmail.com | mail/lojban-list/cur/1287166429.6598d748fd1560ae.jbomohi:2,S
+=== 8 | 2010-10-15T18:13:49Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinm8qczadzigox+x0unq0uyde_dfdhctvc9a-bw@mail.gmail.com | mail/lojban-list/cur/1287166429.6598d748fd1560ae.jbomohi:2,S
 >
 > .i mi lu mi prami do cusku
 
@@ -760,7 +872,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 8 | 2010-10-16T00:00:48Z | Stela Selckiku <selckiku@gmail.com> | aanlktimhy6gne8hiduu7vvy=9tqlg7d2+dk7ta-rc6af@mail.gmail.com | mail/lojban-list/cur/1287187248.5f1bf158032398e0.jbomohi:2,S
+=== 9 | 2010-10-16T00:00:48Z | Stela Selckiku <selckiku@gmail.com> | aanlktimhy6gne8hiduu7vvy=9tqlg7d2+dk7ta-rc6af@mail.gmail.com | mail/lojban-list/cur/1287187248.5f1bf158032398e0.jbomohi:2,S
 On Fri, Oct 15, 2010 at 12:40 PM, Adam Lopresto <adamlopresto@gmail.com> wrote:
 >
 > .i mi lu mi prami do cusku
@@ -789,7 +901,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 9 | 2010-10-16T03:50:47Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinp8sxgmrnytufnnzdvy7jtxhuhbx3cx9hvy6eh@mail.gmail.com | mail/lojban-list/cur/1287201047.10a4d24a516297d8.jbomohi:2,S
+=== 10 | 2010-10-16T03:50:47Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinp8sxgmrnytufnnzdvy7jtxhuhbx3cx9hvy6eh@mail.gmail.com | mail/lojban-list/cur/1287201047.10a4d24a516297d8.jbomohi:2,S
 oh wow, that sounds like a potentially really fun forum.
 
 And what is this "rite of passage" of which you speak, and how would one go
@@ -837,7 +949,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 10 | 2010-10-16T05:34:06Z | Stela Selckiku <selckiku@gmail.com> | aanlktikkuogbhqb2+wgqovqsscfavauqdqxxqdrutr4u@mail.gmail.com | mail/lojban-list/cur/1287207246.b7366bb11e6b4d56.jbomohi:2,S
+=== 11 | 2010-10-16T05:34:06Z | Stela Selckiku <selckiku@gmail.com> | aanlktikkuogbhqb2+wgqovqsscfavauqdqxxqdrutr4u@mail.gmail.com | mail/lojban-list/cur/1287207246.b7366bb11e6b4d56.jbomohi:2,S
 On Fri, Oct 15, 2010 at 11:50 PM, Luke Bergen <lukeabergen@gmail.com> wrote:
 > oh wow, that sounds like a potentially really fun
 > forum.
@@ -864,7 +976,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 11 | 2010-10-16T06:02:11Z | Jonathan Jones <eyeonus@gmail.com> | aanlktintqv4kdxuupi=5+6jp5a_m1suqo1xzzctcgd+y@mail.gmail.com | mail/lojban-list/cur/1287208931.1ae5d4bb619b9518.jbomohi:2,S
+=== 12 | 2010-10-16T06:02:11Z | Jonathan Jones <eyeonus@gmail.com> | aanlktintqv4kdxuupi=5+6jp5a_m1suqo1xzzctcgd+y@mail.gmail.com | mail/lojban-list/cur/1287208931.1ae5d4bb619b9518.jbomohi:2,S
 On Fri, Oct 15, 2010 at 11:34 PM, Stela Selckiku <selckiku@gmail.com> wrote:
 
 > On Fri, Oct 15, 2010 at 11:50 PM, Luke Bergen <lukeabergen@gmail.com>
@@ -910,7 +1022,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 12 | 2010-10-16T18:20:23Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101016182023.ga10877@alice.local | mail/lojban-list/cur/1287253223.572028131d7f025e.jbomohi:2,S
+=== 13 | 2010-10-16T18:20:23Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101016182023.ga10877@alice.local | mail/lojban-list/cur/1287253223.572028131d7f025e.jbomohi:2,S
 On Sat, Oct 16, 2010 at 12:02:11AM -0600, Jonathan Jones wrote:
 >    .imiCUSkubaula.lojban. , to provide a rather simple example, although to
 >    truly do it justice, a more complex jufra should be used.
@@ -932,7 +1044,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 13 | 2010-10-16T18:38:13Z | Krzysztof Sobolewski <jezuch@interia.pl> | 201010162038.17241.jezuch@interia.pl | mail/lojban-list/cur/1287254293.0f986f09b29d85da.jbomohi:2,S
+=== 14 | 2010-10-16T18:38:13Z | Krzysztof Sobolewski <jezuch@interia.pl> | 201010162038.17241.jezuch@interia.pl | mail/lojban-list/cur/1287254293.0f986f09b29d85da.jbomohi:2,S
 Dnia sobota, 16 października 2010 o 08:02:11 Jonathan Jones napisał(a):
 
 >  Still, as just a simple example of annoying practices (you call it amusing art, I call it annoying practice, agree to disagree, Stela), someone should post in .lokadin.'s evil no space writing style.
