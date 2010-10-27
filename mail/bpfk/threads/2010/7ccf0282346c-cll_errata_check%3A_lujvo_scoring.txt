@@ -1,4 +1,4 @@
-# mail/bpfk thread 7ccf0282346c-cll_errata_check%3A_lujvo_scoring | root 20101026061117.gj1105@digitalkingdom.org | 8 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread 7ccf0282346c-cll_errata_check%3A_lujvo_scoring | root 20101026061117.gj1105@digitalkingdom.org | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-26T06:11:17Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20101026061117.gj1105@digitalkingdom.org | mail/bpfk/cur/1288073477.7ccf0282346c5870.jbomohi:2,S
 
@@ -522,7 +522,91 @@ For more options, visit this group at http://groups.google.com/group/bpfk-list?h
 
 
 
-=== 8 | 2010-10-26T08:15:48Z | Arnt Richard Johansen <arj@nvg.org> | 20101026081548.gp8367@nvg.org | mail/bpfk/cur/1288080948.b768626443f8ceed.jbomohi:2,S
+=== 8 | 2010-10-27T00:32:46Z | Robert LeChevalier <lojbab@lojban.org> | 4cc7732e.3060808@lojban.org | mail/bpfk/cur/1288139566.95693174129dc3ee.jbomohi:2,S
+Robin Lee Powell wrote:
+> On Tue, Oct 26, 2010 at 01:56:00PM -0400, Nora LeChevalier wrote:
+> 
+>>At 02:39 AM 10/26/2010, Robin wrote:
+>>
+>>>Oh, also, it means the actual formally written out immediately
+>>>before is wrong, and possibly some of the surrounding verbiage.
+>>>
+>>>It also makes negative lujvo possible, which seems icky.
+>>>
+>>>-Robin
+>>
+>>[snip]
+>>
+>>>>On Tue, Oct 26, 2010 at 02:33:56AM -0400, John Cowan wrote:
+>>>>
+>>>>>At the last minute we (which I think means Nora) decided to subtract
+>>>>>everything from 32500 so that higher values = better lujvo.  12.1
+>>>>>obviously got missed, so your fix is just the wrong way round.
+>>
+>>  In the program, a max of 6 pieces was handled.
+> 
+> 
+> Ah.  That changes things.
+> 
+> 
+>>Looking at calculations in my lujvo-making program ( I presume this
+>>is what you're referring to?), higher is better score:
+>>
+>>
+>>        Luj.LujScore := (32 - length(Luj.Lujvo)) * 1000
+>>                      + ApostTot * 500
+>>                      + (5 - HyphenCount) * 100
+>>                      + TypeTot * 10
+>>                      + VowelTot;
+> 
+> 
+> Thaaaaaaat's not *remotely* like what's in *any* version of the
+> book.  Every book version has both positive and negative segments.
+> It also doesn't have the 6 piece limit.
+
+Actually it is almost identical to the book examples (with the 32500 
+subtraction).  You just have to expand the formula algebraically.  The 
+above becomes
+
+32000 - (1000 * L) + (500 * A) + 500 - (100 * H) + (10 * R) + V
+
+which is the same as subtracting the book formula from 32500 (flipping 
+all the signs):
+
+(1000 * L) - (500 * A) + (100 * H) - (10 * R) - V
+becomes
+32500 - (1000 * L) + (500 * A) - (100 * H) + (10 * R) + V
+which is Nora's equation.
+
+> I'd really prefer to change the book as little as possible.  That
+> means lower score is better.  Is it *really* important that we flip
+> it around, especially at the expense of limiting the alg's
+> applicability?
+
+It isn't important at all.  Indeed, the parenthetical in the first 
+paragraph of section 12.1 shows that flipping it was the explicit 
+intent.  John (apparently) changed it from highest scoring to lowest 
+scoring (probably to eliminate the 6 rafsi limit) but didn't correctly 
+change the example calculations.
+
+So make them match the formula in the book (which requires removing the 
+"32500 -" and adjusting other signs to exactly match the formula, and 
+then using a calculator to get the correct total for the low-scoring 
+algorithm; I think only 12.3 has the correct total for the stated 
+formula, if my head-calculator is working and I flipped the right signs.)
+
+lojbab
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
+
+=== 9 | 2010-10-26T08:15:48Z | Arnt Richard Johansen <arj@nvg.org> | 20101026081548.gp8367@nvg.org | mail/bpfk/cur/1288080948.b768626443f8ceed.jbomohi:2,S
 On Tue, Oct 26, 2010 at 02:33:56AM -0400, John Cowan wrote:
 > At the last minute we (which I think means Nora) decided to subtract
 > everything from 32500 so that higher values = better lujvo.  12.1
