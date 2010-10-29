@@ -1,4 +1,4 @@
-# mail/lojban-list thread df8baf597fb2-questions_about_peg_grammar | root aanlkti=u_dsspkkcwwffqacitcmymtv9ewtk8m-upz68@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread df8baf597fb2-questions_about_peg_grammar | root aanlkti=u_dsspkkcwwffqacitcmymtv9ewtk8m-upz68@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-29T19:36:09Z | Luke Bergen <lukeabergen@gmail.com> | aanlkti=u_dsspkkcwwffqacitcmymtv9ewtk8m-upz68@mail.gmail.com | mail/lojban-list/cur/1288380969.df8baf597fb2bb74.jbomohi:2,S
 Ok, so I'm trying to get a feel for how the peg grammar handles lujvo so
@@ -29,5 +29,50 @@ You received this message because you are subscribed to the Google Groups "lojba
 To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+=== 2 | 2010-10-29T19:40:01Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101029194001.gi47249@alice.local | mail/lojban-list/cur/1288381201.579827db27c6462e.jbomohi:2,S
+On Fri, Oct 29, 2010 at 03:36:09PM -0400, Luke Bergen wrote:
+>    Ok, so I'm trying to get a feel for how the peg grammar handles lujvo so
+>    that I can make my parser be as close to the real deal as possible (i.e.
+>    not a sloppy hack). I have a question though. I think the relevant section
+>    that I want to understand is the following, correct?
+>    ;-----------------------------------------------------------------------------------------------------------------------------------------
+>    lujvo <- !gismu !fuhivla !cmavo initial-rafsi* brivla-core
+>    brivla-core <- fuhivla / gismu / CVV-final-rafsi / stressed-initial-rafsi
+>    short-final-rafsi
+>    stressed-initial-rafsi <- stressed-extended-rafsi / stressed-y-rafsi /
+>    stressed-y-less-rafsi
+>    initial-rafsi <- extended-rafsi / y-rafsi / !any-extended-rafsi
+>    y-less-rafsi
+>    any-extended-rafsi <- fuhivla / extended-rafsi / stressed-extended-rafsi
+>    ;-----------------------------------------------------------------------------------------------------------------------------------------
+>    Now, I may be reading this incorrectly, but wouldn't this mean that an
+>    initial rafsi followed by a fuhivla would be considered a lujvo? i.e.
+>    {bracidrspageti}?
+> 
+
+This is a bit tricky.
+
+Look at the early part of the lujvo definition, and you can see
+there is a predicate-not operation saying "it can't have a fuhivla"
+(That is the !fuhivla).
+
+So when the brivla-core matches, even through brivla-core is capable
+of having a fuhivla, it won't ever have one in this case, because
+the earlier predicate-not operation in the lujvo nonterminal won't let
+one be there.
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
 
 
