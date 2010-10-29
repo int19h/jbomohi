@@ -1,4 +1,4 @@
-# mail/lojban-list thread 7afceda7a1c1-lujvo_deconstruction | root aanlktik2apwyut40-wmwcd_wjj4b4aerknshvq_mcf=p@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 7afceda7a1c1-lujvo_deconstruction | root aanlktik2apwyut40-wmwcd_wjj4b4aerknshvq_mcf=p@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-29T16:08:09Z | Luke Bergen <lukeabergen@gmail.com> | aanlktik2apwyut40-wmwcd_wjj4b4aerknshvq_mcf=p@mail.gmail.com | mail/lojban-list/cur/1288368489.7afceda7a1c1932a.jbomohi:2,S
 When I first started learning lojban I wrote up a quick'n dirty script to
@@ -84,5 +84,74 @@ To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
+
+
+
+=== 3 | 2010-10-29T17:31:53Z | Adam Lopresto <adamlopresto@gmail.com> | aanlktikpwphz9dhr-m2-=sopqchf-uzpss7ejt6j9l2l@mail.gmail.com | mail/lojban-list/cur/1288373513.95c8e66757687c4b.jbomohi:2,S
+When I attacked this in a perl script some time ago, I worked by
+creating regexps for the different classes of rafsi, and then
+attempting to match the entire word against more and more rafsi at a
+time until something fit. It has some false positives (it treats
+illegal lujvo and cmavo clusters as though they were normal lujvo),
+but it gets the job done.
+
+On Fri, Oct 29, 2010 at 12:03 PM, .alyn.post.
+<alyn.post@lodockikumazvati.org> wrote:
+> On Fri, Oct 29, 2010 at 12:08:09PM -0400, Luke Bergen wrote:
+>>    When I first started learning lojban I wrote up a quick'n dirty script to
+>>    make looking up words faster and easier. gismu and cmavo were easy, but I
+>>    could never figure out lujvo. So I'm taking another stab at it. I
+>>    currently have something that works in the general cases of {bajdri},
+>>    {ba'udri}, and {bagypau}. But currently I'm not sure how to deal with 4
+>>    letter rafsi and non "y" buffer letters.
+>>    To deal with the non "y" buffer letters I thought I could just say:
+>>    strip all "y" from the word
+>>    get first three non "'" chars
+>>    if the first letter is "r", "l", "m", or "n" and the second letter is a
+>>    consonant, then chop off the first letter and grab another letter from the
+>>    right
+>>    (so if I was parsing "bacru zei bevri" = "ba'urbei" I would (after
+>>    handling ba'u in the first iteration) end up with "rbe" and due to the
+>>    above step, I'd strip off the "r" and grab the next letter thus ending
+>>    with "bei" which is the right result).
+>>    But this produces strange results because there ARE cases where buffer
+>>    letters are followed by consonants (morsi for instance).
+>>    Is there a way to un-ambiguously and algorithmically break a lujvo down
+>>    into its component gismu?
+>>
+>
+> I haven't rigorously looked at this, so please excuse me if I'm way
+> off base.
+>
+> What if you start at the left side of the word and match characters
+> until you get a matching rafsi, then look for optional buffer
+> characters before matching your next rafsi, &c?  You could be much
+> more sophisticated by adding detection for valid lerfu clustering
+> to throw out what would otherwise be an ambiguous case.
+>
+> It sounds like you're working top down on the problem rather than
+> going from left to right, but I don't know what is wrong with my
+> suggestion yet.
+>
+> I see you've provided 3 simple examples, but can you provide an
+> example for morsi which you mention at the end?
+>
+> -Alan
+> --
+> .i ko djuno fi le do sevzi
+>
+> --
+> You received this message because you are subscribed to the Google Groups "lojban" group.
+> To post to this group, send email to lojban@googlegroups.com.
+> To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+> For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+>
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
 
