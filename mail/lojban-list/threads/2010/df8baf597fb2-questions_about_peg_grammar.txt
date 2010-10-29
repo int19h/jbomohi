@@ -1,4 +1,4 @@
-# mail/lojban-list thread df8baf597fb2-questions_about_peg_grammar | root aanlkti=u_dsspkkcwwffqacitcmymtv9ewtk8m-upz68@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread df8baf597fb2-questions_about_peg_grammar | root aanlkti=u_dsspkkcwwffqacitcmymtv9ewtk8m-upz68@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-29T19:36:09Z | Luke Bergen <lukeabergen@gmail.com> | aanlkti=u_dsspkkcwwffqacitcmymtv9ewtk8m-upz68@mail.gmail.com | mail/lojban-list/cur/1288380969.df8baf597fb2bb74.jbomohi:2,S
 Ok, so I'm trying to get a feel for how the peg grammar handles lujvo so
@@ -152,5 +152,111 @@ You received this message because you are subscribed to the Google Groups "lojba
 To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+=== 4 | 2010-10-29T19:57:44Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101029195744.gj47249@alice.local | mail/lojban-list/cur/1288382264.1bffa6aaf289c1b9.jbomohi:2,S
+Presuming your ',' character is the ordered-choice predicate (the '/'
+in the Lojban grammar) you're totally right.
+
+Your description does not work if you're talking about the sequence
+predicate, because the predicate-not operator is working on the
+input stream, rather than directly modifying the rules, which is how
+you're articulating how it works in your description. 
+
+If that doesn't make sense I'll write up an example, but for your
+example below you've understood the correct behavior.
+
+-Alan
+
+On Fri, Oct 29, 2010 at 03:51:11PM -0400, Luke Bergen wrote:
+>    oh, interesting. So the !fuhivla, !gismu, and the rest will effectively
+>    modify what "bridi-core" is such that a bridi-core (in the context of a
+>    lujvo) will not have fuivla, gismu, or cmavo in it.
+>    Interesting. So if I have
+>    stuff <- !dogs !tabby animal
+>    animal <- dogs, cats, mice
+>    cats <- barn-cat, tabby
+>    then "stuff" will be a class of things that contains "barn-cat and mice".
+>    Is this right?
+>    On Fri, Oct 29, 2010 at 3:40 PM, .alyn.post.
+>    <[1]alyn.post@lodockikumazvati.org> wrote:
+> 
+>      On Fri, Oct 29, 2010 at 03:36:09PM -0400, Luke Bergen wrote:
+>      > Ok, so I'm trying to get a feel for how the peg grammar handles lujvo
+>      so
+>      > that I can make my parser be as close to the real deal as possible
+>      (i.e.
+>      > not a sloppy hack). I have a question though. I think the relevant
+>      section
+>      > that I want to understand is the following, correct?
+>      >
+>      ;-----------------------------------------------------------------------------------------------------------------------------------------
+>      > lujvo <- !gismu !fuhivla !cmavo initial-rafsi* brivla-core
+>      > brivla-core <- fuhivla / gismu / CVV-final-rafsi /
+>      stressed-initial-rafsi
+>      > short-final-rafsi
+>      > stressed-initial-rafsi <- stressed-extended-rafsi / stressed-y-rafsi /
+>      > stressed-y-less-rafsi
+>      > initial-rafsi <- extended-rafsi / y-rafsi / !any-extended-rafsi
+>      > y-less-rafsi
+>      > any-extended-rafsi <- fuhivla / extended-rafsi /
+>      stressed-extended-rafsi
+>      >
+>      ;-----------------------------------------------------------------------------------------------------------------------------------------
+>      > Now, I may be reading this incorrectly, but wouldn't this mean that an
+>      > initial rafsi followed by a fuhivla would be considered a lujvo? i.e.
+>      > {bracidrspageti}?
+>      >
+> 
+>      This is a bit tricky.
+> 
+>      Look at the early part of the lujvo definition, and you can see
+>      there is a predicate-not operation saying "it can't have a fuhivla"
+>      (That is the !fuhivla).
+> 
+>      So when the brivla-core matches, even through brivla-core is capable
+>      of having a fuhivla, it won't ever have one in this case, because
+>      the earlier predicate-not operation in the lujvo nonterminal won't let
+>      one be there.
+> 
+>      -Alan
+>      --
+>      .i ko djuno fi le do sevzi
+>      --
+>      You received this message because you are subscribed to the Google
+>      Groups "lojban" group.
+>      To post to this group, send email to [2]lojban@googlegroups.com.
+>      To unsubscribe from this group, send email to
+>      [3]lojban+unsubscribe@googlegroups.com.
+>      For more options, visit this group at
+>      [4]http://groups.google.com/group/lojban?hl=en.
+> 
+>    --
+>    You received this message because you are subscribed to the Google Groups
+>    "lojban" group.
+>    To post to this group, send email to lojban@googlegroups.com.
+>    To unsubscribe from this group, send email to
+>    lojban+unsubscribe@googlegroups.com.
+>    For more options, visit this group at
+>    http://groups.google.com/group/lojban?hl=en.
+> 
+> References
+> 
+>    Visible links
+>    1. mailto:alyn.post@lodockikumazvati.org
+>    2. mailto:lojban@googlegroups.com
+>    3. mailto:lojban%2Bunsubscribe@googlegroups.com
+>    4. http://groups.google.com/group/lojban?hl=en
+
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
 
 
