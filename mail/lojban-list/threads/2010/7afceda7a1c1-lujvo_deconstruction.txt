@@ -1,4 +1,4 @@
-# mail/lojban-list thread 7afceda7a1c1-lujvo_deconstruction | root aanlktik2apwyut40-wmwcd_wjj4b4aerknshvq_mcf=p@mail.gmail.com | 5 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 7afceda7a1c1-lujvo_deconstruction | root aanlktik2apwyut40-wmwcd_wjj4b4aerknshvq_mcf=p@mail.gmail.com | 6 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-10-29T16:08:09Z | Luke Bergen <lukeabergen@gmail.com> | aanlktik2apwyut40-wmwcd_wjj4b4aerknshvq_mcf=p@mail.gmail.com | mail/lojban-list/cur/1288368489.7afceda7a1c1932a.jbomohi:2,S
 When I first started learning lojban I wrote up a quick'n dirty script to
@@ -384,5 +384,153 @@ You received this message because you are subscribed to the Google Groups "lojba
 To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+=== 6 | 2010-10-29T17:44:11Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101029174411.gf47249@alice.local | mail/lojban-list/cur/1288374251.26ef86f1578786a0.jbomohi:2,S
+I think your message here contains the kernel of the solution,
+namely that you can't just chop off three letters and call that a
+rafsi, but you must grab three (four) letters that form a valid
+rafsi or it isn't one.
+
+The PEG grammar for Lojban morphology:
+
+http://www.lojban.org/tiki/tiki-index.php?page=BPFK+Section%3A+PEG+Morphology+Algorithm
+
+Shows what makes a valid Lujvo, and the process is more subtle than
+"grab three letters and pretend they're a rafsi."  But if you follow
+the formal grammar, you'll get an abstract syntax tree that fully
+delimits each piece of the lujvo.
+
+-Alan
+
+On Fri, Oct 29, 2010 at 01:37:23PM -0400, Luke Bergen wrote:
+>    Actually I guess that was a bad example at the end because a lujvo ending
+>    with "rat" would definitely be wrong. But you get where I'm going with it.
+> 
+>    On Fri, Oct 29, 2010 at 1:34 PM, Luke Bergen <[1]lukeabergen@gmail.com>
+>    wrote:
+> 
+>      Sorry, yes, I was providing very rough pseudocode for my script. I do
+>      look from left to right. But since rafsi are always 3 letters (minus any
+>      ' characters and excluding 4 letter rafsi), I take them in chunks of 3.
+>      an example with morsi would be "xamymro". My code would go like:
+>      grab left most three chars, check for .y'ys and grab a fourth char if
+>      there is a .y'y
+>      look up the rafsi, chop off what you found to be the "leftmost" rafsi
+>      and loop again with what you have left
+>      Now we're looking at "ymro"
+>      Strip off "y" and we're left with "mro". Now because I'm assuming that
+>      "r", "l", "m", or "n" followed by a consonant is a buffer vowel, I see
+>      "mro" and think "ok, the 'm' is a buffer vowel so grab another char so
+>      we're back to a 3 letter rafsi", I then try to grab whatever comes after
+>      "o" and get a null-pointer or some such.
+>      It just occurred to me that I might deal with 4 letter rafsi by keeping
+>      in mind that they always end with "y". So my revised "grab leftmost
+>      rafsi" code would look something like:
+>      word = xajmymro
+>      if (word = "....y") // where this is "word" = any 4 characters followed
+>      by an "y"
+>      return substring(word, 0, 4)
+>      Then in the calling function I just have to look for gismu of the form
+>      rafsi+a, rafsi+e, etc... till I find one that matches a gismu.
+>      I'm still stuck on the buffer consonant problem though.
+>      It feels wrong to use guesswork like "if you see [r|l|m|n]C then check
+>      to see if it's a valid rafsi, if it's not, strip off the [r|l|m|n], grab
+>      another char from the right, and look THAT up and see if it's a rafsi".
+>      Here's a non-code way to think of the problem. How would a parser figure
+>      out whether "co'amrobratroci" is "co'a mro bra troci" or "co'a m rob rat
+>      ro ci"?
+>      On Fri, Oct 29, 2010 at 1:03 PM, .alyn.post.
+>      <[2]alyn.post@lodockikumazvati.org> wrote:
+> 
+>        On Fri, Oct 29, 2010 at 12:08:09PM -0400, Luke Bergen wrote:
+>        > When I first started learning lojban I wrote up a quick'n dirty
+>        script to
+>        > make looking up words faster and easier. gismu and cmavo were easy,
+>        but I
+>        > could never figure out lujvo. So I'm taking another stab at it. I
+>        > currently have something that works in the general cases of
+>        {bajdri},
+>        > {ba'udri}, and {bagypau}. But currently I'm not sure how to deal
+>        with 4
+>        > letter rafsi and non "y" buffer letters.
+>        > To deal with the non "y" buffer letters I thought I could just say:
+>        > strip all "y" from the word
+>        > get first three non "'" chars
+>        > if the first letter is "r", "l", "m", or "n" and the second letter
+>        is a
+>        > consonant, then chop off the first letter and grab another letter
+>        from the
+>        > right
+>        > (so if I was parsing "bacru zei bevri" = "ba'urbei" I would (after
+>        > handling ba'u in the first iteration) end up with "rbe" and due to
+>        the
+>        > above step, I'd strip off the "r" and grab the next letter thus
+>        ending
+>        > with "bei" which is the right result).
+>        > But this produces strange results because there ARE cases where
+>        buffer
+>        > letters are followed by consonants (morsi for instance).
+>        > Is there a way to un-ambiguously and algorithmically break a lujvo
+>        down
+>        > into its component gismu?
+>        >
+> 
+>        I haven't rigorously looked at this, so please excuse me if I'm way
+>        off base.
+> 
+>        What if you start at the left side of the word and match characters
+>        until you get a matching rafsi, then look for optional buffer
+>        characters before matching your next rafsi, &c? You could be much
+>        more sophisticated by adding detection for valid lerfu clustering
+>        to throw out what would otherwise be an ambiguous case.
+> 
+>        It sounds like you're working top down on the problem rather than
+>        going from left to right, but I don't know what is wrong with my
+>        suggestion yet.
+> 
+>        I see you've provided 3 simple examples, but can you provide an
+>        example for morsi which you mention at the end?
+> 
+>        -Alan
+>        --
+>        .i ko djuno fi le do sevzi
+>        --
+>        You received this message because you are subscribed to the Google
+>        Groups "lojban" group.
+>        To post to this group, send email to [3]lojban@googlegroups.com.
+>        To unsubscribe from this group, send email to
+>        [4]lojban+unsubscribe@googlegroups.com.
+>        For more options, visit this group at
+>        [5]http://groups.google.com/group/lojban?hl=en.
+> 
+>    --
+>    You received this message because you are subscribed to the Google Groups
+>    "lojban" group.
+>    To post to this group, send email to lojban@googlegroups.com.
+>    To unsubscribe from this group, send email to
+>    lojban+unsubscribe@googlegroups.com.
+>    For more options, visit this group at
+>    http://groups.google.com/group/lojban?hl=en.
+> 
+> References
+> 
+>    Visible links
+>    1. mailto:lukeabergen@gmail.com
+>    2. mailto:alyn.post@lodockikumazvati.org
+>    3. mailto:lojban@googlegroups.com
+>    4. mailto:lojban%2Bunsubscribe@googlegroups.com
+>    5. http://groups.google.com/group/lojban?hl=en
+
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
 
 
