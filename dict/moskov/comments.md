@@ -104,3 +104,60 @@ Moscow
 speaker, I
 > will replace with '.mosKUAS'.  Let me know.
 
+
+## 2010-11-03T13:50:20Z — totus (comment 546, on definition 18578, in reply to 545)
+
+Re: Based on what pronunciation?
+
+I think the criterion should be to have a pronuciation that is
+recognizable or pronouncable by the maximum number of people.  'Moscow' in
+Chinese Mandarin is 'Mò​sī​kē'.	There is no 'v' in Chinese and 'f'
+only appears at the beginning of words.  So, on that basis, .masKUAS.
+seems optimum - as you suggested, but for a different reason.
+
+kakuas wrote:
+> Yes, I'm native Russian.
+> Almost every Russian pronounce it as "masKVA".
+> The sound "f" is too rare in Russian so "kva" we should transform into
+> "kua".
+> So it should be la. masKUAs.
+> 
+> Although it looks very strange for Russians as Moscow is written (not
+> pronounced !) as "Москва" (literally "Moskva" !)
+> 
+> totus wrote:
+> > kakuas wrote:
+> > > totus wrote:
+> > > > This seems to be based on the British English pronunciation of
+> Moscow
+> > > > (Russia) and Moscow (Idaho, USA). Why?
+> > > 
+> > > 
+> > > In fact
+> > > adjective is "московский" [mosk'ofskij] with the root
+> > [mosk'of].
+> > > So it should be la .mosKOF.
+> > > Another option should be "Москва" (Moscow) which should be
+best
+> > > transformed to la .masKUAS. (not ".maskFAS.").
+> > > One more option is москвич ("moskv'ich", it means "resident
+of
+> > > Moscow") with the root "moskv" so it could be la .moskyv.
+> > > 
+> > > 
+> > > Personally I support "la .moskuas."  as it's easy recognizable to
+both
+> > > Russians (it would be "ла .москуас." using rukylerfu) and
+> > > Anglophones.
+> > 
+> > I think either we should use the pronunciation closest to that of
+> > Russians, or if there are differences within Russia, that of
+Moscovites. 
+> > Why Anglophones?  Although Lojban was invented in the USA, it was
+never
+> > meant to be a constructed langauge for anglophones.  '.maskFAS' is how
+I
+> > heard it when I was in Moscow.	But if you are a native Russian
+> speaker, I
+> > will replace with '.mosKUAS'.  Let me know.
+
