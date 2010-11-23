@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2845aa74b9f1-norats,_space,_and_public_in_peg_grammar | root 20101123180616.gb10838@alice.local | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2845aa74b9f1-norats,_space,_and_public_in_peg_grammar | root 20101123180616.gb10838@alice.local | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-11-23T18:06:16Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101123180616.gb10838@alice.local | mail/lojban-list/cur/1290535576.2845aa74b9f17d2e.jbomohi:2,S
 What do the NORATS, SPACE, and PUBLIC statements mean in the Lojban
@@ -108,6 +108,82 @@ http://singinst.org/ :  Our last, best hope for a fantastic future.
 Lojban (http://www.lojban.org/): The language in which "this parrot
 is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
 is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 5 | 2010-11-23T18:32:10Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101123183210.gd10838@alice.local | mail/lojban-list/cur/1290537130.dde3c2da3d0d1611.jbomohi:2,S
+On Tue, Nov 23, 2010 at 10:16:58AM -0800, Robin Lee Powell wrote:
+> On Tue, Nov 23, 2010 at 10:10:27AM -0800, Robin Lee Powell wrote:
+> > On Tue, Nov 23, 2010 at 11:06:16AM -0700, .alyn.post. wrote:
+> > > What do the NORATS, SPACE, and PUBLIC statements mean in the
+> > > Lojban PEG grammar?
+> > > 
+> > > They are prefixes to non-terminal statements which I haven't
+> > > encountered in other PEG files.
+> > 
+> > They're used by
+> > http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/rats/peg2rats.pl
+> > to create the actual Rats! grammar.  It's all a horrible hack, and
+> > someone should really write something better now that there are
+> > other decent PEG parser generators around.
+> 
+> To be clear there: the point was that someone making their own
+> parser could just strip those tags out.  I didn't want there to be
+> any Rats!-specific stuff in the grammar if I could avoid it.
+> 
+
+I saw the SPACE symbol and thought somehow there was non-standard
+handling of optional whitespace around terminals, and became
+concerned that the grammar itself was non-standard.
+
+I had a brief conversation on the PEG parser mailing list about
+associating code with rules in a PEG grammar.  It seems that
+embedding code inside '{}' brackets has become the standard way of 
+putting code inside a peg file, but there is no concensus on whether
+that code should execute every time a production is parsed (even
+after a backtrack), only executed the first time but not if the
+rule was rematched after memoization, or only at the end of a successful
+parse.
+
+Some parsers give you a flag or hook to say when code is executed.
+
+The most compelling case I found was where the 'code' inside '{}'
+brackets was actually more like a tag, and the source code file that
+handled the parse tree was stored separately from the grammar.  So
+tags inside '{}' were effectively function calls, but could in
+theory be language independent.
+
+There also doesn't seem to be a concensus on how to associate elements
+in the production with the code, with some tools giving you access
+to the parse tree itself (and hence requiring an API to access
+parser productions) while others bracket or tag elements that will
+be passed to a '{}' function and extend the grammar to accept brackets
+and tags.
+
+Do you know off-hand if the lojban grammar has something like this:
+
+expr    <- mulexpr [+] mulexpr
+mulexpr <- digits  [*] digits
+digits  <- [0-9]+
+
+Where a particular rule (in this case expr and mulexpr) has the same
+non-terminal more than once (mulexpr non-terminal for rule expr and
+digits non-terminal for rule mulexpr)?
+
+Also, what does snarf_morph.sh, from the cook file, do?  I would
+assume it grabs xorxes' morphology file from lojban.org?  I didn't
+see snarf_morph.sh in the rats/ folder.
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
