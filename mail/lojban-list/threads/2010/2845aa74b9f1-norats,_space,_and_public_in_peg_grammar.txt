@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2845aa74b9f1-norats,_space,_and_public_in_peg_grammar | root 20101123180616.gb10838@alice.local | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2845aa74b9f1-norats,_space,_and_public_in_peg_grammar | root 20101123180616.gb10838@alice.local | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-11-23T18:06:16Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101123180616.gb10838@alice.local | mail/lojban-list/cur/1290535576.2845aa74b9f17d2e.jbomohi:2,S
 What do the NORATS, SPACE, and PUBLIC statements mean in the Lojban
@@ -370,6 +370,96 @@ http://singinst.org/ :  Our last, best hope for a fantastic future.
 Lojban (http://www.lojban.org/): The language in which "this parrot
 is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
 is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 9 | 2010-11-23T19:25:23Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101123192523.gh10838@alice.local | mail/lojban-list/cur/1290540323.4e9603218caf3e9d.jbomohi:2,S
+On Tue, Nov 23, 2010 at 11:02:15AM -0800, Robin Lee Powell wrote:
+> On Tue, Nov 23, 2010 at 11:57:35AM -0700, .alyn.post. wrote:
+> > I settled on extending the grammar definition by tagging
+> > expressions, which pollutes the grammar but makes the code using
+> > the grammar easier to write.  It doesn't accomplish your goal of
+> > not having a bunch of non-grammar garbage in the peg file.  :-(
+> 
+> Well, show me what you end up with when you're done and we'll see
+> how it looks.
+> 
+
+It doesn't look stellar:
+
+http://bugs.call-cc.org/browser/release/4/genturfahi/trunk/tests/mex.peg
+
+I choose to use Racket Scheme-style keyword tags, which have the
+form #:FOO.  Note also that this grammar uses Scheme-style
+character expressions, like #\+ and #\*, which are ugly in a way
+that doesn't affect the Lojban grammar, which would express the same
+as [+] and [*].
+
+
+> what Lisp PEG parser generator are you using?  :)
+> 
+> -Robin
+> 
+
+Jerk.  :-)
+
+I'm writing one:
+
+  http://wiki.call-cc.org/eggref/4/genturfahi
+
+Last night I finished the boostrap parser generator, and I'm
+comparing differences in my hand-written parser generator vs
+the one it is generating.  I of course have issues to fix
+before my parser generator is self-hosting, but I'm down around 10
+differences in the bootstrap generator vs the one written in PEG,
+and the last several differences have been bugs in the bootstrap
+rather than bugs in the version the bootstrap is generating.
+
+I started by using the only scheme PEG parser I knew about, but I
+quickly gave up on it and realized I needed something that would
+work directly with PEG files:
+
+  http://wiki.call-cc.org/eggref/4/genturfahi#history
+
+I managed to find two bugs in Chicken Scheme while I was writing the
+parser, both related to DSSSL-style #!rest, #!optional, and #!key
+parameters, so I suspect I'm the only person on the planet who has
+tried using them:
+
+  https://bugs.call-cc.org/ticket/421
+  https://bugs.call-cc.org/ticket/430
+
+As well as learn something about Scheme I didn't know:
+
+  https://bugs.call-cc.org/ticket/433
+
+The bootstrap compiler is compiling the morphology and morphology
+header file, but I'm still working on the peg grammar itself.
+
+I've written the code with the idea that I could port it to other
+scheme systems, particularly Racket, though this is only theoretical
+at this point, as there is zero demand for such a thing.  :-)
+
+Given that Lojban is used as an example of a complex PEG grammar:
+
+  http://en.wikipedia.org/wiki/Parsing_expression_grammar#External_links
+
+I'm not sure it's a bad idea to have a peg parser generator written
+specifically to parse Lojban.  I do wish there had been something
+available already, but I'm not aware of Scheme code that parsers PEG
+files--they all seem to want to write the grammar definition in
+Scheme itself.
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
