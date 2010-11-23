@@ -1,4 +1,4 @@
-# mail/lojban-list thread a0bf20379f10-rp-expression-tail_ordered_choice_with_empty_gr | root 20101123184352.ge10838@alice.local | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a0bf20379f10-rp-expression-tail_ordered_choice_with_empty_gr | root 20101123184352.ge10838@alice.local | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-11-23T18:43:52Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101123184352.ge10838@alice.local | mail/lojban-list/cur/1290537832.a0bf20379f10f5a7.jbomohi:2,S
 What does the following production in the lojban grammar mean?:
@@ -18,6 +18,54 @@ related to that?
 -Alan
 -- 
 .i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 2 | 2010-11-23T18:52:11Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20101123185211.gu9301@digitalkingdom.org | mail/lojban-list/cur/1290538331.907517804d926e1d.jbomohi:2,S
+On Tue, Nov 23, 2010 at 11:43:52AM -0700, .alyn.post. wrote:
+> What does the following production in the lojban grammar mean?:
+> 
+> rp-expression-tail <- rp-expression operator rp-expression-tail /
+> ()
+> 
+> Do I understand that to mean 'the sequence of rp-expression,
+> operator, and rp-expression-tail OR nothing?'  Could the above
+> also be expressed:
+> 
+> rp-expression-tail <- (rp-expression operator rp-expression-tail)?
+> 
+> And if so, why the odd way of specifying it?  I'm weak on pitfalls
+> of recursive behavior in grammars, am I looking at a workaround
+> related to that?
+
+Yes, and it mostly doesn't work.  Lojban's RPN (which, if I have my
+druthers, the next version of the language will not have, by the
+way) is left-recursive, which is problematic.  See the peg mailing
+list for various solutions, but IMO since a number of PEG parser
+generators handle this on their own, I think we should just have it
+be left-recursive and say that people have to use such a generator.
+
+If you can figure out how to fix it in in the rules so the right
+behaviour pops out, though, *please* do so.  There are links to
+papers on the peg mailing list; it came up just last week; "*[1]*
+*Packrat Parsers Can Support Left Recursion*, Alessandro Warth,
+James R. Douglass, and Todd Millstein (2008)" is the citation I'm
+seeing at a brief glance.
+
+-Robin
+
+-- 
+http://singinst.org/ :  Our last, best hope for a fantastic future.
+Lojban (http://www.lojban.org/): The language in which "this parrot
+is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
+is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
