@@ -1,4 +1,4 @@
-# mail/lojban-list thread a0bf20379f10-rp-expression-tail_ordered_choice_with_empty_gr | root 20101123184352.ge10838@alice.local | 6 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a0bf20379f10-rp-expression-tail_ordered_choice_with_empty_gr | root 20101123184352.ge10838@alice.local | 7 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-11-23T18:43:52Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101123184352.ge10838@alice.local | mail/lojban-list/cur/1290537832.a0bf20379f10f5a7.jbomohi:2,S
 What does the following production in the lojban grammar mean?:
@@ -420,6 +420,162 @@ alyn.post@lodockikumazvati.org> wrote:
 > For more options, visit this group at
 > http://groups.google.com/group/lojban?hl=en.
 >
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+=== 7 | 2010-11-24T13:46:54Z | Ross Ogilvie <oges007@gmail.com> | aanlkti=yx61z45cfu5bp_rx+rzcmcffwvvjg-z5dhza7@mail.gmail.com | mail/lojban-list/cur/1290606414.af03e04ee9979658.jbomohi:2,S
+As promised https://github.com/RossOgilvie/meksygerna
+I'm a git noob (only learnt it today), so let me know if it's not public
+accessible or otherwise misconfigured.
+
+The main part of my version of mekso is in the txt file. A poorly written
+brain-dump is in the README file. Questions, comments and criticisms
+welcome.
+
+Addressing the question of backwards: I've removed the restriction that RP
+expressions have exactly 2 arguments, so this creates a little problem
+fu'a 1 2 3 + x = (1 ( 2 3 +) x) = 5  OFFICIAL LOJBAN
+1 2 3 + x = ( (1 2 3 +) x) = 7  MY MEKSO
+Given the little volume of RP though, I don't think it's a big deal. I
+haven't noticed any others, though they probably exist.
+
+The rest of the folder is a simple parser I wrote for it. The code is all
+handwritten and pretty messy. I've compiled a working version in
+bin/Release. It's .Net 3.5
+
+mi'e ros
+
+On Wed, Nov 24, 2010 at 10:36 AM, Ross Ogilvie <oges007@gmail.com> wrote:
+
+> Ahh, I started with xorxes' proposal (
+> http://www.lojban.org/tiki/tiki-index.php?page=MEX+grammar+proposal ) and
+> have been tweaking and extending. But it should be largely backward
+> compatible hopefully. Like I said, I don't want to build it up before I know
+> it works (or mostly works).
+>
+> mi'e ros
+>
+>
+> On Wed, Nov 24, 2010 at 10:26 AM, .alyn.post. <
+> alyn.post@lodockikumazvati.org> wrote:
+>
+>> I'm interested.
+>>
+>> Is this compatible with the current grammar?  What is it that you
+>> mean when you say "playing around?"
+>>
+>> -Alan
+>>
+>> On Wed, Nov 24, 2010 at 10:17:42AM +1100, Ross Ogilvie wrote:
+>> >    I've been playing around with the mekso grammar recently. I think I
+>> have a
+>> >    rewrite, but I want to finish coding and check that it works as I
+>> want it
+>> >    to. I'll post tomorrow or the day after if people are interested.
+>> >
+>> >    mi'e ros
+>> >
+>> >    On Wed, Nov 24, 2010 at 6:01 AM, .alyn.post.
+>> >    <[1]alyn.post@lodockikumazvati.org> wrote:
+>> >
+>> >      On Tue, Nov 23, 2010 at 10:52:11AM -0800, Robin Lee Powell wrote:
+>> >      > On Tue, Nov 23, 2010 at 11:43:52AM -0700, .alyn.post. wrote:
+>> >      > > What does the following production in the lojban grammar mean?:
+>> >      > >
+>> >      > > rp-expression-tail <- rp-expression operator rp-expression-tail
+>> /
+>> >      > > ()
+>> >      > >
+>> >      > > Do I understand that to mean 'the sequence of rp-expression,
+>> >      > > operator, and rp-expression-tail OR nothing?' Could the above
+>> >      > > also be expressed:
+>> >      > >
+>> >      > > rp-expression-tail <- (rp-expression operator
+>> rp-expression-tail)?
+>> >      > >
+>> >      > > And if so, why the odd way of specifying it? I'm weak on
+>> pitfalls
+>> >      > > of recursive behavior in grammars, am I looking at a workaround
+>> >      > > related to that?
+>> >      >
+>> >      > Yes, and it mostly doesn't work. Lojban's RPN (which, if I have
+>> my
+>> >      > druthers, the next version of the language will not have, by the
+>> >      > way) is left-recursive, which is problematic. See the peg mailing
+>> >      > list for various solutions, but IMO since a number of PEG parser
+>> >      > generators handle this on their own, I think we should just have
+>> it
+>> >      > be left-recursive and say that people have to use such a
+>> generator.
+>> >      >
+>> >      > If you can figure out how to fix it in in the rules so the right
+>> >      > behaviour pops out, though, *please* do so. There are links to
+>> >      > papers on the peg mailing list; it came up just last week; "*[1]*
+>> >      > *Packrat Parsers Can Support Left Recursion*, Alessandro Warth,
+>> >      > James R. Douglass, and Todd Millstein (2008)" is the citation I'm
+>> >      > seeing at a brief glance.
+>> >      >
+>> >
+>> >      Great. I saw that thread and ignored it as not being relevant in
+>> >      the moment, but I'm happy to read it and play with it when I get to
+>> >      that point.
+>> >
+>> >      I've downloaded the paper and cached it with this problem, as I'm a
+>> >      bit ahead of myself with it.
+>> >      -Alan
+>> >      --
+>> >      .i ko djuno fi le do sevzi
+>> >
+>> >      --
+>> >      You received this message because you are subscribed to the Google
+>> >      Groups "lojban" group.
+>> >      To post to this group, send email to [2]lojban@googlegroups.com.
+>> >      To unsubscribe from this group, send email to
+>> >      [3]lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+>> .
+>> >      For more options, visit this group at
+>> >      [4]http://groups.google.com/group/lojban?hl=en.
+>> >
+>> >    --
+>> >    You received this message because you are subscribed to the Google
+>> Groups
+>> >    "lojban" group.
+>> >    To post to this group, send email to lojban@googlegroups.com.
+>> >    To unsubscribe from this group, send email to
+>> >    lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+>> .
+>> >    For more options, visit this group at
+>> >    http://groups.google.com/group/lojban?hl=en.
+>> >
+>> > References
+>> >
+>> >    Visible links
+>> >    1. mailto:alyn.post@lodockikumazvati.org
+>> >    2. mailto:lojban@googlegroups.com
+>> >    3. mailto:lojban%2Bunsubscribe@googlegroups.com<lojban%252Bunsubscribe@googlegroups.com>
+>> >    4. http://groups.google.com/group/lojban?hl=en
+>>
+>> --
+>> .i ko djuno fi le do sevzi
+>>
+>> --
+>> You received this message because you are subscribed to the Google Groups
+>> "lojban" group.
+>> To post to this group, send email to lojban@googlegroups.com.
+>> To unsubscribe from this group, send email to
+>> lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+>> .
+>> For more options, visit this group at
+>> http://groups.google.com/group/lojban?hl=en.
+>>
+>>
 >
 
 -- 
