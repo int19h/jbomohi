@@ -1,4 +1,4 @@
-# mail/lojban-list thread e8f330b87b09-zoi-open,_zoi-word,_zoi-close_morphology_interf | root 20101123192947.gi10838@alice.local | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread e8f330b87b09-zoi-open,_zoi-word,_zoi-close_morphology_interf | root 20101123192947.gi10838@alice.local | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-11-23T19:29:47Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20101123192947.gi10838@alice.local | mail/lojban-list/cur/1290540587.e8f330b87b099232.jbomohi:2,S
 In the lojban.peg.txt file:
@@ -24,6 +24,66 @@ NORATS COI-word-pre <- " CMAVO=(  COI=( "
 -Alan
 -- 
 .i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 2 | 2010-11-24T08:08:05Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20101124080805.ge9301@digitalkingdom.org | mail/lojban-list/cur/1290586085.a62da545f731adfa.jbomohi:2,S
+On Tue, Nov 23, 2010 at 12:29:47PM -0700, .alyn.post. wrote:
+> In the lojban.peg.txt file:
+> 
+>   http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/lojban.peg.txt
+> 
+> There is a section on MORPHOLOGY INTERFACE.  The rules  zoi-open,
+> zoi-word, and zoi-close have embedded code in them:
+> 
+> zoi-open <- any-word-pre inner-word &{ myAssign( new String(innerWordSEP2.toString()) ) } close-paren
+> 
+> Is that intentional?
+
+Yes.  zoi is 100% context-sensitive; it cannot be processed with
+anything short of a true CSG (
+http://en.wikipedia.org/wiki/Context-sensitive_grammar ) as far as I
+can tell.
+
+As such, it needs code to work, in CFG or PEG.
+
+> I don't really understand what this section is doing, and whether it
+> is glue specific to RATS! or whether it is glue required for any
+> parser, and this is a RATS! implementation of it. 
+
+The latter.  The part you quoted means "store the word after zoi".
+The zoi-close bit means "only match if the stored word matches".
+This is how zoi works.
+
+> What is going on with stuff like this?:
+> 
+> NORATS COI <- COI-word-pre inner-word close-paren close-paren
+> NORATS COI-word-pre <- " CMAVO=(  COI=( "
+
+The morphology outputs stuff like this:
+
+text=(  BRIVLA=(  gismu=( klama )  )  spaces=(   )  )
+
+The rest of the grammar processes that.
+
+A bit of a grotesque hack, really; I was trying to give xorxes
+freedom to mess with the morphology as a seperate construct, and I
+didn't know about JSON or YAML at the time.
+
+-Robin
+
+-- 
+http://singinst.org/ :  Our last, best hope for a fantastic future.
+Lojban (http://www.lojban.org/): The language in which "this parrot
+is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
+is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
