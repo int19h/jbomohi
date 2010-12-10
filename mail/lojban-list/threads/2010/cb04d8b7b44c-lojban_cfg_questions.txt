@@ -1,4 +1,4 @@
-# mail/lojban-list thread cb04d8b7b44c-lojban_cfg_questions | root 201012101024.39320.roman_naumann@fastmail.fm | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread cb04d8b7b44c-lojban_cfg_questions | root 201012101024.39320.roman_naumann@fastmail.fm | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-12-10T09:24:39Z | Roman Naumann <roman_naumann@fastmail.fm> | 201012101024.39320.roman_naumann@fastmail.fm | mail/lojban-list/cur/1291973079.cb04d8b7b44c92aa.jbomohi:2,S
 Hello dear lojbanistanians,
@@ -214,6 +214,68 @@ of "sentence" I gave you.
 
 Solving this toy version won't prove much about the full version,
 but it's a good start.
+
+-Robin
+
+-- 
+http://singinst.org/ :  Our last, best hope for a fantastic future.
+Lojban (http://www.lojban.org/): The language in which "this parrot
+is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
+is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 4 | 2010-12-10T21:27:12Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20101210212712.gh27025@digitalkingdom.org | mail/lojban-list/cur/1292016432.7d6532bb63d2ee3e.jbomohi:2,S
+On Fri, Dec 10, 2010 at 01:21:21PM -0800, Robin Lee Powell wrote:
+> That, in a nutshell, is the elidable terminator problem: making
+> terminators act as though they were included when they actually
+> weren't, but the sentence parses if they were (and doesn't if they
+> weren't).
+> 
+> You have to solve it *without* significantly changing the
+> definition of "sentence" I gave you.
+
+I suddenly have this creepy feeling that there might be a solution
+sitting right there.
+
+You have to solve it *without* significantly changing the definition
+of "sentence" I gave you *to end up with anything that looks
+like the current grammar*.
+
+What if you don't think about it in terms of the current structure
+at all, though?
+
+Right now we have something like:
+
+  sentence -> sumti* klama sumti*
+
+  sumti -> "mi" | "lenu" sentence "ku"?
+
+Where * and ? have their usual regex meanings.  We call "ku" an
+elidable *terminator*; it terminates the sumti.
+
+What if we called it an elidable *seperator*, and instead did this:
+
+  sentence -> mi-sumti klama | lenu-sumti "ku" klama | mi-sumti le-nu sumti "ku" klama | ...
+
+  mi-sumti -> "mi"
+  lenu-sumti -> "lenu" sentence
+
+That is, promote the "ku" one level up.
+
+Would this make it CFG-able?  Could you still end up with something
+like Lojban?
+
+I think you *probably* end up with rule explosion and/or something
+not at all like current Lojban, but I wanted to throw it out in case
+I'm missing something.
 
 -Robin
 
