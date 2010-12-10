@@ -1,0 +1,55 @@
+# mail/lojban-list thread cb04d8b7b44c-lojban_cfg_questions | root 201012101024.39320.roman_naumann@fastmail.fm | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2010-12-10T09:24:39Z | Roman Naumann <roman_naumann@fastmail.fm> | 201012101024.39320.roman_naumann@fastmail.fm | mail/lojban-list/cur/1291973079.cb04d8b7b44c92aa.jbomohi:2,S
+Hello dear lojbanistanians,
+
+i'm starting with an attempt to find a CFG for lojban - or if it shows 
+impossible, to prove it being impossible (so that you see what exactly is 
+impossible and thus to improve).
+
+Back in 2008 when there was a challenge [1] to do exactly that, i would have 
+done it, but i lacked the knowledge to proof or proof-wrong grammars. Learned 
+it during the last year at university and thought, hey, why not put it to use.
+
+However, i realized just now looking at the EBFN [2] causes eye cancer. Also, 
+i've never been good with lojban at all. I don't get the (formalizing) problem 
+with elidable terminators yet. To get started, it would be extremely helpful 
+to work on an abstraction. I'd be glad if you could provide such to me. To 
+give you an idea what kind of abstraction i have in mind, here's an example 
+(though perhaps not very useful):
+
+We have five kinds (sub)sentences. They start and terminate with 'a', 'b', 'c', 
+'d', 'e'. Inside a (sub)sentence, only subsentences with a letter later in 
+alphabet may stand. ("a c c a" is thus valid, "b a a b" is invalid [whitespace 
+ignored], as a..a is no valid subsentence of b..b).
+Inside of sentences may (beside any number of subsentences) stand zero or more 
+of numbers (which are our abstraction of words). Each number starts with zero 
+and may not contain further zeros (this is to spare us the necessity for 
+whitespace). Terminators [a-e] may be elided, if directly followed by another 
+terminator. Thus, a implicitly terminates [b-e] subsentences, b implicitly 
+terminates [c-e] subsentences and so on.
+A valid example 'word' of the language is: "a 01 02 c 0 e c 08 04 a"
+It should parse to: """ a(01 02 c(0 e())c 08 04)a """
+(didn't want to draw a parse tree, but it this this is enough to get the 
+point)
+
+So, do you think this abstraction catches the elidable terminator problem or 
+is it too simple? If it's too simple, why, what's missing?
+Besides elidable terminators, are there other problems why you think lojban 
+can't be expressed as a CFG (without the grammar being way too large)?
+
+Regards,
+Roman
+
+[1] http://www.mail-archive.com/lojban-beginners@lojban.org/msg04337.html
+
+[2] http://www.lojban.org/publications/formal-grammars/bnf.300.txt
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
