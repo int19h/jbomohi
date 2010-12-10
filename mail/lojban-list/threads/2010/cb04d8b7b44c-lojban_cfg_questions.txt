@@ -1,4 +1,4 @@
-# mail/lojban-list thread cb04d8b7b44c-lojban_cfg_questions | root 201012101024.39320.roman_naumann@fastmail.fm | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread cb04d8b7b44c-lojban_cfg_questions | root 201012101024.39320.roman_naumann@fastmail.fm | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2010-12-10T09:24:39Z | Roman Naumann <roman_naumann@fastmail.fm> | 201012101024.39320.roman_naumann@fastmail.fm | mail/lojban-list/cur/1291973079.cb04d8b7b44c92aa.jbomohi:2,S
 Hello dear lojbanistanians,
@@ -136,6 +136,92 @@ so, I'm happy to discuss here or privately.
 -Alan
 -- 
 .i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 3 | 2010-12-10T21:21:21Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20101210212120.gg27025@digitalkingdom.org | mail/lojban-list/cur/1292016081.c8dc418c788c7a80.jbomohi:2,S
+On Fri, Dec 10, 2010 at 10:24:39AM +0100, Roman Naumann wrote:
+> Hello dear lojbanistanians,
+> 
+> i'm starting with an attempt to find a CFG for lojban - or if it
+> shows impossible, to prove it being impossible (so that you see
+> what exactly is impossible and thus to improve).
+> 
+> Back in 2008 when there was a challenge [1] to do exactly that, i
+> would have done it, but i lacked the knowledge to proof or
+> proof-wrong grammars. Learned it during the last year at
+> university and thought, hey, why not put it to use.
+
+FWIW, formal proof is not required for the "yes we can" case; an
+example grammar that clearly parses the language decently well will
+do fine.
+
+> However, i realized just now looking at the EBFN [2] causes eye cancer. 
+
+Hahahah.
+
+> Also, i've never been good with lojban at all. I don't get the
+> (formalizing) problem with elidable terminators yet. To get
+> started, it would be extremely helpful to work on an abstraction.
+> I'd be glad if you could provide such to me.
+
+Here's a very very simplified Lojban for you.  It has exactly 4
+words: lenu, mi, klama, ku
+
+(note to oldbies: yes, I treated lenu as one word; yes, those of you
+who know me know I hate compound cmavo; it's a special case, go
+stick your head in a pig)
+
+A sentence is zero or more sumti, followed by klama, followed by
+zero or more sumti.
+
+A sumti is either "mi" or "lenu" followed by a sentence.
+
+"ku" ends a "lenu" sentence immediately.
+
+From what we have so far, you'd expect:
+  
+  lenu mi klama mi klama mi
+
+to fail to parse, but in fact it parses just fine: because a
+sentence can have only one "klama", upon seeing a second one the
+parser goes "Oh, they forgot to put a "ku" in, but there needs to
+be one for the parse to work, so I'll just insert it".  So what the
+parser sees is actually:
+
+  lenu mi klama mi ku klama mi
+
+(note: not actually true in real Lojban)
+
+Which, loosely, parses like so:
+
+  sentence=( sumti=(lenu sentence=(mi klama mi) ku) klama mi)
+
+That, in a nutshell, is the elidable terminator problem: making
+terminators act as though they were included when they actually
+weren't, but the sentence parses if they were (and doesn't if they
+weren't).
+
+You have to solve it *without* significantly changing the definition
+of "sentence" I gave you.
+
+Solving this toy version won't prove much about the full version,
+but it's a good start.
+
+-Robin
+
+-- 
+http://singinst.org/ :  Our last, best hope for a fantastic future.
+Lojban (http://www.lojban.org/): The language in which "this parrot
+is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
+is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
