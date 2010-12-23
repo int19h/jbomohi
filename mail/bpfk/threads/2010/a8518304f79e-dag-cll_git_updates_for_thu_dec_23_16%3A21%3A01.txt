@@ -1,0 +1,178 @@
+# mail/bpfk thread a8518304f79e-dag-cll_git_updates_for_thu_dec_23_16%3A21%3A01 | root e1pvsar-0005q6-uj@oh-www1.lojban.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2010-12-23T21:21:01Z | www-data <www-data@oh-www1.lojban.org> | e1pvsar-0005q6-uj@oh-www1.lojban.org | mail/bpfk/cur/1293139261.a8518304f79e5381.jbomohi:2,S
+commit ad6589119709cb5c2ee2aef3a8e775d661514eb5
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Thu Dec 23 13:17:07 2010 -0800
+
+    More documentation updates.
+
+diff --git a/todocbook/TODO b/todocbook/TODO
+index 1f3e2e7..f621c03 100644
+--- a/todocbook/TODO
++++ b/todocbook/TODO
+@@ -109,36 +109,40 @@ Also, use <jbophrase valid="false">...</jbophrase> for na gendra and
+ change it, or think it's actually correct in some particular place,
+ post to the BPFK list.
+ 
+  ------
+ 
+ If an example/interlinear-gloss consists solely of English, replace
+ the <interlinear-gloss>...</interlinear-gloss> with <para>...</para>
+ 
+  ------
+ 
++    YOU CAN SKIP THIS PART; it's easy to check for it later on, even
++    in parts that have theoretically already been reviewed.
++
+ Deal with index entries already in the text, like these:
+ 
+     <example role="interlinear-gloss-example" xml:id="random-id-UMjE">
+       <title>
+         <anchor xml:id="c5e1d5" />
+       </title>
+       <interlinear-gloss>
+         <jbo>ta blotrskunri</jbo>
+         <gloss>That is-a-(boat)-schooner.</gloss>
+ <!-- ^^   schooner: example, 83 -->
+ <indexterm><primary>schooner</primary></indexterm>
+         <en>That is a schooner.</en>
+       </interlinear-gloss>
+     </example>
+ 
+-There are several steps:
++There are several steps for single-entry situations like this;
++multi-entry situations are something else again.
+ 
+ 1.  Add a <secondary> tag as appropriate.  In this case, "example".
+ 
+ 2.  Move it to somewhere that seems aesthetically pleasing, is
+ accepted by docbook (try running "make" to check), and is very near
+ the text in question.  For examples, this is just after the title.
+ Just inside a <para> (move the actual text after the <indexterm>) is
+ often a good choice.
+   
+   YOU MAY NEED A COPY OF THE RED BOOK to do this part effectively,
+@@ -169,27 +173,69 @@ with all other instances removed.  To find them, try:
+ or similar.
+ 
+ Please use *exactly* that
+ <indexterm><primary>[item]</primary><secondary>example</secondary></indexterm>
+ format for examples, as we might want to automatically munge it
+ later.
+ 
+ 4.  Make sure that all the *other* options listed for the keyword
+ exist somewhere.  For example, given:
+ 
++ ------
++
++    YOU CAN SKIP THIS PART; it's easy to check for it later on, even
++    in parts that have theoretically already been reviewed.
++
++Multi-entry index situations are a whole different kettle of fish.
++Here's an example:
++
+   <!-- ^^   tanru grouping: complex, 87; effect of tanru inversion on, 96; guheks compared with jeks, 350; three-part, 85; with bo, 87; with ke, 88; with ke and bo, 88 -->
++  <indexterm><primary>schooner</primary></indexterm>
+ 
+-that all 7 of those entries actually have referents somewhere in the text.
++The problem is that just because the automated inclusion of that
++indexterm was inserted in this particular place, which presumably is
++near where one of the 7 entries listed there is supposed to actually
++point to, that doesn't mean that any of the *other* entries got
++inserted in the right place.  That means that
+ 
+-  YOU MAY NEED A COPY OF THE RED BOOK to do this part effectively,
+-  because you should be tagging the same bits of text as it is
+-  (along with others if you wish).
++  <!-- ^^   tanru grouping: complex, 87; effect of tanru inversion on, 96; guheks compared with jeks, 350; three-part, 85; with bo, 87; with ke, 88; with ke and bo, 88 -->
++  <indexterm><primary>schooner</primary></indexterm>
++
++needs to be turned into *all of*:
++
++  <indexterm><primary>tanru grouping</primary><secondary>complex</secondary></indexterm>
++
++  <indexterm><primary>tanru grouping</primary><secondary>effect of tanru inversion on</secondary></indexterm>
++
++  <indexterm><primary>tanru grouping</primary><secondary>guheks compared with jeks</secondary></indexterm>
++
++  <indexterm><primary>tanru grouping</primary><secondary>three-part</secondary></indexterm>
++
++  <indexterm><primary>tanru grouping</primary><secondary>with bo</secondary></indexterm>
++
++  <indexterm><primary>tanru grouping</primary><secondary>with ke</secondary></indexterm>
++
++  <indexterm><primary>tanru grouping</primary><secondary>with ke and bo</secondary></indexterm>
++
++And each of those needs to be placed in some appropriate place in
++the text, where "appropriate" means "in about the same place as it
++currently is in the red book", *and* all instances of the original
++bits, i.e.:
++
++  <!-- ^^   tanru grouping: complex, 87; effect of tanru inversion on, 96; guheks compared with jeks, 350; three-part, 85; with bo, 87; with ke, 88; with ke and bo, 88 -->
++  <indexterm><primary>schooner</primary></indexterm>
++
++need to be removed.
++
++YOU NEED A COPY OF THE RED BOOK to do this part effectively, because
++you should be tagging the same bits of text as it is (along with
++others if you wish).
+ 
+  ------
+ 
+ NON-CHATPER work: Add index entries based on TODO-index.  Pick a
+ point in the middle somewhere, please, and *especially* for this
+ work, check in often.
+ 
+ You will almost certainly need a physical copy of the red book to do
+ this effectively.
+ 
+
+commit ab38eb14afe26f58f6c11b68447f29c0e9a019ce
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Thu Dec 23 12:26:05 2010 -0800
+
+    Doc update.
+
+diff --git a/todocbook/TODO b/todocbook/TODO
+index e46702e..1f3e2e7 100644
+--- a/todocbook/TODO
++++ b/todocbook/TODO
+@@ -61,20 +61,28 @@ example has an obvious title, but it's much less important there, so
+ not worth spending time on for the first pass.
+ 
+ The important thing here is that *NOTHING* mentions a fixed number!
+ *NOWHERE* in the docbook should *ANYTHING* be aware that it is in
+ chapter 20 or section 7 or anything like that.  This is to give us
+ the freedom to move things around later.
+ 
+ Numeric-based stuff will all be autogenerated during processing,
+ based on the current state of the docs.
+ 
++THERE IS ONE EXCEPTION: DO NOT change anchors that are two or three
++pairs of letters and numbers, like this:
++
++  <anchor xml:id="c5e1d5" />
++
++They are going to be needed down the road to provide backwards
++compatability.  Don't touch them.
++
+  ------
+ 
+ With the caveat that indexterm entries for examples should look
+ exactly like this:
+ 
+ <indexterm><primary>[item]</primary><secondary>example</secondary></indexterm>
+ 
+ , do feel free to add index entries where they seem useful.  It's
+ unlikely that we can ever have a too-thorough index (and it's a lot
+ easier to cut the thing down than to grow it anyways).
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
