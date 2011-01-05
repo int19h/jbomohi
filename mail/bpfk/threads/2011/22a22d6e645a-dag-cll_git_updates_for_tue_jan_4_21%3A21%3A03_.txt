@@ -1,0 +1,134 @@
+# mail/bpfk thread 22a22d6e645a-dag-cll_git_updates_for_tue_jan_4_21%3A21%3A03_ | root e1paizn-0005nn-lp@oh-www1.lojban.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2011-01-05T02:21:03Z | www-data <www-data@oh-www1.lojban.org> | e1paizn-0005nn-lp@oh-www1.lojban.org | mail/bpfk/cur/1294194063.22a22d6e645a156b.jbomohi:2,S
+commit 5b85cff2223e332c35d5fc4b9db4330700d2bdf2
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Tue Jan 4 17:42:55 2011 -0800
+
+    Better glossary handling.
+
+diff --git a/todocbook/TODO b/todocbook/TODO
+index 969a951..35b659d 100644
+--- a/todocbook/TODO
++++ b/todocbook/TODO
+@@ -95,21 +95,21 @@ annoying.
+ 
+ If you see a <quote>...</quote> around Lojban text, replace it with
+ <jbophrase>...</jbophrase>.  There are lots of these.
+ 
+ Also, use <jbophrase valid="false">...</jbophrase> for na gendra and
+ <jbophrase valid="iffy">...</jbophrase> for na smudra
+ 
+ Turn letterals, like <quote>l</quote>, into <jbophrase
+ role="letteral">l</jbophrase>
+ 
+-Similarily we have role="morphology", role="dipthong", and
++Similarily we have role="morphology", role="diphthong", and
+ role="rafsi"
+ 
+  ------
+ 
+ <programlisting> is bad; change it.  If you can't figure out how to
+ change it, or think it's actually correct in some particular place,
+ post to the BPFK list.
+ 
+  ------
+ 
+diff --git a/todocbook/docbook2html_preprocess.xsl b/todocbook/docbook2html_preprocess.xsl
+index d925a9f..95de8ea 100644
+--- a/todocbook/docbook2html_preprocess.xsl
++++ b/todocbook/docbook2html_preprocess.xsl
+@@ -165,20 +165,31 @@
+     </xsl:choose>
+   </xsl:template>
+ 
+   <!-- <en> tags that arn't in <interlinear-gloss> tags -->
+   <xsl:template match="example/en[not(boolean(ancestor::interlinear-gloss))]">
+     <para>
+       <xsl:value-of select='.//text()'/>
+     </para>
+   </xsl:template>
+ 
++  <!-- <compound-cmavo> tags; placeholder -->
++  <xsl:template match="compound-cmavo">
++    <simplelist>
++      <xsl:for-each select=".//jbo">
++        <member>
++          <xsl:value-of select=".//text()"/>
++        </member>
++      </xsl:for-each>
++    </simplelist>
++  </xsl:template>
++
+   <!-- turn a string into a lowercase & dashes slug -->
+   <xsl:template name="make_slug">
+     <xsl:param name="input" select="''"/>
+     <!-- This bit below just replaces ' with h-->
+     <xsl:variable name="slug1">
+       <xsl:value-of select="translate( $input, &#x22;&#x27;&#x22;, 'h' )"/>
+     </xsl:variable>
+     <!-- This bit below just deletes " -->
+     <xsl:variable name="slug2">
+       <xsl:value-of select='translate( $slug1, &#x27;&#x22;&#x27;, "" )'/>
+@@ -195,24 +206,25 @@
+         '&#x20;&#x9;&#xD;&#xA;ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+         '----abcdefghijklmnopqrstuvwxyz' )"/>
+     </xsl:variable>
+     <xsl:value-of select="$slug"/>
+   </xsl:template>
+ 
+   <!-- turn <jbophrase> elements with single lojban words into
+        glossary and indexed elements
+        -->
+   <!-- If you change the match here, also change it in
+-       docbook2html_preprocess.xsl ; search for LOJBAN WORDS MATCH
++       generate_glossary.xsl ; search for LOJBAN WORDS MATCH
+        -->
+   <xsl:template match="jbophrase[count(str:tokenize(text())) = 1 and ( not(@glossary) or @glossary != 'false')
+-    and ( not(@role) or ( @role != 'morphology' and @role != 'rafsi' and @role != 'dipthong' and @role != 'letteral' ) ) ]">
++    and ( not(@role) or ( @role != 'morphology' and @role != 'rafsi' and @role != 'diphthong' and @role != 'letteral' ) ) ]"
++    priority="2">
+     <xsl:variable name="wordsnum">
+       <xsl:value-of select="count(str:tokenize(text()))"/>
+     </xsl:variable>
+     <xsl:variable name="slug">
+       <xsl:call-template name="make_slug">
+         <xsl:with-param name="input" select="text()"/>
+       </xsl:call-template>
+     </xsl:variable>
+     <!-- FIXME: the role is currently only used by the chapter2
+          markup stuff, which still needs to be implemented
+@@ -227,22 +239,22 @@
+         <indexterm>
+           <xsl:attribute name="type">lojban-words</xsl:attribute>
+           <primary><xsl:value-of select="text()"/></primary>
+         </indexterm>
+         <xsl:value-of select="text()"/>
+       </foreignphrase>
+     </glossterm>
+   </xsl:template>
+ 
+   <!-- lojban phrases and/or unglossed words -->
+-  <xsl:template match="jbophrase[count(str:tokenize(text())) > 1 or @glossary = 'false'
+-    or @role = 'morphology' or @role = 'rafsi' or @role = 'diphthong' or @role = 'letteral' ]">
++  <xsl:template match="jbophrase"
++    priority="1">
+     <xsl:variable name="wordsnum">
+       <xsl:value-of select="count(str:tokenize(text()))"/>
+     </xsl:variable>
+     <xsl:variable name="slug">
+       <xsl:call-template name="make_slug">
+         <xsl:with-param name="input" select="text()"/>
+       </xsl:call-template>
+     </xsl:variable>
+     <!-- FIXME: the role is currently only used by the chapter2
+          markup stuff, which still needs to be implemented
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
