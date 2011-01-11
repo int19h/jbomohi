@@ -1,0 +1,41 @@
+# mail/lojban-list thread af97a5aaa6dc-vocative_production_in_peg_grammar | root 20110111142512.ga38433@197.sub-75-211-132.myvzw.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2011-01-11T14:25:12Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110111142512.ga38433@197.sub-75-211-132.myvzw.com | mail/lojban-list/cur/1294755912.af97a5aaa6dce9ab.jbomohi:2,S
+The PEG grammar has the following production:
+
+vocative <- ( COI-clause NAI-clause? )+ DOI-clause
+          / ( COI-clause NAI-clause? ) ( COI-clause NAI-clause? )*
+          / DOI-clause
+
+Which is a bit curious to me.  It *seems* like it could be
+rewritten as:
+
+vocative <- ( COI-clause NAI-clause? )* DOI-clause?
+
+The only difference I can see between these two cases are that the
+second form will match the empty string, whereas the first will not.
+It looks like that is a problem for one of the ordered choices in the
+'free' production.  (I'm not sure if that can be addressed yet.)
+
+If vocative is written this way so that it does not match the empty
+string, why isn't it written this way?:
+
+vocative <- ( COI-clause NAI-clause? )+ DOI-clause
+          / ( COI-clause NAI-clause? )+
+          / DOI-clause
+
+Where the second ordered choice uses the + operator instead of
+FOO FOO*?
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
