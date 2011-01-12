@@ -1,4 +1,4 @@
-# mail/lojban-list thread 9b700f0f9223-any-word-sa-handling_clarification | root 20110112141124.ga866@alice.local | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 9b700f0f9223-any-word-sa-handling_clarification | root 20110112141124.ga866@alice.local | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-01-12T14:11:24Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110112141124.ga866@alice.local | mail/lojban-list/cur/1294841484.9b700f0f922394be.jbomohi:2,S
 The Lojban PEG grammar has the following production:
@@ -165,5 +165,71 @@ To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
+
+
+
+=== 4 | 2011-01-12T23:45:09Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110112234509.gb1262@alice.local | mail/lojban-list/cur/1294875909.248e983f1f8e3238.jbomohi:2,S
+On Wed, Jan 12, 2011 at 07:44:19PM -0300, Jorge Llambías wrote:
+> On Wed, Jan 12, 2011 at 3:49 PM, Robin Lee Powell
+> <rlpowell@digitalkingdom.org> wrote:
+> > On Wed, Jan 12, 2011 at 07:11:24AM -0700, .alyn.post. wrote:
+> >> The Lojban PEG grammar has the following production:
+> >>
+> >> any-word-SA-handling <- BRIVLA-pre
+> >>                       / known-cmavo-SA
+> >>                       / !known-cmavo-pre
+> >>                         CMAVO-pre
+> >>                       / CMENE-pre
+> >>
+> >> This is the only production which uses known-cmavo-SA,
+> >> known-cmavo-pre, and CMAVO-pre.  I'm trying to determine how these
+> >> productions interact, but these rules intersect the morphology
+> >> interface in camxes, and I would appreciate help understanding
+> >> them.
+> >
+> > Good luck.  -_-
+> >
+> > The *goal* is to match
+> > http://www.lojban.org/tiki/tiki-index.php?page=Magic+Words , IIRC.
+> > It's really complicated.
+> >
+> > The design there is to match any word, but also to slurp SA clauses.
+> > SA, as used there, only affects cmavo; [selma'o] ... SA [same
+> > selma'o] == one cmavo of that selma'o.
+> 
+> That was your original version, but then you changed it. Now SA does
+> something different, it doesn't just look at the selma'o of the
+> following word, but at a whole following structure. Either way it's a
+> big mess. We really should think seriously about SA at some point, and
+> either make something sensible with it or just drop it. It's no wonder
+> that anyone will be confused by rules that have to do with SA because
+> they were written for one version and then sort of adapted to
+> something else. I believe Alan is correct that the current
+> any-word-SA-handling rule contains unnecessary fluff for the current
+> version.
+> 
+
+Robin,
+
+I've attached a patch that removes *most* of the commented-out
+productions in the lojban.peg file you've checked into github.
+
+This patch removes the commented-out rules having to do with SA
+handling, and in one sense can be seen as a continuation of removing
+the *-no-SA-handling in the PEG grammar.
+
+I'm not at the point yet where I'm testing SA, so I don't really
+know if these rules work better than the ones that aren't commented
+out.  camxes is using the not-these, however.  Can they go?
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
 
