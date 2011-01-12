@@ -1,4 +1,4 @@
-# mail/lojban-list thread 9b700f0f9223-any-word-sa-handling_clarification | root 20110112141124.ga866@alice.local | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 9b700f0f9223-any-word-sa-handling_clarification | root 20110112141124.ga866@alice.local | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-01-12T14:11:24Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110112141124.ga866@alice.local | mail/lojban-list/cur/1294841484.9b700f0f922394be.jbomohi:2,S
 The Lojban PEG grammar has the following production:
@@ -52,6 +52,62 @@ different from known-cmavo-SA?
 -Alan
 -- 
 .i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 2 | 2011-01-12T18:49:21Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20110112184918.gp2132@digitalkingdom.org | mail/lojban-list/cur/1294858161.1d8a17a8752cbc07.jbomohi:2,S
+On Wed, Jan 12, 2011 at 07:11:24AM -0700, .alyn.post. wrote:
+> The Lojban PEG grammar has the following production:
+> 
+> any-word-SA-handling <- BRIVLA-pre
+>                       / known-cmavo-SA
+>                       / !known-cmavo-pre
+>                         CMAVO-pre
+>                       / CMENE-pre
+> 
+> This is the only production which uses known-cmavo-SA,
+> known-cmavo-pre, and CMAVO-pre.  I'm trying to determine how these
+> productions interact, but these rules intersect the morphology
+> interface in camxes, and I would appreciate help understanding
+> them.
+
+Good luck.  -_-
+
+The *goal* is to match
+http://www.lojban.org/tiki/tiki-index.php?page=Magic+Words , IIRC.
+It's really complicated.
+
+The design there is to match any word, but also to slurp SA clauses.
+SA, as used there, only affects cmavo; [selma'o] ... SA [same
+selma'o] == one cmavo of that selma'o.
+
+So, the idea is that "any word" means a brivla, a cmevla, an unknown
+cmavo, or a cmavo with any such SA structures ignored.
+
+> known-cmavo-SA includes a *-pre rule for every selma'o. It doesn't
+> include a rule for CMAVO-pre, hich would match any cmavo not
+> classified into a selma'o by the morphology (like la'oi).
+
+Exactly; that's not how SA works.  That's what "!known-cmavo-pre
+CMAVO-pre" does.
+
+Let me know if that doesn't solve the confusion described in the
+rest of the email.
+
+-Robin
+
+-- 
+http://singinst.org/ :  Our last, best hope for a fantastic future.
+Lojban (http://www.lojban.org/): The language in which "this parrot
+is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
+is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
