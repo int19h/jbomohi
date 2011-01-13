@@ -1,0 +1,240 @@
+# mail/lojban-list thread 2a21f4862b07-inconsistency_between_peg_grammar_and_cll_17%2E | root 20110113012524.gc1262@alice.local | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2011-01-13T01:25:24Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110113012524.gc1262@alice.local | mail/lojban-list/cur/1294881924.2a21f4862b07773d.jbomohi:2,S
+[This fell out of my researching SA.  tl;dr: I've found two bugs in
+ BU handling in the PEG grammar.]
+
+CLL 17.4[1] contains an interesting passage:
+
+  Formally, “bu” may be attached to any single Lojban word. Compound
+  cmavo do not count as words for this purpose. The special cmavo
+  “ba'e”, “za'e”, “zei”, “zo”, “zoi”, “la'o”, “lo'u”, “si”, “sa”,
+  “su”, and “fa'o” may not have “bu” attached, because they are
+  interpreted before “bu” detection is done; in particular,
+
+  4.1)   zo bu
+         the word “bu”
+
+  is needed when discussing “bu” in Lojban. It is also illegal
+  to attach “bu” to itself, but more than one “bu” may be
+  attached to a word; thus “.abubu” is legal, if ugly. (Its
+  meaning is not defined, but it is presumably different from
+  “.abu”.) It does not matter if the word is a cmavo, a cmene,
+  or a brivla. All such words suffixed by “bu” are treated
+  grammatically as if they were cmavo belonging to selma'o BY.
+  However, if the word is a cmene it is always necessary to
+  precede and follow it by a pause, because otherwise the cmene
+  may absorb preceding or following words. 
+
+I do wish the CLL explained why these cmavo are special.  It doesn't,
+so I'm going to pretent the reason is immutable and run some tests:
+
+;; Let's establish a baseline of what camxes does in normal cases.
+;;
+
+; gismu
+-> broda bu
+   text
+      buClauseNoPre
+      |- BRIVLA
+      |     gismu: broda
+      |- CMAVO
+            BU: bu
+
+; lujvo
+-> rodbo'e bu
+   rodbo'e bu
+   text
+      buClauseNoPre
+      |- BRIVLA
+      |     lujvo: rodbo'e
+      |- CMAVO
+            BU: bu
+
+; fu'ivla
+-> fiorso bu
+   fiorso bu
+   text
+      buClauseNoPre
+      |- BRIVLA
+      |     fuhivla: fiorso
+      |- CMAVO
+            BU: bu
+
+; cmene
+-> .alyn. bu
+   text
+      buClauseNoPre
+      |- CMENE
+      |     cmene: alyn
+      |- CMAVO
+            BU: bu
+
+; cmavo (this could certainly be exhaustive)
+-> .abu
+   text
+      buClauseNoPre
+      |- CMAVO
+      |     A: a
+      |- CMAVO
+            BU: bu
+
+-> lobu
+   text
+      buClauseNoPre
+      |- CMAVO
+      |     LE: lo
+      |- CMAVO
+            BU: bu
+
+So far, this has all passed through the same production(s) and the
+PEG grammar agrees with the CLL (and you can see where this is going):
+
+  bu-clause-no-pre <- pre-zei-bu (bu-tail? zei-tail)* bu-tail post-clause
+
+  zei-tail <- (ZEI-clause any-word)+
+  bu-tail <- BU-clause+
+
+  pre-zei-bu <- ( !BU-clause
+                  !ZEI-clause
+                  !SI-clause
+                  !SA-clause
+                  !SU-clause
+                  !FAhO-clause
+                  any-word-SA-handling )
+                si-clause?
+
+
+Let's try the forbidden cmavo:
+
+
+; forbidden cmavo
+-> ba'e bu
+   text
+      buClauseNoPre
+      |- CMAVO
+      |     BAhE: ba'e
+      |- CMAVO
+            BU: bu
+
+-> za'e bu
+   text
+      buClauseNoPre
+      |- CMAVO
+      |     BAhE: za'e
+      |- CMAVO
+            BU: bu
+
+These are the entirety of BAhE, and the CLL is inconsistent with the
+PEG grammar.  I believe you were just complaining about BAhE today,
+Robin.  :-D  It gets better...
+
+
+-> zei bu
+   [ shouldn't and doesn't parse ]
+
+-> zo bu
+   text
+      ZOPre
+      |- CMAVO
+      |     ZO: zo
+      |- CMAVO
+            BU: bu
+
+Note the parse tree differs and is presumably correct.
+ 
+
+-> zoi bu
+   [ shouldn't and doesn't parse ]
+
+-> la'o bu
+   [ shouldn't and doesn't parse ]
+
+This is the entirety of ZOI, and the PEG and CLL are mutually
+consistent.
+
+
+-> lo'u bu
+   [ shouldn't and doesn't parse ]
+
+-> si bu
+   [ shouldn't and doesn't parse ]
+
+-> sa bu
+   [ shouldn't and doesn't parse ]
+
+-> su bu
+   text
+      buClauseNoPre
+      |- CMAVO
+      |     SU: su
+      |- CMAVO
+            BU: bu
+
+Now wait just a minute here.  The rule above *explicitily forbids*
+SU.  How is it that it is matching?
+
+-> fa'o bu
+   [ shouldn't and doesn't parse ]
+
+-> bu bu
+   [ shouldn't and doesn't parse ]
+
+
+The answer as to why SU matches has to do with this tricky little
+interaction:
+
+  SU-clause   <- SU-pre SU-post
+  SU-pre      <- pre-clause SU `spaces?
+  SU-post     <- post-clause
+
+  ; Handling of what can go after a cmavo
+  post-clause <- `spaces? si-clause? !ZEI-clause !BU-clause indicators*
+
+  pre-clause <- BAhE-clause?
+
+We match !SU-clause, which matches SU just fine, but the post-clause
+production contains the rule !BU-clause, and there does happen to be
+a BU, so the match fails, post-clause no-matches, SU-post no-matches,
+which causes the SU-clause production to no-match, so our check that
+ we don't have SU fails.
+
+This could apply to all of pre-zei-bu's '!BRODA-clause' rules.  It
+could be a consequence of the grammar that prevents BU, ZEI, SI, SA,
+ and FAhO from being parsed.  Let's check them.
+
+BU-clause, ZEI-caluse, SI-clause, SA-clause, and FAhO-clause don't use
+the post-clause production.  They therefor don't have this problem.
+It appears to be unique to SU.
+
+This leaves us with two problems.  We need to improve pre-zei-bu to:
+
+ * not permit BAhE (note that BAhE-post *also* has a !BU-clause, it
+   would in theory suffer from the same problem SU does.
+ * for-real no-match SU by not triggering the !BU-clause rule.
+   
+Shall I run back to my cave and formulate a patch, or is it so
+obvious that you can do it?
+
+-Alan
+
+PS:
+
+I've checked the CLL Errata[2] and the Suggestions for the CLL second
+edition[2] and neither of those documents has an entry for CLL 17.4.
+I assume the PEG grammar is mistaken here, and should be fixed.
+
+1: http://dag.github.com/cll/17/4/
+2: http://www.lojban.org/tiki/tiki-index.php?page=CLL,+aka+Reference+Grammar,+Errata
+3: http://www.lojban.org/tiki/tiki-index.php?page=Suggestions+for+CLL%2C+second+edition
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
