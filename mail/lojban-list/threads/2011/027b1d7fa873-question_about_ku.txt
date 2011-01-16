@@ -1,4 +1,4 @@
-# mail/lojban-list thread 027b1d7fa873-question_about_ku | root aanlkti=tgbmgfmpr4v8bb+pxnd+zpfhhnxxwktujbbpz@mail.gmail.com | 13 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 027b1d7fa873-question_about_ku | root aanlkti=tgbmgfmpr4v8bb+pxnd+zpfhhnxxwktujbbpz@mail.gmail.com | 14 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-01-15T23:11:14Z | Luke Bergen <lukeabergen@gmail.com> | aanlkti=8t2ttgdfhetsz0yypha7emk6s8whr-zfjyayi@mail.gmail.com | mail/lojban-list/cur/1295133074.4c05f3fb68aff72f.jbomohi:2,S
 I don't know why it just occurred  to me but... what exactly is "ku"
@@ -845,7 +845,232 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 11 | 2011-01-16T02:42:17Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinb=3ccdob5lietdgblhag0+cpwzh8eu7_b7szr@mail.gmail.com | mail/lojban-list/cur/1295145737.95e5e9fb50109c5a.jbomohi:2,S
+=== 11 | 2011-01-16T05:43:33Z | Luke Bergen <lukeabergen@gmail.com> | aanlkti=abfnqpk6qgt=w9z2vyadppqkogfhpjzbdtapp@mail.gmail.com | mail/lojban-list/cur/1295156613.a0c3995938ebdce1.jbomohi:2,S
+Ok, that makes sense.  Like I said, I don't know PEG so using an example
+helped. Thanks.
+
+On Sat, Jan 15, 2011 at 10:18 PM, Ross Ogilvie <oges007@gmail.com> wrote:
+
+> To the question of "how does the grammar know?": it knows because a rule
+> has been explicitly put in the grammar. As Alan has found already
+>
+> term-1 <- ... / ( !gek ( tag   / FA-clause  free* ) ( sumti / KU-clause?
+> free* ) ) / NA-clause KU-clause free*
+>
+> and the other places KU is used
+>
+> sumti-5 <- ... / quantifier selbri KU-clause? free* relative-clauses?
+>
+> sumti-6 <- .../ (LA-clause / LE-clause) free* sumti-tail KU-clause? free*/ ...
+>
+> This shows the uses of KU: to close a NA, as an alternative to a sumti
+> after a FA or tag, to end a quantified sumti that has no LE or LA and
+> finally to close a LA or LE sumti.
+>
+> I'm not sure if this answers your question. The other interpretation of
+> your question I thought of was "How does the grammar know that we are using
+> KU one way or another?". The answer is that PEG parsers are greedy, ie that
+> they will try to make the current rule they are dealing with as long as
+> possible.
+>
+> To use your example {lo nu citka pu ku lo cidja}. When the parser is at pu,
+> it is processing the rule term-1. It has matched the {pu} as a tag. So then
+> it tries to match ( sumti / KU-clause? free* ). It fails to match a sumti,
+> because no sumti begins with {ku}. Then it has the option of matching a
+> KU-clause, which it does. Then it fails to match any frees. At this point it
+> has successfully matched a term-1, so it goes back to try to match whatever
+> rule had the term-1 in it.
+>
+> If it was not greedy, then yes it might decide to end the bridi after pu
+> and use the ku to close off the lo. This is one of the reasons that
+> ellidible terminators are difficult in the EBNF grammar (or so I am lead to
+> believe).
+>
+> Hope that helps.
+>
+> mu'o mi'e ros
+>
+> On Sun, Jan 16, 2011 at 1:41 PM, Luke Bergen <lukeabergen@gmail.com>wrote:
+>
+>> I know how {ku} is supposed to be used, what I'm asking about is how it
+>> works (as in, how does the grammar know what to do with {ku}).
+>>
+>> I would expect the grammar to see something like {lo nu citka pu ku lo
+>> cidja} and think "ok, {ku} was found, go back to the left until we find a LE
+>> and then terminate that" which would result in two sumti {lo nu citka pu}
+>> followed by {lo cidja} instead of the correct interpretation of it being a
+>> single sumti {lo nu pu citka lo cidja}.
+>>
+>> I should just learn how PEG works and go to the grammar directly for these
+>> things, but mi mutce lazni je mentatpi
+>>
+>>
+>> On Sat, Jan 15, 2011 at 9:27 PM, .alyn.post. <
+>> alyn.post@lodockikumazvati.org> wrote:
+>>
+>>> dur: correcting myself, it's mentioned:
+>>>
+>>>  http://dag.github.com/cll/10/1/
+>>>
+>>> I did a terrible job of looking.  :-)
+>>>
+>>> -Alan
+>>>
+>>> On Sat, Jan 15, 2011 at 07:23:39PM -0700, .alyn.post. wrote:
+>>> > Luke, I went hunting and found this in the CLL:
+>>> >
+>>> > http://dag.github.com/cll/20/
+>>> >
+>>> >   selma'o KU (Chapter 6, Chapter 10)
+>>> >
+>>> >   Elidable terminator for LE and some uses of LA. Indicates the end of
+>>> >   a description sumti. Also used after a tense or modal to indicate
+>>> >   that no sumti follows, and in the compound NA+KU to indicate natural
+>>> >   language-style negation.
+>>> >
+>>> > I didn't find an example of terminating a tense or modal with {ku},
+>>> > but I wasn't exhaustive in my search.  I'm happy I found some
+>>> > mention of this usage.
+>>> >
+>>> > -Alan
+>>> >
+>>> > On Sat, Jan 15, 2011 at 07:08:29PM -0500, Luke Bergen wrote:
+>>> > >    This is the meat of my question. My initial guess was that {ba}
+>>> expects a
+>>> > >    sumti as is the case with {mi citka lo plise ba lo nu mi xagji}
+>>> and that
+>>> > >    putting it before the selbri or terminating it with {ku} is just a
+>>> way of
+>>> > >    saying "forget that sumti, it's zo'e or something". But the only
+>>> way of
+>>> > >    getting that is for there to be an implicit {lo} OR {ku} is
+>>> special in
+>>> > >    that it terminates tags like LE, BAI, BA, (and FA?). But that
+>>> doesn't seem
+>>> > >    right because then why wouldn't the ku be necessary in the case of
+>>> {mi ba
+>>> > >    [ku] citka lo plise}?
+>>> > >
+>>> > >    I wish I understood PEG better.
+>>> > >    On Sat, Jan 15, 2011 at 6:53 PM, Ian Johnson <[1]
+>>> blindbravado@gmail.com>
+>>> > >    wrote:
+>>> > >
+>>> > >      Still no idea why ku can terminate two completely unrelated
+>>> selma'o,
+>>> > >      though.
+>>> > >
+>>> > >      mu'o mi'e .latros.
+>>> > >
+>>> > >      On Sat, Jan 15, 2011 at 6:11 PM, Luke Bergen <[2]
+>>> lukeabergen@gmail.com>
+>>> > >      wrote:
+>>> > >
+>>> > >        I don't know why it just occurred to me but... what exactly is
+>>> "ku"
+>>> > >        terminatiging in "baku mi citka"? Is there an implicit "lo" so
+>>> that
+>>> > >        parsers see this as /really/ being something like "baloku mi
+>>> citka"?
+>>> > >        Or is ku just able to terminate "ba"? I didn't know that BA
+>>> had a
+>>> > >        terminator... either way something feels strange.
+>>> > >
+>>> > >        --
+>>> > >        You received this message because you are subscribed to the
+>>> Google
+>>> > >        Groups "lojban" group.
+>>> > >        To post to this group, send email to [3]
+>>> lojban@googlegroups.com.
+>>> > >        To unsubscribe from this group, send email to
+>>> > >        [4]lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+>>> .
+>>> > >        For more options, visit this group at
+>>> > >        [5]http://groups.google.com/group/lojban?hl=en.
+>>> > >
+>>> > >      --
+>>> > >      You received this message because you are subscribed to the
+>>> Google
+>>> > >      Groups "lojban" group.
+>>> > >      To post to this group, send email to [6]lojban@googlegroups.com
+>>> .
+>>> > >      To unsubscribe from this group, send email to
+>>> > >      [7]lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+>>> .
+>>> > >      For more options, visit this group at
+>>> > >      [8]http://groups.google.com/group/lojban?hl=en.
+>>> > >
+>>> > >    --
+>>> > >    You received this message because you are subscribed to the Google
+>>> Groups
+>>> > >    "lojban" group.
+>>> > >    To post to this group, send email to lojban@googlegroups.com.
+>>> > >    To unsubscribe from this group, send email to
+>>> > >    lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+>>> .
+>>> > >    For more options, visit this group at
+>>> > >    http://groups.google.com/group/lojban?hl=en.
+>>> > >
+>>> > > References
+>>> > >
+>>> > >    Visible links
+>>> > >    1. mailto:blindbravado@gmail.com
+>>> > >    2. mailto:lukeabergen@gmail.com
+>>> > >    3. mailto:lojban@googlegroups.com
+>>> > >    4. mailto:lojban%2Bunsubscribe@googlegroups.com<lojban%252Bunsubscribe@googlegroups.com>
+>>> > >    5. http://groups.google.com/group/lojban?hl=en
+>>> > >    6. mailto:lojban@googlegroups.com
+>>> > >    7. mailto:lojban%2Bunsubscribe@googlegroups.com<lojban%252Bunsubscribe@googlegroups.com>
+>>> > >    8. http://groups.google.com/group/lojban?hl=en
+>>> >
+>>> > --
+>>> > .i ko djuno fi le do sevzi
+>>>
+>>> --
+>>> .i ko djuno fi le do sevzi
+>>>
+>>> --
+>>> You received this message because you are subscribed to the Google Groups
+>>> "lojban" group.
+>>> To post to this group, send email to lojban@googlegroups.com.
+>>> To unsubscribe from this group, send email to
+>>> lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+>>> .
+>>> For more options, visit this group at
+>>> http://groups.google.com/group/lojban?hl=en.
+>>>
+>>>
+>>  --
+>> You received this message because you are subscribed to the Google Groups
+>> "lojban" group.
+>> To post to this group, send email to lojban@googlegroups.com.
+>> To unsubscribe from this group, send email to
+>> lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+>> .
+>> For more options, visit this group at
+>> http://groups.google.com/group/lojban?hl=en.
+>>
+>
+>  --
+> You received this message because you are subscribed to the Google Groups
+> "lojban" group.
+> To post to this group, send email to lojban@googlegroups.com.
+> To unsubscribe from this group, send email to
+> lojban+unsubscribe@googlegroups.com<lojban%2Bunsubscribe@googlegroups.com>
+> .
+> For more options, visit this group at
+> http://groups.google.com/group/lojban?hl=en.
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+=== 12 | 2011-01-16T02:42:17Z | Luke Bergen <lukeabergen@gmail.com> | aanlktinb=3ccdob5lietdgblhag0+cpwzh8eu7_b7szr@mail.gmail.com | mail/lojban-list/cur/1295145737.95e5e9fb50109c5a.jbomohi:2,S
 Which is not to put down your hunting.  Thanks for the links.  I really
 should get around to reading through the CLL again.  It's been a while and
 I'm getting rusty on some of it.
@@ -992,7 +1217,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 12 | 2011-01-16T02:49:06Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110116024906.ge7994@alice.local | mail/lojban-list/cur/1295146146.8dd103828a2f9cdd.jbomohi:2,S
+=== 13 | 2011-01-16T02:49:06Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110116024906.ge7994@alice.local | mail/lojban-list/cur/1295146146.8dd103828a2f9cdd.jbomohi:2,S
 I get something out of doing those hunts, so I'll continue doing
 them.  They're useful to me.  Thank you for understanding.  :-)
 
@@ -1175,7 +1400,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 13 | 2011-01-16T01:02:06Z | Pierre Abbat <phma@phma.optus.nu> | 201101152002.07407.phma@phma.optus.nu | mail/lojban-list/cur/1295139726.ec90d69fbec2e704.jbomohi:2,S
+=== 14 | 2011-01-16T01:02:06Z | Pierre Abbat <phma@phma.optus.nu> | 201101152002.07407.phma@phma.optus.nu | mail/lojban-list/cur/1295139726.ec90d69fbec2e704.jbomohi:2,S
 On Saturday 15 January 2011 18:53:16 Ian Johnson wrote:
 > Still no idea why ku can terminate two completely unrelated selma'o,
 > though.
