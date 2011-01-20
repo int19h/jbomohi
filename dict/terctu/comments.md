@@ -33,3 +33,10 @@ The gloss should also be changed to 'teaching; something taught'.  The
 gloss for the usual meaning of 'teaching' could be 'teaching; practice of
 teaching'.
 
+
+## 2011-01-20T18:26:57Z — seryf (comment 560, on definition 18758, in reply to 558)
+
+Re: What do you mean?
+
+I think you are right, that would be clearer. I will add that.
+
