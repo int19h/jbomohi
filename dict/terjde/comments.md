@@ -36,3 +36,12 @@ By the way, I also am also a native English speaker and have a background
 in communications (languages, not IT).	That doesn't mean I'm always
 right, but in this case, I am.
 
+
+## 2011-01-20T18:24:41Z — seryf (comment 559, on definition 18759, in reply to 557)
+
+Re: Still ungrammatical
+
+I see what you meant. it was grammatical, but weird. There was a relative
+clause that i think you were missing. I made it explicit. your definition
+wasn't a bad way to put it though. i may decide to change mine to that.
+
