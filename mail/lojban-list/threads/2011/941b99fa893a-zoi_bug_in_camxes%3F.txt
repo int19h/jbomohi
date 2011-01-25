@@ -1,4 +1,4 @@
-# mail/lojban-list thread 941b99fa893a-zoi_bug_in_camxes%3F | root 20110124162504.gb27137@alice.local | 14 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 941b99fa893a-zoi_bug_in_camxes%3F | root 20110124162504.gb27137@alice.local | 15 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-01-24T16:25:04Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110124162504.gb27137@alice.local | mail/lojban-list/cur/1295886304.941b99fa893a8b71.jbomohi:2,S
 Robin,
@@ -628,6 +628,84 @@ http://singinst.org/ :  Our last, best hope for a fantastic future.
 Lojban (http://www.lojban.org/): The language in which "this parrot
 is dead" is "ti poi spitaki cu morsi", but "this sentence is false"
 is "na nei".   My personal page: http://www.digitalkingdom.org/rlp/
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 15 | 2011-01-25T17:36:07Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110125173607.ga30364@alice.local | mail/lojban-list/cur/1295976967.db9159fd982126e6.jbomohi:2,S
+On Tue, Jan 25, 2011 at 09:19:57AM -0800, Robin Lee Powell wrote:
+> On Tue, Jan 25, 2011 at 09:01:34AM -0300, Jorge Llambías wrote:
+> > On Tue, Jan 25, 2011 at 4:07 AM, Robin Lee Powell
+> > <rlpowell@digitalkingdom.org> wrote:
+> > >
+> > >  it shouldn't be processing stuff inside the zoi quote at all.
+> > >   "gyrate" or "gyrations" or whatever shouldn't be able to be
+> > >  matched as the delimiter because "gy" isn't *seperated out as a
+> > >  word* there.
+> > 
+> > The text inside the quote "zoi gy gy" is the empty string.
+> > Following this with the Lojban words "ra", "te", "gy" makes no
+> > difference, there is no "processing stuff inside the quote" going
+> > on here since there is no stuff inside the quote to process, other
+> > than a space.
+> 
+> I understand what you're saying, I simply disagree that zoi should
+> work that way; the ending particle should have to be completely
+> delimited.
+> 
+> I don't actually *care* all that much, it's just my feeling on the
+> matter.
+> 
+
+From the conversation, I can summarize three separate proposals:
+
+1) leave the PEG grammar alone and correct the CLL to describe the
+   way this grammar is behaving.
+2) replace the rule for zoi-word to match non-lojban-word rather
+   than any-word, so 'gyrate' won't be divided into three words,
+   satisfying Robin's consistency argument.  We'll still need to
+   update the CLL for the behavior, I think.
+3) Replace the PEG grammar with something that reads the stuff
+   between the ZOI delimiter a character at a time.  Either require
+   a pause before the final delimiter or not.
+
+I like 2, 1, and then 3 in that order.
+
+3 I don't like because the rest of the grammar doesn't really work
+that way.  The grammar is defined by token streams and the
+morphology file handles composing the input stream into tokens.
+3 Is not completely unprecedented, however, FAhO does something
+similar.
+
+2 I like because because of the argument Robin raised about
+consistency.  I think it is surprising that gyrate is invalid
+but gyration is valid, and I don't think that surprise is a useful
+feature.  I can't think of a reason to dislike 2, please help me
+with that.
+
+1 Has the advantage of working that way right now.  It also has the
+advantage of prefering Lojbanic text to non-Lojbanic text.  ZOI
+isn't special from that perspective, the parser does what the parse
+does ZOI or not.
+
+Will you give me your preference ordering?  I'd like to know whether
+I should:
+
+  a) update the CLL errata.
+  b) update the PEG grammar.
+  c) raise an issue with the BPFK to make a decision.
+
+I'll use the preference ordering to make a choice.
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
