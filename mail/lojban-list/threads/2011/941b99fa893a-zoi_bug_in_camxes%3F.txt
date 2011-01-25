@@ -1,4 +1,4 @@
-# mail/lojban-list thread 941b99fa893a-zoi_bug_in_camxes%3F | root 20110124162504.gb27137@alice.local | 11 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 941b99fa893a-zoi_bug_in_camxes%3F | root 20110124162504.gb27137@alice.local | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-01-24T16:25:04Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110124162504.gb27137@alice.local | mail/lojban-list/cur/1295886304.941b99fa893a8b71.jbomohi:2,S
 Robin,
@@ -248,7 +248,81 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 7 | 2011-01-25T07:31:02Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20110125073102.gc26224@digitalkingdom.org | mail/lojban-list/cur/1295940662.00e931e80d77e057.jbomohi:2,S
+=== 7 | 2011-01-25T12:31:16Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110125123116.ga29678@alice.local | mail/lojban-list/cur/1295958676.a9c9b97e34880b20.jbomohi:2,S
+On Tue, Jan 25, 2011 at 09:13:55AM -0300, Jorge Llambías wrote:
+> On Tue, Jan 25, 2011 at 12:57 AM, .alyn.post.
+> <alyn.post@lodockikumazvati.org> wrote:
+> >>
+> >> CLL: "The cmavo “zoi” (of selma'o ZOI) is a quotation mark for quoting
+> >> non-Lojban text. Its syntax is “zoi X. text .X”, where X is a Lojban
+> >> word (called the delimiting word) which is separated from the quoted
+> >> text by pauses, and which is not found in the written text or spoken
+> >> phoneme stream."
+> >
+> > I always assumed that this description was describing (in a PEG
+> > grammar with an '=' operator I'm inventing for this purpose):
+> >
+> > zoi <- zoi-open=any-lojban-word pause (!(pause? zoi-open) .)* pause zoi-open
+> >
+> > Namely, that we read a X as any-lojban-word, store the value, then
+> > we read a *character at a time* until we find another X.  In this case
+> > "quoted text" is a character stream, not itself broken into discrete
+> > words and therefor not subject to differentiation between gyrate and
+> > gyration.
+> >
+> > I believe this description makes the CLL consistent with itself.  It
+> > is the only way I make sense of the example given.  I'm not suggesting
+> > this is the behavior the PEG grammar should have, though I certainly
+> > wonder if this is what is being described in the text above.
+> 
+> No, that doesn't agree with the CLL requirement of a pause in front of
+> the second delimiter, because you are disallowing X even in places not
+> preceded by a pause.
+> 
+
+Right.  zoi-quoted text that contains X not preceded by a pause
+is ungrammatical.  The opening message in this thread was the
+relevent section of the CLL which describes exactly that situation
+as being so.
+
+There are two clauses there, the second being "and which is not
+found in the written text"  The intention of the code above is
+that it does enforce a pause in front of the second delimiter
+(that is the 'pause' before the final 'zoi-open'), but that it
+also doesn't permit the literal string identified by zoi-open
+to appear in the intervening text (with our without a pause,
+with in order to succeed in matching the ending delimiter,
+without to detect the extra CLL requirement that it also not
+appear in the quoted text).
+
+To describe it another way: match any Lojban word, then match a
+pause, then try to match the same Lojban word you just matched,
+moving forward a character at a time until the match succeeds.
+Then, since you must, assert that you had a pause in front of
+the second delimiter.
+
+It's convoluted, but I think your statement that I'm disallowing
+X even in places not preceded by a pause is indeed a CLL
+requirement.  Both by implication of the example given and because
+of the text I specifically quoted above. 
+
+I'm not suggesting this behavior is what we want, I still do
+believe it is what the CLL describes.
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 8 | 2011-01-25T07:31:02Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20110125073102.gc26224@digitalkingdom.org | mail/lojban-list/cur/1295940662.00e931e80d77e057.jbomohi:2,S
 On Mon, Jan 24, 2011 at 11:20:40PM -0300, Jorge Llambías wrote:
 > On Mon, Jan 24, 2011 at 10:03 PM, Robin Lee Powell
 > <rlpowell@digitalkingdom.org> wrote:
@@ -293,7 +367,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 8 | 2011-01-25T01:00:06Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20110125010006.gz26224@digitalkingdom.org | mail/lojban-list/cur/1295917206.2de18637ab765ebb.jbomohi:2,S
+=== 9 | 2011-01-25T01:00:06Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20110125010006.gz26224@digitalkingdom.org | mail/lojban-list/cur/1295917206.2de18637ab765ebb.jbomohi:2,S
 On Mon, Jan 24, 2011 at 09:25:04AM -0700, .alyn.post. wrote:
 > Robin,
 > 
@@ -322,7 +396,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 9 | 2011-01-25T06:14:44Z | Lindar <lindarthebard@yahoo.com> | 3251036.256.1295936084612.javamail.geo-discussion-forums@yqcj39 | mail/lojban-list/cur/1295936084.25fe5a12ef4e4b2e.jbomohi:2,S
+=== 10 | 2011-01-25T06:14:44Z | Lindar <lindarthebard@yahoo.com> | 3251036.256.1295936084612.javamail.geo-discussion-forums@yqcj39 | mail/lojban-list/cur/1295936084.25fe5a12ef4e4b2e.jbomohi:2,S
 This -is- a bug, but not something we can fix. Camxes doesn't differentiate 
 in how the delimited material is pronounced.
 
@@ -341,7 +415,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 10 | 2011-01-25T07:07:30Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20110125070730.gb26224@digitalkingdom.org | mail/lojban-list/cur/1295939250.1114e44a671c19fc.jbomohi:2,S
+=== 11 | 2011-01-25T07:07:30Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20110125070730.gb26224@digitalkingdom.org | mail/lojban-list/cur/1295939250.1114e44a671c19fc.jbomohi:2,S
 On Mon, Jan 24, 2011 at 10:14:44PM -0800, Lindar wrote:
 > This -is- a bug, but not something we can fix. Camxes doesn't
 > differentiate in how the delimited material is pronounced.
@@ -377,7 +451,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 11 | 2011-01-25T12:01:34Z | Jorge Llambías <jjllambias@gmail.com> | aanlktinatq28shsyryrpvgnq55cn-9jbodbcfvevqfvr@mail.gmail.com | mail/lojban-list/cur/1295956894.107018fdcb820787.jbomohi:2,S
+=== 12 | 2011-01-25T12:01:34Z | Jorge Llambías <jjllambias@gmail.com> | aanlktinatq28shsyryrpvgnq55cn-9jbodbcfvevqfvr@mail.gmail.com | mail/lojban-list/cur/1295956894.107018fdcb820787.jbomohi:2,S
 On Tue, Jan 25, 2011 at 4:07 AM, Robin Lee Powell
 <rlpowell@digitalkingdom.org> wrote:
 >
