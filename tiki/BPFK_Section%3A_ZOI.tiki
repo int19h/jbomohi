@@ -1,0 +1,31 @@
+This page resulted from a discussion about the way ZOI is handled in camxes and the specification for it in the CLL:
+
+  http://groups.google.com/group/lojban/browse_frm/thread/aa27ff25e6dd5201
+
+zoi, as described in the CLL:
+
+  http://dag.github.com/cll/19/10/
+
+states, about delimiters:
+
+"...and which is not found in the written text or spoken phoneme stream."
+
+"Within written text, the Lojban written word used as a delimiting word may not appear..."
+
+It then goes on to provide an example that is claimed to be ungrammatical:
+
+mi djuno fi le valsi po'u zoi gy. gyrations .gy.
+
+One could infer, given the example provided, that "gy" could not appear *at all* in the quoted text.  The official parser (grammar.300) does not behave this way, however, as it breaks up the words into tokens and fails to detect that the delimiter might be a substring of a quoted word.
+
+camxes also allows the form above as quoted by the CLL.  It does not allow the following:
+
+mi djuno fi le valsi po'u zoi gy. gyrate .gy.
+
+because "gyrate" are three separate Lojban words, and camxes parses the quoted text as if it were Lojban, stopping after matching the first parsed word against the terminator.
+
+Exactly how a parser should parse text between zoi delimiters needs to be decided.  There are three extant proposals:
+
+# Consider the PEG grammar is it is written now to be correct and update the CLL to more accurately describe how zoi works.
+# replace the rule for zoi-word to match non-Lojban words (strings of non-whitespace) rather than lojban words, so 'gyrate' won't be divided into three words.  The CLL will need to be updated for this behavior too.
+# Replace the PEG grammar with something that reads the stuff between the ZOI delimiter a character at a time.  Either requiring a pause before the final delimiter or not.  This is consistent with the CLL.
