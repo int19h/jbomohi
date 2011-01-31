@@ -1,0 +1,43 @@
+# mail/lojban-list thread 282ed4d4f899-confusion_over_fuhe-post_peg_grammar_rule | root 20110131150504.ga49994@alice.local | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2011-01-31T15:05:04Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110131150504.ga49994@alice.local | mail/lojban-list/cur/1296486304.282ed4d4f8997b18.jbomohi:2,S
+I'm confused over the intent of the FUhE-post production in the PEG
+grammar:
+
+FUhE-clause <- FUhE-pre FUhE-post
+FUhE-pre    <- pre-clause FUhE spaces?
+FUhE-post   <- !BU-clause spaces? !ZEI-clause !BU-clause
+
+The ! predicate does not advance the input, so if you walk through
+each rule in the FUhE-post production, you try to:
+
+ * not match BU-clause.  If we find one, we no-match immediately
+   and stop checking.  The input isn't advanced if we non-match it.
+ * the spaces? production will always match the empty string, as
+   FUhE-post only appears in FUhE-clause, and FUhE-pre, the rule
+   before it, ends with a spaces?
+ * not match ZEI-clause.  If we find ZEI-clause, we immediately
+   stop checking.  If we don't find one, the input is not advanced.
+ * not match BU-clause.  This is where I get confused.  We haven't
+   advanced the token stream, and we've already checked for a
+   BU-clause earlier.
+
+The final !BU-clause is either:
+
+ * redundant
+ * should be something like !(ZEI-clause BU-clause)
+
+Anything I missed?
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
