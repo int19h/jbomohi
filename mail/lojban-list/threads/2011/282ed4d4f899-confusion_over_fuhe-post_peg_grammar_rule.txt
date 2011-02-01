@@ -1,4 +1,4 @@
-# mail/lojban-list thread 282ed4d4f899-confusion_over_fuhe-post_peg_grammar_rule | root 20110131150504.ga49994@alice.local | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 282ed4d4f899-confusion_over_fuhe-post_peg_grammar_rule | root 20110131150504.ga49994@alice.local | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-01-31T15:05:04Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110131150504.ga49994@alice.local | mail/lojban-list/cur/1296486304.282ed4d4f8997b18.jbomohi:2,S
 I'm confused over the intent of the FUhE-post production in the PEG
@@ -212,6 +212,59 @@ instead of the preceding one (similarly to the way commas are absorbed
 by the following letter rather than the preceding one).
 
 mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 5 | 2011-02-01T00:00:33Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110201000033.ga51569@alice.local | mail/lojban-list/cur/1296518433.8c49ee9769d3b035.jbomohi:2,S
+On Mon, Jan 31, 2011 at 07:56:50PM -0300, Jorge Llambías wrote:
+> On Mon, Jan 31, 2011 at 7:32 PM, .alyn.post.
+> <alyn.post@lodockikumazvati.org> wrote:
+> > On Mon, Jan 31, 2011 at 07:14:03PM -0300, Jorge Llambías wrote:
+> >> On Mon, Jan 31, 2011 at 12:05 PM, .alyn.post.
+> >
+> >> >  * the spaces? production will always match the empty string, as
+> >> >   FUhE-post only appears in FUhE-clause, and FUhE-pre, the rule
+> >> >   before it, ends with a spaces?
+> >>
+> >> This also applies to the spaces? in post-clause. If I'm not mistaken,
+> >> it never gets a chance to grab any spaces.
+> >
+> > Correct.  I have a patch out to camxes which fixes this, but I
+> > haven't push it to Robin yet.
+> 
+> My preference would be for spaces to be absorbed by the following word
+> instead of the preceding one (similarly to the way commas are absorbed
+> by the following letter rather than the preceding one).
+> 
+
+Interesting, ok.  I believe the grammar works the opposite way now,
+that spaces are absorbed after a word.  If this was done without any
+consideration, it probably happened because PEG writers have more
+or less handled this problem by absorbing space after a terminal
+production.
+
+If I understand, you'd like:
+
+  spaces* FA
+
+rather than:
+
+  FA spaces*
+
+Correct?  I can certainly do that.  Will you justify this decision
+so that when people ask my why I did it I have a better answer than
+xorxes asked?
+
+-Alan
+-- 
+.i ko djuno fi le do sevzi
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
