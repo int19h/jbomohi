@@ -1,0 +1,126 @@
+# mail/bpfk thread da1baf61a70d-dag-cll_git_updates_for_fri_feb_4_17%3A21%3A07_ | root e1plu1b-0004vf-ta@oh-www1.lojban.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2011-02-04T22:21:07Z | www-data <www-data@oh-www1.lojban.org> | e1plu1b-0004vf-ta@oh-www1.lojban.org | mail/bpfk/cur/1296858067.da1baf61a70d81db.jbomohi:2,S
+commit 2ffd4da263a1719db0d8bb30cab19a5458d27e74
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Fri Feb 4 13:22:50 2011 -0800
+
+    Minor fix of some tags.
+
+diff --git a/todocbook/18.xml b/todocbook/18.xml
+index ece8e14..f6b967a 100644
+--- a/todocbook/18.xml
++++ b/todocbook/18.xml
+@@ -3207,21 +3207,21 @@
+     </example>
+     <para>Overall, 
+     <xref linkend="example-random-id-iwba"/> probably captures the flavor of the English best. 
+     <xref linkend="example-random-id-DzMH"/> and 
+     <xref linkend="example-random-id-HNyL"/> are too simple, and 
+     <xref linkend="example-random-id-2C3I"/> is too tricky. Nevertheless, all four examples are good Lojban. Pedagogically, these examples illustrate the richness of lojbau mekso: anything that can be said at all, can probably be said in more than one way.</para>
+   </section>
+   <section xml:id="section-selmaho-summary">
+     <title>mekso selma'o summary</title>
+     <para>Except as noted, each selma'o has only one cmavo.</para>
+-    <place-structure>
++    <cmavo-list>
+       <cmavo-entry>
+         <selmaho>BOI</selmaho>
+         <description>elidable terminator for numerals and lerfu strings</description>
+       </cmavo-entry>
+       <cmavo-entry>
+         <selmaho>BY</selmaho>
+         <description>lerfu for variables and functions (see <xref linkend="section-math"/>)</description>
+       </cmavo-entry>
+       <cmavo-entry>
+         <selmaho>FUhA</selmaho>
+@@ -3290,28 +3290,28 @@
+         <description>right parenthesis</description>
+       </cmavo-entry>
+       <cmavo-entry>
+         <selmaho>VUhU</selmaho>
+         <description>operators (see <xref linkend="section-vuhu"/>)</description>
+       </cmavo-entry>
+       <cmavo-entry>
+         <selmaho>XI</selmaho>
+         <description>subscript flag</description>
+       </cmavo-entry>
+-    </place-structure>
++    </cmavo-list>
+   </section>
+   <section xml:id="section-vuhu">
+     <title>Complete table of VUhU cmavo, with operand structures</title>
+     <para>The operand structures specify what various operands (labeled a, b, c, ...) mean. The implied context is forethought, since only forethought operators can have a variable number of operands; however, the same rules apply to infix and RP uses of VUhU.</para>
+     <para> <indexterm type="general-imported"><primary>operators</primary><secondary>list of simple</secondary></indexterm> FIXME: TAG SPOT</para>
+     <!-- FIXME: use actual equations for integral, derivative, etc. -->
+-    <place-structure>
++    <cmavo-list>
+       <cmavo-entry>
+         <selmaho>su'i</selmaho>
+         <description>plus</description>
+         <description role="math"><inlineequation><mathphrase>(((a + b) + c) + ...)</mathphrase></inlineequation></description>
+       </cmavo-entry>
+       <cmavo-entry>
+         <selmaho>pi'i</selmaho>
+         <description>times</description>
+         <description role="math"><inlineequation><mathphrase>(((a × b) × c) × ...)</mathphrase></inlineequation></description>
+       </cmavo-entry>
+@@ -3412,21 +3412,21 @@
+       <cmavo-entry>
+         <selmaho>va'a</selmaho>
+         <description>negation of/additive inverse</description>
+         <description role="math">-a</description>
+       </cmavo-entry>
+       <cmavo-entry>
+         <selmaho>re'a</selmaho>
+         <description>matrix transpose/dual</description>
+         <description role="math"><inlineequation><mathphrase>a<superscript>*</superscript></mathphrase></inlineequation></description>
+       </cmavo-entry>
+-    </place-structure>
++    </cmavo-list>
+   </section>
+   <section xml:id="section-pa">
+     <title>Complete table of PA cmavo: digits, punctuation, and other numbers.</title>
+     <itemizedlist>
+       <listitem>
+         <cmavo-list>
+           <title><indexterm type="general-imported"><primary>digits</primary><secondary>list of decimal</secondary></indexterm> Decimal digits:</title>
+           <cmavo-entry>
+             <cmavo>no</cmavo>
+             <rafsi>non</rafsi>
+diff --git a/todocbook/docbook2html_preprocess.xsl b/todocbook/docbook2html_preprocess.xsl
+index bcaef2f..03cf104 100644
+--- a/todocbook/docbook2html_preprocess.xsl
++++ b/todocbook/docbook2html_preprocess.xsl
+@@ -48,21 +48,21 @@
+             </row>
+           </xsl:for-each>
+         </tbody>
+       </tgroup>
+     </informaltable>
+   </xsl:template>
+ 
+   <!-- Turn cmavo-list nodes into tables. -->
+   <xsl:template match="cmavo-list">
+     <informaltable>
+-      <tgroup cols="3">
++      <tgroup cols="8">
+         <xsl:apply-templates select="cmavo-list-head"/>  
+         <tbody>
+           <xsl:for-each select=".//cmavo-entry">
+             <row>
+               <xsl:for-each select="cmavo|selmaho|description|gismu|rafsi|attitudinal-scale|modal-place">
+                 <entry><xsl:value-of select="."/></entry>
+               </xsl:for-each>
+             </row>
+           </xsl:for-each>
+         </tbody>
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
