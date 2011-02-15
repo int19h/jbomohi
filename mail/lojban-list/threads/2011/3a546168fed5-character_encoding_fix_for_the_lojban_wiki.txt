@@ -1,4 +1,4 @@
-# mail/lojban-list thread 3a546168fed5-character_encoding_fix_for_the_lojban_wiki | root aanlktimd5b+kq7qzdt51yqo3lk8v1v5bs6tbna=zrnhs@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 3a546168fed5-character_encoding_fix_for_the_lojban_wiki | root aanlktimd5b+kq7qzdt51yqo3lk8v1v5bs6tbna=zrnhs@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-02-14T15:03:43Z | Veijo Vilva <veijo.vilva@gmail.com> | aanlktimd5b+kq7qzdt51yqo3lk8v1v5bs6tbna=zrnhs@mail.gmail.com | mail/lojban-list/cur/1297695823.3a546168fed57e61.jbomohi:2,S
 I have fixed the character encoding problem which has affected the wiki user
@@ -61,5 +61,90 @@ To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
+
+
+
+=== 3 | 2011-02-15T08:13:42Z | Veijo Vilva <veijo.vilva@gmail.com> | aanlktintlterz63qjchw4_qyaxs60cidynhcmw67z18e@mail.gmail.com | mail/lojban-list/cur/1297757622.6df8b42cbaad4c6f.jbomohi:2,S
+On Tue, Feb 15, 2011 at 3:06 AM, Robin Lee Powell <
+rlpowell@digitalkingdom.org> wrote:
+
+> On Mon, Feb 14, 2011 at 05:03:43PM +0200, Veijo Vilva wrote:
+> > I have fixed the character encoding problem which has affected the
+> > wiki user interface for the last several months. There are still
+> > some translations missing, and some translations in the original
+> > language files for the wiki are bad or even erroneous, but the
+> > encoding problems are gone.
+>
+
+
+> \o/
+>
+> Thanks so much!
+>
+> Were any code changes needed?
+>
+
+I didn't do any, there was just too much unknown code and too little time. I
+prepared the Finnish home page partially in order to be able to experiment
+more freely and found out a brute force method to fix things, perhaps only
+temporarily as the underlying cause for the problem is still lurking
+somewhere. The earlier db contents seemed to be OK but were incorrectly
+encoded for the interface. My experiments with the Finnish version helped me
+to find a procedure which can be used to easily fix things if the problem
+resurfaces in the future.
+
+Re-importing the language.php file for a language fixes that language but
+destroys all the manually entered custom translations. However, if that
+language has a custom.php file, its contents are merged with the
+language.php file during the import to form a new base for the db, a new
+base without any translations tagged as new. At this point the wiki cache
+should be emptied. In case somebody manually enters any new translations,
+they can be exported and inserted into the custom.php file after which an
+import operation reinitializes the db with the new, merged contents and any
+new export shows only translations made after the merger. This way
+everything is in a known state, and the translation db (for all our
+languages) can be restored in a few minutes (or an hour or two if there are
+many custom files to be updated first.)
+
+My procedure to update a language, say Finnish,  is as follows:
+
+    1. at wiki/Edit Languages export the new translations for Finnish
+    2. copy-paste the translations to a copy of the custom.php file on my
+home computer
+    3. on lojban.org:  cp lang/fi/custom lang_vv/fi/custom.old      (lang is
+linked to /var/www/lojban/tiki/lang )
+    4. upload to vilva@www.lojban.org:lang_vv/fi
+    5. on lojban.org:  sudo cp lang_vv/fi/custom.php lang/fi
+    6. at wiki/Edit Languages  import Finnish
+    7. empty the wiki cache
+    8. check that I can access the Finnish home page
+    9. if the page doesn't display, there is a PHP coding error in the
+custom file, and the wiki is stuck:
+        a. sudo rm lang/fi/custom.php    to release the wiki
+        b. sudo cp lang/fi/custom.old lang/fi/custom.php
+        c. edit the file at home
+        d. loop to 4
+
+To restore all the languages when the custom files are up-to-date:
+
+     1. on wiki/Edit languages: import all the languages one by one, which
+takes about two minutes total
+     2. empty the cache
+
+There is an option to export a new language.php version from the db, but in
+our case it is better to keep a separate custom file so that we don't lose
+our custom translations during a system update.
+
+   Veijo
+
+-- 
+
+  web site: http://galactinus.net/vilva/
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
 
