@@ -21,3 +21,10 @@ zoi ly lunba ly ki'a
 
 zoi ly lunba ly la'a na jai drani
 
+
+## 2011-02-18T19:39:18Z — Hussell (comment 561)
+
+Redundant
+
+Seems like a lujvo would work fine for this. {carjau}, perhaps.
+
