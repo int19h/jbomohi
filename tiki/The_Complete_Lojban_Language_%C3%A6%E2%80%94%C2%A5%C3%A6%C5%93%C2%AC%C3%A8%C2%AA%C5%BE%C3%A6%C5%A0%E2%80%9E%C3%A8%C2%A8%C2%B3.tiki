@@ -74,10 +74,12 @@ cll-ja
 コマンドラインで、そのフォルダに移動します。
 そのフォルダで、次のようにして、ローカル・リポジトリを作ります：
 {CODE(wrap="0",ishtml="0")}$ git init{CODE}
+ gh-pages という branch を使えるようにします：
+{CODE(wrap="0",ishtml="0")}$ git symbolic-ref HEAD refs/heads/gh-pages{CODE}
 
 !!5. 編集作業
 ローカルの情報をリモートの最新情報と同じにします：
-{CODE(wrap="0",ishtml="0")}$ git pull git@github.com:mhagiwara/cll-ja.git{CODE}
+{CODE(wrap="0",ishtml="0")}$ git pull git@github.com:mhagiwara/cll-ja.git gh-pages{CODE}
 
 自分のハードディスク内の cll-ja フォルダで
 5.1. 既存のファイルを変更したり
@@ -88,8 +90,9 @@ cll-ja
 その後、以下のようにしてローカルに変更情報を反映させます：
 
 !!!5.1. 既存のファイルを変更した場合
-{CODE(wrap="0",ishtml="0")}$ git commit -a{CODE}
-説明を入力して、[Ctrl]+X キーで終了、Y キーで書き込み、ファイル名を確認して [Enter] キーで完了します。
+{CODE(wrap="0",ishtml="0")}$ git commit -a -m "[編集内容の説明]"{CODE}
+上の[編集内容の説明]という部分は編集した内容に応じて入力してください。
+例：「番号の修正」「術語変更」「第3章追加」「＊＊というより、むしろ＠＠」など。
 
 !!!5.2. ファイルを新しく作った場合
 まず、
@@ -104,7 +107,7 @@ cll-ja
 
 !!6. リモートへの反映
 ローカルの最新情報をリモートの情報に反映させます：
-{CODE(wrap="0",ishtml="0")}$ git push git@github.com:mhagiwara/cll-ja.git{CODE}
+{CODE(wrap="0",ishtml="0")}$ git push git@github.com:mhagiwara/cll-ja.git gh-pages{CODE}
 
 
 あとは、編集作業をする度に手順 5 と 6 を繰り返すだけです。
