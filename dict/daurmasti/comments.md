@@ -14,3 +14,10 @@ phma wrote:
 
 It's not. Wrong rafsi. Please delete.
 
+
+## 2011-03-07T13:50:27Z — vensa (comment 566)
+
+AFAIK {dau} is not the rafsi of {dau}, but {darlu}
+
+AFAIK {dau} is not the rafsi of {dau}, but {darlu}
+
