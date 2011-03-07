@@ -16,3 +16,10 @@ phma wrote:
 
 Well, I'll write up pavypavmasti soonish.
 
+
+## 2011-03-07T13:51:46Z — vensa (comment 568)
+
+AFAIK {fei} is not the rafsi of {fei}, but {fepni}
+
+AFAIK {fei} is not the rafsi of {fei}, but {fepni}
+
