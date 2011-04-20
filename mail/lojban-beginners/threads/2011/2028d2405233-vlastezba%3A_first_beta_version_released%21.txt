@@ -1,4 +1,4 @@
-# mail/lojban-beginners thread 2028d2405233-vlastezba%3A_first_beta_version_released%21 | root banlkti=6xn4jtmld6wa44xnqj66jptvq3w@mail.gmail.com | 5 messages | rendered by jbomohi mail-v1
+# mail/lojban-beginners thread 2028d2405233-vlastezba%3A_first_beta_version_released%21 | root banlkti=6xn4jtmld6wa44xnqj66jptvq3w@mail.gmail.com | 6 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-04-20T09:02:28Z | Johan Pretorius <pretoriusjf@gmail.com> | banlkti=6xn4jtmld6wa44xnqj66jptvq3w@mail.gmail.com | mail/lojban-beginners/cur/1303290148.2028d2405233a723.jbomohi:2,S
 Hi all
@@ -615,5 +615,207 @@ You received this message because you are subscribed to the Google Groups "Lojba
 To post to this group, send email to lojban-beginners@googlegroups.com.
 To unsubscribe from this group, send email to lojban-beginners+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban-beginners?hl=en.
+
+
+
+=== 6 | 2011-04-20T15:12:14Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110420151214.gc49678@alice.local | mail/lojban-beginners/cur/1303312334.9a67425f6fa225b8.jbomohi:2,S
+I can more-or-less work with the what it does now, so that is
+sufficient experimentation.
+
+I routinely write code like |if(var=="foo")| when I mean
+|if(var.equals("foo"))|, my Java isn't what it could be.
+
+I'm able to parse XML for tree-structured data, which is probably
+the easiest choice for interoperability:
+
+XML:
+
+  <pruce>
+    <selruhe>coi ro do</selruhe>
+    <teryruhe>
+      <cmavo selmaho="COI">coi</cmavo>
+      <cmavo selmaho="PA">ro</cmavo>
+      <cmavo selmaho="KOhA">do</cmavo>
+    </teryruhe>
+  </pruce>
+
+If this makes you cringe, then how about:
+
+csv:
+
+  klesi,valsi
+  COI,coi
+  PA,ro
+  KOhA,do
+
+Which unfortunately doesn't include the input string; I don't see a
+simple way to do that that is normal (as in normal form).
+
+-Alan
+
+On Wed, Apr 20, 2011 at 04:51:51PM +0200, Johan Pretorius wrote:
+>    Hi Alan,
+> 
+>    That would indeed be an interesting experiment, I'd be quite keen to see
+>    the results myself.
+> 
+>    Right now, if you just call
+> 
+>    java -jar vlastezba.jar test.txt
+> 
+>    with some Lojban text (legal or otherwise) in test.txt, it will return (on
+>    stdout), one valsi per line. So "coirodo" would result in:
+>    coi
+>    ro
+>    do
+>    (you can make it go look up the definitions by passing a second parameter,
+>    but it will just add junk to the output that I don't think you'd want)
+> 
+>    Right now it doesn't check grammar at all, so you can throw any random
+>    collection of words at it (I don't intend for it to ever do this, there
+>    are tools out there that are far better at this than I could ever hope to
+>    make it).
+> 
+>    It also won't give you a classification of valsi - it doesn't "know" when
+>    it's dealing with a cmavo (or indeed what class), or a gismu, or a lujvo.
+>    This I DO intend to fix.
+> 
+>    I want to add other output formats anyway, so if you want me to do
+>    something specific to make your comparison easier, let me know. Now would
+>    be a good time, as I'm going away on holiday for a week, and wanted to
+>    spend at least a little bit of time on vlastezba.
+> 
+>    In fact, if you are comfortable with Java, feel free to make it do what
+>    you need, the source code is on [1]sourceforge.net
+>    ([2]http://sourceforge.net/projects/vlastezba/), and is GPL'ed :-)
+> 
+>    mu'o mi'e iu'an
+> 
+>    On Wed, Apr 20, 2011 at 4:29 PM, .alyn.post.
+>    <[3]alyn.post@lodockikumazvati.org> wrote:
+> 
+>      Do you have an external representation for your valsi parsing
+>      result? If I hand you the string "coirodo" is there a print
+>      form of that along the lines of ("coi" "ro" "do")?
+> 
+>      I would be interested seeing the result from processing a large
+>      data set of words and phrases and comparing that to jbogenturfa'i.
+>      In order to do this I'd need some output format from your program
+>      that I could parse.
+> 
+>      jbogenturfa'i uses the morphology PEG grammar that xorxes developed,
+>      so it contains code which I think is similar (and should be
+>      identical in result) to what you are doing:
+> 
+>      $ echo "coirodo"|jbogenturfahi --rafske
+>      ((cmavo (COI "coi")) (cmavo (PA "ro")) (cmavo (KOhA "do")))
+> 
+>      I'd be curious to know whether they are in fact producing identical
+>      results.
+> 
+>      -Alan
+>      On Wed, Apr 20, 2011 at 11:02:28AM +0200, Johan Pretorius wrote:
+>      > Hi all
+>      >
+>      > You can download it from here:
+>      >
+>      [1][4]http://sourceforge.net/projects/vlastezba/files/vlastezba.jar/download
+>      >
+>      > I have completed the cmavo cluster breakout code, and tested it as far
+>      as
+>      > I was able.
+>      >
+>      > It should be easy enough to run if you have Java 1.6 installed, just
+>      go
+>      > java -jar vlastezba.jar and it will print out usage instructions.
+>      >
+>      > Please download it and test to pieces! I'd love all your feedback.
+>      >
+>      > Not that it doesn't get very smart at this stage - for instance, it
+>      won't
+>      > know what to do if you feed it a string of lojban that doesn't have
+>      any
+>      > spaces in. The only clever bit is that it's able to break apart cmavo
+>      > clusters if they don't have any spaces.
+>      >
+>      > Regards,
+>      > Johan
+>      >
+>      > --
+>      > Johan Pretorius
+>      > Cell: 0829268327
+>      > [2][5]pretoriusjf@gmail.com
+>      >
+>      > --
+>      > You received this message because you are subscribed to the Google
+>      Groups
+>      > "Lojban Beginners" group.
+>      > To post to this group, send email to
+>      [6]lojban-beginners@googlegroups.com.
+>      > To unsubscribe from this group, send email to
+>      > [7]lojban-beginners+unsubscribe@googlegroups.com.
+>      > For more options, visit this group at
+>      > [8]http://groups.google.com/group/lojban-beginners?hl=en.
+>      >
+>      > References
+>      >
+>      > Visible links
+>      > 1.
+>      [9]http://sourceforge.net/projects/vlastezba/files/vlastezba.jar/download
+>      > 2. mailto:[10]pretoriusjf@gmail.com
+> 
+>      --
+>      .i ma'a lo bradi ku penmi gi'e du
+>      --
+>      You received this message because you are subscribed to the Google
+>      Groups "Lojban Beginners" group.
+>      To post to this group, send email to
+>      [11]lojban-beginners@googlegroups.com.
+>      To unsubscribe from this group, send email to
+>      [12]lojban-beginners+unsubscribe@googlegroups.com.
+>      For more options, visit this group at
+>      [13]http://groups.google.com/group/lojban-beginners?hl=en.
+> 
+>    --
+>    Johan Pretorius
+>    Cell: 0829268327
+>    [14]pretoriusjf@gmail.com
+> 
+>    --
+>    You received this message because you are subscribed to the Google Groups
+>    "Lojban Beginners" group.
+>    To post to this group, send email to lojban-beginners@googlegroups.com.
+>    To unsubscribe from this group, send email to
+>    lojban-beginners+unsubscribe@googlegroups.com.
+>    For more options, visit this group at
+>    http://groups.google.com/group/lojban-beginners?hl=en.
+> 
+> References
+> 
+>    Visible links
+>    1. http://sourceforge.net/
+>    2. http://sourceforge.net/projects/vlastezba/
+>    3. mailto:alyn.post@lodockikumazvati.org
+>    4. http://sourceforge.net/projects/vlastezba/files/vlastezba.jar/download
+>    5. mailto:pretoriusjf@gmail.com
+>    6. mailto:lojban-beginners@googlegroups.com
+>    7. mailto:lojban-beginners%2Bunsubscribe@googlegroups.com
+>    8. http://groups.google.com/group/lojban-beginners?hl=en
+>    9. http://sourceforge.net/projects/vlastezba/files/vlastezba.jar/download
+>   10. mailto:pretoriusjf@gmail.com
+>   11. mailto:lojban-beginners@googlegroups.com
+>   12. mailto:lojban-beginners%2Bunsubscribe@googlegroups.com
+>   13. http://groups.google.com/group/lojban-beginners?hl=en
+>   14. mailto:pretoriusjf@gmail.com
+
+-- 
+.i ma'a lo bradi ku penmi gi'e du
+
+-- 
+You received this message because you are subscribed to the Google Groups "Lojban Beginners" group.
+To post to this group, send email to lojban-beginners@googlegroups.com.
+To unsubscribe from this group, send email to lojban-beginners+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban-beginners?hl=en.
+
 
 
