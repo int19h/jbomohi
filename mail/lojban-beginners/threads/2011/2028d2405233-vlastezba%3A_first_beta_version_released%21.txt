@@ -1,4 +1,4 @@
-# mail/lojban-beginners thread 2028d2405233-vlastezba%3A_first_beta_version_released%21 | root banlkti=6xn4jtmld6wa44xnqj66jptvq3w@mail.gmail.com | 32 messages | rendered by jbomohi mail-v1
+# mail/lojban-beginners thread 2028d2405233-vlastezba%3A_first_beta_version_released%21 | root banlkti=6xn4jtmld6wa44xnqj66jptvq3w@mail.gmail.com | 33 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-04-20T09:02:28Z | Johan Pretorius <pretoriusjf@gmail.com> | banlkti=6xn4jtmld6wa44xnqj66jptvq3w@mail.gmail.com | mail/lojban-beginners/cur/1303290148.2028d2405233a723.jbomohi:2,S
 Hi all
@@ -3529,7 +3529,73 @@ For more options, visit this group at http://groups.google.com/group/lojban-begi
 
 
 
-=== 28 | 2011-04-21T21:34:13Z | Johan Pretorius <pretoriusjf@gmail.com> | banlktimeti6uwoaahfz-1er9owu6love2w@mail.gmail.com | mail/lojban-beginners/cur/1303421653.1371929158b0d49c.jbomohi:2,S
+=== 28 | 2011-04-22T16:45:28Z | Johan Pretorius <pretoriusjf@gmail.com> | banlkti=94rhn=2og=bzcqnpu78kz8=b62w@mail.gmail.com | mail/lojban-beginners/cur/1303490728.bcb57862cad87cef.jbomohi:2,S
+Hi Alan, all
+
+Alan, can I please ask you to run the attached four files through
+jbogenturfa'i, and send me back the results?  I have a visual tool (kdiff3)
+to compare them to my results, which makes it easier for me to figure out
+what is going on.
+
+New release!  Get it here:
+http://sourceforge.net/projects/vlastezba/files/vlastezba_21.jar/download
+
+In this release, I have fixed a bunch of things:
+ - Dots are no longer assumed to be an integral part of a word.  In fact,
+now, if a dot is found, it is assumed to be a word separator, in exactly the
+same way as a space.  Beyond this they are completely ignored, and indeed,
+removed from the input stream.
+ - "ybu" and "y'y" now parses.  Since no clarity was to be had about whether
+or not y is a vowel, consonant, neither or both, I just added those two as
+special cases... I alread had a loose standing "y" as a special case in
+there, because it is explicitly mentioned in CLL (section 4.3, I think)
+ - The last cmavo cluster in a file is no longer misparsed.  Specifically, I
+added a regression test and unit test for "coirodo" appearing on a single
+line in its own file, and it finds 3 words as you would expect it to.
+ - Output is now always ordered alphabetically.  Previously it was in any
+old order because I used an unordered HashMap to store them in.
+ - Previously we seemed to produce some duplicates (I guess this could
+happen if there were extra whitespace in the words).  This only happened in
+about 0.5% of cases.  I did not consciously fix this, but it seems to no
+longer happen.
+ - Internally, the logic is much better organized - the parsing logic is no
+longer all stuffed into a single class, instead there is a class hierarchy
+specifically to represent each word class, the idea is that each will have
+its own specialized processing.  The main point of doing this was to enrich
+the results returned by the tokenizer, which means in future we can get all
+flexible (like, if we find a lujvo, we will know what it's rafsi are, so
+that we can decide to give the user a list of those, look up their gismu's
+definitions, or what).
+ - Added regression tests.  There are 4 files: the Terry the Tiger story,
+the Berenstein Bears story, a file containing *only* "coirodo" on a single
+line, and a file containing a list of all recognized cmavo (about 1000
+lines).  I also added a script that will run all these through vlastezba,
+compares the outputs against "expected" results, and spits the diffs into a
+single file (test_result.txt).  It should be noted that the "expected"
+results are baselined off of this release, so it is impossible for there to
+be any reported problems.  However, next time a change is made, it will be
+possible to see how the regression tests are affected.  The expected results
+can then be manually updated to be more correct, thus causing the test to
+become more correct over time.
+ - Added 2 unit tests to the ones already existing, specifically to test
+these two cases: "coirodo" and "ybu"... since both were problems that got
+fixed in this release.
+
+By the way, does anybody know how to do a formal release on SourceForge?
+Aside from just uploading the jar file, which is what I'm doing currently.
+
+Regards,
+iu'an
+
+-- 
+You received this message because you are subscribed to the Google Groups "Lojban Beginners" group.
+To post to this group, send email to lojban-beginners@googlegroups.com.
+To unsubscribe from this group, send email to lojban-beginners+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban-beginners?hl=en.
+
+
+
+=== 29 | 2011-04-21T21:34:13Z | Johan Pretorius <pretoriusjf@gmail.com> | banlktimeti6uwoaahfz-1er9owu6love2w@mail.gmail.com | mail/lojban-beginners/cur/1303421653.1371929158b0d49c.jbomohi:2,S
 Hmmm.... okay, clearly a more thorough reading of the CLL is required... I
 kinda just jumped in at the section I thought I needed. :-)
 
@@ -3630,7 +3696,7 @@ For more options, visit this group at http://groups.google.com/group/lojban-begi
 
 
 
-=== 29 | 2011-04-22T04:46:49Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110422044649.gf79918@alice.local | mail/lojban-beginners/cur/1303447609.b235b7589fb3554f.jbomohi:2,S
+=== 30 | 2011-04-22T04:46:49Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110422044649.gf79918@alice.local | mail/lojban-beginners/cur/1303447609.b235b7589fb3554f.jbomohi:2,S
 On Thu, Apr 21, 2011 at 10:42:40PM +0200, Johan Pretorius wrote:
 >    Do you mind running the attached
 >    cmavo_dots.txt through jbogenturfa'i to see if we get fewer than 80
@@ -3659,7 +3725,7 @@ For more options, visit this group at http://groups.google.com/group/lojban-begi
 
 
 
-=== 30 | 2011-04-21T21:12:09Z | Jonathan Jones <eyeonus@gmail.com> | banlkti=2mq-ouyz13zssy45evs6yt3yhba@mail.gmail.com | mail/lojban-beginners/cur/1303420329.1d311bec8aeddcb8.jbomohi:2,S
+=== 31 | 2011-04-21T21:12:09Z | Jonathan Jones <eyeonus@gmail.com> | banlkti=2mq-ouyz13zssy45evs6yt3yhba@mail.gmail.com | mail/lojban-beginners/cur/1303420329.1d311bec8aeddcb8.jbomohi:2,S
 to pu benji di'u fo lo mi me la.android. fonxa toi
 
 mu'o mi'e.aionys.
@@ -3765,7 +3831,7 @@ For more options, visit this group at http://groups.google.com/group/lojban-begi
 
 
 
-=== 31 | 2011-04-21T21:27:44Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110421212744.ga78501@alice.local | mail/lojban-beginners/cur/1303421264.83aff59bd8d89b2d.jbomohi:2,S
+=== 32 | 2011-04-21T21:27:44Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110421212744.ga78501@alice.local | mail/lojban-beginners/cur/1303421264.83aff59bd8d89b2d.jbomohi:2,S
 .i .uanai la'e zo di'u .i lo se benji ku no nilcla
 .i mu'o mi'e .alyn.
 
@@ -3895,7 +3961,7 @@ For more options, visit this group at http://groups.google.com/group/lojban-begi
 
 
 
-=== 32 | 2011-04-21T22:13:06Z | Jonathan Jones <eyeonus@gmail.com> | banlktimyo5ojp84m7af0tnjzqmr8ryx9=w@mail.gmail.com | mail/lojban-beginners/cur/1303423986.cd143b8e538a71c0.jbomohi:2,S
+=== 33 | 2011-04-21T22:13:06Z | Jonathan Jones <eyeonus@gmail.com> | banlktimyo5ojp84m7af0tnjzqmr8ryx9=w@mail.gmail.com | mail/lojban-beginners/cur/1303423986.cd143b8e538a71c0.jbomohi:2,S
 la.djimeil.app. na'e nelci lo mi fonxa
 
 On Thu, Apr 21, 2011 at 3:27 PM, .alyn.post. <alyn.post@lodockikumazvati.org
