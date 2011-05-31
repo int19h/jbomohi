@@ -1,0 +1,8 @@
+## 2011-05-31T02:34:44Z — phma (comment 583, on definition 13289)
+
+ray-finned fish
+
+Totus, why did you put "Actinopterygii" and "ray-finned fish" as gloss
+words? The whiting is indeed a ray-finned fish, but it's far from the only
+one.
+
