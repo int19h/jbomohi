@@ -1,4 +1,4 @@
-# mail/lojban-list thread d38e15835d29-lojban_interpreter | root 811b7e98-8667-40e4-a496-09df7b5704d8@k6g2000yqc.googlegroups.com | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread d38e15835d29-lojban_interpreter | root 811b7e98-8667-40e4-a496-09df7b5704d8@k6g2000yqc.googlegroups.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-06-22T13:41:46Z | mirhagk <mirhagk@gmail.com> | 811b7e98-8667-40e4-a496-09df7b5704d8@k6g2000yqc.googlegroups.com | mail/lojban-list/cur/1308750106.d38e15835d29add3.jbomohi:2,S
 I am currently working on a lojban interpreter called "do sampla ma"
@@ -181,6 +181,126 @@ wrote:
 >
 > --
 > .i ma'a lo bradi ku penmi gi'e du
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 4 | 2011-06-24T05:22:09Z | Ian Denhardt <ian@zenhack.net> | 4e041f01.20907@zenhack.net | mail/lojban-list/cur/1308892929.e2fdcc5b4d6916c0.jbomohi:2,S
+So, I'm rather inexperienced with lojban, but I do feel like using dunda 
+in this way is rather malglico. nothing is really being 'given' when you 
+do arithmetic.
+
+The point I really wanted to make though, is that I think the thing to 
+do when doing this is not to focus on arithmetic at all at first. 
+believe it or not, it's not that central to a wide class of problems. If 
+I were working on a project like this, my take would be to make it more 
+prolog-like. in case you're not familiar, prolog, like lojban, is based 
+on predicate logic. It looks something like this:
+
+footmassage(zed,mia).
+kills(marcellus,X) :- footmassage(X,mia).
+dead(X) :- kills(_,X).
+
+(the document I initially used to learn some of the language used these 
+characters, and I thought it was fun.) The above encodes a knowledge 
+database, upon which queries could then be run:
+
+dead(Who).
+ > Who = zed.
+
+I feel like this would map reasonably well to lojban, though my skill 
+with lojban is not yet sufficient to come up with a great mapping - I 
+don't know enough to figure out how one would distinguish between 
+constant names, and names used as variables.
+
+On 06/24/2011 12:10 AM, mirhagk wrote:
+> yeah probably messed up cusku. LOL my bad, but like I said it's about
+> 2 days old. The parser is very bad/basic right now. la is simply
+> parsed by finding the last period before the next la, and li is parsed
+> by justing getting numbers until they aren't numbers anymore. Once all
+> those are gone, then only the selbri is left.
+>
+> dunda means x1 gives x2 to x3 does it not? So x1 would be losing x2
+> and x3 would be gaining x2. IE x1-=x2; x3+=x2; Now normally we are of
+> course talking objects, not values, but the language is supposed to
+> work as a natural way to tell a computer what to do (not math based).
+> If you were telling a computer to transfer $5 from one account to the
+> other you wouldn't say "subtract $5 from account 1, and add $5 to
+> account 2" you'd say "take $5 from account 1 to account 2". Even if
+> you were only talking one account you'd say "take $5 from that
+> account" not "subtract $5 from that account".
+>
+> I like that the language works in a multipurpose for each command kind
+> of way, like cusku meaning input and output and dunda meaning addition
+> and subtraction (and many other things depending on what the arguments
+> are, ie strings or lists or objects etc).
+>
+> Btw in terms of do and mi, mi is the computer/program and do is the
+> user. So when it says do cusku la var. It means read a value from the
+> user and store it into var. (the mi is the default implied sumti for
+> when it's zo'e)
+>
+> If you would like I can show you the source code, if you'd be willing
+> to help me out a bit?
+>
+> On Jun 23, 5:30 pm, ".alyn.post."<alyn.p...@lodockikumazvati.org>
+> wrote:
+>> I think you want 'cusku' when you say 'cuska.'
+>>
+>> Is the pro-sumti for the program 'do'?  You seem to use than
+>> sometimes when executing a 'cuska' expression.
+>>
+>> It's not clear to me what you mean by 'dunda.'  I'm having trouble
+>> reading your example programs that use it.  Lojban has jmina and vimcu
+>> that can mean mathematical addition and subtraction.  I don't
+>> understand dunda to operate at the level of abstraction it seems to
+>> in your program.
+>>
+>> How are you parsing your Lojban?
+>>
+>> -Alan
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> On Wed, Jun 22, 2011 at 06:41:46AM -0700, mirhagk wrote:
+>>> I am currently working on a lojban interpreter called "do sampla ma"
+>>> and what it aims to do is take pure, unaltered lojban bridi and
+>>> execute them as good (obviously not every lojban bridi would be valid
+>>> code, but all excuted code would be perfectly regular lojban bridi. ie
+>>> the comments for the program is literally the program itself). Now
+>>> everyone here already knows the power of lojban, and the simplicity
+>>> for a computer to parse it, so I won't go on and on about that, but I
+>>> just want to say that it's in it's VERY early stages (like just
+>>> started the other day) but it already looks pretty cool.
+>>> If you want to check it out you can go here:
+>>> http://eldidip.weebly.com/lojban.html
+>>> The only thing is that I do not know alot of lojban to be honest. I am
+>>> a good programmer, and I can make this project with ease, and I'm
+>>> trying to learn lojban more, but as it stands I'm a total n00b. I
+>>> don't want to mess up any simple grammar, and I would like some tips
+>>> about how to best parse the lojban text. If anyone is interested/
+>>> willing to help please email me and I will fill you in a little bit
+>>> more.
+>>> mirh...@gmail.com
+>>> --
+>>> You received this message because you are subscribed to the Google Groups "lojban" group.
+>>> To post to this group, send email to lojban@googlegroups.com.
+>>> To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+>>> For more options, visit this group athttp://groups.google.com/group/lojban?hl=en.
+>> --
+>> .i ma'a lo bradi ku penmi gi'e du
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
