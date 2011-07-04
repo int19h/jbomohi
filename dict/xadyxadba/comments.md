@@ -17,3 +17,13 @@ hemicorporectomy,
 
 Right again, Pierre.
 
+
+## 2011-07-04T20:59:02Z — totus (comment 589, on definition 19129)
+
+Incorrect lujvo
+
+"xadyxadba" should have been "xabyxadba".  I have recreated your Dutch
+definition under the correct version.
+
+Sorry!
+
