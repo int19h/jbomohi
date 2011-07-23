@@ -1,0 +1,83 @@
+Received: from mail-gx0-f189.google.com ([209.85.161.189])
+	by chain.digitalkingdom.org with esmtp (Exim 4.72)
+	(envelope-from <lojban+bncCN3Yu8CaCRCUltHxBBoEbXZQkQ@googlegroups.com>)
+	id 1QnE7y-00007a-Jl; Sat, 30 Jul 2011 11:19:13 -0700
+Received: by gxk3 with SMTP id 3sf6587687gxk.16
+        for <multiple recipients>; Sat, 30 Jul 2011 11:19:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:mime-version:date:user-agent:x-http-useragent
+         :message-id:subject:from:to:x-original-sender:reply-to:precedence
+         :mailing-list:list-id:x-google-group-id:list-post:list-help
+         :list-archive:sender:list-subscribe:list-unsubscribe:content-type;
+        bh=sdgwirQwVxLjDGGz/Ud+snxthzns6drWkaBVWzTQO7g=;
+        b=qswGT42yQf5s2cjoblga3K2HCgQgfcpGVK710TeMiw0SkqTLvguiUhqXScBsEF/Ez+
+         YOkuUiYPLfgcF4WHMwGObsMnATsgWCW5wdSo3OKM8T69gqM+O1lEUl8C3osyZ0dKn8d/
+         drgsGzpQUBoSzvs5pt7Q8xmPDT8E+5upVtNfI=
+Received: by 10.236.76.234 with SMTP id b70mr268458yhe.12.1312049940429;
+        Sat, 30 Jul 2011 11:19:00 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 10.91.160.20 with SMTP id m20ls9588571ago.0.gmail; Sat, 30 Jul
+ 2011 11:18:59 -0700 (PDT)
+Received: by 10.236.153.135 with SMTP id f7mr783326yhk.148.1312049939883;
+        Sat, 30 Jul 2011 11:18:59 -0700 (PDT)
+Received: by 10.150.25.1 with SMTP id 1msyby;
+        Sat, 23 Jul 2011 16:51:18 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.101.201.1 with SMTP id d1mr363845anq.2.1311465078605; Sat, 23
+ Jul 2011 16:51:18 -0700 (PDT)
+Received: by h18g2000yqk.googlegroups.com with HTTP; Sat, 23 Jul 2011 16:51:18
+ -0700 (PDT)
+Date: Sat, 23 Jul 2011 16:51:18 -0700 (PDT)
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9.2.17)
+ Gecko/20110422 Ubuntu/9.10 (karmic) Firefox/3.6.17,gzip(gfe)
+Message-ID: <9c8c55e0-a06f-4894-a51c-99f1bd8cfaf1@h18g2000yqk.googlegroups.com>
+Subject: [lojban] Possible error in camxes / PEG grammar (handling of elidable elements)
+From: Mantycore <mantycore@gmail.com>
+To: lojban <lojban@googlegroups.com>
+X-Original-Sender: mantycore@gmail.com
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+X-Google-Group-Id: 1004133512417
+List-Post: <http://groups.google.com/group/lojban/post?hl=en_US>, <mailto:lojban@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/lojban?hl=en_US>
+Sender: lojban@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+unsubscribe@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Length: 1113
+
+coi .a'u.a'o rodo
+
+I noticed what jbofi'e and camxes handle CU differently. For example,
+in {mi pu kalte gi'e citka} jbofi'e interpretes {pu} as selbri tag
+(and so it is applies only to the first bridi-tail), and camxes
+interpretes it as a tag term (and so it applies to the whole
+sentence):
+
+jbofi'e: mi (pu kalte) gi'e citka
+camxes: (mi pu) (kalte gi'e citka)
+
+jbofi'e with -ie option reconstructs elidable elements as {mi CU pu
+kalte VAU gi'e citka VAU VAU}.
+camxes seem to interpret the same sentence as {mi pu KU CU kalte VAU
+gi'e citka VAU VAU}.
+
+I guess jbofi'e handles the sentence correctly, and so there must be
+an error in camxes and/or in PEG grammar used by it. Unfortunately, I
+am not able to point it out, but I hope what this report will be of
+use.
+
+mi'e la ramcinfo re'i
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
