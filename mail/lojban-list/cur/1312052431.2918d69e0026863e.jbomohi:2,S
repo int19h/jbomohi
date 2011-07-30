@@ -1,0 +1,92 @@
+Received: from mail-vw0-f61.google.com ([209.85.212.61])
+	by chain.digitalkingdom.org with esmtp (Exim 4.72)
+	(envelope-from <lojban+bncCJ2UzZHuDRDQqdHxBBoEkfzTLQ@googlegroups.com>)
+	id 1QnEmB-0000HH-1c; Sat, 30 Jul 2011 12:00:45 -0700
+Received: by vws2 with SMTP id 2sf2480090vws.16
+        for <multiple recipients>; Sat, 30 Jul 2011 12:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=k7+4TrjkPLaiFxwgmbxlC2dJwIBzB+I0HgO9whFv1n8=;
+        b=MWO2xuqXDVO5JXzo7cD7h1Pc/+P7hddCIU62fwnhmpZ5idrA5FncBoQCkY4OG958Oi
+         eBKiTk70x+UYeee7dh2ZkmpLaVS4WWdCeqJT44GOWkOvjCSqQ/cNBoAXsYLvZIGva6zF
+         xiy5Fuc7aFXrnRiYTx6HQeytJwiK+0DRKi1dU=
+Received: by 10.220.192.194 with SMTP id dr2mr462555vcb.34.1312052432535;
+        Sat, 30 Jul 2011 12:00:32 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 10.221.13.199 with SMTP id pn7ls283424vcb.0.canary; Sat, 30 Jul
+ 2011 12:00:31 -0700 (PDT)
+Received: by 10.52.178.2 with SMTP id cu2mr646216vdc.40.1312052431736;
+        Sat, 30 Jul 2011 12:00:31 -0700 (PDT)
+Received: by 10.52.178.2 with SMTP id cu2mr646215vdc.40.1312052431727;
+        Sat, 30 Jul 2011 12:00:31 -0700 (PDT)
+Received: from mail-vw0-f44.google.com (mail-vw0-f44.google.com [209.85.212.44])
+        by gmr-mx.google.com with ESMTPS id h2si4232416vdv.0.2011.07.30.12.00.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 30 Jul 2011 12:00:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jjllambias@gmail.com designates 209.85.212.44 as permitted sender) client-ip=209.85.212.44;
+Received: by mail-vw0-f44.google.com with SMTP id 12so3657752vws.3
+        for <lojban@googlegroups.com>; Sat, 30 Jul 2011 12:00:31 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.52.76.195 with SMTP id m3mr2611634vdw.194.1312052431504; Sat,
+ 30 Jul 2011 12:00:31 -0700 (PDT)
+Received: by 10.52.115.133 with HTTP; Sat, 30 Jul 2011 12:00:31 -0700 (PDT)
+In-Reply-To: <20110730182804.GL22654@digitalkingdom.org>
+References: <9c8c55e0-a06f-4894-a51c-99f1bd8cfaf1@h18g2000yqk.googlegroups.com>
+	<20110730182804.GL22654@digitalkingdom.org>
+Date: Sat, 30 Jul 2011 16:00:31 -0300
+Message-ID: <CAO7tK2c5PeGL8VGvQfi9bueD_LUZqQ=HDkRej9=hkQhgF4AQKw@mail.gmail.com>
+Subject: Re: [lojban] Possible error in camxes / PEG grammar (handling of
+ elidable elements)
+From: =?ISO-8859-1?Q?Jorge_Llamb=EDas?= <jjllambias@gmail.com>
+To: lojban@googlegroups.com
+X-Original-Sender: jjllambias@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of jjllambias@gmail.com designates 209.85.212.44 as permitted sender)
+ smtp.mail=jjllambias@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+X-Google-Group-Id: 1004133512417
+List-Post: <http://groups.google.com/group/lojban/post?hl=en_US>, <mailto:lojban@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/lojban?hl=en_US>
+Sender: lojban@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+unsubscribe@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Length: 961
+
+On Sat, Jul 30, 2011 at 3:28 PM, Robin Lee Powell
+<rlpowell@digitalkingdom.org> wrote:
+>
+> I think this will be a non-trivial PEG change, so it's not
+> surprising you didn't find it.
+
+I think the fix should be trivial, just replace:
+
+term-1 <- sumti / ( !gek (tag / FA-clause free*) (sumti / KU-clause?
+free*) ) / termset / NA-clause KU-clause free*
+
+with:
+
+term-1 <- sumti / ( !gek (tag !selbri-1 / FA-clause free*) (sumti /
+KU-clause? free*) ) / termset / NA-clause KU-clause free*
+
+I'm pretty sure we have dscussed this one before. If I'm not mistaken,
+the current PEG is consistent with the official YACC and BNF.
+
+mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
