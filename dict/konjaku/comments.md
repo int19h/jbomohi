@@ -11,3 +11,10 @@ Not brandy
 
 lo konjaku is not brandy, it's a kind of arum.
 
+
+## 2011-08-09T20:59:23Z — totus (comment 596, on definition 19846)
+
+Mistranslation
+
+Cognac is {koinka}.
+
