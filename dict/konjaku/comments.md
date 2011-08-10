@@ -43,3 +43,15 @@ totus wrote:
 I think konjaku sounds more phonemic similar to it's french counterpart
 than koinka. And it is a culturally fu'ivla after all.
 
+
+## 2011-08-10T17:16:19Z — phma (comment 600, on definition 19846, in reply to 598)
+
+Re: Not brandy
+
+I said "arum", not "a rum" :) An arum is a plant with flowers borne on a
+spadix, at least some with male flowers and female flowers on different
+parts of the spadix, which is enveloped by a spathe. Taro (samcrtaro, in
+the see also section) is another arum used as food.
+
+To me "konjaku" sounds pretty close to both "cognac" and "konnyaku".
+
