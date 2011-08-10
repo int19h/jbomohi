@@ -31,3 +31,15 @@ Cognac is, according to swedish wikipedia, a type of brandy (spirits of
 grape) from a limited area around the city of Cognac. But I'm not an
 expert...
 
+
+## 2011-08-10T16:36:08Z — jongausib (comment 599, on definition 19846, in reply to 596)
+
+Re: Mistranslation
+
+totus wrote:
+> Cognac is {koinka}.
+
+
+I think konjaku sounds more phonemic similar to it's french counterpart
+than koinka. And it is a culturally fu'ivla after all.
+
