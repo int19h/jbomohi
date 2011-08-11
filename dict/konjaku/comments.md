@@ -55,3 +55,23 @@ the see also section) is another arum used as food.
 
 To me "konjaku" sounds pretty close to both "cognac" and "konnyaku".
 
+
+## 2011-08-11T14:10:15Z — junpen (comment 601, on definition 19846, in reply to 599)
+
+Re: Mistranslation
+
+In Japanese the words for "konjac" and "cognac" sound similar to each
+other too.
+
+[koɲːak(ɯ)] "konjac" (eller konjakknölkalla på svenska, växt som
+används som vanlig mat i Japan, betydelsen av ordet konjaku på lojban
+som phma skapat)
+
+[koɲakː(ɯ)] "cognac" (konjak på svenska, brandy, druvsprit)
+
+(and even:
+[koNjak(ɯ)] "promise to marry" (förlovning))
+
+But konjaku in lojban has [ʒ] sound and it doesn't sound so similar to me
+to the Japanese counterparts of either "konjac" or "cognac".
+
