@@ -75,3 +75,52 @@ som phma skapat)
 But konjaku in lojban has [ʒ] sound and it doesn't sound so similar to me
 to the Japanese counterparts of either "konjac" or "cognac".
 
+
+## 2011-08-12T18:53:20Z — jongausib (comment 602)
+
+principle: lujvo for name of species rather than fu'ivla?
+
+I have erased the word brandy from the swedish definition of konjaku as a
+first step.
+
+But I still think that konjaku is a phonemic equivalent to english/french
+Cognac (beverage/city) and swedish Konjak (beverage) (but obviously some
+of you disagree, so that's not really an argument).
+Furthermore I think that cognac (beverage) is a more common word than
+konjac, or? (by the way the word for konjac in swedish is munkhätta
+(according to sv.wikipedia), which litterally means monk's hood).
+
+Another way of saying konjaku would be to make it a lojban lujvo from the
+following etymological elements (of the latin word Amorphophallus konjac):
+
+amorphous Look up amorphous at Dictionary.com
+"shapeless," 1731, from Mod.L. amorphus, from Gk. amorphos "without form,
+shapeless, deformed," from a- "without" + morphe "form" (see Morpheus).
+Related: Amorphousness.
+
+phallus Look up phallus at Dictionary.com
+1610s, "an image of the penis," from L. phallus, from Gk. phallos "penis,"
+also "carving or image of an erect penis (symbolizing the generative power
+in nature) used in the cult of Dionysus," from PIE *bhel-no-, from base
+*bhel- (2) "to inflate, swell" (cf. O.N. boli "bull," O.E. bulluc "little
+bull," and possibly Gk. phalle "whale;" see bole). Used of the penis
+itself (often in symbolic context) from 1924, originally in jargon of
+psychoanalysis.
+
+And ooops... konjac itself in the latin name seems here to be either a
+korean or japanese word, so I don't know the etymology of that word.
+
+Anyway, why not make a lujvo of Amorphophallus (x1 pertains/belongs to
+genus Amorphophallus of species x2 [default is Amorphophallus konjac])?
+
+If you need to be more specific you still have to translate konjac (maybe
+from it's korean/japanese meaning), but I think this is the way how to do
+things.
+
+Generally I would prefer to use pure lojbanic words as much as possible
+when referring to species (translating the latin words would do in most
+cases).
+
+Cognac (beverage) on the other hand is a culturally marked word, and
+therefore should deliberately remain as such in lojban, I think.
+
