@@ -124,3 +124,30 @@ cases).
 Cognac (beverage) on the other hand is a culturally marked word, and
 therefore should deliberately remain as such in lojban, I think.
 
+
+## 2011-08-16T10:50:27Z — junpen (comment 606, in reply to 602)
+
+Re: principle: lujvo for name of species rather than fu'ivla?
+
+jongausib wrote:
+> Furthermore I think that cognac (beverage) is a more common word than
+> konjac, or? (by the way the word for konjac in swedish is munkhätta
+> (according to sv.wikipedia), which litterally means monk's hood).
+
+(Isn't munkhätta the swedish word for Arum, a genus in the Arum family
+(Araceae), while knölkalla is the word for Amorphophallus, a genus in the
+Arum family (Araceae)?)
+
+In Japan "konjac" (plant/ food) is a word as common as "cognac"
+(beverage).
+
+> And ooops... konjac itself in the latin name seems here to be either a
+> korean or japanese word, so I don't know the etymology of that word. 
+
+I believe that the word comes from Chinese.
+
+> Cognac (beverage) on the other hand is a culturally marked word, and
+> therefore should deliberately remain as such in lojban, I think.
+
+"Without-form-penis-plant" sounds to me culturally marked, too.
+
