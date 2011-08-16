@@ -151,3 +151,43 @@ I believe that the word comes from Chinese.
 
 "Without-form-penis-plant" sounds to me culturally marked, too.
 
+
+## 2011-08-16T19:39:44Z — jongausib (comment 608, in reply to 606)
+
+Re: principle: lujvo for name of species rather than fu'ivla?
+
+junpen wrote:
+> jongausib wrote:
+> > Furthermore I think that cognac (beverage) is a more common word than
+> > konjac, or? (by the way the word for konjac in swedish is munkhätta
+> > (according to sv.wikipedia), which litterally means monk's hood).
+> 
+> (Isn't munkhätta the swedish word for Arum, a genus in the Arum family
+> (Araceae), while knölkalla is the word for Amorphophallus, a genus in
+the
+> Arum family (Araceae)?)
+> 
+> In Japan "konjac" (plant/ food) is a word as common as "cognac"
+> (beverage).
+> 
+> > And ooops... konjac itself in the latin name seems here to be either a
+> > korean or japanese word, so I don't know the etymology of that word. 
+> 
+> I believe that the word comes from Chinese.
+> 
+> > Cognac (beverage) on the other hand is a culturally marked word, and
+> > therefore should deliberately remain as such in lojban, I think.
+> 
+> "Without-form-penis-plant" sounds to me culturally marked, too.
+
+endless discussion;) well, latin may be culturally marked too, but that's
+the international biological standard for name of species (lojbanized
+latin names would still be recognized as part of the taxonomy). But in the
+case with konjaku (there the latin name has borrowed from chinese), so
+couldn't we just translate the chinese word? I think the more lojbanized
+words the better, and so we can reserve fu'ivla for words like samurai,
+ninja, sushi, nyckelharpa, dalahäst, halloumi, cognac and other words
+which would loose their cultural meaning if you translate them. In a
+dispute like this, who will decide which should be hold for the right
+definition, anyway?
+
