@@ -22,3 +22,10 @@ can
 I should have noticed that. My mistake. 
 Thanks for your comment.
 
+
+## 2011-08-19T05:00:34Z — jongausib (comment 611, on definition 20210)
+
+i. e'o Erase my definition please
+
+I've made a cmene instead of a lujvo, please erase this one.
+
