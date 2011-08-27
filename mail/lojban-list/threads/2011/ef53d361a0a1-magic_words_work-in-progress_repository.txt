@@ -1,4 +1,4 @@
-# mail/lojban-list thread ef53d361a0a1-magic_words_work-in-progress_repository | root 20110826194826.gb18532@alice.local | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread ef53d361a0a1-magic_words_work-in-progress_repository | root 20110826194826.gb18532@alice.local | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-08-26T19:48:26Z | ".alyn.post." <alyn.post@lodockikumazvati.org> | 20110826194826.gb18532@alice.local | mail/lojban-list/cur/1314388106.ef53d361a0a160e3.jbomohi:2,S
 I'm working on implementing Lojban's Magic Words in PEG, as part
@@ -158,6 +158,89 @@ offer.
 .i mu'o mi'e .alyn.
 -- 
 .i ma'a lo bradi cu penmi gi'e du
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 4 | 2011-08-27T01:30:01Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2cjx=7qpovgfqn-ndvsa=po+ni+=5xn0gqj1qwmrugaiq@mail.gmail.com | mail/lojban-list/cur/1314408601.9f92ac58b3964bc4.jbomohi:2,S
+On Fri, Aug 26, 2011 at 9:41 PM, .alyn.post.
+<alyn.post@lodockikumazvati.org> wrote:
+>
+> This case convinced me that we needed precedence rules:
+>
+>  broda bu zei brode bu
+
+It's easy to come up with somewhat strange results with any set of
+rules. The parse you will end up with for "broda zei brode bu" is
+arguably just as unintuitive as the parse for the above with strict
+LTR.
+
+>  The *essential* property of LTR is preserved
+> in this magic words work,
+
+I don't think so, bacause it forces you to learn arbitrary precedence
+rules that may make sense in some cases but not in others. If a system
+of arbitrary precedences did not have strange cases, it might be worth
+the extra effort of learning the arbitrary rules, but if you will have
+strange cases in any case, I think it's better to have as simple a
+rule as possible.
+
+>but I think the above case demonstrates
+> that LTR doesn't make sense in every case: that more complex rules
+> result in easier to understand and parse (by humans) texts.
+
+I find that the rule for ZEI that makes it act like BU to the left and
+like ZO to the right much easier to understand. ZEI is essentially
+like a BU-ZO hybrid, and the (slight, hardly noticeable) difference in
+behavior to the left from the behavior to the right is just a
+reflection of the fact that BU acts (inevitably) slightly different to
+the left than ZO does to the right.
+
+> It is my hope, in preparing this code, that I can change the
+> nature of that debate from discussing individual cases and ideas
+> around Magic Words to "there is a bug on line 100, here is a patch,
+> and here is the list of test cases that changed and as well the
+> justification for why those changes are valid."
+
+OK, but I probably won't be spending time checking code so that it
+does perfectly well something that I feel is essentially wrong. So at
+this point I can only argue against your starting point.
+
+> I believe that it
+> is too easy, in discussing this topic, to focus on what we want out
+> of a single case without realizing the repercussions that has for
+> the remaining body of this work.
+
+Indeed. But are you not doing just that with the "broda bu zei brode bu" case?
+
+If you truly want an intuitively fully symmetric ZEI, then you would
+have to only allow the same type of thing to appear on both sides in
+any given instance, but ZEI is not meant to be read as such a
+connective. Say "denpa bu zei sarji" is a lujvo for "x1 is a dot-side
+supporter", and for whatever reason you wanted to make a lerfu out of
+that lujvo, the lerfu would naurally come out as "[(denpa
+bu)-zei-sarji] bu", no?
+
+> I hope that I am able to deliver a working grammar from which I will
+> graciously receive from you any improvements that you would care to
+> offer.
+
+OK, but my proposed improvements, in the case of ZEI, will be to go
+back to what we have now, and in the case of SA, to go to something
+like "erase back to the beginning of the sentence". So they won't be
+just minor patches to what you are doing...
+
+But I shouldn't be discouraging you from what you are doing. I think
+we really do need to finish the grammar, I'm just a bit uneasy with
+the direction you want to take it...
+
+mu'o mi'e xorxes
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
