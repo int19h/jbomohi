@@ -1,0 +1,76 @@
+# mail/lojban-list thread a84ab784d3c9-valsi_processor | root caaq0impsctudalpayljd=a8p=j9=m7_vks8yg1wheawd=+u6dq@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2011-09-11T20:20:05Z | Remo Dentato <rdentato@gmail.com> | caaq0impsctudalpayljd=a8p=j9=m7_vks8yg1wheawd=+u6dq@mail.gmail.com | mail/lojban-list/cur/1315772405.a84ab784d3c9f07f.jbomohi:2,S
+Someone may have noticed that lately I've posed many questions about
+morphology. The reason is that I am writing a tool to analyze text
+lojban word by word. A tool like this might be able, for example, to
+generate statistics about a text or to augment it.
+
+Everything started from a thread here on the list where we discussed
+how to automatically add typographic elements to a text (e.g.
+converting it to TeX).
+
+I've written a Lua module based on LPeg called "jbo" that offers a
+function jbo.rafske(s) that will analyze the text "s" and will invoke
+a call back funciton for each word it finds.
+
+For example the script:
+-------------
+
+-- Read a file with lojban text and categorize each word in it
+
+jbo = require("jbo")
+
+function jbo.fcmavo(sel,cma)    print("CMAVO", sel, cma)    end
+function jbo.fcmevla(cme)       print("CMEVLA", cme)        end
+function jbo.fgismu(gis)        print("GISMU", gis)         end
+function jbo.ffuhivla(gis)      print("FUhIVLA", gis)       end
+function jbo.flujvo(gis)        print("LUJVO", gis)         end
+function jbo.ftosmabru(sel,cma) print("TOSMABRU", sel,cma)  end
+function jbo.fslinkuhi(s)       print("SLINKhUI", s)        end
+function jbo.fnalvla(s)         print("NALVLA",s)           end
+function jbo.fcomma(s)                                      end
+function jbo.fpause(s)                                      end
+
+text = io.stdin:read("*a")
+
+jbo.rafske(text)
+
+-------------------------
+
+will just print each word preceded by its type. The functions jbo.xxxx
+will be called when an element of type xxxx is found.
+
+For those who don't know Lua (http://www.lua.org), it's a very fast
+scripting language used in major products like "World of Warcraft" or
+"Adobe Lightroom" and LPeg is the module to use PEG expressions as a
+pattern matching tool.
+
+As a guide for the module, I've used the "rafske.peg" file by alyn
+post found in the jbogenturfa'i repository but LPeg does not lend
+easily to a simple translation of a generic PEG grammar so that the
+module it's not an exact translation of the peg file (unfortunately).
+
+The module "jbo" is in it's very alpha stage, it *seems* to handle
+correctly all the words found in jbovlaste but I'm pretty sure it
+would fail for some case I did not considered properly. Definitely
+handling stress might be a weak point.
+
+Someone mentioned a large test file but I was not able to find it, I
+would be very interested in any list of words that would stress the
+morpholy rules.
+
+If anyone is interested, I'll be happy to share the code too, of
+course. It's just 470 lines of codes, including the full list of cmavo
+(3 per rows).
+
+remod
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
