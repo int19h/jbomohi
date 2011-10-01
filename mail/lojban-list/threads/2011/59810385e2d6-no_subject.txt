@@ -1,4 +1,4 @@
-# mail/lojban-list thread 59810385e2d6-no_subject | root df98ddaa7edae76e8c835aaa3365e19e.squirrel@questmail.futurequest.net | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 59810385e2d6-no_subject | root df98ddaa7edae76e8c835aaa3365e19e.squirrel@questmail.futurequest.net | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-09-29T21:27:49Z | fagricipni <lojban707@fagricipni.com> | df98ddaa7edae76e8c835aaa3365e19e.squirrel@questmail.futurequest.net | mail/lojban-list/cur/1317331669.59810385e2d64d13.jbomohi:2,S
 I have written a short program that can quiz me on the types of
@@ -183,6 +183,77 @@ impermissible medials. But I avoid names that are not formed out of
 normal syllables, so I distinguish two kind of cmevla.
 
 mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 5 | 2011-10-01T03:03:50Z | fagricipni <lojban707@fagricipni.com> | 9c2f26424f4f8fbc5ffb0d0c167d4858.squirrel@questmail.futurequest.net | mail/lojban-list/cur/1317438230.36858843ec81a2ae.jbomohi:2,S
+OK, I've gone ahead and done all three, they are called:
+is_lujvo_triple(), is_cmene_triple(), is_init_triple() .
+
+Since the following functions are the fundamental core of my
+consonant and consonant pair type quizzing programs, and will
+serve the same function in my consonant triple type quizzing
+program; I'm asking any programmers to look over this code and
+make sure that I have not done anything stupid in these
+functions.  I'll put up the full code on my web site when I am
+done writing the triple _quizzing_ part; based on my experience
+with writing the other quizzing parts that should be done by
+Monday evening _at the very latest_.  If anyone wants to be
+emailed the full Python code when the program is complete, send
+a request to lojban707@fagricipni.com requesting the complete
+program.
+
+def is_unvoiced(letter):
+    return (letter in ("c","f","k","p","s","t","x"))
+
+def is_voiced(letter):
+    return (letter in ("b","d","g","j","v","z"))
+
+def is_syllabic(letter):
+    return (letter in ("l","m","n","r"))
+
+def is_permiss_pair(pair):
+    if ( is_voiced(pair[0]) and is_unvoiced(pair[1]) ) or \
+       ( is_unvoiced(pair[0]) and is_voiced(pair[1]) ):
+        return False
+    if pair[0]==pair[1]:
+        return False
+    if pair in ("cs","sc","jz","zj","cx","kx","xc","xk","mz"):
+        return False
+    return True
+
+def is_init_pair(pair):
+    return (pair in ("bl","br","cf","ck","cl","cm","cn","cp","cr",
+                     "ct","dj","dr","dz","fl","fr","gl","gr","jb",
+                     "jd","jg","jm","jv","kl","kr","ml","mr","pl",
+                     "pr","sf","sk","sl","sm","sn","sp","sr","st",
+                     "tc","tr","ts","vl","vr","xl","xr","zb","zd",
+                     "zg","zm","zv"))
+
+def is_lujvo_triple(triple):
+    if triple in ("ndj","ndz","ntc","nts"):
+        return False
+    if is_permiss_pair(triple[:2]) and is_init_pair(triple[1:]):
+        return True
+    return False
+
+def is_cmene_triple(triple):
+    if is_permiss_pair(triple[:2]) and is_permiss_pair(triple[1:]):
+        return True
+    return False
+
+def is_init_triple(triple):
+    if is_init_pair(triple[:2]) and is_init_pair(triple[1:]):
+        return True
+    return False
+
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
