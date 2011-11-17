@@ -1,0 +1,131 @@
+# mail/lojban-list thread c65863243e19-new_pa-proposal | root 20b482a7-b58a-4e4a-a3f7-27b49ba861c0@p9g2000vbb.googlegroups.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2011-11-17T09:40:07Z | Jakob Nissen <jakobnybonissen@gmail.com> | 20b482a7-b58a-4e4a-a3f7-27b49ba861c0@p9g2000vbb.googlegroups.com | mail/lojban-list/cur/1321522807.c65863243e19b370.jbomohi:2,S
+Firstly, I'd like to say that neither am I member of the BPFK or
+anything like that, nor do I have insight in the formal grammar of
+Lojban, since I know very little about programming or computer
+language.
+What I do know, though, are the goals and ambitions of the language,
+and to a large extend, what makes good Lojban good and bad Lojban bad.
+Recently, I went through the grammar of the PA-selma'o. and discovered
+to my horror how bad it is now. The day after, I began writing a
+proposal for a new PA-grammar, if not to change anything directly,
+then at least to begin a debate on how to improve this big and broken
+part of cmavo-space.
+
+Klaku’s number proposal:
+The number system of Lojban simply doesn’t work. Due to historical
+reason (I’ve been told), it was decided to let all numbers work the
+same way in the grammar, make no distinction between the selma’o of
+the different PA, and allow any string of PA to be grammatical.
+Furthermore, today, all numbers are grouped from left to right.
+This is not satisfactory. While it grammatically allows all thinkable
+number constructs, the grammar of the numbers do not in any way
+correspond to the way the numbers actually interact. This means that:
+1) Strings of PA which make absolutely no sense are grammatical (like
+{li pai ra’e xo pi pi}) and
+2) Strings of PA which makes sense are parsed wrongly, leading to
+confusing results (like {li rau su’o pa}, which is parsed {li <rau
+su’o> pa}).
+This is bad. In short, the grammar of numbers might be internally
+consistent, but it does not relate to the language, and therefore
+seems like a “black hole”, where anything goes in the grammar.
+
+Proposed changes
+Therefore, I propose to rearrange the words in the different PA as
+follows in order to allow for at least a minimum of usable grammar in
+numbers:
+1)	The new PA1 should contain {xo}, and all members of the current PA1
+and PA2. These constructs are mathematically exact digits, which can
+be combined to form number strings.
+2)	The new PA2 should contain {du'e, mo'a, rau, ro, so'a, so'e, so'i.
+so'o, so'u and no'o (and {xo’e}, in the number sense)}. These numbers
+are inexact or subjective, always are their own number string, but can
+appear before or after any number in order to give additional
+information about it.
+3)	The new PA3 should contain {ce'i, ma'u, me'i, ni'u. za'u, da'a,
+su'e, su'o, ka'o and fi’u}. These take the next number string or
+PA3+number string (with right-grouping rules) and modify it into a new
+number. The grammar of {fi’u} is changed: it can now only express 1/n.
+In order to express a/n, use {a pi’i fi’u n}. They all should work
+without having a number after them, in that case, the number should be
+a default.
+4)	The new PA4 should contain {pi’e and ki’o}, and can appear at any
+time, in any number string, any amount of times. They sever the number
+string, but {ki’o} allows two adjectent number strings to “fuse”
+together again. When several PA4 are put together, the number string
+{no no no} is assumed to be between them.
+5)	The new PA5 should contain {ra’e, pi and ji’i}, and can appear once
+in each number string. The grammar of {ji’i} is changed for this
+purpose: the construct {ji’i ni’u/ma’u} no longer tell us whether
+there have been “rounded up” or “rounded down”. Alone, it means works
+as a number on it own, and tells us the other number strings are
+approximate. For “typical number”, use {no’o}. For elliptical number,
+I suggest the experimental cmavo {xo’e}. If no part of a string is
+placed before {pi} or {ra’e}, the default is 0.
+6)	The new PA6  should contain {pai, te’o and tu’o}. These are full
+numbers and can be modified by PA3 and PA4, but no other.
+Dealing with problems this gives us:
+1)	How is PA6+{ki’o} defined?
+a)	It’s not, sorry. It should be grammatical, though.
+2)	How does PA6 work with PA5?
+a)	{ji’i} works with all numbers. {pi te’o} is “0.271828…”, similar
+with {pai}. {ra’e} is not defined with any number from PA6.
+3)	What happens when you put several number strings next to each
+other?
+a)	All number strings then refer to the same number, describing it in
+different ways. This means you can say something wrong. ({li pai su’o
+vo} refers to “pi, which is more than 4”, for instance.)
+4)	What is a number string?
+a)	I propose it is defined as a construct where one or more PA-cmavo
+interact internally. Thus {da’a pa no} is one number string, because
+{pa} and {no} belongs to PA1 and can make number strings which each
+other, and {da’a} belongs to PA3 and can make number string with any
+number string to its right.
+5)	How would you convey whether a number has been rounded down or up?
+a)	I propose using {za’u} or {me’i} in an adjectant number string to
+show that the number is smaller or greater than some unspecified
+value, which is presumably then understood to be the exact number.
+6)	How exactly should {xo} work?
+a)	It should work like a PA1, but the response to it can be any PA or
+mekso expression which is grammatical in the construct it is placed
+in.
+7)	How should number strings group in for instance {fi’u dau so’i}?
+a)	Number strings should group from right to left. PA3 binds to any
+number strings to the left of it, so the above should group {<fi’u
+dau> so’i}.
+8)	Objection! Right-grouping is a fundamental break in Lojban, which
+uses left-grouping whenever it can!
+a)	Well, even with the current rules, the meaning of numbers is
+dependent on right-grouping, even though the grammar is left-grouped.
+The meaning of {pa} in {pa ci}, for instance, can only be determined
+by knowing how many digits are to the right of it. This is the nature
+of numbers, not something peculiar in my proposed grammar (at least
+unless we make it standard to write “backwards”, writing 42 as {re
+vo}).
+9)	Why the strange rules for {ki’o}? Why should it first separate
+number strings, then fuse them together again?
+a)	Firstly, I tried to make as few selma’o as possible, which is why
+problem 1 and 2 still exist. Secondly, it makes sense, since in a
+{ki’o}-construct, each of the number strings separated by {ki’o} are
+given new value in the number string they are in. Therefore, it still
+“seperates” number strings and assign them different functions. For
+example in {li re no ki’o xa}, {re no} is assigned the value “20,000”
+instead of “200” because of {ki’o}, while the {xa} is still “6”.
+This grammar should allow one to express any number one wants, while
+still being parsed the same way it is understood. The changes should
+be easy to incorporate in the formal grammar, and change nothing in
+earlier texts (since no one follows the current parsing rules anyway).
+
+----
+I'd like to see people's objections and comments to this proposal.
+mi'e la klaku
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
