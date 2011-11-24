@@ -1,0 +1,225 @@
+# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2011-11-24T04:41:18Z | Martin Bays <mbays@sdf.org> | 20111124044118.gf6112@gonzales | mail/lojban-list/cur/1322109678.4ad8fb694bdf20b7.jbomohi:2,S
+Here's where I've got to.
+
+So far, I can handle only the "easy parts" of lojban - the first-order
+fragment, roughly - and am largely ignoring the more difficult issues
+we've been discussing on the list.
+
+The source is here:
+http://gitorious.org/tersmu
+
+It translates arbitrary expressions in this fragment to a mild extension
+of first-order logic (generalised quantifiers, structured relations
+(tanru, NU)). So it reduces the problem of assigning a formal semantics
+to this fragment of lojban to that of understanding the latter.
+
+I don't know of how much interest this will be to anyone in its current
+form, but I thought it best to make it public at this stage before
+I screw it up by trying to extend its capabilities.
+
+The core algorithm is implemented as around 450 lines of Haskell, in
+Lojban.hs. It is not well-commented; I would say the readability is
+currently middling to low; I hope this situation will improve.
+
+The executable simply reads lojban expressions (instances of the
+grammatical production 'text'; 'fragment' is not supported), and prints
+the resulting logical form in (customized) logical notation and in
+stilted forethoughtful lojban. There's an example below.
+
+
+I paste below the README, TODO and BUGS files; even those who aren't
+interested in playing with the code might have useful comments on the
+last.
+
+
+README:
+"""
+tersmu-0.1rc1
+=============
+
+Requirements
+------------
+Compile-time:
+    GHC
+    Pappy - the Makefile automatically wgets, patches and compiles this.
+Run-time:
+    vlatai, part of jbofihe, should be in your path. You can get it at:
+	www.rpcurnow.force9.co.uk/jbofihe/index.html
+
+
+Description
+-----------
+tersmu is a semantic parser for a fragment of the engineered human language
+Lojban (www.lojban.org). It translates Lojban to (a mild extension of)
+first-order logic. The intention is that it be (at least eventually) useful
+for the purposes of language learning, for increasing the precision of the
+specification of the language, and in lojban-using computer programs.
+Currently, tersmu handles a rather restricted part of lojban; in particular,
+it does not handle tenses or modals, nor complicated anaphora, nor UI, and it
+does not handle description sumti properly.
+
+la tersmu goi ty zo'u tu'e
+    da poi pagbu be lopa mulno ke lojbo gerna zo'u
+	ty te smuni ro se cusku poi te gerna la lojban da ku'o pa smuni be
+	su'o se cusku pe su'o milxe se pagbu be la pamoi te galtu logji
+    .i pacna pa du'u ty balvi ju cabna se pilno su'o nu cilre gi'a jimpe gi'a
+    satci zmadu gasnu le ve skicu be la lojban gi'a lojbo samru'e
+    .i se cabna lo nu ty kakne co te smuni no te gerna be fi su'o cmavo be
+    zo pu a zo bai a zo ui gi'e nai xamgu te smuni su'o da poi ga pluja
+    zbasu ke'a su'o cmavo be zo ko'a gi ke'a se gadri
+
+Sample Output
+-------------
+Here's what it makes of the previous paragraph (the indentation was done by
+hand... automated pretty-printing is on TODO!)
+
+Prop:
+{la} x1:(tersmu(_)). (
+    EX x2:({lo} x3:((EQ(1) mei(_) /\ <mulno(_)><<lojbo(_)><gerna>>(_))).
+	    pagbu(_,x3)).
+	FA x3:((cusku( ,_) /\ gerna(x2,lojban,_))).
+	    EQ(1) x4:(
+		    EX x5:({la} x6:(<<EQ(1) moi(_)><galtu>( , ,_)><logji>(_)).
+			    <milxe(_)><pagbu>(x6,_)).
+			EX x6:((cusku( ,_) /\ srana(x5,_))). smuni(_,x6)).
+		smuni(x4,x3,x1)
+    /\ (EQ(1) x2:(du'u[EX x3:(nu[{le} x4:(skicu( ,lojban, ,_)).
+		    (((cilre() \/ jimpe()) \/
+			    <<satci(_)><zmadu>(_)><gasnu>( ,x4))
+		    \/ <lojbo(_)><samru'e>())](_)).
+		<balvi(_)><pilno>(x3,x1)](_)).
+	    pacna( ,x2)
+    /\ {lo} x2:(nu[EX x3:((EX x4:(cmavo(_,{ko'a})).
+		    <pluja(_)><zbasu>( ,_,x4) \/ gadri( ,_))).
+		(<EQ(0) x4:(EX x5:(
+			((cmavo(_,{pu}) \/ cmavo(_,{bai})) \/ cmavo(_,{ui}))).
+		    gerna(x5, ,_)).
+		smuni( ,x4,_)><kakne>(x1) /\ !<xamgu(_)><smuni>( ,x3,x1))](_)).
+	    cabna(x2)))
+
+jbo: la tersmu ku goi ko'a zo'u ge su'o da poi lo poi'i ge ke'a 1 mei gi ke'a
+ke mulno ke lojbo gerna ke'e ke'e kei ku goi ko'e zo'u ke'a pagbu ko'e ku'o ro
+de poi ge zo'e cusku ke'a gi da gerna la lojban. ke'a ku'o 1 di poi su'o da xi
+vo poi la ke te ke 1 moi galtu ke'e logji ke'e ku goi ko'e zo'u ko'e ke milxe
+pagbu ke'e ke'a ku'o su'o da xi mu poi ge zo'e cusku ke'a gi da xi vo srana
+ke'a ku'o zo'u ke'a smuni da xi mu ku'o zo'u di smuni de ko'a gi ge 1 da poi
+ke'a du'u su'o de poi ke'a nu le ve skicu be la lojban. ku goi ko'e zo'u ga ga
+ga cilre gi jimpe gi zo'e ke ke satci zmadu ke'e gasnu ke'e ko'e gi ke lojbo
+samru'e ke'e kei ku'o zo'u de ke balvi pilno ke'e ko'a kei ku'o zo'u zo'e
+pacna da gi lo nu su'o da poi ga su'o de poi ke'a cmavo zo ko'a ku'o zo'u zo'e
+ke pluja zbasu ke'e ke'a de gi zo'e gadri ke'a ku'o zo'u ge ko'a ke poi'i 0 de
+poi su'o di poi ga ga ke'a cmavo zo pu gi ke'a cmavo zo bai gi ke'a cmavo zo
+ui ku'o zo'u di gerna zo'e ke'a ku'o zo'u zo'e smuni de ke'a kei kakne ke'e gi
+na ku zo'e ke xamgu smuni ke'e da ko'a kei ku goi ko'e zo'u ko'e cabna
+
+
+Further remarks
+---------------
+See BUGS for the list of all known cases of divergence, or arguable
+divergence, from CLL-mandated semantics.
+
+Further bug reports gratefully received at <mbays@sdf.org>
+"""
+
+
+TODO:
+"""
+Weak dedonkeyisation
+
+GOhA
+
+Questions
+
+NAhE
+
+JOI 
+
+better gadri handling?
+
+tenses and modals
+
+irrealis UI
+
+Strong donkeys?
+
+Pretty printing
+"""
+
+
+BUGS:
+"""
+All known divergence from CLL prescription, or from plausible interpretations
+thereof, is noted here.
+
+Definite bugs:
+    ka can't handle multiple ce'u (should return a relation)
+
+    Only the simplest {goi} phrases, those of the form {[sumti] goi ko'a}, are
+    currently handled.
+
+Probably bugs:
+    Current gadri (non)-handling is probably inconsistent with xorlo.
+
+    We don't handle donkey anaphora, and so are not in accordance with the
+    CLL. For example, we have
+	> ro ponse be su'o xasli cu darxi ri
+	Prop:FA x1:(EX x2:(xasli(_)). ponse(_,x2)). darxi(x1,x1)
+    , which contradicts CLL:7.6.
+
+    We have the first part of a guhek being a selbri3 rather than an arbitrary
+    selbri. That's because I don't see a sensible way to deal with things like
+    {gu'e broda co brode gi brodi ko'a}
+
+Possibly bugs:
+    Quantifiers on bound variables are ignored. This is contrary to
+    CLL:16.14.1-2. But I don't see how to make sense of what's specified
+    there.
+
+    Seltau are considered to be unary predicates rather than higher arity
+    relations.
+
+    According to CLL:16.11.14, bridi negation scopes over the prenex... but I
+    don't see how to sensibly extend that to arbitrary statements, so I'm
+    ignoring it.
+    c.f. http://www.lojban.org/tiki/BPFK+Section%3A+brivla+Negators and links
+    therefrom.
+    Meanwhile, that BPFK section on brivla negation currently states that {na}
+    "has scope over quantifiers that follow". Currently that's how I have
+    {na ku} working, but not bare {na}.
+
+    We have {broda gi'e brode vau da} equiv to {broda da gi'e brode da};
+    similarly for JA-connected selbri. I'm not sure whether this is right, nor
+    whether there's a coherent alternative. (I suppose the alternative would
+    have to be to handle these tailterms with an 'append' which appends the
+    result to the tails of all the connected bridi it's a tailterm of. I don't
+    currently see why this couldn't work, but haven't thought it through.)
+
+    Termset quantification: CLL:16.7.5 has quantifiers in the same termset
+    having "equal scope", but I don't understand what this means.
+
+    We treat {broda zo'e goi ko'a ko'a} as equivalent to {broda zo'e zo'e}.
+
+Probably not bugs:
+    This might at first seem wrong:
+	> na ku mi noi brode cu broda
+	Prop:!(brode(mi) /\ broda(mi))
+    but consider that e.g.
+	> na ku da ro broda be da ku noi brodi cu brodu
+	Prop:!EX x1. FA x2:(broda(_,x1)). (brodu(x1,x2) /\ brodi(x2))
+    is probably right.
+
+    Also,
+	> ro da na ku broda .i je de brode
+	Prop:FA x1. !EX x2. (broda(x1) /\ brode(x2))
+    is right, because
+    	> ro da na ku broda de .i je de brode
+	Prop:FA x1. !EX x2. (broda(x1,x2) /\ brode(x2))
+    has to be; c.f.
+	> ro da na broda de .i je de brode
+	Prop:FA x1. EX x2. (!broda(x1,x2) /\ brode(x2)) .
+"""
+
+Martin
+
