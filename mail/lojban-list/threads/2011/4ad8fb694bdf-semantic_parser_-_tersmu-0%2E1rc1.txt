@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-11-24T04:41:18Z | Martin Bays <mbays@sdf.org> | 20111124044118.gf6112@gonzales | mail/lojban-list/cur/1322109678.4ad8fb694bdf20b7.jbomohi:2,S
 Here's where I've got to.
@@ -302,4 +302,188 @@ To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.co
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
 
+
+
+=== 4 | 2011-11-25T19:50:38Z | Martin Bays <mbays@sdf.org> | 20111125195038.ga29512@gonzales | mail/lojban-list/cur/1322250638.510b068055a2c1a8.jbomohi:2,S
+* Thursday, 2011-11-24 at 21:18 -0300 - Jorge Llambías <jjllambias@gmail.com>:
+
+> On Thu, Nov 24, 2011 at 1:41 AM, Martin Bays <mbays@sdf.org> wrote:
+> >
+> > Probably not bugs:
+> >    This might at first seem wrong:
+> >        > na ku mi noi brode cu broda
+> >        Prop:!(brode(mi) /\ broda(mi))
+> 
+> It does seem wrong to me. A noi-clause is more like a presupposition,
+> not directly part of the claim.
+> 
+> I'd say it's more like:
+> 
+> presupp Prop: brode(mi)
+> main Prop: !broda(mi)
+
+Yes, quite possibly.
+
+I was working under the assumption that {noi} should be part of this
+basic logical fragment of lojban, meaning in particular that we don't
+have to break out of existing quantifiers when parsing it.
+
+Clearly some parts of lojban do require breaking out in this way -
+question words, anaphora and probably xorlo being examples - so adding
+{noi} to that list wouldn't be too shocking. All else being equal,
+however, I would prefer not to.
+
+> >    but consider that e.g.
+> >        > na ku da ro broda be da ku noi brodi cu brodu
+> >        Prop:!EX x1. FA x2:(broda(_,x1)). (brodu(x1,x2) /\ brodi(x2))
+> >    is probably right.
+> 
+> I don't think a noi-clause is well-defined when it is attached to
+> something that doesn't have referents. You need a referent in order to
+> be able to make a comment about it. It may be that noi forces
+> something like:
+> 
+> ?presupp Prop: FA x1. FA x2:(broda(_,x1). brodi(x2)
+> main Prop: !EX x1. FA x2:(broda(_,x1)). brodu(x1,x2)
+> 
+> I'm not completely sure if that's exactly what the presupposition
+> should be, but I do believe the main proposition should not be
+> affected if you remove any noi-clause from it.
+
+I don't know.
+
+Consider analogous english phrases:
+
+Not one of the farmers owns donkeys, which he beats, with long ears.
+
+(excuse sexist pronoun; using anything else would confuse the issue)
+
+I think the relative phrase here is, on its own, unambiguously
+incidental. But the sentence does not imply that all of the farmers beat
+their donkeys. The overall effect is that the incidental phrase does act
+restrictively, just as in my interpretation of the corresponding lojban:
+
+no le cange cu ponse su'o xasli noi ri darxi zi'e poi clani se kerlo
+
+Prop: {le} x1:(cange(_)). EQ(0) x2:(me(_,x1)). EX x3:((xasli(_) /\
+    <clani(_)><kerlo>( ,_))). (ponse(x2,x3) /\ darxi(x2,x3))
+
+jbo: le cange ku goi ko'a 0 da poi ke'a me ko'a ku'o su'o de poi ge ke'a
+    xasli gi zo'e ke clani kerlo ke'e ke'a ku'o zo'u ge da ponse de gi
+    da darxi de
+
+
+Similarly: "Each boy carried his bag. Two of the boys carried his bag,
+which contained his lunch, on his head" doesn't imply that each bag
+contained its owner's lunch. Again, this agrees with:
+
+ro lo nanla goi ny cu bevri lo ri dakli .i je re ny stedu cpana bevri lo
+ri dakli noi vasru lo ri sanmi 
+
+Prop: {lo} x1:(nanla(_)). FA x2:(me(_,x1)). {lo} x3:((srana(x2,_) /\
+    dakli(_))). EQ(2) x4:(me(_,x1)). {lo} x5:((srana(x4,_) /\
+    dakli(_))). (bevri(x2,x3) /\ (<<stedu(_)><cpana>(_)><bevri>(x4,x5)
+    /\ {lo} x6:((srana(x4,_) /\ sanmi(_))). vasru(x5,x6)))
+
+jbo: lo nanla ku goi ko'a ro da poi ke'a me ko'a ku'o lo poi'i ge da
+    srana ke'a gi ke'a dakli kei ku goi ko'e 2 de poi ke'a me ko'a ku'o lo
+    poi'i ge de srana ke'a gi ke'a dakli kei ku goi ko'i zo'u ge da bevri
+    ko'e gi ge de ke ke stedu cpana ke'e bevri ke'e ko'i gi lo poi'i ge de
+    srana ke'a gi ke'a sanmi kei ku goi ko'o zo'u ko'i vasru ko'o
+
+
+Then again, the english "It is impossible that I, who am great, could
+fail" probably isn't falsified by my possibly not being great (although
+I suspect it's ambiguous). So incidentals in english probably are
+sometimes scope-jumping in the way you suggest.
+
+
+> >    Also,
+> >        > ro da na ku broda .i je de brode
+> >        Prop:FA x1. !EX x2. (broda(x1) /\ brode(x2))
+> >    is right, because
+> >        > ro da na ku broda de .i je de brode
+> >        Prop:FA x1. !EX x2. (broda(x1,x2) /\ brode(x2))
+> >    has to be; c.f.
+> >        > ro da na broda de .i je de brode
+> >        Prop:FA x1. EX x2. (!broda(x1,x2) /\ brode(x2)) .
+> 
+> This is a hairy issue. My instinct has always been that ".ije" should
+> be able to connect prenexed sentences, but the official grammar does
+> say otherwise.
+
+It does. I initially implemented only 'subsentence'; getting from that
+to 'text' was much more difficult than I had anticipated, largely
+because of this kind of issue.
+
+But having connected sentences share a common prenex does seem often
+useful, e.g. to keep a bound variable alive, and unintuitive only if you
+have the wrong intuition (which I certainly did at first!).
+
+> BTW, how do you analyse "su'o da na broda" and "su'o da na broda gi'e na brode"?
+
+Prop: EX x1. !broda(x1)
+and
+Prop: EX x1. (!broda(x1) /\ !brode(x1))
+respectively.
+
+This current handling does mean we get possibly unintuitive results once
+tailterms are brought in:
+
+da na broda de
+Prop: EX x1. EX x2. !broda(x1,x2)
+jbo: su'o da su'o de zo'u na ku da broda de
+
+su'o da na broda gi'e na brode vau de
+Prop: EX x1. EX x2. (!broda(x1,x2) /\ !brode(x1,x2))
+jbo: su'o da su'o de zo'u ge na ku da broda de gi na ku da brode de
+
+The obvious alternative would be to have {na broda} work like {broda be
+na ku}, which I think corresponds to what you suggest on the BPFK
+section page, giving us
+
+da broda be na ku de
+Prop: EX x1. !EX x2. broda(x1,x2)
+jbo: su'o da zo'u na ku su'o de zo'u da broda de
+
+but
+
+su'o da broda na ku gi'e brode na ku
+Prop: EX x1. !!(broda(x1) /\ brode(x1))
+jbo: su'o da zo'u na ku na ku ge da broda gi da brode
+
+and
+
+su'o da broda be na ku gi'e brode be na ku
+Prop: EX x1. !!(broda(x1) /\ brode(x1))
+jbo: su'o da zo'u na ku na ku ge da broda gi da brode
+
+and
+
+su'o da broda be na ku gi'e brode be na ku vau de
+Prop: EX x1. !EX x2. !(broda(x1,x2) /\ brode(x1,x2))
+jbo: su'o da zo'u na ku su'o de zo'u na ku ge da broda de gi da brode de
+
+Contrast all that with
+
+su'o da broda na gi'e nai brode vau de
+Prop: EX x1. EX x2. (!broda(x1,x2) /\ !brode(x1,x2))
+jbo: su'o da su'o de zo'u ge na ku da broda de gi na ku da brode de
+
+
+I'm not sure what the correct behaviour is here (also generally with
+tailterms of connected briditails, even without the negation)
+
+
+
+By the way: in case you or anyone else wants to play with my current
+implementation without compiling it yourself, you can now do so by
+sshing to:
+
+gonzales.homelinux.org  (username tersmu; password tersmu)
+
+I won't actually be watching you to the extent that the (traditional)
+motd might suggest.
+
+Martin
 
