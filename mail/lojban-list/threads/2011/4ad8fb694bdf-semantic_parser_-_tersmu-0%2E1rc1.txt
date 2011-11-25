@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-11-24T04:41:18Z | Martin Bays <mbays@sdf.org> | 20111124044118.gf6112@gonzales | mail/lojban-list/cur/1322109678.4ad8fb694bdf20b7.jbomohi:2,S
 Here's where I've got to.
@@ -486,4 +486,206 @@ I won't actually be watching you to the extent that the (traditional)
 motd might suggest.
 
 Martin
+
+
+=== 5 | 2011-11-25T23:22:11Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2ezxrdkhedqx1k7o1+e_fsvipxyok=r8au3xvy2c4kb6g@mail.gmail.com | mail/lojban-list/cur/1322263331.f2b64b27b0e2c434.jbomohi:2,S
+On Fri, Nov 25, 2011 at 4:50 PM, Martin Bays <mbays@sdf.org> wrote:
+>
+> Consider analogous english phrases:
+>
+> Not one of the farmers owns donkeys, which he beats, with long ears.
+>
+> (excuse sexist pronoun; using anything else would confuse the issue)
+
+The way I read that sentence, it is false if a farmer owns any donkey
+with long ears. You allow for farmers owning donkeys with long ears,
+as long as they don't beat them. Your expansion seems to me to be the
+one for "poi", not "noi".
+
+> I think the relative phrase here is, on its own, unambiguously
+> incidental. But the sentence does not imply that all of the farmers beat
+> their donkeys.
+
+If the non-restrictive clause was moved to the end, it would simply
+that farmers beat donkeys with long ears (but don't own them).
+
+The way you have it, with "noi" coming before "poi", I would say it
+says that farmers beat donkeys (whether they own them or not).
+
+> Similarly: "Each boy carried his bag. Two of the boys carried his bag,
+> which contained his lunch, on his head" doesn't imply that each bag
+> contained its owner's lunch. Again, this agrees with:
+>
+> ro lo nanla goi ny cu bevri lo ri dakli .i je re ny stedu cpana bevri lo
+> ri dakli noi vasru lo ri sanmi
+
+(Do you get "re ny" to parse as intended? What grammar are you using?)
+
+> Prop: {lo} x1:(nanla(_)). FA x2:(me(_,x1)). {lo} x3:((srana(x2,_) /\
+>    dakli(_))). EQ(2) x4:(me(_,x1)). {lo} x5:((srana(x4,_) /\
+>    dakli(_))). (bevri(x2,x3) /\ (<<stedu(_)><cpana>(_)><bevri>(x4,x5)
+>    /\ {lo} x6:((srana(x4,_) /\ sanmi(_))). vasru(x5,x6)))
+>
+> jbo: lo nanla ku goi ko'a ro da poi ke'a me ko'a ku'o lo poi'i ge da
+>    srana ke'a gi ke'a dakli kei ku goi ko'e 2 de poi ke'a me ko'a ku'o lo
+>    poi'i ge de srana ke'a gi ke'a dakli kei ku goi ko'i zo'u ge da bevri
+>    ko'e gi ge de ke ke stedu cpana ke'e bevri ke'e ko'i gi lo poi'i ge de
+>    srana ke'a gi ke'a sanmi kei ku goi ko'o zo'u ko'i vasru ko'o
+
+I haven't tried to decipher that. Is it false if three boys carried
+his bag on his head? (The Lojban says exactly two boys did that.)
+
+I agree that the relative clause here could be interpreted so that
+only the bags of the two boys who carried their bags on their head are
+said to contain their lunch, but I don't think the sentence allows for
+three boys to carry their bag on their head.
+
+The ambiguity arises because we don't have a firm rule on whether the
+antecedent of "ri" is "ny" or the implicit "da" of "re da poi me ny"
+
+
+
+> But having connected sentences share a common prenex does seem often
+> useful, e.g. to keep a bound variable alive, and unintuitive only if you
+> have the wrong intuition (which I certainly did at first!).
+
+Indeed, both cases are needed sometimes, so inevitably one will get
+the short form and the other will need to use a longer form.
+
+To force different preneces you need:
+
+   tu'e su'o da zo'u broda tu'u .i je tu'e su'o da zo'u brode (tu'u)
+
+To force the same prenex, you need:
+
+   su'o da zo'u tu'e broda .i je brode (tu'u)
+
+Giving the short non-tu'e form to the second case, which is the
+shortest to start with, and which I think is also the least common,
+seems backwards.
+
+>> BTW, how do you analyse "su'o da na broda" and "su'o da na broda gi'e na brode"?
+>
+> Prop: EX x1. !broda(x1)
+> and
+> Prop: EX x1. (!broda(x1) /\ !brode(x1))
+> respectively.
+
+Good. I was afraid you were a CLL worshipper.
+
+> This current handling does mean we get possibly unintuitive results once
+> tailterms are brought in:
+>
+> da na broda de
+> Prop: EX x1. EX x2. !broda(x1,x2)
+> jbo: su'o da su'o de zo'u na ku da broda de
+
+For me it's:
+
+Prop: EX x1. !EX x2. broda(x1,x2)
+jbo: su'o da na ku su'o de zo'u da broda de
+
+I don't see why you wouldn't have "su'o" within the scope of "na",
+given that "na" comes first.
+
+> su'o da na broda gi'e na brode vau de
+> Prop: EX x1. EX x2. (!broda(x1,x2) /\ !brode(x1,x2))
+> jbo: su'o da su'o de zo'u ge na ku da broda de gi na ku da brode de
+
+For me:
+
+Prop: EX x1. (!EX x2. broda(x1,x2)) /\ (!EX x2 brode(x1,x2))
+jbo: su'o da zo'u ge na ku su'o de zo'u da broda de gi na ku su'o de
+zo'u da brode de
+
+> The obvious alternative would be to have {na broda} work like {broda be
+> na ku},
+
+Isn't that what you are doing though?
+
+> which I think corresponds to what you suggest on the BPFK
+> section page, giving us
+>
+> da broda be na ku de
+> Prop: EX x1. !EX x2. broda(x1,x2)
+> jbo: su'o da zo'u na ku su'o de zo'u da broda de
+
+I'm confused. How do you get there from "broda be na ku"?
+
+> but
+>
+> su'o da broda na ku gi'e brode na ku
+> Prop: EX x1. !!(broda(x1) /\ brode(x1))
+> jbo: su'o da zo'u na ku na ku ge da broda gi da brode
+
+I'm getting lost.
+
+To me that's:
+
+Prop: EX x1. (!broda(x1) /\ !brode(x1))
+jbo: su'o da zo'u ge na ku da broda gi na ku da brode
+
+> and
+>
+> su'o da broda be na ku gi'e brode be na ku
+> Prop: EX x1. !!(broda(x1) /\ brode(x1))
+> jbo: su'o da zo'u na ku na ku ge da broda gi da brode
+
+I don't know how you get that. I get the same as previous one.
+
+> and
+>
+> su'o da broda be na ku gi'e brode be na ku vau de
+> Prop: EX x1. !EX x2. !(broda(x1,x2) /\ brode(x1,x2))
+> jbo: su'o da zo'u na ku su'o de zo'u na ku ge da broda de gi da brode de
+
+I get either:
+
+Prop: EX x1. (EX x2. !broda(x1,x2)) /\ (EX x2. !brode(x1,x2))
+jbo: su'o da zo'u ge su'o de na ku zo'u da broda de gi su'o de na ku
+zo'u da brode de
+
+
+> Contrast all that with
+>
+> su'o da broda na gi'e nai brode vau de
+> Prop: EX x1. EX x2. (!broda(x1,x2) /\ !brode(x1,x2))
+> jbo: su'o da su'o de zo'u ge na ku da broda de gi na ku da brode de
+
+I get:
+
+Prop: EX x1. (!EX x2. broda(x1,x2)) /\ (!EX x2. brode(x1,x2))
+jbo: su'o da zo'u ge na ku su'o de zo'u da broda de gi na ku su'o de
+zo'u da brode de
+
+> I'm not sure what the correct behaviour is here (also generally with
+> tailterms of connected briditails, even without the negation)
+
+It seems to me that there's no reason for:
+
+  broda gi'e brode vau su'o da
+
+to behave differently than:
+
+  ro de broda su'o da
+
+or than:
+
+  ko'a .e ko'e broda su'o da
+
+or than:
+
+  na ku broda su'o da
+
+In all cases "su'o da" is under the scope of a preceding operator.
+
+mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
 
