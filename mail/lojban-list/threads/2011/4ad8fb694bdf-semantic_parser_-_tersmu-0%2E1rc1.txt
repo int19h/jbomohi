@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 11 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-11-24T04:41:18Z | Martin Bays <mbays@sdf.org> | 20111124044118.gf6112@gonzales | mail/lojban-list/cur/1322109678.4ad8fb694bdf20b7.jbomohi:2,S
 Here's where I've got to.
@@ -1289,7 +1289,141 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 10 | 2011-11-26T11:29:01Z | Martin Bays <mbays@sdf.org> | 20111126112901.ga27177@gonzales | mail/lojban-list/cur/1322306941.1bfd63377702c659.jbomohi:2,S
+=== 10 | 2011-11-26T15:09:12Z | Martin Bays <mbays@sdf.org> | 20111126150912.gb27177@gonzales | mail/lojban-list/cur/1322320152.999cc5af23949ccc.jbomohi:2,S
+* Saturday, 2011-11-26 at 10:52 -0300 - Jorge Llambías <jjllambias@gmail.com>:
+
+> On Sat, Nov 26, 2011 at 1:07 AM, Martin Bays <mbays@sdf.org> wrote:
+> > It seems related to donkey anaphora -  consider
+> > {ro te cange poi ponse su'o xasli noi ke'a xi re darxi cu broda}.
+> 
+> Right, it's the same thing. The grammar allows both ke'a and ri to see
+> as its antecedent something that in principle it should have no
+> business seeing as its antecedent, and so we have to cope somehow.
+
+Well... in the case of true donkey anaphora, I think I'll be happiest
+declaring them semantically anomalous.
+
+(I don't consider something like {la alis goi ko'a cu nixli .i ko'a
+fanza} to be a true donkey anaphora, although it has the grammatical
+form of one and therefore is not handled by my current code)
+
+> > Also, note that the scope-respecting rules sometimes are the most
+> > intuitive - e.g. in {ro da prami de noi se prami da}. I'm not sure what
+> > the scope-breaking rules would make of that; I guess something
+> > nonsensical.
+> 
+> In principle as nonsensical as "no da prami de noi se prami da".
+> 
+> But what you call scope-respecting rules are the rules for "poi", not "noi".
+
+Yes, in the case of an existential quantifier I am making no distinction.
+
+> >> I think it's "broda be na ku" that must force tight scope.
+> >
+> > I don't see why.
+> 
+> Mainly because that's what the sytntax suggests. It's when we go
+> against the syntax that we end up with problem cases.
+
+How can the syntax be suggesting that linkargs but not selbri tags get
+tighter scope than tailterms?
+
+> > But in {broda da gi'e brode da}, the first {da} is to the left of the
+> > {gi'e}. So why shouldn't the {gi'e} be in the scope of the {[su'o] da}?
+> 
+> Because "gi'e" connects two bridi-tails, and so each bridi-tail is
+> subordinate to it. It's for the same reason that in "na broda gi'e na
+> brode" the first "na" is in the scope of "gi'e" and not the other way
+> around.
+
+I agree; my point was only that the scope rules don't always respect
+textual order, which you were appealing to.
+
+> > So do you also have {da broda .i je da brode} -> {ge da broda gi da
+> > brode}? If so: that's clearly contrary to CLL (and much usage).
+> 
+> Yes, as I said, that's what I would have. I find the CLL rule somewhat
+> strange.
+
+OK. Then I'm not worried that we disagree on this.
+
+I intend to stick with the CLL as far as coherence allows for the first
+pass.
+
+I hope that having rigorously implemented semantics for one form of
+lojban will make it easier to develop alternatives.
+
+> >> >>   ko'a .e ko'e broda su'o da
+> >>
+> >> How does that work for ".e"? It seems that if you do what I do, you
+> >> end up exporting "su'o da" to newly created preneces.
+> >
+> > In a sense, yes; e.g.
+> >
+> > da ko'a .e ko'e de broda
+> > Prop: EX x1. (EX x2. broda(x1,ko'a,x2) /\ EX x2. broda(x1,ko'e,x2))
+> >
+> > ; but I think of this as exporting the connective to the prenex, and
+> > then the inner existential to that same prenex within the scope of the
+> > connective.
+> 
+> Same with "gi'e".
+
+I understand.
+
+If it helps: my code is such that switching to your preferred gihek and
+ijek handling is easy to do.
+
+> Presumably in "su'o da .e su'o de" you have the first "su'o" within
+> the scope of ".e", yes?
+
+Yes, certainly. And I have that being equivalent to {da .e da} (which
+may be more controversial, but I think must be right).
+
+> > Basically: when parsing, we always have a notion of 'current prenex',
+> > which corresponds to the closest instance of 'statement' or
+> > 'subsentence' we're below. All sumti connectives, termset connectives,
+> > quantifiers and tagged terms (currently just {naku}) export to that
+> > prenex, in order.
+> 
+> Yes, but I'm just parsing gi'e, na and selbri tags before tail terms
+> rather than leaving them for last. That's what the syntax suggests,
+> and I just don't see the advantage of doing otherwise.
+
+For giheks and ijeks, an argument might be that they are afterthought
+connectives, so should be usable in situations where you had not
+considered when starting the sentence that you were going to want to add
+the connective. If you introduce a quantifier (or sumti connective)
+during the first connectant, you may want it to scope over the second
+connectant - and since you hadn't planned on expressing the second
+connectant at all, you won't have had the foresight to put the
+quantifier in a prenex.
+
+As for having {na broda da} work differently from {na ku broda da}...
+one argument would simply be that it allows you to efficiently get at
+meanings which would otherwise be complicated to express. e.g. suppose
+we want to add negations to modify
+{broda da gi'e brode vau de}
+to have the first conjunct be
+EX x1. EX x2. !broda( ,x1,x2) .
+
+With your {na} rule, it seems you would have to make it
+{broda da gi'e nai brode vau de na ku} .
+With mine, it's just
+{na broda da gi'e brode vau de} .
+
+
+Another argument would involve your agreeing with me that
+
+broda je brode da
+Prop: EX x1. (broda( ,x1) /\ brode( ,x1))
+
+is correct... do you?
+
+Martin
+
+
+=== 11 | 2011-11-26T11:29:01Z | Martin Bays <mbays@sdf.org> | 20111126112901.ga27177@gonzales | mail/lojban-list/cur/1322306941.1bfd63377702c659.jbomohi:2,S
 * Thursday, 2011-11-24 at 21:18 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > On Thu, Nov 24, 2011 at 1:41 AM, Martin Bays <mbays@sdf.org> wrote:
@@ -1321,7 +1455,7 @@ all that's relevant).
 Martin
 
 
-=== 11 | 2011-11-26T14:02:57Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2evfy5iev4qy5hwhhvu+atv3nzujs=yqkr-tr3tp6vg6q@mail.gmail.com | mail/lojban-list/cur/1322316177.9d319f1a392403c3.jbomohi:2,S
+=== 12 | 2011-11-26T14:02:57Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2evfy5iev4qy5hwhhvu+atv3nzujs=yqkr-tr3tp6vg6q@mail.gmail.com | mail/lojban-list/cur/1322316177.9d319f1a392403c3.jbomohi:2,S
 On Sat, Nov 26, 2011 at 8:29 AM, Martin Bays <mbays@sdf.org> wrote:
 >
 > {noi broda} is veridicial - it affects the truth conditions of the
