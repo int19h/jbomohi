@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 21 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 22 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-11-24T04:41:18Z | Martin Bays <mbays@sdf.org> | 20111124044118.gf6112@gonzales | mail/lojban-list/cur/1322109678.4ad8fb694bdf20b7.jbomohi:2,S
 Here's where I've got to.
@@ -1730,7 +1730,169 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 14 | 2011-11-26T11:29:01Z | Martin Bays <mbays@sdf.org> | 20111126112901.ga27177@gonzales | mail/lojban-list/cur/1322306941.1bfd63377702c659.jbomohi:2,S
+=== 14 | 2011-11-26T19:53:18Z | Martin Bays <mbays@sdf.org> | 20111126195318.ga19833@gonzales | mail/lojban-list/cur/1322337198.780b156ef9c88d9b.jbomohi:2,S
+* Saturday, 2011-11-26 at 15:27 -0300 - Jorge Llambías <jjllambias@gmail.com>:
+
+> On Sat, Nov 26, 2011 at 2:14 PM, Martin Bays <mbays@sdf.org> wrote:
+> > (would you agree that "guhek selbri-3 gik selbri-6" is a more sensible
+> > grammar of guheks than the official one, by the way? I spent some time
+> > trying to make sense of the official "guhek selbri gik selbri-6", but
+> > failed - mostly because of the weird interactions with {co})
+> 
+> I think connectives should allow the same things for both connectands,
+> so I'm unhappy with  both "guhek selbri gik selbri-6" and
+> "gek sumti gik sumti-4".
+> 
+> I haven't thought about it enough to have an opinion on what level
+> they should connect, other than that it should be the same on both
+> sides.
+
+Is there any reasoning at all for the current asymmetry?
+
+I see no issue at all as far as the semantics goes with allowing "guhek
+selbri-3 gik selbri-3" and "gek sumti gik sumti". In terms of my code,
+it would involve changing two characters...
+
+> > I actually was, until I changed it a few days ago, handling selbri3
+> > after tailterms. What made me change was {broda be da brode ro da} - it
+> > seems counterintuitive to have the first {da} in the scope of the
+> > second, which is what I seemed to be forced to do when handling
+> > tailterms first.
+> >
+> > Do you see another way to avoid that? Or do you consider it correct?
+> 
+> I still don't know how you handle tanru,
+
+The basic relations in the first-order logic I'm reducing to are
+structured:
+
+data JboRel = Tanru JboPred JboRel
+            | AbsPred Abstractor JboPred
+            | AbsProp Abstractor Prop
+            | Moi Quantifier MOICmavo
+            | Among
+            | Brivla String
+
+The first line means that one possible kind of relation is a tanru, the
+data for which consists of a unary predicate (the seltau) and another
+relation (the tertau).
+
+In the case of {broda be da brode} where {da} is not already bound, the
+seltau is the unary predicate "EX x1. broda(_,x1)" (higher places having
+implicit {zo'e}s, and the scope of this quantifier not escaping the
+seltau), and the tertau is (the relation which is the interpretation of)
+brode.
+
+In other words, I'm interpreting a seltau as giving an implicit
+subsentence (complete with a prenex to export to), with linkargs
+becoming tailterms and an analogue of {ke'a} in the x1.
+
+Does that seem right?
+
+The actual semantics of the resulting Tanru is something I "leave to the
+pragmatics module", i.e. don't even try to handle for now. But my
+assumption is that all the data required to interpret the tanru is
+that I'm giving, i.e. the seltau as a unary predicate and the tertau as
+a relation.
+
+> but it seems to me that "broda be da brode" should be handled like
+> "brodi be da", where the exact derivation of "brodi" from "broda" and
+> "brode" is probably undefinable.
+> 
+> As for "brodi be da ro da", I suppose the first "da" has to be bound
+> by "ro", but I'm willing to reconsider.
+
+Hmm. Well, now you've brought up the NAhE issue and so blocked my
+previous solution of handling tailterms last, I don't see an
+alternative.
+
+> > But I'm afraid I do intend to let conservatism take priority in
+> > this case, at least for now.
+> 
+> Is there any indication that CLL gives giheks tighter scope than
+> tail-terms? (I don't remember either way.)
+
+Not explicitly, that I could find. But it's clear on ijeks, and it seems
+natural to have them be parallel to giheks.
+
+> >> You can use "na'e (ke)" instead of "na" to get your meaning easily,
+> >
+> > You have {na'e} giving logical negation?
+> 
+> What's the alternative?
+
+The CLL's "scalar contrary" - which I understand as having {na'e broda}
+meaning {gu'e nai broda gi co'e}.
+
+The {co'e} sometimes is important - e.g. CLL 15.4.6:
+4.6)   mi cadzu na'e klama le zarci
+       I walkingly-(other-than-go-to) the market.
+
+> >> With your gi'e-rule, my na-rule makes little sense. We both agree that
+> >> na is subordinate to gi'e, so if gi'e has tight scope, na must too.
+> >
+> > Hold on. I understand your gi'e rule as giving e.g.
+> > na broda gi'e na brode da
+> > -> ge na broda da gi na brode da ,
+> 
+> Did you leave out a "vau"?
+
+Oops, yes.
+
+> I have:
+> 
+> na broda gi'e na brode su'o da
+> -> ge na ku zo'u broda gi na ku zo'u su'o da zo'u brode da
+> 
+> na broda gi'e na brode vau su'o da
+> -> ge na ku zo'u su'o da zo'u na broda da gi na ku zo'u su'o da zo'u brode da
+                                ^
+Did you insert a {na} ----------' ?
+
+> > so there's still the issue of whether those {na}s scope over the {da}s.
+> 
+> If you have "su'o da" with scope over "gi'e", there is no doubt that
+> it will also have scope over "na".
+
+Actually... no, that isn't how I'm doing it. I have the extra tail terms
+after the vau distributing over the gi'e conjuncts, appending the tail
+terms to each, and the result then being interpreted:
+
+na broda gi'e na brode vau da
+-> na broda da gi'e na brode da
+-> EX x. [ na broda x gi'e na brode x ]
+-> EX x. (!broda(x) /\ !brode(x))
+
+> >> > Another argument would involve your agreeing with me that
+> >> >
+> >> > broda je brode da
+> >> > Prop: EX x1. (broda( ,x1) /\ brode( ,x1))
+> >> >
+> >> > is correct... do you?
+> >>
+> >> I agree it's EX x1 brodi(x1), and what you offer for brodi is probably
+> >> the obvious choice. But tanru are weird, so I won't commit to it. In
+> >> any case, I suppose you don't need the exact form of "brodi" for your
+> >> argument, but I don't consider na and tag to be part of the tanru, so
+> >> selbri attached "na" is different from tanru-making "je".
+> >
+> > Hmm. Why do you call this a tanru? The relevant grammar for
+> > selbri connection is selbri-4 through selbri-6. It's true that the usual
+> > use (and the only documented use, to my knowledge) of selbri connection
+> > is in a seltau, but I don't see why we should consider the connectives
+> > themselves as anything more complicated than boolean operators.
+> 
+> You're probably right. We just don't have a clear rule on what the
+> place structure of "broda je brode" is wrt the place structures of
+> broda and brode.
+
+Quite. I have it being symmetrical, but I agree this is pretty
+arbitrary.
+
+Martin
+
+
+=== 15 | 2011-11-26T11:29:01Z | Martin Bays <mbays@sdf.org> | 20111126112901.ga27177@gonzales | mail/lojban-list/cur/1322306941.1bfd63377702c659.jbomohi:2,S
 * Thursday, 2011-11-24 at 21:18 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > On Thu, Nov 24, 2011 at 1:41 AM, Martin Bays <mbays@sdf.org> wrote:
@@ -1762,7 +1924,7 @@ all that's relevant).
 Martin
 
 
-=== 15 | 2011-11-26T14:02:57Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2evfy5iev4qy5hwhhvu+atv3nzujs=yqkr-tr3tp6vg6q@mail.gmail.com | mail/lojban-list/cur/1322316177.9d319f1a392403c3.jbomohi:2,S
+=== 16 | 2011-11-26T14:02:57Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2evfy5iev4qy5hwhhvu+atv3nzujs=yqkr-tr3tp6vg6q@mail.gmail.com | mail/lojban-list/cur/1322316177.9d319f1a392403c3.jbomohi:2,S
 On Sat, Nov 26, 2011 at 8:29 AM, Martin Bays <mbays@sdf.org> wrote:
 >
 > {noi broda} is veridicial - it affects the truth conditions of the
@@ -1797,7 +1959,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 16 | 2011-11-26T15:41:14Z | Martin Bays <mbays@sdf.org> | 20111126154114.gc27177@gonzales | mail/lojban-list/cur/1322322074.8e83a159ebdf4159.jbomohi:2,S
+=== 17 | 2011-11-26T15:41:14Z | Martin Bays <mbays@sdf.org> | 20111126154114.gc27177@gonzales | mail/lojban-list/cur/1322322074.8e83a159ebdf4159.jbomohi:2,S
 * Saturday, 2011-11-26 at 11:02 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > On Sat, Nov 26, 2011 at 8:29 AM, Martin Bays <mbays@sdf.org> wrote:
@@ -1846,7 +2008,7 @@ originally intended one, no?
 Martin
 
 
-=== 17 | 2011-11-26T17:32:52Z | John E Clifford <kali9putra@yahoo.com> | 1322328772.59139.yahoomailrc@web81302.mail.mud.yahoo.com | mail/lojban-list/cur/1322328772.0f5c9070c15be95f.jbomohi:2,S
+=== 18 | 2011-11-26T17:32:52Z | John E Clifford <kali9putra@yahoo.com> | 1322328772.59139.yahoomailrc@web81302.mail.mud.yahoo.com | mail/lojban-list/cur/1322328772.0f5c9070c15be95f.jbomohi:2,S
 I can't (with a straight face) claim to have followed this discussion, but I 
 offer this tidbit about relative clauses.  A restrictive relative clause 
 attaches to a description *and are part of that description*.  That is, for 
@@ -1924,7 +2086,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 18 | 2011-11-26T17:56:10Z | Martin Bays <mbays@sdf.org> | 20111126175610.gb15113@gonzales | mail/lojban-list/cur/1322330170.01a7fd6a7a1bd293.jbomohi:2,S
+=== 19 | 2011-11-26T17:56:10Z | Martin Bays <mbays@sdf.org> | 20111126175610.gb15113@gonzales | mail/lojban-list/cur/1322330170.01a7fd6a7a1bd293.jbomohi:2,S
 * Saturday, 2011-11-26 at 09:32 -0800 - John E Clifford <kali9putra@yahoo.com>:
 
 > I can't (with a straight face) claim to have followed this discussion, but I 
@@ -2012,7 +2174,7 @@ brodi}?
 > 
 
 
-=== 19 | 2011-11-26T17:35:49Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2d9hqkweqj_re67gs-+hr=tel_bzszgeufdcavxyoplxq@mail.gmail.com | mail/lojban-list/cur/1322328949.1dc2d8842f3580fe.jbomohi:2,S
+=== 20 | 2011-11-26T17:35:49Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2d9hqkweqj_re67gs-+hr=tel_bzszgeufdcavxyoplxq@mail.gmail.com | mail/lojban-list/cur/1322328949.1dc2d8842f3580fe.jbomohi:2,S
 On Sat, Nov 26, 2011 at 12:41 PM, Martin Bays <mbays@sdf.org> wrote:
 >
 > Hmm. I wonder if I now finally understand part of xorlo: would you say
@@ -2069,7 +2231,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 20 | 2011-11-26T18:29:15Z | Martin Bays <mbays@sdf.org> | 20111126182915.gc15113@gonzales | mail/lojban-list/cur/1322332155.c56ee3d1194b23ef.jbomohi:2,S
+=== 21 | 2011-11-26T18:29:15Z | Martin Bays <mbays@sdf.org> | 20111126182915.gc15113@gonzales | mail/lojban-list/cur/1322332155.c56ee3d1194b23ef.jbomohi:2,S
 * Saturday, 2011-11-26 at 14:35 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > On Sat, Nov 26, 2011 at 12:41 PM, Martin Bays <mbays@sdf.org> wrote:
@@ -2160,7 +2322,7 @@ dodginess in {le broda ku voi brode} -> {le broda je brode}.
 Martin
 
 
-=== 21 | 2011-11-26T19:05:03Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2fsavtz6qa1djb0nh7zwc9_uclmwdkc4kzk2aqk9xpvrq@mail.gmail.com | mail/lojban-list/cur/1322334303.f0bdf68a694bc2b4.jbomohi:2,S
+=== 22 | 2011-11-26T19:05:03Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2fsavtz6qa1djb0nh7zwc9_uclmwdkc4kzk2aqk9xpvrq@mail.gmail.com | mail/lojban-list/cur/1322334303.f0bdf68a694bc2b4.jbomohi:2,S
 On Sat, Nov 26, 2011 at 3:29 PM, Martin Bays <mbays@sdf.org> wrote:
 >
 > {le} to me seems pretty clear: {le broda} refers, wherever it appears,
