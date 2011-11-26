@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-11-24T04:41:18Z | Martin Bays <mbays@sdf.org> | 20111124044118.gf6112@gonzales | mail/lojban-list/cur/1322109678.4ad8fb694bdf20b7.jbomohi:2,S
 Here's where I've got to.
@@ -1070,4 +1070,140 @@ To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.co
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
 
+
+
+=== 8 | 2011-11-26T04:07:57Z | Martin Bays <mbays@sdf.org> | 20111126040757.ga17974@gonzales | mail/lojban-list/cur/1322280477.b3dc5bf47ce41fab.jbomohi:2,S
+* Friday, 2011-11-25 at 23:13 -0300 - Jorge Llambías <jjllambias@gmail.com>:
+
+> On Fri, Nov 25, 2011 at 10:25 PM, Martin Bays <mbays@sdf.org> wrote:
+> >
+> > On second thoughts, I think I agree with your interpretation of the
+> > english. It should be read as making two claims: firstly that precisely
+> > two of the boys carried their bags on their heads, and secondly that
+> > those two bags contained the corresponding lunches.
+> >
+> > But I think this reading is only permitted because the quantifier
+> > effectively picks out a particular group; had it been "two or more of
+> > the boys carried his bag, which contained his lunch, on his head", we
+> > wouldn't know for which boys the incidental claim is being made.
+> 
+> If ke'a can pick "the two that ..." it can just as well pick "the two
+> or more that ..."
+> 
+> The problem cases are no, ro, me'i and any other quantifier compatible
+> with no, because there may be nothing for the relative clause to be
+> about. In those cases, the only reasonable choice seems to be the
+> whole domain of the quantifier, and if that's the case for those, that
+> may have to be the case for all other quantifiers too.
+
+Hmm. This is seeming rather complicated.
+
+It seems related to donkey anaphora - consider
+{ro te cange poi ponse su'o xasli noi ke'a xi re darxi cu broda}.
+
+
+Also, note that the scope-respecting rules sometimes are the most
+intuitive - e.g. in {ro da prami de noi se prami da}. I'm not sure what
+the scope-breaking rules would make of that; I guess something
+nonsensical.
+
+> >> > The obvious alternative would be to have {na broda} work like {broda be
+> >> > na ku},
+> >>
+> >> Isn't that what you are doing though?
+> >
+> > No; I currently have bare {na} (and presumably other selbri tags, once
+> > they're implemented) getting tight scope, within all tail terms, while
+> > the scope of tag-terms like {na ku} respects the order of terms.
+> 
+> But what do you do when "broda be naku" is a seltau?
+
+I have the negation constrained to the seltau.
+
+I'm understanding a seltau as a unary predicate; in e.g. {broda be na ku
+bei ko'a brode}, the seltau is "!broda(_,ko'a)"; in e.g. {broda be da
+bei na ku bei de brode} (assuming neither {da} nor {de} are already
+bound), it's "EX x1. !EX x2. broda(_,x1,x2)".
+
+> I think it's "broda be na ku" that must force tight scope.
+
+I don't see why.
+
+> For bare "na" (and any other tag) I just follow the general rule of
+> left having scope over right. Anything within either bridi tail must
+> be within the scope of "gi'e".
+
+But in {broda da gi'e brode da}, the first {da} is to the left of the
+{gi'e}. So why shouldn't the {gi'e} be in the scope of the {[su'o] da}?
+
+> > Relatedly, what do you make (assuming you're not allowed to change the
+> > official grammar, so there's only one prenex involved) of
+> > {na ku broda .i je na ku brode}?
+> 
+> ge na ku zo'u broda gi na ku zo'u brode
+
+So do you also have {da broda .i je da brode} -> {ge da broda gi da
+brode}? If so: that's clearly contrary to CLL (and much usage). If not:
+why not?
+
+> > Hmm. Do I correctly deduce from all this that your rule is to
+> > syntactically transform giheks to geks, then interpret those?
+> 
+> Yes, but only after all leading terms have been prenexed.
+> 
+> > That creates new prenices, which is something I've avoided doing.
+> 
+> So your rule is that when a prenex would be allowed by the grammar,
+> then it is somehow there, even if it's invisible?
+
+Yes, precisely.
+
+> In that case, if you do end up transforming "gi'e" into "ge", you have
+> created a new prenex, whether you want to use it or not.
+
+But I don't transform it to {ge} - I transform it to "/\".
+
+> > I think of giheks as parallel to ijeks.
+> 
+> I think of all logical connectives as variants of geks
+> 
+> > If we want geks, we can always use geks!
+> 
+> You do end up with nothing but geks anyway.
+
+Well. We end up with something which can be expressed in terms of geks.
+
+I don't think we should feel compelled to route our interpretation of
+lojban via syntactic transformations to a simplified lojban form.
+
+> >>   ko'a .e ko'e broda su'o da
+> >>
+> >> In all cases "su'o da" is under the scope of a preceding operator.
+> >
+> > I certainly agree on the last three. But that's because I have
+> > quantified/connected terms, and tag-terms, exporting to the closest
+> > prenex, in order.
+> 
+> How does that work for ".e"? It seems that if you do what I do, you
+> end up exporting "su'o da" to newly created preneces.
+
+In a sense, yes; e.g.
+
+da ko'a .e ko'e de broda
+Prop: EX x1. (EX x2. broda(x1,ko'a,x2) /\ EX x2. broda(x1,ko'e,x2))
+
+; but I think of this as exporting the connective to the prenex, and
+then the inner existential to that same prenex within the scope of the
+connective. Exporting connectives is entirely parallel to exporting
+quantifiers (and in a simple case like this, we can even think of it as
+literally exporting a universal quantifier over the set {ko'a,ko'e},
+although that doesn't work in general).
+
+Basically: when parsing, we always have a notion of 'current prenex',
+which corresponds to the closest instance of 'statement' or
+'subsentence' we're below. All sumti connectives, termset connectives,
+quantifiers and tagged terms (currently just {naku}) export to that
+prenex, in order.
+
+Martin
 
