@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 26 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 27 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-11-24T04:41:18Z | Martin Bays <mbays@sdf.org> | 20111124044118.gf6112@gonzales | mail/lojban-list/cur/1322109678.4ad8fb694bdf20b7.jbomohi:2,S
 Here's where I've got to.
@@ -1984,7 +1984,108 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 16 | 2011-11-26T11:29:01Z | Martin Bays <mbays@sdf.org> | 20111126112901.ga27177@gonzales | mail/lojban-list/cur/1322306941.1bfd63377702c659.jbomohi:2,S
+=== 16 | 2011-11-26T23:31:20Z | Martin Bays <mbays@sdf.org> | 20111126233119.gc19833@gonzales | mail/lojban-list/cur/1322350280.01e80220fe65e1ca.jbomohi:2,S
+* Saturday, 2011-11-26 at 17:53 -0300 - Jorge Llambías <jjllambias@gmail.com>:
+
+> On Sat, Nov 26, 2011 at 4:53 PM, Martin Bays <mbays@sdf.org> wrote:
+> >
+> > Is there any reasoning at all for the current asymmetry?
+> >
+> > I see no issue at all as far as the semantics goes with allowing "guhek
+> > selbri-3 gik selbri-3" and "gek sumti gik sumti". In terms of my code,
+> > it would involve changing two characters...
+> 
+> I assume it had to do with how they wanted forethought to group with
+> respect to afterthought.
+
+Ah yes. It lets you grab the whole of a gek-gik in afterthought.
+
+Well, a pretty minor issue.
+
+> > In other words, I'm interpreting a seltau as giving an implicit
+> > subsentence (complete with a prenex to export to), with linkargs
+> > becoming tailterms and an analogue of {ke'a} in the x1.
+> >
+> > Does that seem right?
+> >
+> > The actual semantics of the resulting Tanru is something I "leave to the
+> > pragmatics module", i.e. don't even try to handle for now. But my
+> > assumption is that all the data required to interpret the tanru is
+> > that I'm giving, i.e. the seltau as a unary predicate and the tertau as
+> > a relation.
+> 
+> Since you don't say anything about the resulting semantics, why do you
+> need the seltau being a unary predicate rather than a relation?
+
+Because I believe this to be what seltau are, i.e. that higher places
+are filled with zo'e. Just like in description sumti.
+
+I checked this against the uses of tanru in the CLL.
+
+Having it be any other way would make guessing the meaning of a tanru
+even more difficult than it currently is.
+
+> My first impression would be that sometimes the pragmatics module
+> might need to use the full relation implicit in the seltau rather than
+> just the forced unary predicate.
+
+Hrm. I hope not.
+
+> >> If you have "su'o da" with scope over "gi'e", there is no doubt that
+> >> it will also have scope over "na".
+> >
+> > Actually... no, that isn't how I'm doing it. I have the extra tail terms
+> > after the vau distributing over the gi'e conjuncts, appending the tail
+> > terms to each, and the result then being interpreted:
+> >
+> > na broda gi'e na brode vau da
+> > -> na broda da gi'e na brode da
+> > -> EX x. [ na broda x gi'e na brode x ]
+> > -> EX x. (!broda(x) /\ !brode(x))
+> 
+> Yuck. So you distribute the *text* "da", and only then consider the
+> implicit quantifier?
+
+Not literally the text, but a purely syntactic proxy for it (so 'yuck'
+is still a reasonable reaction).
+
+But isn't this how you would handle tailterms when converting to a gek?
+
+I suppose your point is that this leads to less objectionable results.
+I can't deny that there's something fairly horrible about {broda gi'e
+brode vau na ku} ending up as equivalent to {broda gi'e brode}...
+
+I see one other possible approach: interpret the connected tail terms of
+a connected briditail once, but have any resulting sumti be appended to
+both bridi. That would sole the {vau na ku} and {vau PA da} uglinesses,
+and I don't see any theoretical problems with it. It would, however,
+complicate the code quite a bit, suggesting that it isn't very natural.
+
+So... OK, you win.
+
+I'm now handling giheks analogously to eks, giving e.g.
+
+broda da de gi'e brode vau de na ku di
+== ge broda da de gi brode vau de na ku di
+== (EX x1. EX x2. !EX x3. broda( ,x1,x2,x2,x3) /\
+	EX x1. !EX x2. brode( ,x1,x2)) .
+
+Thanks.
+
+> Does that mean you get a different result for:
+> 
+> na broda gi'e na brode vau su'o da
+
+As it happens I didn't, but only because I have {ny da my da} equivalent
+to {ny da da} - because I couldn't make any sense of the CLL's
+prescriptions for quantifiers on already bound {da}.
+
+Any advice on that?
+
+Martin
+
+
+=== 17 | 2011-11-26T11:29:01Z | Martin Bays <mbays@sdf.org> | 20111126112901.ga27177@gonzales | mail/lojban-list/cur/1322306941.1bfd63377702c659.jbomohi:2,S
 * Thursday, 2011-11-24 at 21:18 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > On Thu, Nov 24, 2011 at 1:41 AM, Martin Bays <mbays@sdf.org> wrote:
@@ -2016,7 +2117,7 @@ all that's relevant).
 Martin
 
 
-=== 17 | 2011-11-26T14:02:57Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2evfy5iev4qy5hwhhvu+atv3nzujs=yqkr-tr3tp6vg6q@mail.gmail.com | mail/lojban-list/cur/1322316177.9d319f1a392403c3.jbomohi:2,S
+=== 18 | 2011-11-26T14:02:57Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2evfy5iev4qy5hwhhvu+atv3nzujs=yqkr-tr3tp6vg6q@mail.gmail.com | mail/lojban-list/cur/1322316177.9d319f1a392403c3.jbomohi:2,S
 On Sat, Nov 26, 2011 at 8:29 AM, Martin Bays <mbays@sdf.org> wrote:
 >
 > {noi broda} is veridicial - it affects the truth conditions of the
@@ -2051,7 +2152,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 18 | 2011-11-26T15:41:14Z | Martin Bays <mbays@sdf.org> | 20111126154114.gc27177@gonzales | mail/lojban-list/cur/1322322074.8e83a159ebdf4159.jbomohi:2,S
+=== 19 | 2011-11-26T15:41:14Z | Martin Bays <mbays@sdf.org> | 20111126154114.gc27177@gonzales | mail/lojban-list/cur/1322322074.8e83a159ebdf4159.jbomohi:2,S
 * Saturday, 2011-11-26 at 11:02 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > On Sat, Nov 26, 2011 at 8:29 AM, Martin Bays <mbays@sdf.org> wrote:
@@ -2100,7 +2201,7 @@ originally intended one, no?
 Martin
 
 
-=== 19 | 2011-11-26T17:32:52Z | John E Clifford <kali9putra@yahoo.com> | 1322328772.59139.yahoomailrc@web81302.mail.mud.yahoo.com | mail/lojban-list/cur/1322328772.0f5c9070c15be95f.jbomohi:2,S
+=== 20 | 2011-11-26T17:32:52Z | John E Clifford <kali9putra@yahoo.com> | 1322328772.59139.yahoomailrc@web81302.mail.mud.yahoo.com | mail/lojban-list/cur/1322328772.0f5c9070c15be95f.jbomohi:2,S
 I can't (with a straight face) claim to have followed this discussion, but I 
 offer this tidbit about relative clauses.  A restrictive relative clause 
 attaches to a description *and are part of that description*.  That is, for 
@@ -2178,7 +2279,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 20 | 2011-11-26T17:56:10Z | Martin Bays <mbays@sdf.org> | 20111126175610.gb15113@gonzales | mail/lojban-list/cur/1322330170.01a7fd6a7a1bd293.jbomohi:2,S
+=== 21 | 2011-11-26T17:56:10Z | Martin Bays <mbays@sdf.org> | 20111126175610.gb15113@gonzales | mail/lojban-list/cur/1322330170.01a7fd6a7a1bd293.jbomohi:2,S
 * Saturday, 2011-11-26 at 09:32 -0800 - John E Clifford <kali9putra@yahoo.com>:
 
 > I can't (with a straight face) claim to have followed this discussion, but I 
@@ -2266,7 +2367,7 @@ brodi}?
 > 
 
 
-=== 21 | 2011-11-26T23:29:03Z | "John E. Clifford" <kali9putra@yahoo.com> | 5525a83d-7c2c-4b0c-ac06-7256d1f7023b@yahoo.com | mail/lojban-list/cur/1322350143.76c27fe35ad5f4b7.jbomohi:2,S
+=== 22 | 2011-11-26T23:29:03Z | "John E. Clifford" <kali9putra@yahoo.com> | 5525a83d-7c2c-4b0c-ac06-7256d1f7023b@yahoo.com | mail/lojban-list/cur/1322350143.76c27fe35ad5f4b7.jbomohi:2,S
 
 
 Sent from my iPad
@@ -2373,7 +2474,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 22 | 2011-11-26T17:35:49Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2d9hqkweqj_re67gs-+hr=tel_bzszgeufdcavxyoplxq@mail.gmail.com | mail/lojban-list/cur/1322328949.1dc2d8842f3580fe.jbomohi:2,S
+=== 23 | 2011-11-26T17:35:49Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2d9hqkweqj_re67gs-+hr=tel_bzszgeufdcavxyoplxq@mail.gmail.com | mail/lojban-list/cur/1322328949.1dc2d8842f3580fe.jbomohi:2,S
 On Sat, Nov 26, 2011 at 12:41 PM, Martin Bays <mbays@sdf.org> wrote:
 >
 > Hmm. I wonder if I now finally understand part of xorlo: would you say
@@ -2430,7 +2531,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 23 | 2011-11-26T18:29:15Z | Martin Bays <mbays@sdf.org> | 20111126182915.gc15113@gonzales | mail/lojban-list/cur/1322332155.c56ee3d1194b23ef.jbomohi:2,S
+=== 24 | 2011-11-26T18:29:15Z | Martin Bays <mbays@sdf.org> | 20111126182915.gc15113@gonzales | mail/lojban-list/cur/1322332155.c56ee3d1194b23ef.jbomohi:2,S
 * Saturday, 2011-11-26 at 14:35 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > On Sat, Nov 26, 2011 at 12:41 PM, Martin Bays <mbays@sdf.org> wrote:
@@ -2521,7 +2622,7 @@ dodginess in {le broda ku voi brode} -> {le broda je brode}.
 Martin
 
 
-=== 24 | 2011-11-26T19:05:03Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2fsavtz6qa1djb0nh7zwc9_uclmwdkc4kzk2aqk9xpvrq@mail.gmail.com | mail/lojban-list/cur/1322334303.f0bdf68a694bc2b4.jbomohi:2,S
+=== 25 | 2011-11-26T19:05:03Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2fsavtz6qa1djb0nh7zwc9_uclmwdkc4kzk2aqk9xpvrq@mail.gmail.com | mail/lojban-list/cur/1322334303.f0bdf68a694bc2b4.jbomohi:2,S
 On Sat, Nov 26, 2011 at 3:29 PM, Martin Bays <mbays@sdf.org> wrote:
 >
 > {le} to me seems pretty clear: {le broda} refers, wherever it appears,
@@ -2615,7 +2716,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 25 | 2011-11-26T21:48:06Z | Martin Bays <mbays@sdf.org> | 20111126214806.gb19833@gonzales | mail/lojban-list/cur/1322344086.0e3ac93e039a9d49.jbomohi:2,S
+=== 26 | 2011-11-26T21:48:06Z | Martin Bays <mbays@sdf.org> | 20111126214806.gb19833@gonzales | mail/lojban-list/cur/1322344086.0e3ac93e039a9d49.jbomohi:2,S
 * Saturday, 2011-11-26 at 16:05 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > On Sat, Nov 26, 2011 at 3:29 PM, Martin Bays <mbays@sdf.org> wrote:
@@ -2704,7 +2805,7 @@ Sound right?
 Martin
 
 
-=== 26 | 2011-11-26T22:12:17Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2cu1s5egm9f21kdd6rn548cxdpqetweu5x4td=ojctefa@mail.gmail.com | mail/lojban-list/cur/1322345537.87bd5de0637f89a8.jbomohi:2,S
+=== 27 | 2011-11-26T22:12:17Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2cu1s5egm9f21kdd6rn548cxdpqetweu5x4td=ojctefa@mail.gmail.com | mail/lojban-list/cur/1322345537.87bd5de0637f89a8.jbomohi:2,S
 On Sat, Nov 26, 2011 at 6:48 PM, Martin Bays <mbays@sdf.org> wrote:
 >
 > Yes, I know you prefer to use constant kinds in these situations, but
