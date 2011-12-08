@@ -1,4 +1,4 @@
-# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 78 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 4ad8fb694bdf-semantic_parser_-_tersmu-0%2E1rc1 | root 20111124044118.gf6112@gonzales | 79 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-11-24T04:41:18Z | Martin Bays <mbays@sdf.org> | 20111124044118.gf6112@gonzales | mail/lojban-list/cur/1322109678.4ad8fb694bdf20b7.jbomohi:2,S
 Here's where I've got to.
@@ -4799,7 +4799,126 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 62 | 2011-12-05T04:30:37Z | Martin Bays <mbays@sdf.org> | 20111205043037.gc10776@gonzales | mail/lojban-list/cur/1323059437.9047e07c810ce1e4.jbomohi:2,S
+=== 62 | 2011-12-08T16:48:13Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2fx+uokqaj3bcpno4f5yccfj58a4t0no87jbac4fd+jxw@mail.gmail.com | mail/lojban-list/cur/1323362893.24fdbe9d7e1c1e7b.jbomohi:2,S
+On Thu, Dec 8, 2011 at 12:02 AM, John E. Clifford <kali9putra@yahoo.com> wrote:
+> As I said, this was for one narrow case, where there were no further
+> complications.  With more quantifiers (or modes) in play, more problems
+> arise.
+
+The unpacking rule I'm proposing handles every core grammatical
+construct involving logical operators (negation, logical connectives
+and singular quantifiers). So did the rule used by Martin, although it
+differed from mine in some cases. If you are proposing a rule that
+only handles a limited number of cases, you are taking us a step back
+from what we already had..
+
+> I am, for example, inclined to think that your test sentence is
+> simply illegitimate, since the {su'o plise}  is within the scope of
+> different quantifiers and thus is not guaranteed to have the same
+> instantiation.
+
+I think the assumption we are working with is that every grammatical
+construct involving this core part of Lojban is legitimate, i.e.
+grammatical means legitimate for this subset of the language. I don't
+really see any problem with that assumption. The issue we are facing
+is the abundance of potential unpacking rules, not a lack of them, so
+we don't really need to discard some grammatical cases as
+illegitimate.
+
+> If you do want this to be legitimate,  then you have, in
+> fact, "there are some apples of which every boy ate some, but not every girl
+> did" (disjunctive predication hypothesized).
+
+That would be:
+
+su'oi da poi plise zo'u ge ro de poi nanla ku'o su'o di poi me da zo'u
+de di citka gi na ku ro de poi nixli ku'o su'o di poi me da zo'u de di
+citka
+
+That doesn't say anything different from what I had, but it is not
+clear what you gain by introducing the plural quantification, nor
+where the "su'oi" came from.
+
+> Otherwise, the collapse is
+> meaning-changing, a no-no in this game.
+
+I don't follow. If we are considering any unambiguous unpacking rule,
+whatever the rule is, it is by definition meaning-preserving. One may
+have a preference for this or that coherent rule, and argue for the
+merits of one rule over another, but it is the unpacking rule that
+gives meaning to the packed sentence. The packed sentence doesn't come
+with a predetermined meaning independent of the unpacking rule.
+
+> To reconstruct as you would, does
+> not correspond to a real collapse rule, for it treats a quantifier phrase
+> like name.
+
+Lojban's packing rules are (in part) something like:
+
+(1) Qx:P(x,a)  <--->  P(Qx,a)
+(2) P(a,c) & P(b,c)  <--->  P(a&b,c)
+(3) P(a,b) & Q(a,c)  <--->  P(_,b)&Q(_,c) (a)
+
+where "Q" stands for any quantifier and "&" for any logical
+connective. Obviously the right hand side is nothing like the standard
+notation of first order logic.
+
+The problem is that these packing (or unpackinfg) rules are terribly
+underspecified, since they can be further combined, and so when faced
+with something like P(Ax&~Ay,Ez) the unpacking could go many different
+ways depending on the order in which we apply (some generalized form
+of) rules (1), (2) and (3).
+
+My proposed rule is simple: unpack from left to right, with the caveat
+that afterthought connectives can be converted to forethought first,
+so that the first connectand is clearly shown to be within the scope
+of the connective. That gives:
+
+P(Ax&~Ay,Ez)
+= P(&(Ax,~Ay),Ez)  (convert afterthought to forethought)
+=&(P(Ax,Ez),P(~Ay,Ez))  (by rule 2)
+=&(AxEz:P(x,z), ~AyEz:P(y,z))  (by rule 1 twice for each connectand)
+=AxEz:P(x,z) & ~AyEz:P(y,z)  (convert to afterthought again, just to
+make it look more familiar)
+
+There are other possible coherent unpacking rules, but I'm convinced
+these are the simplest and the ones that make most sense.
+
+A somewhat separate issue is what to do with apparently unbound
+variables. The basic rule is:
+
+(4) Ex:P(x)  <--->  P(x)
+
+but again this is underspecified as to the order in which it has to be
+applied with respect to the other rules. If you want to unpack
+P(Ax,y), you get something different if you apply (1) and then (4), or
+if you apply (4) first and then (1).
+
+My preferred rule is that whenever you run into a variable x which is
+apparently unbound, it gets replaced by Ex, so P(x) must be read as
+P(Ex) and only then apply the unpacking rules 1, 2 and 3 in the order
+described above. But even better is to never omit the explicit
+quantifier.
+
+> And do you really want to talk about all boys and girls
+> everywhere?
+
+Not necessarily, I would have added a "fe'e ro roi" if I did.
+
+But that's not relevant to the issue, is it?
+
+mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+
+=== 63 | 2011-12-05T04:30:37Z | Martin Bays <mbays@sdf.org> | 20111205043037.gc10776@gonzales | mail/lojban-list/cur/1323059437.9047e07c810ce1e4.jbomohi:2,S
 * Saturday, 2011-12-03 at 20:49 -0500 - Martin Bays <mbays@sdf.org>:
 
 > * Saturday, 2011-12-03 at 21:21 -0300 - Jorge Llambías <jjllambias@gmail.com>:
@@ -4890,7 +5009,7 @@ statement-2 <- statement-3 (I (jek / joik)? (stag)? BO free*
 
 
 
-=== 63 | 2011-11-26T23:40:41Z | "John E. Clifford" <kali9putra@yahoo.com> | 0d2e649e-01dd-4ddc-b7e8-0a58e1b9e6b2@yahoo.com | mail/lojban-list/cur/1322350841.47a5cb60dea87f9c.jbomohi:2,S
+=== 64 | 2011-11-26T23:40:41Z | "John E. Clifford" <kali9putra@yahoo.com> | 0d2e649e-01dd-4ddc-b7e8-0a58e1b9e6b2@yahoo.com | mail/lojban-list/cur/1322350841.47a5cb60dea87f9c.jbomohi:2,S
 
 
 Sent from my iPad
@@ -4999,7 +5118,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 64 | 2011-11-27T02:04:24Z | Martin Bays <mbays@sdf.org> | 20111127020424.gg19833@gonzales | mail/lojban-list/cur/1322359464.b53bbb271c38bb47.jbomohi:2,S
+=== 65 | 2011-11-27T02:04:24Z | Martin Bays <mbays@sdf.org> | 20111127020424.gg19833@gonzales | mail/lojban-list/cur/1322359464.b53bbb271c38bb47.jbomohi:2,S
 * Saturday, 2011-11-26 at 17:40 -0600 - John E. Clifford <kali9putra@yahoo.com>:
 
 > On Nov 26, 2011, at 12:29 PM, Martin Bays <mbays@sdf.org> wrote:
@@ -5059,7 +5178,7 @@ mamta in {ro da poi verba cu prami le mamta} to refer to da.
 It does? How can it be non-specific and yet not involve quantification?
 
 
-=== 65 | 2011-11-27T02:44:42Z | Martin Bays <mbays@sdf.org> | 20111127024442.gh19833@gonzales | mail/lojban-list/cur/1322361882.a4308315e90003ba.jbomohi:2,S
+=== 66 | 2011-11-27T02:44:42Z | Martin Bays <mbays@sdf.org> | 20111127024442.gh19833@gonzales | mail/lojban-list/cur/1322361882.a4308315e90003ba.jbomohi:2,S
 * Saturday, 2011-11-26 at 21:04 -0500 - Martin Bays <mbays@sdf.org>:
 
 > * Saturday, 2011-11-26 at 17:40 -0600 - John E. Clifford <kali9putra@yahoo.com>:
@@ -5088,7 +5207,7 @@ of.
 Martin
 
 
-=== 66 | 2011-11-27T04:58:03Z | "John E. Clifford" <kali9putra@yahoo.com> | 2411bd3b-83cc-4820-99f0-1ed60d42989f@yahoo.com | mail/lojban-list/cur/1322369883.a578637adb32803d.jbomohi:2,S
+=== 67 | 2011-11-27T04:58:03Z | "John E. Clifford" <kali9putra@yahoo.com> | 2411bd3b-83cc-4820-99f0-1ed60d42989f@yahoo.com | mail/lojban-list/cur/1322369883.a578637adb32803d.jbomohi:2,S
 
 
 Sent from my iPad
@@ -5166,7 +5285,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 67 | 2011-11-27T14:15:51Z | Martin Bays <mbays@sdf.org> | 20111127141551.gb3125@gonzales | mail/lojban-list/cur/1322403351.5fc2637a9ce65cdf.jbomohi:2,S
+=== 68 | 2011-11-27T14:15:51Z | Martin Bays <mbays@sdf.org> | 20111127141551.gb3125@gonzales | mail/lojban-list/cur/1322403351.5fc2637a9ce65cdf.jbomohi:2,S
 * Saturday, 2011-11-26 at 22:58 -0600 - John E. Clifford <kali9putra@yahoo.com>:
 
 > On Nov 26, 2011, at 8:04 PM, Martin Bays <mbays@sdf.org> wrote:
@@ -5229,7 +5348,7 @@ OK. That's still specific in the sense I have been understanding the
 term (and I would feel free to use {le} in such a case).
 
 
-=== 68 | 2011-11-27T15:25:03Z | John E Clifford <kali9putra@yahoo.com> | 1322407503.64700.yahoomailrc@web81305.mail.mud.yahoo.com | mail/lojban-list/cur/1322407503.2308fc11199e89ef.jbomohi:2,S
+=== 69 | 2011-11-27T15:25:03Z | John E Clifford <kali9putra@yahoo.com> | 1322407503.64700.yahoomailrc@web81305.mail.mud.yahoo.com | mail/lojban-list/cur/1322407503.2308fc11199e89ef.jbomohi:2,S
 
 
 
@@ -5326,7 +5445,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 69 | 2011-11-27T16:50:01Z | Martin Bays <mbays@sdf.org> | 20111127165001.gd3125@gonzales | mail/lojban-list/cur/1322412601.df9b4ecc60771875.jbomohi:2,S
+=== 70 | 2011-11-27T16:50:01Z | Martin Bays <mbays@sdf.org> | 20111127165001.gd3125@gonzales | mail/lojban-list/cur/1322412601.df9b4ecc60771875.jbomohi:2,S
 * Sunday, 2011-11-27 at 07:25 -0800 - John E Clifford <kali9putra@yahoo.com>:
 
 > > ----- Original Message ----
@@ -5412,7 +5531,7 @@ specific. I may be wrong...
 Martin
 
 
-=== 70 | 2011-11-27T04:15:11Z | Pierre Abbat <phma@phma.optus.nu> | 201111262315.12328.phma@phma.optus.nu | mail/lojban-list/cur/1322367311.26cb8a552ca532c4.jbomohi:2,S
+=== 71 | 2011-11-27T04:15:11Z | Pierre Abbat <phma@phma.optus.nu> | 201111262315.12328.phma@phma.optus.nu | mail/lojban-list/cur/1322367311.26cb8a552ca532c4.jbomohi:2,S
 On Saturday 26 November 2011 09:02:57 Jorge Llambías wrote:
 > I can't comment on "voi" since we don't really know whether it's
 > supposed to be restrictive or non-restrictive. It could very well be
@@ -5440,7 +5559,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 71 | 2011-11-27T13:19:05Z | And Rosta <and.rosta@gmail.com> | 4ed238c9.3060703@gmail.com | mail/lojban-list/cur/1322399945.8209b4ec6b1283e2.jbomohi:2,S
+=== 72 | 2011-11-27T13:19:05Z | And Rosta <and.rosta@gmail.com> | 4ed238c9.3060703@gmail.com | mail/lojban-list/cur/1322399945.8209b4ec6b1283e2.jbomohi:2,S
 Jorge Llambías, On 26/11/2011 14:02:
 > The non-restrictiveness of "noi" is what makes it independent of the
 > main clause.  
@@ -5468,7 +5587,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 72 | 2011-11-27T14:31:09Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2c7s4ufrvfi8zm_f-jpfpqxh-wmqtzqnzxysqrj0mccyg@mail.gmail.com | mail/lojban-list/cur/1322404269.edaf06dc64aa8fd9.jbomohi:2,S
+=== 73 | 2011-11-27T14:31:09Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2c7s4ufrvfi8zm_f-jpfpqxh-wmqtzqnzxysqrj0mccyg@mail.gmail.com | mail/lojban-list/cur/1322404269.edaf06dc64aa8fd9.jbomohi:2,S
 On Sun, Nov 27, 2011 at 10:19 AM, And Rosta <and.rosta@gmail.com> wrote:
 > Jorge Llambías, On 26/11/2011 14:02:
 >>
@@ -5510,7 +5629,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 73 | 2011-11-27T14:59:23Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2eabwx2_zmup6djthje2cfgksnuh=e1pcswcqhf_=oedw@mail.gmail.com | mail/lojban-list/cur/1322405963.3efc3f073ebe55f5.jbomohi:2,S
+=== 74 | 2011-11-27T14:59:23Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2eabwx2_zmup6djthje2cfgksnuh=e1pcswcqhf_=oedw@mail.gmail.com | mail/lojban-list/cur/1322405963.3efc3f073ebe55f5.jbomohi:2,S
 2011/11/27 Jorge Llambías <jjllambias@gmail.com>:
 > On Sun, Nov 27, 2011 at 10:19 AM, And Rosta <and.rosta@gmail.com> wrote:
 >> Jorge Llambías, On 26/11/2011 14:02:
@@ -5554,7 +5673,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 74 | 2011-11-27T20:13:26Z | Pierre Abbat <phma@phma.optus.nu> | 201111271513.27837.phma@phma.optus.nu | mail/lojban-list/cur/1322424806.00493c45886e2c00.jbomohi:2,S
+=== 75 | 2011-11-27T20:13:26Z | Pierre Abbat <phma@phma.optus.nu> | 201111271513.27837.phma@phma.optus.nu | mail/lojban-list/cur/1322424806.00493c45886e2c00.jbomohi:2,S
 On Sunday 27 November 2011 09:59:23 Jorge Llambías wrote:
 > In Lojban we can even have an imperative in the relative clause, which
 > English can't quite do I suppose because both the relative pronoun and
@@ -5582,7 +5701,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 75 | 2011-11-28T11:46:56Z | And Rosta <and.rosta@gmail.com> | 4ed374b0.9020406@gmail.com | mail/lojban-list/cur/1322480816.d76a4d970034bbd5.jbomohi:2,S
+=== 76 | 2011-11-28T11:46:56Z | And Rosta <and.rosta@gmail.com> | 4ed374b0.9020406@gmail.com | mail/lojban-list/cur/1322480816.d76a4d970034bbd5.jbomohi:2,S
 Pierre Abbat, On 27/11/2011 20:13:
 > On Sunday 27 November 2011 09:59:23 Jorge Llambías wrote:
 >> In Lojban we can even have an imperative in the relative clause, which
@@ -5609,7 +5728,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 76 | 2011-11-28T13:26:07Z | Pierre Abbat <phma@phma.optus.nu> | 201111280826.10475.phma@phma.optus.nu | mail/lojban-list/cur/1322486767.92046c81cc46fbe1.jbomohi:2,S
+=== 77 | 2011-11-28T13:26:07Z | Pierre Abbat <phma@phma.optus.nu> | 201111280826.10475.phma@phma.optus.nu | mail/lojban-list/cur/1322486767.92046c81cc46fbe1.jbomohi:2,S
 On Monday 28 November 2011 06:46:56 And Rosta wrote:
 > It's not correct for any grammar of English that could be induced from
 > usage or indeed from the knowledge of speakers other than you. But it is,
@@ -5637,7 +5756,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 77 | 2011-11-27T17:12:07Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dcrrdjgk7axsca1n397-g4kwzr=ie0xkolatp17z1=zg@mail.gmail.com | mail/lojban-list/cur/1322413927.8cc30e3cb3da9300.jbomohi:2,S
+=== 78 | 2011-11-27T17:12:07Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dcrrdjgk7axsca1n397-g4kwzr=ie0xkolatp17z1=zg@mail.gmail.com | mail/lojban-list/cur/1322413927.8cc30e3cb3da9300.jbomohi:2,S
 On Sun, Nov 27, 2011 at 10:19 AM, And Rosta <and.rosta@gmail.com> wrote:
 > Jorge Llambías, On 26/11/2011 17:35:
 >>
@@ -5671,7 +5790,7 @@ For more options, visit this group at http://groups.google.com/group/lojban?hl=e
 
 
 
-=== 78 | 2011-11-28T11:42:42Z | And Rosta <and.rosta@gmail.com> | 4ed373b2.8010103@gmail.com | mail/lojban-list/cur/1322480562.cc898e65bac57586.jbomohi:2,S
+=== 79 | 2011-11-28T11:42:42Z | And Rosta <and.rosta@gmail.com> | 4ed373b2.8010103@gmail.com | mail/lojban-list/cur/1322480562.cc898e65bac57586.jbomohi:2,S
 Jorge Llambías, On 27/11/2011 17:12:
 > On Sun, Nov 27, 2011 at 10:19 AM, And Rosta<and.rosta@gmail.com>  wrote:
 >> Jorge Llambías, On 26/11/2011 17:35:
