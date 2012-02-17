@@ -31,3 +31,10 @@ never mind
 
 Just... never mind...  I got it...
 
+
+## 2012-02-17T03:02:58Z — RexScientiarum (comment 633, on definition 8422, in reply to 631)
+
+Re: Confused by definition
+
+Never mind, I understand how it works in a sentence.
+
