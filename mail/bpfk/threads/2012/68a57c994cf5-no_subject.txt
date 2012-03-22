@@ -1,0 +1,1070 @@
+# mail/bpfk thread 68a57c994cf5-no_subject | root e1saqnv-00005j-2v@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2012-03-22T22:21:04Z | Apache <apache@digitalkingdom.org> | e1saqnv-00005j-2v@stodi.digitalkingdom.org | mail/bpfk/cur/1332454864.68a57c994cf54177.jbomohi:2,S
+commit de5292f471e0ab762b877bf976c63bca752a13b0
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Thu Mar 22 14:46:52 2012 -0700
+
+    Less sucky PDF output, yay.
+
+diff --git a/Makefile b/Makefile
+index d8f5677..d8626e9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -111,21 +111,21 @@ mobi_web: mobi
+ 
+ #*******
+ # PDF
+ #
+ # We actually do need xetex (aka xalatex) here, for the IPA and
+ # other utf-8 issues
+ #*******
+ .PHONY: pdf
+ pdf: cll.pdf
+ cll.pdf: cll_processed_pdf.xml xml/dblatex_config.xsl
+-	dblatex -o cll.pdf -b xetex -p xml/dblatex_config.xsl -r post_process_latex.pl cll_processed_pdf.xml 2>&1 | grep -v 'default template used in programlisting or screen'
++	dblatex -T simple -o cll.pdf -b xetex -p xml/dblatex_config.xsl -r post_process_latex.pl cll_processed_pdf.xml 2>&1 | grep -v 'default template used in programlisting or screen'
+ 
+ .PHONY: pdf_web
+ pdf_web: pdf
+ 	cp cll.pdf ~/www/media/public/tmp/cll.pdf
+ 
+ #*********************
+ # Faster testing versions go here; lots of copy and paste; lame
+ #*********************
+ 
+ .PHONY: test
+diff --git a/post_process_latex.pl b/post_process_latex.pl
+index a8d8078..891cf4c 100755
+--- a/post_process_latex.pl
++++ b/post_process_latex.pl
+@@ -1,22 +1,30 @@
+ #!/usr/bin/perl -n -l -a -i
+ 
+ 
+ if( m{^\\makeindex$} ) {
+   # Fix spacing in the ToC
+   print q(
++  % BEGIN Added by post_process_latex.pl
++% More space for the numbers in the ToC (table of contents)
+ \usepackage{savesym}
+ \savesymbol{c@lofdepth}   % tocloft conflicts with subfigure.sty
+ \savesymbol{c@lotdepth}   % tocloft conflicts with subfigure.sty
+ \usepackage{tocloft}
+ \addtolength{\cftsecnumwidth}{2em}
+ \addtolength{\cftchapnumwidth}{0.5em}
++% Two-column glossaries and other such things
++\usepackage{multicol}
++\usepackage{etoolbox}
++\BeforeBeginEnvironment{description}{\begin{multicols}{2}}\AfterEndEnvironment{description}{\end{multicols}}
++\usepackage{fullpage}
++  % END Added by post_process_latex.pl
+   );
+   print;
+   # These two covered by options
+ #} elsif( m{^\\frontmatter$} ) {
+ #  # do nothing
+ #} elsif( m{^\\listof.example..List of Examples.$} ) {
+ #  # do nothing
+ } else {
+   print;
+ }
+diff --git a/xml/dblatex_config.xsl b/xml/dblatex_config.xsl
+index ee6fd7a..13b39ba 100644
+--- a/xml/dblatex_config.xsl
++++ b/xml/dblatex_config.xsl
+@@ -23,20 +23,23 @@
+ 
+ <!-- drop the dblatex logo -->
+ <xsl:param name="doc.publisher.show">0</xsl:param>
+ 
+ <!-- drop the revision history -->
+ <xsl:param name="latex.output.revhistory">0</xsl:param>
+ 
+ <!-- drop the collaboraters list -->
+ <xsl:param name="doc.collab.show">0</xsl:param>
+ 
++<xsl:param name="latex.class.book">book</xsl:param>
++<xsl:param name="latex.class.options">letterpaper,10pt,twoside,openright</xsl:param>
++
+ <!-- default is:
+   <xsl:param name="doc.lot.show">figure,table</xsl:param>
+   to show examples add ,examples, but we almost certainly don't want that
+ -->
+ 
+ <!-- The way this works is that xml/docbook2html_preprocess.xsl
+      wraps things in <latex-verbatim> tags for special latex stuff,
+      and we unwrap them into their raw text here
+ 
+      In addition, there can be non-verbatim elements inside that
+
+commit 3100bb67b420386c8fabce2db17a846f4291f936
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Wed Mar 21 21:46:54 2012 -0700
+
+    Minor tweaks.
+
+diff --git a/README b/README
+index 6b6a4b2..d30bb5b 100644
+--- a/README
++++ b/README
+@@ -8,20 +8,23 @@ testing:
+   make test="-t" chapters="chapters/5.xml"
+ 
+ This does the whole book but is also much faster:
+ 
+   make test="-t"
+ 
+ There are many possible sub-targets as well, such as:
+ 
+   make test="-t" pdf_web
+ 
++Also, -t there makes internal links break and strips out the
++glossary; -s only does the former.
++
+ 
+ Requirements
+ ------------
+ 
+ Getting this all working is actually a pretty huge undertaking;
+ you're almost certainly better off asking Robin Lee Powell for an
+ account on the appropriate server.
+ 
+   General
+   --------------
+@@ -39,14 +42,14 @@ account on the appropriate server.
+   following the instructions at
+   http://fedoraproject.org/wiki/Features/TeXLive to get the TeXLive
+   2011-2 repo or later, then:
+     
+     sudo yum install texlive-xetex
+     sudo yum install texlive-dejavu-fedora-fonts texlive-dejavu texlive-multirow texlive-subfigure texlive-appendix texlive-changebar texlive-overpic texlive-collection-langcjk
+ 
+   MOBI / EPUB
+   -----------
+ 
+-  ebook-convert (from the calibre package)
++  ebook-convert (from the yum/rpm calibre package)
+ 
+   Xvfb and xvfb-run (fake X for calibre)
+ 
+
+commit 089081e593a24dccfc3d6e4234e0782b3d67be93
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Wed Mar 21 21:45:48 2012 -0700
+
+    Allow glossary in only a subset of chapters.
+
+diff --git a/scripts/merge.sh b/scripts/merge.sh
+index ba55d27..3a8fea3 100755
+--- a/scripts/merge.sh
++++ b/scripts/merge.sh
+@@ -24,23 +24,29 @@ echo '<?xml version="1.0"?>
+ </author>
+ </info>
+ 
+ <!-- THIS FILE IS AUTOGENERATED.  DO NOT EDIT OR CHECK IN! -->
+ 
+ ' >cll.xml
+ 
+ testing=""
+ if [ "$1" = "-t" ]
+ then
+-  testing=1
++  testing="both"
+   shift
+-  echo "Entering testing mode: will replace all external xrefs in each chapter."
++  echo "Entering testing mode: will replace all external xrefs in each chapter and turn off the glossary."
++fi
++if [ "$1" = "-s" ]
++then
++  testing="solo"
++  shift
++  echo "Entering solo mode: will replace all external xrefs in each chapter."
+ fi
+ #<chapter xml:id="chapter-selbri">
+ #<section xml:id="section-brivla">
+ 
+ for file in $@
+ do
+   if [ "$testing" ]
+   then
+     # This breaks working sections/chapters as well as broken ones; oh well.
+ 
+@@ -53,21 +59,21 @@ do
+       sed "s/<xref linkend=\"section-[^\"]*\"/<xref linkend=\"$sectiontag\"/g" >>cll.xml
+   else
+     cat $file >>cll.xml
+   fi
+ done
+ 
+ cp cll.xml cll_preglossary.xml
+ 
+ echo '</book>' >>cll_preglossary.xml
+ 
+-if [ "$testing" ]
++if [ "$testing" != "solo" ]
+ then
+   scripts/generate_glossary.sh -t >>cll.xml
+ else
+   scripts/generate_glossary.sh >>cll.xml
+ fi
+ 
+ #rm cll_preglossary.xml
+ 
+ echo '
+ 
+
+commit b58965077b9357fead98f3f61d865e4fb1c4652b
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Wed Mar 21 21:45:23 2012 -0700
+
+    Not sure what I was trying to do there.  -_-  Glossary works now.
+
+diff --git a/xml/latex_preprocess.xsl b/xml/latex_preprocess.xsl
+index e2e5d9e..1820801 100644
+--- a/xml/latex_preprocess.xsl
++++ b/xml/latex_preprocess.xsl
+@@ -24,25 +24,22 @@
+          -->
+   <xsl:template match="text()">
+     <xsl:choose>
+       <xsl:when test="not(boolean(ancestor::latex-verbatim)) and not(boolean(ancestor::glossdef))">
+         <xsl:call-template name="string-char-replace">
+           <xsl:with-param name="from">$</xsl:with-param>
+           <xsl:with-param name="to"><latex-verbatim>\textdollar</latex-verbatim></xsl:with-param>
+           <xsl:with-param name="string" select="."/>
+         </xsl:call-template>
+       </xsl:when>
+-      <xsl:when test="boolean(ancestor::latex-verbatim)">
+-        <xsl:copy-of select="."/>
+-      </xsl:when>
+       <xsl:otherwise>
+-        <xsl:text>!@#$\$@#$ > ERROR bad text substitution</xsl:text>
++        <xsl:copy-of select="."/>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
+ 
+ 
+   <xsl:template match="para[@role='selbri' and ancestor::informaltable]">
+     <latex-verbatim>
+       <xsl:text>\bf{</xsl:text>
+       <xsl:apply-templates select="node()|text()"/>
+       <xsl:text>}</xsl:text>
+
+commit d54d05a9faac502829d98cdb02bfbd7fc7b9c9df
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Wed Mar 21 21:08:40 2012 -0700
+
+    Table alignments fixed.
+
+diff --git a/chapters/2.xml b/chapters/2.xml
+index aa71b02..25288f5 100644
+--- a/chapters/2.xml
++++ b/chapters/2.xml
+@@ -555,54 +555,58 @@
+           <sumti>mi</sumti>
+           <sumti>ti</sumti>
+           <sumti>ta</sumti>     
+           <elidable>cu</elidable>
+           <selbri>vecnu</selbri>
+         </jbo>
+         <gloss>
+           <sumti>seller-x1</sumti>
+           <sumti>goods-sold-x2</sumti>
+           <sumti>buyer-x3</sumti>
++          <elidable></elidable>
+           <selbri>sells</selbri>
+         </gloss>
+         <gloss>
+           <sumti>I</sumti>
+           <sumti>this</sumti>
+           <sumti>to that</sumti>
+-          <sumti>sell.</sumti>
+-          <comment>translates as stilted or poetic English</comment>
++          <elidable></elidable>
++          <selbri>sell</selbri>
+         </gloss>
++        <comment>(translates as stilted or poetic English)</comment>
+         <natlang>I this thing to that buyer do sell.</natlang>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>
+       <xref linkend="example-random-id-k068"/> through 
+     <xref linkend="example-random-id-k0Bm"/> mean the same thing. Usually, placing more than one sumti before the selbri is done for style or for emphasis on the sumti that are out-of-place from their normal position. (Native speakers of languages other than English may prefer such orders.)</para>
+     <para> <indexterm type="general-imported"><primary>observatives</primary><secondary>quick-tour version</secondary></indexterm> If there are no sumti before the selbri, then it is understood that the x1 sumti value is equivalent to 
+     <valsi>zo'e</valsi>; i.e. unimportant or obvious, and therefore not given. Any sumti after the selbri start counting from x2.</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0br">
+       <title>
+         <anchor xml:id="c2e6d4"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>ta</sumti>           
+           <elidable>cu</elidable>
+           <selbri>melbi</selbri>
+         </jbo>
+         <gloss>
+           <sumti>object/idea-x1</sumti>
++          <elidable></elidable>
+           <selbri>is-beautiful</selbri> 
+           <comment>to someone by some standard</comment>
+         </gloss>
+         <gloss>
+           <sumti>That/Those</sumti>
++          <elidable></elidable>
+           <selbri>is/are beautiful.</selbri>
+         </gloss>
+         <natlang>That is beautiful.</natlang>
+         <natlang>Those are beautiful.</natlang>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>when the x1 is omitted, becomes:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0Ch">
+       <title>
+         <anchor xml:id="c2e6d5"/>
+@@ -845,68 +849,72 @@
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>mi</sumti>
+           <elidable>cu</elidable>
+           <selbri>sutra klama</selbri>
+           <sumti>la meris.</sumti>
+         </jbo>
+         <gloss>
+           <sumti>I</sumti>
++          <elidable></elidable>
+           <selbri>quickly-go</selbri>
+           <sumti>to Mary.</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>tanru conversion</primary><secondary>effect on place structure</secondary><tertiary>quick-tour version</tertiary></indexterm> With the conversion 
+     <jbophrase>se klama</jbophrase> as the final component of the tanru, the place structure of the entire selbri is that of 
+     <jbophrase>se klama</jbophrase>: the x1 place is the destination, and the x2 place is the one who goes:</para>
+     
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0J1">
+       <title>
+         <anchor xml:id="c2e9d9"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>mi</sumti>
+           <elidable>cu</elidable>
+-          <selbri>sutra se klama</selbri>
++          <selbri>sutra</selbri>
++          <selbri>se klama</selbri>
+           <sumti>la meris.</sumti>
+         </jbo>
+         <gloss>
+           <sumti>I</sumti>
+-
++          <elidable></elidable>
+           <selbri>quickly</selbri>
+-          <sumti>am-gone-to</sumti>
++          <selbri>am-gone-to</selbri>
+           <sumti>by Mary.</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>tanru</primary><secondary>and conversion</secondary><tertiary>quick-tour version</tertiary></indexterm> The following example shows that there is more to conversion than merely switching places, though:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0LW">
+       <title>
+         <anchor xml:id="c2e9d10"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>la tam.</sumti>
+           <elidable>cu</elidable>
+           <selbri>melbi tavla</selbri>
+           <sumti>la meris.</sumti>
+         </jbo>
+         <gloss>
+           <sumti>Tom</sumti>
++          <elidable></elidable>
+           <selbri>beautifully-talks</selbri>
+           <sumti>to Mary.</sumti>
+         </gloss>
+         <gloss>
+           <sumti>Tom</sumti>
++          <elidable></elidable>
+           <selbri>is a beautiful-talker</selbri>
+           <sumti>to Mary.</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>has the place structure of 
+     <valsi>tavla</valsi>, but note the two distinct interpretations.</para>
+     <para>Now, using conversion, we can modify the place structure order:</para>
+     
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0mh">
+@@ -915,25 +923,27 @@
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>la meris.</sumti>
+           <elidable>cu</elidable>
+           <selbri>melbi se tavla</selbri>
+           <sumti>la tam.</sumti>
+         </jbo>
+         <gloss>
+           <sumti>Mary</sumti>
++          <elidable></elidable>
+           <selbri>is beautifully-talked-to</selbri>
+           <sumti>by Tom.</sumti>
+         </gloss>
+         <gloss>
+           <sumti>Mary</sumti>
++          <elidable></elidable>
+           <selbri>is a beautiful-audience</selbri>
+           <sumti>for Tom.</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>and we see that the modification has been changed so as to focus on Mary's role in the bridi relationship, leading to a different set of possible interpretations.</para>
+     <para>Note that there is no place structure change if the modifying term is converted, and so less drastic variation in possible meanings:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-qIv0">
+       <title>
+         <anchor xml:id="c2e9d12"/>
+@@ -941,39 +951,41 @@
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>la tam.</sumti>
+           <elidable>cu</elidable>
+           <selbri>tavla melbi</selbri>
+           <sumti>la meris.</sumti>
+         </jbo>
+         <gloss>
+           <sumti>Tom</sumti>
++          <elidable></elidable>
+           <selbri>is talkerly-beautiful</selbri>
+           <sumti>to Mary.</sumti>
+         </gloss>
+ 
+       </interlinear-gloss-itemized>
+     </example>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-qIVa">
+       <title>
+         <anchor xml:id="c2e9d13"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>la tam.</sumti>
+           <elidable>cu</elidable>
+           <selbri>se tavla melbi</selbri>
+           <sumti>la meris.</sumti>
+         </jbo>
+         <gloss>
+           <sumti>Tom</sumti>
++          <elidable></elidable>
+           <selbri>is audiencely-beautiful</selbri>
+           <sumti>to Mary.</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>and we see that the manner in which Tom is seen as beautiful by Mary changes, but Tom is still the one perceived as beautiful, and Mary, the observer of beauty.</para>
+   </section>
+   <section xml:id="section-description-sumti">
+     <title>Description sumti</title>
+     <para> 
+@@ -1063,20 +1075,21 @@
+         <anchor xml:id="c2e10d5"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>le sutra</sumti>
+           <elidable elidable="false">cu</elidable>
+           <selbri>tavla</selbri>
+         </jbo>
+         <gloss>
+           <sumti>The fast one</sumti>
++          <elidable></elidable>
+           <selbri>is talking.</selbri>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0Qf">
+       <title>
+         <anchor xml:id="c2e10d6"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo><sumti>le sutra se tavla</sumti></jbo>
+@@ -1088,20 +1101,21 @@
+         <anchor xml:id="c2e10d7"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>le sutra</sumti>
+           <elidable elidable="false">cu</elidable>
+           <selbri>se tavla</selbri>
+         </jbo>
+         <gloss>
+           <sumti>The fast one</sumti>
++          <elidable></elidable>
+           <selbri>is talked to.</selbri>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>KU selma'o</primary><secondary>quick-tour version</secondary></indexterm>  <indexterm type="general-imported"><primary>ku</primary><secondary>quick-tour version</secondary></indexterm> Consider the following more complex example, with two description sumti.</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0S1">
+       <title>
+         <anchor xml:id="c2e10d8"/>
+       </title>
+       <interlinear-gloss-itemized>
+@@ -1109,23 +1123,26 @@
+           <sumti>mi</sumti>
+           <elidable>cu</elidable>
+           <selbri>tavla</selbri>
+           <sumti>le vecnu</sumti>
+           <elidable>ku</elidable>
+           <sumti>le blari'o</sumti>
+           <elidable>ku</elidable>
+         </jbo>
+         <gloss>
+           <sumti>I</sumti>
++          <elidable></elidable>
+           <selbri>talk-to</selbri>
+           <sumti>the seller</sumti>
++          <elidable></elidable>
+           <sumti>about the blue-green-thing.</sumti>
++          <elidable></elidable>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>The sumti 
+     <jbophrase>le vecnu</jbophrase> contains the selbri 
+     <valsi>vecnu</valsi>, which has the 
+     <quote>seller</quote> in the x1 place, and uses it in this sentence to describe a particular 
+     <quote>seller</quote> that the speaker has in mind (one that he or she probably expects the listener will also know about). Similarly, the speaker has a particular blue-green thing in mind, which is described using 
+     <valsi>le</valsi> to mark 
+     <valsi>blari'o</valsi>, a selbri whose first sumti is something blue-green.</para>
+@@ -1149,86 +1166,82 @@
+           <sumti>mi</sumti>  
+           <elidable>cu</elidable>
+           <selbri>klama</selbri>
+           <sumti>ti</sumti>
+           <sumti>zo'e</sumti>
+           <sumti>zo'e</sumti>
+           <sumti>ta</sumti>
+         </jbo>
+         <gloss>
+           <sumti>Go-er</sumti>
++          <elidable></elidable>
+           <selbri>goes</selbri>
+           <sumti>destination</sumti>
+           <sumti>origin</sumti>
+           <sumti>route</sumti>
+           <sumti>means.</sumti>
+         </gloss>
+-        <gloss>
+-          <sumti>I</sumti>
+-          <selbri>go</selbri>
+-          <sumti>here</sumti>
+-          <sumti>(to this)</sumti>
+-          <sumti>using that means</sumti>
+-          <sumti>(from somewhere</sumti>
+-          <sumti>via some route).</sumti>
+-        </gloss>
++        <natlang>I go here (to this) using that means (from somewhere via some route).</natlang>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>lujvo</primary><secondary>quick-tour version</secondary></indexterm> lujvo:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0SR">
+       <title>
+         <anchor xml:id="c2e11d2"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>ta</sumti> 
+           <elidable>cu</elidable>
+           <selbri>blari'o</selbri>
+         </jbo>
+         <gloss>
+           <sumti>That</sumti>
++          <elidable></elidable>
+           <selbri>is-blue-green.</selbri>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>fu'ivla</primary><secondary>quick-tour version</secondary></indexterm> fu'ivla:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0Tj">
+       <title>
+         <anchor xml:id="c2e11d3"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>ti</sumti> 
+           <elidable>cu</elidable>
+           <selbri>djarspageti</selbri>
+         </jbo>
+         <gloss>
+           <sumti>This</sumti>
++          <elidable></elidable>
+           <selbri>is-spaghetti.</selbri>
+         </gloss>
+ 
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>cmavo as selbri</primary><secondary>quick-tour version</secondary></indexterm> Some cmavo may also serve as selbri, acting as variables that stand for another selbri. The most commonly used of these is 
+     <valsi>go'i</valsi>, which represents the main bridi of the previous Lojban sentence, with any new sumti or other sentence features being expressed replacing the previously expressed ones. Thus, in this context:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k0UC">
+       <title>
+         <anchor xml:id="c2e11d4"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>ta</sumti> 
+           <elidable>cu</elidable>
+           <selbri>go'i</selbri>
+         </jbo>
+         <gloss>
+           <sumti>That</sumti>
++          <elidable></elidable>
+           <selbri>too/same-as-last selbri.</selbri>
+         </gloss>
+         <natlang>That (is spaghetti), too.</natlang>
+ 
+       </interlinear-gloss-itemized>
+     </example>
+   </section>
+   <section xml:id="section-dihu-and-lahe-dihu">
+     <title>The sumti 
+     <valsi>di'u</valsi> and 
+@@ -1318,20 +1331,21 @@
+         <anchor xml:id="c2e13d1"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>le mi gerku</sumti>
+           <elidable elidable="false">cu</elidable> 
+           <selbri>sutra</selbri>
+         </jbo>
+         <gloss>
+           <sumti>The of-me dog</sumti>
++          <elidable></elidable>
+           <selbri>is fast.</selbri>
+         </gloss>
+         <natlang>My dog is fast.</natlang>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>possession not ownership</primary><secondary>quick-tour version</secondary></indexterm> In Lojban, possession doesn't necessarily mean ownership: one may 
+     <quote>possess</quote> a chair simply by sitting on it, even though it actually belongs to someone else. English uses possession casually in the same way, but also uses it to refer to actual ownership or even more intimate relationships: 
+     <quote>my arm</quote> doesn't mean 
+     <quote>some arm I own</quote> but rather 
+     <quote>the arm that is part of my body</quote>. Lojban has methods of specifying all these different kinds of possession precisely and easily.</para>
+@@ -1538,40 +1552,42 @@
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>do</sumti>
+           <elidable>cu</elidable>
+           <selbri>tavla</selbri>
+           <sumti>ma</sumti>
+         </jbo>
+         <gloss>
+           <sumti>You</sumti>
++          <elidable></elidable>
+           <selbri>talk</selbri>
+           <sumti>to what/whom?</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>A 
+     <valsi>ma</valsi> can also appear in multiple sumti positions in one sentence, in effect asking several questions at once.</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1dc">
+       <title>
+         <anchor xml:id="c2e15d4"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>ma</sumti>
+           <elidable>cu</elidable>  
+           <selbri>tavla</selbri>
+           <sumti>ma</sumti>
+         </jbo>
+         <gloss>
+           <sumti>What/Who</sumti>
++          <elidable></elidable>
+           <selbri>talks</selbri>
+           <sumti>to what/whom?</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>separate questions</primary><secondary>quick-tour version</secondary></indexterm> The two separate 
+     <valsi>ma</valsi> positions ask two separate questions, and can therefore be answered with different values in each sumti place.</para>
+     
+     <para> <indexterm type="general-imported"><primary>bridi questions</primary><secondary>quick-tour version</secondary></indexterm>  <indexterm type="general-imported"><primary>selbri questions</primary><secondary>quick-tour version</secondary></indexterm> The cmavo 
+     <valsi>mo</valsi> is the selbri analogue of 
+@@ -1582,20 +1598,21 @@
+         <anchor xml:id="c2e15d5"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>do</sumti>
+           <elidable>cu</elidable>
+           <selbri>mo</selbri>
+         </jbo>
+         <gloss>
+           <sumti>You</sumti>
++          <elidable></elidable>
+           <selbri>are-what/do-what?</selbri>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>A 
+     <valsi>mo</valsi> may be used anywhere a brivla or other selbri might. Keep this in mind for later examples. Unfortunately, by itself, 
+     <valsi>mo</valsi> is a very non-specific question. The response to the question in 
+     <xref linkend="example-random-id-k1DE"/> could be:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1DR">
+       <title>
+@@ -1783,20 +1800,21 @@
+       <interlinear-gloss-itemized>
+         <jbo>
+           <cmavo>.ie</cmavo> 
+           <sumti>mi</sumti>
+           <elidable>cu</elidable>
+           <selbri>klama</selbri>
+         </jbo>
+         <gloss>
+           <cmavo>Agreement!</cmavo>
+           <sumti>I</sumti>
++          <elidable></elidable>
+           <selbri>go.</selbri>
+         </gloss>
+         <natlang>Yep! I'll go.</natlang>
+ 
+         
+       </interlinear-gloss-itemized>
+     </example>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1mS">
+       <title>
+         <anchor xml:id="c2e16d2"/>
+@@ -1804,20 +1822,21 @@
+       <interlinear-gloss-itemized>
+         <jbo>
+           <cmavo>.ei</cmavo> 
+           <sumti>mi</sumti>
+           <elidable>cu</elidable>
+           <selbri>klama</selbri>
+         </jbo>
+         <gloss>
+           <cmavo>Obligation!</cmavo>
+           <sumti>I</sumti>
++          <elidable></elidable>
+           <selbri>go.</selbri>
+         </gloss>
+         <natlang>I should go.</natlang>
+ 
+         
+       </interlinear-gloss-itemized>
+     </example>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1pF">
+       <title>
+         <anchor xml:id="c2e16d3"/>
+@@ -1826,23 +1845,25 @@
+         <jbo>
+           <sumti>mi</sumti>
+           <elidable>cu</elidable>
+           <selbri>klama</selbri>
+           <sumti>le melbi</sumti>
+           <cmavo>.ui</cmavo>
+           <elidable>ku</elidable>
+         </jbo>
+         <gloss>
+           <sumti>I</sumti>
++          <elidable></elidable>
+           <selbri>go</selbri>
+           <sumti>to the beautiful-thing</sumti>
+-          <comment>and I am happy because it is the beautiful thing I'm going to).</comment>
++          <cmavo>and I am happy because it is the beautiful thing I'm going to</cmavo>
++          <elidable></elidable>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>but/and equivalence</primary></indexterm>  <indexterm type="general-imported"><primary>metalinguistic words</primary><secondary>quick-tour version</secondary></indexterm>  <indexterm type="general-imported"><primary>discursives</primary><secondary>quick-tour version</secondary></indexterm> Not all indicators indicate attitudes. Discursives, another group of cmavo with the same grammatical rules as attitudinal indicators, allow free expression of certain kinds of commentary about the main utterances. Using discursives allows a clear separation of these so-called 
+     
+     <quote>metalinguistic</quote> features from the underlying statements and logical structure. By comparison, the English words 
+     
+     <quote>but</quote> and 
+     <quote>also</quote>, which discursively indicate contrast or an added weight of example, are logically equivalent to 
+     <quote>and</quote>, which does not have a discursive content. The average English-speaker does not think about, and may not even realize, the paradoxical idea that 
+@@ -1857,22 +1878,25 @@
+           <sumti>mi</sumti>
+           <elidable>cu</elidable>
+           <selbri>klama</selbri>
+           <cmavo>.i</cmavo> 
+           <sumti>do</sumti>
+           <elidable>cu</elidable>
+           <selbri>stali</selbri>
+         </jbo>
+         <gloss>
+           <sumti>I</sumti>
++          <elidable></elidable>
+           <selbri>go.</selbri>
++          <cmavo></cmavo>
+           <sumti>You</sumti>
++          <elidable></elidable>
+           <selbri>stay.</selbri>
+         </gloss>
+ 
+         
+       </interlinear-gloss-itemized>
+     </example>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1Rv">
+       <title>
+         <anchor xml:id="c2e16d5"/>
+       </title>
+@@ -1882,23 +1906,26 @@
+           <elidable>cu</elidable>
+           <selbri>klama</selbri>
+           <cmavo>.i</cmavo>
+           <cmavo>ji'a</cmavo>
+           <sumti>do</sumti>
+           <elidable>cu</elidable>
+           <selbri>stali</selbri>
+         </jbo>
+         <gloss>
+           <sumti>I</sumti>
++          <elidable></elidable>
+           <selbri>go.</selbri>
++          <cmavo></cmavo>
+           <cmavo>In addition,</cmavo>
+           <sumti>you</sumti>
++          <elidable></elidable>
+           <selbri>stay.</selbri>
+           <comment>added weight</comment>
+         </gloss>
+ 
+         
+       </interlinear-gloss-itemized>
+     </example>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1sb">
+       <title>
+         <anchor xml:id="c2e16d6"/>
+@@ -1909,23 +1936,26 @@
+           <elidable>cu</elidable>
+           <selbri>klama</selbri>
+           <cmavo>.i</cmavo>
+           <cmavo>ku'i</cmavo>
+           <sumti>do</sumti>
+           <elidable>cu</elidable>
+           <selbri>stali</selbri>
+         </jbo>
+         <gloss>
+           <sumti>I</sumti>
++          <elidable></elidable>
+           <selbri>go.</selbri>
++          <cmavo></cmavo>
+           <cmavo>However,</cmavo>
+           <sumti>you</sumti>
++          <elidable></elidable>
+           <selbri>stay.</selbri>
+           <comment>contrast</comment>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para> <indexterm type="general-imported"><primary>evidentials</primary><secondary>quick-tour version</secondary></indexterm> Another group of indicators are called 
+     <quote>evidentials</quote>. Evidentials show the speaker's relationship to the statement, specifically how the speaker came to make the statement. These include 
+     
+     
+     <valsi>za'a</valsi> (I directly observe the relationship), 
+@@ -1942,20 +1972,21 @@
+ 
+         <jbo>
+           <cmavo>pe'i</cmavo>
+           <sumti>do</sumti>
+           <elidable>cu</elidable>
+           <selbri>melbi</selbri>
+         </jbo>
+         <gloss>
+           <cmavo>I opine!</cmavo>
+           <sumti>You</sumti>
++          <elidable></elidable>
+           <selbri>are beautiful.</selbri>
+         </gloss>
+ 
+         
+       </interlinear-gloss-itemized>
+     </example>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1Xs">
+       <title>
+         <anchor xml:id="c2e16d8"/>
+       </title>
+@@ -1963,20 +1994,21 @@
+ 
+         <jbo>
+           <cmavo>za'a</cmavo>
+           <sumti>do</sumti>
+           <elidable>cu</elidable>
+           <selbri>melbi</selbri>
+         </jbo>
+         <gloss>
+           <cmavo>I directly observe!</cmavo>
+           <sumti>You</sumti>
++          <elidable></elidable>
+           <selbri>are beautiful.</selbri>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+   </section>
+   <section xml:id="section-tenses">
+     <title>Tenses</title>
+     <para> <indexterm type="general-imported"><primary>time tenses</primary><secondary>quick-tour version</secondary></indexterm>  <indexterm type="general-imported"><primary>tenses</primary><secondary>quick-tour version</secondary></indexterm> In English, every verb is tagged for the grammatical category called tense: past, present, or future. The sentence</para>
+     <example xml:id="example-random-id-xIVa">
+       <title>
+@@ -1999,58 +2031,63 @@
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>la djan.</sumti> 
+           <elidable>cu</elidable>
+           <selbri>klama</selbri>
+           <sumti>le zarci</sumti>
+         </jbo>
+         <gloss>
+           <sumti>John</sumti>
++          <elidable></elidable>
+           <selbri>goes/went/will-go</selbri>
+           <sumti>to-the store</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>serves as a translation of either 
+     <xref linkend="example-random-id-xIVa"/> or 
+     <xref linkend="example-random-id-1Acu"/>, and of many other possible English sentences as well. It is not marked for tense, and can refer to an event in the past, the present or the future. This rule does not mean that Lojban has no way of representing the time of an event. A close translation of 
+     <xref linkend="example-random-id-xIVa"/> would be:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1Y5">
+       <title>
+         <anchor xml:id="c2e17d4"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>la djan.</sumti>
+           <selbri>pu klama</selbri>
+           <sumti>le zarci</sumti>
+         </jbo>
+-        <sumti>John</sumti>
+-        <selbri>[past] goes to-the store</selbri>
++        <gloss>
++          <sumti>John</sumti>
++          <selbri>[past] goes</selbri>
++          <sumti>to-the store</sumti>
++        </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>where the tag 
+     <valsi>pu</valsi> forces the sentence to refer to a time in the past. Similarly,</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k1Y8">
+       <title>
+         <anchor xml:id="c2e17d5"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>la djan.</sumti>
+           <selbri>ca klama</selbri>
+           <sumti>le zarci</sumti>
+         </jbo>
+         <gloss>
+           <sumti>John</sumti>
+-          <selbri>[present] goes to-the store</selbri>
++          <selbri>[present] goes</selbri>
++          <sumti>to-the store</sumti>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>necessarily refers to the present, because of the tag 
+     <valsi>ca</valsi>. Tags used in this way always appear at the very beginning of the selbri, just after the 
+     <valsi>cu</valsi>, and they may make a 
+     <valsi>cu</valsi> unnecessary, since tags cannot be absorbed into tanru. Such tags serve as an equivalent to English tenses and adverbs. In Lojban, tense information is completely optional. If unspecified, the appropriate tense is picked up from context.</para>
+     
+     <para> <indexterm type="general-imported"><primary>space tenses</primary><secondary>quick-tour version</secondary></indexterm> Lojban also extends the notion of 
+     <quote>tense</quote> to refer not only to time but to space. The following example uses the tag 
+@@ -2072,27 +2109,29 @@
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>In addition, tense tags (either for time or space) can be prefixed to the selbri of a description, producing a tensed sumti:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-k26N">
+       <title>
+         <anchor xml:id="c2e17d7"/>
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+-          <sumti>le pu bajra </sumti>
++          <sumti>le pu bajra</sumti>
+           <elidable>ku</elidable>
+           <elidable elidable="false">cu</elidable>
+           <selbri>tavla</selbri>
+         </jbo>
+         <gloss>
+           <sumti>The earlier/former/past runner</sumti>
++          <elidable></elidable>
++          <elidable></elidable>
+           <selbri>talked/talks.</selbri>
+         </gloss>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>(Since Lojban tense is optional, we don't know when he or she talks.)</para>
+     <para>Tensed sumti with space tags correspond roughly to the English use of 
+     <quote>this</quote> or 
+     <quote>that</quote> as adjectives, as in the following example, which uses the tag 
+     
+     <valsi>vi</valsi> meaning 
+@@ -2103,20 +2142,22 @@
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>le vi bajra </sumti>
+           <elidable>ku</elidable>
+           <elidable elidable="false">cu</elidable>
+           <selbri>tavla</selbri>
+         </jbo>
+         <gloss>
+           <sumti>The nearby runner</sumti>
++          <elidable></elidable>
++          <elidable></elidable>
+           <selbri>talks.</selbri>
+         </gloss>
+         <natlang>This runner talks.</natlang>
+       </interlinear-gloss-itemized>
+     </example>
+     <para>Do not confuse the use of 
+     <valsi>vi</valsi> in 
+     <xref linkend="example-random-id-k28N"/> with the cmavo 
+     <valsi>ti</valsi>, which also means 
+     <quote>this</quote>, but in the sense of 
+@@ -2129,20 +2170,22 @@
+       </title>
+       <interlinear-gloss-itemized>
+         <jbo>
+           <sumti>le vi tavla </sumti>
+           <elidable>ku</elidable>
+           <elidable elidable="false">cu</elidable>
+           <selbri>ba klama</selbri>
+         </jbo>
+         <gloss>
+           <sumti>The here talker</sumti>
++          <elidable></elidable>
++          <elidable></elidable>
+           <selbri>[future] goes.</selbri>
+         </gloss>
+         <natlang>The talker who is here will go.</natlang>
+         <natlang>This talker will go.</natlang>
+       </interlinear-gloss-itemized>
+     </example>
+   </section>
+   <section xml:id="section-terms">
+     <title>Lojban grammatical terms</title>
+     
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
