@@ -1,0 +1,408 @@
+# mail/bpfk thread 05be297d8f43-dag-cll_git_updates_for_sat_mar_24_18%3A21%3A04 | root e1sbc8m-0002a6-pt@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2012-03-25T01:21:04Z | Apache <apache@digitalkingdom.org> | e1sbc8m-0002a6-pt@stodi.digitalkingdom.org | mail/bpfk/cur/1332638464.05be297d8f43e89c.jbomohi:2,S
+commit f043bcd54d751be372dcc8a402fe8c810234fbb2
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Sat Mar 24 17:23:13 2012 -0700
+
+    Got the sections and chapters working.
+
+diff --git a/Makefile b/Makefile
+index 9f5bd27..c378df5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -28,21 +28,21 @@ cll_processed_xhtml.xml: cll.xml xml/docbook2html_preprocess.xsl
+ #*******
+ # Many xhtml files
+ #*******
+ .PHONY: xhtml_web
+ xhtml_web: xhtml.done
+ 	mkdir -p ~/www/media/public/tmp
+ 	rm -rf ~/www/media/public/tmp/cll-xhtml
+ 	cp -pr xhtml ~/www/media/public/tmp/cll-xhtml
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/cll-xhtml/docbook2html.css
+ 	mkdir -p ~/www/media/public/tmp/cll-xhtml/media
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml/media/chapter-2-diagram.png
++	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml/chapter-2-diagram.png
+ 
+ .PHONY: xhtml
+ xhtml: xhtml.done
+ xhtml.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml
+ 	mkdir xhtml
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config_no-sections.xsl -o xhtml/ xhtml cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+ 	touch xhtml.done
+@@ -50,41 +50,41 @@ xhtml.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ #*******
+ # Section xhtml files
+ #*******
+ .PHONY: xhtml_sections_web
+ xhtml_sections_web: xhtml_sections.done
+ 	mkdir -p ~/www/media/public/tmp
+ 	rm -rf ~/www/media/public/tmp/cll-xhtml-sections
+ 	cp -pr xhtml_sections ~/www/media/public/tmp/cll-xhtml-sections
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/cll-xhtml-sections/docbook2html.css
+ 	mkdir -p ~/www/media/public/tmp/cll-xhtml-sections/media
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml/sections/media/chapter-2-diagram.png
++	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml-sections/chapter-2-diagram.png
+ 
+ .PHONY: xhtml_sections
+ xhtml_sections: xhtml_sections.done
+ xhtml_sections.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml_sections
+ 	mkdir xhtml_sections
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config_sections.xsl -o xhtml_sections/ --stringparam chunk.section.depth=1 --stringparam chunk.first.sections=1 xhtml cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+ 	touch xhtml_sections.done
+ 
+ #*******
+ # One XHTML file
+ #*******
+ .PHONY: xhtml_nochunks_web
+ xhtml_nochunks_web: xhtml-nochunks.done
+ 	mkdir -p ~/www/media/public/tmp/media
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/docbook2html.css
+ 	cp $(PWD)/xhtml-nochunks/cll_processed_xhtml.html ~/www/media/public/tmp/cll-xhtml-nochunks.html
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/media/chapter-2-diagram.png
++	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/chapter-2-diagram.png
+ 
+ .PHONY: xhtml_nochunks
+ xhtml_nochunks: xhtml-nochunks.done
+ xhtml-nochunks.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml-nochunks
+ 	mkdir xhtml-nochunks
+ 	ln -fs $(PWD)/docbook2html.css xhtml-nochunks/
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config.xsl -o xhtml-nochunks/ xhtml-nochunks cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+diff --git a/xml/docbook2html_config_no-sections.xsl b/xml/docbook2html_config_no-sections.xsl
+index 74e3954..88bdce5 100644
+--- a/xml/docbook2html_config_no-sections.xsl
++++ b/xml/docbook2html_config_no-sections.xsl
+@@ -1,13 +1,18 @@
+ <?xml version='1.0'?>
+ 
+-<xsl:import href="docbook2html_config_common.xsl"/>
++<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
++  xmlns:fo="http://www.w3.org/1999/XSL/Format"
++  xmlns:docbook="http://docbook.org/ns/docbook"
++  version="1.0">
++
++  <xsl:import href="docbook2html_config_common.xsl"/>
+   <xsl:param name="generate.toc">
+     appendix  toc,title
+     article/appendix  nop
+     article   toc,title
+     book      toc,title,figure,table,equation
+     chapter   title
+     part      toc,title
+     preface   toc,title
+     qandadiv  toc
+     qandaset  toc
+diff --git a/xml/docbook2html_config_sections.xsl b/xml/docbook2html_config_sections.xsl
+index 2023f08..73fedbd 100644
+--- a/xml/docbook2html_config_sections.xsl
++++ b/xml/docbook2html_config_sections.xsl
+@@ -1,13 +1,19 @@
+ <?xml version='1.0'?>
+ 
+-<xsl:import href="docbook2html_config_common.xsl"/>
++<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
++  xmlns:fo="http://www.w3.org/1999/XSL/Format"
++  xmlns:docbook="http://docbook.org/ns/docbook"
++  version="1.0">
++
++  <xsl:import href="docbook2html_config_common.xsl"/>
++
+   <xsl:param name="generate.toc">
+     appendix  toc,title
+     article/appendix  nop
+     article   toc,title
+     book      toc,title,figure,table,equation
+     chapter   toc,title
+     part      toc,title
+     preface   toc,title
+     qandadiv  toc
+     qandaset  toc
+
+commit cdc76c1280849a9a166e34e2e143d42f6887d1ce
+Merge: e2dc9a8 c0244d8
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Sat Mar 24 17:22:58 2012 -0700
+
+    Merge remote-tracking branch 'banseljaj/docbook' into docbook
+    
+    Conflicts:
+    	Makefile
+
+commit c0244d80773c80cda89ef8f18632b6ca2fc198c7
+Author: Ali Sajid Imami <Ali.Sajid.Imami@gmail.com>
+Date:   Thu Mar 22 04:35:50 2012 -0700
+
+    minor cleanup
+
+diff --git a/Makefile b/Makefile
+index e319a09..73c5c28 100644
+--- a/Makefile
++++ b/Makefile
+@@ -35,21 +35,21 @@ xhtml_web: xhtml.done
+ 	cp -pr xhtml ~/www/media/public/tmp/cll-xhtml
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/cll-xhtml/docbook2html.css
+ 
+ .PHONY: xhtml
+ xhtml: xhtml.done
+ xhtml.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml
+ 	mkdir xhtml
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+-	xmlto -m xml/docbook2html_config.xsl -o xhtml/ xhtml cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
++	xmlto -m xml/docbook2html_config_no-sections.xsl -o xhtml/ xhtml cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+ 	touch xhtml.done
+ 
+ #*******
+ # Section xhtml files
+ #*******
+ .PHONY: xhtml_sections_web
+ xhtml_sections_web: xhtml_sections.done
+ 	mkdir -p ~/www/media/public/tmp
+ 	rm -rf ~/www/media/public/tmp/cll-xhtml-sections
+ 	cp -pr xhtml_sections ~/www/media/public/tmp/cll-xhtml-sections
+
+commit fa8b5a3d3e950d20898b541cd7915bb66ec8bcf9
+Author: Ali Sajid Imami <Ali.Sajid.Imami@gmail.com>
+Date:   Thu Mar 22 03:09:33 2012 -0700
+
+    minor cleanup
+
+diff --git a/xhtml_chapters.done b/xhtml_chapters.done
+deleted file mode 100644
+index e69de29..0000000
+
+commit c5163a2eb12e6450fc2236d709dc3afd187f8114
+Author: Ali Sajid Imami <ASImami@nhmag.org>
+Date:   Thu Mar 22 14:58:38 2012 +0500
+
+    Split the xsl files into common and section specofic
+
+diff --git a/.gitignore b/.gitignore
+index ccb70c8..923fcae 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,16 +1,18 @@
+ .*.sw[po]
+ cll.xml
+ cll_preglossary.xml
+ xhtml/
+ xhtml.done
+ jbovlaste.xml
+ jbovlaste2.xml
+ xhtml-nochunks/
+ xhtml-nochunks.done
++xhtml_chapters.done
+ cll.epub
+ cll.mobi
+ cll.pdf
+ cll_processed_pdf.xml
+ cll_processed_xhtml.xml
+ xhtml_sections.done
+ xhtml_sections/
++*.*~
+diff --git a/xml/docbook2html_config_common.xsl b/xml/docbook2html_config_common.xsl
+new file mode 100644
+index 0000000..7c1ea1c
+--- /dev/null
++++ b/xml/docbook2html_config_common.xsl
+@@ -0,0 +1,45 @@
++<?xml version='1.0'?>
++<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
++  xmlns:fo="http://www.w3.org/1999/XSL/Format"
++  xmlns:docbook="http://docbook.org/ns/docbook"
++  version="1.0">
++  <xsl:param name="use.id.as.filename" select="'1'"/>
++  <xsl:param name="chunk.section.depth" select="0"></xsl:param>
++  <xsl:param name="html.stylesheet" select="'docbook2html.css'"/>
++  <xsl:param name="index.on.type" select="1"/>
++  <xsl:param name="index.on.role" select="1"/>
++  <xsl:param name="index.links.to.section" select="0"/>
++  <xsl:param name="emphasis.propagates.style" select="1"/>
++  
++  <xsl:param name="xref.with.number.and.title" select="0"/>
++
++  <!-- FIXME: do we even use admonitions? (see
++       http://newbiedoc.sourceforge.net/tutorials/docbook-guide/admon-docbook-guide.html.en for what those are).  Why are these set?
++       -->
++  <xsl:param name="admon.graphics" select="'1'"/>
++  <xsl:param name="admon.graphics.path"></xsl:param>
++
++  <!-- deal with colspan=0, which doesn't actually work properly in
++       the HTML output from docbook; we turn it into 100% here.
++
++       Starter code stolen from /usr/share/sgml/docbook/xsl-ns-stylesheets/xhtml/htmltbl.xsl 
++  -->
++  <xsl:template match="@colspan" mode="htmlTableAtt">
++    <xsl:if test="number(.) != 1">
++      <xsl:choose>
++        <xsl:when test="number(.) = 0">
++          <xsl:attribute name="{local-name(.)}">
++            <xsl:text>100%</xsl:text>
++          </xsl:attribute>
++        </xsl:when>
++        <xsl:otherwise>
++          <xsl:attribute name="{local-name(.)}">
++            <xsl:value-of select="."/>
++          </xsl:attribute>
++        </xsl:otherwise>
++      </xsl:choose>
++    </xsl:if>
++  </xsl:template>
++
++
++</xsl:stylesheet>
+diff --git a/xml/docbook2html_config_no-sections.xsl b/xml/docbook2html_config_no-sections.xsl
+new file mode 100644
+index 0000000..74e3954
+--- /dev/null
++++ b/xml/docbook2html_config_no-sections.xsl
+@@ -0,0 +1,24 @@
++<?xml version='1.0'?>
++
++<xsl:import href="docbook2html_config_common.xsl"/>
++  <xsl:param name="generate.toc">
++    appendix  toc,title
++    article/appendix  nop
++    article   toc,title
++    book      toc,title,figure,table,equation
++    chapter   title
++    part      toc,title
++    preface   toc,title
++    qandadiv  toc
++    qandaset  toc
++    reference toc,title
++    sect1     toc
++    sect2     toc
++    sect3     toc
++    sect4     toc
++    sect5     toc
++    section   toc
++    set       toc,title
++  </xsl:param>
++
++</xsl:stylesheet>
+diff --git a/xml/docbook2html_config_sections.xsl b/xml/docbook2html_config_sections.xsl
+index 185a5f6..2023f08 100644
+--- a/xml/docbook2html_config_sections.xsl
++++ b/xml/docbook2html_config_sections.xsl
+@@ -1,67 +1,24 @@
+ <?xml version='1.0'?>
+-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+-  xmlns:fo="http://www.w3.org/1999/XSL/Format"
+-  xmlns:docbook="http://docbook.org/ns/docbook"
+-  version="1.0">
+-  <xsl:param name="use.id.as.filename" select="'1'"/>
+-  <xsl:param name="chunk.section.depth" select="0"></xsl:param>
+-  <xsl:param name="html.stylesheet" select="'docbook2html.css'"/>
+-  <xsl:param name="index.on.type" select="1"/>
+-  <xsl:param name="index.on.role" select="1"/>
+-  <xsl:param name="index.links.to.section" select="0"/>
+-  <xsl:param name="emphasis.propagates.style" select="1"/>
+-  <!-- default is at
+-       http://docbook.sourceforge.net/release/xsl/1.76.1/doc/html/generate.toc.html
+-       -->
++
++<xsl:import href="docbook2html_config_common.xsl"/>
+   <xsl:param name="generate.toc">
+     appendix  toc,title
+     article/appendix  nop
+     article   toc,title
+     book      toc,title,figure,table,equation
+     chapter   toc,title
+     part      toc,title
+     preface   toc,title
+     qandadiv  toc
+     qandaset  toc
+     reference toc,title
+     sect1     toc
+     sect2     toc
+     sect3     toc
+     sect4     toc
+     sect5     toc
+     section   toc
+     set       toc,title
+   </xsl:param>
+ 
+-  <xsl:param name="xref.with.number.and.title" select="0"/>
+-
+-  <!-- FIXME: do we even use admonitions? (see
+-       http://newbiedoc.sourceforge.net/tutorials/docbook-guide/admon-docbook-guide.html.en for what those are).  Why are these set?
+-       -->
+-  <xsl:param name="admon.graphics" select="'1'"/>
+-  <xsl:param name="admon.graphics.path"></xsl:param>
+-
+-  <!-- deal with colspan=0, which doesn't actually work properly in
+-       the HTML output from docbook; we turn it into 100% here.
+-
+-       Starter code stolen from /usr/share/sgml/docbook/xsl-ns-stylesheets/xhtml/htmltbl.xsl 
+-  -->
+-  <xsl:template match="@colspan" mode="htmlTableAtt">
+-    <xsl:if test="number(.) != 1">
+-      <xsl:choose>
+-        <xsl:when test="number(.) = 0">
+-          <xsl:attribute name="{local-name(.)}">
+-            <xsl:text>100%</xsl:text>
+-          </xsl:attribute>
+-        </xsl:when>
+-        <xsl:otherwise>
+-          <xsl:attribute name="{local-name(.)}">
+-            <xsl:value-of select="."/>
+-          </xsl:attribute>
+-        </xsl:otherwise>
+-      </xsl:choose>
+-    </xsl:if>
+-  </xsl:template>
+-
+-
+ </xsl:stylesheet>
+
+commit 8a009572b13d060bd86f982a9ca057a612fea9b2
+Author: Ali Sajid Imami <Ali.Sajid.Imami@gmail.com>
+Date:   Sun Mar 18 01:19:51 2012 -0700
+
+    Makefile modified
+
+diff --git a/Makefile b/Makefile
+index c3c24ac..e319a09 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,15 +1,15 @@
+ test = 
+ chapters = $(if $(CHAPTERS), $(CHAPTERS), chapters/1.xml chapters/2.xml chapters/3.xml chapters/4.xml chapters/5.xml chapters/6.xml chapters/7.xml chapters/8.xml chapters/9.xml chapters/10.xml chapters/11.xml chapters/12.xml chapters/13.xml chapters/14.xml chapters/15.xml chapters/16.xml chapters/17.xml chapters/18.xml chapters/19.xml chapters/20.xml chapters/21.xml)
+ 
+ .PHONY: all
+-all: xhtml_web xhtml_nochunks_web pdf_web epub_web mobi_web
++all: xhtml_web xhtml_nochunks_web pdf_web epub_web mobi_web xhtml_sections_web
+ 
+ .PHONY: clean
+ clean:
+ 	-rm -rf cll* xhtml/ xhtml.done xhtml-nochunks/ xhtml-nochunks.done
+ 
+ .PHONY: realclean
+ realclean: clean
+ 	-rm -rf jbovlaste.xml jbovlaste2.xml
+ 
+ #*******
+diff --git a/xhtml_chapters.done b/xhtml_chapters.done
+new file mode 100644
+index 0000000..e69de29
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
