@@ -1,0 +1,90 @@
+# mail/bpfk thread dfd515f9079d-dag-cll_git_updates_for_sun_mar_25_01%3A21%3A02 | root e1sbihd-0004u6-7a@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2012-03-25T08:21:02Z | Apache <apache@digitalkingdom.org> | e1sbihd-0004u6-7a@stodi.digitalkingdom.org | mail/bpfk/cur/1332663662.dfd515f9079daa85.jbomohi:2,S
+commit 6918e09b9f7dc55873d73df014fc8f61be9fd66b
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Sun Mar 25 01:05:12 2012 -0700
+
+    betting handling of images
+
+diff --git a/Makefile b/Makefile
+index c378df5..303bcbe 100644
+--- a/Makefile
++++ b/Makefile
+@@ -28,21 +28,21 @@ cll_processed_xhtml.xml: cll.xml xml/docbook2html_preprocess.xsl
+ #*******
+ # Many xhtml files
+ #*******
+ .PHONY: xhtml_web
+ xhtml_web: xhtml.done
+ 	mkdir -p ~/www/media/public/tmp
+ 	rm -rf ~/www/media/public/tmp/cll-xhtml
+ 	cp -pr xhtml ~/www/media/public/tmp/cll-xhtml
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/cll-xhtml/docbook2html.css
+ 	mkdir -p ~/www/media/public/tmp/cll-xhtml/media
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml/chapter-2-diagram.png
++	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml/media/chapter-2-diagram.png
+ 
+ .PHONY: xhtml
+ xhtml: xhtml.done
+ xhtml.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml
+ 	mkdir xhtml
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config_no-sections.xsl -o xhtml/ xhtml cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+ 	touch xhtml.done
+@@ -50,41 +50,42 @@ xhtml.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ #*******
+ # Section xhtml files
+ #*******
+ .PHONY: xhtml_sections_web
+ xhtml_sections_web: xhtml_sections.done
+ 	mkdir -p ~/www/media/public/tmp
+ 	rm -rf ~/www/media/public/tmp/cll-xhtml-sections
+ 	cp -pr xhtml_sections ~/www/media/public/tmp/cll-xhtml-sections
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/cll-xhtml-sections/docbook2html.css
+ 	mkdir -p ~/www/media/public/tmp/cll-xhtml-sections/media
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml-sections/chapter-2-diagram.png
++	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml-sections/media/chapter-2-diagram.png
+ 
+ .PHONY: xhtml_sections
+ xhtml_sections: xhtml_sections.done
+ xhtml_sections.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml_sections
+ 	mkdir xhtml_sections
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config_sections.xsl -o xhtml_sections/ --stringparam chunk.section.depth=1 --stringparam chunk.first.sections=1 xhtml cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+ 	touch xhtml_sections.done
+ 
+ #*******
+ # One XHTML file
+ #*******
+ .PHONY: xhtml_nochunks_web
+ xhtml_nochunks_web: xhtml-nochunks.done
+ 	mkdir -p ~/www/media/public/tmp/media
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/docbook2html.css
+ 	cp $(PWD)/xhtml-nochunks/cll_processed_xhtml.html ~/www/media/public/tmp/cll-xhtml-nochunks.html
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/chapter-2-diagram.png
++	mkdir -p ~/www/media/public/tmp/media
++	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/media/chapter-2-diagram.png
+ 
+ .PHONY: xhtml_nochunks
+ xhtml_nochunks: xhtml-nochunks.done
+ xhtml-nochunks.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml-nochunks
+ 	mkdir xhtml-nochunks
+ 	ln -fs $(PWD)/docbook2html.css xhtml-nochunks/
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config.xsl -o xhtml-nochunks/ xhtml-nochunks cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
