@@ -1,0 +1,1845 @@
+# mail/bpfk thread eab4463dd948-dag-cll_git_updates_for_fri_apr_6_19%3A21%3A05_ | root e1sglh0-00044j-ee@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2012-04-07T02:21:05Z | Apache <apache@digitalkingdom.org> | e1sglh0-00044j-ee@stodi.digitalkingdom.org | mail/bpfk/cur/1333765265.eab4463dd9481e4d.jbomohi:2,S
+commit 628ec93e26a00f1159a651bf860c57e992237769
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Fri Apr 6 18:31:23 2012 -0700
+
+    Doc tweaks.
+
+diff --git a/TODO b/TODO
+index e1dd021..51e350a 100644
+--- a/TODO
++++ b/TODO
+@@ -18,58 +18,24 @@ help at this stage.
+ 
+ IF YOU CHANGE, ADD, OR REMOVE ANY ACTUAL CONTENT, I WILL EAT YOUR
+ FAMILY.  WITH STEAK SAUCE.  MMMMMM.
+ 
+ If you make a change that is not *solely* XML tags, that's a content
+ change, and I will hunt you down and bad things will occur.
+ 
+  ------
+ 
+ ==================
+-PDF Visual Issues
++  Uncategorized Issues By Chapter
+ ==================
+-
+-Maybe add an interlinear-gloss-manual? for manual grouping that
+-isn't chapter 2 style; otherwise it's hard to see how to make
+-something like this work:
+-
+-    le    se nelci      cu   cafne
+-    The   liked-thing   is-frequent.
+-
+-18-17:44 < tsani> rlpowell: I think that having the glossary split into [cmavo], [brivla], and
+-          [cmene] sections might be worth while
+-18-17:44 < tsani> rlpowell: where the cmavo definitions say in which section the cmavo is
+-          discussed
+-
+-==================
+-I Don't Even
+-==================
+-24-22:44 < rlpowell> *Neat*.
+-24-22:45 < rlpowell> The HTML and the LaTeX number the examples differently.
+-24-22:45 < rlpowell> *THAT'S* gonna need to change.
+-
+-==================
+-  Random Visual Issues (numbered by chapter)
+-==================
+-2. "sumti selbri sumti (argument)" below example 2.3 looks weird;
+-compare red book.
+-2. NOT FIRST PASS, but section 2.4 should be dropped eventually.
+-2. S1.11: "gismu:" as a line by itself looks pretty lame.
+-
+-==================
+-  Issues noticed during the proofread
+-==================
+-
+-1. Captions to Pictures section is broken
+-2. Description of formatting for interlinear-gloss needs to be fixed to match the formatting changes
++2. S11: "gismu:" as a line by itself looks pretty lame.
+ 2. Example 2.9 could do with some re-formatting (compare 5.3 in http://dag.github.com/cll/2/5/ )
+-3. Tengwar table should be made multi-column to save vertical space
+ 4. Example 4.4 is formatted differently from other nearby and similar examples
+ 4. Examples 4.24, 4.26-4.38, 4.52-4.70 are missing content
+ 	- The content in question gets deleted by xml/docbook2html_preprocess.xsl
+ 4. Examples 4.46-4.51 are broken, and 4.51 is not present in the red book
+ 4. Broken HTML character codes on the last line of page 79 of the red book
+ 	- This is from the <quote xml:lang="el"/> tag not being handled properly in the docbook->html conversion
+ 5. Table of language acronyms in section 14 could use reformatting to save space
+ 7. Section cmavo lists are missing series information
+ 	- This seems to be due to the <series> tag not being handled by the xml->docbook conversion
+ 7. Example 7.39 is hella ugly.  Like, seriously
+@@ -102,31 +68,40 @@ compare red book.
+ 19. Examples 4.2 and 4.6 have their rows out of order
+ 19. Example 19.33 is missing a row
+ 19. Examples 19.52-19.54, 19.67, 19.71-19.74, 19.77, 19.81 are missing quotes
+ 19. Examples 19.61, 19.62 are missing emphasis
+ 20. All the examples are using different markup
+ 20. xrefs here can be a little verbose
+ 
+  ------
+ 
+ ==================
++I Don't Even
++==================
++24-22:44 < rlpowell> *Neat*.
++24-22:45 < rlpowell> The HTML and the LaTeX number the examples differently.
++24-22:45 < rlpowell> *THAT'S* gonna need to change.
++[change that *AFTER* handling all the proofread stuff, or it's going to suck)
++
++==================
+   Non-Visual Issues
+ ==================
+ 
+-The section level chunking has no per-chapter toc, which means the
+-chapter header chunks look awful; see
+-http://vrici.lojban.org/~rlpowell/media/public/tmp/cll-xhtml-sections/chapter-phonology.html
+-; we should give those pages the chapter toc, which means changing
+-<xsl:param name="generate.toc"> (see xml/docbook2html_config.xsl  )
++Maybe add an interlinear-gloss-manual? for manual grouping that
++isn't chapter 2 style; otherwise it's hard to see how to make
++something like this work:
+ 
+- ------
++    le    se nelci      cu   cafne
++    The   liked-thing   is-frequent.
+ 
++ ------
++ 
+ The <definition> tags within tables have their <valsi> component in another column of the table.  We need to decide whether is this is
+ satisfactory, or if something else should be done with them.
+ 
+  ------
+  
+ <lojbanization> tables are shit
+ 
+  ------
+  
+ All the imported/manual indexterm entries for single words or
+@@ -181,20 +156,25 @@ is why the columns are so spaced out).
+ - <phrase role="IPA">∞</phrase> is *not* IPA
+ - In the mediaobjects in chapter 1, can we do better than <alt>The
+   picture for chapter 20</alt> in terms of non-numerical cross
+   referencing?
+ - there's a bunch of problems in 18.xml ; a lot of math stuff has
+   gotten truncated in the final form.  they basically all need to be
+   checked; having a CLL to hand would help
+ - Fix all FIXMEs; in particular the output of:
+   grep 'FIXME:' [0-9]*.xml | grep -v 'TAG SPOT'
+ 
++18-17:44 < tsani> rlpowell: I think that having the glossary split into [cmavo], [brivla], and
++          [cmene] sections might be worth while
++18-17:44 < tsani> rlpowell: where the cmavo definitions say in which section the cmavo is
++          discussed
++
+ ==================
+   Display
+ ==================
+ - links to examples should *say* "example N"; easy to test from the
+   index
+ - links to sections should say the number of section and chapter
+ - examples should be 5.2.1 rather than 5.6 for the first example in
+   section 2 of chapter 5
+ - print: Add a header or footer to the left or the right page that
+   has the number of the chapter you're in.
+@@ -214,10 +194,19 @@ is why the columns are so spaced out).
+   the way the red book does
+ 
+ ==================
+   Both/Other
+ ==================
+ - make sure backwards-compatible anchors exist
+   - Ideally, make sure they are autogenerated as part of the HTML
+     production.
+ - Similarily, generate more-readable anchors based on current
+   section number and such
++
++==================
++Content Issues That Need Fixing
++==================
++
++DON'T TOUCH THESE.  The timing on these should be handled very carefully
++
++2. Description of formatting for interlinear-gloss needs to be fixed to match the formatting changes
++2. section 2.4 should be dropped eventually.
+
+commit dd698c45026646c571f1ae265a6ea577a82ad45b
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Fri Apr 6 18:30:12 2012 -0700
+
+    All the pictures work!  yay -_-
+
+diff --git a/chapters/1.xml b/chapters/1.xml
+index 4e0b5e9..2857811 100644
+--- a/chapters/1.xml
++++ b/chapters/1.xml
+@@ -1,15 +1,22 @@
+ <chapter xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="chapter-about">
+   <title>Lojban As We Mangle It In Lojbanistan: About This Book</title>
++  <mediaobject xml:id="chapter-about-picture">
++    <alt>The picture for chapter 1</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-about.gif" />
++    </imageobject>
++  </mediaobject>
+   
+   <section xml:id="section-what-is-lojban">
+     <title>What is Lojban?</title>
++
+     <para> <indexterm type="general-imported"><primary>Logical Language Group</primary><secondary>relation to Lojban</secondary></indexterm>  <indexterm type="general-imported"><primary>Lojban</primary><secondary>history of</secondary></indexterm> Lojban (pronounced 
+     <quote>LOZH-bahn</quote>) is a constructed language. Previous versions of the language were called 
+     <quote>Loglan</quote> by Dr. James Cooke Brown, who founded the Loglan Project and started the development of the language in 1955. The goals for the language were first described in the open literature in the article 
+     
+     
+     <quote><citetitle pubwork="article">Loglan</citetitle></quote>, published in 
+     <citetitle pubwork="journal">Scientific American</citetitle>, June, 1960. Made well-known by that article and by occasional references in science fiction (most notably in Robert Heinlein's novel 
+     
+     <citetitle pubwork="book">The Moon Is A Harsh Mistress</citetitle>) and computer publications, Loglan and Lojban have been built over four decades by dozens of workers and hundreds of supporters, led since 1987 by The Logical Language Group (who are the publishers of this book).</para>
+     <para> <indexterm type="general-imported"><primary>Lojban</primary><secondary>features of</secondary></indexterm> There are thousands of artificial languages (of which Esperanto is the best-known), but Loglan/Lojban has been engineered to make it unique in several ways. The following are the main features of Lojban:</para>
+@@ -156,347 +163,204 @@
+     <xref linkend="chapter-negation"/> is derived from a reading of Laurence Horn's work 
+     <citetitle pubwork="book">A Natural History of Negation</citetitle>.</para>
+     <para>Of course, neither Brown nor Quine nor Horn is in any way responsible for the uses or misuses I have made of their works.</para>
+     
+     <para> <indexterm type="general-imported"><primary>books about Lojban</primary></indexterm> Depending on just when you are reading this book, there may be three other books about Lojban available: a textbook, a Lojban/English dictionary, and a book containing general information about Lojban. You can probably get these books, if they have been published, from the same place where you got this book. In addition, other books not yet foreseen may also exist.</para>
+     
+   </section>
+   <section xml:id="section-captions">
+     <title>Captions to Pictures</title>
+     <para>The following examples list the Lojban caption, with a translation, for the picture at the head of each chapter. If a chapter's picture has no caption, 
+-    <quote>(none)</quote> is specified instead.</para>
+-    <itemizedlist>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c1"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 1</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-about.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-coi lojban.             coi rodo
+-        </programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-Greetings, O Lojban!    Greetings, all-of you
+-        </programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c2"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 2</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-tour.gif"/>
+-          </imageobject>
+-        </mediaobject> has no text.</para>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c3"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 3</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-phonology.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-.i .ai .i .ai .o
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-[untranslatable]
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c4"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 4</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-morphology.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-jbobliku
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-Lojbanic-blocks
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c5"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 5</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-selbri.gif"/>
+-          </imageobject>
+-        </mediaobject> has no text.</para>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c6"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 6</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-sumti.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-lei re nanmu cu bevri le re nanmu
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-The-mass-of two men carry the two men
+-Two men (jointly) carry two men (both of them).
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c7"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 7</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-anaphoric-cmavo.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-ma drani danfu
+-.i di'e
+-
+-.i di'u
+-.i dei
+-.i ri
+-.i do'i
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-[What sumti] is-the-correct type-of-answer?
+-The-next-sentence.
+-The-previous-sentence.
+-This-sentence.
+-The-previous-sentence.
+-An-unspecified-utterance.
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c8"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 8</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-relative-clauses.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-ko viska re prenu poi bruna la santas.
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-[You!] see two persons who-are brothers-of Santa.
+-
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c9"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 9</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-sumti-tcita.gif"/>
+-          </imageobject>
+-        </mediaobject> has no text.</para>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c10"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 10</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-tenses.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-za'o klama
+-
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-[superfective] come/go
+-Something goes (or comes) for too long.
+-
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c11"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 11</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-abstractions.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-le si'o kunti
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-The concept-of emptiness
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c12"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 12</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-lujvo.gif"/>
+-          </imageobject>
+-        </mediaobject> has no text.</para>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c13"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 13</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-attitudinals.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-.oi ro'i ro'a ro'o
++      <quote>(none)</quote> is specified instead.</para>
++    <section>
++      <title><link linkend="chapter-about-picture">Chapter 1 Caption</link></title>
++      <programlisting xml:space="preserve">
++        coi lojban.             coi rodo
++      </programlisting>
++      <programlisting xml:space="preserve">
++        Greetings, O Lojban!    Greetings, all-of you
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-tour-picture">Chapter 2 Caption</link></title>
++      <programlisting xml:space="preserve">
++        (none)
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-phonology-picture">Chapter 3 Caption</link></title>
++      <programlisting xml:space="preserve">
++        .i .ai .i .ai .o
++      </programlisting>
++      <programlisting xml:space="preserve">
++        [untranslatable]
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-morphology-picture">Chapter 4 Caption</link></title>
++      <programlisting xml:space="preserve">
++        jbobliku
++      </programlisting>
++      <programlisting xml:space="preserve">
++        Lojbanic-blocks
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-selbri-picture">Chapter 5 Caption</link></title>
++      <programlisting xml:space="preserve">
++        (none)
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-sumti-picture">Chapter 6 Caption</link></title>
++      <programlisting xml:space="preserve">
++        lei re nanmu cu bevri le re nanmu
++      </programlisting>
++      <programlisting xml:space="preserve">
++        The-mass-of two men carry the two men
++        Two men (jointly) carry two men (both of them).
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-anaphoric-cmavo-picture">Chapter 7 Caption</link></title>
++      <programlisting xml:space="preserve">
++        ma drani danfu
++        .i di'e
+ 
++        .i di'u
++        .i dei
++        .i ri
++        .i do'i
++      </programlisting>
++      <programlisting xml:space="preserve">
++        [What sumti] is-the-correct type-of-answer?
++        The-next-sentence.
++        The-previous-sentence.
++        This-sentence.
++        The-previous-sentence.
++        An-unspecified-utterance.
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-relative-clauses-picture">Chapter 8 Caption</link></title>
++      <programlisting xml:space="preserve">
++        ko viska re prenu poi bruna la santas.
++      </programlisting>
++      <programlisting xml:space="preserve">
++        [You!] see two persons who-are brothers-of Santa.
+ 
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-sumti-tcita-picture">Chapter 9 Caption</link></title>
++      <programlisting xml:space="preserve">
++        (none)
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-tenses-picture">Chapter 10 Caption</link></title>
++      <programlisting xml:space="preserve">
++          za'o klama
++      </programlisting>
++      <programlisting xml:space="preserve">
++        [superfective] come/go
++        Something goes (or comes) for too long.
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-abstractions-picture">Chapter 11 Caption</link></title>
++      <programlisting xml:space="preserve">
++        le si'o kunti
++      </programlisting>
++      <programlisting xml:space="preserve">
++        The concept-of emptiness
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-lujvo-picture">Chapter 12 Caption</link></title>
++      <programlisting xml:space="preserve">
++        (none)
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-attitudinals-picture">Chapter 13 Caption</link></title>
++      <programlisting xml:space="preserve">
++        .oi ro'i ro'a ro'o
++      </programlisting>
++      <programlisting xml:space="preserve">
++        [Pain!] [emotional] [social] [physical]
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-connectives-picture">Chapter 14 Caption</link></title>
++      <programlisting xml:space="preserve">
++        (none)
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-negation-picture">Chapter 15 Caption</link></title>
++      <programlisting xml:space="preserve">
++        mi na'e lumci le karce
++      </programlisting>
++      <programlisting xml:space="preserve">
++        I other-than wash the car
++        I didn't wash the car.
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-quantifiers-picture">Chapter 16 Caption</link></title>
++      <programlisting xml:space="preserve">
++        drata mupli pe'u .djan.
++      </programlisting>
++      <programlisting xml:space="preserve">
++        another example [please] John
++        Another example, John, please!
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-letterals-picture">Chapter 17 Caption</link></title>
++      <programlisting xml:space="preserve">
++        zai xanlerfu by. ly. .obu .jy by. .abu ny.
+ 
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-[Pain!] [emotional] [social] [physical]
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c14"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 14</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-connectives.gif"/>
+-          </imageobject>
+-        </mediaobject> has no text.</para>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c15"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 15</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-negation.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-mi na'e lumci le karce
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-I other-than wash the car
+-I didn't wash the car.
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c16"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 16</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-quantifiers.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-drata mupli pe'u .djan.
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-another example [please] John
+-Another example, John, please!
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c17"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 17</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-letterals.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-zai xanlerfu by. ly. .obu .jy by. .abu ny.
+-
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-[Shift] hand-letters l o j b a n
+-"Lojban" in a manual alphabet
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c18"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 18</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-mekso.gif"/>
+-          </imageobject>
+-        </mediaobject> has the following text:</para>
+-        <programlisting xml:space="preserve">
+-no no
+-</programlisting>
+-        <para>which has the following translation:</para>
+-        <programlisting xml:space="preserve">
+-0 0
+-</programlisting>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c19"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 19</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-structure.gif"/>
+-          </imageobject>
+-        </mediaobject> has no text.</para>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c20"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 20</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-catalogue.gif"/>
+-          </imageobject>
+-        </mediaobject> has no text.</para>
+-      </listitem>
+-      <listitem>
+-        <para>
+-        <anchor xml:id="c21"/>
+-        <mediaobject>
+-          <alt>The picture for chapter 21</alt>
+-          <imageobject>
+-            <imagedata fileref="chapter-grammars.gif"/>
+-          </imageobject>
+-        </mediaobject> has no text.</para>
+-      </listitem>
+-    </itemizedlist>
++      </programlisting>
++      <programlisting xml:space="preserve">
++        [Shift] hand-letters l o j b a n
++        "Lojban" in a manual alphabet
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-mekso-picture">Chapter 18 Caption</link></title>
++      <programlisting xml:space="preserve">
++        no no
++      </programlisting>
++      <programlisting xml:space="preserve">
++        0 0
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-structure-picture">Chapter 19 Caption</link></title>
++      <programlisting xml:space="preserve">
++        (none)
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-catalogue-picture">Chapter 20 Caption</link></title>
++      <programlisting xml:space="preserve">
++        (none)
++      </programlisting>
++    </section>
++    <section>
++      <title><link linkend="chapter-grammars-picture">Chapter 21 Caption</link></title>
++      <programlisting xml:space="preserve">
++        (none)
++      </programlisting>
++    </section>
+   </section>
+   <section xml:id="section-copyright">
+     <title>Boring Legalities</title>
+     <para>Copyright © 1997 by The Logical Language Group, Inc. All Rights Reserved.</para>
+     <para>Permission is granted to make and distribute verbatim copies of this book, either in electronic or in printed form, provided the copyright notice and this permission notice are preserved on all copies.</para>
+     <para>Permission is granted to copy and distribute modified versions of this book, provided that the modifications are clearly marked as such, and provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.</para>
+     <para>Permission is granted to copy and distribute translations of this book into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation that has been approved by the Logical Language Group, rather than in English.</para>
+     <para>The contents of 
+     <xref linkend="chapter-grammars"/> are in the public domain.</para>
+     <para>For information, contact: The Logical Language Group, 2904 Beau Lane, Fairfax VA 22031-1303 USA Telephone 703-385-0273. Electronic address: 
+diff --git a/chapters/10.xml b/chapters/10.xml
+index d51edd5..521bff1 100644
+--- a/chapters/10.xml
++++ b/chapters/10.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-tenses">
+   <title>Imaginary Journeys: The Lojban Space/Time Tense System</title>
++  <mediaobject xml:id="chapter-tenses-picture">
++    <alt>The picture for chapter 10</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-tenses.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-tenses-introduction">
+     <title>Introductory</title>
+     <para> <indexterm type="general-imported"><primary>tense</primary><secondary>explanation of presentation method</secondary></indexterm> This chapter attempts to document and explain the space/time tense system of Lojban. It does not attempt to answer all questions of the form 
+     
+     <quote>How do I say such-and-such (an English tense) in Lojban?</quote> Instead, it explores the Lojban tense system from the inside, attempting to educate the reader into a Lojbanic viewpoint. Once the overall system is understood and the resources that it makes available are familiar, the reader should have some hope of using appropriate tense constructs and being correctly understood.</para>
+     
+     <para> <indexterm type="general-imported"><primary>tense</primary><secondary>Lojban contrasted with native languages</secondary></indexterm> The system of Lojban tenses presented here may seem really complex because of all the pieces and all the options; indeed, this chapter is the longest one in this book. But tense is in fact complex in every language. In your native language, the subtleties of tense are intuitive. In foreign languages, you are seldom taught the entire system until you have reached an advanced level. Lojban tenses are extremely systematic and productive, allowing you to express subtleties based on what they mean rather than on how they act similarly to English tenses. This chapter concentrates on presenting an intuitive approach to the meaning of Lojban tense words and how they may be creatively and productively combined.</para>
+     <para> <indexterm type="general-imported"><primary>temporal tense</primary><secondary>Lojban contrasted with English in necessity</secondary></indexterm>  <indexterm type="general-imported"><primary>temporal tense</primary><secondary>as mandatory in English</secondary></indexterm>  <indexterm type="general-imported"><primary>temporal tense</primary><secondary>real relationship to time in English</secondary></indexterm>  <indexterm type="general-imported"><primary>temporal tense</primary><secondary>historical definition</secondary></indexterm> What is 
+     <quote>tense</quote>? Historically, 
+     <quote>tense</quote> is the attribute of verbs in English and related languages that expresses the time of the action. In English, three tenses are traditionally recognized, conventionally called the past, the present, and the future. There are also a variety of compound tenses used in English. However, there is no simple relationship between the form of an English tense and the time actually expressed:</para>
+diff --git a/chapters/11.xml b/chapters/11.xml
+index 2e7bf1f..4c3b637 100644
+--- a/chapters/11.xml
++++ b/chapters/11.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-abstractions">
+   <title>Events, Qualities, Quantities, And Other Vague Words: On Lojban Abstraction</title>
++  <mediaobject xml:id="chapter-abstractions-picture">
++    <alt>The picture for chapter 11</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-abstractions.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-syntax">
+     <title>The syntax of abstraction</title>
+     <para>The purpose of the feature of Lojban known as 
+     <quote>abstraction</quote> is to provide a means for taking whole bridi and packaging them up, as it were, into simple selbri. Syntactically, abstractions are very simple and uniform; semantically, they are rich and complex, with few features in common between one variety of abstraction and another. We will begin by discussing syntax without regard to semantics; as a result, the notion of abstraction may seem unmotivated at first. Bear with this difficulty until 
+     <xref linkend="section-events"/>.</para>
+     <para> An abstraction selbri is formed by taking a full bridi and preceding it by any cmavo of selma'o NU. There are twelve such cmavo; they are known as 
+     <quote>abstractors</quote>. The bridi is closed by the elidable terminator 
+     <valsi>kei</valsi>, of selma'o KEI. Thus, to change the bridi</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-6EI1">
+       <title>
+diff --git a/chapters/12.xml b/chapters/12.xml
+index 0ad6f2d..1dba90f 100644
+--- a/chapters/12.xml
++++ b/chapters/12.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-lujvo">
+   <title>Dog House And White House: Determining lujvo Place Structures</title>
++  <mediaobject xml:id="chapter-lujvo-picture">
++    <alt>The picture for chapter 12</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-lujvo.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-why-lujvo">
+     <title>Why have lujvo?</title>
+     <para>The Lojban vocabulary is founded on its list of 1350-plus gismu, made up by combining word lists from various sources. These gismu are not intended to be either a complete vocabulary for the language nor a minimal list of semantic primitives. Instead, the gismu list serves as a basis for the creation of compound words, or lujvo. The intention is that (except in certain semantically broad but shallow fields such as cultures, nations, foods, plants, and animals) suitable lujvo can be devised to cover the ten million or so concepts expressible in all the world's languages taken together. Grammatically, lujvo behave just like gismu: they have place structures and function as selbri.</para>
+     
+     
+     
+     
+     
+     
+     
+diff --git a/chapters/13.xml b/chapters/13.xml
+index 7cd36e7..756481e 100644
+--- a/chapters/13.xml
++++ b/chapters/13.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-attitudinals">
+   <title>Oooh! Arrgh! Ugh! Yecch! Attitudinal and Emotional Indicators</title>
++  <mediaobject xml:id="chapter-attitudinals-picture">
++    <alt>The picture for chapter 13</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-attitudinals.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-attitudinals-introduction">
+     <title>What are attitudinal indicators?</title>
+     
+     <para>This chapter explains the various words that Lojban provides for expressing attitude and related notions. In natural languages, attitudes are usually expressed by the tone of voice when speaking, and (very imperfectly) by punctuation when writing. For example, the bare words</para>
+     
+     <example xml:id="example-random-id-EWHQ">
+       <title>
+         <anchor xml:id="c13e1d1"/>
+       </title>
+       <para>John is coming.</para>
+diff --git a/chapters/14.xml b/chapters/14.xml
+index d6555b8..51f1902 100644
+--- a/chapters/14.xml
++++ b/chapters/14.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-connectives">
+   <title>If Wishes Were Horses: The Lojban Connective System</title>
++  <mediaobject xml:id="chapter-connectives-picture">
++    <alt>The picture for chapter 14</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-connectives.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-connectives-introduction">
+     <title>Logical connection and truth tables</title>
+     
+     <para> <indexterm type="general-imported"><primary>truth functions</primary></indexterm>  <indexterm type="general-imported"><primary>logical language</primary><secondary>truth functions</secondary></indexterm> Lojban is a logical language: the name of the language itself means 
+     
+     <quote>logical language</quote>. The fundamentals of ordinary logic (there are variant logics, which aren't addressed in this book) include the notions of a 
+     
+     <quote>sentence</quote> (sometimes called a 
+     <quote>statement</quote> or 
+     <quote>proposition</quote>), which asserts a truth or falsehood, and a small set of 
+diff --git a/chapters/15.xml b/chapters/15.xml
+index 770d605..1f3bdb8 100644
+--- a/chapters/15.xml
++++ b/chapters/15.xml
+@@ -1,13 +1,18 @@
+ <chapter xml:id="chapter-negation">
+-  <title>
+-  <quote>No</quote> Problems: On Lojban Negation</title>
++  <title> <quote>No</quote> Problems: On Lojban Negation</title>
++  <mediaobject xml:id="chapter-negation-picture">
++    <alt>The picture for chapter 15</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-negation.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-negation-introduction">
+     <title>Introductory</title>
+     <para>The grammatical expression of negation is a critical part of Lojban's claim to being logical. The problem of negation, simply put, is to come up with a complete definition of the word 
+     <quote>not</quote>. For Lojban's unambiguous grammar, this means further that meanings of 
+     <quote>not</quote> with different grammatical effect must be different words, and even different grammatical structures.</para>
+     <para>Logical assertions are implicitly required in a logical language; thus, an apparatus for expressing them is built into Lojban's logical connectives and other structures.</para>
+     
+     <para>In natural languages, especially those of Indo-European grammar, we have sentences composed of two parts which are typically called 
+     <quote>subject</quote> and 
+     <quote>predicate</quote>. In the statement</para>
+diff --git a/chapters/16.xml b/chapters/16.xml
+index 1d60c71..9b0ae77 100644
+--- a/chapters/16.xml
++++ b/chapters/16.xml
+@@ -1,13 +1,18 @@
+ <chapter xml:id="chapter-quantifiers">
+-  <title>
+-  <quote>Who Did You Pass On The Road? Nobody</quote>: Lojban And Logic</title>
++  <title> <quote>Who Did You Pass On The Road? Nobody</quote>: Lojban And Logic</title>
++  <mediaobject xml:id="chapter-quantifiers-picture">
++    <alt>The picture for chapter 16</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-quantifiers.gif"/>
++    </imageobject>
++</mediaobject>
+   <section xml:id="section-quantifiers-introduction">
+     <title>What's wrong with this picture?</title>
+     <para> <indexterm type="general-imported"><primary>nobody</primary><secondary>interpretation of</secondary></indexterm> The following brief dialogue is from <citetitle pubwork="chapter">Chapter 7</citetitle> of 
+     <citetitle pubwork="book">Through The Looking Glass</citetitle> by Lewis Carroll.</para>
+     <!-- Perhaps these should be combined into one example. -->
+     <example xml:id="example-random-id-KB90">
+       <title>
+         <anchor xml:id="c16e1d1"/>
+       </title>
+       <para>
+diff --git a/chapters/17.xml b/chapters/17.xml
+index f091f72..5ac87f4 100644
+--- a/chapters/17.xml
++++ b/chapters/17.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-letterals">
+   <title>As Easy As A-B-C? The Lojban Letteral System And Its Uses</title>
++  <mediaobject xml:id="chapter-letterals-picture">
++    <alt>The picture for chapter 17</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-letterals.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-letterals-introduction">
+     <title>What's a letteral, anyway?</title>
+     <para> <indexterm type="general-imported"><primary>letter</primary><secondary>alphabet</secondary></indexterm>  <indexterm type="general-imported"><primary>letteral</primary><secondary>definition</secondary></indexterm>  <indexterm type="general-imported"><primary>Brown</primary><secondary>James Cooke</secondary><tertiary>and &quot;letteral&quot;</tertiary></indexterm> James Cooke Brown, the founder of the Loglan Project, coined the word 
+     
+     <quote>letteral</quote> (by analogy with 
+     <quote>numeral</quote>) to mean a letter of the alphabet, such as 
+     <quote>f</quote> or 
+     <quote>z</quote>. A typical example of its use might be</para>
+     <example xml:id="example-random-id-tvHm">
+       <title>
+diff --git a/chapters/18.xml b/chapters/18.xml
+index 5a79924..068d8d9 100644
+--- a/chapters/18.xml
++++ b/chapters/18.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-mekso">
+   <title>lojbau mekso: Mathematical Expressions in Lojban</title>
++  <mediaobject xml:id="chapter-mekso-picture">
++    <alt>The picture for chapter 18</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-mekso.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-mekso-introduction">
+     <title>Introductory</title>
+     <para>lojbau mekso ( 
+     <quote>Lojbanic mathematical-expression</quote>) is the part of the Lojban language that is tailored for expressing statements of a mathematical character, or for adding numerical information to non-mathematical statements. Its formal design goals include:</para>
+     <orderedlist>
+       <listitem>
+         <para> <indexterm type="general-imported"><primary>mekso goal</primary><secondary>for mathematical writing</secondary></indexterm>  <indexterm type="general-imported"><primary>mekso</primary><secondary>design goals</secondary></indexterm> representing all the different forms of expression used by mathematicians in their normal modes of writing, so that a reader can unambiguously read off mathematical text as written with minimal effort and expect a listener to understand it;</para>
+       </listitem>
+       <listitem>
+         <para> <indexterm type="general-imported"><primary>mekso goal</primary><secondary>for common use</secondary></indexterm>  <indexterm type="general-imported"><primary>mekso goal</primary><secondary>expandable</secondary></indexterm> providing a vocabulary of commonly used mathematical terms which can readily be expanded to include newly coined words using the full resources of Lojban;</para>
+diff --git a/chapters/19.xml b/chapters/19.xml
+index de38758..7acaebf 100644
+--- a/chapters/19.xml
++++ b/chapters/19.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-structure">
+   <title>Putting It All Together: Notes on the Structure of Lojban Texts</title>
++  <mediaobject xml:id="chapter-structure-picture">
++    <alt>The picture for chapter 19</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-structure.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-structure-introduction">
+     <title>Introductory</title>
+     <para>This chapter is incurably miscellaneous. It describes the cmavo that specify the structure of Lojban texts, from the largest scale (paragraphs) to the smallest (single words). There are fewer examples than are found in other chapters of this book, since the linguistic mechanisms described are generally made use of in conversation or else in long documents.</para>
+     <para>This chapter is also not very self-contained. It makes passing reference to a great many concepts which are explained in full only in other chapters. The alternative would be a chapter on text structure which was as complex as all the other chapters put together. Lojban is a unified language, and it is not possible to understand any part of it (in full) before understanding every part of it (to some degree).</para>
+   </section>
+   <section xml:id="section-i">
+     <title>Sentences: I</title>
+     <para>The following cmavo is discussed in this section:</para>
+     <cmavo-list>
+       <cmavo-entry>
+diff --git a/chapters/2.xml b/chapters/2.xml
+index 63bc84f..b7dcd2a 100644
+--- a/chapters/2.xml
++++ b/chapters/2.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-tour">
+   <title>A Quick Tour of Lojban Grammar, With Diagrams</title>
++  <mediaobject xml:id="chapter-tour-picture">
++    <alt>The picture for chapter 2</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-tour.gif" />
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-bridi">
+     <title>The concept of the bridi</title>
+     <para> <indexterm type="general-imported"><primary>bridi</primary><secondary>concept of</secondary></indexterm> This chapter gives diagrammed examples of basic Lojban sentence structures. The most general pattern is covered first, followed by successive variations on the basic components of the Lojban sentence. There are many more capabilities not covered in this chapter, but covered in detail in later chapters, so this chapter is a 
+     <quote>quick tour</quote> of the material later covered more slowly throughout the book. It also introduces most of the Lojban words used to discuss Lojban grammar.</para>
+     <para> 
+ 
+ 
+  Let us consider John and Sam and three statements about them:</para>
+     
+     <example xml:id="example-random-id-qIuj">
+diff --git a/chapters/20.xml b/chapters/20.xml
+index 5bee4e0..6cd6675 100644
+--- a/chapters/20.xml
++++ b/chapters/20.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-catalogue">
+   <title>A Catalogue of selma'o</title>
++  <mediaobject xml:id="chapter-catalogue-picture">
++    <alt>The picture for chapter 20</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-catalogue.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-index">
+     <title/>
+     <!--
+         <h6>$Revision: 4.3 $<br />
+         mkhtml: 1.1</h6>
+     -->
+     <para> <indexterm type="general-imported"><primary>selma'o</primary><secondary>cross-reference list of</secondary><tertiary>selma'o catalog</tertiary></indexterm> The following paragraphs list all the selma'o of Lojban, with a brief explanation of what each one is about, and reference to the chapter number where each is explained more fully. As usual, all selma'o names are given in capital letters (with “h” serving as the capital of “'”) and are the names of a representative cmavo, often the most important or the first in alphabetical order. One example is given of each selma'o: for selma'o which have several uses, the most common use is shown.</para>
+     <bridgehead>
+       <indexterm type="lojban-word-imported"><primary>A</primary><secondary>selma'o catalog</secondary></indexterm>  <indexterm type="general-imported"><primary>connection</primary><secondary>of sumti</secondary><tertiary>selma'o catalog</tertiary></indexterm> 
+       <anchor xml:id="A" xreflabel="A"/> selma'o A (<xref linkend="section-sumti-connection"/>)
+diff --git a/chapters/21.xml b/chapters/21.xml
+index 6f61e94..cf211e1 100644
+--- a/chapters/21.xml
++++ b/chapters/21.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-grammars">
+   <title>Formal Grammars</title>
++  <mediaobject xml:id="chapter-grammars-picture">
++    <alt>The picture for chapter 21</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-grammars.gif"/>
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-YACC">
+     <title>YACC Grammar of Lojban</title>
+     <para>The following two listings constitute the formal grammar of Lojban. The first version is written in the YACC language, which is used to describe parsers, and has been used to create a parser for Lojban texts. This parser is available from the Logical Language Group. The second listing is in Extended Backus-Naur Form (EBNF) and represents the same grammar in a more human-readable form. (In case of discrepancies, the YACC version is official.) There is a cross-reference listing for each format that shows, for each selma'o and rule, which rules refer to it.</para>
+     
+     <para>/* /*Lojban Machine Grammar, Final Baseline The Lojban Machine Grammardocument is explicitly dedicated to the public domain by its author,The Logical Language Group, Inc.</para>
+     <para>grammar.300 */</para>
+     <para>/* The Lojban machine parsing algorithm is a multi-step process. The YACC machine grammar presented here is an amalgam of those steps, concatenated so as to allow YACC to verify the syntactic ambiguity of the grammar. YACC is used to generate a parser for a portion of the grammar, which is LALR1 (the type of grammar that YACC is designed to identify and process successfully), but most of the rest of the grammar must be parsed using some language-coded processing.</para>
+     
+     <bridgehead>Step 1 &ndash; Lexing</bridgehead>
+     <para>From phonemes, stress, and pause, it is possible to resolve Lojban unambiguously into a stream of words. Any machine processing of speech will have to have some way to deal with <quote>non-Lojban</quote> failures of fluent speech, of course. The resolved words can be expressed as a text file using Lojban's phonetic spelling rules.</para>
+diff --git a/chapters/3.xml b/chapters/3.xml
+index 3a87993..bfb447c 100644
+--- a/chapters/3.xml
++++ b/chapters/3.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-phonology">
+   <title>The Hills Are Alive With The Sounds Of Lojban</title>
++  <mediaobject xml:id="chapter-phonology-picture">
++    <alt>The picture for chapter 3</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-phonology.gif"  />
++    </imageobject>
++  </mediaobject>
+   <section xml:id="section-orthography">
+     <title>Orthography</title>
+     <para> <indexterm type="general-imported"><primary>orthography</primary><secondary>relation to pronunciation</secondary></indexterm>  <indexterm type="general-imported"><primary>pronunciation</primary><secondary>relation to orthography</secondary></indexterm>  <indexterm type="general-imported"><primary>audio-visual isomorphism</primary></indexterm>  <indexterm type="general-imported"><primary>isomorphism</primary><secondary>audio-visual</secondary></indexterm> Lojban is designed so that any properly spoken Lojban utterance can be uniquely transcribed in writing, and any properly written Lojban can be spoken so as to be uniquely reproduced by another person. As a consequence, the standard Lojban orthography must assign to each distinct sound, or phoneme, a unique letter or symbol. Each letter or symbol has only one sound or, more accurately, a limited range of sounds that are permitted pronunciations for that phoneme. Some symbols indicate stress (speech emphasis) and pause, which are also essential to Lojban word recognition. In addition, everything that is represented in other languages by punctuation (when written) or by tone of voice (when spoken) is represented in Lojban by words. These two properties together are known technically as <quote>audio-visual isomorphism</quote>.</para>
+     
+     <para> <indexterm type="general-imported"><primary>alphabet</primary><secondary>Lojban</secondary></indexterm>  <indexterm type="general-imported"><primary>Lojban alphabet</primary></indexterm>  <indexterm type="general-imported"><primary>Latin alphabet</primary></indexterm> Lojban uses a variant of the Latin (Roman) alphabet, consisting of the following letters and symbols:
+     <simplelist type="horiz" columns="26">
+       <member>'</member>
+       <member>,</member>
+       <member>.</member>
+       <member>a</member>
+diff --git a/chapters/4.xml b/chapters/4.xml
+index 0242db5..103fd92 100644
+--- a/chapters/4.xml
++++ b/chapters/4.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-morphology">
+   <title>The Shape Of Words To Come: Lojban Morphology</title>
++  <mediaobject xml:id="chapter-morphology-picture">
++    <alt>The picture for chapter 4</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-morphology.gif"/>
++    </imageobject>
++  </mediaobject>
+   
+   <section xml:id="section-morphology-introduction">
+     <title>Introductory</title>
+     <para><indexterm type="general-imported"><primary>word forms</primary><secondary>in Lojban (see also morphology)</secondary></indexterm>  <indexterm type="general-imported"><primary>morphology</primary><secondary>definition</secondary></indexterm>  <indexterm type="general-imported"><primary>morphology</primary><secondary>simplicity of</secondary></indexterm> Morphology is the part of grammar that deals with the form of words. Lojban's morphology is fairly simple compared to that of many languages, because Lojban words don't change form depending on how they are used. English has only a small number of such changes compared to languages like Russian, but it does have changes like 
+     <quote>boys</quote> as the plural of 
+     
+     <quote>boy</quote>, or 
+     <quote>walked</quote> as the past-tense form of 
+     <quote>walk</quote>. To make plurals or past tenses in Lojban, you add separate words to the sentence that express the number of boys, or the time when the walking was going on.</para>
+     <para> <indexterm type="general-imported"><primary>word forms</primary><secondary>as related to grammatical uses</secondary></indexterm>  <indexterm type="general-imported"><primary>derivational morphology</primary><secondary>definition</secondary></indexterm>  <indexterm type="general-imported"><primary>morphology</primary><secondary>derivational</secondary></indexterm> However, Lojban does have what is called 
+diff --git a/chapters/5.xml b/chapters/5.xml
+index 9d2d318..31eb982 100644
+--- a/chapters/5.xml
++++ b/chapters/5.xml
+@@ -1,12 +1,18 @@
+ <chapter xml:id="chapter-selbri">
+   <title><quote>Pretty Little Girls' School</quote>: The Structure Of Lojban selbri</title>
++  <mediaobject xml:id="chapter-selbri-picture">
++    <alt>The picture for chapter 5</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-selbri.gif"/>
++    </imageobject>
++  </mediaobject>
+   
+   <section xml:id="section-content-words-brivla">
+     <title>Lojban content words: brivla</title>
+     <para> <indexterm type="general-imported"><primary>bridi</primary><secondary>relation to selbri</secondary></indexterm>  <indexterm type="general-imported"><primary>selbri</primary><secondary>relation to bridi</secondary></indexterm>  <indexterm type="general-imported"><primary>selbri</primary><secondary>definition</secondary></indexterm>  <indexterm type="general-imported"><primary>bridi</primary><secondary>definition</secondary></indexterm> At the center, logically and often physically, of every Lojban bridi is one or more words which constitute the selbri. A bridi expresses a relationship between things: the selbri specifies which relationship is referred to. The difference between:</para>
+     <example role="interlinear-gloss-example" xml:id="example-do-mamta-mi">
+       <title>
+         <anchor xml:id="c5e1d1"/>
+       </title>
+       <interlinear-gloss>
+         <jbo>do mamta mi</jbo>
+diff --git a/chapters/6.xml b/chapters/6.xml
+index 52230e3..bdd93f1 100644
+--- a/chapters/6.xml
++++ b/chapters/6.xml
+@@ -1,12 +1,19 @@
+ <chapter xml:id="chapter-sumti">
+   <title>To Speak Of Many Things: The Lojban sumti</title>
++  <mediaobject xml:id="chapter-sumti-picture">
++    <alt>The picture for chapter 6</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-sumti.gif"/>
++    </imageobject>
++  </mediaobject>
++
+   <section xml:id="section-simple-sumti-kinds">
+     <title>The five kinds of simple sumti</title>
+     
+     <para> <indexterm type="general-imported"><primary>sumti</primary><secondary>definition</secondary></indexterm>  <indexterm type="general-imported"><primary>simple sumti</primary></indexterm> If you understand anything about Lojban, you know what a sumti is by now, right? An argument, one of those things that fills the places of simple Lojban sentences like:</para>
+     <example role="interlinear-gloss-example" xml:id="example-random-id-VKU6">
+       <title>
+         <anchor xml:id="c6e1d1"/>
+       </title>
+       <interlinear-gloss>
+         <jbo>mi klama le zarci</jbo>
+diff --git a/chapters/7.xml b/chapters/7.xml
+index f87dc40..5eb8394 100644
+--- a/chapters/7.xml
++++ b/chapters/7.xml
+@@ -1,12 +1,20 @@
+ <chapter xml:id="chapter-anaphoric-cmavo">
+   <title>Brevity Is The Soul Of Language: Pro-sumti And Pro-bridi</title>
++
++  <mediaobject xml:id="chapter-anaphoric-cmavo-picture">
++    <alt>The picture for chapter 7</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-anaphoric-cmavo.gif"/>
++    </imageobject>
++  </mediaobject>
++
+   <section xml:id="section-anaphoric-cmavo-introduction">
+     <title>What are pro-sumti and pro-bridi? What are they for?</title>
+     <para> <indexterm type="general-imported"><primary>pronouns in English</primary><secondary>as noun abbreviations</secondary></indexterm> Speakers of Lojban, like speakers of other languages, require mechanisms of abbreviation. If every time we referred to something, we had to express a complete description of it, life would be too short to say what we have to say. In English, we have words called 
+     <quote>pronouns</quote> which allow us to replace nouns or noun phrases with shorter terms. An English with no pronouns might look something like this:</para>
+     
+     <example xml:id="example-random-id-KeL4">
+       <title>
+         <anchor xml:id="c7e1d1"/>
+       </title>
+       <para>Speakers of Lojban, like speakers of other languages, require mechanisms of abbreviation. If every time speakers of Lojban referred to a thing to which speakers of Lojban refer, speakers of Lojban had to express a complete description of what speakers of Lojban referred to, life would be too short to say what speakers of Lojban have to say.</para>
+diff --git a/chapters/8.xml b/chapters/8.xml
+index 245239b..25d7cdc 100644
+--- a/chapters/8.xml
++++ b/chapters/8.xml
+@@ -1,12 +1,19 @@
+ <chapter xml:id="chapter-relative-clauses">
+   <title>Relative Clauses, Which Make sumti Even More Complicated</title>
++  <mediaobject xml:id="chapter-relative-clauses-picture">
++    <alt>The picture for chapter 8</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-relative-clauses.gif"/>
++    </imageobject>
++  </mediaobject>
++
+   <section xml:id="section-poi">
+     <title>What are you pointing at?</title>
+     <para>The following cmavo are discussed in this section:</para>
+     <cmavo-list>
+       <cmavo-entry>
+         <cmavo>poi</cmavo>
+         <selmaho>NOI</selmaho>
+         <description>restrictive relative clause introducer</description>
+         
+       </cmavo-entry>
+diff --git a/chapters/9.xml b/chapters/9.xml
+index 2ae71a5..6d5d78d 100644
+--- a/chapters/9.xml
++++ b/chapters/9.xml
+@@ -1,12 +1,19 @@
+ <chapter xml:id="chapter-sumti-tcita">
+   <title>To Boston Via The Road Go I, With An Excursion Into The Land Of Modals</title>
++  <mediaobject xml:id="chapter-sumti-tcita-picture">
++    <alt>The picture for chapter 9</alt>
++    <imageobject>
++      <imagedata fileref="media/chapter-sumti-tcita.gif"/>
++    </imageobject>
++  </mediaobject>
++
+   <section xml:id="section-sumti-tcita-introduction">
+     <title>Introductory</title>
+     <para> <indexterm type="general-imported"><primary>relationship</primary><secondary>objects of</secondary></indexterm>  <indexterm type="general-imported"><primary>relationship</primary><secondary>as basis of sentence</secondary></indexterm>  <indexterm type="general-imported"><primary>sentence</primary><secondary>basic Lojban</secondary></indexterm>  <indexterm type="general-imported"><primary>selbri</primary><secondary>definition</secondary></indexterm>  <indexterm type="general-imported"><primary>sumti</primary><secondary>definition</secondary></indexterm> The basic type of Lojban sentence is the bridi: a claim by the speaker that certain objects are related in a certain way. The objects are expressed by Lojban grammatical forms called 
+     <valsi>sumti</valsi>; the relationship is expressed by the Lojban grammatical form called a 
+     <valsi>selbri</valsi>.</para>
+     <para> <indexterm type="general-imported"><primary>sumti</primary><secondary>as objects in place structure slots</secondary></indexterm>  <indexterm type="general-imported"><primary>place structure</primary><secondary>empty slots in</secondary></indexterm>  <indexterm type="general-imported"><primary>place structure</primary><secondary>definition</secondary></indexterm>  <indexterm type="general-imported"><primary>selbri</primary><secondary>place structure of</secondary></indexterm> The sumti are not randomly associated with the selbri, but according to a systematic pattern known as the 
+     <quote>place structure</quote> of the selbri. This chapter describes the various ways in which the place structure of Lojban bridi is expressed and by which it can be manipulated. The place structure of a selbri is a sequence of empty slots into which the sumti associated with that selbri are placed. The sumti are said to occupy the places of the selbri.</para>
+     <para> <indexterm type="general-imported"><primary>place structure of selbri</primary><secondary>determining</secondary></indexterm> For our present purposes, every selbri is assumed to have a well-known place structure. If the selbri is a brivla, the place structure can be looked up in a dictionary (or, if the brivla is a lujvo not in any dictionary, inferred from the principles of lujvo construction as explained in 
+     <xref linkend="chapter-lujvo"/>); if the selbri is a tanru, the place structure is the same as that of the final component in the tanru.</para>
+     <para>
+diff --git a/media/chapter-about.gif b/media/chapter-about.gif
+new file mode 100644
+index 0000000..0e71e29
+Binary files /dev/null and b/media/chapter-about.gif differ
+diff --git a/media/chapter-abstractions.gif b/media/chapter-abstractions.gif
+new file mode 100644
+index 0000000..d3d77c1
+Binary files /dev/null and b/media/chapter-abstractions.gif differ
+diff --git a/media/chapter-anaphoric-cmavo.gif b/media/chapter-anaphoric-cmavo.gif
+new file mode 100644
+index 0000000..745cdb5
+Binary files /dev/null and b/media/chapter-anaphoric-cmavo.gif differ
+diff --git a/media/chapter-attitudinals.gif b/media/chapter-attitudinals.gif
+new file mode 100644
+index 0000000..373379e
+Binary files /dev/null and b/media/chapter-attitudinals.gif differ
+diff --git a/media/chapter-catalogue.gif b/media/chapter-catalogue.gif
+new file mode 100644
+index 0000000..06ceb1a
+Binary files /dev/null and b/media/chapter-catalogue.gif differ
+diff --git a/media/chapter-connectives.gif b/media/chapter-connectives.gif
+new file mode 100644
+index 0000000..87476fc
+Binary files /dev/null and b/media/chapter-connectives.gif differ
+diff --git a/media/chapter-grammars.gif b/media/chapter-grammars.gif
+new file mode 100644
+index 0000000..eb99d90
+Binary files /dev/null and b/media/chapter-grammars.gif differ
+diff --git a/media/chapter-letterals.gif b/media/chapter-letterals.gif
+new file mode 100644
+index 0000000..a4fe587
+Binary files /dev/null and b/media/chapter-letterals.gif differ
+diff --git a/media/chapter-lujvo.gif b/media/chapter-lujvo.gif
+new file mode 100644
+index 0000000..25677b8
+Binary files /dev/null and b/media/chapter-lujvo.gif differ
+diff --git a/media/chapter-mekso.gif b/media/chapter-mekso.gif
+new file mode 100644
+index 0000000..af78cb3
+Binary files /dev/null and b/media/chapter-mekso.gif differ
+diff --git a/media/chapter-morphology.gif b/media/chapter-morphology.gif
+new file mode 100644
+index 0000000..638cb63
+Binary files /dev/null and b/media/chapter-morphology.gif differ
+diff --git a/media/chapter-negation.gif b/media/chapter-negation.gif
+new file mode 100644
+index 0000000..5bce2ff
+Binary files /dev/null and b/media/chapter-negation.gif differ
+diff --git a/media/chapter-phonology.gif b/media/chapter-phonology.gif
+new file mode 100644
+index 0000000..d676128
+Binary files /dev/null and b/media/chapter-phonology.gif differ
+diff --git a/media/chapter-quantifiers.gif b/media/chapter-quantifiers.gif
+new file mode 100644
+index 0000000..b8c8aae
+Binary files /dev/null and b/media/chapter-quantifiers.gif differ
+diff --git a/media/chapter-relative-clauses.gif b/media/chapter-relative-clauses.gif
+new file mode 100644
+index 0000000..6bd68bd
+Binary files /dev/null and b/media/chapter-relative-clauses.gif differ
+diff --git a/media/chapter-selbri.gif b/media/chapter-selbri.gif
+new file mode 100644
+index 0000000..845e1ed
+Binary files /dev/null and b/media/chapter-selbri.gif differ
+diff --git a/media/chapter-structure.gif b/media/chapter-structure.gif
+new file mode 100644
+index 0000000..ee12adb
+Binary files /dev/null and b/media/chapter-structure.gif differ
+diff --git a/media/chapter-sumti-tcita.gif b/media/chapter-sumti-tcita.gif
+new file mode 100644
+index 0000000..b895118
+Binary files /dev/null and b/media/chapter-sumti-tcita.gif differ
+diff --git a/media/chapter-sumti.gif b/media/chapter-sumti.gif
+new file mode 100644
+index 0000000..f162c1f
+Binary files /dev/null and b/media/chapter-sumti.gif differ
+diff --git a/media/chapter-tenses.gif b/media/chapter-tenses.gif
+new file mode 100644
+index 0000000..4bdb100
+Binary files /dev/null and b/media/chapter-tenses.gif differ
+diff --git a/media/chapter-tour.gif b/media/chapter-tour.gif
+new file mode 100644
+index 0000000..729bdee
+Binary files /dev/null and b/media/chapter-tour.gif differ
+
+commit 0428da36640168140ad6b9b1c9f03d8fa55dab33
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Thu Apr 5 15:48:43 2012 -0700
+
+    Use the whole media folder.
+
+diff --git a/Makefile b/Makefile
+index 303bcbe..99d0510 100644
+--- a/Makefile
++++ b/Makefile
+@@ -27,65 +27,62 @@ cll_processed_xhtml.xml: cll.xml xml/docbook2html_preprocess.xsl
+ 
+ #*******
+ # Many xhtml files
+ #*******
+ .PHONY: xhtml_web
+ xhtml_web: xhtml.done
+ 	mkdir -p ~/www/media/public/tmp
+ 	rm -rf ~/www/media/public/tmp/cll-xhtml
+ 	cp -pr xhtml ~/www/media/public/tmp/cll-xhtml
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/cll-xhtml/docbook2html.css
+-	mkdir -p ~/www/media/public/tmp/cll-xhtml/media
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml/media/chapter-2-diagram.png
++	cp -pr $(PWD)/media ~/www/media/public/tmp/cll-xhtml/
+ 
+ .PHONY: xhtml
+ xhtml: xhtml.done
+ xhtml.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml
+ 	mkdir xhtml
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config_no-sections.xsl -o xhtml/ xhtml cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+ 	touch xhtml.done
+ 
+ #*******
+ # Section xhtml files
+ #*******
+ .PHONY: xhtml_sections_web
+ xhtml_sections_web: xhtml_sections.done
+ 	mkdir -p ~/www/media/public/tmp
+ 	rm -rf ~/www/media/public/tmp/cll-xhtml-sections
+ 	cp -pr xhtml_sections ~/www/media/public/tmp/cll-xhtml-sections
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/cll-xhtml-sections/docbook2html.css
+-	mkdir -p ~/www/media/public/tmp/cll-xhtml-sections/media
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/cll-xhtml-sections/media/chapter-2-diagram.png
++	cp -pr $(PWD)/media ~/www/media/public/tmp/cll-xhtml-sections/media
+ 
+ .PHONY: xhtml_sections
+ xhtml_sections: xhtml_sections.done
+ xhtml_sections.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml_sections
+ 	mkdir xhtml_sections
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config_sections.xsl -o xhtml_sections/ --stringparam chunk.section.depth=1 --stringparam chunk.first.sections=1 xhtml cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+ 	touch xhtml_sections.done
+ 
+ #*******
+ # One XHTML file
+ #*******
+ .PHONY: xhtml_nochunks_web
+ xhtml_nochunks_web: xhtml-nochunks.done
+ 	mkdir -p ~/www/media/public/tmp/media
+ 	cp $(PWD)/docbook2html.css  ~/www/media/public/tmp/docbook2html.css
+ 	cp $(PWD)/xhtml-nochunks/cll_processed_xhtml.html ~/www/media/public/tmp/cll-xhtml-nochunks.html
+-	mkdir -p ~/www/media/public/tmp/media
+-	cp $(PWD)/media/chapter-2-diagram.png ~/www/media/public/tmp/media/chapter-2-diagram.png
++	cp -pr $(PWD)/media ~/www/media/public/tmp/
+ 
+ .PHONY: xhtml_nochunks
+ xhtml_nochunks: xhtml-nochunks.done
+ xhtml-nochunks.done: cll_processed_xhtml.xml xml/docbook2html_config.xsl
+ 	rm -rf xhtml-nochunks
+ 	mkdir xhtml-nochunks
+ 	ln -fs $(PWD)/docbook2html.css xhtml-nochunks/
+ 	# FIXME: Consider doing something like this: -x /usr/share/sgml/docbook/xsl-ns-stylesheets-1.76.1/fo/docbook.xsl
+ 	# So we know exactly what stylesheets we're getting
+ 	xmlto -m xml/docbook2html_config.xsl -o xhtml-nochunks/ xhtml-nochunks cll_processed_xhtml.xml 2>&1 | grep -v 'No localization exists for "jbo" or "". Using default "en".'
+
+commit e835eeb91ec03485eb2dead8499f737796804cba
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Thu Apr 5 15:48:31 2012 -0700
+
+    Easier on the eyes.
+
+diff --git a/xml/latex_preprocess.xsl b/xml/latex_preprocess.xsl
+index e74191b..16a7cf2 100644
+--- a/xml/latex_preprocess.xsl
++++ b/xml/latex_preprocess.xsl
+@@ -77,23 +77,21 @@
+         </xsl:call-template>
+       </xsl:if>
+     </xsl:for-each>
+   </xsl:template>
+ 
+   <xsl:template name="counted_table">
+     <xsl:param name="maximal" select="''"/>
+     <xsl:param name="items" select="''"/>
+     <latex-verbatim>
+       <!-- LaTeX table setup -->
+-      <xsl:text>
+-        % see longtable docs for these next lines
+-        \begin{tabulary}{\linewidth}{</xsl:text>
++      <xsl:text>&#10;\begin{tabulary}{\linewidth}{</xsl:text>
+       <!-- LaTeX table width -->
+       <xsl:for-each select="$maximal/td">
+         <xsl:text>L</xsl:text>
+       </xsl:for-each>
+       <xsl:text>}&#10;</xsl:text>
+       <xsl:for-each select="$items/tr">
+         <xsl:for-each select="./td">
+           <xsl:choose>
+             <!-- Deal with full width columns -->
+             <xsl:when test="@colspan='0'">
+@@ -120,21 +118,21 @@
+             </xsl:otherwise>
+           </xsl:choose>
+           <!-- column terminator if not last -->
+           <xsl:if test="position() != last()">
+             <xsl:text>&amp;&#10;</xsl:text>
+           </xsl:if>
+         </xsl:for-each>
+         <!-- end of row -->
+         <xsl:text>\tabularnewline&#10;</xsl:text>
+       </xsl:for-each>
+-      <xsl:text>\end{tabulary}</xsl:text>
++      <xsl:text>\end{tabulary}&#10;</xsl:text>
+     </latex-verbatim>
+   </xsl:template>
+ 
+ 
+   <!-- deal with aleph -->
+   <xsl:template match="math/text()[contains(.,'&#x2135;')]|inlinemath/text()[contains(.,'&#x2135;')]|mathphrase/text()[contains(.,'&#x2135;')]">
+     <xsl:call-template name="string-char-replace">
+       <xsl:with-param name="from">&#x2135;</xsl:with-param>
+       <xsl:with-param name="to"><latex-verbatim>$\aleph$</latex-verbatim></xsl:with-param>
+       <xsl:with-param name="string" select="."/>
+
+commit b1d5e9aa695408b6d814067b8d1bf617015d6cee
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Thu Apr 5 15:17:26 2012 -0700
+
+    Re-arranging the bullshit quenya chart.
+
+diff --git a/chapters/3.xml b/chapters/3.xml
+index 7c68866..3a87993 100644
+--- a/chapters/3.xml
++++ b/chapters/3.xml
+@@ -2081,113 +2081,113 @@
+     <quote>y</quote> is mapped onto the hard sign 
+     <quote>ъ</quote>, as in Bulgarian. The apostrophe, comma, and period are unchanged. Diphthongs are written as vowel pairs, as in the Roman representation.</para>
+     <para> <indexterm type="general-imported"><primary>Tolkien</primary><secondary>and non-standard Lojban orthography</secondary></indexterm>  <indexterm type="general-imported"><primary>non-standard orthographies</primary><secondary>Tengwar</secondary></indexterm> Finally, an orthography using the Tengwar of Féanor, a fictional orthography invented by J. R. R. Tolkien and described in the Appendixes to 
+     
+     
+     <citetitle pubwork="book">The Lord Of The Rings</citetitle>, has been devised for Lojban. The following mapping, which closely resembles that used for Westron, will be meaningful only to those who have read those appendixes. In brief, the tincotéma and parmatéma are used in the conventional ways; the calmatéma represents palatal consonants, and the quessetéma represents velar consonants.</para>
+     
+       <variablelist>
+         <varlistentry>
+           <term><phrase xml:lang="qya">tinco</phrase></term>
+-          <listitem><letteral>t</letteral></listitem>
++          <listitem><para><letteral>t</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">calma</phrase></term>       
+-          <listitem>-</listitem>
++          <listitem><para>-</para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">ando</phrase></term>
+-          <listitem><letteral>d</letteral></listitem>
++          <listitem><para><letteral>d</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">anga</phrase></term>        
+-          <listitem>-</listitem>
++          <listitem><para>-</para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">thule</phrase></term>       
+-          <listitem>-</listitem>
++          <listitem><para>-</para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">harma</phrase></term>
+-          <listitem><letteral>c</letteral></listitem>
++          <listitem><para><letteral>c</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">anto</phrase></term>        
+-          <listitem>-</listitem>
++          <listitem><para>-</para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">anca</phrase></term>
+-          <listitem><letteral>j</letteral></listitem>
++          <listitem><para><letteral>j</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">numen</phrase></term>
+-          <listitem><letteral>n</letteral></listitem>
++          <listitem><para><letteral>n</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">noldo</phrase></term>       
+-          <listitem>-</listitem>
++          <listitem><para>-</para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">ore</phrase></term>
+-          <listitem><letteral>r</letteral></listitem>
++          <listitem><para><letteral>r</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">anna</phrase></term>
+-          <listitem><letteral>i</letteral></listitem>
++          <listitem><para><letteral>i</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">parma</phrase></term>
+-          <listitem><letteral>p</letteral></listitem>
++          <listitem><para><letteral>p</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">quesse</phrase></term>
+-          <listitem><letteral>k</letteral></listitem>
++          <listitem><para><letteral>k</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">umbar</phrase></term>
+-          <listitem><letteral>b</letteral></listitem>
++          <listitem><para><letteral>b</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">ungwe</phrase></term>
+-          <listitem><letteral>g</letteral></listitem>
++          <listitem><para><letteral>g</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">formen</phrase></term>
+-          <listitem><letteral>f</letteral></listitem>
++          <listitem><para><letteral>f</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">hwesta</phrase></term>
+-          <listitem><letteral>x</letteral></listitem>
++          <listitem><para><letteral>x</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">ampa</phrase></term>
+-          <listitem><letteral>v</letteral></listitem>
++          <listitem><para><letteral>v</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">unque</phrase></term>
+-          <listitem>-</listitem>
++          <listitem><para>-</para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">malta</phrase></term>
+-          <listitem><letteral>m</letteral></listitem>
++          <listitem><para><letteral>m</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">nwalme</phrase></term>
+-          <listitem>-</listitem>
++          <listitem><para>-</para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">vala</phrase></term>
+-          <listitem><letteral>u</letteral></listitem>
++          <listitem><para><letteral>u</letteral></para></listitem>
+         </varlistentry>
+         <varlistentry>
+           <term><phrase xml:lang="qya">vilya</phrase></term>
+-          <listitem>-</listitem>
++          <listitem><para>-</para></listitem>
+         </varlistentry>
+       </variablelist>
+ 
+     <para>The letters 
+     <quote xml:lang="qya">vala</quote> and 
+     <quote xml:lang="qya">anna</quote> are used for 
+     <letteral>u</letteral> and 
+     <letteral>i</letteral> only when those letters are used to represent glides. Of the additional letters, 
+     <letteral>r</letteral>, 
+     <letteral>l</letteral>, 
+
+commit a15bdc64eae8d5715e143561e3e08175a8bf7774
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Sun Mar 25 13:57:38 2012 -0700
+
+    Better tengwar list.
+
+diff --git a/chapters/3.xml b/chapters/3.xml
+index f2b7f84..7c68866 100644
+--- a/chapters/3.xml
++++ b/chapters/3.xml
+@@ -2078,118 +2078,119 @@
+     <quote>ф</quote>, 
+     <quote>х</quote>, and 
+     <quote>ш</quote> in the obvious ways. The Latin letter 
+     <quote>y</quote> is mapped onto the hard sign 
+     <quote>ъ</quote>, as in Bulgarian. The apostrophe, comma, and period are unchanged. Diphthongs are written as vowel pairs, as in the Roman representation.</para>
+     <para> <indexterm type="general-imported"><primary>Tolkien</primary><secondary>and non-standard Lojban orthography</secondary></indexterm>  <indexterm type="general-imported"><primary>non-standard orthographies</primary><secondary>Tengwar</secondary></indexterm> Finally, an orthography using the Tengwar of Féanor, a fictional orthography invented by J. R. R. Tolkien and described in the Appendixes to 
+     
+     
+     <citetitle pubwork="book">The Lord Of The Rings</citetitle>, has been devised for Lojban. The following mapping, which closely resembles that used for Westron, will be meaningful only to those who have read those appendixes. In brief, the tincotéma and parmatéma are used in the conventional ways; the calmatéma represents palatal consonants, and the quessetéma represents velar consonants.</para>
+     
+-    <informaltable>
+-          <tr>
+-            <td><letteral>t</letteral></td>
+-            <td><phrase xml:lang="qya">tinco</phrase></td>
+-          </tr>
+-          <tr>
+-            <td>-</td>
+-            <td><phrase xml:lang="qya">calma</phrase></td>       
+-          </tr>
+-          <tr>
+-            <td><letteral>d</letteral></td>
+-            <td><phrase xml:lang="qya">ando</phrase></td>
+-          </tr>
+-          <tr>
+-            <td>-</td>
+-            <td><phrase xml:lang="qya">anga</phrase></td>        
+-          </tr>
+-          <tr>
+-            <td>-</td>
+-            <td><phrase xml:lang="qya">thule</phrase></td>       
+-          </tr>
+-          <tr>
+-            <td><letteral>c</letteral></td>
+-            <td><phrase xml:lang="qya">harma</phrase></td>
+-          </tr>
+-          <tr>
+-            <td>-</td>
+-            <td><phrase xml:lang="qya">anto</phrase></td>        
+-          </tr>
+-          <tr>
+-            <td><letteral>j</letteral></td>
+-            <td><phrase xml:lang="qya">anca</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>n</letteral></td>
+-            <td><phrase xml:lang="qya">numen</phrase></td>
+-          </tr>
+-          <tr>
+-            <td>-</td>
+-            <td><phrase xml:lang="qya">noldo</phrase></td>       
+-          </tr>
+-          <tr>
+-            <td><letteral>r</letteral></td>
+-            <td><phrase xml:lang="qya">ore</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>i</letteral></td>
+-            <td><phrase xml:lang="qya">anna</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>p</letteral></td>
+-            <td><phrase xml:lang="qya">parma</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>k</letteral></td>
+-            <td><phrase xml:lang="qya">quesse</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>b</letteral></td>
+-            <td><phrase xml:lang="qya">umbar</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>g</letteral></td>
+-            <td><phrase xml:lang="qya">ungwe</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>f</letteral></td>
+-            <td><phrase xml:lang="qya">formen</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>x</letteral></td>
+-            <td><phrase xml:lang="qya">hwesta</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>v</letteral></td>
+-            <td><phrase xml:lang="qya">ampa</phrase></td>
+-          </tr>
+-          <tr>
+-            <td>-</td>
+-            <td><phrase xml:lang="qya">unque</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>m</letteral></td>
+-            <td><phrase xml:lang="qya">malta</phrase></td>
+-          </tr>
+-          <tr>
+-            <td>-</td>
+-            <td><phrase xml:lang="qya">nwalme</phrase></td>
+-          </tr>
+-          <tr>
+-            <td><letteral>u</letteral></td>
+-            <td><phrase xml:lang="qya">vala</phrase></td>
+-          </tr>
+-          <tr>
+-            <td>-</td>
+-            <td><phrase xml:lang="qya">vilya</phrase></td>
+-          </tr>
+-    </informaltable>
++      <variablelist>
++        <varlistentry>
++          <term><phrase xml:lang="qya">tinco</phrase></term>
++          <listitem><letteral>t</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">calma</phrase></term>       
++          <listitem>-</listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">ando</phrase></term>
++          <listitem><letteral>d</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">anga</phrase></term>        
++          <listitem>-</listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">thule</phrase></term>       
++          <listitem>-</listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">harma</phrase></term>
++          <listitem><letteral>c</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">anto</phrase></term>        
++          <listitem>-</listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">anca</phrase></term>
++          <listitem><letteral>j</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">numen</phrase></term>
++          <listitem><letteral>n</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">noldo</phrase></term>       
++          <listitem>-</listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">ore</phrase></term>
++          <listitem><letteral>r</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">anna</phrase></term>
++          <listitem><letteral>i</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">parma</phrase></term>
++          <listitem><letteral>p</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">quesse</phrase></term>
++          <listitem><letteral>k</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">umbar</phrase></term>
++          <listitem><letteral>b</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">ungwe</phrase></term>
++          <listitem><letteral>g</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">formen</phrase></term>
++          <listitem><letteral>f</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">hwesta</phrase></term>
++          <listitem><letteral>x</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">ampa</phrase></term>
++          <listitem><letteral>v</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">unque</phrase></term>
++          <listitem>-</listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">malta</phrase></term>
++          <listitem><letteral>m</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">nwalme</phrase></term>
++          <listitem>-</listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">vala</phrase></term>
++          <listitem><letteral>u</letteral></listitem>
++        </varlistentry>
++        <varlistentry>
++          <term><phrase xml:lang="qya">vilya</phrase></term>
++          <listitem>-</listitem>
++        </varlistentry>
++      </variablelist>
++
+     <para>The letters 
+     <quote xml:lang="qya">vala</quote> and 
+     <quote xml:lang="qya">anna</quote> are used for 
+     <letteral>u</letteral> and 
+     <letteral>i</letteral> only when those letters are used to represent glides. Of the additional letters, 
+     <letteral>r</letteral>, 
+     <letteral>l</letteral>, 
+     <letteral>s</letteral>, and 
+     <letteral>z</letteral> are written with 
+     <quote xml:lang="qya">rómen</quote>, 
+
+commit a96e042f27e947401f1138607e877f066d71b3d2
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Sun Mar 25 13:57:17 2012 -0700
+
+    multicolumn setup, currently unused.
+
+diff --git a/xml/latex_preprocess.xsl b/xml/latex_preprocess.xsl
+index 2fb1939..e74191b 100644
+--- a/xml/latex_preprocess.xsl
++++ b/xml/latex_preprocess.xsl
+@@ -143,11 +143,24 @@
+ 
+   <!-- deal with pi -->
+   <xsl:template match="math/text()[contains(.,'&#x03C0;')]|inlinemath/text()[contains(.,'&#x03C0;')]|mathphrase/text()[contains(.,'&#x03C0;')]">
+     <xsl:call-template name="string-char-replace">
+       <xsl:with-param name="from">&#x03C0;</xsl:with-param>
+       <xsl:with-param name="to"><latex-verbatim>$\pi$</latex-verbatim></xsl:with-param>
+       <xsl:with-param name="string" select="."/>
+     </xsl:call-template>
+   </xsl:template>
+ 
++
++  <xsl:template match="para[starts-with(@role,'columnar-')]">
++    <latex-verbatim>
++      <xsl:text>\begin{multicols}{</xsl:text>
++      <xsl:value-of select="substring(@role,10,1)"/>
++      <xsl:text>}</xsl:text>
++    </latex-verbatim>
++    <xsl:apply-templates select="node()|text()"/>
++    <latex-verbatim>
++      <xsl:text>\end{multicols}</xsl:text>
++    </latex-verbatim>
++  </xsl:template>
++
+ </xsl:stylesheet>
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
