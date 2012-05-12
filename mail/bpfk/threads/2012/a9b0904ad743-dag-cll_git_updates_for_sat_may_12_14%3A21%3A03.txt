@@ -1,0 +1,106 @@
+# mail/bpfk thread a9b0904ad743-dag-cll_git_updates_for_sat_may_12_14%3A21%3A03 | root e1stjko-0002ev-cv@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2012-05-12T21:21:03Z | Apache <apache@digitalkingdom.org> | e1stjko-0002ev-cv@stodi.digitalkingdom.org | mail/bpfk/cur/1336857663.a9b0904ad7430e4e.jbomohi:2,S
+commit 10b3bcbffa53116bc5cd93f36d9ef659a5cf5955
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Sat May 12 13:24:18 2012 -0700
+
+    Updated readme and makefile; documentation only, really.
+
+diff --git a/Makefile b/Makefile
+index 99d0510..d192003 100644
+--- a/Makefile
++++ b/Makefile
+@@ -119,38 +119,10 @@ mobi_web: mobi
+ # other utf-8 issues
+ #*******
+ .PHONY: pdf
+ pdf: cll.pdf
+ cll.pdf: cll_processed_pdf.xml xml/dblatex_config.xsl
+ 	dblatex -T latex/cll -o cll.pdf -b xetex -p xml/dblatex_config.xsl cll_processed_pdf.xml 2>&1 | grep -v 'default template used in programlisting or screen'
+ 
+ .PHONY: pdf_web
+ pdf_web: pdf
+ 	cp cll.pdf ~/www/media/public/tmp/cll.pdf
+-
+-#*********************
+-# Faster testing versions go here; lots of copy and paste; lame
+-#*********************
+-
+-.PHONY: test
+-test: chapters = -t chapters/1.xml chapters/2.xml chapters/10.xml chapters/21.xml
+-test: xhtml_web xhtml_nochunks_web pdf_web epub_web mobi_web
+-
+-.PHONY: xhtml_web_test
+-xhtml_web_test: chapters = -t chapters/1.xml chapters/2.xml chapters/10.xml chapters/21.xml
+-xhtml_web_test: xhtml_web
+-
+-.PHONY: pdf_web_test
+-pdf_web_test: chapters = -t chapters/1.xml chapters/2.xml chapters/10.xml chapters/21.xml
+-pdf_web_test: pdf_web
+-
+-.PHONY: epub_web_test
+-epub_web_test: chapters = -t chapters/1.xml chapters/2.xml chapters/10.xml chapters/21.xml
+-epub_web_test: epub_web
+-
+-.PHONY: mobi_web_test
+-mobi_web_test: chapters = -t chapters/1.xml chapters/2.xml chapters/10.xml chapters/21.xml
+-mobi_web_test: mobi_web
+-
+-.PHONY: xhtml_nochunks_web_test
+-xhtml_nochunks_web_test: chapters = -t chapters/1.xml chapters/2.xml chapters/10.xml chapters/21.xml
+-xhtml_nochunks_web_test: xhtml_nochunks_web
+diff --git a/README b/README
+index d30bb5b..56f4449 100644
+--- a/README
++++ b/README
+@@ -11,20 +11,40 @@ This does the whole book but is also much faster:
+ 
+   make test="-t"
+ 
+ There are many possible sub-targets as well, such as:
+ 
+   make test="-t" pdf_web
+ 
+ Also, -t there makes internal links break and strips out the
+ glossary; -s only does the former.
+ 
++Here's a list of all the make targets you care about, as of May
++2012:
++
++  all (default)
++  clean
++  realclean
++  xhtml_web
++  xhtml
++  xhtml_sections_web
++  xhtml_sections
++  xhtml_nochunks_web
++  xhtml_nochunks
++  epub
++  epub_web
++  mobi
++  mobi_web
++  pdf
++  pdf_web
++
++They all have _test versions as well.
+ 
+ Requirements
+ ------------
+ 
+ Getting this all working is actually a pretty huge undertaking;
+ you're almost certainly better off asking Robin Lee Powell for an
+ account on the appropriate server.
+ 
+   General
+   --------------
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To post to this group, send email to bpfk-list@googlegroups.com.
+To unsubscribe from this group, send email to bpfk-list+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/bpfk-list?hl=en.
+
+
+
