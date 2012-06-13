@@ -1,4 +1,4 @@
-# mail/lojban-list thread 72383f2ffe17-other_lojban_peg_parsers%3F_%28alan%29 | root 20120601191346.gm8656@stodi.digitalkingdom.org | 5 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 72383f2ffe17-other_lojban_peg_parsers%3F_%28alan%29 | root 20120601191346.gm8656@stodi.digitalkingdom.org | 6 messages | rendered by jbomohi mail-v1
 
 === 1 | 2012-06-01T19:13:47Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20120601191346.gm8656@stodi.digitalkingdom.org | mail/lojban-list/cur/1338578027.72383f2ffe1749ea.jbomohi:2,S
 
@@ -250,5 +250,93 @@ To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
+
+
+
+=== 6 | 2012-06-13T19:47:55Z | Veijo Vilva <veijo.vilva@gmail.com> | ca+4zpkrchn-xyv-deys_mt7embxw32voqrcvtgptz_7pvo54kw@mail.gmail.com | mail/lojban-list/cur/1339616875.943ef01a1f903029.jbomohi:2,S
+On 1 June 2012 22:13, Robin Lee Powell <rlpowell@digitalkingdom.org> wrote:
+
+>
+> Besides camxes, what have people gotten the Lojban PEG running in?
+>
+
+I've rather intermittently been working on a Lua[1] version using the LPeg
+library[2], originally out of plain curiosity as this very light-weight
+combination (Lua compiler, byte code interpreter, VM and basic libraries
+total about 160 kb and the LPeg library is about 39 kb) allows running a
+re-notated PEG as a normal Lua program - there is no parser generator nor a
+specifically written parser program. There is only one drawback - a parser
+can be relatively slow as the library doesn't employ Packrat methodology.
+This is because it was primarily designed for pattern matching even in very
+large, mainly linear data sets, which would choke a Packrat based parser.[3]
+
+After defining the non-terminals for the LPeg, which is a necessary step so
+the Lua compiler knows which operators to overload, the LPeg notation is a
+rather simple transformation of the original PEG code. Here is an example:
+
+final_syllable = onset * -y * -stressed * nucleus * -cmene * #post_word,
+stressed_syllable = #stressed * syllable + syllable * #stress,
+stressed_diphthong = #stressed * diphthong + diphthong * #stress,
+stressed_vowel = #stressed * vowel + vowel * #stress,
+unstressed_syllable = -stressed * syllable * -stress + consonantal_syllable,
+unstressed_diphthong  = -stressed * diphthong * -stress,
+unstressed_vowel  = -stressed * vowel * -stress,
+stress = consonant^0 * y^-1 * syllable * pause,
+stressed  = onset * comma^0 * S"AEIOU",
+
+In order to handle recursion, these statements are put inside an
+associative array definition, which then serves as the grammar. The
+left-hand sides are used as indices and the right-hand sides as array
+element values. This way the Lua interpreter doesn't need to know anything
+about the recursion, everything is handled behind the scenes by the LPeg
+library, which starts from the first element in the array and traverses it
+using the non-terminal names in the right-hand sides as indices to access
+the corresponding rules. This is quite an ingenious system utilizing the
+built-in meta-mechanisms of Lua.
+
+I'm just testing the morphology PEG including the classification of cmavo,
+and my present version seems to work quite decently unless fed lots of
+somewhat nasty strings like "rafytestudine". A three years old, quite
+average office PC handles "Alice" in 20 seconds, and the original Asus
+EeePC (with an 800 MHz Celeron) needs slightly less than 2 minutes, which
+even that is quite decent for many purposes. The morphology test sentence
+data set with a lot of nasty words takes 4.5 minutes on the office PC. The
+source text can be fed to the PEG in arbitrary slices, even the whole test
+sentence data set as one block.
+
+I made three small changes in the morphology PEG, two of which ought not
+matter in the parser context even in theory and one which might but did not
+change the output even from the test sentence data set. These changes
+resulted in an about 100% speedup, but might not matter when using a
+Packrat parser.
+
+1) removed !cmene from the rule for cmavo
+2) removed !gismu !fuhivla !cmavo from the rule for lujvo
+3) moved    !cmavo from the rule for brivla-head to the rule for
+fuhivla-head
+
+The PEG script is compiled for each run, but it doesn't really matter as
+the compilation takes only about 50 ms on the office PC. The Lua
+interpreter is available also during the execution of the program and can
+be used to run internally generated scripts, which often make things much
+simpler. A very advanced LuaJIT compiler[4] is also available but doesn't
+really help at the PEG stage. It can, however, offer a substantial speedup
+in other parts of the program system.
+
+I must still check the conversion and do some tidying up before moving on
+to the syntax PEG and the glue between the processing stages.
+
+    Veijo
+
+[1]  http://www.lua.org
+[2]  http://www.inf.puc-rio.br/~roberto/lpeg/
+[3]  http://www.inf.puc-rio.br/~roberto/docs/peg.pdf
+[4]  http://luajit.org
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
 
