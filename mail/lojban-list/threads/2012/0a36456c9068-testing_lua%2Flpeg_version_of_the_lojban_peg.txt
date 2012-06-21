@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0a36456c9068-testing_lua%2Flpeg_version_of_the_lojban_peg | root ca+4zpktphhpvatez_gv3+cqjzeg8ysnq68kdsg60tu-epkq=zq@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0a36456c9068-testing_lua%2Flpeg_version_of_the_lojban_peg | root ca+4zpktphhpvatez_gv3+cqjzeg8ysnq68kdsg60tu-epkq=zq@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2012-06-21T08:08:21Z | Veijo Vilva <veijo.vilva@gmail.com> | ca+4zpktphhpvatez_gv3+cqjzeg8ysnq68kdsg60tu-epkq=zq@mail.gmail.com | mail/lojban-list/cur/1340266101.0a36456c9068755c.jbomohi:2,S
 I,ve now got a preliminary version of the full parser running.
@@ -360,5 +360,63 @@ You received this message because you are subscribed to the Google Groups "lojba
 To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+
+=== 4 | 2012-06-21T16:27:32Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20120621162732.gy1445@stodi.digitalkingdom.org | mail/lojban-list/cur/1340296052.0a88b1887d5d9bde.jbomohi:2,S
+On Thu, Jun 21, 2012 at 11:08:21AM +0300, Veijo Vilva wrote:
+> I,ve now got a preliminary version of the full parser running.
+> 
+> Basically the parser is just the re-formatted PEG, the rest is
+> about 150 lines of quite ordinary Lua code for glue between the
+> stages, some very small  help functions and pretty printing. The
+> source files (The driver program, the morphology PEG and the
+> grammar PEG) presently total 2560 lines (incl. the comments and
+> the empty separator lines), about 78 kbytes. There is no binary
+> for the parser, which is compiled for each run. The compilation
+> time is about 100 ms on any decent PC, which has helped a lot
+> during the testing and refinement stage.
+
+Nice!  Go you.
+
+> I've omitted the erasure handling rules as they seemed to cause
+> too much slowdown and  rewritten some rules to speed up the
+> parsing process. 
+>
+> I've also added  rules to bracket sumti tcita and
+> zei  lujvo. I had to add rules to the morphology PEG in order to
+> keep any quoted non-Lojban text intact - now the quoted text is
+> sent as a single non-L word to the grammar PEG.
+
+For all your changes that you believe do not change the language,
+can you comment on them at
+http://www.lojban.org/tiki/BPFK+Section%3A+Formal+Grammar ?
+
+> My present, very simple pretty printer is quite flexible. It can
+> produce either the full parse tree, which is probably required
+> only for checking the parser, or omit the numbered sub-rules
+> (sumti-1,...) or omit any user-defined set of intermediate levels
+> from the tree. It would be trivial to add glosses for cmavo and
+> gismu to the output. I've also given some thought to passing the
+> lujvo split from the morphology PEG.
+
+FWIW, the trick that I've used for programmatic tree pruning, that
+works very well, is to prune anything that has only one child.
+That, IIRC, is the entire difference between camxes and camxes -v.
+
+> I'll have to do some more testing before releasing the program for
+> general consumption. 
+
+You might as well throw it up on github for people to play with,
+no?
+
+-Robin
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
 
 
