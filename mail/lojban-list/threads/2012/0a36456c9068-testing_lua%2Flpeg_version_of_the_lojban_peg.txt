@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0a36456c9068-testing_lua%2Flpeg_version_of_the_lojban_peg | root ca+4zpktphhpvatez_gv3+cqjzeg8ysnq68kdsg60tu-epkq=zq@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0a36456c9068-testing_lua%2Flpeg_version_of_the_lojban_peg | root ca+4zpktphhpvatez_gv3+cqjzeg8ysnq68kdsg60tu-epkq=zq@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2012-06-21T08:08:21Z | Veijo Vilva <veijo.vilva@gmail.com> | ca+4zpktphhpvatez_gv3+cqjzeg8ysnq68kdsg60tu-epkq=zq@mail.gmail.com | mail/lojban-list/cur/1340266101.0a36456c9068755c.jbomohi:2,S
 I,ve now got a preliminary version of the full parser running.
@@ -309,5 +309,56 @@ To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
+
+
+
+=== 3 | 2012-06-21T16:02:03Z | Veijo Vilva <veijo.vilva@gmail.com> | ca+4zpktkt7n31y0p56q+umb1tyf4joycaw1fo=wnfdb2cas+pa@mail.gmail.com | mail/lojban-list/cur/1340294523.7e1d5e1b7f3840ef.jbomohi:2,S
+On 21 June 2012 14:36, Remo Dentato <rdentato@gmail.com> wrote:
+
+> On Thu, Jun 21, 2012 at 10:08 AM, Veijo Vilva <veijo.vilva@gmail.com>
+> wrote:
+> > I,ve now got a preliminary version of the full parser running.
+>
+> That's realy great!
+>
+> Will you offer an API? I would love to have the possibility of setting
+> call-backs for each element of the grammar. I did this for a (very
+> basic) morphology analyzer done with LPeg
+> (https://groups.google.com/d/topic/lojban/fSJWGpqr9eQ/discussion) and
+> I found it easy to use.
+>
+> Or will you build up the parse tree and return it as result of a
+> function? That would be fine as well.
+>
+
+
+There are two main PEG grammars, one for the morphology and one for the
+syntax, and a third one used by the morphology PEG to classify cmavo.
+
+The morphology PEG produces a Lua program segment containing one function
+call per word. This program segment can be used to drive custom formatting
+functions to produce input for an arbitrary back-end.
+
+The parser PEG produces a parse tree in the form of a Lua table definition
+which can be traversed by further processing steps like the pretty printer
+I used to produce the example listings.
+
+You can, of course, take the syntax LPeg and modify it to use call-backs,
+but I'm not sure it is worth your while as it is much easier to play with
+the parse tree. I'll be adding a few traversing functions like tree pruning
+(to replace the pruning during pretty printing) and sumti enumeration,
+which can be very useful for various purposes.
+
+I expect to be able to release an alpha version pretty soon. I'll just
+re-check the PEG, clean it a little bit and run through a random sample
+from the CLL.
+
+  Veijo
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
 
