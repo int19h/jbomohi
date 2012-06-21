@@ -1,0 +1,595 @@
+Received: from mail-ob0-f189.google.com ([209.85.214.189]:51879)
+	by stodi.digitalkingdom.org with esmtps (TLSv1:RC4-SHA:128)
+	(Exim 4.76)
+	(envelope-from <lojban+bncCIfYkcm2DRCBrYv_BBoE7ZCPWw@googlegroups.com>)
+	id 1ShcS3-00034n-Ui; Thu, 21 Jun 2012 01:09:27 -0700
+Received: by obbun3 with SMTP id un3sf379457obb.16
+        for <multiple recipients>; Thu, 21 Jun 2012 01:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:date:message-id:subject:from
+         :to:x-spam-score:x-spam_score:x-spam_score_int:x-spam_bar:sender
+         :x-original-sender:x-original-authentication-results:reply-to
+         :precedence:mailing-list:list-id:x-google-group-id:list-post
+         :list-help:list-archive:list-subscribe:list-unsubscribe:content-type;
+        bh=k0vZ2RNh1K/DP/+lfPFz1bRu+/u0brgfvGI951h1lqY=;
+        b=MFCaEb79GjiPjB8U3JES7WF0R/QQ4nUpuDQXvCBxUEJVhkGbDuAV4uKZV1vsiZMBdD
+         Ex9o6+FiqhVkkjZ5MHDePFFEtFJ4A8lyy9U66vMowSmuG1fU927iulSbhO49p1yvbnML
+         2qLfUmXXHDT8FVQB9Pdnz7JIHc28EcB/17bc0=
+Received: by 10.68.233.1 with SMTP id ts1mr996034pbc.7.1340266113739;
+        Thu, 21 Jun 2012 01:08:33 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 10.68.240.172 with SMTP id wb12ls1574011pbc.3.gmail; Thu, 21 Jun
+ 2012 01:08:32 -0700 (PDT)
+Received: by 10.68.238.65 with SMTP id vi1mr25541323pbc.7.1340266112369;
+        Thu, 21 Jun 2012 01:08:32 -0700 (PDT)
+Received: by 10.68.238.65 with SMTP id vi1mr25541322pbc.7.1340266112353;
+        Thu, 21 Jun 2012 01:08:32 -0700 (PDT)
+Received: from stodi.digitalkingdom.org (mail.digitalkingdom.org. [173.13.139.236])
+        by gmr-mx.google.com with ESMTPS id iq5si4078444pbc.1.2012.06.21.01.08.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 21 Jun 2012 01:08:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of nobody@stodi.digitalkingdom.org designates 173.13.139.236 as permitted sender) client-ip=173.13.139.236;
+Received: from nobody by stodi.digitalkingdom.org with local (Exim 4.76)
+	(envelope-from <nobody@stodi.digitalkingdom.org>)
+	id 1ShcRL-00033q-1Z
+	for lojban@googlegroups.com; Thu, 21 Jun 2012 01:08:31 -0700
+Received: from mail-vb0-f53.google.com ([209.85.212.53]:57478)
+	by stodi.digitalkingdom.org with esmtps (TLSv1:RC4-SHA:128)
+	(Exim 4.76)
+	(envelope-from <veijo.vilva@gmail.com>)
+	id 1ShcRI-00033c-1G
+	for lojban-list@lojban.org; Thu, 21 Jun 2012 01:08:30 -0700
+Received: by vbbfc26 with SMTP id fc26so190221vbb.40
+        for <lojban-list@lojban.org>; Thu, 21 Jun 2012 01:08:21 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.220.148.196 with SMTP id q4mr13135948vcv.36.1340266101654;
+ Thu, 21 Jun 2012 01:08:21 -0700 (PDT)
+Received: by 10.52.159.193 with HTTP; Thu, 21 Jun 2012 01:08:21 -0700 (PDT)
+Date: Thu, 21 Jun 2012 11:08:21 +0300
+Message-ID: <CA+4zpkTpHHpVAtEZ_gV3+cQJZeg8ySnQ68KdSg60tU-epkq=zQ@mail.gmail.com>
+Subject: [lojban] Testing Lua/LPeg version of the Lojban PEG
+From: Veijo Vilva <veijo.vilva@gmail.com>
+To: lojban@googlegroups.com, lojban-list@lojban.org
+X-Spam-Score: -0.8 (/)
+X-Spam_score: -0.8
+X-Spam_score_int: -7
+X-Spam_bar: /
+Sender: lojban@googlegroups.com
+X-Original-Sender: veijo.vilva@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of nobody@stodi.digitalkingdom.org designates 173.13.139.236 as
+ permitted sender) smtp.mail=nobody@stodi.digitalkingdom.org; dkim=pass header.i=@gmail.com
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+X-Google-Group-Id: 1004133512417
+List-Post: <http://groups.google.com/group/lojban/post?hl=en_US>, <mailto:lojban@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/lojban?hl=en_US>
+List-Subscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:googlegroups-manage+1004133512417+unsubscribe@googlegroups.com>
+Content-Type: multipart/alternative; boundary=f46d0438939de4c3d904c2f704ab
+X-Spam-Score: 0.0 (/)
+X-Spam_score: 0.0
+X-Spam_score_int: 0
+X-Spam_bar: /
+Content-Length: 20527
+
+--f46d0438939de4c3d904c2f704ab
+Content-Type: text/plain; charset=ISO-8859-1
+
+I,ve now got a preliminary version of the full parser running.
+
+Basically the parser is just the re-formatted PEG, the rest is about 150
+lines of quite ordinary Lua code for glue between the stages, some very
+small  help functions and pretty printing. The source files (The driver
+program, the morphology PEG and the grammar PEG) presently total 2560 lines
+(incl. the comments and the empty separator lines), about 78 kbytes. There
+is no binary for the parser, which is compiled for each run. The
+compilation time is about 100 ms on any decent PC, which has helped a lot
+during the testing and refinement stage.
+
+The parser outputs a full parse tree in the form of a Lua table definition
+instead of something intended for immediate human consumption or
+interpretation by some external program. The inherently available Lua
+interpreter is used to compile the definition into a table, which can then
+be recursively traversed with (very) simple routines to produce any desired
+kind of output.
+
+I've omitted the erasure handling rules as they seemed to cause too much
+slowdown and  rewritten some rules to speed up the parsing process. I've
+also added  rules to bracket sumti tcita and zei  lujvo. I had to add rules
+to the morphology PEG in order to keep any quoted non-Lojban text intact -
+now the quoted text is sent as a single non-L word to the grammar PEG.
+
+The parser will handle multiple paragraph text, but I haven't yet any ideas
+about error recovery or meaningful error messages. Presently the program
+just produces an output up to the last structure passing the parser, which
+isn't very helpful - especially as there sometimes is no output what so
+ever.
+
+My present, very simple pretty printer is quite flexible. It can produce
+either the full parse tree, which is probably required only for checking
+the parser, or omit the numbered sub-rules (sumti-1,...) or omit any
+user-defined set of intermediate levels from the tree. It would be trivial
+to add glosses for cmavo and gismu to the output. I've also given some
+thought to passing the lujvo split from the morphology PEG.
+
+I'll have to do some more testing before releasing the program for general
+consumption. I also haven't yet given any thought to the user interface.
+Presently all the parameters are set by editing the driver program as the
+compilation time is no problem.
+
+  Veijo
+
+
+
+
+Some examples of the present output:
+
+a) a "full" tree (without the numbered sub-rules)
+
+text
+| paragraphs
+| | paragraph
+| | | statement
+| | | | sentence
+| | | | | terms
+| | | | | | term
+| | | | | | | sumti
+| | | | | | | | KOhA mi
+| | | | | | term
+| | | | | | | tag
+| | | | | | | | tense modal
+| | | | | | | | | simple tense modal
+| | | | | | | | | | time
+| | | | | | | | | | | time offset
+| | | | | | | | | | | | PU ba
+| | | | | bridi tail
+| | | | | | selbri
+| | | | | | | tanru unit
+| | | | | | | | BRIVLA gismu zgana
+| | | | | | tail terms
+| | | | | | | terms
+| | | | | | | | term
+| | | | | | | | | sumti
+| | | | | | | | | | description
+| | | | | | | | | | | LE le
+| | | | | | | | | | | sumti tail
+| | | | | | | | | | | | selbri
+| | | | | | | | | | | | | tanru unit
+| | | | | | | | | | | | | | abstraction
+| | | | | | | | | | | | | | | NU du'u
+| | | | | | | | | | | | | | | subsentence
+| | | | | | | | | | | | | | | | sentence
+| | | | | | | | | | | | | | | | | terms
+| | | | | | | | | | | | | | | | | | term
+| | | | | | | | | | | | | | | | | | | sumti
+| | | | | | | | | | | | | | | | | | | | name
+| | | | | | | | | | | | | | | | | | | | | LA la
+| | | | | | | | | | | | | | | | | | | | | CMENE djan
+| | | | | | | | | | | | | | | | | | | | joik ek
+| | | | | | | | | | | | | | | | | | | | | ek
+| | | | | | | | | | | | | | | | | | | | | | A ji
+| | | | | | | | | | | | | | | | | | | | | | indicators
+| | | | | | | | | | | | | | | | | | | | | | | indicator
+| | | | | | | | | | | | | | | | | | | | | | | | UI kau
+| | | | | | | | | | | | | | | | | | | | name
+| | | | | | | | | | | | | | | | | | | | | LA la
+| | | | | | | | | | | | | | | | | | | | | CMENE djordz
+| | | | | | | | | | | | | | | | | CU clause
+| | | | | | | | | | | | | | | | | | CU cu
+| | | | | | | | | | | | | | | | | bridi tail
+| | | | | | | | | | | | | | | | | | selbri
+| | | | | | | | | | | | | | | | | | | tanru unit
+| | | | | | | | | | | | | | | | | | | | BRIVLA gismu zvati
+| | | | | | | | | | | | | | | | | | tail terms
+| | | | | | | | | | | | | | | | | | | terms
+| | | | | | | | | | | | | | | | | | | | term
+| | | | | | | | | | | | | | | | | | | | | sumti
+| | | | | | | | | | | | | | | | | | | | | | description
+| | | | | | | | | | | | | | | | | | | | | | | LE le
+| | | | | | | | | | | | | | | | | | | | | | | sumti tail
+| | | | | | | | | | | | | | | | | | | | | | | | selbri
+| | | | | | | | | | | | | | | | | | | | | | | | | tanru unit
+| | | | | | | | | | | | | | | | | | | | | | | | | | BRIVLA gismu panka
+
+b) the same tree after omitting some intermediate levels (an ad-lib pruning
+made by giving a list of rules to omit)
+
+paragraph
+| statement
+| | sentence
+| | | sumti
+| | | | KOhA mi
+| | | tense modal
+| | | | time
+| | | | | time offset
+| | | | | | PU ba
+| | | selbri
+| | | | BRIVLA gismu zgana
+| | | sumti
+| | | | description
+| | | | | LE le
+| | | | | selbri
+| | | | | | abstraction
+| | | | | | | NU du'u
+| | | | | | | sentence
+| | | | | | | | sumti
+| | | | | | | | | name
+| | | | | | | | | | LA la
+| | | | | | | | | | CMENE djan
+| | | | | | | | | ek
+| | | | | | | | | | A ji
+| | | | | | | | | | indicator
+| | | | | | | | | | | UI kau
+| | | | | | | | | name
+| | | | | | | | | | LA la
+| | | | | | | | | | CMENE djordz
+| | | | | | | | CU clause
+| | | | | | | | | CU cu
+| | | | | | | | selbri
+| | | | | | | | | BRIVLA gismu zvati
+| | | | | | | | sumti
+| | | | | | | | | description
+| | | | | | | | | | LE le
+| | | | | | | | | | selbri
+| | | | | | | | | | | BRIVLA gismu panka
+
+c) the tree can also indicate any elided terminators
+
+paragraph
+| statement
+| | sentence
+| | | sumti
+| | | | KOhA mi
+| | | tense modal
+| | | | time
+| | | | | time offset
+| | | | | | PU ba
+| | | *ELIDED KU
+| | | *ELIDED CU
+| | | selbri
+| | | | BRIVLA gismu zgana
+| | | sumti
+| | | | description
+| | | | | LE le
+| | | | | selbri
+| | | | | | abstraction
+| | | | | | | NU du'u
+| | | | | | | sentence
+| | | | | | | | sumti
+| | | | | | | | | name
+| | | | | | | | | | LA la
+| | | | | | | | | | CMENE djan
+| | | | | | | | | ek
+| | | | | | | | | | A ji
+| | | | | | | | | | indicator
+| | | | | | | | | | | UI kau
+| | | | | | | | | name
+| | | | | | | | | | LA la
+| | | | | | | | | | CMENE djordz
+| | | | | | | | CU clause
+| | | | | | | | | CU cu
+| | | | | | | | selbri
+| | | | | | | | | BRIVLA gismu zvati
+| | | | | | | | sumti
+| | | | | | | | | description
+| | | | | | | | | | LE le
+| | | | | | | | | | selbri
+| | | | | | | | | | | BRIVLA gismu panka
+| | | | | | | | | | *ELIDED KU
+| | | | | | | | *ELIDED VAU
+| | | | | | | *ELIDED KEI
+| | | | | *ELIDED KU
+| | | *ELIDED VAU
+
+d) a sumti tcita example (bracketing the sumti tcita will simplify
+enumerating the main sumti at some later stage)
+
+paragraph
+| statement
+| | sentence
+| | | sumti
+| | | | KOhA mi
+| | | selbri
+| | | | BRIVLA gismu klama
+| | | sumti
+| | | | description
+| | | | | LE le
+| | | | | selbri
+| | | | | | BRIVLA gismu zarci
+| | | sumti tcita
+| | | | tense modal
+| | | | | time
+| | | | | | time offset
+| | | | | | | PU ca
+| | | | sumti
+| | | | | description
+| | | | | | LE le
+| | | | | | selbri
+| | | | | | | abstraction
+| | | | | | | | NU nu
+| | | | | | | | sentence
+| | | | | | | | | sumti
+| | | | | | | | | | KOhA do
+| | | | | | | | | selbri
+| | | | | | | | | | BRIVLA gismu klama
+| | | | | | | | | sumti
+| | | | | | | | | | description
+| | | | | | | | | | | LE le
+| | | | | | | | | | | selbri
+| | | | | | | | | | | | BRIVLA gismu zdani
+
+e) two zei lujvo examples from the CLL
+
+paragraph
+| statement
+| | sentence
+| | | selbri
+| | | | zei lujvo
+| | | | | CMAVO  NAhE na'e
+| | | | | ZEI zei
+| | | | | CMAVO  A a
+| | | | | ZEI zei
+| | | | | CMAVO  NAhE na'e
+| | | | | ZEI zei
+| | | | | CMAVO  BY by
+| | | | BRIVLA lujvo livgyterbilma
+
+
+paragraph
+| statement
+| | sentence
+| | | selbri
+| | | | zei lujvo
+| | | | | CMAVO  NAhE na'e
+| | | | | ZEI zei
+| | | | | CMAVO  A a
+| | | | | ZEI zei
+| | | | | CMAVO  NAhE na'e
+| | | | | ZEI zei
+| | | | | CMAVO  BY by
+| | | | | ZEI zei
+| | | | | BRIVLA lujvo livgyterbilma
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
+--f46d0438939de4c3d904c2f704ab
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I,ve now got a preliminary version of the full parser runn=
+ing.<div><br></div><div>Basically the parser is just the re-formatted PEG, =
+the rest is about 150 lines of quite ordinary Lua code for glue between the=
+ stages, some very small =A0help functions and pretty printing. The source =
+files (The driver program, the morphology PEG and the grammar PEG) presentl=
+y total 2560 lines (incl. the comments and the empty separator lines), abou=
+t 78 kbytes. There is no binary for the parser, which is compiled for each =
+run. The compilation time is about 100 ms on any decent PC, which has helpe=
+d a lot during the testing and refinement stage.</div>
+
+<div><br></div><div>The parser outputs a full parse tree in the form of a L=
+ua table definition instead of something intended for immediate human consu=
+mption or interpretation by some external program. The inherently available=
+ Lua interpreter is used to compile the definition into a table, which can =
+then be recursively traversed with (very) simple routines to produce any de=
+sired kind of output.</div>
+
+<div><br></div><div>I&#39;ve omitted the erasure handling rules as they see=
+med to cause too much slowdown and =A0rewritten some rules to speed up the =
+parsing process. I&#39;ve also added =A0rules to bracket sumti tcita and ze=
+i =A0lujvo. I had to add rules to the morphology PEG in order to keep any q=
+uoted non-Lojban text intact - now the quoted text is sent as a single non-=
+L word to the grammar PEG.</div>
+
+<div><br></div><div>The parser will handle multiple paragraph text, but I h=
+aven&#39;t yet any ideas about error recovery or meaningful error messages.=
+ Presently the program just produces an output up to the last structure pas=
+sing the parser, which isn&#39;t very helpful - especially as there sometim=
+es is no output what so ever.</div>
+<div><br></div><div>My present, very simple pretty printer is quite flexibl=
+e. It can produce either the full parse tree, which is probably required on=
+ly for checking the parser, or omit the numbered sub-rules (sumti-1,...) or=
+ omit any user-defined set of intermediate levels from the tree. It would b=
+e trivial to add glosses for cmavo and gismu to the output. I&#39;ve also g=
+iven some thought to passing the lujvo split from the morphology PEG.</div>
+
+<div><br></div><div>I&#39;ll have to do some more testing before releasing =
+the program for general consumption. I also haven&#39;t yet given any thoug=
+ht to the user interface. Presently all the parameters are set by editing t=
+he driver program as the compilation time is no problem.</div>
+<div><br></div><div>=A0 Veijo</div><div><br></div><div><br></div><div><br><=
+/div><div><br></div><div>Some examples of the present output:</div><div><br=
+></div><div>a) a &quot;full&quot; tree (without the numbered sub-rules)</di=
+v>
+<div><br></div>
+<div><div>text</div><div>| paragraphs</div><div>| | paragraph</div><div>| |=
+ | statement</div><div>| | | | sentence</div><div>| | | | | terms</div><div=
+>| | | | | | term</div><div>| | | | | | | sumti</div><div>| | | | | | | | K=
+OhA mi</div>
+
+<div>| | | | | | term</div><div>| | | | | | | tag</div><div>| | | | | | | |=
+ tense modal</div><div>| | | | | | | | | simple tense modal</div><div>| | |=
+ | | | | | | | time</div><div>| | | | | | | | | | | time offset</div><div>
+
+| | | | | | | | | | | | PU ba</div><div>| | | | | bridi tail</div><div>| | =
+| | | | selbri</div><div>| | | | | | | tanru unit</div><div>| | | | | | | |=
+ BRIVLA gismu zgana</div><div>| | | | | | tail terms</div><div>| | | | | | =
+| terms</div>
+
+<div>| | | | | | | | term</div><div>| | | | | | | | | sumti</div><div>| | |=
+ | | | | | | | description</div><div>| | | | | | | | | | | LE le</div><div>=
+| | | | | | | | | | | sumti tail</div><div>| | | | | | | | | | | | selbri</=
+div>
+
+<div>| | | | | | | | | | | | | tanru unit</div><div>| | | | | | | | | | | |=
+ | | abstraction</div><div>| | | | | | | | | | | | | | | NU du&#39;u</div><=
+div>| | | | | | | | | | | | | | | subsentence</div><div>| | | | | | | | | |=
+ | | | | | | sentence</div>
+
+<div>| | | | | | | | | | | | | | | | | terms</div><div>| | | | | | | | | | =
+| | | | | | | | term</div><div>| | | | | | | | | | | | | | | | | | | sumti<=
+/div><div>| | | | | | | | | | | | | | | | | | | | name</div><div>| | | | | =
+| | | | | | | | | | | | | | | | LA la</div>
+
+<div>| | | | | | | | | | | | | | | | | | | | | CMENE djan</div><div>| | | |=
+ | | | | | | | | | | | | | | | | joik ek</div><div>| | | | | | | | | | | | =
+| | | | | | | | | ek</div><div>| | | | | | | | | | | | | | | | | | | | | | =
+A ji</div>
+
+<div>| | | | | | | | | | | | | | | | | | | | | | indicators</div><div>| | |=
+ | | | | | | | | | | | | | | | | | | | | indicator</div><div>| | | | | | | =
+| | | | | | | | | | | | | | | | | UI kau</div><div>| | | | | | | | | | | | =
+| | | | | | | | name</div>
+
+<div>| | | | | | | | | | | | | | | | | | | | | LA la</div><div>| | | | | | =
+| | | | | | | | | | | | | | | CMENE djordz</div><div>| | | | | | | | | | | =
+| | | | | | CU clause</div><div>| | | | | | | | | | | | | | | | | | CU cu</=
+div>
+
+<div>| | | | | | | | | | | | | | | | | bridi tail</div><div>| | | | | | | |=
+ | | | | | | | | | | selbri</div><div>| | | | | | | | | | | | | | | | | | |=
+ tanru unit</div><div>| | | | | | | | | | | | | | | | | | | | BRIVLA gismu =
+zvati</div>
+
+<div>| | | | | | | | | | | | | | | | | | tail terms</div><div>| | | | | | |=
+ | | | | | | | | | | | | terms</div><div>| | | | | | | | | | | | | | | | | =
+| | | term</div><div>| | | | | | | | | | | | | | | | | | | | | sumti</div>
+
+<div>| | | | | | | | | | | | | | | | | | | | | | description</div><div>| | =
+| | | | | | | | | | | | | | | | | | | | | LE le</div><div>| | | | | | | | |=
+ | | | | | | | | | | | | | | sumti tail</div><div>| | | | | | | | | | | | |=
+ | | | | | | | | | | | selbri</div>
+
+<div>| | | | | | | | | | | | | | | | | | | | | | | | | tanru unit</div><div=
+>| | | | | | | | | | | | | | | | | | | | | | | | | | BRIVLA gismu panka</di=
+v><div><br></div><div>b) the same tree after omitting some intermediate lev=
+els (an ad-lib pruning made by giving a list of rules to omit)</div>
+
+<div><br></div><div><div>paragraph</div><div>| statement</div><div>| | sent=
+ence</div><div>| | | sumti</div><div>| | | | KOhA mi</div><div>| | | tense =
+modal</div><div>| | | | time</div><div>| | | | | time offset</div><div>
+
+| | | | | | PU ba</div><div>| | | selbri</div><div>| | | | BRIVLA gismu zga=
+na</div><div>| | | sumti</div><div>| | | | description</div><div>| | | | | =
+LE le</div><div>| | | | | selbri</div><div>| | | | | | abstraction</div>
+
+<div>| | | | | | | NU du&#39;u</div><div>| | | | | | | sentence</div><div>|=
+ | | | | | | | sumti</div><div>| | | | | | | | | name</div><div>| | | | | |=
+ | | | | LA la</div><div>| | | | | | | | | | CMENE djan</div><div>| | | | |=
+ | | | | ek</div>
+
+<div>| | | | | | | | | | A ji</div><div>| | | | | | | | | | indicator</div>=
+<div>| | | | | | | | | | | UI kau</div><div>| | | | | | | | | name</div><di=
+v>| | | | | | | | | | LA la</div><div>| | | | | | | | | | CMENE djordz</div=
+>
+
+<div>| | | | | | | | CU clause</div><div>| | | | | | | | | CU cu</div><div>=
+| | | | | | | | selbri</div><div>| | | | | | | | | BRIVLA gismu zvati</div>=
+<div>| | | | | | | | sumti</div><div>| | | | | | | | | description</div>
+
+<div>| | | | | | | | | | LE le</div><div>| | | | | | | | | | selbri</div><d=
+iv>| | | | | | | | | | | BRIVLA gismu panka</div></div><div><br></div><div>=
+c) the tree can also indicate any elided terminators</div><div><br></div>
+
+<div><div>paragraph</div><div>| statement</div><div>| | sentence</div><div>=
+| | | sumti</div><div>| | | | KOhA mi</div><div>| | | tense modal</div><div=
+>| | | | time</div><div>| | | | | time offset</div><div>| | | | | | PU ba</=
+div>
+
+<div>| | | *ELIDED KU</div><div>| | | *ELIDED CU</div><div>| | | selbri</di=
+v><div>| | | | BRIVLA gismu zgana</div><div>| | | sumti</div><div>| | | | d=
+escription</div><div>| | | | | LE le</div><div>| | | | | selbri</div><div>
+
+| | | | | | abstraction</div><div>| | | | | | | NU du&#39;u</div><div>| | |=
+ | | | | sentence</div><div>| | | | | | | | sumti</div><div>| | | | | | | |=
+ | name</div><div>| | | | | | | | | | LA la</div><div>| | | | | | | | | | C=
+MENE djan</div>
+
+<div>| | | | | | | | | ek</div><div>| | | | | | | | | | A ji</div><div>| | =
+| | | | | | | | indicator</div><div>| | | | | | | | | | | UI kau</div><div>=
+| | | | | | | | | name</div><div>| | | | | | | | | | LA la</div><div>| | | =
+| | | | | | | CMENE djordz</div>
+
+<div>| | | | | | | | CU clause</div><div>| | | | | | | | | CU cu</div><div>=
+| | | | | | | | selbri</div><div>| | | | | | | | | BRIVLA gismu zvati</div>=
+<div>| | | | | | | | sumti</div><div>| | | | | | | | | description</div>
+
+<div>| | | | | | | | | | LE le</div><div>| | | | | | | | | | selbri</div><d=
+iv>| | | | | | | | | | | BRIVLA gismu panka</div><div>| | | | | | | | | | *=
+ELIDED KU</div><div>| | | | | | | | *ELIDED VAU</div><div>| | | | | | | *EL=
+IDED KEI</div>
+
+<div>| | | | | *ELIDED KU</div><div>| | | *ELIDED VAU</div></div><div><br><=
+/div><div>d) a sumti tcita example (bracketing the sumti tcita will simplif=
+y enumerating the main sumti at some later stage)</div><div><br></div>
+<div><div>paragraph</div><div>| statement</div><div>| | sentence</div><div>=
+| | | sumti</div>
+<div>| | | | KOhA mi</div><div>| | | selbri</div><div>| | | | BRIVLA gismu =
+klama</div><div>| | | sumti</div><div>| | | | description</div><div>| | | |=
+ | LE le</div><div>| | | | | selbri</div><div>| | | | | | BRIVLA gismu zarc=
+i</div>
+
+<div>| | | sumti tcita</div><div>| | | | tense modal</div><div>| | | | | ti=
+me</div><div>| | | | | | time offset</div><div>| | | | | | | PU ca</div><di=
+v>| | | | sumti</div><div>| | | | | description</div><div>| | | | | | LE le=
+</div>
+
+<div>| | | | | | selbri</div><div>| | | | | | | abstraction</div><div>| | |=
+ | | | | | NU nu</div><div>| | | | | | | | sentence</div><div>| | | | | | |=
+ | | sumti</div><div>| | | | | | | | | | KOhA do</div><div>| | | | | | | | =
+| selbri</div>
+
+<div>| | | | | | | | | | BRIVLA gismu klama</div><div>| | | | | | | | | sum=
+ti</div><div>| | | | | | | | | | description</div><div>| | | | | | | | | | =
+| LE le</div><div>| | | | | | | | | | | selbri</div><div>| | | | | | | | | =
+| | | BRIVLA gismu zdani</div>
+
+</div><div><br></div><div>e) two zei lujvo examples from the CLL</div><div>=
+<br></div><div><div>paragraph</div><div>| statement</div><div>| | sentence<=
+/div><div>| | | selbri</div><div>| | | | zei lujvo</div><div>| | | | | CMAV=
+O =A0NAhE na&#39;e</div>
+
+<div>| | | | | ZEI zei</div><div>| | | | | CMAVO =A0A a</div><div>| | | | |=
+ ZEI zei</div><div>| | | | | CMAVO =A0NAhE na&#39;e</div><div>| | | | | ZEI=
+ zei</div><div>| | | | | CMAVO =A0BY by</div><div>| | | | BRIVLA lujvo livg=
+yterbilma</div>
+
+</div><div><br></div><div><br></div><div><div>paragraph</div><div>| stateme=
+nt</div><div>| | sentence</div><div>| | | selbri</div><div>| | | | zei lujv=
+o</div><div>| | | | | CMAVO =A0NAhE na&#39;e</div><div>| | | | | ZEI zei</d=
+iv>
+
+<div>| | | | | CMAVO =A0A a</div><div>| | | | | ZEI zei</div><div>| | | | |=
+ CMAVO =A0NAhE na&#39;e</div><div>| | | | | ZEI zei</div><div>| | | | | CMA=
+VO =A0BY by</div><div>| | | | | ZEI zei</div><div>| | | | | BRIVLA lujvo li=
+vgyterbilma</div>
+
+</div><div><br></div><div><br></div>
+</div></div>
+
+<p></p>
+
+-- <br />
+You received this message because you are subscribed to the Google Groups "=
+lojban" group.<br />
+To post to this group, send email to lojban@googlegroups.com.<br />
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegrou=
+ps.com.<br />
+
+For more options, visit this group at http://groups.google.com/group/lojban=
+?hl=3Den.<br />
+
+
+
+--f46d0438939de4c3d904c2f704ab--
+
+
