@@ -1,0 +1,123 @@
+# mail/lojban-list thread ab395d2ac06f-lllp_%28lua_lpeg_lojban_parser%29,_alpha_versio | root ca+4zpks=sazgx4tit3nuv1abtmvfjde5wrbsme8pju9y2gll8a@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2012-06-28T15:48:33Z | Veijo Vilva <veijo.vilva@gmail.com> | ca+4zpks=sazgx4tit3nuv1abtmvfjde5wrbsme8pju9y2gll8a@mail.gmail.com | mail/lojban-list/cur/1340898513.ab395d2ac06f0e37.jbomohi:2,S
+I've decided to release an alpha version of my parser for testing and
+comments as I must stop developing it for a while - it is causing me too
+much loss of sleep and disturbance of domestic peace :)
+
+A package containing the parser scripts and a luajit linux binary with a
+built-in LPeg library is available at this stage at my web site:
+http://galactinus.net/vilva/lllp.tgz (235 kb). Mac and Windows users will
+have to get either lua or luajit2 and the LPeg library from elsewhere.
+
+I've checked the code once more and cleaned it a little bit. There
+shouldn't be any major problems, but as I haven't yet been able to do
+extensive testing, I decided to publish yhe program as an alpha version and
+only on my own site. There may be obscure errors in the PEG so the output
+of  this version shouldn't be taken as gospel. THIS ISN'T A CERTIFIED
+PARSER. Anyway, it handles most of "Alice".
+
+I've appended the README file from the package.
+
+   Veijo
+
+
+
+                      LLLP = Lua LPeg Lojban Parser
+
+                            (Version = alpha)
+
+
+
+  Requirements:
+
+     lua5.1x (or luajit2) and the LPeg library (either built-in or external)
+
+ LuaJIT doesn't seem to offer any benefit for the PEG but makes a difference
+ in auxiliary operations. However, for reasonable sized texts the difference
+ is negligible.
+
+  lua    : http://www.lua.org
+  luajit : http://luajit.org
+  LPeg   : http://www.inf.puc-rio.br/~roberto/lpeg/lpeg.html
+           http://www.inf.puc-rio.br/~roberto/docs/peg.pdf (theoretical
+basis)
+
+ LLLP files:
+
+  lllp.lua                the main program script
+  lllp_morphology.lua     the Lojban morphology PEG
+  lllp_syntax_r.lua       the Lojban syntax PEG, a reduced output version
+  lllp_syntax_f.lua       the Lojban syntax PEG, a "full" output version
+
+  The reduced output version of the syntax PEG omits the numbered
+intermediate
+  rules (e.g. term-1) from the output because the depth of the "full" parse
+  tree can exceed the maximum number of syntax levels an unmodified
+lua/luajit
+  interpreter can handle (200 levels), and increasing the limit can be
+unsafe.
+  While parsing "Alice" using the "full" output version, the program hit the
+  limit at three points. I've set the program to use the reduced output
+version
+  as the full output isn't usually required. The version to use can be
+changed
+  by editing the main program script.
+
+  A luajit linux binary with built-in LPeg library is included in the
+package.
+
+  Running:
+
+     luajit lllp.lua lojban_file_name
+
+
+  NB. the output goes to STDOUT and can be re-directed as required
+
+  NB. the output parameters can only be set by editing lllp.lua
+
+  NB. input text is sliced at blank lines and handled block by block.
+      This means that terminated structures MUST NOT span blank lines!
+
+  NB. punctuation handling is still deficient (this is an alpha version)
+
+
+  Lua commenting conventions can be used within the Lojban files:
+
+    --   two or more adjacent dashes mark the rest of the line as comment
+
+    --[[ starts a multi-line comment ending at --]] or EOF
+         A space between -- and [[ can be used to de-activate the commenting
+
+  The output can be fine-tuned quite extensively by editing lllp.lua. It is
+  also possible to add processing stages at various points.
+
+  ** The program gathers statistics about word usage.
+
+  There is no error handling. The processing of a block terminates when a
+  syntax error is found, and the program continues with the next block if
+any.
+
+  I've tested the parser with both single sentences and the full "Alice",
+and
+  there don't seem to be any major problems. Alice does contain a number of
+  blocks which don't pass the parser, but most do. On a decent PC the
+process
+  takes about one minute, and the reduced tree output interleaved with the
+  source text blocks is about 1,200 A4 pages long (1,300 Letter size), the
+full
+  tree would be about 16,000 pages.
+
+
+-- 
+
+  web site: http://galactinus.net/vilva/
+  on Google+: https://plus.google.com/106533767817816079660/posts
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
