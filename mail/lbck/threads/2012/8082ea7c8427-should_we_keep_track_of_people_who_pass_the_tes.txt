@@ -1,4 +1,4 @@
-# mail/lbck thread 8082ea7c8427-should_we_keep_track_of_people_who_pass_the_tes | root 201208062214.29953.phma@phma.optus.nu | 2 messages | rendered by jbomohi mail-v1
+# mail/lbck thread 8082ea7c8427-should_we_keep_track_of_people_who_pass_the_tes | root 201208062214.29953.phma@phma.optus.nu | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2012-08-07T02:14:28Z | Pierre Abbat <phma@phma.optus.nu> | 201208062214.29953.phma@phma.optus.nu | mail/lbck/cur/1344305668.8082ea7c84274e34.jbomohi:2,S
 Right now the database schema has one table with people's names in it: cipfihi 
@@ -42,4 +42,44 @@ mu'o mi'e .aionys.
 
 .i.e'ucai ko cmima lo pilno be denpa bu .i doi.luk. mi patfu do zo'o
 (Come to the Dot Side! Luke, I am your father. :D )
+
+
+=== 3 | 2012-08-07T03:22:49Z | Pierre Abbat <phma@phma.optus.nu> | 201208062322.50346.phma@phma.optus.nu | mail/lbck/cur/1344309769.665925c252d28441.jbomohi:2,S
+On Monday 06 August 2012 22:16:53 Jonathan Jones wrote:
+> "Real name / Lojban name / tests attempted / tests passed / proficiency
+> level"?
+
+"tests attempted" and "tests passed" should be in a different table. It is 
+possible to put arrays in a table column, but I don't know how to use them or 
+how portable it is. Do we really need "tests attempted"? I don't see the need 
+to enter someone who's never passed a test or authored a question.
+
+Here's that part of the database schema with your fields added (I changed the 
+table name from "cipfihi" to "prenu":
+
+create table prenu
+(nacycme serial primary key,
+ cipfihi boolean,
+ plicme text,
+ sivyvla text,
+ rarbaucme text,
+ jbocme text,
+ nilcertu short
+ );
+
+create table ciptoi
+(tercipra int references prenu,
+ detri date,
+ nilnandu short,
+ snada boolean
+ );
+
+> Also, where is this test?
+
+We're still designing it.
+
+Pierre
+-- 
+lo ponse be lo mruli po'o cu ga'ezga roda lo ka dinko
+
 
