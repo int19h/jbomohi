@@ -1,0 +1,85 @@
+Received: from mail-ie0-f189.google.com ([209.85.223.189]:54522)
+	by stodi.digitalkingdom.org with esmtps (TLSv1:RC4-SHA:128)
+	(Exim 4.76)
+	(envelope-from <lojban+bncCMLaiI6rCBDanKKCBRoEnoGdzA@googlegroups.com>)
+	id 1T9acr-00087p-6E; Thu, 06 Sep 2012 04:52:10 -0700
+Received: by ieak10 with SMTP id k10sf938957iea.16
+        for <multiple recipients>; Thu, 06 Sep 2012 04:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=x-beenthere:mime-version:date:user-agent:x-http-useragent
+         :message-id:subject:from:to:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-google-group-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=x77X5+h2oxd6MBOaJQlcjFwYR8ry8yh7LDHo12GDHl0=;
+        b=JMv0ykl2D61N/ajwspA/cTG1LlZRpAuLD8RLELv24pWjdD05PmS65+lASPFOLkZ53c
+         oNrDYkA4ob4W/uIkU1J1/F3qP0RULXmawQBPVEtr8qZNTpj/X1DihT8YVyo8/JJU9Ehl
+         OtwnJdJhKFC+sgf7gcqhHlj6SvfEw6zewfveirEYwZVDqqUJskcV+7rTILz0K6rllQSs
+         znPp1kwoRz610ADeiQZQ9qn1ZjdFKCTdbpFFyrtbuYHUzRkBeXPwok/h6L92akcU2RMr
+         Uz2HmLrLMZ4h0ZhMqhsUzNbLPN+yY0PBH2AI9cl36bxI4XscYf6l5dXdSTB3IVImkal8
+         uNOg==
+Received: by 10.52.180.202 with SMTP id dq10mr133697vdc.17.1346932314537;
+        Thu, 06 Sep 2012 04:51:54 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 10.52.156.112 with SMTP id wd16ls418861vdb.6.gmail; Thu, 06 Sep
+ 2012 04:51:53 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.52.90.129 with SMTP id bw1mr140594vdb.13.1346932313860; Thu,
+ 06 Sep 2012 04:51:53 -0700 (PDT)
+Received: by m3g2000vby.googlegroups.com with HTTP; Thu, 6 Sep 2012 04:51:53
+ -0700 (PDT)
+Date: Thu, 6 Sep 2012 04:51:53 -0700 (PDT)
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.1 (KHTML, like
+ Gecko) Chrome/21.0.1180.89 Safari/537.1,gzip(gfe)
+Message-ID: <4ec0f8fa-b7de-4f30-8df4-2b2685aa40b0@m3g2000vby.googlegroups.com>
+Subject: [lojban] A fast way to check whether a given text parses?
+From: ianek <janek37@gmail.com>
+To: lojban <lojban@googlegroups.com>
+X-Original-Sender: janek37@gmail.com
+X-Original-Authentication-Results: ls.google.com; spf=pass (google.com: domain
+ of janek37@gmail.com designates internal as permitted sender)
+ smtp.mail=janek37@gmail.com; dkim=pass header.i=@gmail.com
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+X-Google-Group-Id: 1004133512417
+List-Post: <http://groups.google.com/group/lojban/post?hl=en_US>, <mailto:lojban@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/lojban?hl=en_US>
+Sender: lojban@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/lojban/subscribe?hl=en_US>, <mailto:googlegroups-manage+1004133512417+unsubscribe@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1
+X-Spam-Score: 0.0 (/)
+X-Spam_score: 0.0
+X-Spam_score_int: 0
+X-Spam_bar: /
+Content-Length: 858
+
+I'm looking for a fast test to say whether a text parses in Lojban.
+I've tried jbofihe and camxes. For jbofihe I was using
+$ if echo "$text" | jbofihe &2> /dev/null; then echo good; fi
+which mostly works, but fails on some inputs, eg. accepts {la'o}:
+
+$ if echo "la'o" | jbofihe; then echo good; fi
+(0[])0
+good
+
+For camxes I was using
+$ if [ "`echo "$text" | camxes -t | tail -n1`" = "$text" ]; then echo
+good; fi
+which worked better for me, but was much slower.
+I'm sure there's a simple way, but I didn't find it.
+
+mu'o mi'e ianek
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
