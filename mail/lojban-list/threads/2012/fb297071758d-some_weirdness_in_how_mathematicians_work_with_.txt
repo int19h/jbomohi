@@ -1,0 +1,71 @@
+# mail/lojban-list thread fb297071758d-some_weirdness_in_how_mathematicians_work_with_ | root ca+gztgl4ea1wnusmjp-=s8zmsdpbtkrmmj1ukmgrct=hwotnra@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2012-12-24T23:53:34Z | Ian Johnson <blindbravado@gmail.com> | ca+gztgl4ea1wnusmjp-=s8zmsdpbtkrmmj1ukmgrct=hwotnra@mail.gmail.com | mail/lojban-list/cur/1356393214.fb297071758df193.jbomohi:2,S
+This is rather subtle, so I think it's best to begin with an example. This
+example isn't all *that* mathematically heavy, but it does involve the
+interaction of several sentences which each have a "forall exists forall"
+quantifier structure. This *does* have something to do with Lojban, but it
+will be a while before that is actually clear. You've been warned :)
+
+Suppose g : R->R is uniformly continuous and f : R -> R is integrable on
+[a,b]. Define the new function
+(f * g)(x) = integral from a to b of g(x-z) f(z) dz
+We want to show that the function f * g is continuous at every point, that
+is:
+(for all x in R,e1 > 0)(there exists d1 > 0)(for all y in R) |x-y| < d1 ->
+|(f * g)(x) - (f * g)(y)| < e1.
+
+(I write quantifiers in almost-prenex-normal form; my apologies if it is
+hard to read.)
+
+Let e1 > 0.
+Using the uniform continuity of g we have
+(for all e2 > 0)(exists d2 > 0)(for all x,y in R) |x-y| < d2 -> |g(x) -
+g(y)| < e2.
+
+So let e2 > 0, obtain the desired d2 > 0, and take x,y with |x-y| < d2.
+Then:
+
+| (f * g)(x) - (f * g)(y) | = | integral from a to b of f(z) (g(x-z) -
+g(y-z)) dz |
+<= integral from a to b of |f(z) (g(x-z) - g(y-z))| dz
+= integral from a to b of |f(z)| |g(x-z) - g(y-z)| dz
+< integral from a to b of |f(z)| e2 dz
+= Me2
+where M = integral from a to b of |f(z)| exists and is finite by assumption.
+
+(Now comes the weird part.)
+
+Setting e2 = e1/M, obtain d2 using the continuity of g, then set d1=d2.
+Then if |x-y| < d1, from the above |(f * g)(x) - (f * g)(y)| < M e1/M = e1
+as desired. Thus f*g is continuous at every point.
+
+What is weird here is that we're playing with e2 and d2 as if they're real.
+e1 and d1 are interacted with as the quantifier structure suggests: you
+introduce e1, do some work, and find a valid value of d1. But e2 is
+now *instantiated
+*(in this case in a trivial way, thankfully) under the e1 quantifier, and
+then d2 is instantiated under the e2 quantifier, followed by folding back
+up to obtain the original statement. None of this instantiation is "real",
+it's all syntactic, but we operate better when objects appear to be
+concrete. This is all ultimately valid reasoning, and indeed can be
+compressed so that everything is in normal form, but syntactically it's
+very strange, because it's analogous to {da goi ko'a}, which as I think
+most of us know doesn't actually make any sense.
+
+I was originally curious about this because I don't know how I would render
+proofs like this in Lojban; I would be forced, in order to "set d1=d2" and
+such, to bind d2, which is bound under a quantifier, to a variable, which
+doesn't actually make logical sense.
+
+Any thoughts?
+
+mu'o mi'e la latro'a
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
