@@ -1,4 +1,4 @@
-# mail/lojban-list thread fb297071758d-some_weirdness_in_how_mathematicians_work_with_ | root ca+gztgl4ea1wnusmjp-=s8zmsdpbtkrmmj1ukmgrct=hwotnra@mail.gmail.com | 6 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread fb297071758d-some_weirdness_in_how_mathematicians_work_with_ | root ca+gztgl4ea1wnusmjp-=s8zmsdpbtkrmmj1ukmgrct=hwotnra@mail.gmail.com | 7 messages | rendered by jbomohi mail-v1
 
 === 1 | 2012-12-24T23:53:34Z | Ian Johnson <blindbravado@gmail.com> | ca+gztgl4ea1wnusmjp-=s8zmsdpbtkrmmj1ukmgrct=hwotnra@mail.gmail.com | mail/lojban-list/cur/1356393214.fb297071758df193.jbomohi:2,S
 This is rather subtle, so I think it's best to begin with an example. This
@@ -554,4 +554,176 @@ is because the are not structured in a very logical way.
 
 
 mi'e la .van. mu'o
+
+
+=== 7 | 2012-12-26T15:53:52Z | Felipe Gonçalves Assis <felipeg.assis@gmail.com> | calma68poj-rgqxhzgcamnzk4__nmrrbzvmuqea5wev90op4m9w@mail.gmail.com | mail/lojban-list/cur/1356537232.48f9943431686f0a.jbomohi:2,S
+coi latro'a
+
+Your confusion is well-founded. I'll introduce an example without
+analysis to make
+the discussion accessible to non-mathematicians. Then I'll get to your point.
+
+Let's prove "Everyone has an uncle" from "Everyone has a mother" and
+"Everyone has a brother".
+
+(1) Everyone has a mother.
+(2) Bob has a mother.
+(3) Let Mary be a mother of Bob.
+(4) Everyone has a brother.
+(5) Mary has a brother.
+(6) Let Sam be a brother of Mary.
+(7) Sam is a brother of a mother of Bob.
+(8) Sam is an uncle of Bob.
+(9) Bob has an uncle.
+(10) Everyone has an uncle.
+
+This is a sequence of valid inferences:
+(1) and (4) are hypotheses;
+(2) and (5) are Universal Instantiations;
+(3) and (6) are Existential Instantiations;
+(7) and (9) are Existential Generalizations;
+(10) is Universal Generalization;
+(8) is definition.
+
+In prose:
+"Let Bob be an arbitrary folk. By hypothesis, Bob has a mother. Let Mary be
+a mother of Bob. Again, by hypothesis, Mary has a brother. Let's call him Sam.
+Well, Sam is the brother of Mary, and Mary is the mother of Bob, therefore, by
+definition, Sam is an uncle of Bob. We have concluded that Bob has an uncle.
+Since Bob was arbitrary, everyone has an uncle."
+
+Now to your point: Let's see how a mathematician could write that argument
+using logical formulae:
+"We wish to prove
+  (for all Bob)(there exists z) UNCLE(z, Bob).
+
+We have
+  (for all x1)(there exists Mary) MOTHER(Mary, x1);
+  (for all x2)(there exists Sam) BROTHER(Sam, x2).
+
+Setting x1=Bob, we obtain Mary such that MOTHER(Mary, Bob).
+Setting x2=Mary, we obtain Sam such that BROTHER(Sam, Mary).
+Now set z=Sam to get
+  BROTHER(z, Mary) and MOTHER(Mary, Bob)
+from where, by definition,
+  UNCLE(z, Bob)
+as desired."
+
+What happens is
+ 1. Universal Generalization and Existential Instantiation are
+anticipated in the
+bound variable names of the thesis and hypotheses, respectively, and done
+implicitly.
+ 2. Universal Instantiation and Existential Generalization are done with a "set
+x=y" wording.
+
+Of these, what appears to trouble you is the implicit Existential Instantiation.
+The reuse of the bound variable as the witness object is not how
+formal inference
+rules typically work. The free Mary in "MOTHER(Mary, Bob)" is
+something different
+from the bound Mary in "(for all x1)(there exists Mary) MOTHER(Mary,
+x1)". It would
+be equally logical to say, e.g.,
+  "Setting x1=Bob, we obtain Eve such that MOTHER(Eve, Bob)" .
+
+This "set x1=Bob and obtain a Mary" thing only works because Mathematicians
+use a peculiar set of inference rules, which involves naming bound variables
+differently across sentences in hypothesis and thesis and "using" each formula
+only once.
+
+Regarding Lojban, instead of trying to translate something like
+ "There exists Bob such that Bob is blue, therefore we obtain a blue Bob."
+Try translating
+  "There exists x such that x is blue. Let Bob be a blue thing."
+
+My initial suggestion is
+  {da blanu .i[seji'ubo] la .bab. ca'e go'i}
+
+A dual question is how to translate Universal Generalization:
+  "Let Bob be arbitrary. [...] Bob is blue, therefore everything is blue."
+
+I suggest
+  {la .bab. ca'e [...] .i la .bab. blanu .i ja'o ro da go'i}
+
+a'o mi sidju do
+mu'o mi'e .asiz.
+
+On 24 December 2012 20:53, Ian Johnson <blindbravado@gmail.com> wrote:
+> This is rather subtle, so I think it's best to begin with an example. This
+> example isn't all that mathematically heavy, but it does involve the
+> interaction of several sentences which each have a "forall exists forall"
+> quantifier structure. This does have something to do with Lojban, but it
+> will be a while before that is actually clear. You've been warned :)
+>
+> Suppose g : R->R is uniformly continuous and f : R -> R is integrable on
+> [a,b]. Define the new function
+> (f * g)(x) = integral from a to b of g(x-z) f(z) dz
+> We want to show that the function f * g is continuous at every point, that
+> is:
+> (for all x in R,e1 > 0)(there exists d1 > 0)(for all y in R) |x-y| < d1 ->
+> |(f * g)(x) - (f * g)(y)| < e1.
+>
+> (I write quantifiers in almost-prenex-normal form; my apologies if it is
+> hard to read.)
+>
+> Let e1 > 0.
+> Using the uniform continuity of g we have
+> (for all e2 > 0)(exists d2 > 0)(for all x,y in R) |x-y| < d2 -> |g(x) -
+> g(y)| < e2.
+>
+> So let e2 > 0, obtain the desired d2 > 0, and take x,y with |x-y| < d2.
+> Then:
+>
+> | (f * g)(x) - (f * g)(y) | = | integral from a to b of f(z) (g(x-z) -
+> g(y-z)) dz |
+> <= integral from a to b of |f(z) (g(x-z) - g(y-z))| dz
+> = integral from a to b of |f(z)| |g(x-z) - g(y-z)| dz
+> < integral from a to b of |f(z)| e2 dz
+> = Me2
+> where M = integral from a to b of |f(z)| exists and is finite by assumption.
+>
+> (Now comes the weird part.)
+>
+> Setting e2 = e1/M, obtain d2 using the continuity of g, then set d1=d2. Then
+> if |x-y| < d1, from the above |(f * g)(x) - (f * g)(y)| < M e1/M = e1 as
+> desired. Thus f*g is continuous at every point.
+>
+> What is weird here is that we're playing with e2 and d2 as if they're real.
+> e1 and d1 are interacted with as the quantifier structure suggests: you
+> introduce e1, do some work, and find a valid value of d1. But e2 is now
+> instantiated (in this case in a trivial way, thankfully) under the e1
+> quantifier, and then d2 is instantiated under the e2 quantifier, followed by
+> folding back up to obtain the original statement. None of this instantiation
+> is "real", it's all syntactic, but we operate better when objects appear to
+> be concrete. This is all ultimately valid reasoning, and indeed can be
+> compressed so that everything is in normal form, but syntactically it's very
+> strange, because it's analogous to {da goi ko'a}, which as I think most of
+> us know doesn't actually make any sense.
+>
+> I was originally curious about this because I don't know how I would render
+> proofs like this in Lojban; I would be forced, in order to "set d1=d2" and
+> such, to bind d2, which is bound under a quantifier, to a variable, which
+> doesn't actually make logical sense.
+>
+> Any thoughts?
+>
+> mu'o mi'e la latro'a
+>
+> --
+> You received this message because you are subscribed to the Google Groups
+> "lojban" group.
+> To post to this group, send email to lojban@googlegroups.com.
+> To unsubscribe from this group, send email to
+> lojban+unsubscribe@googlegroups.com.
+> For more options, visit this group at
+> http://groups.google.com/group/lojban?hl=en.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To post to this group, send email to lojban@googlegroups.com.
+To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
+For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
+
+
 
