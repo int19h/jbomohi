@@ -1,4 +1,4 @@
-# mail/lojban-list thread fb297071758d-some_weirdness_in_how_mathematicians_work_with_ | root ca+gztgl4ea1wnusmjp-=s8zmsdpbtkrmmj1ukmgrct=hwotnra@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread fb297071758d-some_weirdness_in_how_mathematicians_work_with_ | root ca+gztgl4ea1wnusmjp-=s8zmsdpbtkrmmj1ukmgrct=hwotnra@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2012-12-24T23:53:34Z | Ian Johnson <blindbravado@gmail.com> | ca+gztgl4ea1wnusmjp-=s8zmsdpbtkrmmj1ukmgrct=hwotnra@mail.gmail.com | mail/lojban-list/cur/1356393214.fb297071758df193.jbomohi:2,S
 This is rather subtle, so I think it's best to begin with an example. This
@@ -334,4 +334,66 @@ To post to this group, send email to lojban@googlegroups.com.
 To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.com.
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
+
+
+=== 4 | 2012-12-26T10:33:00Z | v4hn <me@v4hn.de> | 20121226103259.gd7855@samsa.fritz.box | mail/lojban-list/cur/1356517980.ade70197831f96b5.jbomohi:2,S
+On Mon, Dec 24, 2012 at 06:53:34PM -0500, Ian Johnson wrote:
+> Suppose g : R->R is uniformly continuous and f : R -> R is integrable on
+> [a,b]. Define the new function
+> (f * g)(x) = integral from a to b of g(x-z) f(z) dz
+
+.uesai lonu tavla fi la'o gy. convolution .gy vecu'u le mriste kei spaji mi
+.i le do mupli ku pluja sei mi jinvi fi loi purci nu casnu
+
+> We want to show that the function f * g is continuous at every point, that is:
+> (for all x in R,e1 > 0)(there exists d1 > 0)(for all y in R) |x-y| < d1 -> |(f * g)(x) - (f * g)(y)| < e1.
+
+> (I write quantifiers in almost-prenex-normal form; my apologies if it is hard to read.)
+> 
+> Let e1 > 0.
+> Using the uniform continuity of g we have
+> (for all e2 > 0)(exists d2 > 0)(for all x,y in R) |x-y| < d2 -> |g(x) - g(y)| < e2.
+
+I'll call this P.
+
+> So let e2 > 0, obtain the desired d2 > 0, and take x,y with |x-y| < d2.
+> Then:
+> 
+> | (f * g)(x) - (f * g)(y) | = | integral from a to b of f(z) (g(x-z) - g(y-z)) dz |
+> <= integral from a to b of |f(z) (g(x-z) - g(y-z))| dz
+> = integral from a to b of |f(z)| |g(x-z) - g(y-z)| dz
+> < integral from a to b of |f(z)| e2 dz
+> = Me2
+> where M = integral from a to b of |f(z)| exists and is finite by assumption.
+> 
+> (Now comes the weird part.)
+> 
+> Setting e2 = e1/M, obtain d2 using the continuity of g, then set d1=d2.
+
+You use P as a method of obtaining d2 here. If you'd skolemize P before, you don't need
+to introduce an additional variable(d2). Also e2 is simply e1/M, so if you think
+e1 is "real" (whatever you mean by that), then how is it different from e1/M?
+
+P could be written as (Given a function d: R->R, which replaces the existential quantifier):
+
+(forall e2 > 0)(forall x,y in R) [|x-y| < d(e2) -> |g(x) - g(y)| < e2]
+
+So now you are just applying universal instantiation to derive
+
+(forall x,y in R) [|x-y| < d(e1/M) -> |g(x) - g(y)| < e1/M]
+
+which you need for your above derivation. The rest should work out fine,
+replacing your d2 with d(e1/M) and e2 with e1/M.
+
+> What is weird here is that we're playing with e2 and d2 as if they're real.
+
+As I said, they are as "real" as everything else (though you might want
+to consider viewing d2 as a function instead of an existentially bound variable)
+
+> Any thoughts?
+
+di'u selpensi mi
+
+
+mi'e la .van. mu'o
 
