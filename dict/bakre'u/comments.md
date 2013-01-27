@@ -9,3 +9,10 @@ not $b_2$.
 Also, how about putting "beef;bovine meat" as the place keyword for the
 first place? Also "steak;beef" for the word as a whole.
 
+
+## 2013-01-27T21:11:37Z — zort (comment 685, on definition 17532, in reply to 684)
+
+Re: Meat comes from an animal, not from a species/breed
+
+Ah, screw it, making my own definition.
+
