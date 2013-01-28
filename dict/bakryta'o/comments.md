@@ -9,3 +9,13 @@ writing surface.
 
 So I've coined {rokpisterci'a:w}.
 
+
+## 2013-01-28T03:09:47Z — zort (comment 689, on definition 7869)
+
+"blackboard" always means "chalkboard", I tell you
+
+Redundantly disambiguating "blackboard" to "chalkboard"? I think (after
+checking a few dictionaries) that's bollocks. And now I can't use the
+default sense for "blackboard" in my beautiful {rokpisterci'a:w} because
+Jbovlaste won't trust me that I'm right ;_;
+
