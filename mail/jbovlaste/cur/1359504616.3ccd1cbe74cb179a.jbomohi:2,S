@@ -1,0 +1,96 @@
+Received: from localhost ([::1]:44315 helo=stodi.digitalkingdom.org)
+	by stodi.digitalkingdom.org with esmtp (Exim 4.76)
+	(envelope-from <jbovlaste-bounces@lojban.org>)
+	id 1U0LFz-0000hv-Sk; Tue, 29 Jan 2013 16:10:28 -0800
+Received: from earth.ccil.org ([192.190.237.11]:39458)
+ by stodi.digitalkingdom.org with esmtps (TLSv1:AES256-SHA:256)
+ (Exim 4.76) (envelope-from <cowan@ccil.org>) id 1U0LFr-0000hp-9l
+ for jbovlaste@lojban.org; Tue, 29 Jan 2013 16:10:26 -0800
+Received: from cowan by earth.ccil.org with local (Exim 4.72)
+ (envelope-from <cowan@ccil.org>) id 1U0LFo-0005m4-Di
+ for jbovlaste@lojban.org; Tue, 29 Jan 2013 19:10:16 -0500
+Date: Tue, 29 Jan 2013 19:10:16 -0500
+From: John Cowan <cowan@mercury.ccil.org>
+To: jbovlaste@lojban.org
+Message-ID: <20130130001016.GG16924@mercury.ccil.org>
+References: <CAO7bV+gfG2RK+vJLb2WLVA0VGeD3HhXX=Y3cwvq-G6AefwpT4g@mail.gmail.com>
+ <20130124175134.GA14317@mercury.ccil.org>
+ <51017FF7.504@plasmatix.com>
+ <20130124221349.GB20636@mercury.ccil.org>
+ <CAO7tK2dx4ps9J1n8o+qRiWb2mPJzR=SEvBDGMHkaO90RseXkEQ@mail.gmail.com>
+ <20130125151703.GB20813@mercury.ccil.org>
+ <CAO7tK2coVb2JagQOpUm-P211U8b_045dL8DGb+QTJBNAZiiLFg@mail.gmail.com>
+ <20130126232527.GG13680@mercury.ccil.org>
+ <CAO7tK2df_wDMFqwY_0uQdG1xUvojB4Btd2BW2G=GBZHtSDdxRQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <CAO7tK2df_wDMFqwY_0uQdG1xUvojB4Btd2BW2G=GBZHtSDdxRQ@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Score: -0.4 (/)
+X-Spam_score: -0.4
+X-Spam_score_int: -3
+X-Spam_bar: /
+Subject: Re: [jbovlaste] berbere, berberi
+X-BeenThere: jbovlaste@lojban.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+Reply-To: jbovlaste@lojban.org
+List-Id: <jbovlaste.lojban.org>
+List-Unsubscribe: <http://mail.lojban.org/mailman/options/jbovlaste>,
+ <mailto:jbovlaste-request@lojban.org?subject=unsubscribe>
+List-Archive: <http://mail.lojban.org/mailman/private/jbovlaste/>
+List-Post: <mailto:jbovlaste@lojban.org>
+List-Help: <mailto:jbovlaste-request@lojban.org?subject=help>
+List-Subscribe: <http://mail.lojban.org/mailman/listinfo/jbovlaste>,
+ <mailto:jbovlaste-request@lojban.org?subject=subscribe>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Errors-To: jbovlaste-bounces@lojban.org
+Content-Length: 1941
+
+Jorge Llamb=EDas scripsit:
+
+> Since we don't need to detect LALR-n-ambiguity anyway, why would
+> this limitation of a PEG make it not good enough to parse the Lojban
+> morphology?
+
+Let me use a greatly oversimplified example.  Suppose we are writing a
+morphology program to parse a word into a sequence of morphemes.
+We define a morpheme as having the form V, CV, or CVn, where V and C
+are any vowel and any consonant respectively.  If C does not include n,
+this grammar is obviously unambiguous, as there is only one way to parse
+any valid word into a sequence of morphemes.  If C does include n, this
+grammar is obviously ambiguous: we do not know if "jana" parses as "jan a"
+or "ja na".
+
+Now if we write a YACC grammar for the latter case, like this:
+
+C : 'j' | 'k' | 'l' | 'm' | 'n';
+V : 'a' | 'e' | 'i' | 'o' | 'u';
+morpheme: V | C V | C V 'n';
+word : morpheme | word morpheme;
+
+Yacc will tell us that there is a shift-reduce error.  This reflects
+the fact that the grammar is ambiguous, and therefore unsuited for a
+Lojban-style language.
+
+But if we write a PEG grammar, we will not get a complaint: it will be all
+about whether the morpheme rule is written as C V 'n' / C V / V (which
+will prefer the parse "jan a") or C V / C V 'n' / V, (which will prefer
+the parse "ja na").  It is in this sense that a PEG grammar is unsuitable
+for Lojban: precisely because the PEG grammar settles all ambiguities in
+advance, we cannot be sure that the text has only one possible analysis.
+The only way to be sure is to put each alternation rule in the PEG into
+every possible order, and make sure that all texts parse the same way
+with all the variants.
+
+-- =
+
+John Cowan            http://www.ccil.org/~cowan     cowan@ccil.org
+Uneasy lies the head that wears the Editor's hat! --Eddie Foirbeis Climo
+
+_______________________________________________
+jbovlaste mailing list
+jbovlaste@lojban.org
+http://mail.lojban.org/mailman/listinfo/jbovlaste
+
