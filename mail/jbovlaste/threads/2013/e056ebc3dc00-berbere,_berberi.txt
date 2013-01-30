@@ -1,4 +1,4 @@
-# mail/jbovlaste thread e056ebc3dc00-berbere,_berberi | root cao7bv+gfg2rk+vjlb2wlva0vged3hhxx=y3cwvq-g6aefwpt4g@mail.gmail.com | 22 messages | rendered by jbomohi mail-v1
+# mail/jbovlaste thread e056ebc3dc00-berbere,_berberi | root cao7bv+gfg2rk+vjlb2wlva0vged3hhxx=y3cwvq-g6aefwpt4g@mail.gmail.com | 23 messages | rendered by jbomohi mail-v1
 
 === 1 | 2013-01-24T17:06:43Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+gfg2rk+vjlb2wlva0vged3hhxx=y3cwvq-g6aefwpt4g@mail.gmail.com | mail/jbovlaste/cur/1359047203.e056ebc3dc00f297.jbomohi:2,S
 Is it allowed to have several fui'vla that differ in the ending only? What
@@ -962,7 +962,88 @@ http://mail.lojban.org/mailman/listinfo/jbovlaste
 
 
 
-=== 22 | 2013-01-25T04:54:55Z | Pierre Abbat <phma@bezitopo.org> | 2035173.jdsqtslb3n@caracal | mail/jbovlaste/cur/1359089695.790088aa44262d4d.jbomohi:2,S
+=== 22 | 2013-01-30T01:05:26Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2eoqcnyz2gybr05r=93ddx5=74_q9oahwvzf1gnsb76gg@mail.gmail.com | mail/jbovlaste/cur/1359507926.f4223f9e8799bb3f.jbomohi:2,S
+On Tue, Jan 29, 2013 at 9:10 PM, John Cowan <cowan@mercury.ccil.org> wrote:
+> Jorge Llambías scripsit:
+>
+>> Since we don't need to detect LALR-n-ambiguity anyway, why would
+>> this limitation of a PEG make it not good enough to parse the Lojban
+>> morphology?
+>
+> Let me use a greatly oversimplified example.  Suppose we are writing a
+> morphology program to parse a word into a sequence of morphemes.
+> We define a morpheme as having the form V, CV, or CVn, where V and C
+> are any vowel and any consonant respectively.  If C does not include n,
+> this grammar is obviously unambiguous, as there is only one way to parse
+> any valid word into a sequence of morphemes.  If C does include n, this
+> grammar is obviously ambiguous: we do not know if "jana" parses as "jan a"
+> or "ja na".
+>
+> Now if we write a YACC grammar for the latter case, like this:
+>
+> C : 'j' | 'k' | 'l' | 'm' | 'n';
+> V : 'a' | 'e' | 'i' | 'o' | 'u';
+> morpheme: V | C V | C V 'n';
+> word : morpheme | word morpheme;
+>
+> Yacc will tell us that there is a shift-reduce error.  This reflects
+> the fact that the grammar is ambiguous, and therefore unsuited for a
+> Lojban-style language.
+>
+> But if we write a PEG grammar,
+
+But we cannot do that for that language! It's simply impossible to
+write an ambiguous PEG grammar.
+
+> we will not get a complaint: it will be all
+> about whether the morpheme rule is written as C V 'n' / C V / V (which
+> will prefer the parse "jan a")
+
+and therefore does not correspond to your ambiguous language.
+
+> or C V / C V 'n' / V, (which will prefer
+> the parse "ja na").
+
+and therefore also does not match your ambiguous language. Either of
+those two PEG grammars would be suitable for a language like Lojban,
+unlike the third grammar flagged as ambiguous by Yacc. PEG will never
+even find that unsuitable third grammar.
+
+> It is in this sense that a PEG grammar is unsuitable
+> for Lojban: precisely because the PEG grammar settles all ambiguities in
+> advance, we cannot be sure that the text has only one possible analysis.
+
+But the text does have one possible analysis for each of the two PEG
+grammars: "jan a" for one of the grammars and "ja na" for the other
+grammar. They are two different grammars, each unambiguous. One of
+them could be a language like Lojban. The ambiguous third language
+that PEG cannot handle could never be Lojban anyway, so why should we
+care that PEG cannot represent it?
+
+If the Lojban morphology is defined by a PEG grammar, it is
+unambiguous. There's nothing unsuitable about that.
+
+> The only way to be sure is to put each alternation rule in the PEG into
+> every possible order, and make sure that all texts parse the same way
+> with all the variants.
+
+That's easy to do. You just replace every  (A / B) by its equivalent
+(A | !A B). It doesn't matter in which order you test A and !A B
+because at most only one can ever succeed. The disadvantage of doing
+this is that the parsing is more inefficient, but if you don't care
+about efficiency it doesn't make a difference, and now the rules can
+be applied in any order.
+
+mu'o mi'e xorxes
+
+_______________________________________________
+jbovlaste mailing list
+jbovlaste@lojban.org
+http://mail.lojban.org/mailman/listinfo/jbovlaste
+
+
+
+=== 23 | 2013-01-25T04:54:55Z | Pierre Abbat <phma@bezitopo.org> | 2035173.jdsqtslb3n@caracal | mail/jbovlaste/cur/1359089695.790088aa44262d4d.jbomohi:2,S
 On Thursday, January 24, 2013 21:06:43 Gleki Arxokuna wrote:
 > Is it allowed to have several fui'vla that differ in the ending only? What
 > about rafsi for them then?
