@@ -1,0 +1,83 @@
+Received: from localhost ([::1]:50465 helo=stodi.digitalkingdom.org)
+	by stodi.digitalkingdom.org with esmtp (Exim 4.76)
+	(envelope-from <jbovlaste-bounces@lojban.org>)
+	id 1UKBom-0005IT-QP; Mon, 25 Mar 2013 11:08:24 -0700
+Received: from rlpowell by stodi.digitalkingdom.org with local (Exim 4.76)
+ (envelope-from <rlpowell@digitalkingdom.org>)
+ id 1UKBoj-0005I8-Ns; Mon, 25 Mar 2013 11:08:21 -0700
+Date: Mon, 25 Mar 2013 11:08:21 -0700
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+To: lojban-list@lojban.org, jbovlaste@lojban.org
+Message-ID: <20130325180820.GU6328@stodi.digitalkingdom.org>
+Mail-Followup-To: lojban-list@lojban.org, jbovlaste@lojban.org
+MIME-Version: 1.0
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [jbovlaste] Need some jbovlaste programming help.
+X-BeenThere: jbovlaste@lojban.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+Reply-To: jbovlaste@lojban.org
+List-Id: <jbovlaste.lojban.org>
+List-Unsubscribe: <http://mail.lojban.org/mailman/options/jbovlaste>,
+ <mailto:jbovlaste-request@lojban.org?subject=unsubscribe>
+List-Archive: <http://mail.lojban.org/mailman/private/jbovlaste/>
+List-Post: <mailto:jbovlaste@lojban.org>
+List-Help: <mailto:jbovlaste-request@lojban.org?subject=help>
+List-Subscribe: <http://mail.lojban.org/mailman/listinfo/jbovlaste>,
+ <mailto:jbovlaste-request@lojban.org?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Errors-To: jbovlaste-bounces@lojban.org
+Content-Length: 1992
+
+
+Some bad data has snuck its way in to jbovlaste (a good chunk from
+an import script I screwed up that we can't just re-run, but some of
+it isn't from that, so not sure what's going on) and it needs
+cleaning.
+
+I have neither the time nor inclination.
+
+I don't much care what it's written in as long as it's UTF-8 safe
+(i.e. bash isn't going to cut it), but we need something that does
+the following:
+
+For every natlang word:
+
+  if a duplicate (same word, meaning, and langid) exists,
+  consolidate them.  This means deleting the duplicate, combining
+  the "notes" field for the two of them, and updating all instances
+  of the id you just deleted to point to the one that still exists
+  in the tables threads, keywordmapping, natlangwordbestguesses, and
+  natlangwordvotes.  natlangwordbestguesses has to be handled
+  specially there, as it shouldn't end up with two identical rows
+  (identical across all 3 fields); that shouldn't be possible given
+  that manipulation, but check anyway.
+
+  if the word is unused, delete it; unused means that its id does
+  not occur in the appropriate column in threads, keywordmapping,
+  natlangwordbestguesses, and natlangwordvotes. 
+
+For context, here's the code: https://github.com/lojban/jbovlaste ,
+here's a script that works
+https://github.com/lojban/jbovlaste/blob/master/bin/snarfgismu_tabs
+(the script in question, in fact, but fixed) in case you want to
+keep to the same code style, and here's the schema:
+https://github.com/lojban/jbovlaste/blob/master/help/schema.txt
+
+Looking forward to some help.
+
+-Robin
+
+-- 
+http://intelligence.org/ :  Our last, best hope for a fantastic future.
+.i ko na cpedu lo nu stidi vau loi jbopre .i danfu lu na go'i li'u .e
+lu go'i li'u .i ji'a go'i lu na'e go'i li'u .e lu go'i na'i li'u .e
+lu no'e go'i li'u .e lu to'e go'i li'u .e lu lo mamta be do cu sofybakni li'u
+
+_______________________________________________
+jbovlaste mailing list
+jbovlaste@lojban.org
+http://mail.lojban.org/mailman/listinfo/jbovlaste
+
