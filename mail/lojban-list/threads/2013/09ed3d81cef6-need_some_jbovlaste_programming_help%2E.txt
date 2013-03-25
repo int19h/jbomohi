@@ -1,0 +1,58 @@
+# mail/lojban-list thread 09ed3d81cef6-need_some_jbovlaste_programming_help%2E | root 20130325180820.gu6328@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2013-03-25T18:08:21Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20130325180820.gu6328@stodi.digitalkingdom.org | mail/lojban-list/cur/1364234901.09ed3d81cef6d3db.jbomohi:2,S
+
+Some bad data has snuck its way in to jbovlaste (a good chunk from
+an import script I screwed up that we can't just re-run, but some of
+it isn't from that, so not sure what's going on) and it needs
+cleaning.
+
+I have neither the time nor inclination.
+
+I don't much care what it's written in as long as it's UTF-8 safe
+(i.e. bash isn't going to cut it), but we need something that does
+the following:
+
+For every natlang word:
+
+  if a duplicate (same word, meaning, and langid) exists,
+  consolidate them.  This means deleting the duplicate, combining
+  the "notes" field for the two of them, and updating all instances
+  of the id you just deleted to point to the one that still exists
+  in the tables threads, keywordmapping, natlangwordbestguesses, and
+  natlangwordvotes.  natlangwordbestguesses has to be handled
+  specially there, as it shouldn't end up with two identical rows
+  (identical across all 3 fields); that shouldn't be possible given
+  that manipulation, but check anyway.
+
+  if the word is unused, delete it; unused means that its id does
+  not occur in the appropriate column in threads, keywordmapping,
+  natlangwordbestguesses, and natlangwordvotes. 
+
+For context, here's the code: https://github.com/lojban/jbovlaste ,
+here's a script that works
+https://github.com/lojban/jbovlaste/blob/master/bin/snarfgismu_tabs
+(the script in question, in fact, but fixed) in case you want to
+keep to the same code style, and here's the schema:
+https://github.com/lojban/jbovlaste/blob/master/help/schema.txt
+
+Looking forward to some help.
+
+-Robin
+
+-- 
+http://intelligence.org/ :  Our last, best hope for a fantastic future.
+.i ko na cpedu lo nu stidi vau loi jbopre .i danfu lu na go'i li'u .e
+lu go'i li'u .i ji'a go'i lu na'e go'i li'u .e lu go'i na'i li'u .e
+lu no'e go'i li'u .e lu to'e go'i li'u .e lu lo mamta be do cu sofybakni li'u
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban?hl=en.
+For more options, visit https://groups.google.com/groups/opt_out.
+
+
+
+
