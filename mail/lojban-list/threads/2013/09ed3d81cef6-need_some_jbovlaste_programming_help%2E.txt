@@ -1,4 +1,4 @@
-# mail/lojban-list thread 09ed3d81cef6-need_some_jbovlaste_programming_help%2E | root 20130325180820.gu6328@stodi.digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 09ed3d81cef6-need_some_jbovlaste_programming_help%2E | root 20130325180820.gu6328@stodi.digitalkingdom.org | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2013-03-25T18:08:21Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20130325180820.gu6328@stodi.digitalkingdom.org | mail/lojban-list/cur/1364234901.09ed3d81cef6d3db.jbomohi:2,S
 
@@ -166,6 +166,64 @@ http://intelligence.org/ :  Our last, best hope for a fantastic future.
 .i ko na cpedu lo nu stidi vau loi jbopre .i danfu lu na go'i li'u .e
 lu go'i li'u .i ji'a go'i lu na'e go'i li'u .e lu go'i na'i li'u .e
 lu no'e go'i li'u .e lu to'e go'i li'u .e lu lo mamta be do cu sofybakni li'u
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban?hl=en.
+For more options, visit https://groups.google.com/groups/opt_out.
+
+
+
+
+
+=== 4 | 2013-03-27T10:34:00Z | Pierre Abbat <phma@bezitopo.org> | 2679640.amcdiyqbse@caracal | mail/lojban-list/cur/1364380440.ac9e5a223dcf8176.jbomohi:2,S
+On Tuesday, March 26, 2013 16:13:16 Robin Lee Powell wrote:
+> The problems are mostly in Russian, due to an import script I fucked
+> up.  You can see the issue thuswise:
+> 
+> select word,meaning,langid from natlangwords where word in (select word from
+> natlangwords group by word, meaning, langid having count(*) > 1) order by
+> langid;
+
+I've loaded the database and verified the problem. I added ",word" to the end 
+of the query and got this:
+
+ язык                             |              |      5
+ язык                             |              |      5
+ язык                             | часть тела   |      5
+ язык                             | речь         |      5
+ язык (орган)                     |              |      5
+ язык (орган)                     |              |      5
+
+Besides the duplicates, which I'll get rid of, "язык (орган)" shoudn't be in 
+there at all; it means the same as "язык|часть тела".
+
+The query produces fake duplicates for numbers in English:
+
+ .001                             |              |      2
+ 1E12                             |              |      2
+ 1E-12                            |              |      2
+ 1E15                             |              |      2
+ 1E-15                            |              |      2
+ 1E18                             |              |      2
+ 1E-18                            |              |      2
+ 1E21                             |              |      2
+ 1E-21                            |              |      2
+ 1E24                             |              |      2
+ 1E-24                            |              |      2
+ 1E6                              |              |      2
+ 1E-6                             |              |      2
+ 1E-9                             |              |      2
+ MEX                              |              |      2
+
+Apparently it thinks those are equal for sorting purposes. The same entries 
+are really duplicated in Russian.
+
+Pierre
+-- 
+sei do'anai mi'a djuno puze'e noroi nalselganse srera
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
