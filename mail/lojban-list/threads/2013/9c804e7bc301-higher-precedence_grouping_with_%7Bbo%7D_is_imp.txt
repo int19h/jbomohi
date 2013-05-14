@@ -1,4 +1,4 @@
-# mail/lojban-list thread 9c804e7bc301-higher-precedence_grouping_with_%7Bbo%7D_is_imp | root caoq8vdv21kdhlncsr2yhqnnenpe-rbv8gcjdkxhjnpjyfrjp6a@mail.gmail.com | 12 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 9c804e7bc301-higher-precedence_grouping_with_%7Bbo%7D_is_imp | root caoq8vdv21kdhlncsr2yhqnnenpe-rbv8gcjdkxhjnpjyfrjp6a@mail.gmail.com | 13 messages | rendered by jbomohi mail-v1
 
 === 1 | 2013-05-12T01:37:42Z | Jacob Errington <nictytan@gmail.com> | caoq8vdv21kdhlncsr2yhqnnenpe-rbv8gcjdkxhjnpjyfrjp6a@mail.gmail.com | mail/lojban-list/cur/1368322662.9c804e7bc3012b9a.jbomohi:2,S
 The title says it all; the following won't parse:
@@ -683,7 +683,71 @@ For more options, visit https://groups.google.com/groups/opt_out.
 
 
 
-=== 11 | 2013-05-14T02:15:59Z | Pierre Abbat <phma@bezitopo.org> | 1432954.nhihrhzkxp@caracal | mail/lojban-list/cur/1368497759.a62d5f820c39fc2e.jbomohi:2,S
+=== 11 | 2013-05-14T18:15:55Z | John E Clifford <kali9putra@yahoo.com> | 1368555355.51683.yahoomailneo@web184403.mail.bf1.yahoo.com | mail/lojban-list/cur/1368555355.b5bac5b1426fc7fa.jbomohi:2,S
+Or, in short, while Lojban could use full FOPL (augmented, to be sure) to cover every possible situation, the results are too ugly to even consider as a language to speak or write.  Hence, the project is to find the way to take away the maximum of the preciding features of Logic without losing the precision.  To some extent, this is trial and error, but, given that no significant changes have been made in the overall underlying logic, Lojban has done a rather good job of it.  At some point we will get to the aesthetics of whether what we have is really a language, but the vector of progress has generally been that way.
+
+
+
+
+________________________________
+ From: "Bob LeChevalier, President and Founder - LLG" <lojbab@lojban.org>
+To: lojban@googlegroups.com 
+Sent: Tuesday, May 14, 2013 12:39 PM
+Subject: Re: [lojban] Higher-precedence Grouping with {bo} Is Impossible for TAG Sentence Connectives
+ 
+
+Ian Johnson wrote:
+> {bo} is hackish, but its meaning is at least determined by the grammar.
+> Grammatically the worst thing about it is failure to elide certain
+> terminators. For example, if {I TAG BO} were instead {I TAG BOhOI} or
+> something, {.i fi'o broda fe'u bo} could be {.i fi'o broda bo'oi} with
+> the {fe'u} elided. This isn't that bad, however, all things said; I
+> wouldn't say it's worth having its own cmavo. Incidentally, why is it
+> that the PEG can't make {.i fi'o broda bo mi brode} parse correctly,
+> whereas it can fix things like JOI connecting LE-sumti without {ku}?
+> 
+> Evidently {ke} is actually even worse, since you can't coerce {GIhA KE
+> SELBRI} to not make a gihe-kek. Why were these designed to be so
+> awkwardly general purpose?
+
+I'm not sure I understand your question.  one point to note is that TLI Loglan grammar was originally designed with no formal parser analysis at all, and this history has driven the subsequent Lojban effort.
+
+a) JCB discovered the works of Victor Yngve sometime in the 60s or early 70s, and therefore got the idea of codifying the grammar in a set of rules.  He also conceived of several goals for this codified grammar which I don't remember very well.  But he was unable to achieve these goals, whatever they were, though they were associated with encoding what JCB understood as the "human grammar"
+b} Around 1976-78, the effort changed to using a YACC LALR-1 grammar as a standard for codifying the grammar because several people knew how to use YACC.  Much of the grammar was encoded, but it seemed to be impossible to get the "machine grammar" to parse things quite the same as the "human grammar" did.
+c) The problem was solved around 1980, I believe by Jeff Prothero, then a student at the University of Washington, to use elidable terminators to bracket constructs, which elisions YACC would supply using its error processing.  It took until around 1982-1983 to actually achieve a complete YACC grammar for the language, using error correction.
+
+When we started redeveloping Lojban, the intent was to retain the Loglan grammar in its entirety, changing only the words.  Thus we were bound by the design limitations of the original language.  JCB attempted to play copyright games with the formal grammar (as he had with the words of the language), but he was on impossible legal ground given that so much of the work had been done by Prothero and others, along with known legal issues in copyrighting a computer algorithm.
+
+But we had reinvented the cmavo lexicon, and we wanted to include grammar components for tense and MEX that JCB had never managed.  Thus, initially with the help of Prothero and a guy named Jeff Taylor and others who knew YACC, I attempted to reimplement the YACC grammar from scratch, but not really trying to reinvent any wheels.  In 1991, Cowan took over what I had done, and cleaned it up considerably, eventually achieving the baseline grammar listed in CLL (which is still the official grammar).  But the grammar was still a YACC grammar, with all its limitations.
+
+Attempts to create a PEG grammar remain unofficial, and frankly I've never looked at the PEG grammar and probably wouldn't understand it if I did.  YACC was hard enough for me, and having learned the YACC grammar for Lojban, I never managed to fluently use the supposedly simpler E-BNF grammar (even though I had learned a couple of computer languages using BNF).
+
+Thus the long answer to your question, as I understand it is that the grammar was always intended to be as general purpose as possible. Elidability of terminators wasn't a high priority in general, though certain ones were desirable; there was nothing more obnoxious that trying to figure out what was and was not terminated when you expressed a string like kukukeiku.  (JCB's language used gu instead of ku, and thus it sounded a lot like baby talk.  Lojban with full terminators, is simply kuku.)
+
+Some of the non-general purpose constructs arose because they couldn't get YACC to work with fully general constructs, or they required too much use of obnoxious terminators.  Hence the plethora of different families of logical connectives, each linking a different type of construct.  Those decisions generally dated from the JCB era, though we added some new things that were connectable (such as relative clauses), and hence some new families, most of which eventually went away (leaving for example zi'e which no longer is the basis for a family of logical connectives).  We also abandoned the effort to impose a formal grammar on PA and UI compounds, so that there are strings of each of those cmavo that are technically grammatical but make no sense:
+pi'epaime'ipipi'e.  But for the most part, the fundamental language grammar remains that of JCB's pre-formal language, with elidable terminator constructs added where they could enable useful and yet syntactically unambigious constructs.
+
+lojbab
+-- Bob LeChevalier    lojbab@lojban.org    www.lojban.org
+President and Founder, The Logical Language Group, Inc.
+
+-- You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban?hl=en.
+For more options, visit https://groups.google.com/groups/opt_out.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban?hl=en.
+For more options, visit https://groups.google.com/groups/opt_out.
+
+
+
+
+=== 12 | 2013-05-14T02:15:59Z | Pierre Abbat <phma@bezitopo.org> | 1432954.nhihrhzkxp@caracal | mail/lojban-list/cur/1368497759.a62d5f820c39fc2e.jbomohi:2,S
 (Resending; it didn't come back the first time.)
 On Saturday, May 11, 2013 21:37:42 Jacob Errington wrote:
 > The title says it all; the following won't parse:
@@ -713,7 +777,7 @@ For more options, visit https://groups.google.com/groups/opt_out.
 
 
 
-=== 12 | 2013-05-14T14:10:33Z | Jacob Errington <nictytan@gmail.com> | caoq8vdwzx9yphv1-ajm7v7zsyfnqn-wuex+hc5y8tcdskodkuw@mail.gmail.com | mail/lojban-list/cur/1368540633.44036b6fa9af3cbd.jbomohi:2,S
+=== 13 | 2013-05-14T14:10:33Z | Jacob Errington <nictytan@gmail.com> | caoq8vdwzx9yphv1-ajm7v7zsyfnqn-wuex+hc5y8tcdskodkuw@mail.gmail.com | mail/lojban-list/cur/1368540633.44036b6fa9af3cbd.jbomohi:2,S
 On 13 May 2013 22:15, Pierre Abbat <phma@bezitopo.org> wrote:
 
 > (Resending; it didn't come back the first time.)
