@@ -1,4 +1,4 @@
-# mail/lojban-list thread 5d17d42f04bc-number_of_unique_symbols_needed_to_write_lojban | root c87e7070-9168-4f82-9546-d08cef7a114b@aol.com | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 5d17d42f04bc-number_of_unique_symbols_needed_to_write_lojban | root c87e7070-9168-4f82-9546-d08cef7a114b@aol.com | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2013-06-08T18:36:41Z | Terry <tsofian@aol.com> | c87e7070-9168-4f82-9546-d08cef7a114b@aol.com | mail/lojban-list/cur/1370716601.5d17d42f04bce3e4.jbomohi:2,S
 How many unique symbols would be needed for all sounds and punctuation in written lojban?
@@ -329,6 +329,62 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To post to this group, send email to lojban@googlegroups.com.
 Visit this group at http://groups.google.com/group/lojban?hl=en.
 For more options, visit https://groups.google.com/groups/opt_out.
+
+
+
+
+=== 9 | 2013-06-09T06:53:47Z | Daeldir <daeldir@gmail.com> | 20130609085347.30689d8aded469d57d5a7967@gmail.com | mail/lojban-list/cur/1370760827.53280152ab7edff5.jbomohi:2,S
+On Sat, 8 Jun 2013 13:36:41 -0500
+Terry <tsofian@aol.com> wrote:
+
+> How many unique symbols would be needed for all sounds and punctuation in written lojban?
+
+Do you plan to do some stuff with lojban alphabet?
+
+I did some work on lojban symbols a while ago to pass the time (when I had some…). An HTML page to compare all proposed alphabets for lojban. Currently, there is latin alphabet, cyrillic alphabet, tengwar mode, and I added braille, just to see what it gives.
+
+I wanted to add hiragana, but the conversion algorithm I found was… A little too complex/undefined for me to work on it. I also thought about a hangul system, as hangul has some interesting linguistic properties (so says wikipedia), but… I don't know hangul, so I didn't spend time on it neither.
+
+I also tried to design an alphabet from scratch, with sound features in mind but… Well, Tolkien did a better job, mine was useless compared to tengwars (even if tengwars are more complicated that needed for lojban, using a subset works fine).
+
+For now, stressed characters are in uppercase (it doesn't recognize accents). Unknown characters are replaced with “..” and numbers are replaced with their name (1 is “pa”, 45 is “vomu”…).
+
+While that doesn't answer your question, I can say that for that work, I used 27 lowercase characters (including punctuation and *space*).  Uppercase was checked only for latin letters, not the apostrophe (so, I don't recognize the "h" as a letter in my program), which gives 23 more symbols. So, 50 symbols are used (counting space, no “h”).
+
+However, at least in the tengwar mode, there are more (or less) letters: 12 vowels (“full” vowels, which are a symbol, and “small” vowels, which are like accents), 18 consonants, one punctuation (“'” is counted as a letter, and with tengwar, the comma is useless). Because each full letter (six vowels, 18 consonnants) can have an “accent”, that is, can be followed by a small vowel, we have 24×7=168 letters, (we count 7 “vowels”, one being “no vowel”), that, time two, for stressed syllables: 336 symbols are used in the tengwar mode. However, it is really 32 symbols, since each of the 336 final symbols are from one to three superposed symbols (24 full letters + 6 small vowels + stress + space). So, that is less than the 50 symbols used in the latin alphabet. Also, we could think about the way tengwar are designed, and decompose them in even less symbols (each one being a feature of the represented sound).
+
+Here is the code I used to “classify” each latin letters:
+
+> maps.latin = {
+>   letters:      "abcdefgijklmnoprstuvxyz.,' ",
+>   vowels:       "aeiouy",
+>   consonants:   "bcdfgjklmnprstvxz",
+>   punctuations: ".,' " // (“'” should be a consonant and not a punctuation, but, he!…) 
+> };
+
+What matters for “counting” the symbol is only the “letters” field. And adding stress (uppercase characters).
+
+You can give it a try here:
+
+http://daeldir.ninm.net/lojban-alphabets/alphabets.html (needs javascript to work, and a recent navigator, at least for displaying tengwar)
+
+I wanted to make the code more readable before releasing it, but as I don't have time, and will spend the small amount I have on translations rather than on this code, I guess I won't wait more…
+
+I have another page with my attempt at a new alphabet, but it is not on the net, and not very interesting.
+
+That may not answer totally your question, but it shows that the number of symbols needed to write lojban can vary from 32 to 336, depending on how you analyze the language and the alphabet (are “a”, “e”, “i”, “ä”, “ë” and “ï”, six symbols, or four? Is the dot really needed, as it is said (at least in the wave lessons, I don't remember for the CLL) that it is always optionnal?).
+
+Also, keep in mind that I'm a beginner… But you already have better answers from more experienced people. Mine is a… Complement.
+
+mu'o mi'e la .daeldir.lurni'acadz.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban?hl=en.
+For more options, visit https://groups.google.com/groups/opt_out.
+
 
 
 
