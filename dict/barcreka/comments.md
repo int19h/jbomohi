@@ -54,3 +54,31 @@ gejyspa wrote:
 vetli died because i couldnt find etymology. and it was robin who had
 suggested creating a gismu for "dorsal/ventral part of body".
 
+
+## 2013-06-13T16:02:30Z — gejyspa (comment 717, in reply to 715)
+
+Re: This is kosta.
+
+gleki wrote:
+> gejyspa wrote:
+> > gleki wrote:
+> > > gejyspa wrote:
+> > > > There is nothing added by this word
+> > > 
+> > > 
+> > > or rather there is no need for {kosta}
+> > 
+> > 
+> >   ... says the guy who would rather add experimental gismu like vetli,
+> > rather than use lujvo that already exist?  kosta has been around for
+> > decades.  Why put in a different word?
+> 
+> 
+> vetli died because i couldnt find etymology. and it was robin who had
+> suggested creating a gismu for "dorsal/ventral part of body".
+
+  I'm just saying, why prefer a lujvo over an official gismu? Why not pare
+out lenku for tolgla, masno for tolsutra, etc? You seem to like creating
+unofficial gismu, so just wondering why you are picking on poor little
+kosta?
+
