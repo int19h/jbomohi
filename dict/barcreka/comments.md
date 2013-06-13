@@ -32,3 +32,25 @@ gleki wrote:
 rather than use lujvo that already exist?  kosta has been around for
 decades.  Why put in a different word?
 
+
+## 2013-06-13T15:03:16Z — gleki (comment 715, in reply to 714)
+
+Re: This is kosta.
+
+gejyspa wrote:
+> gleki wrote:
+> > gejyspa wrote:
+> > >	There is nothing added by this word
+> > 
+> > 
+> > or rather there is no need for {kosta}
+> 
+> 
+>   ... says the guy who would rather add experimental gismu like vetli,
+> rather than use lujvo that already exist?  kosta has been around for
+> decades.  Why put in a different word?
+
+
+vetli died because i couldnt find etymology. and it was robin who had
+suggested creating a gismu for "dorsal/ventral part of body".
+
