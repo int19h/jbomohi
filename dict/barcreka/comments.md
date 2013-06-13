@@ -15,3 +15,20 @@ gejyspa wrote:
 
 or rather there is no need for {kosta}
 
+
+## 2013-06-13T11:45:07Z — gejyspa (comment 714, in reply to 713)
+
+Re: This is kosta.
+
+gleki wrote:
+> gejyspa wrote:
+> >   There is nothing added by this word
+> 
+> 
+> or rather there is no need for {kosta}
+
+
+  ... says the guy who would rather add experimental gismu like vetli,
+rather than use lujvo that already exist?  kosta has been around for
+decades.  Why put in a different word?
+
