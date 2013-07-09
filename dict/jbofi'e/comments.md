@@ -23,3 +23,11 @@ Another question would be if there should in general be a separate
 category for cmene-like names. I don't know, it might create more problems
 than it solves.
 
+
+## 2013-07-09T15:20:59Z — Wuzzy (comment 733, on definition 2458)
+
+Calque
+
+A calque of the worst kind like this deserves to be downvoted into
+oblivion.
+
