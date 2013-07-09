@@ -31,3 +31,10 @@ Calque
 A calque of the worst kind like this deserves to be downvoted into
 oblivion.
 
+
+## 2013-07-09T15:22:04Z — Wuzzy (comment 734, on definition 2458, in reply to 733)
+
+Re: Calque
+
+But I fear this word is too engrained nowadays. :-/
+
