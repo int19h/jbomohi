@@ -82,3 +82,12 @@ out lenku for tolgla, masno for tolsutra, etc? You seem to like creating
 unofficial gismu, so just wondering why you are picking on poor little
 kosta?
 
+
+## 2013-07-09T15:51:56Z — Wuzzy (comment 736, on definition 18277)
+
+kosta vs creka
+
+{kosta} would have been a much better choice for the tertau.
+{creka} just means “any upper garment” where {kosta} explicitly means
+“any _outer_ upper garment”.
+
