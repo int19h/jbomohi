@@ -18,3 +18,12 @@ you to read the Reference Grammar, chapter 3: sections 2 and 4. See also
  for the pronouncation
 of [e], [ɛ], and [j] respectively.
 
+
+## 2013-07-12T14:15:10Z — Wuzzy (comment 738, on definition 16190, in reply to 737)
+
+IPA notation broken
+
+Sigh. The parser broke the IPA notation of my previous post. Please
+imagine there were brackets (“[” and “]”) around the “spoken”
+letters. These are NOT links!
+
