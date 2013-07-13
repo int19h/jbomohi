@@ -63,3 +63,19 @@ no pa re ci vo mu xa ze bi so
 No two cmavo alike.
 {rei} breaks this and therefore must die.
 
+
+## 2013-07-13T09:43:48Z — Wuzzy (comment 742, on definition 16190, in reply to 741)
+
+Not not needed.
+
+gleki wrote:
+> This is legal but if one says [li pareno li parejno]
+> or [li parɛno li parɛjno] then the problem still exists.
+Whoops! I did not think about this. *sigh*
+[li pareno li parejno] is indeed hard distinguishable (But I find [li
+parɛno li parɛjno] much easier to distinguish btw.) and it would not
+against the grammar to say so. Whoops! So it seems that {rei} was indeed a
+bad choice. Now I agree that it needs to change.
+
+I just turned my thumb around.
+
