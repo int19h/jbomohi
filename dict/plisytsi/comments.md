@@ -76,3 +76,12 @@ Yes, today I thought about it again and independently came to the
 conclusion as you. Definition #1 was indeed the better one. Forget about
 the new definition, it was silly.
 
+
+## 2013-07-14T18:46:29Z — Wuzzy (comment 755, on definition 41755, in reply to 751)
+
+Doch nicht missbilligt
+
+Ähh, vergesst das, was ich sagte. Definition #1 ist besser als die »ein
+Apfelkern«-Definition. Lojban macht standardmäßig absichtlich keine
+Angaben über die Anzahl.
+
