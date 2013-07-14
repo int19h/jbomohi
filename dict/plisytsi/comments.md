@@ -44,3 +44,26 @@ I, the coiner of this lujvo, discourage further use of this definition
 (not the lujvo itself!). Reason:
 
 
+
+## 2013-07-14T10:24:38Z — gleki (comment 753, on definition 41825, in reply to 749)
+
+Re: New definition.
+
+Wuzzy wrote:
+> I just noticed that the first definition “p1=t1 is/are apple seed.”
+is
+> flawed since you can’t quantify the apple seed anymore. If you say
+“i
+> mi ponse ci lo plisytsi” it means you possess three times one or more
+> apple seed which could mean you posses three to infinite apple seed,
+which
+> makes this brivla not really useful. “p1=t1 is a apple seed.” on the
+> other hand, is quantifiable so I prefer this one. Sorry for the trouble!
+> :-/
+
+Wait. Let's take {gerku}. It doesn't specify the number of dogs.
+
+{mi ralte lo gerku} can mean "I keep a dog"/"I keep dogs"
+
+To specify number you use either {pa lo gerku} or {za'u lo gerku}.
+
