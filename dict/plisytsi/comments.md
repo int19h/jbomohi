@@ -35,3 +35,12 @@ Ich, der Erfinder dieses lujvo, rate von dieser Definition ab. Begründung
 siehe
 .
 
+
+## 2013-07-14T10:22:25Z — Wuzzy (comment 752, on definition 41757)
+
+deprecated
+
+I, the coiner of this lujvo, discourage further use of this definition
+(not the lujvo itself!). Reason:
+
+
