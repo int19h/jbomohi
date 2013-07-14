@@ -67,3 +67,12 @@ Wait. Let's take {gerku}. It doesn't specify the number of dogs.
 
 To specify number you use either {pa lo gerku} or {za'u lo gerku}.
 
+
+## 2013-07-14T18:43:01Z — Wuzzy (comment 754, on definition 41825, in reply to 753)
+
+Re: New definition.
+
+Yes, today I thought about it again and independently came to the
+conclusion as you. Definition #1 was indeed the better one. Forget about
+the new definition, it was silly.
+
