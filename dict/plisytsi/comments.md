@@ -26,3 +26,12 @@ nutzlos. Das neue »plisytsi« ist jetzt nur noch ein Apfelkern, somit
 sind exakte Aussagen möglich. »i mi ponse ci lo plisytsi« heißt »Ich
 besitze genau drei Apfelkerne.«. 
 
+
+## 2013-07-14T10:20:28Z — Wuzzy (comment 751, on definition 41755)
+
+Misbilligt.
+
+Ich, der Erfinder dieses lujvo, rate von dieser Definition ab. Begründung
+siehe
+.
+
