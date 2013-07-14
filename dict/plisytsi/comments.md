@@ -85,3 +85,13 @@ Doch nicht missbilligt
 Apfelkern«-Definition. Lojban macht standardmäßig absichtlich keine
 Angaben über die Anzahl.
 
+
+## 2013-07-14T18:49:16Z — Wuzzy (comment 756, on definition 41755, in reply to 755)
+
+Re: Doch nicht missbilligt
+
+Und ich meinte eigentlich »Definition #41755«, nicht »Definition #1«.
+e'enaicai
+Was ist heute nur los mit mir? Ich sollte mal Pause machen und mal für
+eine gewisse Zeit die Finger von jbovlaste lassen. ;-)
+
