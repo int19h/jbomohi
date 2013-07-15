@@ -50,3 +50,51 @@ In English-speaking regions outside North America, such as the British
 Isles and Australasia, "cowboy" can refer to a tradesmen whose work is of
 shoddy and questionable value, e.g., "a cowboy plumber". "
 
+
+## 2013-07-15T23:52:35Z — Wuzzy (comment 758, on definition 41686, in reply to 757)
+
+Re: Not actual cowboys?
+
+Okay. You presented me these definitions:
+- someone who watches out for cattle
+- someone like John Wayne ;-)
+- a tough someone
+- (metaphor) masculine symbol (in one sense)
+- derogative term
+- someone who is reckless
+
+I can remove “derogative term” from the list since your definition
+explicitly mentions some kind of “cowboy culture” (whatever that may
+be).
+
+If all the remaining definitions are valid interpretations for
+“kauvboi”, I do not think that this valsi is very useful. It is highly
+ambigious. If it just were vague, I would be okay with it. But it isn’t
+just vague, it is too ambigious. The difference between “guy who watches
+out for cattle” and “a guy who is like John Wayne” is too big to
+unite them both under one valsi. Also uniting “reckless” and
+“tough” under one valsi is a bad idea.
+
+I have no idea what “kind” of cowboy you actually meant with
+“kauvboi”. Also what the heck is the “cowboy culture”? Even if
+something like that existed, it is unclear what kind of “cowboy” was
+meant. Is it the culture of the “John Wayne”-style cowboys or the
+“cow watcher”-style cowboys? Or even something else? So the x2 place
+does not reduce ambiguity at all, it seems. :-(
+
+Currently, it seems I am not going to like this valsi, after all. Copying
+words from the English language including all their ambigiuty to Lojban
+seems like a very bad idea to me.
+
+I’d be much better to extract all the useful possible meanings of
+“cowboy” and give each of them their own valsi. That would be much
+much better than having one vague, ambigious and possibly even confusing
+valsi. Four of them are already defined:
+
+- someone who watches out for cattle: {xirbakyku'i}
+- a tough someone: {tsali}
+- (metaphor) masculine symbol (in one sense): {nakni}?
+- derogative term: {mabla}
+- someone like John Wayne: currently no Lojban valsi
+- someone who is reckless: possibly currently no Lojban valsi
+
