@@ -98,3 +98,79 @@ valsi. Four of them are already defined:
 - someone like John Wayne: currently no Lojban valsi
 - someone who is reckless: possibly currently no Lojban valsi
 
+
+## 2013-07-18T07:06:13Z — jongausib (comment 760, on definition 41686, in reply to 758)
+
+Re: Not actual cowboys?
+
+Wuzzy wrote:
+> Okay. You presented me these definitions:
+> - someone who watches out for cattle
+> - someone like John Wayne ;-)
+> - a tough someone
+> - (metaphor) masculine symbol (in one sense)
+> - derogative term
+> - someone who is reckless
+> 
+> I can remove “derogative term” from the list since your definition
+> explicitly mentions some kind of “cowboy culture” (whatever that may
+> be).
+> 
+> If all the remaining definitions are valid interpretations for
+> “kauvboi”, I do not think that this valsi is very useful. It is
+highly
+> ambigious. If it just were vague, I would be okay with it. But it
+isn’t
+> just vague, it is too ambigious. The difference between “guy who
+watches
+> out for cattle” and “a guy who is like John Wayne” is too big to
+> unite them both under one valsi. Also uniting “reckless” and
+> “tough” under one valsi is a bad idea.
+> 
+> I have no idea what “kind” of cowboy you actually meant with
+> “kauvboi”. Also what the heck is the “cowboy culture”? Even if
+> something like that existed, it is unclear what kind of “cowboy” was
+> meant. Is it the culture of the “John Wayne”-style cowboys or the
+> “cow watcher”-style cowboys? Or even something else? So the x2 place
+> does not reduce ambiguity at all, it seems. :-(
+> 
+> Currently, it seems I am not going to like this valsi, after all.
+Copying
+> words from the English language including all their ambigiuty to Lojban
+> seems like a very bad idea to me.
+> 
+> I’d be much better to extract all the useful possible meanings of
+> “cowboy” and give each of them their own valsi. That would be much
+> much better than having one vague, ambigious and possibly even confusing
+> valsi. Four of them are already defined:
+> 
+> - someone who watches out for cattle: {xirbakyku'i}
+> - a tough someone: {tsali}
+> - (metaphor) masculine symbol (in one sense): {nakni}?
+> - derogative term: {mabla}
+> - someone like John Wayne: currently no Lojban valsi
+> - someone who is reckless: possibly currently no Lojban valsi
+
+{kauvboi} is a loanword for translating a complex cultural specific
+concept from natural language. Of course you can translate cowboy to
+{xirbakyku'i}, {tsali}, {nakni}, {me la jon vein ku simsa} etc if you
+prefer, but that doesn't catch all the nuances of the word cowboy. I don't
+agree that kauvboi is  ambiguous, it just include all those associations
+I've mentioned which has become interrelated due to an historical process
+of this cultural concept. You could say that cowboy is an important
+concept in American culture, just as for example the concept of ubuntu is
+important to understand some African cultures, or nirvana in Indian
+religions; concepts very difficult to translate to lujvo equivalents.
+That's one reason why we have fu'ivla, to talk about complex concepts with
+just one short word.
+You know approximately what I mean when I say something like "Our kids
+played cowboys and Indians all night long", right (but nowadays such a
+statement might probably be considered racialist)? When we talk about
+cowboys we mean something to do with the original cowboy in the way I (or
+some other people/standard) see it. For most of the time context will do
+the job, but now and then you need to explicitly express by what standard
+you consider someone/something to be cowboy (the standard place).
+But the cowboy culture place I think is non-intrinsical and therefore
+unnecessary when I think about it (you could as well express this with
+{kauvboi kulnu}, so I delete it).
+
