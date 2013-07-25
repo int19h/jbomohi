@@ -1,0 +1,53 @@
+# mail/lojban-list thread 17ad4841231e-mex_roi,_mex_moi,_mex_mai | root 4hk11m02656cr6m01hk2bg | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2013-07-25T17:03:09Z | "Bob LeChevalier, President and Founder - LLG" <lojbab@lojban.org> | 51f15a4d.3030805@lojban.org | mail/lojban-list/cur/1374771789.821c4c5b8e064812.jbomohi:2,S
+Ian Johnson wrote:
+> Today we found that you can't use MEX with ROI, MOI, or MAI, even in the
+> PEG. camxes treats a closed MEX (e.g. {vei mo'e ko'a [te'u ve'o]} as a
+> "quantifier", distinct from PA* (i.e. PA* = PA | PA PA*), which it calls
+> a "number". With MOI we have the YACC-friendly hack "ME LI MEX MOI",
+> which still cooperates with the PEG, but as best I can tell there is no
+> such hack for ROI and MAI.
+>
+> Would anything go wrong if MEX ROI, MEX MOI, and MEX MAI were made
+> allowed in the PEG? If not, can we get this into camxes?
+
+I don't know anything about the PEG grammar (or camxes), but for YACC 
+and the official grammar, there is a fundamental problem.  ROI is 
+defined and used solely in the "preparser" that constructs strings of 
+cmavo into tenses.
+
+MEX is defined at the full grammar level, and has delimited recursive 
+components that in theory could include pretty much the whole grammar 
+(not that I think anyone uses such functionality).
+
+It might be possible to add some rules to expand the set of cmavo 
+strings that the preparser would accept for ROI, but it would have to be 
+done carefully (IIRC, we had a bear of a time getting logical tense 
+compounds to work because of FIHO), and it wouldn't include most of MEX.
+
+I believe that MAI is handled in the UI "grammar", and hence is even 
+pre- preparser
+
+MOI on the other hand is already tied to MEX at the full grammar level. 
+  So I am not sure what it means to say that you cannot use MEX with 
+MOI.  Almost anything can be used with MOI if you first turn it into a 
+sumti, and then apply a ME conversion to that sumti.  You can of course 
+turn a MEX into a sumti using LI, so "meli MEX" with appropriate 
+terminators should work with MOI.  I just tried it, and you need either 
+a lo'o or a me'u to terminate the li/me construct before the moi.
+
+-- 
+Bob LeChevalier    lojbab@lojban.org    www.lojban.org
+President and Founder, The Logical Language Group, Inc.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/groups/opt_out.
+
+
+
+
