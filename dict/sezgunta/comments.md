@@ -19,3 +19,14 @@ qoi Qi na jetnu. Qi ma pilno fi ku?
 
 Qi qe'o pa mai ko je'urja'o lo du'u zo sevzi na mapti.
 
+
+## 2013-07-28T18:21:59Z — Wuzzy (comment 767, in reply to 765)
+
+Re: not that I'm complaining
+
+gleki wrote:
+> but {sevzi} is used for expressing "ego" these days.
+:-(
+
+Suggest a better brivla. :P
+
