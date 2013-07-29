@@ -30,3 +30,21 @@ gleki wrote:
 
 Suggest a better brivla. :P
 
+
+## 2013-07-29T08:03:15Z — gleki (comment 768, in reply to 766)
+
+Re: not that I'm complaining
+
+selpahi wrote:
+> gleki wrote:
+> > but {sevzi} is used for expressing "ego" these days. 
+> 
+> qoi Qi na jetnu. Qi ma pilno fi ku?
+> 
+> > Do we have an algorithm of creating true reflective lujvo?
+> 
+> Qi qe'o pa mai ko je'urja'o lo du'u zo sevzi na mapti.
+
+
+http://www.lojban.org/tiki/BPFK+Section%3A+gismu+Issues
+
