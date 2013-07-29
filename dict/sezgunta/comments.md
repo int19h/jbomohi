@@ -48,3 +48,17 @@ selpahi wrote:
 
 http://www.lojban.org/tiki/BPFK+Section%3A+gismu+Issues
 
+
+## 2013-07-29T14:01:56Z — selpahi (comment 769, in reply to 768)
+
+Re: not that I'm complaining
+
+gleki wrote:
+> selpahi wrote:
+> > Qi qe'o pa mai ko je'urja'o lo du'u zo sevzi na mapti.
+>
+> http://www.lojban.org/tiki/BPFK+Section%3A+gismu+Issues
+
+mi djuno .i za'a dai la .lojbab. pu finti zo sevzi lo se mupli be lu mi
+lumci lo sevzi be mi li'u .i li'a lo gimste na prane ciksi lo smuni
+
