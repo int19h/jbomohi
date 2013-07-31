@@ -1,0 +1,82 @@
+# mail/bpfk thread 7c68cf173210-dag-cll_git_updates_for_tue_jul_30_20%3A21%3A06 | root e1v4myi-0001da-vw@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2013-07-31T03:21:06Z | Apache <apache@digitalkingdom.org> | e1v4myi-0001da-vw@stodi.digitalkingdom.org | mail/bpfk/cur/1375240866.7c68cf173210939d.jbomohi:2,S
+commit 2b9395aee2db4d6f3664691335b2f798153a9047
+Author: Robin Lee Powell <rlpowell@digitalkingdom.org>
+Date:   Tue Jul 30 19:29:43 2013 -0700
+
+    LaTeX install tips, fix to packages.
+
+diff --git a/README b/README
+index 00d5ccb..e0507db 100644
+--- a/README
++++ b/README
+@@ -32,25 +32,25 @@ account on the appropriate server.
+ 
+   xsltproc
+ 
+   xmlto
+ 
+   PDF Generation
+   --------------
+ 
+   dblatex
+ 
+-  xetex, with a recent version of texlive.  For Fedora, this means
+-  following the instructions at
+-  http://fedoraproject.org/wiki/Features/TeXLive to get the TeXLive
+-  2011-2 repo or later, then:
++  xetex, with a recent version of texlive.  For Fedora, this
++  upgrading to F19.  Then install these packages; this may not be a
++  complete list, but it should be pretty close:
+     
+-    sudo yum install texlive-xetex
+-    sudo yum install texlive-dejavu-fedora-fonts texlive-dejavu texlive-multirow texlive-subfigure texlive-appendix texlive-changebar texlive-overpic texlive-collection-langcjk
++    sudo yum install texlive-xetex texlive-dejavu texlive-multirow texlive-subfigure texlive-appendix texlive-changebar texlive-overpic dejavu-fonts-common dejavu-sans-fonts dejavu-sans-mono-fonts dejavu-serif-fonts texlive-cjkutils-bin texlive-collection-xetex texlive-dvipdfm-bin texlive-jfontmaps-bin texlive-ptex-bin texlive-release texlive-ttfutils-bin texlive-xetex-bin xmltex tex-texlive-common-doc tex-texlive-en-doc tex-texlive-msg-translations tex-texlive-scripts tex-texlive texlive-subfigure texlive-appendix texlive-multirow texlive-multirow texlive-listings texlive-overpic texlive-overpic texlive-changebar texlive-tabulary texlive-savesym texlive-tocloft texlive-framed
++
++  Yes, that's a lot of packages.
+ 
+   MOBI / EPUB
+   -----------
+ 
+   ebook-convert (from the yum/rpm calibre package)
+ 
+   Xvfb and xvfb-run (fake X for calibre)
+ 
+diff --git a/latex/cll.sty b/latex/cll.sty
+index ada2f0b..86f01dd 100644
+--- a/latex/cll.sty
++++ b/latex/cll.sty
+@@ -12,20 +12,21 @@
+ \DeclareOption{nohyperlink}{ \def\DBKhyperlink{no} }
+ 
+ % Default values
+ \ExecuteOptions{nohyperlink}
+ 
+ % If defined, process the options
+ \ProcessOptions\relax
+ 
+ % Needed packages
+ \usepackage{float}
++\usepackage{listings}
+ \usepackage{dbk_core}
+ \usepackage{multicol}
+ \usepackage{etoolbox}
+ \usepackage{tabulary}
+ \usepackage{soul}
+ 
+ % Deal with the width provided for ToC numbers
+ \usepackage{savesym}
+ \savesymbol{c@lofdepth}   % tocloft conflicts with subfigure.sty
+ \savesymbol{c@lotdepth}   % tocloft conflicts with subfigure.sty
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/groups/opt_out.
+
+
+
+
