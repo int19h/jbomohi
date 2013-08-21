@@ -36,3 +36,26 @@ because
 
 .e'u do pilno lo mriste lo nu jungau ro da
 
+
+## 2013-08-21T04:02:40Z — gusnikantu (comment 774, on definition 782, in reply to 711)
+
+Re: .eu galfi zoi gy inert gy zoi gy noble gy
+
+gleki wrote:
+> gusnikantu wrote:
+> > Inert gases are different from noble gases both in the intension and
+the
+> > extension. the term for "noble gas" is more useful as gismu, while
+> "inert
+> > gas" is easily expressed with lujvo {tolfragapci}. The extension of
+> noble
+> > gas is composed of helium, neon, argon, krypton, xenon and radon. The
+> > ununoctium, a member of Group 18, may not be a member of noble gas
+> because
+> > of its chemical properties.
+> 
+> .e'u do pilno lo mriste lo nu jungau ro da
+
+
+pu go'i ki'e i ba'o stika lo smuni be zo navni
+
