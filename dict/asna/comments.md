@@ -30,3 +30,11 @@ four-letter fu'ivla equivalent is justified.
 
 Just my two cents.
 
+
+## 2013-10-08T17:06:25Z — Wuzzy (comment 797, in reply to 796)
+
+Re: asna vs. morna
+
+I just saw the other words using the concept of {asna}. Therefore I think
+this four-letter fu'ivla is already justified. :-)
+
