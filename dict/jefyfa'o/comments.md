@@ -34,3 +34,10 @@ Yes, but I had to enter a sense because there was already another word for
 weekend. Saturday Sunday doesn't mean it can't be used for other sorts of
 weekends.
 
+
+## 2013-10-31T13:06:32Z — selpahi (comment 810, on definition 42454, in reply to 809)
+
+Re: Culturally biased
+
+I have added an additional sense: "weekly off-days".
+
