@@ -1,67 +1,45 @@
-<!--
+<includeonly><!--
   Automatically add {{template sandbox notice}} when on a /sandbox page.
--->{{#ifeq: {{SUBPAGENAME}} | sandbox
-| <div style="clear: both;"></div>{{template sandbox notice|{{{livepage|}}}}}
-}}<!--
-  Automatically add {{pp-template}} to protected templates.
--->{{template other
-| {{#ifeq: {{PROTECTIONLEVEL:move}} | sysop
-  | {{pp-template|docusage=yes}}
-  | {{#if: {{PROTECTIONLEVEL:edit}}
-    | {{pp-template|docusage=yes}}
-    | <!--Not protected, or only semi-move-protected-->
-    }}
-  }}
+-->{{#ifeq: {{SUBPAGENAME}} | sandbox |
+<div style="clear:both" />
+{{Template sandbox notice|{{{livepage|}}}}}
 }}<!--
   Start of green doc box.
--->{{documentation/start box2
-| preload = {{{preload|}}}   <!--Allow custom preloads-->
-| heading = {{{heading|¬}}}   <!--Empty but defined means no header-->
+-->{{Documentation/start box2
+| preload = {{{preload|}}}<!-- Allow custom preloads -->
+| heading = {{{heading|¬}}}<!-- Empty but defined means no header -->
 | heading-style = {{{heading-style|}}}
 | content = {{{content|}}}
-
-<!--Some namespaces must have the /doc, /sandbox and /testcases 
-    in talk space-->
-| docspace = {{documentation/docspace}}
-
-| 1 = {{{1|}}}   <!--Other docname, if fed-->
-
-<!--The namespace is added in /start box2-->
-| template page = {{documentation/template page}}
-
-}}<!-- Start content --><!--
+| docspace = {{documentation/docspace}}<!-- Some namespaces must have the /doc, /sandbox and /testcases in talk space -->
+| 1 = {{{1|}}}<!-- Other docname, if fed -->
+| lang = {{{lang|}}}
+| template page = {{documentation/template page}}<!-- The namespace is added in /start box2 -->
+}}<!--
   Start load the /doc content:
-  Note: The line breaks between this comment and the next line are necessary
-  so  "=== Headings ===" at the start and end of docs are interpreted.
+  Note: The line break between this comment and the next line is necessary
+  so an  "=== Heading ===" at start of doc subpage is correctly interpreted.
 -->
-{{#switch: {{#if:{{{content|}}}|1|0}}{{#if:{{{1|}}}|1|0}}{{#ifexist:{{{1|}}}|1|0}}{{#ifexist:{{documentation/docspace}}:{{documentation/template page}}/doc|1|0}}
-| 1000 | 1001 | 1010 | 1011 | 1100 | 1101 | 1110 
-| 1111 = {{{content|}}}
-| 0110 | 0111 = {{ {{{1}}} }}
-| 0001 | 0011 = {{ {{documentation/docspace}}:{{documentation/template page}}/doc }}
-| 0000 | 0100 | 0010 | 0101 = 
-}}
-<!--
+{{#switch: {{#if:{{{content|}}}|1|0}}{{#if:{{{1|}}}|1|0}}{{#ifexist:{{{1|}}}|1|0}}{{#ifexist:{{Documentation/docspace}}:{{Documentation/template page}}/doc|1|0}}
+| 0000 | 0100 | 0010 | 0101 = <!-- currently no content to transclude -->
+| 0001 | 0011 = {{ {{Documentation/docspace}}:{{Documentation/template page}}/doc }}
+| 0110 | 0111 = {{ {{{1|}}} }}
+| 1000 | 1001 | 1010 | 1011 | 1100 | 1101 | 1110 | 1111 = {{{content|}}}
+}}<!--
   End load the /doc content:
-  Note: The line breaks between this comment and the previous line are necessary
-  so  "=== Headings ===" at the start and end of docs are interpreted.
--->{{documentation/end box2
-| preload = {{{preload|}}}   <!--Allow custom preloads-->
+  Note: The line break between this comment and the next line is necessary
+  so an "=== Heading ===" at end of doc subpage is correctly interpreted.
+-->
+{{Documentation/end box2
+| preload = {{{preload|}}}<!-- Allow custom preloads -->
 | content = {{{content|}}}
-| link box = {{{link box|}}}   <!--So "link box=off" works-->
-
-<!--Some namespaces must have the /doc, /sandbox and /testcases 
-    in talk space-->
-| docspace = {{documentation/docspace}}
-
-| 1 = {{{1|}}}   <!--Other docname, if fed-->
-
-<!--The namespace is added in /end box2-->
-| template page = {{documentation/template page}}
-
+| link box = {{{link box|}}}<!-- So "link box=off" works -->
+| docspace = {{Documentation/docspace}}<!-- Some namespaces must have the /doc, /sandbox and /testcases in talk space -->
+| 1 = {{{1|}}}<!-- Other docname, if fed -->
+| lang = {{{lang|}}}
+| template page = {{Documentation/template page}}<!-- The namespace is added in /end box2 -->
 }}<!--
   End of green doc box
---><noinclude>
-
+--></includeonly><noinclude>
+{{Documentation}}
 <!-- Add categories and interwikis to the /doc subpage, not here! -->
 </noinclude>
