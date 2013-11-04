@@ -1,20 +1,783 @@
 
-Robin's Palm Writings Category: la nicte cadzu
+== le ranmi be la zeldas ==
 
-Navigation: [[Robin's Palm Writings: la nicte cadzu|la nicte cadzu Index]] [[Robin's Palm Writings|Robin's Palm Writings Top-Level Index]] 
+[[jbocre: bancus|bancus]]  have been working on translating The Legend of Zelda to Lojban. This page holds a copy of my notes while working on it.
 
-ni'o mu pi re mo'o nu nergau
+{img src="http://www.nemorathwald.com/lojban/le_ranmi_be_la_zeldas.gif"}{img src="http://www.digitalkingdom.org/~rizen/5.png"} {img src="http://www.digitalkingdom.org/~rizen/7.png"} {img src="http://www.digitalkingdom.org/~rizen/8.png"} {img src="http://www.digitalkingdom.org/~rizen/9.png"} {img src="http://www.digitalkingdom.org/~rizen/13.png"}
 
-.i ba za bo le karxe cu tolcliva lo brabra zdani .i sy zgana le nu vy zenba lo ka fengu simlu kei ca'o le nu klama .i sy te preti la'e di'u fo vy .i vy badri se sance gi'e cusku lu mi na birti ri'a lo nu mi pa ji'i pa roi klama .i ku'i pe'i ti zdani le mi bruna li'u .i se mu'i bo ro kalte cu denpa .i ba zi bo sy cusku lu mi pacna lo du'u do na drani li'u .i vy cusku lu mi ji'a pacna li'u
+See [[jbocre: clinoi be la'e lu le ranmi be la zeldas li'u|clinoi be la'e lu le ranmi be la zeldas li'u]] for a translation of the instruction manual.
 
-ni'o le girzu cu tolcliva le vorme gi'e denpa .i sy cusku lu ta'o .oi sai mi na kane lo nu te vecnu lo jibni zdani ri'a lo nu dukse lo ka kargu .i ta'i ma ro bradi be mi'o cu ponse lo brabra zdani .i ta'o nai .y. mi'o ca gasnu ma .i xu pilno le janbe li'u .i ky cusku lu na go'i li'u gi'e tcica le stela gi'e kargau le vrogai .i .a bu cladu cusku lu .oi cai mi xebni li'u gi'e vamtu .i sy mulno jimpe lo krinu be la'e di'u .i ku'i sy rivbi lo nu vamtu .i ky cusku lu da'i lo nu mi'o na viska lo simsa cu mukti lo nu ga'orgau le vrogai gi'e pilno le janbe .i ku'i li'a sai no remna cu bu'u xabju li'u
+General notes on the encoding. VRAM loading is done by a few routines, the main one is described below.
 
-ni'o le nenri be le zdani cu curve lo ka fenki .i ti rinka lo nu sy morji lo pixra be fi la .ecer. .i le nenri kumfa cu cmalu gi'e vasru vo serti .e no vrogai .i ro serti cu se fanmo gi'e se krasi vau pa bargu .i ku'i .ii sai no serti cu kuspe le loldi bi'o lo gapru .i pa serti cu pencu le loldi gi'e ku'i krasi le drudi .i le ci drata serti cu krasi jo nai fanmo lo mlana bitmu gi'e nai pinta ja sraji .i sy cusku lu mi'o na kakne lo nu pilno le serti .i ta'i ma mi'o litru ne'i le zdani li'u .i vy cusku lu do na drani li'u gi'e se jvinu lo ka mutce xanka kei gi'e cusku lu mi xebni li'u gi'e cadzu lo bitmu
+The routine is given an address and does the following:
 
-ni'o sy ze'i na kakne lo nu tavla .i .a bu cusku lu xu do jimpe lo nu mi xebni lo simsa dinju li'u .i ry cusku lu ro mi'o xebni .i ku'i lo nu cadzu ne'i ti cu sarcu lo nu daspo le cukta to'i cmalu denpa toi za'u re'u ku li'u .i sy cusku lu ma tadji li'u gi'e sligau pa xance fa'a la .deivid. .i ky cusku lu la .deivid. cadzu po'o .i so'i  bitmu cu cupra lo drata terjunta .i lo ralju fekcrida cu gansu la'e di'u mu'i lo nu nelci lo za'u ci cimde .i ku'i le ti munje cu se cimde lo ci mei po'o .i se ki'u bo lo ralju fekcrida cu zbasu lo cizra farna je platu .i la'e di'u rinka lo nu simlu lo se xabju munje li'u
+1. If the byte at the address has the high-bit set, we're done. Return.
 
-ni'o sy ze'i cinri je se terpa catlu vy .i fi'o dicra bo vy fanza cusku lu xu do'o ze'u sanli pau nai .i ko se gidva be mi cadzu li'u .i sy punji le jamfu le serti .i na cinri .i sy ca'u mo'i muvdu gi'e ganse lo nu farlu gi'e vofli ca pa mokca .i se ki'u bo sy xruti .i vy cusku lu ko sutra cadzu .i jo nai do ba farlu li'u .i sy barda vasxu gi'e sutra cadzu le serti .i sy cabyku'e ganse lo nu farlu .e lo nu vofli .i la'e di'u mutce to'e se nelci sy .i ku'i sy na farlu .i ba bo sy sanli le serti gi'e zgana lo du'u le drata kalte to claxu vy toi cu sanli lo sraji salpo be li so no bei sy
+2. Otherwise, read two bytes from that address, this is the address (big-endian) in VRAM that the data should be written to.
 
-ni'o vy cadzu fa'a pa dargu .i le drata kalte cu se gidva to ku'i .a bu smaji claxu toi .i ro le kalte cu pagre le bargu lo cnino kumfa .i le kumfa cu vasru lo flecu be lo xunre litki bei lo kunti canlu bei lo kunti canlu .i sy merli le flecu li ji'i pa lo remna birka .i le ve pluta be fo le flecu cu tcetce pluja .i ca lo nu le litki cu flecu kei le flecu cu muvdu .i ku'i le tarmi cu stodi .i sy mutce se cinri
+3. Read the next byte. If high bit (bit 7) is set, set the Inc32 bit of $2000. If bit 6 is set, perform RLE. (Explained below.) The remaining six bits are the length.
 
-ni'o ji'a le kumfa cu vasru vo serti .i lei vo serti cu kurfa gi'e fe'e ro roi lamji lo bitmu .i le kumfa cu vasru re bargu po'o .i se ki'u bo vy ga'u mo'i cadzu le serti .i bu'u le kojna le lamji serti cu salpo lo milxe cnita .i ku'i lo makfa cu rinka lo nu le girzu cu ga'u mo'i cadzu le lamji serti .i sy zgana lo du'u da cadzu ro le vi serti gi'e ku'i ro roi ga'u mo'i cadzu .i sy peisku lu .i ja mi'o pu kakne lo nu cadzu fa'a lo fatne .i se ki'u bo ro roi ni'a mo'i cadzu .i .oi li'u .i ba zi bo vy nergau le bargu
+4. If performing RLE, read the next byte, write it length times, then go to 1.
+
+5. Otherwise, read the next byte.
+
+6. Write this byte.
+
+7. Decrement length.
+
+8. If length is not zero, go to 5.
+
+9. Go to 1.
+
+RLE: Stands for Run-Length Encoding. With RLE, you'll have pairs of bytes. The first gives you a run-length, the second is the data itself. When uncompressing, you simply repeat the data byte run-length times.
+
+I do my romhacking with hexpose. It's pretty simple, but it does the job. I also used a disassembler at some point to figure out some of the above, but I ended up just gleaning it from various sources and how the data itself works.
+
+Title screen starts at $1A879
+
+Due to the nature of the loading routine, I can translate such that things take up less space, but I can't make them take more. That is, unless I can find where the reference addresses are stored. Hopefully, this won't cause too many issues.
+
+Cave text $405C-$45B1:
+
+Cave text is distinct from the usual routines, in that it has no way to set the VRAM address, rather there seems to be a separate sub-routine that pulls data from the table of cave text. It also assigns functions to  the two high bits, which would be impossible out side of text.
+
+Cave text starts at a certain point, and has three lines. Text starts on the first line. Line termination is achieved by setting high-bits on the last character in the line.:
+
+* Bit 7 (AND $80) moves to the second line.
+
+* Bit 6 (AND $40) moves to the third line.
+
+* Bits 6 and 7 (AND $C0), set together, terminate the text.
+
+<pre>
+
+$405C 43 Bytes
+
+-
+
+IT'S DANGEROUS TO GO
+
+ALONE! TAKE THIS.
+
+-
+
+.o'i do po'o klama
+
+.i ko cpacu ti
+
+-
+
+$4087 42 Bytes
+
+-
+
+MASTER USING IT AND
+
+YOU CAN HAVE THIS.
+
+-
+
+do crebi'o semu'i 
+
+le nu mi dunda ti do
+
+-
+
+$40B1 25 Bytes
+
+-
+
+TAKE ANY ROAD YOU WANT.
+
+-
+
+.e'a ko litru le seldji
+
+-
+
+$40C9 42 Bytes
+
+-
+
+SECRET IS IN THE TREE
+
+AT THE DEAD-END.
+
+-
+
+mipri ne'i le tricu 
+
+poi zvati le fanmo
+
+-
+
+$40F3 34 Bytes
+
+-
+
+LET'S PLAY MONEY
+
+MAKING GAME.
+
+-
+
+.e'u mi'o kelci 
+
+le nu jdini cpacu
+
+-
+
+$4115 41 Bytes
+
+-
+
+PAY ME FOR THE DOOR
+
+REPAIR CHARGE.
+
+-
+
+ko pleji fi mi
+
+le nu cikre le vorme
+
+-
+
+$413D 36 Bytes
+
+-
+
+SHOW THIS TO THE
+
+OLD WOMAN.
+
+-
+
+ko jarco tu'a ti
+
+le tolci'o ninmu
+
+-
+
+$4162 39 Bytes
+
+-
+
+MEET THE OLD MAN
+
+AT THE GRAVE.
+
+-
+
+ko penmi le tolci'o
+
+nanmu le mrostu
+
+-
+
+$4189 30 Bytes
+
+-
+
+BUY MEDICINE BEFORE
+
+YOU GO.
+
+-
+
+.o'i ko te vecnu 
+
+lo ve mikce
+
+-
+
+$41A7 23 Bytes
+
+-
+
+PAY ME AND I'LL TALK.
+
+-
+
+mi tavla gi'o terle'i
+
+-
+
+$41BE 34 Bytes
+
+-
+
+THIS AIN'T ENOUGH
+
+TO TALK.
+
+-
+
+ti na banzu 
+
+lenu mi tavla
+
+-
+
+$41E2 38 Bytes
+
+-
+
+GO UP,UP,
+
+THE MOUNTAIN AHEAD.
+
+-
+
+ko mo'iga'u
+
+litru lo cmana
+
+-
+
+$4208 54 Bytes
+
+-
+
+GO NORTH,WEST,SOUTH,
+
+WEST TO THE FOREST
+
+OF MAZE.
+
+-
+
+ko mo'ibe'a mo'ivu'a
+
+mo'ine'u mo'ivu'a 
+
+litru le ricfoi
+
+-
+
+$423C
+
+-
+
+BOY, YOU'RE RICH!
+
+-
+
+.ue do ricfu
+
+-
+
+$4151
+
+-
+
+BUY SOMETHIN' WILL YA!
+
+-
+
+.e'o vecnu fi ko 
+
+-
+
+$4268
+
+-
+
+BOY, THIS IS
+
+REAL EXPENSIVE!
+
+-
+
+.ue ti mutce kargu
+
+-
+
+$428D
+
+-
+
+TAKE ANY ONE YOU WANT.
+
+-
+
+.e'a ko cuxna
+
+-
+
+$42A4
+
+-
+
+IT'S A SECRET
+
+TO EVERYBODY.
+
+-
+
+se mipri 
+
+fi ro prenu
+
+-
+
+$42C8
+
+-
+
+GRUMBLE, GRUMBLE...
+
+-
+
+.oiro'oru'ebe'u
+
+-
+
+$42DD
+
+-
+
+EASTMOST PENNINSULA
+
+IS THE SECRET.
+
+-
+
+le traji bo stuna 
+
+xabyplu cu mipri
+
+-
+
+$4305
+
+-
+
+DODONGO DISLIKES SMOKE.
+
+-
+
+la .dodan. ka'e spoja
+
+-
+
+$431D 64 Bytes
+
+-
+
+DID YOU GET THE SWORD
+
+FROM THE OLD MAN ON
+
+TOP OF THE WATERFALL?
+
+-
+
+xu do terdu'a lo 
+
+cladakyxa'i le tolci'o 
+
+nanmu ga'u lo jacfa'u
+
+-
+
+$435D 35 Bytes
+
+-
+
+WALK INTO THE
+
+WATERFALL.
+
+-
+
+ko cadzu mo'ine'i 
+
+lo jacfa'u
+
+-
+
+$4380
+
+-
+
+SECRET POWER IS SAID
+
+TO BE IN THE ARROW.
+
+-
+
+lo ga'ardanti cu
+
+selmipri vlipa
+
+-
+
+$43AC
+
+-
+
+DIGDOGGER HATES
+
+CERTAIN KIND OF SOUND.
+
+-
+
+la .digdagr. xebni
+
+lo steci sance
+
+-
+
+$43D6 42 Bytes
+
+-
+
+I BET YOU'D LIKE
+
+TO HAVE MORE BOMBS.
+
+-
+
+ru'a do djica co ka'e
+
+ponse za'u lo jbama
+
+-
+
+$4400
+
+-
+
+IF YOU GO IN THE
+
+DIRECTION OF THE ARROW.
+
+-
+
+ko klama mo'ire'o 
+
+lo ga'ardanti
+
+-
+
+$442C
+
+-
+
+LEAVE YOUR LIFE
+
+OR MONEY.
+
+-
+
+ko dunda lo 
+
+se kanro ja jdini
+
+-
+
+$444F
+
+-
+
+THERE ARE SECRETS WHERE
+
+FAIRIES DON'T LIVE.
+
+-
+
+mipri vi le na se xabju 
+
+be lo crida
+
+-
+
+$447D 34 Bytes
+
+-
+
+AIM AT THE EYE
+
+OF GOHMA.
+
+-
+
+ko celgunta le kanla 
+
+be la .gomat.
+
+-
+
+$44A0
+
+-
+
+SOUTH OF ARROW MARK
+
+HIDES A SECRET.
+
+-
+
+ne'u le ga'ardanti
+
+barna cu mipri
+
+-
+
+$44C8
+
+-
+
+THERE'S A SECRET IN
+
+THE TIP OF THE NOSE.
+
+-
+
+ne'i le jipno be 
+
+le nazbi cu mipri
+
+-
+
+$44F3
+
+-
+
+SPECTACLE ROCK IS
+
+AN ENTRANCE TO DEATH.
+
+-
+
+la .le'otcirok.
+
+ve nerkla lo nu morsi
+
+-
+
+$451E
+
+-
+
+10TH ENEMY HAS THE BOMB.
+
+-
+
+le 10moi cu jbama ponse
+
+-
+
+$4536 45 Bytes
+
+-
+
+ONES WHO DOES NOT HAVE
+
+TRIFORCE CAN'T GO IN.
+
+-
+
+da poi na ponse lo
+
+cibmakfa na ka'e nerkla
+
+-
+
+$4563
+
+-
+
+PATRA HAS THE MAP.
+
+-
+
+la .patr. cartu ponse
+
+-
+
+$4578
+
+-
+
+GO TO THE NEXT ROOM.
+
+-
+
+ko ranji klama
+
+-
+
+$458E 36 Bytes
+
+-
+
+EYES OF SKULL
+
+HAS A SECRET.
+
+-
+
+lo kanla be le 
+
+sedbo'u cu jai mipri
+
+-
+
+</pre>
+
+
+All of Treasures $91AB-$94BC:
+
+These actually are in the ROM out of order from when they appear on screen.
+
+These also seem to have their own sub-routine for display. This one starts with a byte indicating how far over to start the line. Lines are terminated with $FF. Some times you get two lines for descriptions, sometimes only one. The positioning of the lines seems to be decided somewhere that I haven't found.
+
+Main menu is around 9D58
+
+"ZELDA" appears at 9EFB for some reason
+
+<pre>
+
+A969: 38 Bytes
+
+-
+
+THANKS LINK,YOU'RE
+
+?
+
+THE HERO OF HYRULE*
+
+-
+
+ki'e .link. do vudvri
+
+<64>
+
+fi la .xairul.
+
+</pre>
+
+AB17 has some more endgame stuff, which does not use the 8/7 bit method
+
+-
+
+FINALLY,PEACE RETURNS TO HYRULE.THIS ENDS THE STORY.
+
+-
+
+.uo di'a pacna vi la .xairul.     .i ba'o ranmi
+
+-
+
+Credits at AC6F
+
+<pre>
+
+AD45:
+
+ANOTHER QUEST WILL START(AB)FROM HERE PRESS THE START BUTTON
+
+YOU ARE GREAT
+
+YOU HVE AN AMAZING WISDOM AND POWER
+
+END OF "THE LEGEND OF ZELDA"
+
+</pre>
+
+More main menu at 1A15C
+
+1A2CB has death menu stuff
+
+1A329 looks to have the pause menu stuff
+
+Visible story screen runs from 1A454 to 1A827
+
+<pre>
+
+THE LEGEND OF ZELDA
+
+MANY  YEARS  AGO  PRINCE
+
+DARKNESS   GANNON  STOLE
+
+ONE OF THE TRIFORCE WITH
+
+POWER     PRINCESS ZELDA
+
+HAD  ONE OF THE TRIFORCE
+
+WITH WISDOM  SHE DIVIDED
+
+IT INTO  8 UNITS TO HIDE
+
+IT FROM   GANNON  BEFORE
+
+SHE WAS CAPTURED
+
+GO FIND THE  8 UNITS
+
+LINK TO SAVE HER
+
+-----------------------|
+
+ranmi be la .zeldas.
+
+le palci po'u la .ganyn. 
+
+puki zerle'a le cibmakfa
+
+peloka tsali .i le nobli
+
+po'u la  .zeldas.  ponse 
+
+le cibmakfa peloka prije 
+
+.i zy fendi  fi bi spisa 
+
+tezu'e le nu mipri fi gy
+
+kei pu le nu zy se kavbu
+
+doi .link. ko cpacu    
+
+le bi spisa        
+
+tezu'e lenu nurgau zy
+
+</pre>
+
+2109 " CMENE "
+
+2112 " NI KANRO "
+
+22A7 "CFARI TADJI"
+
+22E7 "VIMCU TADJI"
+
+<pre>
+
+REGISTER YOUR NAME
+
+CUXNA LE DO CMENE
+
+ELIMINATION MODE
+
+VIMCU TADJI
+
+-LIFE-
+
+NI KANRO
+
+USE B BUTTON
+
+FOR THIS
+
+KO PILNO BY
+
+</pre>
+
+[[jbocre: text|text]]
