@@ -1,319 +1,182 @@
 
-== Lesson 3 ==
+For computer applications of Lojban, there needs to be a formal grammar of numbers. I started from [[User:xorxes|xorxes]]' grammar below, and revised it in places and made it into a [[jbocre: PEG|PEG]] grammar.
 
-=== Commands, Requests and Questions ===
+I intend to meet all the rules in chapter 18 of CLL, except the one where it contradicts Lojban for Beginners, and LfB has the more useful reading. Namely, you can have a decimal point inside a "digit" (segment) of a mixed-base number like a time.
 
-So far we've looked at simple propositions, sentences that say that
+This involves defining 14 new selma'o. SA is not handled yet (what should it do inside a number?) Also, letters mixed with numbers are not handled, but I consider this a feature and not a bug.
 
-something is true. You can, in theory, say anything you want with
+The "number" rule in the existing grammar is replaced, and these rules are inserted:
 
-propositions, but it's pretty inconvenient. For example, if I want you
+^digit <- NO / TUhO
 
-to run, I could say just that:
+digits <- digit+
 
-"I want you to run"
+thousand <- digits? KIhO
 
-but I'd probably just say:
+whole <- thousand+ digits? / digits
 
-"Run!"
+approx <- whole / MAhU
 
-How do we do this in Lojban? We can't copy English grammar and just say
+after-decimal <- whole? ( RAhE whole? / JIhI approx? )?
 
-'''''bajra''''', since, as we've seen, this means "Someone/something
+approx-decimal <- (whole? PI)? approx
 
-runs". Instead we say
+decimal2 <- whole (PI after-decimal / JIhI approx-decimal)? / PAI
 
-'''''ko bajra'''''
+decimal1 <- MAhU? decimal2 / MAhU
 
-'''''ko''''' means you, the person I'm talking to, but only in commands
+decimal <- decimal1 CEhI?
 
-(in normal sentences it's '''''do'''''). Normally it comes in the first
+digitplace <- decimal PIhE?
 
-place of the '''''bridi''''', since normally you're asking people to do
+tuple <- digitplace+
 
-something or be something, not to have something done to them. However,
+real <- decimal / tuple / indef
 
-you can put it elsewhere, e.g.
+indef <- PI? RO / TUhO
 
-'''''nelci ko'''''
+fraction <- real? FIhU fraction? / real
 
-This means something like "Act so that [[jbocre: someone unspecified|someone unspecified]] likes you",
+complex <- fraction? KAhO fraction? / fraction
 
-and sounds pretty odd in English, but you could use it in the sense of
+quantity <- real / fraction / DAhA quantity
 
-"Try to make a good impression." Another example is:
+range <- DAhA? SUhO quantity?
 
-'''''mi dunda le cifnu ko'''''
+number <- indef number / range+ / complex / quantity
 
-or "Act so that I give the baby to you," with the possible meaning "Get
+NO <- pre-cmavo NO-words post-cmavo
 
-up and put your cigarette out~--~I'm going to pass you the baby."
+NO-words <- "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "0" / "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9"
 
-You can even have '''''ko''''' in two places in a '''''bridi''''', for example,
+MAhU <- pre-cmavo MAhU-words post-cmavo
 
-;'''''ko kurji ko''''':[[jbocre: Act so that|Act so that]] you take care of you
+MAhU-words <- "ma'u" / "ni'u"
 
-or in other words, "Take care of yourself." In fact, since we can put
+SUhO <- pre-cmavo SUhO-words post-cmavo
 
-the '''''selbri''''' anywhere other than the beginning of the sentence
+SUhO-words <- "su'e" / "su'o" / "me'i" / "za'u"
 
-(since this would imply "someone/something" for the first place), we can
+TUhO <- pre-cmavo TUhO-words post-cmavo
 
-(and do) say
+TUhO-words <- "tu'o" / "xo"
 
-'''''ko ko kurji'''''
+PAI <- pre-cmavo PAI-words post-cmavo
 
-==== Exercise 1 ====
+PAI-words <- "pai" / "te'o" / "ci'i"
 
-Imagine that someone says these things to you. What is it that they want you to do?
+CEhI <- pre-cmavo CEhI-words post-cmavo
 
-# '''''ko klama mi'''''
+CEhI-words <- "ce'i"
 
-# '''''ko dunda le cukta mi'''''
+KIhO <- pre-cmavo KIhO-words post-cmavo
 
-# '''''la .izaBEL. nelci ko'''''
+KIhO-words <- "ki'o"
 
-# '''''ko sutra'''''
+PI <- pre-cmavo PI-words post-cmavo
 
-# '''''ko ko nelci'''''
+PI-words <- "pi"
 
-So far we've looked at simple commands. However, outside the army, we
+PIhE <- pre-cmavo PIhE-words post-cmavo
 
-don't normally use these very much~--~normally we ask people politely.
+PIhE-words <- "pi'e"
 
-Foreigners in England often make the mistake of thinking that putting
+RAhE <- pre-cmavo RAhE-words post-cmavo
 
-"Please" in front of a command makes it into a polite request, which it
+RAhE-words <- "ra'e"
 
-doesn't (in English we usually have to make it into a question e.g.
+RO <- pre-cmavo RO-words post-cmavo
 
-"Could you open the window?"). Fortunately, in Lojban, "please" really
+RO-words <- "ro" / "so'a" / "so'e" / "so'i" / "so'o" / "so'u" / "rau" / "du'e" / "mo'a" / "no'o"
 
-is the magic word. Putting the attitudinal '''''.e'o''''' before a
+JIhI <- pre-cmavo JIhI-words post-cmavo
 
-sentence with '''''ko''''' changes it into a request e.g.
+JIhI-words <- "ji'i"
 
-'''''.e'o ko dunda le cukta mi'''''
+KAhO <- pre-cmavo KAhO-words post-cmavo
 
-is literally "Please give me the book," but is actually more like "Could
+KAhO-words <- "ka'o"
 
-you give me the book, please?"
+DAhA <- pre-cmavo DAhA-words post-cmavo
 
-=== Questions ===
+DAhA-words <- "da'a"
 
-In English, we make a yes/no question by changing the
+FIhU <- pre-cmavo FIhU-words post-cmavo
 
-order of the words (e.g. "You are ..." -> "Are you ...") or putting some
+FIhU-words <- "fi'u"
 
-form of "do" at the beginning (e.g. "Does she smoke?"). This seems
+^
 
-perfectly natural to someone whose native language is English (or
+''mi'e [[jbocre: rab.spir|rab.spir]]''
 
-German, or whatever) but is actually unnecessarily complicated (as any
+-----
 
-speaker of Chinese or Turkish will tell you). In Lojban we can turn any
+==== Grammar proposed by [[User:xorxes|xorxes]] (work in progress): ====
 
-proposition into a yes/no question by simply putting '''''xu''''' at the
+^number <- quantifier / complex
 
-beginning. Some examples:
+quantifier <- quantity* FIhU quantity* / quantity+ / PI quantity / real CEhI
 
-;'''''xu do nelci la bil.''''':Do you like Bill?
+quantity <- SUhO* RO / SUhO+ digits? / digits
 
-;'''''xu mi klama''''':Am I coming?
+complex <- real? KAhO real? / real
 
-;'''''xu crino''''':Is it green?
+real <- SUhO* MAhU? (decimal / fraction / aleph / digits / PAI)
 
-There are two ways to answer these questions. Lojban, like some other
+decimal <- digits? PI digits? (RAhE digits)?
 
-languages, does not have words that mean "yes" or "no". One way to
+fraction <- digits? FIhU digits?
 
-answer "yes" is to repeat the '''''selbri''''' e.g.
+aleph <- CIhI digits*
 
-* '''''xu do nelci la bil.'''''
-* '''''nelci'''''
+digits <- NO+ / TUhO
 
-We can also use '''''go'i''''', which repeats the last '''''bridi'''''. In this case,
+^
 
-though, it doesn't mean '''''do nelci la bil.''''' but '''''mi nelci la bil.'''''~--~it is
+==== New selma'o ====
 
-the '''meaning''', rather than the words of the '''''bridi''''' which are repeated. In
+||
 
-other words, in an answer to a yes/no question, it means "yes".
+NO | no, pa, re, ci, vo, mu, xa, ze, bi, so, dau, fei, gai, jau, rei, vai, ki'o, pi'e
 
-What about negative answers? Any '''''bridi''''' can be made negative by
+RO | ro, so'a, so'e, so'i, so'o, so'u, rau, du'e, mo'a, no'o
 
-using '''''na'''''. This negates the '''whole''' of the '''''bridi''''', so you can put
+SUhO | su'o, su'e, me'i, za'u, ji'i, da'a 
 
-it anywhere you want~--~most people either put it right at the beginning,
+MAhU | ma'u, ni'u
 
-or before the '''''selbri''''' (I prefer the beginning, since then it is
+TUhO | tu'o, xo
 
-clearer that I'm negating the whole thing). So '''''na mi nelci la bil.''''' means "It is not true that I like Bill," or in other words, "I don't like Bill."
+CIhI | ci'i
 
-As an answer to a question, we do the same thing, so we just say '''''na nelci''''' or '''''na go'i'''''.
+PAI | pai, te'o
 
-'''Logical note:''' Negatives are a lot more complicated than they look, in
+FIhU | fi'u
 
-both English and Lojban. Strictly speaking, '''''na mi nelci la bil.''''' is
+KAhO | ka'o
 
-true even if I've never heard of Bill (since it's pretty hard to like
+PI | pi
 
-someone you know nothing about). We'll look at some other negatives
+RAhE | ra'e
 
-later, but for the time being '''''na''''' will do fine. Just as in
+CEhI | ce'i
 
-English, if you ask someone if they like Bill, and they reply "No"
+||
 
-because they haven't met him, they're being amazingly unhelpful.
+==== Notes: ====
 
-English also has a number of "wh-" questions~--~"who", "what" etc. In
+#I made {da'a} a SUhO. For da'a in front of a number I propose the following interpretation: {ta mitre li da'a cipimu}, "that is all but 3.5 meters long", i.e. "that is 3.5 meters short of what it ought to be" or something like that. 
 
-Lojban we use one word for all of these: '''''ma'''''. This is like an
+# I made {ji'i} a SUhO because it is also used to indicate a range. This means that I don't use the position of ji'i as an indicator of the magnitude of fuzziness.  
 
-instruction to fill in the missing place. For example:
+# Any SUhO in front of a quantity returns another quantity, so they can be added indefinitely, even though in usage they probably won't be. For example, {za'u za'u za'u pa}, "more than more than more than one" is equivalent to {su'o vo}, "at least four" (when dealing with integers/quantifiers).
 
-;'''''do klama ma la london.''''':"Where are you going?" "London"
+# {pi'e} and {ki'o} can mingle freely with digits, collapsing digits between {pi'e} or {ki'o}s, or between these and {pi} into a single macro-digit. {ki'o} is the special case of {pi'e} for base 1000. Digits after {pi} are decimal unless there is at least one {ki'o} or {pi'e} after {pi}. 
 
-;'''''ma klama la london. la klaudias.''''':"Who's going to London?" "Claudia."
+# Two quantities in a row give the intersection if it exists, else the union. They group from left to right.
 
-;'''''mi dunda ma do le cukta''''':"I give what to you?" (probably meaning "What was it I was supposed to be giving you?") "The book."
+''mi'e [[User:xorxes|xorxes]]''
 
-Finally we have '''''mo'''''. This is like '''''ma''''', but questions a
+-----
 
-'''''selbri''''', not a '''''sumti'''''~--~it's like English "What does X
-
-do?" or "What is X?" (remember being and doing are the same!). More
-
-logically, we can see '''''mo''''' as asking someone to describe the
-
-relationship between the '''''sumti''''' in the question. For example:
-
-;'''''do mo la klaudias.''''':"You ??? Claudia"
-
-The answer depends on the context. Possible answers to this question
-
-are:
-
-;'''''nelci''''':"I like her."
-
-;'''''pendo''''':"I am her friend"
-
-;'''''prami''''':"I adore/am in love with her."
-
-;'''''xebni''''':"I hate her."
-
-;'''''fengu''''':"I'm angry with her."
-
-;'''''cinba''''':"I kissed her."
-
-Note that the time is not important here: just as '''''cinba''''' can
-
-mean "kiss", "kissed", "will kiss" and so on, '''''mo''''' does not ask a
-
-question about any particular time. There '''are''' ways to specify
-
-time in Lojban, but it's not necessary to use them (just to satisfy your
-
-curiosity though, "I kiss'''ed''' Claudia" is '''''mi '''pu''' cinba la klaudias.''''').
-
-We've said that '''''mo''''' can also be a "What is
-
-..." type of question. The simplest example is '''''ti mo'''''~--~"What
-
-is this?". You could also ask '''''la meilis. mo''''', which could mean
-
-"Who is Mei Li?", "What is Mei Li?", "What is Mei Li doing?" and so on.
-
-Again, the answer depends on the context. For example:
-
-;'''''ninmu''''':"She's a woman."
-
-;'''''jungo''''':"She's Chinese."
-
-;'''''pulji''''':"She's a policewoman."
-
-;'''''sanga''''':"She's a singer" '''or''' "She's singing."
-
-;'''''melbi''''':"She's beautiful." (possibly a pun, since this is what "meili" means in Chinese!)
-
-There are ways to be more specific, but these normally involve a
-
-'''''ma''''' question; for example '''''la meilis. gasnu ma''''' ("Mei Li
-
-does what?").
-
-There are more question words in Lojban, but
-
-'''''xu''''', '''''ma''''' and '''''mo''''' are enough for most of what you
-
-might want to ask. Three other important questions, '''''xo''''' ("How
-
-many?") '''''ca ma''''' ("When?) and '''''pei''''' ("How do you feel about
-
-it?") will come in the lessons on numbers, time and attitudes.
-
-==== Exercise 2: Lojban general knowledge quiz ====
-
-Answer the following questions (in Lojban, of course). Most of the
-
-answers are very easy; the trick is to understand the question!
-
-# '''''la brutus. mo la .iulius.'''''
-
-# '''''ma prami la djuliet.'''''
-
-# '''''xu la paris. nenri la .iunaityd.steits.'''''
-
-# '''''ma ciska la .anas.kaREninas.'''''
-
-# '''''xu la porc. sutra'''''
-
-# '''''la .ozuald. catra ma'''''
-
-# '''''xu la djorj.eliot. ninmu'''''
-
-# '''''la sakiamunis. mo'''''
-
-# '''''la cekspir. ciska ma'''''
-
-# '''''la dolorez.kleiborn. mo'''''
-
-# '''''xu la xardis. fengu la lorel.'''''
-
-=== Answers to Exercises ===
-
-==== Exercise 1 ====
-
-# Come to me.
-
-# Give me the book.
-
-# Act so that Isabel likes you (or "Butter up Isabel" perhaps)
-
-# Be fast ("Hurry up!")
-
-# Like yourself. (note that changing the word order doesn't change the meaning here)
-
-==== Exercise 2 ====
-
-# '''''catra''''' (assuming it's Julius Caesar we're talkin about)
-
-# '''''la romios.''''' (assuming it's '''that''' Juliet)
-
-# '''''na nenri''''' or '''''na go'i''''', unless we're talking about Paris, Texas.
-
-# '''''la tolstois.'''''
-
-# Trick question. '''''la''''' can name a specific Porsche, not Porsches in general, so it might go fast or not (e.g. it could have just broken down and not go at all).
-
-# '''''la KEnydis.'''''
-
-# '''''ninmu''''' or '''''go'i''''' (Despite the pen-name, George Eliot was a woman)
-
-# Not much we can say with the vocabulary we have at the moment other than '''''prenu''''' (maybe emphasising that Sakyamuni~--~the Buddha~--~was a person, not a God or somesuch). Other possible answers would be '''''xindo'''''~--~Indian, or '''''pavbudjo'''''~--~first Buddhist.
-
-# Anything Shakespeare wrote, e.g. '''''la xamlyt.''''', '''''la .otelos.''''' ...
-
-# '''''cukta''''' (it's a novel by Stephen King)
-
-# '''''fengu''''' or '''''go'i'''''~--~we're talking about Laurel and Hardy here.
+*[[jbocre: tinkit|tinkit]] try [[jbocre: xei|xei]] instead of rei.  xo really should be an indef.  oh, and what's the initial non-terminal?
