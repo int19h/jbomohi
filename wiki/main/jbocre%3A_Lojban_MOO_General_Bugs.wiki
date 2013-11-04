@@ -1,14 +1,46 @@
 
-lu le puzi cerni li'u tcita di'e .itu'e
+[[jbocre: The Lojban MOO|The Lojban MOO]]
 
-.oi lemi pamoi
+[[jbocre: Lojban MOO Performance|Lojban MOO Performance]]
 
-ckavelylafti stapa
+==  Outstanding Bugs ==
 
-pu jalra catra
+* If you end a line in a field you're editing with \, that and the following newline get replaced with \\n.  It should either be left alone or simply have the newline dropped.
+* mulsidju/helpall is incredibly slow. This appears to be because it's reading through every help file it can find to see if they refer back to the help file actualy asked for.  This is stupid; we should be saving a list of referred to helpfiles on exit.
 
-tu'u
+* The owners of an object with its "immobile" field set cannot pick/drop it dispite the helps mentioning they should be able to.
+* If you are holding a 'furnature' object and you {catlu} (and nothing else) you get *the object's description* and a bridi stating {fi'o se cpana <item name> do viska}
 
-----
+* When you edit "look_empty.msg" in lojban (the first time) it copies .jbo over the default .en, causing you to have to then go fix "look_empty.msg.en". BTW, this -doesn't- happen with "look.msg".
+* Using {menli cusku} to speak with la marn., the period seems to mess something up.  If you go {cusku} them personally you can later use {menli cusku} to them as the last-person-spoken-to-default.
 
-(banzu ta'i di'e)
+* The MOO suggests asking other peoples jbofi'es when saying for example {preti fo le jbofi'e fe lu coi rodo .i do mo li'u}
+* In English, "look the jbofi'e which is in D" doesn't work because "d" is both a user's name and an alias for the "down" exit, and it only tries the latter.  The is_obj_in_obj code on parse should really check both, but it only checks what the grammar passes to it.  Not sure how to fix that.
+
+* showall doesn't require any kind of documentation for .cmd fields.  In other words, it seems to me that if there is a global command named "kick", "help kick" should say something.  It currently doesn't, and there's no way to get a list of commands with no associated help.
+* No help for the dictionary object.  :-|
+
+* The output from "dict" that the dictionary produces isn't using msg(), so it can't be wrapped in zoi or anything.
+* Every once in a while, and I have no idea why, this happens:> get the red ball *** glibc detected *** free(): invalid pointer: 0x0806e1e0 ***.  It seems to only happen on picking things up.  It ''may'' be exclusive to the mooadmin's red ball.
+
+* {Turgul's name is "foo"} doesn't work in the English parser because I added single-quote quotes... Not sure what to do, but that should really be fixed.
+** Actually, it's not that bad; "edit Turgul's foo" works just fine.  From this I conclude that it's likely a (relatively) simple English grammar change.
+
+** "I'm debugging" does not work, nor does "help on my debugger's trace"
+* "look my debugger" doesn't work if there's more than one; should pick the one being held.
+
+* Given "Which one of the debugger you're holding, and the debugger which is in Turgul  do you mean?" it would be nice if any of the responses that worked matched the question asked, or vice versa.
+* The language parameters (the language command, edit in language, etc) are case-sensitive.
+
+==  Fixed Bugs ==
+
+* Incrementing of sumti number occurs in NU clauses in inappropriate ways.
+* No messages are printed to those in the room when a user logs in; not sure if other forms of arrival are all working
+
+* Test script needs to be rewritten.
+* In Lojban, ;, ! and their command equivalents samyrucygau and samyminde are basically non-functional; this is probably largely due to "..." being turned into zoi quotes.
+
+* Documentation of builder commands needs examples. -- basically covered by [[jbocre: Lojban mooix Test Script|Lojban mooix Test Script]]
+* There's a bug in SE handling.  SE inside abstractions are treated the same as the main bridi; that is, they swap the main bridi elements and not the sub-bridi elements. mu'a lu jarco lo ka se gleki mi li'u cu co'e lu se jarco lo ka gleki mi li'u
+
+* In lojban, when I edit a leave.msg flag on an exit in {bau la gliban}, it will load in the current leave.msg.jbo field instead.  -- nice catch, fixed
