@@ -1,234 +1,253 @@
 
-==  Minutes of the 2001 Annual Meeting of the Members of The Logical Language Group, Inc. ==
+==  xorxes' Version ==
 
-The thirteenth Annual Meeting of the Members of The Logical Language Group, Inc. was called to order on July 29, 2001 at 11:17 AM EDT.
+Magic words are all cmavo that have some interaction with words as words irrespective of their function. These are SI SA SU ZO ZOI LOhU LEhU ZEI BU and FAhO. (BAhE, even though it can modify any word, is not a magic word, because it doesn't affect the function of the word it modifies.)
 
-Non-members in attendance at the annual meeting were:
+=== Meta-Rule ===
 
-*  Robin Powell  voted in as member during the meeting
-*  Charles Hope (Xod)  voted in as member during the meeting
+# Magic words are processed left-to-right.
 
-*  Olivia
+# Y is not a word (i.e. it is considered whitespace) for the purposes of these definitions.
 
-Roll call was taken of the members.
+=== Proposed definitions ===
 
-Members attending (13) were:
+# '''ZO''' turns the following word into a ''quoted word'', which behaves as a member of KOhA.
 
-*  John Cowan
-*  John Hodges
+# '''LOhU''' turns all following Lojban words up to a LEhU into a ''LOhU-quote'', which behaves as a member of KOhA.
 
-*  Shawn Lasseter
-*  Nora LeChevalier
+# '''LEhU''' terminates a LOhU-quote. It is never elidable.
 
-*  Robert (Bob) LeChevalier
-*  Keith Lynch
+# '''ZEI''' combines the preceding word, quoted word, LOhU-quote, ZEI-lujvo, lerfu word, or ZOI-phrase together with the following word into a ''ZEI-lujvo'', which behaves as a member of BRIVLA. 
 
-*  Alex (Alexandra) Miles-Lasseter
-*  Nick Nicholas
+# '''BU''' turns the preceding word, quoted word, LOhU-quote, ZEI-lujvo, lerfu word, or ZOI-phrase into a ''lerfu word'', which behaves as a member of BY. 
 
-*  Paul Francis OSullivan
-*  Mark Shoulson
+# '''ZOI''' uses the following word as a delimiting word, and turns anything that follows until the delimiting word is found again into a ''ZOI-phrase'', which behaves as a member of KOhA.
 
-*  David Twery
-*  Tommy Whitlock
+# '''SI''' erases the preceding word, quoted word, LOhU-quote, ZEI-lujvo, lerfu word, or ZOI-phrase. The construct becomes invisible to the rest of the text.
 
-*  David Crowell
+# '''SA''' erases the preceding text back until it sees a word of the same selma'o as the word that follows SA, which replaces it. (Words that have been turned into a quoted word, a LOhU-quote, a zei-lujvo, a lerfu word, or a delimiter in a ZOI-phrase are invisible to SA, but the magic word in those constructs is visible.) The construct becomes invisible to the rest of the text.
 
-Members "present" (12) by proxy:
+# '''SU''' erases all words back to the beginning of text. The construct becomes invisible to the rest of the text.
 
-*  Athelstan proxy to Nora LeChevalier, with instructions
-*  Dave Barton proxy to Bob LeChevalier
+# '''FAhO''' terminates the text, absorbing preceding words until the remaining text is grammatical. 
 
-*  Gary Burgess  proxy to Bob LeChevalier
-*  John Clifford proxy to Nora LeChevalier
+===  Marking Words ===
 
-*  Ivan Derzhanski proxy to Mark Shoulson
-*  Arnt Johansen proxy to Charles Hope (Xod)
+* '''BAhE''' marks the following word but does not change its nature. The construct behaves just as that word by itself.
+* Attitudinals ('''UI''' and '''CAI''' cmavo) mark the previous word, quoted word, LOhU-quote, ZEI-lujvo, lerfu word, or ZOI-phrase, but do not change its nature. Attitudinals do not blend into a single word with the word they modify, but remain as separate words for the purposes of magic words that come after them.
 
-*  Jorge Llambias proxy to Bob LeChevalier
-*  And Rosta proxy to John Cowan
+* '''DAhO''', '''FUhE''', and '''FUhO''' are the same as UI, but do not absorb a following NAI.
 
-*  Yevgeny Sklyanin proxy to Bob LeChevalier
-*  Robin Turner proxy to Bob LeChevalier
+==  Comparison ==
 
-*  Veijo Vilva proxy to Bob LeChevalier
-*  David Young proxy to Nora LeChevalier
+A comparison between this method and Robin's method below.  Bear in mind that all of these differences could theoretically be rectified by exceptions to one or the other method.
 
-Members not in attendance (5) were:
+||
 
-*  Jake Berglund  [[jbocre: Note from Secretary: Resignation received after the meeting]]
-*  Colin Fine [[jbocre: Note from Secretary: Resignation, sent before meeting, was received after meeting.]]
+Subject Phrase | LTR | Precedence
 
-*  Ethan Fremen
-*  Guy Garnett
+broda .y. bu | The letter broda | broda + The letter y
 
-*  Karen Stein
+zoi si stuff si | "stuff" | Error (first si erases the zoi)
 
-Roll call of members: Taken.
+da zoi sa da joi de | Unclosed zoi | da joi de
 
-Chair turned over to Vice President, John Cowan.
+da zei fa'o | Lujvo of da and fa'o | Error (unclosed zei)
 
-No proper notice of meeting by Secretary/Treasurer was given (per Article 3, Section 4 of the Bylaws); therefore no bylaw amendments may be made.
+lo'u co co zo le'u co le'u | Error ("co le'u" outside of quotes) | "co co le'u co"
 
-Reading of the Minutes: Minutes from last meeting were read and accepted.
+zoi si doi do | Uclosed zoi | doi do
 
-Report of officers: Secretary/Treasurer, by President:
+zo da si | Nothing | Open zo
 
-*  Organization delinquent 6-7 quarters in state sales tax
-*  Book orders almost caught up
+zo da si si | Error (too many si) | Nothing
 
-*  Other orders not done
-*  Estimated 5-6 thousand in liability for balances.
+da zei de bu | Letter da type of de | Error
 
-*  Expenses: CAIS (internet site) account $800 per year (although we are investigating CAIS claim we didnt pay last year)
-*  Visa/Mastercard/Amex service $30 per month, plus extra charges
+bu zei de | Error (nothing for bu to use) | bu type-of de
 
-*  about $1500 income, $1500 expense
-*  Income: net negative
+zo bu zei de | "bu" type-of de | Error
 
-*  $3000 left on book loan
-*  $2600 in bank
+broda zei brode si brodi | brodi | broda zei brodi
 
-*  Book Sales total: 360 (about 40 since last year)
+zei zei zei | Error | Error
 
-Report of officers - President:
+da zei zei | da type-of zei | Error
 
-*  Printer settlement money received and deposited. About 6 bad books sent out since. Recipients have usually accepted PDF file of bad pages.
-*  Yevgeny Sklyanin translating gismu into Russian. Also maintaining index of things happening on the website.
+lo'u co co co le'u bu | The letter "co co co" | Error
 
-*  Production of Dictionary: advanced slightly. Nick Nicholas has keyworded a large list of used lujvo. Jay Kominek has an archive site for searching text for the usage and has set up a website supporting dictionary updating by the group.
-*  Nick took on the Level 0 book task. He has a draft level zero book, and a draft textbook/primer as an expansion of Robin Turners work (although its not to be the baseline textbook, its more like a Teach Yourself book); both are being reviewed.
+lo'u co co co le'u si bo le'u | Error (bare bo) | lo'u co co co bo le'u
 
-*  On Nicks efforts, Bob commented that we cannot publish 2 books now due to monetary considerations.
-*  Robin Powell and Jay Kominek have each set up links to other sites, including Lojban Wiki (which facilitates people working together on a project).
+broda ba'e si | nothing (but emphatically!) | broda
 
-*  A translation of Alice in Wonderland is nearly complete. This project has used CVS (a configuration management tool) to keep track of and help resolve problems due to changes by multiple people on a project. Nick is also using it for his books.
-*  Bjrn Gohla has begun translating the draft level 0 book into German.
+broda ba'e da si da | broda da | broda '''da'''
 
-*  A Lojban phrasebook is being compiled (primarily by Pierre Abbat).
-*  Pierre Abbat and others are also working on a bible translation from the original languages.
+zo da bu | The letter "da" | Error
 
-*  The Imeme offer (from Ethan Fremen and Jake Berglund) came to naught; the Board was not satisfied.
-*  Robin Powell is committing to take over as administrator for the web-site; wed been interested in looking at another option than CAIS.
+zoi zoi That letter that you use between a user id and a host name in an e-mail address zoi bu | @ | Error
 
-*  We are also interested in other options for credit card processing. Perhaps Pay Pal online credit or Verisign.
-*  Recognition for Charles Hope (Xod) as keeping promise of speaking Lojban for the entire LogFest.
+broda brode si bu | The letter broda | Same 
 
-Report of Committees:
+zoi zoi stuff zoi si | Nothing | An open zoi quote
 
-*  Level 0 package committee (1998,99: John Cowan, chairman; David Twery; Tommy Whitlock; Bob LeChevalier): No report.
-*  Internet site committee (1999: David Twery, Chairman; Shawn Lasseter; Nick Nicholas): No report.
+zoi zoi lots of stuff zoi si si si si | Error (too many si) | Nothing
 
-*  Finance (aka Poverty) Committee: No report.
-*  On-line ordering (1997: Mark Shoulson, chairman): No report.
+zoi zoi lots of stuff zoi sa zoi si | Open zoi | Nothing
 
-*  WorldCon committee (1998: Keith Lynch, chairman; David Bowen; Bob LeChevalier): No report.
-*  Meeting notice (1994: Bob LeChevalier and John Cowan): No report.
+||
 
-*  Grant proposal: (1996: Dave Barton, chairman; Dave Twery; and Bob LeChevalier): No report.
-*  Streamlining meeting procedures (1999: John Cowan, chairman): No report.
+==  John Cowan's Version ==
 
-Consideration of new members or removal of old members:
+# '''ZO''' turns the following word into a word of selma'o ''any-word''.
 
-*  MOVED: To send notice to Colin and Karen that if they do not participate by presence or proxy at the next annual meeting they will be terminated with no further vote needed.
-*  Motion then divided into 2 parts, one for each person:
+# '''LOhU''' turns all following Lojban words up to but not including a LEhU into a single word of selma'o ''any-string''.
 
-*  1.       Notice to Karen : PASSED.
-*  2.       Notice to Colin : PASSED.
+# '''LEhU''' terminates a LOhU-quote. It is never elidable.
 
-*  MOVED: To offer membership to Charles Hope (Xod). : PASSED.
+# '''ZEI''' turns the preceding word and the following word into a member of BRIVLA. 
 
-Election of Board of Directors:
+# '''BU''' turns the preceding word into a word of selma'o ''any-word''; such a word followed by a BU has the same grammatical function as a member of BY. 
 
-*  Current Board includes John Cowan, Shawn Lasseter, Bob LeChevalier, Nora LeChevalier, Alex Miles-Lasseter and David Twery and John Clifford. Maximum of 7 allowed.
-*  Alex wishes to step down from Board.
+# '''ZOI''' uses the following word as a delimiting word and turns it into a word of selma'o ''any-word''.  All words that follow until the delimiting word is found again are turned into a word of selm'ao ''any-string''; the second delimiting word is turned into a word of selma'o ''any-word''.
 
-*  MOVED: To elect John Clifford, John Cowan, Shawn Lasseter, Bob LeChevalier, Nora LeChevalier : PASSED as AMENDED.
-*  FRIENDLY AMENDMENT: Offer Board membership to Nick Nichols and Charles Hope (Xod) as well : ACCEPTED.
+# '''SI''' erases the preceding word.  The construct becomes invisible to the rest of the text.
 
-*  MOVED: To thank the departing Board members for their participation: PASSED by acclamation.
+# '''SA''' erases the preceding text back until it sees a word of the same selma'o as the word that follows SA, which replaces it. Words whose selma'o has been changed to ''any-word'' or ''any-string'' are invisible to SA. 
 
-Old/Unfinished Business:
+# '''SU''' erases all words back to the beginning of text. The construct becomes invisible to the rest of the text.
 
-*  MOVED: To rescind approval in principle on the Imeme offer. : PASSED.
+# '''FAhO''' terminates the text, absorbing preceding words until the remaining text is grammatical. 
 
-New Business:
+==  Robin's Version ==
 
-*  MOVED: To use these flyers [[jbocre: flyers created during Logfest exhibited|flyers created during Logfest exhibited]] for distribution at World Con; Board to work out details : PASSED.
-*  MOVED: To make the flyers available, to any interested party attending a Science Fiction or related convention, for distribution, at the discretion of the Board : PASSED as AMENDED.
+This document was originated to provide a clearing house for discussion related to the BPFK Magic Words checkpoint, as well as a place safer than /tmp to store my ongoing description of the magic word interactions, which here follows.
 
-*  FRIENDLY AMENDMENT: Also make available on Lojban web-site for people to distribute without Board approval - ACCEPTED.
-*  MOVED: To reduce dependence on the Internet : FAILED.
+Magic words are all cmavo that interact directly with the nature of the speech stream, so SI SA SU ZO ZOI LOhU LEhU ZEI BU BAhE FAhO.
 
-*  There was discussion on the pros and cons of Internet involvement here. Athelstans position that the Internet is de-humanizing was noted. Other members disagreed, saying that increased communication can be humanizing. There was general consensus that we need to pay more attention to Lojbanists not on the Internet, however.
-*  MOVED: That the mailing list be compiled with all deliberate speed, and then notice sent to all members announcing the book(s) and level of activity in advance of any LK (the Lojbo Karni newsletter) : PASSED.
+The two documents that were used to construct this page are [http://www.lojban.org/files/machine-grammars/g grammar.300] (which is a plain text document, and really should be renamed to have .txt after it) and [http://lojban.org/publications/reference_grammar/chapter19.html efGram Chapter 19], section 16.
 
-* Updated report on book-writing (Level 0 and Textbook lessons) by Nick:
+It is worth noting that these two documents contradict each other on many points.  In particular, the order of operations is substantially different (grammar.300 handles zoi before lo'u...le'u, for example).
 
+==  Outstanding Questions ==
 
+* Is nested lo'u...le'u allowed?
+** Not really, but lo'u has no effect and we allow "zo le'u".
 
-Lessons (15) completed, reviewed by some of the on-line community, then revised; there are still comments pending. More examples and exercises added. There is some concern about the level that the book is aimed at. Comes to 280 pages, including vocabulary but not index nor additional exercises.
+* Does zoi function in lo'u...le'u?
+** No.  If you need to quote a broken zoi, use another zoi.
 
+* What does BAhE+BU do?
+** Just empasizes the BU.
 
+* The red book claims that UI cmavo can't mark BU.  What's up with that?
+** I have no idea, but I'm ignoring it.  UI can mark anything that doesn't grab it.
 
-Level 0 package, as currently designed, contains:
+* What do we do about ZOI, SI and SA interactions?  Is SI allowed as a ZOI delimiter?  Does SI after a ZOI clause erase the whole thing?
+** SI, SA and SU are not allowed ZOI delimiters.  4 SI for ZOI erasure from outside.  SA+ZOI+SI works.  ZOI+SI == nothing.
 
+* Does SU go back to the last NIhO, LU, TUhE, or TO (as grammar.300 claims) or the beginning of input (as the Red Book claims)?
+** The latter; SA can be used for the other things, and if SU works the former way there is no way to unequivocably erase to the beginning of input.
 
+* grammer.300 claims that ZEI works on ZOI, ZO and LOhU...LEhU clauses.  I'm pretty sure this is just a YACC side effect; it certainly seems amazingly ridiculous to me.  If anyone disagrees, let me know.
+** It doesn't do any harm, and allows certain useful things (like ZEI lujvo with the various words that ZEI can't bind to in them).
 
-*  What is Lojban / la lojban mo
+==  Meta-Rules ==
 
+# Magic words lay claim to, or "grab", other words, with varying effects.
 
+# Magic word grabbing proceeds by an order of precedence.  The effect of a magic word can be to prevent the operation of another magic word (zo in particular) in which case the word that has been so grabbed no longer is allowed to grab other words.
 
-*  Overview
+# No two magic words may grab the same word, unless the interaction between those two magic words has been clearly defined. Any attempt to do so is an error.
 
+==  Magic Words Handling ==
 
+(based on C16 S19 of the RefGram)
 
-*  Diagrammed Summary
+In order of precedence.  selma'o names used throughout.  + means "a member of the selma'o to the left of the + followed immediately by a member of the selma'o to the right of the + (ignoring words taken out of the equation by previous steps)".  For example, "ZO+LEhU" means a string like "zo le'u" (since both of these are currently (6 Nov 2004) single member selma'o).  Just to be pedantic, "any word" and similar refer only to valid Lojban words unless the text explicitely states otherwise.
 
+# Y is completely ignored (i.e. considered whitespace) except before BU.
 
+# ZOI cmavo use the following word as a delimiting word, no matter what it is, execept Y (which is ignored); and SI, SA and SU (which erase it).
 
-*  Linguistic Issues (mostly response to Zwickys questions)
+# ZO quotes the following word, no matter what it is, except Y.  Words quoted with ZO lose their grammatical functions.
 
+# FAhO terminates the word or text stream unequivocably, unless quoted with ZO, ZOI or LOhU...LEhU.
 
+# LOhU quotes all following Lojban words up to a LEhU (but not a ZO+LEhU; this is to allow nested LOhU...LEhU quotes inside a LOhU...LEhU, so you can talk about mistakes you made that include a previous error quote).  Except for the ZO+LEhU case (which should be read as simply LEhU inside a LOhU...LEhU quote) all Lojban words within a LOhU...LEhU quote are read without any grammar and have no grammatical effects.
 
-*  4 glossed texts
+# LEhU is ungrammatical except at the end of a LOhU quotation and after ZO.
 
+# SI erases the preceding word unless it is a ZO.  Y is ignored.
 
+# SA erases the preceding word and other words, unless the preceding word is a ZO.  SA erases back until it sees a word of the same selma'o as the word that follows SA.  The previous same-selma'o word is itself erased.  Y is ignored for selma'o matching purposes. 
 
-Does not contain mini-lesson nor FAQ (Frequently Asked Questions) sections.
+# SU erases itself and all words back to the beginning of the current conversation for the speaker that says it.  If spoken twice, it also erases the other speaker's words.  In computer input cases SU, in general, erases itself and all words to the beginning of the input (as most computer input cases cannot distinguish between speakers).
 
+# ZEI combines the preceding and the following word into a lujvo.  For words to its left, it does not affect SI, SA, and SU (it affects whatever is to the left after the erasing is done; if nothing is left an error result); ZO and LOhU (which quote it); ZOI (which uses it as a delimiter); BAhE and Y (which it skips); ZEI (which would lead to grouping issues, and hence is an error to attempt); and FAhO (which makes no sense because the stream ends at the FAhO).  For words to its right, it does not affect SI, SA, and SU (which erase it); BAhE and Y (which it skips); ZEI (which would lead to grouping issues, and hence is an error to attempt); and FAhO (which results in an error).  ZO, ZOI and LOhU...LEhU clauses are attached to the ZEI lujvo in their entirety.  BAhE effects ZEI as usual, so ZEI skips over any preceeding BAhE cmavo to affect the word before them.
 
+# BU makes the preceding word into a lerfu word, except for ZO, ZEI and LOhU (which quote it), ZOI (which uses it as a delimiter); LEhU (which would result in bizarrely re-opening the LOhU...LEhU, and hence is an error);  SI, SA and SU (it affects whatever is to the left after the erasing is done; if nothing is left an error results); BAhE (which it skips); BU (which would lead to grouping issues, and hence is an error to attempt); and FAhO (after which anything, including BU, is ignored).  Note that Y is specifically included.  BAhE effects BU as usual, so BU skips over any preceeding BAhE cmavo to affect the word before them.  Multiple BU may be used in succession, in which case a new letteral is formed for each additional BU (i.e. "broda bu" is a different letteral from "broda bu bu").  However, "bu bu" by itself is illegal.
 
-*  MOVED: For informal consideration : PASSED.
-*  Discussion on proposed content for Level 0 package/book ensued, resulting in possibility of Bob combining the Overview, the Zwicky answers and an essay on Lojban and linguistics research (previously written by Bob) into one section.
+==  Marking Words ==
 
-*  MOVED: To make clear that Nick has full editorial discretion over the content of books on which hes working; the Board can then decide whether to take on the actual publication as an LLG book. : PASSED.
-*  MOVED: To have an e-mail mailing list for Lojban announcements (low volume); to also look into other mailing lists (membership, Board) : PASSED.
+Some words are almost, but not quite, magic words, in that they mark and affect nearby words, but do not change the special effects of other magic words.  Hence they don't really fall in to the magic word precedence list.
 
-*  Discussion here on tracking Grammar change proposals. Proposal was to formalize the process that John Clifford has been doing with the 'record' discussions, with rigid format record with a place for no-approval suggestions. It was brought up that sometimes discussions start up on points that have previously been well-discussed and decided on, but that those involved in the current discussions did not see.
-*  MOVED: That the Board will institute some system, on and off the internet, of permanently documenting discussion, decisions, and proposals for change, so that they are available to interested parties without the need to rediscuss. : PASSED.
+* BAhE marks the following word, except for SI, SA and SU (which erase it), or unless it is preceded by ZO (which quotes it) or ZOI (which uses it as a delimiter). Multiple BAhE cmavo may be used in succession, in which case they all affect the next non-BAhE word.  BAhE skips Y as usual.
+* Attitudinals (UI and CAI cmavo) mark the previous word, except for SI, SA and SU (the attitudinal marks whatever is to the left after the erasing is done, if anything); ZO, LOhU or ZEI (which quote it); ZOI (which uses it as a delimiter); BAhE (BAhE marks the attitudinal, which in turn marks the word before the stream of BAhE); Y (which is ignored); FAhO (which there can be nothing to the right of).  Attitudinals are permitted following any word of the grammar, without interfering with that word's grammatical function, or causing any effect on the grammatical interpretation of any other token in the text.  Multiple UI cmavo may be used in succession. They may also be used at the beginning of text.  A following NAI is made part of the attitudinal.
 
-*  MOVED: That LLG ask John Clifford to write a draft work dealing with 'Lojban and logic', in the sense of addressing problems of Lojban (things not decided, or things not appropriate level for the Reference Grammar) at a level not tutorial, and which fills in gaps in the Reference Grammar that havent been defined. : PASSED.
-*  This followed discussion on a book on 'Lojban and Logic', and disagreement over what this might mean.
+* DAhO, FUhE, and FUhO are the same as UI, but do not absorb a following NAI.
 
-*  During this discussion, Mark Shoulson leaves, proxy to Nick for himself and Ivan.
-*  Also, Shawn leaves, proxy to Alex.
+==  Special SI and SA Cases ==
 
-*  MOVED: That a complete logical specification of the language be written and submitted to the Board : WITHDRAWN.
-*  Bob LeChevalier wants it noted that the Baseline has begun on some parts of the language, but that the 5-years of the complete baseline does not begin until we have the real Dictionary, real Textbook and Reference Grammar (unless the organization votes otherwise).
+SI gets very complicated in a few cases, so here we go.  Some SA notes here too.
 
-*  MOVED: To thank Nick for his work on the level 0 package book and the lesson revisions : PASSED.
-*  Sense of organization was that we might want to consider bundling Nicks work into the real Textbook.
+* SI has no effect inside LOhU...LEhU or after ZO (or inside a ZOI quote, of course).
+* Multiple SI erase back through more words, rather than operating on themselves or something.  Duh.
 
-*  Action item proposed by Bob: Add to the Web page our approval (already voted on last meeting) of Lojban as a pivot language for European patent system. Charles Hope (Xod) and Robin agreed to do this.
-*  MOVED: To thank Robin Turner for his work on the lessons. : PASSED.
+* SI is valid at the beginning of input, but only to deal with the fact computer parsing is often done line by line, and two lines can be from the same speaker (e.g. "mi broda co" followed later by "si do").
+* SA+SI == nothing.
 
-*  MOVED: To adjourn meeting. - PASSED.
+* SU+SI == nothing.
+* SA+any word (except ZO)+SI == nothing (assuming that the SA is valid, i.e. that there is a word of the same selma'o as the word after SA to erase back to).  For ZO you need two SI.
 
-The 13th Annual Meeting of the Members of The Logical Language Group, Inc. was adjourned at approximately 2:45 PM EDT.
+** Not quite true; doesn't work for ZO or (probably) ZOI.
+* ZO+any word+SI == ZO
 
-I certify that the above motions were presented to all members present for discussion and approval, and that all motions were approved as noted. I further certify that these minutes are an accurate representation of the thirteenth Annual Meeting of the Members of The Logical Language Group, Inc.
+* ZO+any word+SI+SI == nothing
+* SI has no effect in a LOhU...LEhU even though ZO+LEhU does, so you can't do ZO+LEhU+SI+SI inside a LOhU...LEhU quote to get nothing.
 
-Nora LeChevalier
+* A SI immediately after the terminating LEhU of a LOhU...LEhU quote erases the LEhU, opening up the quote again.  A string of SI in that position keeps erasing through the quote, possibly destroying it entirely (although SA+LOhU+SI is normally a much better way of accomplishing this goal).  As soon as a non-SI word interrupts the string of SI after the terminating LEhU, that word and all other words until the next unquoted LEhU are considered part of the quote again, and have no grammatical function.
+* SA can destroy LOhU...LEhU quotes, of course.  LOhU...LEhU+SA+LOhU, in particular, is exactly equivalent to just LOhU (hence, the quote is re-opened).  SA cannot erase to any other word in a LOhU...LEhU quote (because they are not considered part of any selma'o) except for ZO if a ZO+LEhU quote is used inside the LOhU...LEhU quote (because the ZO is used grammatically in this case, and hence has a selma'o in practice).
 
-Secretary/Treasurer
+* SI can back into a ZOI quote in the same manner as into a LOhU...LEhU quote, except that all of the quoted non-Lojban text (which is considered non-Lojban text even if it clearly is) is treated as one word.  So:
+** ZOI+delimiter+text+delimiter+SI == ZOI+delimiter+text
+
+** ZOI+delimiter+text+delimiter+SI+SI == ZOI+delimiter
+** ZOI+delimiter+text+delimiter+SI+SI+SI == ZOI
+
+** ZOI+delimiter+text+delimiter+SI+SI+SI+SI == nothing
+* As a result of the above, if you really want to destroy a whole ZOI quote, SA+ZOI+SI is strongly reccomended.
+
+* ZOI+SI == nothing (i.e. if you haven't presented a delimiter yet, SI can still operate).
+* ZOI + SA + ZOI + SI still == nothing.
+
+==  Error Cases ==
+
+The following cases are explicitely defined as bad, i.e. error cases.
+
+* ZO + any word + BU
+* ZOI+delimiter+text+delimiter + BU
+
+* ZEI + ZEI
+* BAhE + end of text
+
+* start of text + BU
+
+==  Non-Error Cases ==
+
+Cases that are degenerate and strange, but not errors.
+
+* BU + ZEI + BU
+* BAhE + ZOI -- ZOI retains its usual meaning
+
+* BAhE + ZO -- ZO retains its usual meaning
+* DAhO (and friends) + NAI + ZEI + any word
