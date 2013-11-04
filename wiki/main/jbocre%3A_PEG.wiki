@@ -1,42 +1,55 @@
 
-*''ziryro'i'' amethyst
-*''mijyjbo'' [[jbocre: Middle Lojban|Middle Lojban]]
+Parsing Expression grammars.  Parsing expression grammars allow for full lookahead and backtracking in time linear to the input size.  This makes them more expressive than [[jbocre: YACC|YACC]] or [[BNF|BNF]], which are limited in the how far they look ahead, and as a consequence how far they can backtrack.  They also require more memory than either YACC or BNF to parse an equivalently sized input.
 
-*''famyma'o'' trailing-cmavo ("terminator")
-*''datytsani'' Other-Sky ("Dreamtime")
+PEG grammars also do not have a separate lexing stage.  Lexing and parsing are performed at the same time, using the same language for both.
 
-*''teryranmi'' mythos
-*''zasyspo'' temporarily-destroy
+See wikipedia for additional general information on [http://en.wikipedia.org/wiki/Parsing_expression_grammar arsing Expression Grammars].
 
-*''samymri'' e-mail
-*''lizyzi'e'' the experience of being free
+==  4th Baseline Machine Grammar Proposal ==
 
-*''ticycfi'' deceiver-flaw
-*''luryri'e'' lunar river
+[[jbocre: .alyn.post.|.alyn.post.]] is working on a proposal for a 4th Machine Grammar Baseline, replacing the 3rd baseline's [[jbocre: YACC|YACC]] grammar with a PEG grammar.  This work is scheduled for inclusion into [[jbocre: Suggestions for CLL, second edition LL version 2.0]] or [[jbocre: CLL Peg Errata LL version 2.1]].
 
-*''zugygei'' guilt-happy
-*''gubybre'' public-ready
+===  Morphology ===
 
-*''bevyvau'' carry-container
-*''jadydai'' adorn-object
+Since PEG does not have a separate lexing stage, any PEG Machine Grammar will also need to express the Lojban Morphology in PEG.
 
-*''zumymlu'' the activity of seeming
-*''pupypei'' the process of thinking
+* [[BPFK Section: Formal Morphology]]
 
-*''sizyzei'' the idea of crime ("transgression")
-*''dabybai'' fight-compeller
+===  Technical Points of the PEG language ===
 
-*''noryru'i'' quasi-spirit ("ghost")
-*''tolyla'a'' unfasten
+* The '.' characters means any character, in any character set.  It is only used after fa'o, which unconditionally consumes the remaining characters.
+* '!.' is the way EOF is tested in PEG.
 
-*''tolyla'e'' improbable
-*''gafyfantytei'' [[jbocre: baseline|baseline]] (a [[jbocre: relylujyjvo|relylujyjvo]])
+* space is defined as the literal '.' (as opposed to the '.' operator of PEG), whitespace, and all punctuation other than ',' and '''.
 
-*''selylacri'' reliable, relied upon
-*''balylabybu'u'' fine, white cloth (trans. of Hebrew xur in Esther) 
+===  CLL ===
 
-*''cucycau'' barefoot (shoe-lacking)
+The CLL will need to be updated to account for changes resulting from the translation of the grammar to PEG.
 
-It might be too late to change it now, but I prefer the term za'e zo "cijyjvo".  I would have thought that "lujyjvo" would have had a more relevant/profound seljvo.  -selkik
+Main Article: [[jbocre: CLL PEG Errata|CLL PEG Errata]]
 
-Well I'm over feeling like "lujyjvo" is a wasted lujvo.  Whatever.  Leaves us some space for other stuff anyway, like now we can say za'e "lujyjbo" meaning something that's Lojbanically complex or something and it won't conflict as much with "lujyjvo" because they'd have different contexts.  I still like my word "cijyjvo" though!  I was thinking I could make it more useful by broadening its meaning, for instance to also include words with shapes like "tedjda".  Also I have a question about what's included in lujyjvo: Does it include words with one -CyC- wrinkle but also a non-wrinkled connection, like ummmmm za'e "cintolyla'a"?  I think I'll say those count in the broader category of cijyjvo, but I'm guessing they're not lujyjvo since the only longer lujvo in the list above are relylujyjvo, does that seem right? -selkik
+===  Uncategorized Material ===
+
+** [[jbocre: Practicable syntax changes|Practicable syntax changes]]
+** [[jbocre: Exploiting the preparser|Exploiting the preparser]]
+
+*** [[jbocre: rant about "exploiting the preparser"|rant about "exploiting the preparser"]]
+
+==  Open Discussion Points ==
+
+* jbogenturfa'i further transforms the PEG grammar into an idealized representation.  This parse tree is suitable for programmatic manipulation.  Why is this idealized parse tree not the way the PEG is written?
+
+==  Lojban parsers that use PEG ==
+
+* [[jbocre: camxes|camxes]], the original PEG parser from which all others are based.
+* [[jbocre: jbogenturfa'i|jbogenturfa'i]]
+
+* [[jbocre: jbominje|jbominje]], John Leuner's PEG grammar.  The [http://subvert-the-dominant-paradigm.net/~jbominji/code/lojban_grammar.peg ojban_grammar.peg grammar] is derived from camxes.
+
+==  See Also ==
+
+* [http://www.teddyb.org/~rlpowell/hobbies/lojban/grammar/ obin Powell's PEG Grammar Page].  This document builds on the work [[jbocre: camgusmis|camgusmis]] and [[User:xorxes|xorxes]] have done, documented on this page.
+* [[jbocre: Grammar|Grammar]], for a discussion of Lojban's grammar beyond PEG.
+
+* [[jbocre: YACC|YACC]], the language in which Lojban's official grammar is defined.
+* [[BNF|BNF]], widely considered easier to read than the YACC grammar.
