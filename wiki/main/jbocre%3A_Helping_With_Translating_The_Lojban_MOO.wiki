@@ -1,18 +1,177 @@
 
-Dr. Elgin, creator of [[jbocre: Láadan]], wrote on [http://www.sfwa.org/members/elgin/Laadan.html his page]:
+==  How To Assist With Translating The MOO ==
 
-''They lacked ways to express emotional information conveniently, so that -- especially in English -- much of that information had to be carried by body language and was almost entirely missing from written language. This characteristic (which makes English so well suited for business) left women vulnerable to hostile language followed by the ancient "But all I said was...." excuse; and it restricted women to the largely useless "It wasn't what you said, it was the way you said it!" defense against such hostility. In constructing Ladan, I focused on giving it features intended to repair those two deficiencies.''
 
-Since we have attitudinals in Lojban, we should not color utterances without attudinals with emotional content, as we do in English and probably all natural languages. Since we have cmavo ui we have no need for subtlety and entendre, and in fact should do away with it, since perceived unintended slights are a major miscommunication threat. It should be possible for me to utter {do bebna} without offense. However, {le'o do bebna} is fighting words. --xod
+# Get admin privs.  Come on #lojban and ask rlpowell.
 
-Just because something is true doesn't mean that people won't get upset over it. You can't prescribe away humans' refusal to accept reality. Telling some women their weight (a simple physical attribute inherent in all objects!) could get you slapped. --jay
+## Please note that if you do anything with the admin user (such as move around the MOO) it affects ''everyone'' who uses that user.  So try to avoid that sort of thing.  If you must do something jarring to test something, please put the admin back the way you found it when you're done.
 
-A guy can dream, can't he? One hopes that a jbofetsi is jbokai enough to be able to comprehend the spectrum of {do tilju .a'unai}, {do tilju ge'e}, and {do tilju .auro'u}. This is an experiment which can actually be performed.--xod
+# Find a message you want to translate.
 
-----
+# Run "showall [[jbocre: object|object]]" ("tcelanli [[jbocre: object|object]]" in Lojban) on the object with the message.  Look for the message in the output.  If it's not in a .msg field, you'd probably best stop right there and send mail to [[jbocre: Robin Powell|Robin Powell]] with what you were trying to do.
 
-(The difference between using an attitudinal &amp; using the corresponding gismu is the difference between honking your horn &amp; applying your brakes.)
+# Having found the .msg field in question in the "showall" output, look for a "*" in the line with the .msg field name in it.  If there is one (and there almost certainly will be), that field is inherited.  If not, something wierd is going on, and you'd probably best stop right there and send mail to [[jbocre: Robin Powell|Robin Powell]] with what you were trying to do.
 
-huh? breaking and honking both seem near reflex responses to me.. In what way are these differences similar, and which is the horn and which the brakes? -LordBrain
+# So, now we need to figure out which object originally defined that field.  There are a couple of ways to do this; the fastest one is '!find /usr/lib/mooix -type f | xargs grep "[[jbocre: the message|the message]]"'.  You can also do the following:
 
-* I don't get this one either, but the difference is between a scream brought on by a pain and the calm statement "I have a terrible pain."  If you must mix them up, do as we do in English: use the predicative forms throughout -- which, alas, destroys the point here, I think.
+## Find the parent line in "showall".
+
+## Replace "/var" with "/usr".  showall that.
+
+## Repeat until there is no "*" in the showall line for the field you're wanting to translate.
+
+# So you now have the /usr/lib/mooix path of an object.  '''YOU MUST''' change /usr to /var; any edits in /usr will be destroyed.  So you want to do something like: "edit mooix:/var/lib/mooix/concrete/thing put_under.msg".  Again, if you edit '''anything''' under mooix:/usr, your changes will be lost.
+
+===  How To Do The Actual Translating ===
+
+Just run the following:
+
+edit [[jbocre: object|object]] [[jbocre: field|field]] in [[jbocre: language|language]]
+
+So, for example:
+
+edit the nice wooden desk's name in Lojban
+
+The Lojban equivalent is:
+
+galfi "name" po "nice wooden desk" bau la lojban
+
+==  Translation Conventions ==
+
+When translating a name, leave the article out, as Robin indicated above. When translating messages, always remember to include .i at the start of the sentence, and if your x1 uses a variable, use cu just to be safe. (ie ".i $this cu broda" instead of ".i $this broda", since $this might be replaced with "le dakfu" or something, and without a cu, you have no selbri in this case.)
+
+- Ted
+
+==  Code Changes ==
+
+(Copied from IRC)
+
+~pp~
+
+<rlpowell> Yeah, code changes don't belong in /var.
+
+<rlpowell> So the way it works is that the live moo runs out of /var/lib/mooix, and the distributed code is all in /usr/lib/mooix
+
+<rlpowell> Every object in /var has a parent in /usr, and every parent in /usr has a parent in /var.
+
+<rlpowell> Erm, every *system* object, rather.
+
+<rlpowell> So your avatar's parent is in /var, and its parent is in /usr, and its parent is in /var, and so on until you get to /usr/lib/mooix/concrete/thing, where it stops.
+
+<rlpowell> The *reason* is that it allows one to update the the code in /usr as much as you want *without* fucknig with local changes but still having the changes take effect.
+
+<Eimi> So changes in /usr/ take effect, unless we've already overridden it in /var/
+
+<Eimi> we do our local translations in /var, /usr gets the code changes and new messages that will eventually get folded back into the distribution
+
+<rlpowell> Right.
+
+<rlpowell> /usr is *completely* destroyed every time I compile.
+
+<rlpowell> So never ever ever change things in /usr.
+
+<rlpowell> Test your code changes in /var and then e-mail me with what you changed so I can roll it into the tree.
+
+~/pp~
+
+==  Translating Verbs (i.e. command names) ==
+
+You'll need to be an admin for this.
+
+# Find something you'd like to be able to do.  Find the original .cmd file for it.
+
+# Copy the entire text of the .cmd file.
+
+# Edit a file named <brivla>.cmd.jbo on the same object as the original .cmd file (except in the /var tree, which should happen by default anyways).  It technically doesn't '''have''' to be named .jbo, but it simplifies things.
+
+# Replace "verb" with "brivla".
+
+# Make aliases for the various parts of speech, such as "direct_object=object2", which says that the object in the 2nd sumti place will be called the direct object when the verb is run.  Doing this aliasing means most verbs don't actually need to be touched at all.
+
+# Unless you have made, or are planning on making, a special Lojban-only verb, make sure that the line ends with the verb to use, such as ": say".
+
+===  Example ===
+
+The example is mooix:concrete/thing put.cmd
+
+~pp~
+
+# "put down object / put object down"
+
+verb, do_preposition(down), direct_object(this)(touchable)(tomove) : put_in
+
+# "put object in object"
+
+verb, direct_object(touchable)(tomove), io_preposition(set@in_prepositions), indirect_object(this)(touchable)(open) : put_in
+
+# "put object on object"
+
+verb, direct_object(touchable)(tomove), io_preposition(set@on_prepositions), indirect_object(this)(touchable) : put_on
+
+# "put object under object"
+
+verb, direct_object(touchable)(tomove), io_preposition(set@under_prepositions), indirect_object(this)(touchable) : put_under
+
+# "put object behind object"
+
+verb, direct_object(touchable)(tomove), io_preposition(set@behind_prepositions), indirect_object(this)(touchable) : put_under
+
+~/pp~
+
+The first one can simply be dropped.
+
+The rest become:
+
+~pp~
+
+## "prepositional" forms
+
+# "punji le bolci le nenri be le jubme"
+
+brivla, direct_object=object2(touchable)(tomove), io_preposition=preposition3(set@in_prepositions), indirect_object=object3(this)(touchable)(open) : put_in
+
+# "punji le bolci le cpana be le jubme"
+
+brivla, direct_object=object2(touchable)(tomove), io_preposition=preposition3(set@on_prepositions), indirect_object=object3(this)(touchable) : put_on
+
+# "punji le bolci le cnita be le jubme"
+
+brivla, direct_object=object2(touchable)(tomove), io_preposition=preposition3(set@under_prepositions), indirect_object=object3(this)(touchable) : put_under
+
+# "punji le bolci le trixe be le jubme"
+
+brivla, direct_object=object2(touchable)(tomove), io_preposition=preposition3(set@behind_prepositions), indirect_object=object3(this)(touchable) : put_behind
+
+~/pp~
+
+In addition, Lojban has the non-prepositional use of "punji", like so:
+
+~pp~
+
+## Regular bridi forms
+
+# "punji le bolci le jubmi"
+
+brivla, direct_object=object2(touchable)(tomove), indirect_object=object3(this)(touchable) : put_on
+
+~/pp~
+
+===  Lojban .cmd Elements ===
+
+See mulsidju fi "lojban-commands".  Some basic information:
+
+;objectN:Phrases that the moo has matched with an available object, such as "le bolci" or "le bolci poi nenri le tanxe".  N is the sumti position of the object, so the first object after the brivla will be object2.
+
+;prepositionN:This is a bit of a hack; these are "prepositional" phrases, by which I mean things like "le cnita be".  They are associated with and have the same N as the object they modify.
+
+;lojban_quoteN:Lojban quotes (i.e. quotes using lu...li'u; no actual Lojban correctness is enforced in the quotes).  Numbered along with objects.
+
+;non_lojban_quoteN:Non-Lojban quotes, which currently only use "..." but should some day use zoi properly.  Numbered along with objects.
+
+Special case: things attached to an object with po/pe/etc are numbered the same as the object, so {galfi "name" po le lojbo cipra pilno} ends up with an object1 and a non_lojban_quote1.
+
+==  Theoretical Capabilities ==
+
+It seems to me that there should be a place to record what a Lojban parser '''should''' be able to do, particularily as compared to what the English parser can already do.
+
+So, please record such observations at the [[jbocre: Lojban MOO Multilingual Parser Theoretical Capabilities|Lojban MOO Multilingual Parser Theoretical Capabilities]] page.
