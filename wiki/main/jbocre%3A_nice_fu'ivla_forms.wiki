@@ -1,170 +1,125 @@
 
-mooix is not terribly high-performance, and the machine it's
+''nice fu'ivla forms'' are those forms that don't contain VVV, CC/C or CCCC groups, which can never appear in lujvo, and start with one or two consonants. These nice forms are the ones that sit most comfortably among native Lojban forms. These forms are:
 
-currently running on is fully encrypted, which Doesn't Help (tm).
+6-letter nice fu'ivla
 
-Here are some notes and ideas about how to make things better:
+*'''CVVC/C'''V ma'agni
+*'''CCVVC'''V tce'exo
 
-==  Improvement Suggestions ==
+7-letter nice fu'ivla
 
-Faster hybrid daddy:  have markers like Eimi's untagged special in
+*CVVCCVV saispai (second C different from 'r' or 'nr')
+*'''CVVCCC'''V saispra (second C different from 'r' or 'nr')
 
-the main source tree; users can insert them themselves if they want,
+*CVC/CVCV sarpasa
+*CVCCCVV sasprai (VV must be a diphthong)
 
-but they don't have too, but not having to go all they way up the
+*CVC/CCVV sarprai
+*'''CCVVC/C'''V spaipsa
 
-tree saves time.
+*CCVCVCV spapapa
 
-session, $avatar, $direct_object and $this flags (and any
+8-letter nice fu'ivla
 
-similar things that may exist) are not shortcutted in msg.c; that
+*'''CVVC/CVC'''V paurtaki
+*CVVCCCVV paustrai (final VV must be diphthong)
 
-is, propigate is run all the way through, even though (presumably)
+*CVVC/CCVV paurtra'i
+*'''CVC/CVVC'''V partaika
 
-finding the targets for a message with those flags requires no
+*CVC/CVCVV partakai
+*CCVVCVCV praitaki
 
-propigation.  I suspect this to be fairly serious.
+*CCVVCCVV praitrai
+*'''CCVVCCC'''V praistra
 
-Performance suggestion: Per-user flag to select from the following:
+*'''CCVCVVC'''V prataiki
+*CCVCVCVV pratakai
 
-1.  Daddy Tag
+*CCVC/CVCV mlongena
+*CCVCCCVV prastrai
 
-2.  Own language always.
+9-letter nice fu'ivla
 
-3.  Daddy Tag with own language.
+*'''CVVC/CVVC'''V pairtaika
+*'''CVVC/CVCC'''V paintakra (second C different from 'r' or 'nr')
 
-#2 being much, much cheaper.
+*'''CVVC/CCVC'''V paintraka (second C different from 'r' or 'nr')
+*'''CVC/CVCVC'''V partakana
 
-There must be *something* that can be done to make nearbyobjs
+*'''CVC/CCVVC'''V partraika
+*'''CCVVCVVC'''V praitaika
 
-faster.  Caching it and watching for changes is one possibility;
+*CCVVCVCVV praitakai
+*CCVVCVCCV praitakra
 
-test mod time on the location's contents?  Enh.
+*CCVVCCCVV praistrai
+*'''CCVCVVC/C'''V pratairka
 
-Rather larger scale idea:
+*'''CCVCVCVC'''V pratakana
+*'''CCVCCVVC'''V pratraika
 
-We could have a layer in the language bindings that caches results
+*CCVC/CVCVV prartakai
+*'''CCVC/CVCC'''V prartakra
 
-for 1 second (unless told not to).
+*CCVCCVC/CV pratrarka
 
-Dunno if this would be faster than a RAM disk on a real box.
+10-letter nice fu'ivla
 
-Might be better done on the parser; probably the most savings there.
+*CVVC/CVVCVV painkaitai (second C different from 'r' or 'nr')
+*'''CVVC/CVVCC'''V painkaitra (second C different from 'r' or 'nr')
 
-==  Benchmarking Results ==
+*CVVC/CVCVCV pairkatana
+*CVVC/CVCCVV painkatrai (second C different from 'r' or 'nr')
 
-All these are from "look" in Robin's MUD Workshop by m-test (i.e. an English
+*'''CVVC/CVCCC'''V painkastra (second C different from 'r' or 'nr')
+*'''CVVC/CCVVC'''V pairkraita
 
-user).
+*CVVC/CCVCVV painkratai (second C different from 'r' or 'nr')
+*'''CVVC/CCVCC'''V painkratra (second C different from 'r' or 'nr')
 
-Before the conversion from XML to .lang:
+*CVC/CVVCVCV parkaitana
+*'''CVC/CVCVVC'''V parkataina
 
-~pp~
+*CVC/CVCVCVV parkatanai
+*'''CVC/CVCVCC'''V parkatasna
 
-[[jbocre: preprocessing took 0.000101 secs (0.000101) secs total)]]
+*CVC/CVCCVCV parkatrana
+*CVC/CVCCCVV parkastrai
 
-[[jbocre: nearbyobs took 0.477296 secs (0.477397) secs total)]]
+*CVC/CCVVCVV parkraitai
+*'''CVC/CCVVCC'''V parkraitra
 
-[[jbocre: prepping parser took 0.740027 secs (1.217424) secs total)]]
+*CVC/CCVCVCV parkratana
+*CVC/CCVCCVV parkratrai
 
-[[jbocre: generating adjectives took 0.000580 secs (1.218004) secs total)]]
+*'''CVC/CCVCCC'''V parkrastra
+*'''CCVVCVVC/C'''V praikairta
 
-[[jbocre: building nouns took 0.000693 secs (1.218697) secs total)]]
+*'''CCVVCVCVC'''V praikatana
+*'''CCVVCCVVC'''V praikraita
 
-[[jbocre: resetting took 0.000334 secs (1.219031) secs total)]]
+*CCVVC/CVCVV prairkatai
+*'''CCVVC/CVCC'''V prairlatra
 
-[[jbocre: gathering info took 0.000142 secs (1.219173) secs total)]]
+*'''CCVVCCVC/C'''V praikrarta
+*'''CCVVCCCVC'''V praiskrata
 
-[[jbocre: parsing took 0.071015 secs (1.290188) secs total)]]
+*CCVCVVCVCV prakaitana
+*CCVCVVCCVV prakaitrai
 
-[[jbocre: prepping command took 0.545593 secs (1.835781) secs total)]]
+*'''CCVCVVCCC'''V prakaistra
+*'''CCVCVCVVC'''V prakataina
 
-[[jbocre: running command took 0.287330 secs (2.123111) secs total)]]
+*CCVCVCVCVV prakatanai
+*'''CCVCVCVCC'''V prakatasna
 
-~/pp~
+*CCVCVCCVCV prakatrana
+*CCVCVCCCVV prakastrai
 
-After the conversion from XML to lang:
+*'''CCVCCVVC/C'''V prakrairta
+*CCVCCVCVCV prakratana
 
-~pp~
+*'''CCVCCCVC/C'''V praskrarta
 
-[[jbocre: preprocessing took 0.000113 secs -- (0.000113 secs total)]]
-
-[[jbocre: nearbyobs took 0.559789 secs -- (0.559902 secs total)]]
-
-[[jbocre: prepparser step 1 took 0.000686 secs -- (0.560588 secs total)]]
-
-[[jbocre: prepparser step 2 took 0.491008 secs -- (1.051596 secs total)]]
-
-[[jbocre: prepping parser took 0.000177 secs -- (1.051773 secs total)]]
-
-[[jbocre: generating adjectives took 0.000161 secs -- (1.051934 secs total)]]
-
-[[jbocre: building nouns took 0.000573 secs -- (1.052507 secs total)]]
-
-[[jbocre: resetting took 0.000056 secs -- (1.052563 secs total)]]
-
-[[jbocre: gathering info took 0.000031 secs -- (1.052594 secs total)]]
-
-[[jbocre: parsing took 0.069660 secs -- (1.122254 secs total)]]
-
-[[jbocre: prepping command part 0 took 0.000256 secs -- (1.122510 secs total)]]
-
-[[jbocre: prepping command part 1 took 0.003496 secs -- (1.126006 secs total)]]
-
-[[jbocre: prepping command part 2 took 0.001439 secs -- (1.127445 secs total)]]
-
-[[jbocre: prepping command part 2 took 0.000086 secs -- (1.127531 secs total)]]
-
-[[jbocre: prepping command part 3 took 0.000463 secs -- (1.127994 secs total)]]
-
-[[jbocre: prepping command part 4 took 0.000054 secs -- (1.128048 secs total)]]
-
-[[jbocre: prepping command part 5 took 0.000029 secs -- (1.128077 secs total)]]
-
-[[jbocre: prepping command part 6 took 0.000027 secs -- (1.128104 secs total)]]
-
-[[jbocre: prepping command part 7 took 0.000048 secs -- (1.128152 secs total)]]
-
-[[jbocre: prepping command took 0.000119 secs -- (1.128271 secs total)]]
-
-[[jbocre: running command part 1 took 0.000540 secs -- (1.128811 secs total)]]
-
-[[jbocre: running command part 2 took 0.147447 secs -- (1.276258 secs total)]]
-
-[[jbocre: prepping command part 0 took 0.000544 secs -- (1.276802 secs total)]]
-
-[[jbocre: prepping command part 1 took 0.001895 secs -- (1.278697 secs total)]]
-
-[[jbocre: prepping command part 2 took 0.000417 secs -- (1.279114 secs total)]]
-
-[[jbocre: prepping command part 0 took 0.000177 secs -- (1.279291 secs total)]]
-
-[[jbocre: prepping command part 1 took 0.002491 secs -- (1.281782 secs total)]]
-
-[[jbocre: prepping command part 2 took 0.000376 secs -- (1.282158 secs total)]]
-
-[[jbocre: prepping command part 0 took 0.000177 secs -- (1.282335 secs total)]]
-
-[[jbocre: prepping command part 1 took 0.001084 secs -- (1.283419 secs total)]]
-
-[[jbocre: prepping command part 2 took 0.000348 secs -- (1.283767 secs total)]]
-
-[[jbocre: prepping command part 2 took 0.000141 secs -- (1.283908 secs total)]]
-
-[[jbocre: prepping command part 3 took 0.000695 secs -- (1.284603 secs total)]]
-
-[[jbocre: prepping command part 4 took 0.000257 secs -- (1.284860 secs total)]]
-
-[[jbocre: prepping command part 5 took 0.000467 secs -- (1.285327 secs total)]]
-
-[[jbocre: prepping command part 6 took 0.000034 secs -- (1.285361 secs total)]]
-
-[[jbocre: prepping command part 7 took 0.000582 secs -- (1.285943 secs total)]]
-
-[[jbocre: prepping command took 0.000151 secs -- (1.286094 secs total)]]
-
-[[jbocre: running command part 1 took 0.000813 secs -- (1.286907 secs total)]]
-
-[[jbocre: running command took 0.483902 secs -- (1.770809 secs total)]]
-
-~/pp~
+Forms in '''bold''' are those that can have [[jbocre: rafsi fu'ivla afsi|rafsi fu'ivla afsi]].
