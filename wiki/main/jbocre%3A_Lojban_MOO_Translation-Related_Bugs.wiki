@@ -1,185 +1,43 @@
 
-'''.e'o ko ciska le glico xelfanva sera'a le cizra valsi'''
+[[jbocre: The Lojban MOO|The Lojban MOO]]
 
-'''.i ko morji le du'u ro fu'ivla cu se basna fi le da'amoi slaka'''
+[[jbocre: The Lojban MOO: Inheritance vs. Multilingualism]]
 
-*[[jbocre: ropno|ropno]]
-**[[jbocre: gugrbelge|gugrbelge]] ''(Belgium)''
+==  Outstanding Bugs ==
 
-**[[jbocre: gugrblgaria|gugrblgaria]]
-**[[jbocre: brito|brito]] i va'i [[jbocre: brito onsi'u se noltru|brito onsi'u se noltru]]
+* Non-Lojban names should be wrapped in la'o zoi ... zoi for output.
+* in both English and Lojban, "and"/".e" is used for the "The parser believes that you need to supply the following parts of speech:" list.  Should be "and/or" and ".a"
 
-**[[jbocre: gugrckiperi,e|gugrckiperi,e]] ''(Albania)''
-**[[jbocre: gugrdanska|gugrdanska]]
+* it also appears that some required arguments get repeated, ie {cusku} produces {.i le bangu gerna samru'e cu nitcu lo 2 moi sumti poi sitna selsku gi'e pilno zo lu .e lo 2 moi sumti poi sitna selsku gi'e pilno zo lu}
+* being able to rephrase it as a question, {go'i ma poi sitna selsku gi'e pilno zo lu} would be even cooler
 
-**[[jbocre: jecrflami|jecrflami]] (to pagbu le [[jbocre: gugrbelge|gugrbelge]] toi)
-**[[jbocre: daplrgrenlanda|daplrgrenlanda]] (to pagbu le gugrdanska .i bau la .inuit. se cmene zoi xy Kalaallit Nunaat xy toi)
+* the second \n in any .msg file for guest users seems to get turned into \N.  I haven't the slightest idea why.
+* Search the code for "adjectives"; various bits set adjectives like "broken" that we need to do something about.
 
-**[[jbocre: dotco|dotco]]
-**[[jbocre: fraso|fraso]]
+* We don't handle numbers at all, as in for example set.cmd: verb(this), direct_object(nearby|reference), number, field, quote; used for things like "set bob's second alias to "foo"".
+* Trying to delete a mip while there are multiple present produced ".i do cuxna ma lu'i le mip poi do bevri ku'o .e le mip poi nenri le skami xanri bo munje krasi ku'o".  It appears that the correct way to choose the former is "le mip poi nenri mi".  This is far from intuitive, since 1) it's not actually {nenri} me (complete containment), and 2) it's not actually one of the choices presented.
 
-**[[jbocre: glico|glico]] (to pagbu le [[jbocre: brito onsi'u se noltru|brito onsi'u se noltru]] toi)
-**[[jbocre: gugrxislanda|gugrxislanda]]
+==  Fixed Bugs ==
 
-**[[jbocre: gugrkemru|gugrkemru]] ''(Wales)'' (to pagbu le [[jbocre: brito onsi'u se noltru|brito onsi'u se noltru]] toi)
-**[[jbocre: gugrlatui,a|gugrlatui,a]] ''(Lettland)'' (?) ''xu cumki caku''
+* SE doesn't appear to work anymore.  Test case: "lu cipra li'u cu se cusku"
+* tty sessions do dexml on the very first bit said, socket connections do not.  (pretty dumb either way; no point in multilingualizing the banner before the user has logged in!)
 
-**[[jbocre: gugrlietuva|gugrlietuva]] ''(Lithuania)''
-**[[jbocre: gugrlixtenctaina|gugrlixtenctaina]] ''(Liechtenstein)''
+* selbau la gliban "portfolio" -- presents a new prompt.  Again.
+* No grammar setup for languages; should be {bangu fa la gliban} and not {bangu fa "gliban"}
 
-**[[jbocre: gugrluksemburga|gugrluksemburga]] ''(Luxembourg)''
-**[[jbocre: gugrmadjara|gugrmadjara]] ''(Hungary)'' va'i la [[jbocre: madjar|madjar]]
+* The help system currently shows *only* the help for one's language if a non-zero amount of same exists.  Need "helpall" that shows all language's help strings.
+* Regular users (children of mooix:abstract/avatar) can't use the language change commands.
 
-**[[jbocre: gugrmakedonia|gugrmakedonia]] noi ritli se cmene lu ''le purci ke gugriugoslavia ka'irtruje'a '''(republic)''' beme'e zo makedonias'' li'u
-**[[jbocre: gugrmalta|gugrmalta]]
+* {bangu la gliban} caused an infinite loop for clsn
+* cpacu le blanu bolci poi cpana le mudri jubme -- doesn't work; need a cpacu.cmd.jbo for furniture -- actually, that wasn't it at all; "poi cpana" was missing out of "on relatives".
 
-**[[jbocre: gugrnedrlanda|gugrnedrlanda]]
-**[[jbocre: gugdrnorge|gugdrnorge]] va'i la [[jbocre: noreg|noreg]].
+* viska le cpana be le mudri jubme -- doesn't work; need a viska.cmd.jbo for furniture
+* Entering the command "cusku lu cipra" produces (Guessing that you meant to type: cusku "lu cipra" ...).  It should be able to guess that I actually mean to type "cusku lu cipra li'u"
 
-**[[jbocre: gugrpolska|gugrpolska]]
-**[[jbocre: porto|porto]]
+* When an object has a name only in one language (<lang code="jbo">xunre bolci</lang>, for instance), it can't be refered to in other languages except by id.  Note that if it's only in English (and therefore is saved without the <lang> tags), this problem doesn't exist.
+* "editor" po mi cu binxo "vim" doesn't work, but \"editor" po mi cu binxo "vim" does; this is even worse since "foo doesn't cause "foo" to be spoken...
 
-**[[jbocre: natmlromani|natmlromani]] va'i la romanes. .a natmrsindo ''(Gypsy people)''
-**[[jbocre: gugnromani,a|gugnromani,a]]
+** Just in case that wasn't clear: "... should do speech for Lojban speakers too, just because It's Easier.
+** WORKS, but need to have a space or fa before "editor" po mi cu binxo "vim"
 
-**[[jbocre: rusko|rusko]]
-**[[jbocre: tutrnsapmi|tutrnsapmi]] ''(Lappland)'' (to pagbu le [[jbocre: gugrsueri,e|gugrsueri,e]] fa'u le [[jbocre: gugdrnorge|gugdrnorge]] fa'u le [[jbocre: gugrsuomi|gugrsuomi]] fa'u le rusko gugde toi)
-
-**[[jbocre: gugrsantasede|gugrsantasede]] va'i la [[jbocre: vatiKAN|vatiKAN]]
-**[[jbocre: skoto|skoto]] (to pagbu le [[jbocre: brito onsi'u se noltru|brito onsi'u se noltru]] toi)
-
-**[[jbocre: gugrslovakia|gugrslovakia]] ''(Slovakia)'' va'i la slovak.
-**[[jbocre: gugrslovenia|gugrslovenia]] ''(Slovenia)''
-
-**[[jbocre: spano|spano]]
-**[[jbocre: gugrsrbia|gugrsrbia]] ''(Serbia)'' va'i la serb.
-
-**[[jbocre: gugrsferie|gugrsferie]] ''(Sweden)''
-**[[jbocre: gugrsuisa|gugrsuisa]]
-
-**[[jbocre: gugrsuomi|gugrsuomi]] ''(Finland)''
-**[[jbocre: gugrtalia|gugrtalia]] .i va'i la [[jbocre: italian|italian]] ''i ji'a zo [[jbocre: latmo|latmo]] su'oroi mapti'' '''.i na go'i'''
-
-**[[jbocre: gugrtceska|gugrtceska]] ''(Czech Republic)''
-**[[jbocre: gugrturki|gugrturki]] .i va'i gugrturki,e
-
-**[[jbocre: jecrvalonia|jecrvalonia]] (to pagbu le [[jbocre: gugrbelge|gugrbelge]] toi)
-**[[jbocre: vukro|vukro]]
-
-**[[jbocre: gugrxaustria|gugrxaustria]]
-**[[jbocre: gugrxeire|gugrxeire]] ''(Ireland)''
-
-**[[jbocre: xelso|xelso]]
-**[[jbocre: gugrxesti|gugrxesti]] ''(Estonia)''
-
-**[[jbocre: gugrxrvatska|gugrxrvatska]] ''(Croatia)''
-*[[jbocre: xazdo|xazdo]]
-
-**[[jbocre: stuna milxe|stuna milxe]] ''(to pe'i lu stici xazdo li'u xagmau toi)''
-***[[jbocre: jonsi'u je xrabo ke turnrximara jecta|jonsi'u je xrabo ke turnrximara jecta]] ''(United Arab Emirates)''
-
-***[[jbocre: jordo|jordo]]
-***[[jbocre: gugrkatari|gugrkatari]] ''(Qatar)''
-
-***[[jbocre: gugrku,ueiti|gugrku,ueiti]] ''(Kuwait)''
-***[[jbocre: lubno|lubno]]
-
-***[[jbocre: rakso|rakso]]
-***[[jbocre: sadjo|sadjo]]
-
-***[[jbocre: sirxo|sirxo]]
-***[[jbocre: xebro|xebro]]
-
-***[[jbocre: gugrxiamani|gugrxiamani]] ''(Yemen)''
-***[[jbocre: gugrxirani|gugrxirani]] ''(Iran)''
-
-***[[jbocre: gugrxumani|gugrxumani]] ''(Oman)''
-**[[jbocre: gugrjunguo|gugrjunguo]] ''China/jungo''
-
-**[[jbocre: kisto|kisto]]
-**[[jbocre: gugrkore,a|gugrkore,a]] va'i la [[jbocre: tcosan|tcosan]] i va'i [[jbocre: gugrtcosana|gugrtcosana]]
-
-**[[jbocre: gugrkurdistani|gugrkurdistani]] va'i la [[jbocre: kurd|kurd]] i va'i [[jbocre: gugrkurdi|gugrkurdi]]
-**[[jbocre: gugrmongolia|gugrmongolia]] va'i la [[jbocre: mongol|mongol]]
-
-**[[jbocre: ponjo|ponjo]]
-**[[jbocre: gugrvietnami|gugrvietnami]] va'i la [[jbocre: vietNAM|vietNAM]]
-
-**[[jbocre: xindo|xindo]]
-*[[jbocre: friko|friko]]
-
-**la .[[jbocre: azanias|azanias]]. va'i le friko snanu gugde
-**[[jbocre: jerxo|jerxo]]
-
-**[[jbocre: libjo|libjo]]
-**[[jbocre: misro|misro]]
-
-**[[jbocre: morko|morko]]
-*[[jbocre: bemro|bemro]]
-
-**[[jbocre: kadno|kadno]]
-**[[jbocre: merko|merko]] i va'i [[jbocre: merko onsi'u jecta be le mergu'e|merko onsi'u jecta be le mergu'e]] .i va'i '''gugrmerika''' ([[jbocre: tavla fi le tutra pe le terdi riping about "gugrmerika" is somewhere at this link.|(tavla fi le tutra pe le terdi riping about "gugrmerika" is somewhere at this link.]].)
-
-**[[jbocre: mexno|mexno]]
-**[[jbocre: gugrxalaska|gugrxalaska]] (to pagbu le merko gugde toi)
-
-*[[jbocre: kri'ibe|kri'ibe]]
-**[[jbocre: gugrba'ama|gugrba'ama]] i va'i la ba'amas
-
-**[[jbocre: gugrkeimana daplu|gugrkeimana daplu]] ''(to pagbu le [[jbocre: brito rito baljecta|brito rito baljecta]] toi)''
-**[[jbocre: gugrkuba|gugrkuba]]
-
-**[[jbocre: gugrpuertoriko|gugrpuertoriko]] ''(to nalca'i jecypau le [[jbocre: merko ergu'e|merko ergu'e]] toi)''
-**[[jbocre: gugrxa,iti|gugrxa,iti]] ''(Haiti)''
-
-**[[jbocre: gugrdjamaika|gugrdjamaika]] ''(Jamaica)''
-*[[jbocre: bemjoltco midju|bemjoltco midju]] ''to le [[jbocre: bemjoltco midju|bemjoltco midju]] cu pagbu le bemro gugde ji le ketco gugde toi''
-
-**[[jbocre: gugrbelize|gugrbelize]]
-**[[jbocre: gugrguatemala|gugrguatemala]]
-
-**[[jbocre: gugrkostarika|gugrkostarika]] i va'i la ricfu xaskoi ''(Costa Rica)''
-**[[jbocre: gugrnikaragua|gugrnikaragua]]
-
-**[[jbocre: gugrpanama|gugrpanama]]
-**[[jbocre: gugrxondura|gugrxondura]]
-
-*[[jbocre: ketco|ketco]]
-**[[jbocre: gugrkolombia|gugrkolombia]]
-
-**[[jbocre: gugrvenesuela|gugrvenesuela]]
-**[[jbocre: gugrbolivia|gugrbolivia]]
-
-**[[jbocre: gugrxekuadore|gugrxekuadore]]
-**[[jbocre: gugrparaguai|gugrparaguai]]
-
-**[[jbocre: gugrxuruguai|gugrxuruguai]]
-**[[jbocre: brazo|brazo]]
-
-**[[jbocre: gento|gento]]
-**[[jbocre: tci'ile|tci'ile]] i va'i gugrtcile
-
-**[[jbocre: gugrperu|gugrperu]]
-**[[jbocre: gugrxarxentina|gugrxarxentina]]
-
-*[[jbocre: polno|polno]]
-**[[jbocre: sralo|sralo]]
-
-**[[jbocre: gugrnuzilanda|gugrnuzilanda]]
-**[[jbocre: gugrniugini|gugrniugini]]
-
-**[[jbocre: gugrvanuatu|gugrvanuatu]]
-**[[jbocre: gugrtuvalu|gugrtuvalu]]
-
-**[[jbocre: baxso|baxso]] ''to cmene le bangu be loi meljo e loi bindo toi''
-***[[jbocre: meljo|meljo]]
-
-***[[jbocre: bindo|bindo]]
-**[[jbocre: jecrxauai,i|jecrxauai,i]] (to pagbu le [[jbocre: merko ergu'e|merko ergu'e]] toi)
-
-*[[jbocre: dzipo|dzipo]]
-*[[jbocre: jbotut|jbotut]]
-
------
-
-''' -> [[jbocre: tavla fi le tutra pe le terdi|tavla fi le tutra pe le terdi]]'''
+* {cusku lu .i mi na djuno li'u} produces ".i do cu cusku lu i mi na djuno li'u" (note the missing .)
