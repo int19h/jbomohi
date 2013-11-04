@@ -1,0 +1,94 @@
+
+Total number of possible gismu forms: ''96,475''
+
+Total number of possible forms excluding the last vowel: ''19,295''
+
+Total number of official gismu: ''1,342''
+
+Total number of gismu forms that clash with official gismu: ''11,874'' 
+
+(according to the definition of which gismu clash with each other in the book, including the forms of the official gismu themselves)
+
+Percentage of forms actually taken: ''12.31'' (about 1 in 8) 
+
+(whether by clashes or by the actual gismu themselves)
+
+* But this is misleading: once you actually assign a new gismu, a variable amount of gismu space becomes used up.
+** Good point. However, the most forms that a gismu can use up is 13: 5 for the last vowel plus 2 for each consonant. So there are at least ''6,507'' free gismu. In practice, it seems they use up about 9 forms each, so there are about ''9,400'' free forms.
+
+Percentage of forms actually taken (ignoring clashes other than the last vowel): ''6.96'' 
+
+(about 1 in 15)
+
+----
+
+I get a different analysis, as follows:
+
+# There are 19365 legal gisms (4-letter rafsi) by the rules.
+
+# There are 1338 gisms in actual use.
+
+# The gismu avoidance rules block 3731 more gisms, for an effective total of 5069 in use.
+
+# This leaves 14566 gisms available.
+
+# On average, each gism blocks 4 other gisms.
+
+# In effect, then, we can have about 2900 more gismu, depending on the exact details of assignments.
+
+* That's not correct. You can't count 4-letter rafsi, because 4-letter rafsi '''are''' allowed to be very similar to other 4-letter rafsi. The gismu they come from could differ by one small change in the 4-letter stem and by the final vowel.
+
+If this is correct, then we can't have a distinct gismu for every culture, because the number of languages spoken around the world is 6000-7000, depending on how you count.
+
+* But we can have an indistinct gismu for every culture. [[User:And Rosta|And Rosta]]
+* Can you tell me exactly the rules by which gismu block each other, and gisms block each other? -[[User:tsali|tsali]]
+
+** See [http://www.lojban.org/files/reference-grammar/chap4.html#s14 Chapter 4, Section 14 of the Book]
+*** Unfortunately, the consonant blocking table is illegible in the on-line version.  Here it is:
+
+b blocks p, v
+
+c blocks j, s
+
+d blocks t
+
+f blocks v, p
+
+g blocks k, x
+
+j blocks c, z
+
+k blocks g, x
+
+l blocks r
+
+m blocks n
+
+n blocks m
+
+p blocks b, f
+
+r blocks l
+
+s blocks z, c
+
+t blocks d
+
+v blocks b, f
+
+x blocks g, k
+
+z blocks j, s
+
+----
+
+Enough speculation!  I have written a program that by brute force actually ''counts'' the number of free gismu.  I started by generating a list of all 96475 possible gismu forms.  We can call 'em "candidate gismu" or "proto-gismu".  I then went through the list of 1342 official gismu, one at a time.  For each one, I deleted it from the list of proto-gismu. Then I deleted all the proto-gismu that differed only by the final vowel (except for the "brodV" series (are there any other exceptions like this?].  Then I deleted all the proto-gismu that were blocked based on consonant similarity as in the table given just above.  When I had done that for all the official gismu I counted the remaining proto-gismu.  (On my Pentium III 450 running Windoze 98 all this takes less than a minute.)
+
+The answer was rather surprising.  I find that there are still 85,536 available gismu forms.  Now, I'm sure you'll say, "That's simply not possible!" But think about it.  A lot of the forms that would be blocked by the consonant similarity rules aren't even valid proto-gismu.  (Don't forget, to be a valid proto-gismu a form still has to conform to certain rules.)  So fewer forms are blocked than you might think.  Additionally, a number of forms (no, I haven't counted them; maybe later) are blocked multiple ways.  For instance, *bajru is blocked by both '''bacru''' and '''bajra'''.  Because of this overlap fewer forms are blocked than you might think.
+
+I'm pretty confident that my program is correct, but it would be a Good Thing if someone were to attempt to verify my results. --mi'e skat
+
+*You have to consider that those 85,536 are not independently available. Choosing one will block many of the others. Close to 80% of them will be blocked by the last vowel rule. --mi'e [[User:xorxes|xorxes]]
+*But experimental gismu won't block each other (or at least, we can't say which blocks which). --[[User:And Rosta|And Rosta]] Furthermore, the blocking rules were part of the algorithm for assigning the original gismu forms and are not part of the living morphological rules that constrain, say, fuhivla and cmevla, since the gismu are supposed to form a closed class. Since experimental gismu are inherently unofficial, there is no need to suppose that the blocking rules would apply to them. I accept that one would expect official gismu to conform to the blocking rules.
+
+**Right, but in that case the relevant number is 96475 - 1342 = 95133 available forms. --[[User:xorxes|xorxes]]
