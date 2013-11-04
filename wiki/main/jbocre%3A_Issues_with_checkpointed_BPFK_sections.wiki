@@ -1,66 +1,99 @@
 
-== Recursive Grammar and Fractals ==
+This page is for concerns related to BPFK sections that are already passed and checkpointed. For BPFK sections that are '''not''' passed, see the relevant section itself.
 
-One of the nifty properties of the Lojban grammar is that it is fully recursive.  That is: any grammatically correct piece of Lojban text can be embedded within another piece of Lojban text.  Combined with the fact that Lojban can be parsed (and therefore synthesized) by machines, the possibility exists of creating Lojban sentences with a self-similar, or fractal, structure.
 
-The following is a simple example of one such fractal sentence.
+== Tense sumtcita as of 16 Jun 2005 ==
 
-== la nelci bebna ==
+In [[BPFK Section: Tense sumtcita as of 16 Jun 2005]], the examples of ''di'o'' do not match the place structure of ''diklo''. E-mail from Yanis Batura:
 
-'''la nelci bebna''' is a simple fractal Lojban sentence with the following grammar:
+~pp~
 
-^
+--------------------------------------
 
-<sentence> --> mi nelci tu'a lonu do tavla fi lodu'u <sentence> kei kei mu'i lodu'u losi'o <sentence> kei ku bebna kei ku
+The definition and the examples seem very dubious for me, because {diklo} is
 
-^
+defined as "x1 is local to x2; x1 is confined to locus x2 within range x3".
 
-It means, roughly, "I like your talking about the fact of (this sentence) because of the fact that the idea of (this sentence) is foolish."
+{di'o} marks x1 of {diklo}, i. e. something that is local or confined to a
 
-=== Prolog code for la necli bebna ===
+locus. So {broda di'o da} means that there is / happens {broda} such that
 
-The following Prolog code uses definite clause grammar (DCG) clauses to generate iterations of the '''la nelci bebna''' fractal.
+{da} is confined to its locus. Consider the example {mi se jibri le sampla
 
-^
+di'o la ibubymym}. If {la ibumbum} is x1 of {diklo}, then {la ibumbum} is
 
-~np~
+confined to a locus of where the person works with software. The sentence
 
-buha(0) --> [[jbocre: 'bu''a'|'bu''a']].
+actually means that the whole IBM is local to where the person works with
 
-~/np~
+software! That is something different from "I work with software at IBM"...
 
-~np~
+I hope you got my English.
 
-buha(N) --> {integer(N), N > 0, M is N-1},
+mi'e .ianis
 
-[[jbocre: mi,nelci,'tu''a',lonu,do,tavla,fi,'lodu''u'|mi,nelci,'tu''a',lonu,do,tavla,fi,'lodu''u']], buha(M), [[jbocre: kei,kei|kei,kei]],
+~/pp~
 
-[[jbocre: 'mu''i','lodu''u','losi''o'|'mu''i','lodu''u','losi''o']], buha(M), [[jbocre: kei,ku,bebna,kei,ku|kei,ku,bebna,kei,ku]].
+Possible actions:
 
-~/np~
+# Rule that all usages of "di'o" is in error, and replace real examples with (correct) made-up ones.
 
-^
+# Devise a lujvo that fits the place structure of "di'o" as it is actually used.
 
-=== Example Iterations ===
+arj (the original shepherd of the section) recommends alternative #1, as there are a handful of spatial tenses that could easily replace the use of "di'o" as intended.
 
-The zero'th iteration of '''la nelci bebna''' is just the terminal sentence ''bu'a''.
+== Text Structure cmavo as of 11 Feb 2005 ==
 
-The first iteration is: ''mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku''.
+Jorge says:
 
-The second: ''mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku''.
+~pp~
 
-And so on.  Since each '''<sentence>''' has two branches, the number of ''bu'a''s in the Nth expansion is 2**N.
+This comment is s bit misleading, as it suggests that there is something
 
-Here's '''la nelci bebna''' after five expansions (containing just 32 ''bu'a''s):
+special about MAI that breaks LALR(1). But even if MAI were to be removed
 
-^
+from the language, or made prefix, the problem with numbers would remain
 
-mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku
+just the same, because you can't tell "number MOI", "number ROI" and
 
-^
+"number /BOI/" appart from each other without indefinite lookahead,
 
-When fed to a Lojban parser, such as [http://www.lojban.org/j jboski], the above text parses nicely into a self-similar parse tree.  (Thanks to [http://www.lojban.org/tiki/tiki-user_information.php?view_user=a adamgarrigus] for catching a [http://www.lojban.org/tiki/tiki-view_forum_thread.php?forumId=1&amp;comments_parentId=5853&amp;comments_maxComments=1&amp;comments_style=commentStyle_threaded rammatical error] in the fractal.)
+the same goes for "lerfu-string MOI" vs. "lerfu-string /BOI/", and I think
 
-== Many More Possibilities! ==
+compound tags break LALR(1) too.
 
-Of course, '''la necli bebna''' is a simple and (as the name implies) rather silly sentence.  Much more meaningful, even profound, fractal sentences could be constructed in a similar fashion.  In fact, one could imagine fractal sentences becoming a new art form - maybe fractal poems will be written - unique among the literature of other languages, because of the recursive and unambiguous nature of Lojban's grammar.  The possibilities are literally endless endless endless endless endless endless endless endless endless endless endless!
+"A term is either a sumti or a sumti preceded by a tense or modal tag."
+
+Also: "na ku", "tag ku" and the most weird "fa ku" are terms.
+
+mu'o mi'e xorxes
+
+~/pp~
+
+== Digressives ==
+
+lojbab says:
+
+~pp~
+
+1. sei
+
+I think it should be clarified what it means "no trailing sumti", and
+
+possibly rephrased because the "no trailing sumti" should be distinct
+
+from the rest of the definition (as it is, the wording suggests that
+
+there is some other word that starts a discursive bridi that CAN have
+
+trailing sumti).  Putting it in 2 sentences would probably solve this.
+
+For the former comment, it should be noted that
+
+i ku'i fe'e mo'a roi trene sei mi kelci pilno be zo roi
+
+is perfectly legal - i.e. trailing sumti have to be attached with be/bei
+
+~/pp~
+
+* I suspect, strongly, that this can be fixed in the PEG, but haven't actually looked at it yet.  Does anyone know the reason for this restriction? -- rlpowell
