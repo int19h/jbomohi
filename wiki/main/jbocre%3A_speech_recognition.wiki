@@ -1,42 +1,21 @@
 
-subsentence = sentence | prenex subsentence 
+The first step of a general speech recognition system (and the kind one would want for Lojban), consists of phoneme recognition. There are two ways of doing it (roughly?):
 
-prenex = terms ZOhU # 
+# Some kludgy looking algorithmic process for identifying phonemes based on voice features. (Bebe (sorry, URL tomorrow) does this)
 
-sentence = ([[jbocre: FA|FA]] KOhA) ... bridi-tail 
+** This requires you have either a very good description of the distinguishing features of each relevent phoneme, or a bunch of bunch of phoneme recordings to work from.
 
-bridi-tail = selbri tail-terms | gek-sentence 
+# Some kludgy method for comparing extracted voice features to the voice features of a bunch of phoneme recordings on record.
 
-selbri = [[jbocre: tag|tag]] [[jbocre: NA [jbocre: tag|tag]] ... selbri-6 
+** This requires a bunch of phoneme recordings to work from.
 
-For each sentence, if the ''bridi-tail'' is ''selbri tail-terms'':
+# Other?
 
-([[jbocre: FA|FA]] KOhA) ... [[jbocre: tag|tag]] [[jbocre: NA [jbocre: tag|tag]] ... selbri-6 tail-terms: reduces to ''[[jbocre: tag zo'u|tag zo'u]] [[jbocre: NA ku zo'u [jbocre: tag zo'u|tag zo'u]] ... ([[jbocre: FA|FA]] KOhA) ... selbri-6 tail-terms''
+** This requires that you replace "Other?" with a description. :)
 
-If the ''bridi-tail'' is ''gek-sentence'':
+So, does anyone happen to have any idea where to get a lot of phoneme recordings, with the phoneme boundries convinently premarked? Or descriptions of algorithms for identifying phonemes (without recordings to match again)? The Lojban speech synthesis data for festvox/festival would be nice, but when I looked earlier today, the URLs for it were broken, and the whole webserver seemed fairly mucked up.
 
-([[jbocre: FA|FA]] KOhA) ... gek prenex ... sentence gik prenex ... sentence tail-terms: reduces to ''gek prenex ... ([[jbocre: FA|FA]] KOhA) sentence gik prenex ... ([[jbocre: FA|FA]] KOhA) sentence tail-terms''
+* Why doesn't someone organize a research project, by getting a bunch of lojbanists to pronounce every phoneme, and then analyzing the differences and similarities between them, until we can at least begin to nail down what makes these sounds different. -- mi'e [[jbocre: bancus|bancus]]
+** because there are already huge corpora of sounds out there, which are already tagged so that you know exactly where every last phoneme in the corpus starts and stops. see the [http://www.ldc.upenn.edu/ inguistic Data Consortium]. problem is they only distribute on CD, and the CDs are usually $100 or so a pop. and i, at least, have zero interest in trying to tag hundreds of thousands of phonemes. i've found decent corpora floating about freely on the internet in the past, but they didn't have phoneme boundries tagged. --[[jbocre: Jay Kominek|Jay]]
 
-Finally, the ''tail-terms'' of each sentence are reduced in the same way as the pre-selbri terms have been before: starting from the first one, tagged terms and negations go directly to the prenex, KOhA terms go to the prenex and leave a KOhA behind, and connected terms and termsets expand into a gek-sentence. 
-
-To tidy up, we now split every multiple term ''prenex'' into single term ones:
-
-term ... ZOhU  subsentence:  ''(term zohu) ... subsentence''
-
-and we move all pre-selbri terms behind the selbri:
-
-([[jbocre: [jbocre: FA|FA]] KOhA) ... [[jbocre: CU|CU]] selbri [[jbocre: FA|FA]] KOhA] ... /VAU#/: reduces to ''selbri [[jbocre: FA|FA]] KOhA] ... [[jbocre: FA|FA]] KOhA] ... /VAU#/''
-
-''text'' has been reduced to:
-
-subsentence = selbri-6 [[jbocre: FA|FA]] KOhA] ... /VAU#/ 
-
-| gek subsentence gik subsentence 
-
-| NA KU # ZOhU subsentence 
-
-| tag /KU#/ ZOhU subsentence 
-
-| [[jbocre: tag|tag]] [[jbocre: quantifier|quantifier]] KOhA xi number [[jbocre: relative-clauses|relative-clauses]] ZOhU subsentence 
-
-(Where ''selbri-6'' is an untagged/unnegated selbri, KOhA is one of da, de, di when quantifier is present, else it is one of ko'a, ko'e, ... fo'u.)
+** Just a piece of technicality about terminology (never a Loglan/Lojban strong point): you cant have a recording of ''phonemes'' as such, only of ''phones''. A phoneme is a language-specific grouping of phones -- actually produced sounds -- that are taken as functioning as identicals in a given language. So what we want is either a way of dividing up phones into phonemes of Lojban or a way of generalizing from various phones taken in Lojban to belong to the same phoneme. >|8}
