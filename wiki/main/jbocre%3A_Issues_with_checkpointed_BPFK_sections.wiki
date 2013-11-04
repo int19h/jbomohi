@@ -1,0 +1,66 @@
+
+== Recursive Grammar and Fractals ==
+
+One of the nifty properties of the Lojban grammar is that it is fully recursive.  That is: any grammatically correct piece of Lojban text can be embedded within another piece of Lojban text.  Combined with the fact that Lojban can be parsed (and therefore synthesized) by machines, the possibility exists of creating Lojban sentences with a self-similar, or fractal, structure.
+
+The following is a simple example of one such fractal sentence.
+
+== la nelci bebna ==
+
+'''la nelci bebna''' is a simple fractal Lojban sentence with the following grammar:
+
+^
+
+<sentence> --> mi nelci tu'a lonu do tavla fi lodu'u <sentence> kei kei mu'i lodu'u losi'o <sentence> kei ku bebna kei ku
+
+^
+
+It means, roughly, "I like your talking about the fact of (this sentence) because of the fact that the idea of (this sentence) is foolish."
+
+=== Prolog code for la necli bebna ===
+
+The following Prolog code uses definite clause grammar (DCG) clauses to generate iterations of the '''la nelci bebna''' fractal.
+
+^
+
+~np~
+
+buha(0) --> [[jbocre: 'bu''a'|'bu''a']].
+
+~/np~
+
+~np~
+
+buha(N) --> {integer(N), N > 0, M is N-1},
+
+[[jbocre: mi,nelci,'tu''a',lonu,do,tavla,fi,'lodu''u'|mi,nelci,'tu''a',lonu,do,tavla,fi,'lodu''u']], buha(M), [[jbocre: kei,kei|kei,kei]],
+
+[[jbocre: 'mu''i','lodu''u','losi''o'|'mu''i','lodu''u','losi''o']], buha(M), [[jbocre: kei,ku,bebna,kei,ku|kei,ku,bebna,kei,ku]].
+
+~/np~
+
+^
+
+=== Example Iterations ===
+
+The zero'th iteration of '''la nelci bebna''' is just the terminal sentence ''bu'a''.
+
+The first iteration is: ''mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku''.
+
+The second: ''mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku''.
+
+And so on.  Since each '''<sentence>''' has two branches, the number of ''bu'a''s in the Nth expansion is 2**N.
+
+Here's '''la nelci bebna''' after five expansions (containing just 32 ''bu'a''s):
+
+^
+
+mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei kei mu'i lodu'u losi'o mi nelci tu'a lonu do tavla fi lodu'u bu'a kei kei mu'i lodu'u losi'o bu'a kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku kei ku bebna kei ku
+
+^
+
+When fed to a Lojban parser, such as [http://www.lojban.org/j jboski], the above text parses nicely into a self-similar parse tree.  (Thanks to [http://www.lojban.org/tiki/tiki-user_information.php?view_user=a adamgarrigus] for catching a [http://www.lojban.org/tiki/tiki-view_forum_thread.php?forumId=1&amp;comments_parentId=5853&amp;comments_maxComments=1&amp;comments_style=commentStyle_threaded rammatical error] in the fractal.)
+
+== Many More Possibilities! ==
+
+Of course, '''la necli bebna''' is a simple and (as the name implies) rather silly sentence.  Much more meaningful, even profound, fractal sentences could be constructed in a similar fashion.  In fact, one could imagine fractal sentences becoming a new art form - maybe fractal poems will be written - unique among the literature of other languages, because of the recursive and unambiguous nature of Lojban's grammar.  The possibilities are literally endless endless endless endless endless endless endless endless endless endless endless!
