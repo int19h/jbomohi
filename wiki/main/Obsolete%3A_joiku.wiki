@@ -1,30 +1,43 @@
+=== Why doesn't "le broda joi le brode" parse? ===
 
-The English word "if" encompasses a large range of concepts. Sometimes it implies correlation, and sometimes it implies causality. Sometimes it expresses an event happening in a counterfactual world. All of these should be translated differently into Lojban, because they express different concepts.
+''After appearance of [[camxes]] it parses so the rest of this article is obsolete.''
+*... cu'u la gleki, ma'i ma? I suggest not to mislead people who are looking for [http://www.lojban.org/files/roadmap.html#software_parser ''official'' Lojban], whether one likes ''official'' Lojban or not, or considers it broken or not. I also find it misleading at least to call a reformed version of Lojban ''Optimized Lojban.'' mu'o mi'e .[[User:iesk|iesk]]. 21:42, 22 oktobero 2013 (UTC)
 
-So, there is no "standard" word or phrase you can use to translate English "if" consistently. The following words can all be used:
+-----
 
-*'''[[jbocre: ganai, gi|ganai, gi]]''' indicates correlation and says nothing about causality.
-*'''[[jbocre: go, gi|go, gi]]''' indicates a slightly different correlation and says nothing about causality.
-
-*'''[[jbocre: va'o|va'o]], [[jbocre: fau|fau]]''' indicate correlation and say nothing about causality?
-*'''[[jbocre: mu'ei|mu'ei]]''' is an experimental cmavo which incorporates into Lojban logicians' method of handing conditional statements in terms of [[jbocre: possible worlds and mu'ei ossible worlds|possible worlds and mu'ei ossible worlds]]; it has been discussed on the wiki as a means to indicate [[jbocre: counterfactual correlation|counterfactual correlation]].
-
-*'''[[jbocre: CAhA as sumtcita a'a|CAhA as sumtcita a'a]]''' as a sumtcita may indicate necessity like ''ro[[jbocre: mu'ei|mu'ei]]''
-*'''[[jbocre: bi'ai|bi'ai]]''' is the true ''ro[[jbocre: mu'ei|mu'ei]]''. ''ca'a'' is a special variation of ''su'o[[jbocre: mu'ei|mu'ei]]''.
-
-*'''[[jbocre: bai|bai]]''' indicates causality, in the sense that one event compels another to happen.
-*'''[[jbocre: ja'e|ja'e]]''' indicates logical causality.
-
-*'''[[jbocre: selbri for causality rinu|selbri for causality rinu]]''' indicates causality by reason/justification/explanation.
-*'''[[jbocre: selbri for causality ibli|selbri for causality ibli]]''' indicates causality by logical implication.
-
-*'''[[jbocre: selbri for causality ukti|selbri for causality ukti]]''' indicates causality by motivation/incentive.
-*'''[[jbocre: selbri for causality inka|selbri for causality inka]]''' indicates causality by physical cause.
+[[jbocre: joiks|joiks]] are both [[jbocre: sumti|sumti]] and [[jbocre: tanru|tanru]] connectives. Thus, the parser gets to broda joi and expects another [[jbocre: brivla|brivla]] afterwards, and when it encounters le, reports an error. The solution is to explicitly terminate "le broda" with "ku", which in this case is not elidable.
 
 ----
 
-This page was absolutely getting out of hand, so I've reorganized it. If you feel your viewpoint has been marginalized, sorry.
+do skudji '''lu le broda ku joi le brode li'u''' .e '''lu le broda joi brode li'u'''
 
-Please try to keep this list clean - comments about whether a certain form is good or bad should go on the corresponding page. --[[jbocre: rab.spir|rab.spir]]
+----
 
-* Thanks. A big improvement. --[[User:And Rosta|And Rosta]].
+The longer answer to this is that Lojban is defined by a jbocre: LALR(1) grammar, so that any ambiguities have to be resolved with at most one token of lookahead. ''le broda joi le brode'' has to be disambiguated as early as ''broda'': it has to know whether the [[jbocre: selbri|selbri]] is over by the time it hits ''joi'', or will be continued through ''joi''. To resolve this, though, it would have to look past ''joi'', at ''le''. This means two tokens of lookahead, which is thus disallowed. (Yes, it's counterintuitive, but that's what you get for using [[jbocre: YACC|YACC]] to define a human language.) For further discussion, see:
+* [http://wiw.org/~jkominek/lojban/9511/msg00535.html wiw.org/~jkominek/lojban/9104/msg00011.html] (where Guy Steele points out issues with [[jbocre: YACC|YACC]]);
+* and for amusement value, [http://wiw.org/~jkominek/lojban/9110/msg00033.html] (where [[User:Nick Nicholas|Nick Nicholas]] first discovered this issue to his acute indignation).
+----
+
+''Yes, it's counterintuitive, but that's what you get for using [[jbocre: YACC|YACC]] to define a human language.''
+
+Well, it's counterintuitive to English speakers, but someone with a lot of practice in Lojban (a native speaker?) might find it clearer.
+
+For example, take a phrase like:
+
+;:le broda nu brode joi le brodi
+
+It starts to get a little tricky even for a human to quickly pick out whether the joi attaches to the "brode", the "nu brode" or the whole "le"-sumti when there's no "ku" before the "joi".
+
+Lojban ''really'' likes terminators, and so if you find adding an extra one or two to be counterintuitive, you're probably going to have a hard time. :-)
+
+''(I also had a hard time accepting this, until I came across something like the above example, which made me do a double-take and rethink how counterintuitive this situation really is.)'' -- [[jbocre: Adam Raizen|Adam Raizen]]
+
+Lojban does '''not''' like terminators, it only puts up with them when they are necessary. One mark of good style is phrasing your sentences in such a way that the use of terminators in minimized. Unfortunately, this ''kujoi'' case is one of the unavoidables. It is about the only time that the terminator ''ku'' needs to be used.
+
+Terminators are such an integral part of Lojban that it shouldn't seem counterintuitive to a good speaker to add them. If the ''ku'' of "le broda ku joi le brode" is counterintuitive, what makes the ''ku'o'' in "mi viska le nanmu poi slabu mi ku'o bu'u le panka" any more intuitive? Personally, I think that having to rearrange a sentence in order to be able to elide terminators is at least as counterintuitive as saying the terminators themselves. -- Adam
+
+'' *shrug* Adding ku before joi in this context has become a reflex action for me anyway. Just because I think something's wrong doesn't mean I won't do it :-) . Very good example, btw. '' -- Nick Nicholas
+
+So what ''would'' that parse as? I assume, since the second argument of joi is clearly a sumti, then the 1st one must be too, which means the proper interpretation should be le broda nu brode '''keiku''' joi le brodi -- xod
+
+''You're doing more than one token of lookahead, I'm afraid. There is no reason for ''broda nu brode joi le brodi'' to be any more grammatical than ''le brode joi le brodi''; the parser still doesn't know whether the [[jbocre: selbri|selbri]] (now embedded in a ''nu''-clause) is over by the time it hits ''joi''. '' -- [[User:Nick Nicholas|nitcion]]
