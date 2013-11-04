@@ -1,324 +1,58 @@
 
-(work in progress)
+A Prolog program consists of a database of rules and facts.  A rule
 
-----------------------------------------------------------------------
+is a bridi with the following restricted grammar:
 
-critu vanci .uo
+<rule> = <simple-bridi> .ijanai <simple-bridi> | <simple-bridi> .ijanai tu'e <conjunct> tu'u
 
-xekcpi bu'u le lunbe
+<conjunct> = <simple-bridi> | <simple-bridi> .ije <conjunct>
 
-tricu se vanbi
+<simple-bridi> = <simple-sumti>* <brivla> <simple-sumti>*
 
-le litru bilma
+<simple-sumti> = la <name> | <quantified-variable> | li <number> |  lo <brivla> <be-beho>?
 
-cu lubyfoi snopagre
+<be-beho> = be <simple-sumti> (bei <simple-sumti)* be'o
 
-sajdilnu cfari
+All variables are always quantified universally with a scope
 
-le za'u ni'u
+extending over the whole rule.  Facts are degenerate rules with
 
-so'omoi cerni .a'a
+just a "<simple-bridi>", and are treated as unconditional rules.
 
-cu flaumyrulska
+A fact or rule is said to be "ground" if there are no variables in it.
 
-le lekmilxe joi
+Prolog interpreters accept queries, which are simple-bridi, and return
 
-sutra rirxypau zo'u
+all values of all variables in the simple-bridi which, when substituted
 
-cadzu le rokcma
+for those variables, produce either facts in the database or facts
 
-mi ge zgana le
+deducible from the facts and rules in the database.
 
-lunra gusni be so'i
+Here is a trivial Prolog program in Lojban syntax:
 
-xrani dargu gi
+la djan. patfu la djordj.
 
-jijnu le critu morna
+.i la djordj. patfu la fred.
 
-be ge mi gi nabo mi
+.i roda rode rodi zo'u: da patpatfu de .ijanai tu'e da patfu di .ije di patfu de tu'u
 
-lenu mi klama
+.i ma patpatfu la fred.
 
-fi le manku le manku
+To which the Prolog system will reply "la fred."  The system sees that
 
-cu se gusni fi
+"ma patpatfu la fred." matches the rule head "da patpatfu de" and then
 
-le cmalu lunra po'o
+attempts to match the members of the conjunct against existing facts
 
-nevi le cmana salpo
+or rule heads.
 
-critu cmana .i
+There are built-in brivla for which the system knows how to compute the
 
-farlu fa le pezli poi
+answer rather than consulting its database: e.g. "li mu du lo sumji
 
-skari .i ganai
+be li re bei li ci be'o" is always true.  Typically the sumti of such
 
-mi fanta la'edi'u
+predicates must be ground.
 
-gi cabna viska ko'a
-
-naku ti vensa
-
-je lunra co mibypre
-
-.i ni'inaibo
-
-fi ri stodi fa ba'e
-
-mi po'o leka purci
-
-va'o le brife
-
-ku lei xrula cu porpi
-
-tetai tu'a lo
-
-snime .i da poi canci
-
-cu mintu lo mibypre
-
-co'e lezoigy.
-
-On a journey, ill:
-
-my dream goes wandering
-
-over withered fields.
-
-Basho
-
-Of late the nights
-
-are dawning
-
-plum-blossom white.
-
-Buson
-
-The running stream
-
-is cool--the pebbles
-
-underfoot.
-
-Chiboku
-
-As I watch the moon
-
-shining on pain's myriad paths,
-
-I know I am not
-
-alone involved in Autumn.
-
-Oe no Chisato
-
-I go out of the darkness
-
-onto a road of darkness
-
-lit only by the far off
-
-moon on the edge of the mountains.
-
-Izumi
-
-In the Autumn mountains
-
-the colored leaves are falling.
-
-If I could hold them back
-
-I could still see her.
-
-Hitomaro
-
-This is not the moon,
-
-nor is this the spring,
-
-of other springs,
-
-and I alone
-
-am still the same.
-
-Narahira
-
-The flowers whirl away
-
-in the wind like snow.
-
-The thing that falls away
-
-is myself.
-
-the priest Kintsune
-
-.gy.
-
-tu'e
-
-le ninbistcima
-
-lei blabi mi mipri .i
-
-ganai mi lebna
-
-djica gi go facki fi
-
-pale xrula gi funca
-
-tu'u .i co'e zoigy.
-
-The white chrysanthemum
-
-is disguised by the first frost.
-
-If i wanted to pick one
-
-I could find it only by chance.
-
-Oshikochi no Mitsune
-
-gy.
-
-tu'e
-
-mo'izo'a mi
-
-ku slabu xu prenu .i
-
-cagi smadi gi
-
-le nictymidju lunra
-
-co'i dilnu se zunti
-
-tu'u
-
-.ico'e zoigy.
-
-Someone passes,
-
-and while I wonder
-
-if it is he,
-
-the midnight moon
-
-is covered with clouds.
-
-Murasaki
-
-gy.
-
-tu'e
-
-co'a lunsa fa
-
-le crityvanci bumru
-
-pu'o lemu'e
-
-sudbi'o fa lei tricu
-
-jesni dandu cavdirgo
-
-tu'u .i co'e zoigy.
-
-'The hanging raindrops
-
-have not dried from the needles
-
-of the fir forest
-
-before the evening mist
-
-of Autumn rises.'
-
-the monk Jakuren
-
-gy.
-
-(Basho:
-
-Summer grass. After
-
-soldiers' quests so glorious,
-
-this quiet answer.)
-
-''cisysrasu .i
-
-vrisoi ke selsne co se
-
-manci ke balvi''
-
-----
-
-tr. Juan Ramon Jimenez: "Yo no soy yo"
-
-mi na me mi. .i mi me
-
-da poi go'o .i ge
-
-cadzu co mlana gi na se
-
-viska vau mi .ije
-
-gonai mlicafne se penmi
-
-gi datytemci se
-
-tolmorji vau mi .ije
-
-ge panpi je smaji cale
-
-nu mi bacru kei gi
-
-xendo fraxu calenu
-
-mi xebni .ije ge klama
-
-le claxu bemi gi sanli ba
-
-lemu'e mi lenku margu
-
-----
-
-Basho
-
-cai jaursa'e fe
-
-le slarkemcmalalxu co
-
-banfyselplipe
-
-(1991)
-
-to zo slabu na drani .oi toi
-
-''tolcnino lalxu''
-
-''ke banfi nerplipe ke''
-
-''liksna jalge .uo''
-
-----
-
-'''Songs'''
-
-"[http://nuzban.wiw.org/wiki/index.php?le%20pu%20naje%20ca%20xamsi%20cnita tlantis]" by Donovan.
-
-"[http://silentnight.web.za/translate/lojban.htm ilent Night]"
-
-A Cole Porter song from "Kiss Me, Kate!" is [http://groups.yahoo.com/group/jbosnu/message/171 here].
-
-"[[jbocre: House of the Rising Sun|House of the Rising Sun]]"
-
-"[http://groups.yahoo.com/group/jbosnu/message/475 ar Pigs]" ([http://groups.yahoo.com/group/jbosnu/message/476 ops!])
-
-"[http://groups.yahoo.com/group/jbosnu/message/477 od on Our Side]"
-
-"[[jbocre: My Version of 'The Book' he Book|My Version of 'The Book' he Book]]" by H.P.Lovecraft
+See also: [[jbocre: Prolog tools|Prolog tools]]
