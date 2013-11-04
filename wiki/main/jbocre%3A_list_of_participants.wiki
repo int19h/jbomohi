@@ -1,43 +1,102 @@
-=== Why doesn't "le broda joi le brode" parse? ===
 
-''After appearance of [[camxes]] it parses so the rest of this article is obsolete.''
-*... cu'u la gleki, ma'i ma? I suggest not to mislead people who are looking for [http://www.lojban.org/files/roadmap.html#software_parser ''official'' Lojban], whether one likes ''official'' Lojban or not, or considers it broken or not. I also find it misleading at least to call a reformed version of Lojban ''Optimized Lojban.'' mu'o mi'e .[[User:iesk|iesk]]. 21:42, 22 oktobero 2013 (UTC)
+This is the list of participants of [[Broken phone|Broken phone]] with the languages they are fluent in and the other languages they are competent in. This distinction is made with the following concept in mind: if you are not fluent in a language, you will find it easier to translate from that language into lojban than from lojban into that language; thus, in establishing a list of participants for a round, the coordinator will ensure that everyone is fluent in the language they translate into and competent in the language they translate out of.
 
------
 
-[[jbocre: joiks|joiks]] are both [[jbocre: sumti|sumti]] and [[jbocre: tanru|tanru]] connectives. Thus, the parser gets to broda joi and expects another [[jbocre: brivla|brivla]] afterwards, and when it encounters le, reports an error. The solution is to explicitly terminate "le broda" with "ku", which in this case is not elidable.
+Wiki doesn't allow nice arrangement of this list. I have written it following this model:
+
+*cmen. (email@email.mail)
+**fluent languages
+
+**other languages
+
+Append your name to the end of the list and notify the coordinator of the current Broken Phone (if you want to join in on that one).
 
 ----
 
-do skudji '''lu le broda ku joi le brode li'u''' .e '''lu le broda joi brode li'u'''
+*[[jbocre: .kreig.daniyl.|.kreig.daniyl.]] ([mailto:r|ragnarok@pobox.com]])
+**English, Spanish
 
-----
+** Galician (written only)
 
-The longer answer to this is that Lojban is defined by a jbocre: LALR(1) grammar, so that any ambiguities have to be resolved with at most one token of lookahead. ''le broda joi le brode'' has to be disambiguated as early as ''broda'': it has to know whether the [[jbocre: selbri|selbri]] is over by the time it hits ''joi'', or will be continued through ''joi''. To resolve this, though, it would have to look past ''joi'', at ''le''. This means two tokens of lookahead, which is thus disallowed. (Yes, it's counterintuitive, but that's what you get for using [[jbocre: YACC|YACC]] to define a human language.) For further discussion, see:
-* [http://wiw.org/~jkominek/lojban/9511/msg00535.html wiw.org/~jkominek/lojban/9104/msg00011.html] (where Guy Steele points out issues with [[jbocre: YACC|YACC]]);
-* and for amusement value, [http://wiw.org/~jkominek/lojban/9110/msg00033.html] (where [[User:Nick Nicholas|Nick Nicholas]] first discovered this issue to his acute indignation).
-----
+*[[jbocre: Pierre Abbat ier.|Pierre Abbat ier.]] (phma@webjockey.net)
+**English, French
 
-''Yes, it's counterintuitive, but that's what you get for using [[jbocre: YACC|YACC]] to define a human language.''
+**Other romance languages
 
-Well, it's counterintuitive to English speakers, but someone with a lot of practice in Lojban (a native speaker?) might find it clearer.
+*[[jbocre: Evgenii Sklyanin evgenis.|Evgenii Sklyanin evgenis.]] (eks2@york.ac.uk)
+**English, Russian
 
-For example, take a phrase like:
+**French, Italian, Esperanto
+**'''temporarily out of the game'''
 
-;:le broda nu brode joi le brodi
+*[[User:xod|xod]]. (xod@sixgirls.org)
+**English
 
-It starts to get a little tricky even for a human to quickly pick out whether the joi attaches to the "brode", the "nu brode" or the whole "le"-sumti when there's no "ku" before the "joi".
+*.[[jbocre: and|and]]. (arosta@uclan.ac.uk) ''I can work from Italian or, if the text is short and a crude translation is tolerable, French or German. --[[User:And Rosta|And Rosta]]''
+**English
 
-Lojban ''really'' likes terminators, and so if you find adding an extra one or two to be counterintuitive, you're probably going to have a hard time. :-)
+**Italian, French, German
 
-''(I also had a hard time accepting this, until I came across something like the above example, which made me do a double-take and rethink how counterintuitive this situation really is.)'' -- [[jbocre: Adam Raizen|Adam Raizen]]
+*[[User:xorxes|xorxes]]. (jjllambias@hotmail.com)
+**English, Spanish, Esperanto
 
-Lojban does '''not''' like terminators, it only puts up with them when they are necessary. One mark of good style is phrasing your sentences in such a way that the use of terminators in minimized. Unfortunately, this ''kujoi'' case is one of the unavoidables. It is about the only time that the terminator ''ku'' needs to be used.
+**French
 
-Terminators are such an integral part of Lojban that it shouldn't seem counterintuitive to a good speaker to add them. If the ''ku'' of "le broda ku joi le brode" is counterintuitive, what makes the ''ku'o'' in "mi viska le nanmu poi slabu mi ku'o bu'u le panka" any more intuitive? Personally, I think that having to rearrange a sentence in order to be able to elide terminators is at least as counterintuitive as saying the terminators themselves. -- Adam
+*[[jbocre: rab.spir|rab.spir]]. (rob@twcny.rr.com)
+**English
 
-'' *shrug* Adding ku before joi in this context has become a reflex action for me anyway. Just because I think something's wrong doesn't mean I won't do it :-) . Very good example, btw. '' -- Nick Nicholas
+**Spanish
 
-So what ''would'' that parse as? I assume, since the second argument of joi is clearly a sumti, then the 1st one must be too, which means the proper interpretation should be le broda nu brode '''keiku''' joi le brodi -- xod
+*[[jbocre: .greg.|greg.]]daik. (gordon.dyke@bluewin.ch)
+**English, French, German(not quite but I ''can'' send and receive)
 
-''You're doing more than one token of lookahead, I'm afraid. There is no reason for ''broda nu brode joi le brodi'' to be any more grammatical than ''le brode joi le brodi''; the parser still doesn't know whether the [[jbocre: selbri|selbri]] (now embedded in a ''nu''-clause) is over by the time it hits ''joi''. '' -- [[User:Nick Nicholas|nitcion]]
+*[[User:tsali|tsali]] (arntrich@stud.ntnu.no)
+**English, Norwegian
+
+**Danish, Swedish, German, Esperanto
+
+*[[jbocre: Nora LeChevalier|Nora LeChevalier]] (lojbab@lojban.org)
+**English
+
+*[[jbocre: lidaniyl.|lidaniyl.]] (lee@piclab.com)
+**English
+
+**Spanish
+
+*[[jbocre: Jay Kominek|Jay Kominek]] (jay.kominek@colorado.edu)
+**English
+
+**French, Japanese
+
+*[[jbocre: randl.nortmn.|randl.nortmn.]] (randall@wonderclown.com)
+**English
+
+**French (can only translate '''from''' French into English or Lojban, not '''into''' French) ''Don't worry; nobody is ever asked to translate into a language that they do not list themself as fluent in.''
+
+*[[jbocre: Adam Raizen|Adam Raizen]] (araizen@newmail.net)
+**English, Hebrew, Esperanto
+
+**French
+
+*Bj�rn Gohla, [[jbocre: biorn.|biorn.]] ([mailto:b.gohla@gmx.de?subject=brokenphone .gohla@gmx.de]])
+**English, German
+
+**Latin
+
+*Ted Reed [[jbocre: bancus|bancus]] (rizen-at-surreality.(UnitedStates]
+**English
+
+**Esperanto
+
+*Bruce Williams [[jbocre: .iusris.|.iusris.]] (codedbliss at comcast dot net)
+**Arabic, English
+
+**Esperanto
+
+*John Leuner [[jbocre: .jemna.|.jemna.]] (jewel at debian dot org)
+**English
+
+*Lionel Vidal (nessus@free.fr)
+**French, English, Latin, Esperanto
+
+**Russian, German, Italian, Japanese
