@@ -1,0 +1,217 @@
+
+==  Short-Form Requests ==
+
+* Currently mobs don't fight back, which seems incomplete.  My area will require combat and the defeat of some foes to reach the end.
+* Add lojban equivalent commands for opening, closing, locking, and unlocking doors. 
+
+* Support for {la'oi} and {zo'oi}.
+* klama le gapru .i klama le cnita -- tries to resolve "le cnita" before going up; same thing in English
+
+* "edit the name of the red ball" doesn't work
+* {viska la'o zoi users/m_labinx/portfolio/cloak zoi} should be the same as {viska mooix:users/m_labinx/portfolio/cloak} -- probably isn't possible as such, but allowing mooix:stuff in zoi quotes (if we had zoi quotes) should work fine.
+
+* A chat mode (where the normal action is speaking, and using commands requires extra typing) would be snazzy.  Bonus points if it acts like IRC.  Having / be the thing that introduces commands would certainly help there.
+* contents of rooms should be sorted, and avatars listed separately from inanimate objects
+
+* Write an advanced builder tutorial that does an ocean liner: that is, a bunch of rooms inside a container or another room (the boat) which in turn is inside another room (the bit of ocean currently being sailed).  Varying degrees of transparency to outside objects, windows, etc.  Note that I'm reasonably certain that not all the features required for this exist yet.
+* Not working: edit here "description" in lojban (small l, "description" in quotes; these are two seperate issues, neither works individually either)
+
+* Not working: edit description of here in Lojban (of instead of 's, or ungrammatical "here description")
+* The event.msg of an event object should be able to refer to the event's immediate location.
+
+* Provide a special command which tells the command processor to start accepting further commands immediately, rather than waiting for preceding commands to have finished.
+
+==  Long-Form Requests ==
+
+These are loosely (as in, the first few but not necessarily the whole list) in the order that [[jbocre: Robin Lee Powell obin|Robin Lee Powell obin]] expects to work on them.  If you think something not near the top is Very Important, please use the discuss tab to say so.
+
+;More natural support for exits: In the English MOO, you can go through an exit merely by giving its name.  In the Lojban version, it would be nice if that were possible, as well as using spatial tenses.  This is likely to be difficult. The goal is to make things like {vu'a klama} and {stici} work.  Is this aready done?
+
+;Exits based on destination, not just direction: Currently, exits are named and used based on their direction.  It would be nice to be able to say {klama le zirpu malsi} as an alternative to {klama le berti}, in case you remember the room adjoins this one but not in what direction. For bonus points, it would be even nicer if you could go anywhere in the MOO (or anywhere you'd already been to once) in the same way, with the software plotting the route for you.
+
+;Allow any user to add a translation to an object they don't own:If no translation for that language exists yet, anyways.
+
+;Translator permissions: A specific role allowing users to use translation commands on objects they don't own. More likely than the previous two, we'll allow people to submit suggestions for translation, which the Gods can implement after looking them over. suggested syntax is "stidi co [[jbocre: command|command]]"
+
+;Assignable pronouns: We should be able to assign to ko'A and fo'A {viska le melbi mudri jubme goi ko'a}
+
+;zo'e for place skipping: We can currently move around the places of a command using FA and SE.  We should also be able to skip a place with {zo'e} {finti le xunre bolci zo'e mooix:ball}
+
+;Language fallbacks: if something hasn't been translated into all the languages the moo permits, then I prefer lojban, followed by English, followed by Spanish (since I remember a little from highschool), and then just anything else available.
+
+;En passant object creation: This is somewhat speculative, but it would be incredibly cool to be able to create an object inline with a command to use it, using bi'u to indicate that it's a new creation. {le bi'u xunre bolci cu cpana le melbi mudre jubme} would create a new ball, placing it on the desk.   If it couldn't be made to guess that it derives from bolci (and  it might be reasonable to assume that it couldn't in all cases), we'd need something like {le bi'u xunre bolci noi bolci cu cpana le melbi mudre jubme} or {le bi'u xunre bolci ne ve fi'e le bolci cu cpana le melbi mudre jubme}
+
+;Logical sumti connectives: At the very least, .e should work for performing the same operation on multiple objects at once.  For bonus points, .a, .o, and .u should do logically valid things (treating them all identically to .e seems technically correct in all cases).  {catlu le pastu .e le xunre bolci}
+
+;la'o name quoting: There doesn't appear to be any way to refer to an object by its name in a non-current langauge.  Additionally, the mooix: absolute path references are ugly when they're sitting in the middle of otherwise valid lojban.  Once {zoi} quotes work (point 11 above), it would be nice if {la'o} could be used to refer to an object by its non-lojban (either English, or whatever other language the moo is translated into, or mooix: fully-qualified) name. -- This is partly done now.  Need to work on a few details.
+
+;Modify the web client for the MOO:(well, if it existed in any useful sense) In such a way that when someone creates an object, they can upload a little flashcard-like drawing of it that will appear in a separate window in the web client, similar to [[jbocre: mg/wiki_up/smani_daplu.gif he inventory panel in Monkey Island 2|mg/wiki_up/smani_daplu.gif he inventory panel in Monkey Island 2]]. Perhaps there could even be another window to show a drawing of the room itself. Of course these images would not be visible to anyone playing the game from a terminal or Telnet.
+
+;Vocatives: Along the lines of a chat mode, we should make vocatives work.  Each one emit some text (so that {ki'e} would do roughly the same thing as {ckire}) and also assign the assignable pronoun {do} -- vocatives are supported now, we just need to fill them in -- Also, they don't assign {do}
+
+;Better error messages: Currently, just about all parse errors give the same output.  It would be nice if it could draw distinctions among "I can't parse that at all", "There is no broda.cmd.jbo" (and if it could suggest alternatives that are close, that would be even cooler), "there are many broda.cmd.jbo files, but none match", and "there's only one broda.cmd.jbo, and here's what it wants (which isn't what you gave me)"
+
+==  Robin's Notes To Himself ==
+
+These are unlikely to mean anything to anyone else; saves me having to keep notes in multiple places.
+
+* Possible msg.scm tweaks:
+** Optimize onlyto by calling propagate on that object only
+
+** Look at cleaning up the algorithm; it seems it could be simplified.
+** Optimize propagation by taking out messages/criteria based on failing the filtration so far, and stop propagating when no valid messages are left.
+
+** More complicated $foo calls, like $foo->(bar) for any method?
+* Anti-spoofing that should ''always'' work: a flag that, when activated, shows the mooix:object/path for every variable replacement that dexml does.  Or maybe just shows the current call stack in its entirety on each message.  Something like those.
+
+* Make a tutorial about how to code complex multilingual stuff using both the old_version and current of concrete/thing/take_verb, for situations where the ball is in the blue box is in the red box.
+* The programmer tutorial will have to be altered, in particular to take into account the preposition->relation stuff.
+
+* mixin objects should allow us to do something like @addfeature on Waterpoint.  In particular, it seems that the auto-translation feature requested above should be a feature (so someone else can maintain it :-).
+** mixin objects probably don't actually help here.  What would is a list of objects that get checked when checking for verbs on a given object, without those objects having to be in the inventory.  That is, if a player (or whatever) has a thinglist (or whatever) named "features", each object in that list gets checked by the parser when the parser gets to that player for verb matching.
+
+* We should have a flag users can set to see the raw <lang> and <field> and <initial>, for debugging if nothing else. (is <field> even used anymore?)
+*  packages and (in particular) the "install" verb have been ripped to shreds and need to be tested.  This includes translations of install_*.msg in abstract/builder
+
+==  Completed Requests ==
+
+;Field aliases in alternate languages: All field names are in English.  It would be nice if there were some way to give them aliases in other languages (for instance, lojban), so I could say {galfi le cmene pe mi} (or, nicer, {galfi le mi cmene} or {galfi le cmene be mi}) instead of {galfi "name" pe mi}.  This could possibly be done with a cmene method and a .cmene-safe field set to true, but there may be a simpler way.
+
+* Try to make "You can't do that." indicate when it is actually simply confused.
+* "mi klama le cnita" should work.
+
+* There should either be an xml language object or setting one's language field to "xml" should work, in either case all tags should be visible in the raw (i.e. dexml just skips the processing). -- now irrelevant
+* Add code to check for well-formed XML when people edit things, and bug them if it's crap.  This is probably better done by having per-language editing instead; see 6. More intuitive translation commands below. -- now irrelevant
+
+* zoi quotes
+* Another thing to stew on: is there a way to make tense part of a command?  That is, I can think of no more natural translation for the remove of clothing than {co'u dasni}
+
+* Someone should create a voting booth object inside the MOO.  Doesn't need any code hacking, just Programmer level access. (I'm removing this, since we now have prayer)
+* Write an advanced programmer tutorial that does awareness, self movement, dispensing and ownership handling, multilingualism, and stuff like that. I suggest a Meep dispenser, where the meeps can be leashed to things and if they aren't they wander.
+
+* lo'u...le'u and zo quotes should work, in addition to lu...li'u (and eventually, zoi).
+
+^Support for full zoi quotes
+
+Currently, "" works for quoting English text.  This is a very handy shortcut, but it would be nice if proper zoi quotes worked too.^
+
+^Support for sumtcita
+
+gunta la norlaitru se pi'o le grana^
+
+^Allow tense to be able to distinguish commands from each other
+
+co'u dasni le pastu^
+
+^Support for non-brivla commands
+
+All commands in the Lojban version have to be of brivla form.  Loosening that restriction would allow us to do some handy things.  Examples:
+
+;le pastu cu mo:show, showall, or look (mo may technically be a brivla, but it isn't of the brivla form that the parser recognizes (no consonant cluster]
+
+;ni'o:clear the screen
+
+;fa'o:exit the moo
+
+;ki'e nolraitru:see the emotes in point 1 above
+
+;le nukni bolci cu me le xunre bolci:reparent^
+
+^tanru commands
+
+Allow a command to be a tanru, such as {smaji cusku} (or {sivni cusku}) for whisper^
+
+^display quotes
+
+The lojban parser, when it encounters a quotation in place _n_, creates the variables $any_quote[[jbocre: n|n]] and $lojban_quote[[jbocre: n|n]] (or $non_lojban_quote[[jbocre: n|n]], as appopriate).  I also want it to create $display_quote[[jbocre: n|n]], which would have the correct quotation marks around it to be displayed in output text.
+
+'''DONE'''.  See cusku.cmd.jbo and friends.  At this point, cusku_verb can be destroyed AFAICT.
+
+^
+
+^generic but translated commands
+
+There needs to be a way to call generic_verb but lie to it about what verb was actually called.  Discussion on irc produced the syntax
+
+brivla=greet(this), direct_object=object2 : generic
+
+'''DONE''': The syntax actually used is brivla(this)(value=greet), direct_object=object2 : generic
+
+^
+
+^Generic multilingual communication commands to allow communication with speakers of other languages.
+
+examples: 
+
+"rinsa la tenes." "coi tenes." "greet tene"
+
+"co'o tenes."
+
+angry/fengu, annoyed/fanza, kiss/cinba, respect/sinma, like/nelci, cry/krixa, dance/dansu, hate/xebni, agree/tugni, sleepy/tatpi, relax/surla, upset/dunku, poke/tunta, shake/desku, hurt/cortu
+
+'''DONE''': All of the brivla above are done (and a bunch more).  The vocatives need code changes.  And I need more concrete suggestions for the part below.
+
+problems:
+
+Would it be possible to implement something like "ask/tell $player to do something" for a defined set of somethings?
+
+^
+
+^Incorporate word-lookup software similar to that at http://www.hypermetrics.com/pikmin so that instead of:
+
+Foobar says "lemi varkiclaflo'i cu culno lo angila"
+
+... it would say:
+
+Foobar says "lemi varkiclaflo'i cu culno lo angila" which means "my specific" "hovercraft" "(selbri separator)" "full" "the specific mass" "eel"
+
+'''DONE''':
+
+The object in question is the jbofi'e.  Stick it in your ear, and any lojban it hears it will translate for you.  You can also ask it (fo) about (fe) any text you're considering saying, even if it's not in your ear.
+
+^
+
+^More intuitive translation commands:
+
+cmene fa "blue ball" le blanu bolci bau la gliban
+
+skicu le mudri jubme fo lu .i marji lo melbi mudri li'u .i skicu jy fo zoi zoi Made of beautiful wood. zoi bau la gliban
+
+finti le xunre bolci .i le xunre bolci cu se cmene "red ball" bau la gliban
+
+Default for all these should be to set the user's own language, with lang tags and everything.  Provide mulcmene/full_name to edit the raw stuff.
+
+Notes from Robin: To go along with this, fix the language marker code in the grammar to return the language object, rather than the name, so the turn-name-into-language-object crap doesn't have to be repeated everywhere.  '''DONE'''
+
+In addition, might as well put the code that dissects and rebuilds lang expressions into a method.
+
+* This has been done, and it mostly works.  Outstanding issues:
+** The admin's edit_verb is based on avatar, so it doesn't work on methods.
+
+*** It should refuse to edit them instead of failing stupidly; use mooix::thing's "implements"
+*** Actually, I think avatar's (as opposed to builder's or programmer's) safechange would have caused a refusal
+
+*** Note in addition that edit_verb no longer needs to be different for avatar vs. builder, but get_field and set_field doe
+*** Should always default to lang xml for methods
+
+*** All of the above is '''DONE''', and seems to work
+** We've only done edit.cmd and is.cmd, I'm sure there are others.
+
+*** List of others; please add: rename, describe, set
+**** set.cmd, is.cmd, edit.cmd, rename.cmd '''done'''
+
+*** Can we somehow factor ''all'' xml-related code out of these into just one or two method calls?  I don't think so.
+**** Actually, we may be able to, with set_field_in_lang and get_field_in_lang
+
+***** '''DONE'''; edit_verb has been updated to use them; set_verb doesn't need them
+** Also, we should make sure that assigning a value with <lang> tags in it always assigns in xml mode '''DONE'''
+
+** We've not done the Lojban versions at all (galfi.cmd.jbo, stika.cmd.jbo) (umm, there is no stika.cmd.jbo)
+*** galfi.cmd, cmene.cmd, binxo.cmd, skicu.cmd '''DONE'''
+
+** NEAT! A side effect of the foo(value=bar) trick in .cmd is that we can ''get rid of rename_verb and describe_verb'' and all their attendant messages; just use field(value=name) : set, or whatever, in the .cmd.  '''DONE'''
+***Rename also has the (desirable) side effect of informing others that the name has changed.  Being able to have that modification however the name is changed (rename, set, edit, whatever) would be very nice (and ends up getting into deep issues).  Probably best to add a name_onset method, which gets called by safechange.
+
+**** Conveniently enough, this already exists: ./concrete/thing/name_onset (and "usage of my name_onset").
+
+^
