@@ -1,158 +1,46 @@
 
-Stuff that should go here:
+This page contains errata for the Complete Lojban Language resulting from the 4th Grammar Baseline proposal, which makes the [[jbocre: PEG|PEG]] grammar the official grammar.
 
-* Magic word precedence
+While this page documents differences between the CLL and PEG grammar, it will be worded as if the CLL is in error.  As this document evolves a tagging system will be creating to disambiguate the cases in which the PEG grammar is in error from the cases in which the CLL is in error.
 
-==  Foreword ==
+For errata relating to the current edition of the CLL, see [[jbocre: CLL, aka Reference Grammar, Errata|CLL, aka Reference Grammar, Errata]].  For suggestions for the 2nd edition of the CLL, see [[jbocre: Suggestions for CLL, second edition|Suggestions for CLL, second edition]].
 
-Some points to mention:
+==  Chapter 2 ==
 
-* This book is the main result of the work of the BPFK
-** The BPFK was started in 2003 and ended in --
+* Section 18 contains a list of Lojban names for grammatical terms.  If the PEG grammar introduces other grammatical terms (e.g., any of those in [[jbocre: gerna tecyvla|gerna tecyvla]]), this section should be updated to include them.
 
-* This book contains all the vocabulary necessary to read and write Lojban at a basic level. However, many words are omitted, and more are being created all the time.
+==  Chapter 4 ==
 
-==  General Info On Lojban ==
+* Section 6, example 6.15 and 6.17 use the word |.a| in the Lojban, but gloss it to the letteral A.  This is because the example, using zei, does not permit something like |cy. zei .abu| to be interpreted as a "c type-of a lujvo."  This has been corrected in the PEG grammar, and the example should be modified to use .abu, just as the gloss does.
 
-See [http://jbovlaste.lojban.org/wiki/Some%20general%20info%20on%20Lojban%20for%20the%20mini-dictionary]
+==  Chapter 14 ==
 
-==  How To Use This Book ==
+* Section 14, example 14.4, discusses a situation in which the elidable terminator 'ku' is required.  This specific example is no longer valid, as the 'ku' can be elided without ambiguity in PEG.
 
-See [http://jbovlaste.lojban.org/wiki/how%20to%20use%20this%20book]
+==  Chapter 17 ==
 
-Also, a starting point might be
+* Section 4 claims that "ba'e" may not have "bu" attached.  The "Marking Words" section of [[jbocre: Magic Words|Magic Words]] document clarifies this, and permits "ba'e bu" to mean "the ba'e letter."  "ba'e" should be removed from the list of cmavo not permitted in front of BU.
 
-[http://www.lojban.org/files/draft-dictionary/Working/dictbook.ZIP] .
+==  Chapter 19 ==
 
-==  Pronounciation Chart ==
+* Section 10 does not properly describe the way ZOI works, by failing to articulate that the token stream is divided into words before looking for delimiters.  This issue is extensively discussed at [[BPFK Section: ZOI]], and the CLL needs to be updated to reflect the way the PEG works.
 
-IPA is must.
+* Section 10 states, on zoi syntax: "Its syntax is .zoi X. text .X., where X is a Lojban word (called the delimiting word) which is separated from the quoted text by pauses, and which is not found in the written text or spoken phoneme stream."  In the PEG grammar, zoi-open and zoi-close are any-word, rather than any-lojban-word, permitting non-Lojban words to be used as delimiters.
 
-==  Word Category Notes ==
+* Section 13 should be reviewed obsolete parts completely rewritten.  This section in large part describes limitations of the YACC parser.  As well, it needs to substantially expanded to include more examples.
 
-This section is for general issues surrounding an entire grammatical
+* Example 13.3 uses the phrase "zo si si si" as a self-erasing example.  [[jbocre: Magic Words|Magic Words]] now defines "zo si" to be a single word, grammatically, shortening this phrase to "zo si si".
 
-category, or whatever.  Stuff that would otherwise get repeated
+* Example 13.5 uses four "si" to erase a zoi phrase.  [[jbocre: Magic Words|Magic Words]] now defines ZOI-clause to be a single word, only requiring a single si to erase it.
 
-many, many times in the various definitions.
+* Example 13.6 uses two "si" to erase a zo phrase.  [[jbocre: Magic Words|Magic words]] now defines ZO-clause to be a single word, only requiring a single si to erase it.
 
-This section needs a better name.
+* Section 15 should mention that fa'o can be used as a zoi delimiter, as I believe it enumerates every other case in which fa'o may appear in the grammar and not indicate the end of text.
 
-===  BAI Issues ===
+* Section 15 should mention that fa'o can be quoted by zoi, as it mentions zo and lo'u ... le'u.
 
-This is a very rough draft, largely stolen from bancus.
+* Section 16 needs to be carefully checked against [[jbocre: Magic Words|Magic Words]] and updated accordingly.  More detail to follow.
 
-====  BAI vs. FIhO + selbri [[jbocre: + FEhU|+ FEhU]] ====
+==  Chapter 21 ==
 
-Every BAI expression is equivalent to a FIhO + selbri [[jbocre: + FEhU|+ FEhU]]
-
-expression.  Both forms are valid in all places the each form is
-
-valid.
-
-This contradicts the CLLv1, but the CLLv1 clearly states the old
-
-behaviour was due to parser limitations.
-
-====  BAI + SE/NAhE/NAI ====
-
-It has been determined that BAI is effectively fi'o BAPLI, and that the following
-
-derivation exists:
-
-* SE BAI == fi'o SE BAPLI
-
-* BAInai == fi'o na BAPLI
-
-* na'eBAI == fi'o na'e BAPLI
-
-* to'eBAI == fi'o to'e BAPLI
-
-=====  BAI + SE/NAhE/NAI and Causals =====
-
-This is shown as the following:
-
-* ri'a == with cause
-
-* ri'anai == not with cause
-
-* to'eri'a == prevented by
-
-* to'eri'anai == not prevented by (despite)
-
-====  BAI + KU ====
-
-Putting KU immediately after a BAI tag is equivalent to "BAI zo'e"
-
-in all respects.  It is generally translated into English as an
-
-adverb.  For example, "mi klama bai ku" is "I compelledly go".
-
-=====  BAI + selbri =====
-
-Putting a BAI tag immediately before the selbri is exactly the same
-
-as putting BAI + KU immediately before the selbri.
-
-====  BAI And Connectives ====
-
-BAI can interact with connectives in various ways, which are mostly
-
-beyond the scope of this document (see CLL or other Lojban learning
-
-materials).  In particular, BAI before a forethought connective
-
-causes the BAI to have scope over the entire structure, and BAI + BO
-
-after an afterthought connective causes the BAI to have scope over
-
-the structure to the right (after the BAI + BO).
-
-This is worth mentioning here because constructs like ".i ri'a bo"
-
-meaning "because" (specifically a physical cause) are incredibly
-
-common in Lojban.
-
-===  Attitudinals (UI, CAI, others?) ===
-
-Unless the individual word entries specify otherwise, interjections
-
-are words that are used to express the emotional state of the
-
-speaker directly, propositional attitude indicators are words that
-
-are used to used to indicate the speaker's attitude toward the
-
-factuality or likelihood of the action or condition expressed,
-
-evidentials are words that are used to express how the speaker came
-
-to know something, and discursives are metalinguistic claims by the
-
-speaker about something said.
-
-The effect of these words is associated with the referent of the
-
-immediately preceding word, or construct started or terminated by
-
-that word, even if the construct is otherwise empty (in which case
-
-the exact thing the emotion is directed towards is unspecified).
-
-----
-
-At the end of the dictionary:
-
-==  Rafsi Appendix ==
-
-Sorted on rafsi. It's probably best to have these in an appendix, instead of
-
-mixed with the bulk of the dictionary. In order to be helpful in decomposing
-
-unknown lujvo, it would have to have all of the following entries (for example):
-
-* blo - blo lot lo'i bloti
-* lo'i - blo lot lo'i bloti
-
-* lot - blo lot lo'i bloti
+This chapter needs to be completely rewritten to provide an overview of the PEG morphology and grammar.
