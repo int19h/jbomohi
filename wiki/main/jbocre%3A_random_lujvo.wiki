@@ -1,0 +1,102 @@
+
+Mumym is a lojbanic wordgame similar to 5x5 or Mastermind. It selects a random gismu, and people take turns guessing which one. With every guess, you get a score, telling you how many letters in your guess are in the winning gismu. It also has a framework for AI, although there is only one simple AI right now.
+
+The current version of Mumym is 0.9.1, released on 14 Jan 2004.
+
+A tarball of the source is available at http://www.surreality.us/files/mumym-0.9.1.tar.bz2
+
+A deb (probably outdated at this point) is available at http://www.surreality.us/debian/mumym_0.9.1_all.deb.
+
+==  How to play Mumym ==
+
+When Mumym is just sitting there, having just joined, or not playing a game, you can tell it to start the game process by saying:
+
+<pre>doi mumym ko cfari</pre>
+
+Mumym then enters the starting phase. Here, players can specify their desire to play with the following:
+
+<pre>doi mumym mi kelci djica</pre>
+
+You can also tell it that you want an AI to play with a command like the following:
+
+<pre>doi mumym la .alis kelci</pre>
+
+When all the players are ready, you can tell Mumym to start the actual game with:
+
+<pre>doi mumym ko cfagau</pre>
+
+Mumym will then ask the players in order to guess. You can respond with a guess by saying:
+
+<pre>zo gismu</pre>
+
+Where gismu is your guess.
+
+At any time during play, you can tell Mumym to end the current game by saying:
+
+<pre>doi mumym ko sisti</pre>
+
+You can also ask Mumym to redisplay its startup message by saying:
+
+<pre>doi mumym ko sarji</pre>
+
+==  Contributing AI ==
+
+I have a generally open call for new AI classes for Mumym. It must be written in fairly clean Python, and must be licensed under the GPL.
+
+(The following code is all under the GNU GPL.)
+
+When making an AI, you derive from the following class:
+
+<pre>class AI:
+
+"Base class for AIs."
+
+def '''init'''(self, mumym):
+
+global possible_gismu
+
+self.possible_gismu = possible_gismu
+
+self.mumym = mumym
+
+def onGuess(self, guess, score):
+
+"Called when someone makes a guess, including the current AI."
+
+pass
+
+def makeGuess(self):
+
+"Called when it's the AI's turn, you should make a guess with self.mumym.guess()."
+
+pass</pre>
+
+Here is an example of a very simple AI:
+
+<pre>class SimpleAI(AI): # la alis.
+
+"A simple AI that will only guess random words that haven't already been guessed."
+
+def onGuess(self, guess, score):
+
+# This needs to be done in a try block, in case some bonehead guesses a word
+
+#  that's already been guessed.
+
+try:
+
+self.possible_gismu.remove(guess)
+
+except:
+
+pass
+
+def makeGuess(self):
+
+guess = random.choice(self.possible_gismu)
+
+self.mumym.msg(self.mumym.chan, "la .alis smadi le du'u zo " + guess + " valsi")
+
+self.mumym.guess(".alis", guess)</pre>
+
+If you need help or want to submit one, contact [[jbocre: bancus|bancus]].
