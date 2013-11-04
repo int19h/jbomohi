@@ -1,85 +1,419 @@
 
-Profanity doesn't really exist in Lojban, at least not the same way it does in other languages. This is because words that have become considered "bad words" in other languages have mainly arisen by accident or out of existing, non-offensive words. Lojban, however, was designed for functionality and to reduce the need for evolution, so there hasn't been much need for creation of profanity terms. Moreover, the speaker mass of Lojban is largely concentrated on the Internet, not in verbal, face-to-face confrontations, and due to the educational and collaborative nature of most Lojban sites and channels, the amount of flaming going on is negligible.
+la samtrosku xi no pi'e pa pe fi'e la [[jbocre: rab.spir|rab.spir]]
 
-However, that which follows is, to the best of my knowledge, the most appropriate (no pun intended) way to swear in Lojban.
+'''samtrosku''' is a procedural computer language expressed in Lojban.
 
-'''Disclaimer''': Many Lojban sites and channels discourage or prohibit the use of profanity, English or otherwise. Use the same discretion when cursing in Lojban as you would in any other language.
+[[jbocre: samtrosku examples|samtrosku examples]]
 
-== Addressing someone in preparation for cussing them out ==
+A samtrosku program must parse. Certainly some parts of the language could be
 
-The primary way to address someone in Lojban is by using "doi" followed by the recipient's name. A somewhat rougher and louder version is to use "ju'i" instead of "doi". After using one of these particles, you may opt to either address the recipient with a curse word or two, rationalizing that that is what they are and you can address them as such, or to simply address them with their name and then tell them what they are.
+simplified for computers - for example, names wouldn't necessarily have to be
 
-You may also make use of "do po'u" to start a phrase meaning "You bastard, bitch, etc." The cmavo "po'u" roughly translates to "the", as in "Sonic the Hedgehog".
+pronounceable - but samtrosku's unique advantage is that it could be spoken aloud.
 
-== Attitudinals ==
+The commands and functions in samtrosku are brivla, and are defined by their
 
-You may find that attitudinals are often useful for preceding statements, such as ".o'onai"/anger ("You asshole!"), ".i'enai"/disapproval ("That bitch needs to get her priorities straight."), or ".a'ucu'i"/disinterest ("Fuck this shit.") More can be found in the article [[jbocre: Nonviolent Communication with Lojban attitudinals|Nonviolent Communication with Lojban attitudinals]].
+place structure.
 
-== Profanity for people ==
+=== Statements and blocks ===
 
-||   
+A statement is a bridi.
 
-'''English'''|   '''Lojban'''|   '''Etymology'''
+A statement can be a simple bridi such as {li abu mleca li ci}. This simply
 
-Bitch|   fazge'u|   fanza gerku = annoying dog
+returns a truth value of "true" or "false", which can be used if the next
 
-Bastard|   pacnau|   palci nanmu = evil male-adult
+statement is connected with a logical connective, or if the statement is part
 
-Whore|   ve'uni'u|   vecnu ninmu = sold woman
+of a function.
 
-Douchebag|   viblumpre|   vibna lumci prenu = vagina washing person
+A statement can also be a bridi involving {ko}. This is a command for the
 
-Motherfucker|   mamglepre|   mamta gletu prenu = mother fucking person
+computer to do something, such as {ko cusku lu coi munje li'u}. It returns
 
-||
+"true" if the command can be performed, and "false" otherwise.
 
-== Racial slurs ==
+Because of the way truth values work, {ko} is always equivalent to {do}.
 
-These are usually thought of as bad form, even among people who are already cursing, but you can simply use one of the ethno-cultural terms found in the gismu list.
+If a statement is connected to another statement with a logical connective, the
 
-== Others ==
+first statement is performed, and then the second statement is either performed
 
-||
+or skipped in order to make the connective true. If the connective would be
 
-'''English'''|   '''Lojban'''|   '''Etymology'''
+true (or false) either way, the second statement is skipped - call this the
 
-Fuck (verb)|   gletu|   original gismu
+"laziness rule". The text scope containing both statements is assigned a truth
 
-Shit (noun)|   kalci|   original gismu
+value - if the connective cannot be made true, the truth value of the connected
 
-Shit (verb)|   vikmi|   original gismu
+statements is false; otherwise it is true.
 
-Ass|   ganxo|   original gismu
+If the end of a text scope is reached (there are no more connectives, and the
 
-Cunt|   vibna|   original gismu
+commands are not inside a block) and the last truth value is "false", the
 
-Fucking/damn/etc.|   se mabla|   se mabla = thing that is/deserves to be cursed at
+program stops with an error. So a command which cannot be executed will stop
 
-||
+the program. Also, this means a simple statement, not connected to anything,
 
-== Varieties on the F-word ==
+can be used as an assertion - if it is true, nothing happens, and if it is
 
-*Nora fucked Joey.
-**la noras. pu gletu la jo'is.
+false, the program stops.
 
-*Fuck this shit. I'm leaving.
-**.a'ucu'i le tcini cu se mabla zo'e .i mi ba cliva ti
+==== Blocks ====
 
-*What the fuck?
-**.ianai mi na jimpe
+A block is a set of statements grouped with {tu'e ... tu'u}. It creates a
 
-*Fuck you.
-**.i'anai ko se gletu
+separate text scope, which is true if all the statements within are true, and
 
-*Where are my fucking keys?
-**le mi ckiku poi se mabla cu zvati ma
+false otherwise (at which point no more statements in the block are executed).
 
-mabla .i malmabla .i mi'e la mabla stela mabla selckiku do'u pinka .i lo bavlamji ciksi cu to .u'u toi mutce lo ka mabla .i lo finti noi nintadni zi'e noi to'e mabla zi'e noi zabna cu mo'a roi tavla fi zo mabla .i basti tavla fi lo malgli .oi ro'e .i mabla mabla mabla .i me zo mabla mabla .i xu zo mabla mabla na'e slabu do .i do pau nai ma malpei .i doi ro mabla se bangu be le ma'a mabla jbobau ko mabla joi zabna pilno zo zabna .e zo mabla noi mabla zi'e noi zanbanzu mi'e la .selkik. mu'o --[[jbocre: UserPagem|mungojelly]]
+Unlike a logical connective scope, a block does not overwrite {go'u} and {go'a}
 
-That's true. You should consider, though, that I am not trying to reform the language at once, or act like it already accepts these terms as its own. I am only offering suggestions for how to best approximate English curse words in Lojban, and thus feel it is appropriate to call this act "cursing in Lojban," even though people may not be accustomed to hearing this.
+(see below).
 
-By the way, since you addressed "ro", this is the gist of what .selkik. just said, in case you are visiting this page and don't speak Lojban.
+The cmavo {di'e} would refer to whatever is in the following text scope (but must be used as {la'edi'e} to actually run the code). So {di'e} would most commonly be used to introduce a block.
 
-''''''Curse. Cursed curse. Comment: I'm also known as the cursed key to the cursed lock. Anyway, the future-adjacent explanation (sorry) makes up much of the cursing. These inventions, which are a new study-method and are unrestrained, are favorable, but have not been spoken for a long enough time to be considered cursing. The replacement is to use English curse words (ugh), in a mental sense at least. Curse, curse, curse. The word 'curse' is a curse. Is this a curse that is not too old for you? What do you think about cursing? Everyone, curses are spoken by us, who curse about Lojban. It is ideal that you curse by using the word 'favorable' as well as the word 'curse,' which is a curse and works just fine. I'm .selkik.; please reply.''''''
+Blocks are useful for defining loops and brivla.
 
---[[User:PlasticRaven|Plastic Raven]]
+==== Recent truth values ====
+
+If you want to do something with logical values that connectives cannot handle
+
+(such as an if-then-else statement), you can use the go'V series of cmavo.
+
+* go'i contains the most recent truth value.
+* go'e contains the second most recent truth value.
+
+* go'u contains the truth value of the first part of the most recent logical connective.
+* go'a contains the truth value of the second part of the most recent logical connective.
+
+So if you want the program to execute {ko brode} if {broda} is true, and {ko
+
+brodi} if not, you could do this:
+
+broda
+
+.ijo ko brode
+
+.i go'u ijonai ko brodi
+
+(By using the 'experimental cmavo' feature described later, you could reduce
+
+{.i go'u ijonai} to {.ijo'ai} for convenience.)
+
+=== Variables ===
+
+The ko'a-series, {la} followed by a name, or any sequence of lerfu can refer
+
+to a value.
+
+Variables defined outside of a function are global. Variables can also be
+
+explicitly made global with the brivla {vitno} (as in {ko'a vitno}). To access
+
+a global variable inside a function, follow it with {bi'unai} when it first
+
+appears. {bi'u} can also be used to explicitly state that a variable is local.
+
+==== Assignment ====
+
+Assignment of variables can be done with {goi}, {dubgau}, or {dungau}, which
+
+have different effects.
+
+{goi} performs the action called "unification": if the variable on one side is
+
+assigned and the variable on the other side is not, it makes the unassigned
+
+variable equal to the assigned one. If both variables are already assigned,
+
+then the statement containing {goi} fails. If one variable is cleared with
+
+{da'o}, the other continues to exist.
+
+Both variables are then given the same referent - this happens even if both
+
+variables were equal, or both variables were unassigned. So after unification,
+
+the variables are linked so that one changes when the other does. This can be
+
+used to give more useful names to items of a sequence, or to give a variable a
+
+lerfu-based name so it can be used in a mekso expression.
+
+{dungau} takes three arguments:
+
+'''dungau''': x1 (ko) sets the value of x2 (variable) equal to that of x3
+
+(variable)
+
+The referent of the variable in x2 is not changed, so one can be assigned again
+
+later without affecting the other. This is the standard form of assignment in
+
+most programming languages.
+
+{dubgau} takes any number of arguments after the first which is {ko}. Every
+
+argument starting at x2 is given the same referent as the rightmost argument.
+
+=== Defining brivla ===
+
+Brivla are defined using logically linked statements, with {ca'e} at the
+
+beginning of the bridi that is being defined. The connective should usually be
+
+'o' or 'onai', but 'a' would work like 'onai' because of the laziness rule. So
+
+a brivla could be defined using these general structures:
+
+go ca'e <bridi being defined> gi <statement>
+
+go ca'e <bridi being defined> gi ko zukte la'edi'e .i <block>
+
+ko ca'e <bridi-tail being defined> gi'o <bridi-tail> (defines simple commands)
+
+ca'e <bridi being defined> ijo <statement or block>
+
+This last form is the one which is most likely to be useful for complex
+
+definitions.
+
+==== Truth tests ====
+
+If all the places are known and none are {ko}, the brivla is a truth test,
+
+which is true if the defining statement or block is true, and false otherwise.
+
+Example: This brivla tests whether x1 is between the items in the two-item
+
+sequence x2.
+
+ca'e ko'a jbini ko'e ijo                | (defining "x1 is between x2"):
+
+tu'e                                    |
+
+by goi le pamoi be ko'e               | (b = ko'e[[jbocre: 1|1]])
+
+.i cy goi le remoi be ko'e            | (c = ko'e[[jbocre: 2|2]])
+
+.i ge ko'a zmadu by gi ko'a mleca cy  | (is it true that b < ko'a < c?)
+
+tu'u
+
+With this brivla defined:
+
+.i li 3 jbini li 2 ce'o 4               | (returns true)
+
+.ijo ko cusku lu go'i li'u              | (prints "go'i")
+
+.i go'i ijonai ko cusku lu na go'i li'u | (otherwise print "na go'i")
+
+==== Functions ====
+
+A function is like a truth test, but one of its places (usually the x1) is
+
+unknown. The result is returned as that place, using the predicate {jagdu'o}.
+
+'''jagdu'o''': x1, as a result, is equal to x2
+
+If x1 is unknown, {jagdu'o} sets x1 equal to x2. If x1 is known, {jagdu'o}
+
+does nothing, but has a truth value of whether x1 equals x2. This means that a
+
+function can be used as a truth test.
+
+The result of a function is retrieved with {le}.
+
+Example: This brivla can either return the square of x2 in x1, or test whether
+
+x1 equals x2 squared.
+
+ca'e ko'a kurpi'i by ijo
+
+ko'a jagdu'o li by pi'i by
+
+With this brivla defined:
+
+ko cusku le kurpi'i be li 3               | (prints "9")
+
+.i li 16 kurpi'i li 4                     | (returns true)
+
+.ijo ko cusku lu go'i li'u                | (prints "go'i")
+
+==== Commands ====
+
+A command is a truth test or a function which performs an action. This could be
+
+accomplished simply with {ko} statements in the block, but it is good form to
+
+fix {ko} as the x1 by putting it in the x1 of the {ca'e} phrase. Hence, the
+
+definition of a command {ganzu} which takes one argument {ko'a} would look like
+
+this:
+
+ca'e ko ganzu ko'a ijo
+
+tu'e
+
+...
+
+tu'u
+
+Then this command would be called with {ko ganzu ...}, and if the {ko} were not
+
+there (for example, if something tried to refer to {le ganzu}, which makes
+
+little sense), the command would fail.
+
+==== Loops ====
+
+A "while" loop would be done in this form:
+
+.i ca le du'u <statement1> kei <statement2>
+
+...which says to repeatedly perform <statement2> while <statement1> is true. Of course, this could always be rephrased as
+
+.i <statement2> ca le du'u <statement1>
+
+Also, <statement2> would very frequently be a block.
+
+==== Case statements ====
+
+Case statements would be begun by asking the computer a question; it would then return a Lojban string containing the answer to that question. I'm not certain yet how the choices would be given from there.
+
+=== Strings ===
+
+==== Literal strings and filenames ====
+
+Pure strings are quoted with {zoi}; filenames are quoted with {la'o}.
+
+The ordinary delimiters should be usable in most cases, though I suggest that
+
+the angle bracket convention (using < and > to delimit the quoted text) should be
+
+usable as well. The quoted string would be whatever is between the delimiters, not
+
+counting the whitespace on each end. These strings would be the only part of
+
+samtrosku that is not speakable.
+
+If the string is a particularly pathological one, you may use a mekso of
+
+lerfu (example: "hi^Z ", where ^Z is character code 1A and the string ends
+
+with a space, could be {lu'e me'o y'ybu ibu se'e pa dau na'a denpa bu}.
+
+Character codes should be hexadecimal. In C they are octal, but this is because
+
+the letters A-F would create ambiguity if they appeared in a character code
+
+embedded in a string. In samtrosku there is no such problem.
+
+[jbocre: Obligatory troll-protective disclaimer: This does not mean that I endorse
+
+using hexadecimal "by default" in the rest of the language, either lojban or
+
+samtrosku.|Obligatory troll-protective disclaimer: This does not mean that I endorse
+
+using hexadecimal "by default" in the rest of the language, either lojban or
+
+samtrosku.]
+
+==== Lojban strings ====
+
+Text enclosed in {lo'u...le'u} is a string composed of Lojban words. The
+
+literal text is not used; the text is stored as the Lojban words it represents.
+
+So {ko cusku lo'u icale nubroda le'u} could display ".i ca le nu broda".
+
+=== Input and output ===
+
+Besides the fact that {cusku} would write to standard output, I haven't yet decided anything here.
+
+=== Loading brivla definitions ===
+
+The definition of a brivla can be loaded from another file.
+
+A brivla is defined using {cilre}.
+
+'''cilre''': x1 (ko) learns the instructions corresponding to x3 (gismu/lujvo/fu'ivla) from
+
+x4 (file)
+
+x2 and x5 are ignored, though they might mean something in a later revision of
+
+samtrosku. If x3 is {zo'e} it learns every brivla in that file; if x4 is {zo'e}
+
+an implementation may search a standard path to find the appropriate brivla.
+
+Examples:
+
+ko cilre fi zo cunyna'u
+
+ko cilre fi zo pandi la'o < /usr/share/samtrosku/brivla/vrici.sam >
+
+ko cilre fo la'o < /usr/share/samtrosku/brivla/kanji.sam >
+
+=== Defining experimental cmavo ===
+
+A cmavo is defined in experimental cmavo space by setting it equal to
+
+a fragment of text, using the predicate {cmavygau}.
+
+'''cmavygau''': x1 (ko) defines x2 (cmavo) to represent x4 (text fragment)
+
+x3 (the selma'o) and x5 (samtrosku) are ignored.
+
+For example:
+
+.i ko cmavygau zo lai'e fi    | makes "la'edi'e" shorter
+
+lo'u la'e di'e le'u
+
+.i ko cmavygau zo jo'ai fi    | makes a pseudo-connective for "if-then-else"
+
+lo'u go'u ijonai le'u
+
+=== sumti types ===
+
+Samtrosku is weakly typed, and inherently to the semantics of Lojban, there are
+
+lots of types. Only certain types work in certain situations. Here is a list of
+
+types and examples of how each might be referred to (these references could
+
+then be assigned to a variable such as {ko'a} using {goi}.)
+
+* personal: {ko}, {do}
+* number: {li 3}
+
+** floating-point number: {li 3pi2}, {li 4pi}, {li pai}
+** mixed-base number: {le tcika}
+
+** Boolean value: {le jei go'i}
+** complex number: {li ci ka'o re}
+
+* ratio: {li 4 pa'i 2}
+* interval: {li no bi'o pano}, {li su'o 2}
+
+* vector: {li jo'i 1 boi 2 te'u}
+* matrix: {li jo'i 1 boi 0 te'u pi'a jo'i 0 boi 1 te'u}
+
+* set: {li 2 ce li 4}, {lu'i ko'i}
+* sequence: {li 2 ce'o li 4}, {vu'i ko'i}
+
+* unevaluated expression: {me'o by pi'i by}
+* character: {lu'e me'o by}, {lu'e me'o se'e 62}, {zoi <b>}
+
+* string: {zoi <xyzzy>}
+** parseable string, unevaluated code: {lu na go'i li'u}, {di'e}
+
+** evaluated code: {la'edi'e}
+** words: {lo'u go'u ijonai le'u}, {zo lai'e}
+
+''For a better list of types, look through the gismu list. Some places are specified for ka, others for du'u, some for sets and others for numbers. These are some Lojban datatypes.''
