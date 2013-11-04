@@ -1,187 +1,497 @@
 
-This page is a summary of information about the Lojban Dictionary: It's history, current form, and future design.
+The list of 1342 gismu can be split into groups of gismu having the same anagram, that is, they are composed of the same letters in a different order.
 
-===  Dictionary Software and Data ===
+The statistics are as follows:
 
-* [http://jbovlaste.lojban.org bovlaste] is the Lojban dictionary.
-* [http://www.lojban.org/cgi-bin/dict.pl ojban Online Dictionary Query]. The jbovlaste search engine.
+Statistics:  
 
-* [[jbocre: Dictionaries, Glossers and parsers|Dictionaries, Glossers and parsers]] contains links to software for using a Lojban Dictionary.
-* [[jbocre: Word Lists|Word Lists]] contain dictionary information in a variety of formats.
+||#of anagrams        |#of clusters
 
-===  Dictionary Discussion ===
+1|         937
 
-Several pages on the wiki discuss the Lojban Dictionary.  Those are collected here:
+2|         148
 
-* [[jbocre: The Lojban Dictionary|The Lojban Dictionary]]
-* [[jbocre: Great Dictionary Problem|Great Dictionary Problem]]
+3|          23
 
-* [[jbocre: dictionary notes from 2001]]
-* [[BPFK Section: Dictionary Preface]]
+4|           7
 
-* [[jbocre: Old Draft Dictionary|Old Draft Dictionary]]
-* [[jbocre: Mini-dictionary|Mini-dictionary]]
+5|           1
 
-* [[jbocre: Mini-dictionary To-do|Mini-dictionary To-do]]
-* [[jbocre: Mini-dictionary paradigms|Mini-dictionary paradigms]]
+6|           0
 
-===  Dictionary Design ===
+7|           1 (ainst)||
 
-This section is an exploration of the issue started in this discussion about the [http://groups.google.com/group/lojban/browse_thread/thread/ac00bb38bebef953 ictionary backend].
+Total: 1117 groups, 1342 words
 
-====  What use cases will use Lojban dictionary data? ====
+The champion is '''ainst''': 7 gismu:
 
-What end-use will this data put put to?
+* '''ainst''': sitna stani tansi tinsa tisna tsani tsina
 
-* A print version of the Lojban dictionary
-* jbovlaste, the online dictionary.  This includes editing and voting on dictionary entries
+One group of 5 gismu:
 
-* Flash card definitions, which are more concise.
-* Interactive tools, like glossers and parsers 
+*'''acilr''':  cirla clira lacri racli ralci
 
-** Ideally, jbofihe could use this data instead of having its own version.
-** Similarly, the list of rafsi for jvocuhadju could be extracted herefrom
+Seven groups of 4 gismu:
 
-====  What sorts of things *should* a Lojbanic dictionary store, ideally? ====
+*'''abikr''':  bakri birka kabri karbi
+*'''acdir''':  cradi crida dicra draci
 
-* Are any of these use cases unsuitable for a dictionary?  Are there use cases we haven't thought of that are suitable?
-* Can we separate a definition from its grammatical context?  Are we treating Lojban gismu too much like a verb or noun in the way we handle them now?
+*'''aciks''':  ciska sacki sakci skaci
+*'''aciln''':  cinla clani lanci nalci
 
-* Should we use some manner of spatial visualization?  (e.g., [[jbocre: cpacuvisualization|cpacuvisualization]])
-* Versioning: it would be really really nice to be able to have BPFK proposals reference "checkpoint 123 in the dictionary software".  A possibility here: have an "official word" checkbox, and a button that says "checkpoint all the official words, give the checkpoint a number", and the ability to diff successive checkpoints.  Or possibly have the checkpoint button do everything, but be able to filter out the diffs to just show the official stuff, or not.  Then it could be of more general use: could also have a "this word is worth printing" button, and than any given official print run of the dictionary would be all those words, from checkpoint #123 or whatever.
+*'''acint''':  canti catni cinta cnita
+*'''acrtu''':  cartu ctaru ractu ratcu
 
-** Related: You can't edit a definition with the "officially approved" and "official word" checkboxes. You can fork it, and then there's a button that outputs a diff between the fork and the officialdata version.  An admin could then move the "officially approved" checkbox around.
+*'''ainrt''':  ranti ratni tirna trina
 
-====  What storage format is going to work for all of these use cases? ====
+The complete list is too long to put it here. I may put it on my website some day. --''mi'e .evgenis.''
 
-* Each use of the dictionary data needs to view it in a different way.  Can we design a format that can be shared between all users of the data?
-* Since the form of a dictionary entry is often unstructured text, What would a dictionary definition look like that supports all of our use cases without duplicating the definitions by changing their form?  (e.g., a brief definition for a study card, a full definition for a print dictionary, and an archive discussion for the online dictionary?)
+Please do. --''mi'e filip.''
 
-====  What prior art is there? ====
+----
 
-* Dictionaries are not a new problem, how do other people deal with this?
-* Is Lojban fundamentally different because of its formal grammar?  Is our thinking on this problem influenced by working with languages that don't have a formal grammar: Is a dictionary a compromise that we have a better solution for?
+'''rango''' and '''organ''', '''lunra''' and '''lunar''' are anagrams. No other keyword is an anagram of its gismu.
 
-===  Design Proposal ===
+----
 
-gismu, lujvo, and selma'o have different storage requirements.  The proposal below assumes they will be storted in a database, and describe the storage schema.
+Here's the complete list that I got of anagram-groups with more than one member, from the gi'uste.  Note that it includes some cmavo with rafsi. -- ''mi'e .clsn.''
 
-====  gismu ====
+||aabjr|   barja bajra
 
-{FANCYTABLE(head=" Field | Description ]]
+aacnp|   pacna canpa cpana
 
-gismu      | the gismu this row defines
+aagnr|   ganra garna grana
 
-lang       |  the language this row is in
+aajnt|   janta jatna
 
-definition | the definition of the gismu
+aakln|   lanka kanla
 
-x1         | gloss for x1
+aakls|   kalsa slaka
 
-x2         | gloss for x2, NULL if there is no x2
+aalpt|   palta tapla
 
-x3         | gloss for x3, NULL if there is no x3
+aalst|   talsa salta
 
-x4         | gloss for x4, NULL if there is no x4
+abdir|   dirba bradi badri
 
-x5         | gloss for x5, NULL if there is no x5
+abdnu|   bandu bunda
 
-xN         | gloss for xN, NULL if there is no xN
+abejn|   janbe jbena
 
-{FANCYTABLE}
+abejr|   jbera jabre
 
-There is one entry in this table for each language/gismu.
+abelr|   balre rebla
 
-====  lujvo ====
+abikr|   birka bakri karbi kabri
 
-{FANCYTABLE(head=" Field | Description ]]
+abiln|   balni banli lanbi
 
-lujvo      | the lujvo this row defines
+abinv|   vanbi vibna
 
-lang       | the language this row is in
+abinz|   zbani nazbi
 
-definition | the definition of the lujvo
+abnot|   tanbo tabno
 
-x1         | gloss for x1
+abnru|   bruna burna
 
-x2         | gloss for x2, NULL if there is no x2
+abnuz|   nuzba banzu
 
-x3         | gloss for x3, NULL if there is no x3
+abrtu|   bratu bartu
 
-x4         | gloss for x4, NULL if there is no x4
+accin|   cicna canci
 
-x5         | gloss for x5, NULL if there is no x5
+accit|   tcaci tcica
 
-xN         | gloss for xN, NULL if there is no xN
+acder|   cedra cerda
 
-{FANCYTABLE}
+acdij|   djica cidja
 
-====  lujvo-component ====
+acdir|   draci crida dicra cradi
 
-{FANCYTABLE(head=" Field | Description ]]
+acekr|   karce creka
 
-lujvo      | the lujvo this row defines
+acenr|   crane canre
 
-component  | the component gismu or lujvo that is one part of this lujvo
+acens|   censa sance
 
-lang       |
+acent|   tcena tance
 
-x1         | The position this component's x1 place appears in the lujvo.  NULL if it does not appear.
+acest|   stace setca
 
-x2         | The position this component's x2 place appears in the lujvo.  NULL if it does not appear.
+acfik|   ckafi facki cfika
 
-x3         | The position this component's x3 place appears in the lujvo.  NULL if it does not appear.
+acfir|   frica cfari
 
-x4         | The position this component's x4 place appears in the lujvo.  NULL if it does not appear.
+acfnu|   fancu funca
 
-x5         | The position this component's x5 place appears in the lujvo.  NULL if it does not appear.
+acijk|   ckaji jikca
 
-xN         | The position this component's xN place appears in the lujvo.  NULL if it does not appear.
+acikl|   kalci clika
 
-{FANCYTABLE}
+aciks|   sacki skaci sakci ciska
 
-There is an entry in this table for each component of the lujvo.
+acikt|   citka tcika
 
-====  selma'o ====
+aciln|   lanci clani cinla nalci
 
-{FANCYTABLE(head=" Field | Description ]]
+acilr|   cirla ralci clira lacri racli
 
-selma'o    | the selma'o this row defines
+acilt|   tcila cilta
 
-lang       | the language this row is in
+acilv|   cliva civla
 
-class      | the selma'o class of this selma'o
+acimt|   matci tcima
 
-gloss      | the definition of this selma'o
+acinp|   panci cpina pinca
 
-{FANCYTABLE}
+acint|   catni cnita canti cinta
 
-====  Use Cases ====
+acirv|   vacri carvi
 
-How will this format be used in each of the use cases we've identified?
+acirz|   zarci cizra
 
-=====  A print version of the Lojban dictionary  =====
+acitt|   tcita tcati
 
-Assuming we're printing the English language translation dictionary, the gismu table will be rendered as the string:
+acklu|   cukla calku
 
-<verbatim>
+aclmu|   cumla cmalu
 
-$gismu: $x1 $definition $x2 $x3 $x4 $x5 $xN
+aclpu|   clupa lacpu
 
-</verbatim>
+acmnu|   macnu namcu
 
-=====  jbovlaste, the online dictionary. =====
+acmsu|   samcu smacu
 
-<verbatim>
+acrtu|   cartu ractu ratcu ctaru
 
-TBD.
+addnu|   dunda dandu
 
-</verbatim>
+adgru|   dargu gradu
 
-=====  Flash Cards =====
+adint|   datni danti tadni
 
-<verbatim>
+adirs|   darsi dasri
 
-TBD.
+adlru|   darlu ladru
 
-</verbatim>
+adnor|   darno radno
+
+adosv|   sovda sodva
+
+aefnt|   natfe tenfa fatne
+
+aegjn|   jgena genja
+
+aegnr|   gerna narge
+
+aelnx|   lanxe naxle
+
+aemnt|   matne tamne
+
+aensv|   senva vensa
+
+afirt|   fatri frati
+
+afkru|   kufra kurfa
+
+afmno|   fanmo manfo
+
+agijn|   jgina jinga
+
+agijr|   jgari jgira
+
+agijt|   jgita tagji
+
+agikn|   ginka kagni
+
+agilv|   livga vlagi
+
+agltu|   gluta galtu
+
+agnsu|   gasnu sunga
+
+aijkl|   jilka klaji
+
+aijmr|   marji mraji
+
+aijmv|   mavji vamji
+
+aijnr|   ranji jirna
+
+aijns|   jinsa sanji
+
+aijnv|   jivna vajni javni
+
+aijrs|   jisra sarji sraji
+
+aikln|   klina klani
+
+aiklr|   karli kalri
+
+aikls|   silka sakli
+
+aikms|   skami maksi
+
+aiknr|   rinka karni
+
+aikpt|   tikpa pikta
+
+aikrs|   skari krasi
+
+ailms|   slami malsi
+
+ailns|   silna sanli
+
+ailpr|   prali rapli
+
+ailst|   stali tsali
+
+aimnr|   ranmi manri minra
+
+aimns|   sinma sanmi smani
+
+aimnt|   manti natmi
+
+aimrx|   xirma maxri
+
+ainnv|   nanvi navni
+
+ainps|   sipna snipa
+
+ainrs|   rinsa risna
+
+ainrt|   ratni trina tirna ranti
+
+ainrx|   xanri xrani ranxi
+
+ainst|   sitna tisna tansi tsani tsina stani tinsa
+
+aipst|   spita spati tsapi
+
+airtt|   tarti trati
+
+aklpu|   palku pluka
+
+akmpu|   mapku kampu
+
+akntu|   tunka kantu
+
+almtu|   mlatu tumla
+
+alnsu|   lunsa slanu sunla
+
+alptu|   platu patlu pluta
+
+alrsu|   surla sarlu
+
+alrux|   xrula xlura
+
+anrsu|   ransu snura
+
+anrtu|   runta tanru
+
+'aoz|   za'o  zo'a 
+
+arstu|   sutra stura
+
+arsuv|   vasru savru
+
+arttu|   tatru tutra
+
+beirt|   berti betri
+
+biijn|   jbini jibni
+
+biiln|   bilni nibli
+
+biklu|   bliku kubli
+
+ceikr|   ckire cikre
+
+ceikt|   kecti cteki
+
+ceiln|   nelci nilce
+
+ceilr|   lerci cilre
+
+ceilt|   litce ctile clite
+
+ceins|   cinse since senci
+
+ceint|   centi nicte
+
+ceist|   steci ciste
+
+'ceo|   ce'o  co'e 
+
+cepru|   crepu pruce
+
+certu|   certu rectu
+
+ciikn|   cinki ckini
+
+ciinr|   rinci cinri
+
+ciint|   tcini tinci
+
+ciist|   citsi stici
+
+ciklu|   kucli ckilu
+
+cikor|   cirko rokci
+
+cimno|   cinmo cmoni
+
+cinot|   notci ctino citno
+
+cipru|   cripu purci
+
+cirtu|   critu tricu
+
+deijn|   dejni djine
+
+deimn|   minde denmi
+
+deirt|   detri terdi
+
+deksu|   dukse desku
+
+dijnu|   jundi dinju
+
+dilnu|   dilnu dunli
+
+efinp|   fepni finpe
+
+efist|   fetsi festi
+
+egkru|   gerku greku
+
+eijlp|   pelji pleji
+
+eijmn|   jenmi jinme
+
+eilps|   sepli plise
+
+eimns|   mensi snime
+
+einps|   senpi speni pensi
+
+eirst|   tirse serti
+
+enpru|   prenu nupre
+
+enrux|   xunre xenru
+
+fiilr|   frili lifri
+
+iijnv|   vinji nivji jinvi
+
+iiklt|   kliti litki
+
+iilrs|   lisri sliri
+
+iilrt|   rilti ritli
+
+ijknu|   jukni jinku
+
+ijkru|   kruji jikru kurji
+
+ijltu|   tilju tujli
+
+ijnru|   jinru rinju junri
+
+ijstu|   tsiju jutsi
+
+ilmpu|   mupli pimlu
+
+ilmru|   mruli mrilu
+
+ilnpu|   pulni punli
+
+cimno|   cinmo cmoni
+
+cinot|   notci ctino citno
+
+cipru|   cripu purci
+
+cirtu|   critu tricu
+
+deijn|   dejni djine
+
+deimn|   minde denmi
+
+deirt|   detri terdi
+
+deksu|   dukse desku
+
+dijnu|   jundi dinju
+
+dilnu|   dilnu dunli
+
+efinp|   fepni finpe
+
+efist|   fetsi festi
+
+egkru|   gerku greku
+
+eijlp|   pelji pleji
+
+eijmn|   jenmi jinme
+
+eilps|   sepli plise
+
+eimns|   mensi snime
+
+einps|   senpi speni pensi
+
+eirst|   tirse serti
+
+enpru|   prenu nupre
+
+enrux|   xunre xenru
+
+fiilr|   frili lifri
+
+iijnv|   vinji nivji jinvi
+
+iiklt|   kliti litki
+
+iilrs|   lisri sliri
+
+iilrt|   rilti ritli
+
+ijknu|   jukni jinku
+
+ijkru|   kruji jikru kurji
+
+ijltu|   tilju tujli
+
+ijnru|   jinru rinju junri
+
+ijstu|   tsiju jutsi
+
+ilmpu|   mupli pimlu
+
+ilmru|   mruli mrilu
+
+ilnpu|   pulni punli
+
+imors|   morsi misro
+
+inrtu|   rutni turni
+
+iorsx|   xriso sirxo
+
+'ios|   si'o  so'i 
+
+'ioz|   zo'i  zi'o 
+
+'ipu|   pu'i  pi'u 
+
+irtux|   xruti tirxu
+
+istuz|   stizu stuzi
+
+korsu|   skuro rusko
+
+'osu|   su'o  so'u ||
