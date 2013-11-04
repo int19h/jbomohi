@@ -1,89 +1,176 @@
 
 
-According to a new [[BPFK|BPFK]] policy proposal, which is likely to be
+===  cmavo xo (PA5) ===
 
-adopted, the BPFK has to review ''ALL'' the machine grammar rules.
+====  Proposed Definition ====
 
-The current machine grammar is written mostly in YACC, with a few post- and pre-processing rules written in English. Some of these are difficult to formalize, as such, implementation of the grammar (such as the [[jbocre: official parser|official parser]] and [[jbocre: jbofi'e|jbofi'e]] give different results, and none of them implement the whole language.
+question word to which the answer is a number
 
-Robin Lee Powell is currently working on a machine grammar in [[jbocre: Parsing Expression Grammar|Parsing Expression Grammar]] (see [http://www.digitalkingdom.org/~rlpowell/hobbies/lojban/grammar/ is web page]), which is expected to eventually be blessed by the [[BPFK|BPFK]] as the definitive grammar, when it has been thoroughly debugged.
+====  Proposed Tag ====
 
-This collection of pages looks at the ''current'' (ie. YACC) rules. Most of them are carried over to the PEG grammar, though.
+====  See Also ====
 
-[[User:tsali|tsali]]'m going to take the easy ones first; I
+====  Proposed Keywords ====
 
-don't expect there to be any issues with them. I'm working from
+====  Usage Examples ====
 
-[http://www.lojban.org/files/machine-grammars/g grammar.300], which is the same as the one in the [[jbocre: CLL|CLL]], barring typos.
+.i xo jbopre cu ka'e jai galfi lo spofu gusni balji .i re mei pa jdice be lo du'u galfi fi ma kau be'o ku ce pa facki be lo du'u ma kau balji gi'e te gusni lo spofu<br />
 
-When I started this, I was unaware of the [http://www.lojban.org/files/machine-grammars/techfix.300 echfix comments]. These might be of help in understanding the rationale of the rules.
+<br />
 
-==== Non-terminals (phrases) ====
+"How many Lojbanists does it take to change a broken light bulb? Two, one to figure out what to change it into, and the other to figure out what kind of bulb emits broken light."<br />
 
-* [[jbocre: free_modifier_32]]
-* [[jbocre: free_modifier_A_33]]
+<br />
 
-* [[jbocre: description_110]]
-* [[jbocre: space_direction_1046]]
+doi la vensa la birti pu te preti fi lo du'u la'u xokau lo fraso prenu noi ji'a lojbo cu zasti  gi'e kucli lo du'u xukau ba xamgu zukte lo zu'o fanva zo'e la lojban lo fraso (mildly edited)<br />
 
-==== Specific kinds of non-terminals ====
+Vensa, Birti asked how many French people who are also Lojbanists exist and wonder if anybody will translate French things to Lojban.
 
-These are non-terminals that are so similar that it makes sense
+====  Notes ====
 
-discussing them collectively.
+====  Issues ====
 
-* [[jbocre: Machine grammar slots for elidable terminators|Machine grammar slots for elidable terminators]]
+{BOX}
 
-==== Terminals (tokens) ====
 
-* [[jbocre: FAhA_528]]
-* [[jbocre: NAI_581]]
+===  cmavo ci'i (PA5) ===
 
-* [[jbocre: error|error]] (sic)
+====  Proposed Definition ====
 
-The machine grammar of Lojban is not purely LALR(1). Some constructs need to be modified by a program before passing it on to the actual YACC parser. This program is referred to as the [[jbocre: lexer|lexer]] in literature about the machine grammar, but it does a lot more than simply lexing. There are two kinds of modifications the lexer can do to its input:
+infinity; when followed by a number, denotes a transfinite cardinal, such as ℵ{SUB()}0{SUB}. As multiplication and exponentiation of transfinite ordinals is incompatible with that of cardinals, a new cmavo should be added for a transfinite ordinal, such as ω{SUB()}0{SUB}.
 
-* Replace it with a pseudo-token ("lexer token")
-* Insert a lexer token ''in front of'' it
+====  Proposed Tag ====
 
-An example where this is done, is with utterance ordinals, that consists of a letteral or number string, followed by [[jbocre: mai|mai]]. The lexer detects that such a string is followed by mai, and inserts [[jbocre: lexer_A_701]] in front of it. Thus, the "real" parser sees the resulting construct about the same way as it sees a parenthesis, with an introducing particle, a contained phrase, and a terminator. Needless to say, the conceptual "terminator" of the utterance ordinal, mai, is not elidable, because that is the word that the lexer has to detect to insert the lexer token in the first place.
+====  See Also ====
 
-The lexer tokens and the preparsing process is not as well understood as the rest of the YACC grammar. In particular, it is not certain if they interact with each other. This project is trying to remedy this.
+====  Proposed Keywords ====
 
-*[[jbocre: token lexer_A_701]] - flags a MAI utterance ordinal
-*[[jbocre: token lexer_B_702]] - flags an EK unless EK_BO, EK_KE
+====  Usage Examples ====
 
-*[[jbocre: token lexer_C_703]] - flags an EK_BO
-*[[jbocre: token lexer_D_704]] - flags an EK_KE
+ni'u ci'i prenu cu prami mi<br />
 
-*[[jbocre: token lexer_E_705]] - flags a JEK
-*[[jbocre: token lexer_F_706]] - flags a JOIK
+There are an infinitely negative number of people that love me. (best approximation)<br />
 
-*[[jbocre: token lexer_G_707]] - flags a GEK
-*[[jbocre: token lexer_H_708]] - flags a GUhEK
+<br />
 
-*[[jbocre: token lexer_I_709]] - flags a NAhE_BO
-*[[jbocre: token lexer_J_710]] - flags a NA_KU
+du'o la .gugl. lo cmaci prenu cu tugni fi lo du'u me'o ci'i vu'u ci'i na se smuni<br />
 
-*[[jbocre: token lexer_K_711]] - flags an I_BO (option. JOIK/JEK lexer tags)
-*[[jbocre: token lexer_L_712]] - flags a PA, unless MAI (then lexer A)
+Google knows that math people agree with the position that infinity minus infinity is uninterpretable.<br />
 
-*[[jbocre: token lexer_M_713]] - flags a GIhEK_BO
-*[[jbocre: token lexer_N_714]] - flags a GIhEK_KE
+====  Notes ====
 
-*[[jbocre: token lexer_O_715]] - flags a modal operator BAI or compound
-*[[jbocre: token lexer_P_716]] - flags a GIK
+====  Issues ====
 
-*[[jbocre: token lexer_Q_717]] - flags a lerfu_string unless MAI (then lexer_A)
-*[[jbocre: token lexer_R_718]] - flags a GIhEK, not BO or KE
+{BOX}
 
-*[[jbocre: token lexer_S_719]] - flags simple I
-*[[jbocre: token lexer_T_720]] - flags I_JEK
 
-*[[jbocre: token lexer_U_721]] - flags a JEK_BO
-*[[jbocre: token lexer_V_722]] - flags a JOIK_BO
+===  cmavo ka'o (PA5) ===
 
-*[[jbocre: token lexer_W_723]] - flags a JOIK_KE
-*[[jbocre: token lexer_X_724]] - "null" - commented out in [http://www.lojban.org/files/machine-grammars/g grammar.300], possibly because it is only in the informal grammar
+====  Proposed Definition ====
 
-*[[jbocre: token lexer_Y_725]] - flags a PA_MOI
+i, imaginary unit. When followed by a real number, multiplies that number by i. If four real numbers are separated by three ''ka'o'', the number is a quaternion, with the components in the order 1, i, j, k.
+
+====  Proposed Tag ====
+
+====  See Also ====
+
+====  Proposed Keywords ====
+
+====  Usage Examples ====
+
+;saclu fi'ure loi lujna'u li paka'opa .iku'i saclu piro loi lujna'u li ni'upaka'opa:"Only half the complex numbers can be represented in base 1+i, but all complex numbers can be represented in base i-1."
+
+====  Notes ====
+
+====  Issues ====
+
+{BOX}
+
+
+===  cmavo pai (PA5) ===
+
+====  Proposed Definition ====
+
+pi, circumference divided by diameter
+
+====  Proposed Tag ====
+
+====  See Also ====
+
+====  Usage Examples ====
+
+.i li pai namcu .i loi pai gusta ku cizra se viska<br />
+
+Pi is a number. There are pi restaurants which collectively are seen very strangely.<br />
+
+====  Notes ====
+
+====  Issues ====
+
+{BOX}
+
+
+===  cmavo te'o (PA5) ===
+
+====  Proposed Definition ====
+
+e, Euler's number
+
+====  Proposed Tag ====
+
+====  See Also ====
+
+====  Proposed Keywords ====
+
+====  Usage Examples ====
+
+;li te'o te'a ka'o bi'e pi'i pai su'i pa du li no:"''e''{SUP()}''i'' *𝜋{SUP}+1=0"
+
+====  Notes ====
+
+====  Issues ====
+
+{BOX}
+
+
+===  cmavo tu'o (PA5) ===
+
+====  Proposed Definition ====
+
+null operand; inspecific number or placeholder digit
+
+====  Proposed Tag ====
+
+====  See Also ====
+
+====  Proposed Keywords ====
+
+====  Usage Examples ====
+
+ta'o ji'a mi pu za gunka tu'o le lojbo samrxuebe pagbu<br />
+
+Also, by the way, I worked on some number of web pages a while ago.<br />
+
+<br />
+
+doi broca mi gleki tu'o lo nu do na ca bilma<br />
+
+Broca, I am glad about X number of times you aren't ill.<br />
+
+<br />
+
+mi ba'aru'e krici le nu da'i byfy cuxna tu'o lo denpa bu<br />
+
+I kinda expect to believe that supposedly the BPFK would select some number of full-stops.<br />
+
+<br />
+
+====  Notes ====
+
+====  Issues ====
+
+[http://groups.google.com/group/lojban/browse_thread/thread/1174052e98a26c31 ailing List Debate]
+
+{BOX}
+
+===  General Section Issues ===
