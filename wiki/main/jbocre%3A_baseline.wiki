@@ -1,0 +1,60 @@
+<noinclude>__NOTOC__
+This widget allows you to add '''[http://code.google.com/apis/maps/ Google Maps]''' widget to your wiki page.
+
+Created by [http://www.mediawikiwidgets.org/User:Sergey_Chernyshev Sergey Chernyshev]
+
+== Using this widget ==
+For information on how to use this widget, see [http://www.mediawikiwidgets.org/Google_Maps widget description page on MediaWikiWidgets.org].
+
+== Copy to your site ==
+To use this widget on your site, just install [http://www.mediawiki.org/wiki/Extension:Widgets MediaWiki Widgets extension] and copy [{{fullurl:{{FULLPAGENAME}}|action=edit}} full source code] of this page to your wiki as '''{{FULLPAGENAME}}''' article.
+</noinclude><includeonly><!--{if not isset($static)}--><!--{counter name="mapDivID" assign="mapDivID"}--><script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("maps", "2.s");
+// Call this function when the page has been loaded
+google.setOnLoadCallback(function() {
+	if (google.maps.BrowserIsCompatible()) {
+		var center = new GLatLng('<!--{$lat|escape:'quotes'}-->', '<!--{$lng|escape:'quotes'}-->');
+		// Create and Center a Map
+		var map = new google.maps.Map2(document.getElementById("map<!--{$mapDivID|escape:'html'}-->"),
+			{size: new google.maps.Size('<!--{$width|escape:'quotes'|default:'420'}-->', '<!--{$height|escape:'quotes'|default:350}-->')}
+		);
+		map.setCenter(center, 13);
+		map.setZoom(Number('<!--{$zoom|escape:'quotes'|default:16}-->'));
+		map.enableScrollWheelZoom();
+
+		var createMarker = function(markerLatLng,MarkerTitle,markerIcon,markerPopup) {
+			var marker=new google.maps.Marker(markerLatLng,{title:MarkerTitle,icon:markerIcon});
+			if (markerPopup) {
+				GEvent.addListener(marker, "click", function() {
+					marker.openInfoWindowHtml(markerPopup);
+				});
+			}
+			return marker;
+		}
+		<!--{foreach from=$marker item=m}-->
+			var markerIcon=new GIcon(G_DEFAULT_ICON);
+			<!--{if isset($m.letter)}-->markerIcon.image="http://www.google.com/mapfiles/marker<!--{$m.letter|escape:'urlpathinfo'}-->.png";<!--{/if}-->
+			<!--{if isset($m.icon)}-->markerIcon.image='<!--{$m.icon|validate:url}-->';<!--{/if}-->
+			var markerLatLng = new GLatLng('<!--{$m.lat|escape:'quotes'}-->', '<!--{$m.lng|escape:'quotes'}-->');
+			var markerPopup="";
+			<!--{if isset($m.text)}-->markerPopup='<!--{$m.text|escape:'quotes'}-->';<!--{/if}-->
+			var marker = new createMarker(markerLatLng,'<!--{$m.title|escape:'quotes'}-->',markerIcon,markerPopup);
+			
+		map.addOverlay(marker);
+		<!--{/foreach}-->
+		<!--{if isset($xml)}-->map.addOverlay(new GGeoXml('<!--{$xml|escape:'quotes'}-->'));<!--{/if}-->
+		<!--{if isset($centermarker)}-->map.addOverlay(new google.maps.Marker(center));<!--{/if}-->
+		<!--{if isset($maptypecontrol)}-->map.addControl(new GMapTypeControl());<!--{/if}-->
+		<!--{if isset($largemapcontrol)}-->map.addControl(new GLargeMapControl());<!--{/if}-->
+		<!--{if isset($smallmapcontrol)}-->map.addControl(new GSmallMapControl());<!--{/if}-->
+		<!--{if isset($smallzoomcontrol)}-->map.addControl(new GSmallZoomControl());<!--{/if}-->
+		<!--{if isset($scalecontrol)}-->map.addControl(new GScaleControl());<!--{/if}-->
+		<!--{if isset($overviewmapcontrol)}-->map.addControl(new GOverviewMapControl());<!--{/if}-->
+		<!--{if isset($hierarchicalmaptypecontrol)}-->map.addControl(new GHierarchicalMapTypeControl());<!--{/if}-->
+                <!--{if isset($maptype)}-->map.setMapType(<!--{if $maptype eq 'satellite'}-->G_SATELLITE_MAP<!--{elseif $maptype eq 'hybrid'}-->G_HYBRID_MAP<!--{else}-->G_NORMAL_MAP<!--{/if}-->);<!--{/if}-->
+
+	}
+});
+</script>
+<div id="map<!--{$mapDivID|escape:'html'}-->" style="width: <!--{$width|escape:'html'|default:'420'}-->px; height: <!--{$height|escape:'html'|default:350}-->px"><!--{/if}--><img src="http://maps.googleapis.com/maps/api/staticmap?sensor=false&center=<!--{$lat|escape:'urlpathinfo'}-->,<!--{$lng|escape:'urlpathinfo'}-->&zoom=<!--{$zoom|escape:'urlpathinfo'|default:16}-->&size=<!--{$width|escape:'urlpathinfo'|default:'420'}-->x<!--{$height|escape:'urlpathinfo'|default:350}-->&markers=<!--{if isset($centermarker)}--><!--{$lat|escape:'urlpathinfo'}-->,<!--{$lng|escape:'urlpathinfo'}-->%7C<!--{/if}--><!--{foreach from=$marker item=m}--><!--{$m.lat|escape:'urlpathinfo'}-->,<!--{$m.lng|escape:'urlpathinfo'}-->%7C<!--{/foreach}-->&maptype=<!--{$maptype|escape:'urlpathinfo'|default:'roadmap'}-->" width="<!--{$width|escape:'html'|default:'420'}-->" height="<!--{$height|escape:'html'|default:350}-->"><!--{if not isset($static)}--></div><!--{/if}--></includeonly>
