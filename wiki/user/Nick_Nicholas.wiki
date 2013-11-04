@@ -1,0 +1,43 @@
+
+[[jbocre: The Lojban MOO|The Lojban MOO]]
+
+[[jbocre: The Lojban MOO: Inheritance vs. Multilingualism]]
+
+==  Outstanding Bugs ==
+
+* Non-Lojban names should be wrapped in la'o zoi ... zoi for output.
+* in both English and Lojban, "and"/".e" is used for the "The parser believes that you need to supply the following parts of speech:" list.  Should be "and/or" and ".a"
+
+* it also appears that some required arguments get repeated, ie {cusku} produces {.i le bangu gerna samru'e cu nitcu lo 2 moi sumti poi sitna selsku gi'e pilno zo lu .e lo 2 moi sumti poi sitna selsku gi'e pilno zo lu}
+* being able to rephrase it as a question, {go'i ma poi sitna selsku gi'e pilno zo lu} would be even cooler
+
+* the second \n in any .msg file for guest users seems to get turned into \N.  I haven't the slightest idea why.
+* Search the code for "adjectives"; various bits set adjectives like "broken" that we need to do something about.
+
+* We don't handle numbers at all, as in for example set.cmd: verb(this), direct_object(nearby|reference), number, field, quote; used for things like "set bob's second alias to "foo"".
+* Trying to delete a mip while there are multiple present produced ".i do cuxna ma lu'i le mip poi do bevri ku'o .e le mip poi nenri le skami xanri bo munje krasi ku'o".  It appears that the correct way to choose the former is "le mip poi nenri mi".  This is far from intuitive, since 1) it's not actually {nenri} me (complete containment), and 2) it's not actually one of the choices presented.
+
+==  Fixed Bugs ==
+
+* SE doesn't appear to work anymore.  Test case: "lu cipra li'u cu se cusku"
+* tty sessions do dexml on the very first bit said, socket connections do not.  (pretty dumb either way; no point in multilingualizing the banner before the user has logged in!)
+
+* selbau la gliban "portfolio" -- presents a new prompt.  Again.
+* No grammar setup for languages; should be {bangu fa la gliban} and not {bangu fa "gliban"}
+
+* The help system currently shows *only* the help for one's language if a non-zero amount of same exists.  Need "helpall" that shows all language's help strings.
+* Regular users (children of mooix:abstract/avatar) can't use the language change commands.
+
+* {bangu la gliban} caused an infinite loop for clsn
+* cpacu le blanu bolci poi cpana le mudri jubme -- doesn't work; need a cpacu.cmd.jbo for furniture -- actually, that wasn't it at all; "poi cpana" was missing out of "on relatives".
+
+* viska le cpana be le mudri jubme -- doesn't work; need a viska.cmd.jbo for furniture
+* Entering the command "cusku lu cipra" produces (Guessing that you meant to type: cusku "lu cipra" ...).  It should be able to guess that I actually mean to type "cusku lu cipra li'u"
+
+* When an object has a name only in one language (<lang code="jbo">xunre bolci</lang>, for instance), it can't be refered to in other languages except by id.  Note that if it's only in English (and therefore is saved without the <lang> tags), this problem doesn't exist.
+* "editor" po mi cu binxo "vim" doesn't work, but \"editor" po mi cu binxo "vim" does; this is even worse since "foo doesn't cause "foo" to be spoken...
+
+** Just in case that wasn't clear: "... should do speech for Lojban speakers too, just because It's Easier.
+** WORKS, but need to have a space or fa before "editor" po mi cu binxo "vim"
+
+* {cusku lu .i mi na djuno li'u} produces ".i do cu cusku lu i mi na djuno li'u" (note the missing .)
