@@ -1,0 +1,464 @@
+
+{maketoc}
+
+== Design discussion ==
+
+What follows is something of a dumping ground for thoughts.  It'll probably be incomplete, and if you don't understand it, don't worry.
+
+We're looking at completely redoing the way the multilingualism is done in
+
+Mooix.  Specifically, instead of having xml files that each contain all
+
+languages, we're going to have separate files for translations into each
+
+language.  So that instead of having one name, you'd have name.en, name.jbo,
+
+name.es, or whatever else.
+
+One advantage is that it would be faster than splitting the xml.  Another
+
+advantage comes from the fact that language packs could be made much more
+
+easily (so you could download an entire language and add it to your MOO,
+
+without it breaking anything that currently exists).  It also makes it much
+
+clearer which fields are subject to translation (so you won't be like me,
+
+with an editor of "<lang code='en'>vim</lang><lang code='jbo'>vim</lang>".
+
+So far the chief difficulty seems to be with inheritance.
+
+In the following, we have two users, John (who language is Lojban, "jbo"),
+
+and Ed (whose language is English, "en").  Ed creates a Meep, and gives it a
+
+description in English.  Finally, John derives his own mipri from Ed's Meep,,
+
+but doesn't change anything in it.  So we've got:
+
+~pp~
+
+/usr/lib/mooix/contrib/animal/description.en:              An animal.
+
+/var/lib/mooix/contrib/animal/description.jbo:             .i danlu
+
+/var/lib/mooix/users/ed/portfolio/Meep1/description.en:     A meep!
+
+~/pp~
+
+It seems desirable that both John and Ed see the Meep described as "A meep!"
+
+(even though for John that's not his own language), instead of John seeing
+
+".i danlu" (which just means "[[jbocre: It's an|It's an]] animal").
+
+In addition, we want John to be able to create a descendant of Ed's meep, with properly translated messages, like:
+
+~pp~
+
+/var/lib/mooix/users/ed/portfolio/Meep2/description.jbo:     .i me la mip
+
+~/pp~
+
+Here's a picture of this case:
+
+{img src="img/wiki_up/lang_inheritance_1.jpg" }
+
+What inheritance strategy provides this?  We want John looking at the first Meep to see English (the wrong language for him) and we want Ed looking at the second Meep to see English (the correct language for him).
+
+More interestingly, what inheritance strategy handles that ''and'' the following case?
+
+{img src="img/wiki_up/lang_inheritance_2.jpg" }
+
+~pp~
+
+/usr/.../room/description.en:              A room.
+
+/var/.../room/description.jbo:             .i kumfa
+
+/var/lib/mooix/users/ed/portfolio/My_Room contains no description* files at all.
+
+~/pp~
+
+We want both John and Ed looking at My Room to see their own languages (jbo and en, resp.).
+
+=== Re-Stating The Problem ===
+
+The problem is that given two messages, one above the other in the
+
+tree (where Meep 1 is above Meep 2, for example) the message down
+
+the tree might be a direct translation, as with /usr/.../room and
+
+/var/...room, and hence we really only want to see one of them.  On
+
+the other hand, it might be a new, more specific message, as with
+
+Meep 1 vs. animal.
+
+There doesn't seem to be any way to distinguish between the two
+
+cases (a message below another in a tree being a translation vs.
+
+being a more specific message) without putting in some kind of
+
+flagging system; I haven't thought of one that is workable.
+
+=== Some Possible Strategies ===
+
+==== Normal Inheritance, User's Language ====
+
+In this case, the bottom-most definition in the user's language prevails.
+
+===== The Good =====
+
+Both John and Ed looking at Meep2 or My Room see the correct messages in their own language.
+
+===== The Bad =====
+
+John looking at Meep 1 sees the generic ".i danlu".
+
+==== Last Object Special ====
+
+This is like "Normal Inheritance, User's Language" except that the
+
+object we are actually looking at getts special dispensation: we
+
+don't look past it for translations if we find anything  at all.
+
+===== The Good =====
+
+John looking at Meep 1 sees the more specific (but wrong language)
+
+"A meep!".
+
+Both John and Ed looking at Meep2 or My Room see the correct messages in their own language.
+
+===== The Bad =====
+
+John looking at an unmodified child of Meep 1 sees the less specific
+
+"An animal.".  This means that a child with no modifications has
+
+different behaviour than the parent, which is not cool.
+
+==== Reverse Hierarchical ====
+
+We walk up the stack, and take something from the first object with
+
+a defined message.
+
+A variant on this, with similar problems, is to present the first
+
+message up the tree we find in the user's language but if there is
+
+another message further down the tree, we present that as well in
+
+parens or something.  
+
+===== The Good =====
+
+John looking at Meep 1 sees the more specific (but wrong language)
+
+"A meep!".
+
+John looking at Meep 2 sees the right thing.
+
+===== The Bad =====
+
+Ed looking at Meep 2 sees only the Lojban message; his translation
+
+is effectively lost unless John copies it.  Copying it kind of
+
+defeats the purpose of an object oriented system.
+
+Same with Ed, looking at My Room, who sees the Lojban instead of the English.
+
+==== Untagged Special ====
+
+In addition to "description.en", "description.jbo", and so
+
+on, there's also a "description" file without a language, that represents the
+
+original, untranslated (or most native) version of the object.  In almost all
+
+cases, it'll be just a symlink to one of the more specific languages.  When
+
+we're looking for a property, we never look at anything but our own language
+
+and the untagged.  So we look first at the object itself for the current
+
+language, then for the untagged, then up a level for user's language, then
+
+for untagged there, and so on.
+
+So for the test cases, we get
+
+/usr/lib/mooix/contrib/animal/description.en:              An animal.
+
+/usr/lib/mooix/contrib/animal/description -> description.en
+
+/var/lib/mooix/contrib/animal/description.jbo:             .i danlu
+
+/var/lib/mooix/users/ed/portfolio/Meep1/description.en:    A meep!
+
+/var/lib/mooix/users/ed/portfolio/Meep1/description -> description.en
+
+/var/lib/mooix/users/ed/portfolio/Meep2/description.jbo:   .i me la mip
+
+Now John looks for the a lojban or plain description in Meep1, finds the
+
+plain, and uses it.  Ed can look for an English or plain description in
+
+Meep2, doesn't find either, looks for an English or plain description in
+
+Meep1, the English wins, so he uses it.
+
+For the room
+
+/usr/.../room/description.en:              A room.
+
+/usr/.../room/description -> description.en
+
+/var/.../room/description.jbo:             .i kumfa
+
+/var/lib/mooix/users/ed/portfolio/My_Room contains no description* files at
+
+all.
+
+John looks at My_Room, finds no description files, looks up a level, finds
+
+description.jbo, and uses it.  Ed finds nothing on My_Room, nothing he can
+
+use on /var/.../room, but takes /usr/.../room/description.en.
+
+So in essence, the untagged says "I'm now replacing everything translated
+
+above me.  For any language that I don't provide a translation for
+
+specifically, don't inherit from above.  Instead, use this."
+
+There might be some issues with getting defaults for editing to work exactly
+
+properly, but I think then can be worked out.
+
+Specific issues, and possible ideas (though this could really go many
+
+different ways).  When do we create an untagged, and when do we just create a
+
+new, additional language file?  I'd say that definitely if we're editing an
+
+object that already contains the same field in a different language we don't
+
+create an untagged version by default.  Perhaps we could make a separate
+
+command (fanva/translate) that never creates the untagged, with
+
+galfi/binxo/edit/is defaulting to creating the untagged (if we're changing
+
+the name, we're overriding.  If we're providing a new translation, we're
+
+augmenting).
+
+Another good heuristic: if there is already a translation into the language that we're editing at or below the level of the current default, then we're almost certainly making ours more specific, so we should create a new default.
+
+As an alternative, if we do want to separate out the untagged/untranslated from the other, we could use an extension of something like .default, .def, or whatever, to say "this is the default language".  
+
+===== The Good =====
+
+Lets us draw a clear distinction between translations and specializations.
+
+With proper configuration, allows a solution to all cases presented so far.
+
+===== The Bad =====
+
+===== !Complexity =====
+
+Gives us more complexity in deciding what overrides what.  An implementation note, here, that seems to make this very easy from a coding perspective.  Given variable X, and user's preferred language Y:
+
+# Find X.def.  Since the core objects will have these added, this should always exist, but even if it doesn't we're OK.  Call the full path of X.def PATH/X.def.  Set the variable def_path to PATH.  If there's no X.def, set it to the empty string.
+
+# Find PATH2/X.Y.  If none, then not even the core object is translated to the user's language; it doesn't much matter what we do then, but we treat it as this step failing; go to the next step.  Anyways, if PATH2 is a (non-proper) substring of def_path (or def_path is empty), then great: X.Y is more specific, and we're done.  Otherwise, continue.
+
+# Find PATH3/X.L, for all languages L that the MUD supports.  If PATH3 is a (non-proper) substring of def_path (or def_path is empty), that's our string, we're done.  Otherwise, continue.
+
+# Find PATH/parent/MORE_PATH/X.def.  Set def_path based on this.  Return to step 1.  Lather, rinse, repeat.
+
+===== !Editing =====
+
+Makes the user's task of editing an object that much more complicated, with the decisions of what to override and what not to.  Except that it looks like we can automate this trivially: if you're editing variable X in language Y, and X.Y exists up the parent tree before or at the same level as the previous X.def, you are assumed to be creating a more specific instance of variable X (indeed, I haven't thought of a case where that fails yet), and X.def is automatically created at your level.  This means, as far as I've noticed (and I haven't walked every step) that every case presented so for works (assuming all core objects have .def files in the right places) ''without anyone doing anything special''.  Just regular editing.
+
+==== Look Ma, No Tags! ====
+
+So realizing that Untagged Special can put the tags in place
+
+automatically when editing made me wonder if we can do it
+
+programatically, hence dispensing with the actual tags.  I believe
+
+the answer to be yes.  The idea here is that if we see the same
+
+language twice down the parent tree, then everything after the
+
+more-parental instance must be a more-specific object.
+
+The algorithm is as follows:
+
+~pp~
+
+object = [[jbocre: the original object|the original object]]
+
+field = [[jbocre: description, article, name, whatever|description, article, name, whatever]]
+
+best_lang( object, field, user's preferred lang, language list (starts empty ) )
+
+{
+
+if field.user's preferred lang is found, return user's prefirred lang
+
+For X = every language in the MUD:
+
+if field.X exists, add X to language list
+
+if X is already in the language list, return X
+
+return best_lang( object's parent, field, user's preferred lang, language list )
+
+}
+
+~/pp~
+
+Given that, we just grab the normally inherited field X.[jbocre: whatever
+
+best_lang returns].
+
+Some extensions:
+
+Change "if X is already in the language list, return X" to "if X is
+
+already in the language list, return the thing in the language list
+
+that is highest in the user's preferences".  Not doing this because
+
+a proper preference list is a fair bit of work; I'm not going to
+
+bother until someone wants a more-than-two language MUD.
+
+Add a user flag that says "If you don't find my language at the
+
+most-specific level, please print out whatever you *do* find in my
+
+language, as well".
+
+===== The Good =====
+
+Seems to work in all the cases presented so far.  (but not a simple extension of them; see The Bad)
+
+No manual intervention at all.
+
+===== The Bad =====
+
+Breaks on a simple extension: My Room has an English description; a
+
+Lojbanic user will see the generic description instead.
+
+Potentially non-obvious to the casual builder.
+
+Cases where a user makes a child with a message on the object in
+
+language X and updates it in only language X in a trivial way (such
+
+as to correct a spelling mistake) will seem to do the wrong thing,
+
+as all languages above that one will be "lost". OTOH, if the change
+
+is not trivial, then all languages above being lost are The Right
+
+Thing, and telling the difference requires smart intervention.
+
+==== Daddy's Got A Brand New Non-Existant Tag ====
+
+So "Look Ma, No Tags!" turns out to not DTRT; this is an extension
+
+that counts from the bottom instead of the top, on the same
+
+principle: a repeated copy in the same language means an increase in
+
+specificity.
+
+# Start at the top of the chain (i.e. the root object) (actual implementation will presumably be recursive to the top and then return stuff back up)
+
+# Walk down the chain towards the child we're wondering about.  Collect a list of languages.
+
+# If we see a language that matches our current one, clear the list, then add the language in question back into it.
+
+# When we reach the child and have collected all of its languages, return the language most preferred by the user.
+
+The "show *something* in my language, dammit" tag works here (as it does with any variant).
+
+A crack at pseudo-code for the recursive version:
+
+~pp~
+
+best_lang( object, field )
+
+{
+
+if at the root
+
+return list of all available languages on the root object
+
+else
+
+language list = best_lang( object's parent, field, user's preferred lang )
+
+Add all languages on object to the list.  If a duplicate is
+
+found, clear the list and then add the duplicate back in
+
+return the resulting list
+
+}
+
+language list = best_lang( object, field )
+
+EITHER
+
+IF language list includes the user's preferred lang, return
+
+that ELSE return the first thing on the list
+
+OR
+
+Sort the list via the user's preferred languages list and return
+
+the top
+
+DEPENDING ON whether more than one language has been implemented for
+
+the user (the latter) or not (the former)
+
+~/pp~
+
+===== The Good =====
+
+Seems to work in all the cases presented so far.
+
+No manual intervention at all.
+
+===== The Bad =====
+
+Potentially non-obvious to the casual builder.
+
+Cases where a user makes a child with a message on the object in
+
+language X and updates it in only language X in a trivial way (such
+
+as to correct a spelling mistake) will seem to do the wrong thing,
+
+as all languages above that one will be "lost". OTOH, if the change
+
+is not trivial, then all languages above being lost are The Right
+
+Thing, and telling the difference requires smart intervention.
