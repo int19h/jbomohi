@@ -152,3 +152,11 @@ how the intersection of sets actually works!
 > not include any meaning of turni nor tutra
 I agree.
 
+
+## 2013-11-15T15:12:05Z — Wuzzy (comment 818, on definition 16900, in reply to 817)
+
+Re: The derivation is very malglico
+
+Oh, and the x3 of “kruca” reads “at locus”. There is no such thing
+as a “locus” in an intersection of sets.
+
