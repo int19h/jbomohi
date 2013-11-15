@@ -1,0 +1,37 @@
+-- This module implements {{italic title}}.
+ 
+local p = {}
+ 
+function p.main(frame)
+    -- Process the arguments.
+    local args
+    if frame == mw.getCurrentFrame() then
+        args = frame:getParent().args
+        for k, v in pairs(frame.args) do
+            args = frame.args
+            break
+        end
+    else
+        args = frame
+    end    
+ 
+    local title = mw.title.getCurrentTitle() -- Get the current page object.
+    -- Find the parts before and after the disambiguation parentheses, if any.
+    local prefix, parentheses = mw.ustring.match(title.text, '^(.+) (%([^%(%)]+%))$')
+    -- If parentheses were found, italicise only the part before them. Otherwise
+    -- italicise the whole title.
+    local result
+    if prefix and parentheses and args.all ~= 'yes' then
+        result = "''" .. prefix .. "'' " .. parentheses
+    else
+        result = "''" .. title.text .. "''"
+    end
+    -- Add the namespace if it exists.
+    if title.nsText and title.nsText ~= "" then
+        result = title.nsText .. ':' .. result
+    end
+    -- Call displaytitle with the text we generated.
+    return mw.getCurrentFrame():callParserFunction( 'DISPLAYTITLE', result )
+end    
+ 
+return p
