@@ -45,3 +45,26 @@ trace on a surface of a country land.
 "tumgre" from "tumla pagre" would be better translation of "cross
 country".
 
+
+## 2013-11-15T00:21:44Z — Wuzzy (comment 815, on definition 16900, in reply to 814)
+
+Re: The derivation is very malglico
+
+I would almost have accepted your reasoning, but:
+> "international" is a relationship of people from different nations. In
+> other words, it is an intersection "kruca" of several sets "lo'i se
+> gugde".
+
+To interpret “{kruca}” as intersection of sets is a bit far-fetched.
+In my opinion a good lujvo is a lujvo where you could guess its meaning
+(more or less) just from the rafsi. I had NOT A CLUE what “gugykruca”
+could possibly mean before reading the definition.
+Please also consider the word “{ku'a}” (intersection of sets) in the
+lujvo making, it has a rafsi (“kuz”).
+
+Also consider “{natmi}” (nation) although I do not think “{gugde}”
+is terribly wrong here. Maybe we could use “natmi” to emphasize the
+nation-aspect and “gugde” to emphasize the country-aspect.
+
+But I agree with the original poster that “gugykruca” is not so good.
+
