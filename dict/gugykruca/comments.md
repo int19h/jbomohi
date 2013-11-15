@@ -218,3 +218,83 @@ thing
 of {ku'a} in Lojban). In the special case that sets are lines on a 2D
 surface, the intersection is called "locus". 
 
+
+## 2013-11-15T18:11:27Z — gejyspa (comment 820, on definition 16900, in reply to 819)
+
+Re: The derivation is very malglico
+
+gusnikantu wrote:
+> Wuzzy wrote:
+> > > The meaning of ku'a is the same as kruca.
+> > I can’t see how “ku'a” means the same (!) as “kruca”. I read
+> > both definitions. Yes, they are kinda similar, but they are certainly
+> not
+> > the same.
+> > 
+> 
+> 
+> See the definition of {ku'a} in Lojban:
+> nalylogji jonma'o .i te jorne le li'erla'i le se li'erla'i ja'e lo
+> terkruca
+> 
+> This definition implies that {ku'a} has exactly the same meaning as
+> {kruca}. The conjunction {ku'a} brings "lo terkruca".
+> 
+> 
+> > > Moreover, the rafsi "kuz" of ku'a cannot be put at the end of lujvo.
+> > Correct. But who says that “kuz” must be put at the end of the
+> lujvo?
+> > 
+> > > "-kruca" as rafsi at the end is therefore indispensable.
+> > This does not follow.
+> > 
+> > > The English words
+> > > "cross/traverse" in the definition of kruca should mean a special
+case
+> > > of "intersect" that the sets are lines on a 2-dimensional surface.
+> > This analogy is flawed. Come up with a better one.
+> > 
+> > When two lines on a 2D surface intersect, they do so on a single
+point.
+> > Now if we view both lines as sets and the points of these lines as
+> members
+> > of the set, this would mean an “intersection of sets” can only
+have
+> > member at maximum: the point where both lines intersect. But this is
+not
+> > how the intersection of sets actually works!
+> > 
+> 
+> 
+> The point where both lines intersect belongs to both lines. This point
+is
+> naturally a member of the intersection of two sets that are lines.
+Plural
+> number of points may be the intersection of two lines on 2D surface
+> depending on the form of surface and lines.
+> 
+> 
+> > Oh, and the x3 of “kruca” reads “at locus”. There is no such
+> thing
+> > as a “locus” in an intersection of sets.
+> 
+> 
+> "lo te kruca" is simply the intersection itself (see again the
+definition
+> of {ku'a} in Lojban). In the special case that sets are lines on a 2D
+> surface, the intersection is called "locus". 
+
+
+  Indeed, I concur that ku'a is derived from kruca, and both mean an
+intersection.  Which is why I suggested a possible meaning of gugykruca
+might be a territory owned by more than one country.  But I guess the real
+issue I have with this word is the English.  I don't believe that
+"international" means an "intersection of countries", but in fact, the
+"UNION of countries" (jorne/jo'e/jo'u) or better, simply so'i gugde.  The
+Olympics is an international sporting events, it belongs to (well,
+involves) many countries.  It is "nu jmaji fi lo so'i gugde", or a 
+sorgu'e jmaji.	That's why I think sorgu'e would be better for
+international.
+
+  That being said, I can understand your POV, guskant.
+
