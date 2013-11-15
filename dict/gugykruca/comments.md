@@ -68,3 +68,53 @@ nation-aspect and “gugde” to emphasize the country-aspect.
 
 But I agree with the original poster that “gugykruca” is not so good.
 
+
+## 2013-11-15T06:06:16Z — gusnikantu (comment 816, on definition 16900, in reply to 815)
+
+Re: The derivation is very malglico
+
+Wuzzy wrote:
+> I would almost have accepted your reasoning, but:
+> > "international" is a relationship of people from different nations. In
+> > other words, it is an intersection "kruca" of several sets "lo'i se
+> > gugde".
+> 
+> To interpret “{kruca}” as intersection of sets is a bit far-fetched.
+> In my opinion a good lujvo is a lujvo where you could guess its meaning
+> (more or less) just from the rafsi. I had NOT A CLUE what
+“gugykruca”
+> could possibly mean before reading the definition.
+> Please also consider the word “{ku'a}” (intersection of sets) in the
+> lujvo making, it has a rafsi (“kuz”).
+> 
+
+
+The meaning of {ku'a} is the same as {kruca}. The English words
+"cross/traverse" in the definition of {kruca} should mean a special case
+of "intersect" that the sets are lines on a 2-dimensional surface.
+Moreover, the rafsi "kuz" of {ku'a} cannot be put at the end of lujvo.
+"-kruca" as rafsi at the end is therefore indispensable.
+
+
+> Also consider “{natmi}” (nation) although I do not think
+“{gugde}”
+> is terribly wrong here. Maybe we could use “natmi” to emphasize the
+> nation-aspect and “gugde” to emphasize the country-aspect.
+> 
+> But I agree with the original poster that “gugykruca” is not so
+good.
+
+
+Adding a lujvo "natkruca" of "natmi kruca" is a good idea, but it should
+be differentiate from {gugykruca} in the meaning. {gugykruca} has a
+background associated with government {turni} and territory {tutra}
+because of the definition of {gugde}. On the other hand, "natkruca" should
+not include any meaning of {turni} nor {tutra}. I'm not sure if there are
+appropriate single words in English to differentiate {gugykruca} from
+"natkruca", but there are those in Japanese:
+{gugykruca} : 国際 (kokusai)
+"natkruca" : 民際 (minsai)
+
+It seems that the problem comes from vagueness of the English word
+"international", not the lujvo {gugykruca} itself.
+
