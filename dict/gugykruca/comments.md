@@ -298,3 +298,18 @@ international.
 
   That being said, I can understand your POV, guskant.
 
+
+## 2013-11-17T03:59:42Z — Wuzzy (comment 821, on definition 16900, in reply to 820)
+
+Re: The derivation is very malglico
+
+Well, I basicly just have to agree with the last post.
+I also accept now that “ku'a” and “kruca” are (more or less)
+interchangable.
+
+But now you have touched the real issue behind “gugykruca”.
+Yes, it’s true, “international” is not about two sets
+of countries which you intersect.
+
+Your suggestion now makes much more sense to me.
+
