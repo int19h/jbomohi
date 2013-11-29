@@ -313,3 +313,62 @@ of countries which you intersect.
 
 Your suggestion now makes much more sense to me.
 
+
+## 2013-11-29T06:56:34Z — gusnikantu (comment 823, on definition 16900, in reply to 821)
+
+Re: The derivation is very malglico
+
+gejyspa wrote:
+>   Indeed, I concur that ku'a is derived from kruca, and both mean an
+> intersection.  Which is why I suggested a possible meaning of gugykruca
+> might be a territory owned by more than one country.	But I guess the
+real
+> issue I have with this word is the English.  I don't believe that
+> "international" means an "intersection of countries", but in fact, the
+> "UNION of countries" (jorne/jo'e/jo'u) or better, simply so'i gugde. 
+The
+> Olympics is an international sporting events, it belongs to (well,
+> involves) many countries.  It is "nu jmaji fi lo so'i gugde", or a 
+> sorgu'e jmaji.	That's why I think sorgu'e would be better for
+> international.
+> 
+>   That being said, I can understand your POV, guskant.
+
+Wuzzy wrote:
+> Well, I basicly just have to agree with the last post.
+> I also accept now that “ku'a” and “kruca” are (more or less)
+> interchangable.
+> 
+> But now you have touched the real issue behind “gugykruca”.
+> Yes, it’s true, “international” is not about two sets
+> of countries which you intersect.
+> 
+> Your suggestion now makes much more sense to me.
+
+
+We arrived at an agreement that the point is not on the lujvo but on the
+English word "international". 
+
+Still I opine that the word "international" is not a "UNION of countries".
+The latter is rather associated with something like the United Nations to
+which each contry belongs. Something like the UN can be called "loi gugde"
+in Lojban. 
+
+On the other hand, the participants of olympic games are only "so'o se
+gugde", not the whole gugde; the event of "olympic games" belongs to each
+contry, but not the whole contry concerns it; each contry does not belong
+to the olympic games. This proposition can be illustrated as an
+"intersection" that is "lo te kruca", not a "union". Consequently, "lo vi
+bajra cu gugykruca la'o gy Olympics gy" should be a valid text.
+
+If the English definition needs some modification, the foregoing
+difference between "union" and "intersection" should be mentioned. I
+suggest the following text for the English definition:
+
+$x_1=g_2=k_1$ is international in aspect $x_2=k_3$; $x_2=k_3$ is an
+intersection of nations with participant $x_1=g_2=k_1$.
+
+note:  For union of nations, {loi} {gugde}. For cross-country, {tumgre}.
+
+Example: lo vi bajra cu gugykruca la'o gy Olympics gy
+
