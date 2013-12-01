@@ -44,3 +44,16 @@ exactly.
 I realize now that it is easier to describe them just using kulnu, and
 save klulei for when the outer culture is less murkily defined.
 
+
+## 2013-12-01T01:02:44Z — Wuzzy (comment 831, on definition 42582, in reply to 826)
+
+Re: Irregular place structure for no apparent reason
+
+Now that we have sorted that out, I think “klulei” is a good lujvo.
+
+It’s useful to express that a culture _is_ a subculture. But its equally
+true to say that all subcultures are cultures.
+
+Now I don’t see anything wrong with the lujvo; it is clearly defined,
+useful and the place structure is regular: The way lujvo should be. :-)
+
