@@ -57,3 +57,21 @@ true to say that all subcultures are cultures.
 Now I don’t see anything wrong with the lujvo; it is clearly defined,
 useful and the place structure is regular: The way lujvo should be. :-)
 
+
+## 2013-12-01T02:07:37Z — ccs4ever (comment 832, on definition 42582, in reply to 831)
+
+Re: Irregular place structure for no apparent reason
+
+Wuzzy wrote:
+> Now that we have sorted that out, I think “klulei” is a good lujvo.
+> 
+> It’s useful to express that a culture _is_ a subculture. But its
+equally
+> true to say that all subcultures are cultures.
+> 
+> Now I don’t see anything wrong with the lujvo; it is clearly defined,
+> useful and the place structure is regular: The way lujvo should be. :-)
+
+Thanks a lot for the help. This was my first addition to the list and so I
+was a bit nervous.
+
