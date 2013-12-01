@@ -11,3 +11,11 @@ lo pa valsi po'o zo'u
 
 .u'i
 
+
+## 2013-12-01T02:12:35Z — ccs4ever (comment 833, on definition 42584, in reply to 829)
+
+Re: Just one word:
+
+I was going to try for a lujvo, but camselci'i was already too long as it
+is :>
+
