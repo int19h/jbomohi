@@ -461,3 +461,181 @@ This still doesn’t catch _all_ meaning of “international” but it’s
 a start. On the other hand, as I said it may by foolish to try to catch
 all meaning of “international” at once.
 
+
+## 2013-12-01T19:19:38Z — gusnikantu (comment 834, on definition 16900, in reply to 828)
+
+Re: Perhaps let’s just start all over. xD
+
+Wuzzy wrote:
+> Oh boy, now things are becoming complicated.
+> 
+> I find the following defininition very confusing:
+> “x1=g2=k1 is international in aspect x2=k3; x2=k3 is an intersection
+of
+> nations with participant x1=g2=k1.”
+> First of all: Why are there two alternations? Those two sentences seem
+to
+> be a bit far from each other.
+> The x2 could be an aspect or an intersection. “intersection” is a
+> no-brainer but why “aspect”? {kruca} does not say anything about
+> aspects. x1 could be  or a participant. That’s already
+> confusing to me.
+> 
+
+An intersection of a plural number of sets can be regarded as an aspect.
+
+In the case of Olympics, some of "lo se gugde" belong to a set of
+participants of Olympics organized by a plural number of "lo gugde". Then,
+a participant of Olympics belongs to "lo'i se gugde be ro lo gugde" in the
+aspect of Olympics, though not in the aspect of family register. 
+
+If you don't understand yet, recall the definition of {gugde}:
+$x_1$ ciste lo nu turni kei lu'i $x_2$ noi prenu ra'a $x_3$ noi tutra lu'u
+lo ka co'e
+as well as the definition of {turni} which can be vaguely interpreted:
+"governs/rules/is ruler/governor/sovereign/reigns over"
+
+On the basis of these definitions, a set of all participants of Olympics
+is an intersection of the countries organizing Olympics iff the
+intersection is formed on the basis of the aspect of Olympics.
+
+> I am not happy with this. If I understood set theory correctly,
+> “intersection” is only possible between two sets.
+> What the heck does an intersection between two /countries/ even _mean_?
+> Unless you meant two _sets of countries_ which you want to want to
+> intersect, the idea of “intersection of countries” is not meaningful
+> to me.
+> 
+
+An "intersection" can be a binary operator, but not always used in this
+way. It takes more terms, even an infinite number of terms, just like a
+"product" Π can take many terms. 
+
+Moreover, the idea of {gugykruca} is not "intersection of countries" but
+"intersection of su'o re lo'i se gugde".
+
+
+> Perhaps we should really work out what we /actually/ want to say when we
+> say the Lojban word for “international”. It does not make much sense
+> to me to first discuss the details if nobody knows what we’re actually
+> talking about. ;-)
+> 
+> The first step would obviously to obtain the possible meanings of the
+word
+> “international”.
+> 
+
+No. I don't need lujvo(s) that signify the same things as "international";
+I need rather a better English definition for {gugykruca} that conforms to
+the Lojbanic definition. The English definition for {gugykruca} needs some
+limitation to be a narrower sense than "international".
+
+
+> In English, the word “international” can mean many things:
+> 1) First, it can actually mean something which directly involves some
+> nations. Like “international affairs”, “international law”,
+> “international treaty” etc.
+> 2) Then there is a more vague interpretation where the word just
+describes
+> something which has /something/ do with multiple nations, but does not
+> involve any nation directly. Like in “international berbeque”. The
+> connections to nations is very vague, it just means there a visitors
+FROM
+> multiple nations.
+> 3) Then there is the horribly derived word “internationalization”,
+> shortened to “I18N”, from software development. It actually means
+that
+> a certain software is made translatable for different _languages_. This
+> doesn’t have anything to do with nations.
+> 4) There may be other meanings as well in the wild.
+> Annoyingly, the word “international” is often used interchangibly
+for
+> nations ({natmi}) AND countries ({gugde}) alike. Yet there’s no word
+> like “intercountrial”. ;-) (Or is there? Whatever …)
+> We should be careful to not fall into the same trap.
+> Anyways, none of 1) to 3) does involve some sort of intersection IMO.
+But
+> also no real union (as in set theory).
+> Unless you can present me ANY interpretation now which involves
+> intersections and countries SOMEHOW, the word “gugykruca” stays just
+> meaningless to me.
+> 
+
+I have already explained it above. However, it would be meaningful to add
+some interpretation to your examples.
+
+1) {gugykruca} is applied as long as "affaires", "law", "treaty" etc. are
+gugykruca_2 and participants of them are gugykruca_1. If talking about
+those of union of contries, "cuntu be loi su'o re gugde" "flalu be fi lo
+su'o re gugde bei fu loi su'o re gugde" "{gugbinselnu'e}" are applied
+respectively.
+
+2) If the visitors are from different "lo gugde", {gugykruca} is applied,
+and the event of barbeque is gugykruca_2. If the visitors are from
+different races from the same contry, {gugykruca} is not applicable.
+Possibly "natkruca" is not applicable either, because a Lojbanic
+definition of {natmi} would not include anything associated with {turni};
+without {turni}, a participant cannot easily belong to every {natmi}. In
+this case, "me lo su'o re natmi" would be one of the possible translations
+of "international".
+
+3) {gugykruca} is not applied. For internationalization of language,
+"vanbi gi'e gunma lo so'i bangu" would be a basis of construction of
+lujvo.
+
+As I wrote in the Comment #4 (Thu Nov 14 22:06:16 2013), there are two
+words in Japanese that distinguish "international" and "intercountrial".
+The lack of the word is fault in English, and it does not imply that
+Lojban should have an interchangeable word between {natmi} and {gugde},
+though it is possible with "nairjavgu'e".
+
+
+> We should of course NOT try to shoehorn meanings 1-3 and possibly even
+> more into one lujvo. In the current definition, well, it just seems like
+> that already happened.
+> Instead, we should look at concepts 1 to 3 and possibly others, look
+which
+> of them are actually meaningful and well-understood (and not some
+> wish-washy bullshit).
+> 
+> 1) Okay, I have no problem with that one.
+> 2) I am not sure wheather we should include that interpretation into
+> Lojban. It is still to vague to me.
+> 3) Although the word is awful, the concept behind is clearly defined and
+> clearly deserves a Lojban word.
+> Your own comments are welcome.
+> 
+> Based on the three concepts, I try to make new definitions:
+> 1) 
+> - gugysi'u: “s1 (set of countries) do mutually s2.”
+> - natsi'u:  “n1 (set of nations) do mutually s2.”
+> (… perhaps be part of an international treaty, etc.; very general
+> concept)
+> - gugycu'u: “c1 is an organized activity involving countries n1
+> (ind./mass).”
+> - natcu'u:  “c1 is an organized activity involving nations n1
+> (ind./mass).”
+> (One could call this an “international affair” but I’d be
+careful.)
+> 2) Don’t know for sure, but it clearly should involve {ckaji}.
+> 3) Since this concept does not involve nations, it is quite out of scope
+> here.
+> 
+> This still doesn’t catch _all_ meaning of “international” but
+it’s
+> a start. On the other hand, as I said it may by foolish to try to catch
+> all meaning of “international” at once.
+
+1) "-si'u" as tertau is not very easy to use according to the current
+definition, because simxu_1 should be a set (though I hope the definition
+will be changed to a mass some day, because actual use of simxu_1 as a
+mass is frequently seen in Lojban corpus). 
+"gugycu'u" and "natcu'u" are not associated with plurality; too far from
+"international".
+
+2) I don't understand why it should involve {ckaji}.
+
+3) Agree, and all of 1) 2) 4) are out of scope for me. I only argue the
+validity of lujvo {gugykruca}, and I am not interested in creating full
+lujvo for English word "international".
+
