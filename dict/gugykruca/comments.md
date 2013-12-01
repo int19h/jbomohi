@@ -372,3 +372,92 @@ note:  For union of nations, {loi} {gugde}. For cross-country, {tumgre}.
 
 Example: lo vi bajra cu gugykruca la'o gy Olympics gy
 
+
+## 2013-12-01T00:43:23Z — Wuzzy (comment 828, on definition 16900, in reply to 823)
+
+Perhaps let’s just start all over. xD
+
+Oh boy, now things are becoming complicated.
+
+I find the following defininition very confusing:
+“x1=g2=k1 is international in aspect x2=k3; x2=k3 is an intersection of
+nations with participant x1=g2=k1.”
+First of all: Why are there two alternations? Those two sentences seem to
+be a bit far from each other.
+The x2 could be an aspect or an intersection. “intersection” is a
+no-brainer but why “aspect”? {kruca} does not say anything about
+aspects. x1 could be  or a participant. That’s already
+confusing to me.
+
+I am not happy with this. If I understood set theory correctly,
+“intersection” is only possible between two sets.
+What the heck does an intersection between two /countries/ even _mean_?
+Unless you meant two _sets of countries_ which you want to want to
+intersect, the idea of “intersection of countries” is not meaningful
+to me.
+
+Perhaps we should really work out what we /actually/ want to say when we
+say the Lojban word for “international”. It does not make much sense
+to me to first discuss the details if nobody knows what we’re actually
+talking about. ;-)
+
+The first step would obviously to obtain the possible meanings of the word
+“international”.
+
+In English, the word “international” can mean many things:
+1) First, it can actually mean something which directly involves some
+nations. Like “international affairs”, “international law”,
+“international treaty” etc.
+2) Then there is a more vague interpretation where the word just describes
+something which has /something/ do with multiple nations, but does not
+involve any nation directly. Like in “international berbeque”. The
+connections to nations is very vague, it just means there a visitors FROM
+multiple nations.
+3) Then there is the horribly derived word “internationalization”,
+shortened to “I18N”, from software development. It actually means that
+a certain software is made translatable for different _languages_. This
+doesn’t have anything to do with nations.
+4) There may be other meanings as well in the wild.
+Annoyingly, the word “international” is often used interchangibly for
+nations ({natmi}) AND countries ({gugde}) alike. Yet there’s no word
+like “intercountrial”. ;-) (Or is there? Whatever …)
+We should be careful to not fall into the same trap.
+Anyways, none of 1) to 3) does involve some sort of intersection IMO. But
+also no real union (as in set theory).
+Unless you can present me ANY interpretation now which involves
+intersections and countries SOMEHOW, the word “gugykruca” stays just
+meaningless to me.
+
+We should of course NOT try to shoehorn meanings 1-3 and possibly even
+more into one lujvo. In the current definition, well, it just seems like
+that already happened.
+Instead, we should look at concepts 1 to 3 and possibly others, look which
+of them are actually meaningful and well-understood (and not some
+wish-washy bullshit).
+
+1) Okay, I have no problem with that one.
+2) I am not sure wheather we should include that interpretation into
+Lojban. It is still to vague to me.
+3) Although the word is awful, the concept behind is clearly defined and
+clearly deserves a Lojban word.
+Your own comments are welcome.
+
+Based on the three concepts, I try to make new definitions:
+1) 
+- gugysi'u: “s1 (set of countries) do mutually s2.”
+- natsi'u:  “n1 (set of nations) do mutually s2.”
+(… perhaps be part of an international treaty, etc.; very general
+concept)
+- gugycu'u: “c1 is an organized activity involving countries n1
+(ind./mass).”
+- natcu'u:  “c1 is an organized activity involving nations n1
+(ind./mass).”
+(One could call this an “international affair” but I’d be careful.)
+2) Don’t know for sure, but it clearly should involve {ckaji}.
+3) Since this concept does not involve nations, it is quite out of scope
+here.
+
+This still doesn’t catch _all_ meaning of “international” but it’s
+a start. On the other hand, as I said it may by foolish to try to catch
+all meaning of “international” at once.
+
