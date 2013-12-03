@@ -639,3 +639,11 @@ mass is frequently seen in Lojban corpus).
 validity of lujvo {gugykruca}, and I am not interested in creating full
 lujvo for English word "international".
 
+
+## 2013-12-03T20:42:03Z — Wuzzy (comment 836, on definition 16900, in reply to 834)
+
+Re: Perhaps let’s just start all over. xD
+
+I’m out of this discussion.
+It is becoming way too complicated for me.
+
