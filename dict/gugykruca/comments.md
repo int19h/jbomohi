@@ -647,3 +647,24 @@ Re: Perhaps let’s just start all over. xD
 I’m out of this discussion.
 It is becoming way too complicated for me.
 
+
+## 2013-12-04T14:45:38Z — gusnikantu (comment 837, on definition 16900, in reply to 836)
+
+Re: Perhaps let’s just start all over. xD
+
+Wuzzy wrote:
+> I’m out of this discussion.
+> It is becoming way too complicated for me.
+
+
+I modified again the English definition.
+
+Definition: A citizen $x_1=g_2=k_1$ is international in
+aspect/participates in an international event $x_2=k_3$.
+
+Note: $x_2=k_3$ may be Olympics, working/studying abroad, foreign trade,
+international crime syndicate etc. See {gugde}, {kruca}; for union of
+countries, me loi su'o re gugde; for union of races, me loi su'o re natmi;
+for treaty, {gugbinselnu'e}; for internationalization of language, vanbi
+gi'e gunma lo so'i bangu; for cross-country, {tumgre}.
+
