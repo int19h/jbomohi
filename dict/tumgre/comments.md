@@ -42,3 +42,17 @@ I hereby grant this definition the
 
 ;-)
 
+
+## 2013-12-05T08:37:00Z — gusnikantu (comment 840, on definition 42577, in reply to 839)
+
+Re: Seal of approval
+
+Wuzzy wrote:
+> I hereby grant this definition the
+> <<< OFFICIAL SEAL OF APPROVAL >>>
+> .
+> 
+> ;-)
+
+u'i je'e
+
