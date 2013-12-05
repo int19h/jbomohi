@@ -31,3 +31,14 @@ Wuzzy wrote:
 
 Right. I will add "crosses terrain" to the English definition.
 
+
+## 2013-12-05T07:41:56Z — Wuzzy (comment 839, on definition 42577, in reply to 835)
+
+Seal of approval
+
+I hereby grant this definition the
+<<< OFFICIAL SEAL OF APPROVAL >>>
+.
+
+;-)
+
