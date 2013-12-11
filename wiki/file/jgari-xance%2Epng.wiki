@@ -14,3 +14,10 @@ As of August 2013 LMW is running on MW 1.22 wmf11.
 
 ==AWC Extension for LMW==
 It has been discovered that AWC extension no longer works for MW 1.22 wmf11. So la gleki patched it by replacing all deprecated functions with new ones or commenting out some strings that had deprecated functions. The patched extension can be downloaded [[:File:AWC-LMW.7z|here]]. If a file is patched it is backuped in the same folder with suffix @@@. For now uploading user avatars from AWC itself doesn't work. Use <nowiki>[[File: ...]]</nowiki> links or urls instead.
+==ConfirmAccount==
+Since the author hasn't updated the extension yet we had to use the following patch in extensions/ConfirmAccount/business/AccountRequestSubmission.php:
+<pre>
+# Check if biography is long enough
+$bioWordCount = preg_match_all("/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $this->bio, $matches);
+if ($bioWordCount < $wgAccountRequestMinWords) {
+</pre>
