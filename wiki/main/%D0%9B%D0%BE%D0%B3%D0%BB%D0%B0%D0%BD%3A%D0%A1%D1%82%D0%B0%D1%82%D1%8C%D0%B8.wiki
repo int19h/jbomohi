@@ -13,15 +13,3 @@
 }
 
 #footer { display:none; }
-
-$wgHooks['SkinTemplateSetupPageCss'][] = 'wfHideVariousTabsFromAnonymous';
- 
-function wfHideVariousTabsFromAnonymous( &$hidetabcss ) {
-	global $wgUser;
- 
-	if ( !$wgUser->isLoggedIn() ) {
-		$hidetabcss .= 'li#ca-history, li#ca-viewsource, li#ca-edit, li#ca-talk, .vectorMenu { display: none; }';
-	}
- 
-	return true;
-}
