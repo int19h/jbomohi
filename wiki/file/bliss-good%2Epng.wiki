@@ -13,7 +13,8 @@
 -- create actual link (if not nolink=yes)
 -->{{#if:{{{nolink|}}}
       |<!-- nolink=yes -->
-      |{{!((}}:<!-- opening brackets of link
+      |{{#if:{{{braceinside|}}}|<nowiki>{</nowiki>}}<!-- first opening brace before link if braceinside=yes
+    -->{{!((}}:<!-- opening brackets of link
     -->{{#ifeq:{{padleft:|1|{{{1}}}}} <!-- check whether we have a colon at the beginning -->
          |:
          |{{FULLPAGENAME:{{{1}}}}} <!-- if yes: link to article ns or assume other valid link, e.g. Interwikilink -->
@@ -25,14 +26,17 @@
 -->}}<!--
 
 -- create link text
-   -- opening brace if braceinside=yes
--->{{#if:{{{braceinside|}}}|<nowiki>{{</nowiki>}}<!--
+   -- second opening brace if braceinside=yes
+-->{{#if:{{{braceinside|}}}|<nowiki>{</nowiki>}}<!--
    -- surface text of link
 -->{{{alttext|{{#if:{{{1|}}}|{{{1}}}|{{#ifeq:{{NAMESPACE}}|{{ns:Template}}|{{PAGENAME}}|{{FULLPAGENAME}}}}}}}}}<!--
-   -- closing brace if braceinside=yes
--->{{#if:{{{braceinside|}}}|<nowiki>}}</nowiki>}}<!--
+   -- first closing brace if braceinside=yes
+-->{{#if:{{{braceinside|}}}|<nowiki>}</nowiki>}}<!--
    -- end of link, unless nolink=yes
--->{{#if:{{{nolink|}}}||]]}}<!--
+-->{{#if:{{{nolink|}}}||]]<!--
+   -- second closing brace after link if braceinside=yes
+-->{{#if:{{{braceinside|}}}|<nowiki>}</nowiki>}}<!-- 
+-->}}<!--
 
    -- end boldface if bold=yes
 -->{{#if:{{{bold|}}}|'''}}<!--
