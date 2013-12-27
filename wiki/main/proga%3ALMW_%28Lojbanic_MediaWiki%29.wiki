@@ -1,22 +1,23 @@
-''('''Ilmen:''' As it seems this isn't clearly specified in the CLL, here is an explanation.)''
+Lojbanic MediaWiki (LMW) is being developed by Lojbanic community. It's main goals are:
+# Replace the old Tiki (http://www.lojban.org/tiki/) while retaining all the stuff. As of August 2013 this goal is complete. The two wikis are slowly drifting apart since April 2013. Otherwise LMW contains all the stuff from the tiki including text and attachments (files). You are welcome to copy new content from the old wiki to this one until the old tiki is frozen making this one official.
+# Split all the content using pages prefixes.
+## (Without prefixes): main pages. Clean and usable stuff
+## BPFK: pages related to developing Lojban by [[BPFK Sections|BPFK]]
+## jbocre: pages with discussing lojbanic stuff and discussions of how to develop lojban. Not usable by nintadni (i.e. newbies)
+## Stub: pages to be developed and moved to the first category
+## jbocre: imported from the tiki, to be moved to all the other categories or deleted if they are of no use
+# '''THIS GOAL IS COMPLETE: '''Install VisualEditor so people not familiar with MediaWiki syntax can start developing LMW immediately.
+# Install a forum extension. This goal is almost complete. AWC extension patched by la [[User:Gleki|gleki]] works. Minor bugs can exist, though.
+# [[proga:LMW. Creation and ToDo|Other ToDo]]
+==Version of MediaWiki==
+As of now LMW is running on Mediawiki {{CURRENTVERSION}}.
 
-As you know it, when one or several slots of the place structure of a selbri are left empty, they are implicitely filled with {zo'e}. However, some gismu don't seem to comply with this rule, namely those with a default value for one of their arguments.
-
-Here is a couple of examples:
-
-• '' '''''fagri '''''(fire) — x1 is a fire/flame in fuel x2 burning-in/reacting-with oxidizer x3 (default air/oxygen)''
-
-• '' '''''nanca''''' (year) — x1 is x2 years in duration (default is 1 year) by standard x3; (adjective:) x1 is annual''
-
-== Proposed interpretation ==
-
-• When a place with a default value isn't explicitly filled, it is implicitly filled with the default value.
-
-• When a place without default value isn't explicitly filled, it is implicitly filled with '''zo'e'''.
-
-• When a place with a default value is explicitly filled with '''zo'e '''or any other sumti, the default value does '''not''' apply.
-
-Thus, in '''ti fagri''', fagri3 is filled with the default value "air/oxygen", whereas in '''ti fagri fi zo'e''', fagri3 is effectively unspecified.
-
-[[Category:gerna]]
-[[Category:ELG]]
+==AWC Extension for LMW==
+It has been discovered that AWC extension no longer works for MW 1.22 wmf11. So la gleki patched it by replacing all deprecated functions with new ones or commenting out some strings that had deprecated functions. The patched extension can be downloaded [[:File:AWC-LMW.7z|here]]. If a file is patched it is backuped in the same folder with suffix @@@. For now uploading user avatars from AWC itself doesn't work. Use <nowiki>[[File: ...]]</nowiki> links or urls instead.
+==ConfirmAccount==
+Since the author hasn't updated the extension yet we had to use the following patch in extensions/ConfirmAccount/business/AccountRequestSubmission.php:
+<pre>
+# Check if biography is long enough
+$bioWordCount = preg_match_all("/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $this->bio, $matches);
+if ($bioWordCount < $wgAccountRequestMinWords) {
+</pre>
