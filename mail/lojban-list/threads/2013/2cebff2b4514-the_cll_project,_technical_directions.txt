@@ -1,0 +1,123 @@
+# mail/lojban-list thread 2cebff2b4514-the_cll_project,_technical_directions | root 20131227041501.ga21848@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2013-12-27T04:15:01Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20131227041501.ga21848@stodi.digitalkingdom.org | mail/lojban-list/cur/1388117701.2cebff2b4514d34c.jbomohi:2,S
+
+Preliminary notes:
+
+1.  This is a *technical* discussion.  I have technical questions.
+There's a lot of text before you get there.  Sorry.
+
+2.  This is mostly a private discussion between me and the other
+potential volunteers; I'm having it here for convenience and because
+it affects the community.
+
+3.  Before commenting, ask yourself "If I get what I want, will I
+have the time/energy/skill/etc to *actually contribute* to this
+project?".  If the answer is no, unless you're sure we've missed
+something really important, I'd really rather you kept it to
+yourself.  This community has a really bad tendency to get bogged
+down in bikeshedding (
+https://en.wikipedia.org/wiki/Parkinson's_law_of_triviality ), and
+I'm very tired of constant commentary from people who aren't
+actually going to do any work.
+
+4.  Before suggesting awesome minimalist markup language X, first
+make sure that it has the concept of a glossary and the concept of a
+printed, page-numbered index.  Almost all do not.
+
+Actual content:
+
+Reminder of the repo location for reference:
+
+https://github.com/dag/cll
+
+The topic is: "How do we best set up the CLL markup to produce all
+the output formats we need, PDF and HTML in particular?".
+
+The end result of the PDF, when printed, should look at least as
+good as the current Red Book, and when presented on the web as HTML
+should look better than
+http://www.lojban.org/publications/reference_grammar/chapter2.html
+(cuz that's terrible) and ideally as nice as
+http://dag.github.io/cll/ or better.
+
+What prompted me wanting to have a larger discussion around this is
+two things:
+
+1.  It's been very hard to get anyone to help me with the deep
+technical stuff given the current setup, which is pretty hard to
+work with.
+
+2.  I've realized that my ideal of "Here's a source document, and we
+can go straight from here to both printed PDF and web-based HTML,
+with just a bit of tweaking for visual differences in the two
+media", is simply not going to happen; there's no solution that
+works like that, at all.  The paths from the source document to PDF
+and HTML are going to be radically different, and there's nothing we
+can do, so we might as well expect it and structure things around
+that expectation.
+
+So.
+
+The current setup is this:
+
+- the markup is basically docbook, but with significant local/fake
+  tags, like <selmaho> tags and such.
+- we currently convert this to:
+  - normal docbook for the HTML
+    - the docbook is converted directly to HTML via a very large XSLT
+      package not made by us ( see
+      http://sourceforge.net/projects/docbook/files/docbook-xsl-ns/ ,
+      http://wiki.docbook.org/DocBookXslStylesheets , and other
+      resources around the net )
+  - quasi-normal docbook for the PDF
+    - I say quasi-normal because it includes a <latex-verbatim> tag,
+      into which we insert raw LaTeX based on our source markup,
+      that is then passed verbatim into the final LaTeX document
+    - this mostly-normal docbook is then converted into LaTeX by
+      http://dblatex.sourceforge.net/ , which is part XSLT and part
+      Python
+    - this is then processed via xelatex into a PDF
+- we also output other formats based on one of the various
+  intermediary stages mentioned above, but these are largely
+  straightforward
+
+The part that seems to cause trouble is the conversion from our
+source to normal-ish docbook.  This is currently in XSLT.
+
+As a technical person trying to help, you need to have a decent idea
+of "I see the following crappy bit in the HTML/PDF; how did that get
+there?".
+
+So, my questions to technical people interested in helping:
+
+1.  Do you see any solution better than the current two-fork setup?
+
+2.  Given your expertise (which in turn determines the output format
+you'd be helping with), what needs to be streamlined for you to be
+able to go "Oh, I see the problem; it's here, I'll go fix that" when
+you see an issue in the output?
+
+3.  Assuming the problem is the initial conversion from local source
+to docbook, how much would it help if that conversion step was in
+Haskell?  What about Ruby?
+
+Feel free to make other commentary, as long as the general thrust is
+"I would better be able to help if...".
+
+-Robin
+
+-- 
+http://intelligence.org/ :  Our last, best hope for a fantastic future.
+.i ko na cpedu lo nu stidi vau loi jbopre .i danfu lu na go'i li'u .e
+lu go'i li'u .i ji'a go'i lu na'e go'i li'u .e lu go'i na'i li'u .e
+lu no'e go'i li'u .e lu to'e go'i li'u .e lu lo mamta be do cu sofybakni li'u
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/groups/opt_out.
+
+
