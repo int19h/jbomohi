@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2cebff2b4514-the_cll_project,_technical_directions | root 20131227041501.ga21848@stodi.digitalkingdom.org | 7 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2cebff2b4514-the_cll_project,_technical_directions | root 20131227041501.ga21848@stodi.digitalkingdom.org | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2013-12-27T04:15:01Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20131227041501.ga21848@stodi.digitalkingdom.org | mail/lojban-list/cur/1388117701.2cebff2b4514d34c.jbomohi:2,S
 
@@ -446,4 +446,112 @@ To post to this group, send email to lojban@googlegroups.com.
 Visit this group at http://groups.google.com/group/lojban.
 For more options, visit https://groups.google.com/groups/opt_out.
 
+
+
+=== 8 | 2013-12-29T13:08:28Z | entot <ento.entotto@gmail.com> | 8306dbd5-1789-4def-8b65-810283aa58f5@googlegroups.com | mail/lojban-list/cur/1388322508.89882b130c157c95.jbomohi:2,S
+1.  “Is there a better solution?"
+
+There *are* tools for generating HTML and PDF from a single source. I think 
+capitalizing on one of them is a worthwhile option to consider.
+
+In particular, Publican (based on docbook; maintained by RedHat) and Sphinx 
+(based on reStructuredText, a wiki-like markup language; official 
+documentation tool of Python) appear to be well-maintained.
+
+Publican: https://fedorahosted.org/publican/
+Sphinx: http://sphinx-doc.org/
+
+Further in particular, I think Sphinx fits the overall bill:
+
+- Has the concept of a glossary
+  ex. glossary page:  http://sphinx-doc.org/glossary.html
+  ex. link from main text to a glossary entry: 
+ http://sphinx-doc.org/tutorial.html (second paragraph, link titled "source 
+directory”)
+
+- Has the concept of a printed, page-numbered index
+  ex. HTML:  http://sphinx-doc.org/genindex.html
+  ex. PDF:  http://static.repoze.org/bfg-1.2a9-v3.pdf (scroll to the last 
+page)
+
+- Actual books in paper have been produced using Sphinx
+  http://sphinx-doc.org/examples.html#books-produced-using-sphinx
+
+- Conversion from reStructuredText (reST) to HTML and LaTeX is written in 
+Python, not XSLT
+  - the conversion flow is
+    reST -> HTML
+    reST -> LaTeX -> PDF
+    alternatively, reST -> PDF (via a Python library called rst2pdf, which 
+in turn uses reportlab)
+    - I don't know which route to PDF is better
+
+- Can be extended to define custom "tags", called "roles" in Sphinx: 
+corresponds to <cmavo/> etc.
+  http://doughellmann.com/2010/05/defining-custom-roles-in-sphinx.html
+
+- Can be extended to do custom rendering for a particular output format: 
+corresponds to <latex-verbatim/>
+  
+http://sphinx-doc.org/latest/ext/appapi.html#sphinx.application.Sphinx.add_node
+
+If we are to consider Sphinx as an alternative to the current setup, I 
+think it's best to prototype first with the set of constructs from the book 
+that we want to support, as there may be some features Sphinx is missing. 
+The last statement implies I'm not an expert on the ins and outs of Sphinx. 
+I did use it for work once though.
+
+That said, I also think the current setup can just work *if* its problems 
+are fixable by tweaking the workflow or documentation or whatever in a 
+low-cost way. I don't know enough about what the problem really is to make 
+a judgment.
+
+
+2.  “What needs to be streamlined to smoothly fix an issue"
+
+- If the issue stems from the toolchain itself: a sandbox environment to 
+test small code snippets. Probably unit tests, or a very small subset of 
+the book that can be built in seconds.
+
+
+3.  “What if the initial conversion from local source to docbook was in 
+Haskell or Ruby, etc.?"
+
+I want to make sure I understand why the initial conversion may be a 
+problem:
+
+- Because it's in XSLT and few people know how to work with it?
+- Because it's hard to maintain, i.e. tends to go spaghetti or easily get 
+broken when trying to fix something else, etc.?
+
+Regardless, I myself would be a little more comfortable with something in 
+Python or Ruby, but I also think the overhead of getting familiar with a 
+new project's codebase would be about the same if it were in XSLT, Python 
+or Ruby.
+
+I don't know enough about Haskell to comment.
+
+
+4.  "I would better be able to help if..."
+
+* Shorter build time. I’ll have to re-check to give an actual number, but 
+for a full build, it was in the range of tens of minutes. Shorter build 
+time means less time for distraction.
+
+* An automated build server like Jenkins. For trivial fixes, people can 
+just modify the source locally and make a pull request (or push to their 
+own repo, depending on the setup) to let Jenkins build the entire book and 
+archive the result for inspection. Long build time may not be much of a 
+problem if a build server were in place. I can help with setting one up.
+
+* Regular hackathons. Having a fixed appointment will help me in setting 
+aside time for CLL. Timezone differences may be problematic. I'm on 
+GMT+0900.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/groups/opt_out.
 
