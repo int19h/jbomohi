@@ -40,3 +40,23 @@ nanometer wavelength wave".
 Note that all kinds of precisions are permitted by Lojban lujvo making,
 rather than the (mostly strictly) logarithmic system that English employs.
 
+
+## 2014-01-03T09:28:26Z — krtisfranks (comment 847, on definition 20512, in reply to 846)
+
+Re: Issues
+
+(4) It should be noted that the usage of this proposed word (or any of its
+kin [a'o]) is definitely not as would an English layperson would expect. 
+It is malglico to say that dinner was cooked in a microwave, (except in a
+very pedantic and not-very-layperson fashion).	"Microwave oven" should be
+used in such a context, wherein the (microwave) radiation could be
+specified.
+
+(5) I would just like to note that most contexts probably default to
+understanding "microwaves" to be electromagnetic, but as far as these
+definitions go, such interpretations would be wrong (malglico and/or
+malklu).  Any wave that has a wavelength on the order of certain lengths
+would be considered to be microwave- even if it is a water wave or a
+gravitational wave, or any other wave for that matter.	A note stating
+such usage would be nice (I recommend).
+
