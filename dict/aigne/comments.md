@@ -29,3 +29,13 @@ natural eigenvalue of the scalar zero (0). In most English mathematics
 culture to which I have been exposed, these objects are explicitly
 excluded from these groups, which is less pretty and natural.
 
+
+## 2014-01-03T11:08:01Z — krtisfranks (comment 849, on definition 42482, in reply to 848)
+
+Re: Fun Insight
+
+krtisfranks wrote:
+> excluded from these groups, which is less pretty and natural.
+
+I do not mean "group" in the mathematical sense, although...
+
