@@ -1,4 +1,4 @@
-Lojbanic MediaWiki (LMW) is being developed by Lojbanic community. Right now there are [[Special:Statistics|{{NUMBEROFARTICLES}}]] articles in LMW.
+Lojbanic MediaWiki (LMW) is being developed by Lojbanic community. Right now there are [[Special:Statistics|{{NUMBEROFARTICLES}}]] articles in LMW. As of now LMW is running on Mediawiki {{CURRENTVERSION}}.
 
 It's main goals are:
 # Replace the old Tiki (http://www.lojban.org/tiki/) while retaining all the stuff. As of August 2013 this goal is complete. The two wikis are slowly drifting apart since April 2013. Otherwise LMW contains all the stuff from the tiki including text and attachments (files). You are welcome to copy new content from the old wiki to this one until the old tiki is frozen making this one official.
@@ -10,19 +10,6 @@ It's main goals are:
 ## jbocre: imported from the tiki, to be moved to all the other categories or deleted if they are of no use
 # '''THIS GOAL IS COMPLETE: '''Install VisualEditor so people not familiar with MediaWiki syntax can start developing LMW immediately.
 # Install a forum extension. This goal is almost complete. WikiForum extension works. Although, this is not an ideal extension.
-# [[proga:LMW. Creation and ToDo|Other ToDo]]
-==Version of MediaWiki==
-As of now LMW is running on Mediawiki {{CURRENTVERSION}}.
-
-==AWC Extension for LMW==
-It has been discovered that AWC extension no longer works for MW 1.22 wmf11. So la gleki patched it by replacing all deprecated functions with new ones or commenting out some strings that had deprecated functions. The patched extension can be downloaded [[:File:AWC-LMW.7z|here]]. If a file is patched it is backuped in the same folder with suffix @@@. For now uploading user avatars from AWC itself doesn't work. Use <nowiki>[[File: ...]]</nowiki> links or urls instead.
-==ConfirmAccount==
-Since the author hasn't updated the extension yet we had to use the following patch in extensions/ConfirmAccount/business/AccountRequestSubmission.php:
-<pre># Check if biography is long enough
-$bioWordCount = preg_match_all("/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $this->bio, $matches);
-if ($bioWordCount < $wgAccountRequestMinWords) {
-</pre>
-
 ==What to do with LMW==
 If you are in charge of LMW you should do the following:
 # Open LMW once in a while to see if there are new requests from users for being registered. ConfirmAccount extension is installed requiring every new user to fill in a short bio about them. So you have to manually let users in. Don't disable this feature otherwise spambots or vandals might come in. Don't use captcha as it is cracked by vicarious.com
@@ -30,22 +17,23 @@ If you are in charge of LMW you should do the following:
 # Update LMW once in a while. Usually alpha version are okay but please don't delete the old folder so that if after updating the wiki fails to load you can go back to the old version LMW. You need to run $ php maintenance/update.php to update all mysql tables after each update
 # '''Update localisations'''
 # 
-==ToDo==
-This is a list of things that still needs to be added to the new MediaWiki. Please add anything you feel is missing or needs fixing.
+
+===ConfirmAccount===
+Since the author hasn't updated the extension yet we have to use the following patch in extensions/ConfirmAccount/business/AccountRequestSubmission.php:
+<pre># Check if biography is long enough
+$bioWordCount = preg_match_all("/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $this->bio, $matches);
+if ($bioWordCount < $wgAccountRequestMinWords) {
+</pre>
+
+==Content ToDo==
+===ToDo===
+This section is supposed to act as a central point in coordinating what needs to be done on the wiki. This is a list of things that still needs to be added to the new MediaWiki. Please add anything you feel is missing or needs fixing. If you feel like adopting something, just write your name behind it in parentheses, maybe together with the current date. When you're finished, delete it, or move it to a Done section below.
 # News block is almost absent in LMW. Look at those fance welcome pages at en.wikipedia.org or nds-nl.wikipedia.org We need something like that.
 # When a new alpha version of MW is out we should update LMW. Why? See #2.
 # When a new version of [https://www.mediawiki.org/wiki/Extension:VisualEditor VisualEditor] is out please update it in LMW after finishing #1.
 # [https://www.mediawiki.org/wiki/Extension:Flow Flow extension], a replacement of Talk tabs should be available in beta version in 2014. Please install it when it's ready to use.
 # Clicking on the flags on the welcome screen should change the interface (e.g. the left sidebar) accordingly but currently it's not possible (&setlang flag doesn't work). Wait until the [https://bugzilla.wikimedia.org/show_bug.cgi?id=47646 bug] is fixed.
 # Currently not possible to edit the code of pages in "User" namespace. Not sure what can be the reason. Visual Editor works on them, though.
-=== Missing Extensions ===
-* The Babel extension may be of interest (http://www.mediawiki.org/wiki/Extension:Babel). Here is an example of use: http://meta.wikimedia.org/wiki/User_language
-=== Stylistic Matters ===
-* Auto-capitalization is removed; "Fanva" and "Ralju Ckupau" don't look like correct Lojban.
-==Content ToDo==
-This section is supposed to act as a central point in coordinating what needs to be done on the tiki.
-
-If you feel like adopting something, just write your name behind it in parentheses, maybe together with the current date. When you're finished, delete it, or move it to a Done section below.
 
 * see what to do about the duplication of information between the home page and the [[jbocre: What is Lojban?]] page linked from the menu (as "About")
 * check whether old and outdated translations exist
@@ -66,6 +54,12 @@ If you feel like adopting something, just write your name behind it in parenthes
 ***[[la gleki]]:
 ***:I' working on [[L4N]] which is heavily based on [[L4B]].
 
+=== Missing Extensions ===
+* The Babel extension may be of interest (http://www.mediawiki.org/wiki/Extension:Babel). Here is an example of use: http://meta.wikimedia.org/wiki/User_language
+=== Stylistic Matters ===
+* Auto-capitalization is removed; "Fanva" and "Ralju Ckupau" don't look like correct Lojban.
+
+==Done==
 ==Broken pages==
 While importing the content of the old wiki into LMW the attachments with the following attachments couldn't be imported because they were files of zero length.
 
@@ -80,3 +74,6 @@ While importing the content of the old wiki into LMW the attachments with the fo
 [http://mw.lojban.org/index.php/Draft_Tiki_Feature_Testing http://mw.lojban.org/index.php/Draft_Tiki_Feature_Testing] removed
 
 805 is removed as it's a duplicate of 818[[Category:LMW]]
+==Extensions that can be installed for LMW==
+===AWC Extension for LMW===
+It has been discovered that AWC extension no longer works for MW 1.22 wmf11. So la gleki patched it by replacing all deprecated functions with new ones or commenting out some strings that had deprecated functions. The patched extension can be downloaded [[:File:AWC-LMW.7z|here]]. If a file is patched it is backuped in the same folder with suffix @@@. For now uploading user avatars from AWC itself doesn't work. Use <nowiki>[[File: ...]]</nowiki> links or urls instead.
