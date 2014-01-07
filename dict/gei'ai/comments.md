@@ -60,3 +60,26 @@ I mean, to each their own, but I could use this word.  I tried to remove
 it from areas of more dire/greater need. I could not justify its
 encroachment there, but its existence itself is nice.
 
+
+## 2014-01-07T22:20:08Z — krtisfranks (comment 860, in reply to 856)
+
+Re: I think this experimental cmavo was not really neccessary.
+
+Wuzzy wrote:
+> Duh! Was a new experimental BAI cmavo really neccessary for
+> “eigenvalue”? I bet 99% won’t ever have to use this cmavo and its
+> friends in their whole life.
+> 
+> The funniest thing: “gei'ai” is even one letter /longer/ than
+> “aigne”.
+> BAI cmavo were made for concepts that are likely to be used really often
+> in daily conversation. Eigenvalues (and friends) are WAY too special to
+> deserve a BAI cmavo.
+
+A (probably bad example) could be "T is a diagonalizable linear
+transformation with eigenspace(s) ... (respectively for eigenvalues ...)".
+ One /could/ put that into two bridi (by {gije}/{gi'e}), but in more
+complicated statements (such as, say, a description of the process of
+Jordan decomposing a given linear transformation) it is helpful to have
+around. 
+
