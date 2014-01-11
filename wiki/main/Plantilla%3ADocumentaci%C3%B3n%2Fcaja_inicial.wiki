@@ -1,0 +1,43 @@
+<!--
+  Formato de la caja de color
+--><!-- <div id="template-documentation" class="template-documentation iezoomfix">--> <!-- OCULTO PORQUE LA WIKIPEDIA EN ESPAÑOL NO DISPONE DE ESTA CLASE -->
+<div style="clear: both; margin: 1em 0 0 0; background: #EEF9FA; border: 1px dotted #8BCBFF; color:#000; padding: 0.9em;"> <!-- EQUIVALE A LA CLASE ANTERIOR -->
+<!--
+  Título de la caja:
+-->{{#ifeq: {{{título|¬}}} | <!-- «título=», definido pero vacío -->
+| <!--sin título -->
+| <div style="padding-bottom: 3px; border-bottom: 1px solid #aaa; margin-bottom: 1ex;"><span style="{{#if: {{{estilo-título|}}}
+  | {{{estilo-título|}}}
+  | {{#switch: {{SUBJECTSPACE}}
+    | {{ns:10}} | {{ns:828}} = font-weight: bold; font-size: 125%
+    | #default = font-size: 150%
+    }}
+  }}">{{#if: {{{título|}}}
+        | {{{título}}}
+        | {{#switch: {{SUBJECTSPACE}}
+            | {{ns:6}} = Resumen
+            | {{ns:10}} = [[Archivo:Template-info.svg|50px|link=|alt=Icono de documentación de plantilla]] Documentación de la plantilla
+            | {{ns:828}} = [[Archivo:Template-info.svg|50px|link=|alt=Icono de documentación de módulo]] Documentación del módulo
+            | #default = Documentación
+          }}
+      }}</span>{{
+  #if: {{{contenido|}}}
+  |
+  <span class="mw-editsection plainlinks" id="doc_editlinks">
+{{{contenido}}}</span>
+  | <!--Enlaces en el encabezamiento [ver][editar][historial]... o [crear]-->
+    <span class="mw-editsection plainlinks" id="doc_editlinks">{{
+    #ifexist:{{{1|{{FULLPAGENAME}}/doc}}}
+    | [[{{fullurl:{{{1|{{FULLPAGENAME}}/doc}}}}} ver]] [{{editar|{{FULLPAGENAME}}/doc}}] [{{historial|{{FULLPAGENAME}}/doc}}] [{{purgar}}]
+    | <!-- No existe la página de documentación -->
+      [[{{fullurl:{{{1|{{FULLPAGENAME}}/doc}}}|action=edit&preload={{#switch: {{SUBJECTSPACE}}<!-- 
+               -->| {{ns:10}} = {{urlencode:Plantilla:Documentación/precarga}}<!-- Precarga para plantillas
+               -->| {{ns:828}} = {{urlencode:Plantilla:Documentación/precarga módulo}}<!-- Precarga para módulos Lua
+           -->}} }} crear]]}}</span>}}
+</div>
+}}<noinclude><!-- final de la caja --></div>
+
+Esta subplantilla de {{ep|documentación}} genera el formato de la caja de color con un título y enlaces en el encabezado en la página de documentación.
+
+[[Categoría:Wikipedia:Plantillas de apoyo]]
+</noinclude>
