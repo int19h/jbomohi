@@ -1,45 +1,420 @@
-A word that functions as a pro-bridi is any word that temporarily has the same meaning as another bridi (such as a pro-sumti, or in English, a hypothetical "pro-verb").
+-- Test the output from a template by comparing it with fixed text.
+-- The expected text must be in a single line, but can include
+-- "\n" (two characters) to indicate that a newline is expected.
+-- Tests are run (or created) by setting p.tests (string or table), or
+-- by setting page=PAGE_TITLE (and optionally section=SECTION_TITLE),
+-- then executing run_tests (or make_tests).
 
-== Vocabulary ==
+local function collection()
+	-- Return a table to hold lines of text.
+	return {
+		n = 0,
+		add = function (self, s)
+			self.n = self.n + 1
+			self[self.n] = s
+		end,
+		join = function (self, sep)
+			return table.concat(self, sep or '\n')
+		end,
+	}
+end
 
- cei             assigns a a pro-bridi from the ''broda series'' to a bridi (equivalent to [''goi''])
- broda           assigned pro-bridi (set meaning) #1
- brode           assigned pro-bridi (set meaning) #2
- brodi           assigned pro-bridi (set meaning) #3
- brodo           assigned pro-bridi (set meaning) #4
- brodu           assigned pro-bridi (set meaning) #5
- da'o            cancels pro-assigns
- go'a            repeats a recent bridi (usually not the last 2 but may be the antepenultimate)
- go'e            repeats the next to last (penultimate) bridi
- go'i            preceding bridi; in answer to a yes/no question, repeats the claim, meaning "yes"
- go'ira'o        pro-bridi: preceding bridi; repeats claim as true, updates speaker/listener change
-                            true for me too
- go'o            repeats a future bridi, normally the next one
- go'u            repeats a remote past bridi
- mo              bridi/selbri/brivla question
- nei             repeats the current bridi
- no'a            repeats the bridi in which this one is embedded
- 
+local function empty(text)
+	-- Return true if text is nil or empty (assuming a string).
+	return text == nil or text == ''
+end
 
-== Additional Notes and/or Examples ==
+local function strip(text)
+	-- Return text with no leading/trailing whitespace.
+	return text:match("^%s*(.-)%s*$")
+end
 
-*[''cu''] is not required when preceding a pro-selbri in the ''broda series''.
-*Like [''goi''], [''cei''] does not always need to assign a pro-selbri of the ''broda series''.
-**[lo tricu cu pu melbi cei mua mi .i lo nanmu mua mi] = The/a tree was beautiful/good-looking ''<assign: mua ( = current bridi meaning = '''pu melbi''' = English: was good-looking)>''  to me.  The man was <reference assign: mua = pu melbi = English: was beautiful> to me.
-***In the immediately previous example, any occurrence of [''mua''] thereafter would mean ['''<i>pu</i>''' ''melbi''], or "''was good-looking''".  The pro-bridi keeps the same tense as the original selbri.
-*Pro-bridi not only reference the relation (selbri), and therefore the Lojbanic tense of the selbri, of a bridi; but all of the sumti as well.  They do not, however, reference other participles (such as "''xu''", question/true-or-false...?).  They also reference the ''meaning'' of the bridi, not the precise words.
-**xu do prami mi
-::.i go'i (= .i mi prami do)
-***Do you love me?
-:::repeat: last bridi meaning = (that-you = <b>I</b>) love (that-me = <b>you</b>) = Yes, I love you.
-*Iff not edited, a pro-bridi repeats the exact same sumti, tense, etc. as the bridi being referenced (though not other participles, as per immediately preceding and above).  However, if sumti, tenses, etc. <i>are</i> specifically stated, then they replace the respective sumti, tenses, etc. of the referenced bridi.
-**[mi prami la dulsinei,as. --> .i la don kixoteis. (cu) pu go'i] = I love Dulcinea. --> Immediately previous bridi; with rewrite (edit) of first sumti (I <b>--></b> Don Quixote), and of tense (''unspecified'' <b>--></b> past): Don Quixote loved Dulcinea. = I love Dulcinea.  Don Quixote loved Dulcinea.
+local function status_box(stats, expected, actual, iscomment)
+	local label, bgcolor, align, isfail
+	if iscomment then
+		actual = ''
+		align = 'center'
+		bgcolor = 'silver'
+		label = 'Cmnt'
+	elseif expected == '' then
+		stats.ignored = stats.ignored + 1
+		return actual, ''
+	elseif expected == actual then
+		stats.pass = stats.pass + 1
+		actual = ''
+		align = 'center'
+		bgcolor = 'green'
+		label = 'Pass'
+	else
+		stats.fail = stats.fail + 1
+		align = 'center'
+		bgcolor = 'red'
+		label = 'Fail'
+		isfail = true
+	end
+	return actual, 'style="text-align:' .. align .. ';color:white;background:' .. bgcolor .. ';" | ' .. label, isfail
+end
 
-=== go'i Within and/or Near Quotations ===
+local function status_text(stats)
+	local bgcolor, ignored_text, msg
+	if stats.fail == 0 then
+		if stats.pass == 0 then
+			bgcolor = 'salmon'
+			msg = 'No tests performed'
+		else
+			bgcolor = 'green'
+			msg = string.format('All %d tests passed', stats.pass)
+		end
+	else
+		bgcolor = 'darkred'
+		msg = string.format('%d test%s failed', stats.fail, stats.fail == 1 and '' or 's')
+	end
+	if stats.ignored == 0 then
+		ignored_text = ''
+	else
+		bgcolor = 'salmon'
+		ignored_text = string.format(', %d test%s ignored because expected text is blank', stats.ignored, stats.ignored == 1 and '' or 's')
+	end
+	return '<span style="font-size:120%;color:white;background-color:' .. bgcolor .. ';">' .. msg .. ignored_text .. '.</span>'
+end
 
-*These anaphoric words (basyvla) can be used in quotations, but never refer to any of the supporting text outside the quotation, since speakers presumably do not know that they may be quoted by someone else.
+local function run_template(frame, template, forcename, collapse_multiline)
+	-- Template "{{ example |  2  =  def  |  abc  |  name  =  ghi jkl  }}"
+	-- gives args { "  abc  ", "def", name = "ghi jkl" }.
+	if template:sub(1, 2) == '{{' and template:sub(-2, -1) == '}}' then
+		template = template:sub(3, -3) .. '|'  -- append sentinel to get last field
+	else
+		return '(invalid template)'
+	end
+	local args = {}
+	local index = 1
+	local templatename
+	for field in template:gmatch('(.-)|') do
+		if templatename == nil then
+			templatename = forcename or strip(field)
+			if templatename == '' then
+				return '(invalid template)'
+			end
+		else
+			local k, eq, v = field:match("^(.-)(=)(.*)$")
+			if eq then
+				k, v = strip(k), strip(v)  -- k and/or v can be empty
+				local i = tonumber(k)
+				if i and i > 0 and string.match(k, '^%d+$') then
+					args[i] = v
+				else
+					args[k] = v
+				end
+			else
+				while args[index] ~= nil do
+					-- Skip any explicit numbered parameters like "|5=five".
+					index = index + 1
+				end
+				args[index] = field
+			end
+		end
+	end
+	local function expand(t)
+		return frame:expandTemplate(t)
+	end
+	local ok, result = pcall(expand, { title = templatename, args = args })
+	if not ok then
+		result = 'Error: ' .. result
+	end
+	if collapse_multiline then
+		result = result:gsub('\n', '\\n')
+	end
+	return result
+end
 
-However, a "''ri''"-series or "''go'a''"-series reference within a quotation can refer to something mentioned in an earlier quotation if the two quotations are closely related in time and context. This allows a quotation to be broken up by narrative material without interfering with the pro-sumti within it (see example below).  Of course, there is no problem with narrative material referring to something within a quotation: people who quote, unlike people who are quoted, are aware of what they are doing.
-**[la mark. cusku lu mi cliva le zdani li'u .i la .alksyndr. cusku lu mi go'i li'u] = Mark says, "I am leaving the house."  Alexander (Alxinder) says, "Me too."
+local function _make_tests(frame, all_tests, forcename)
+	local maxlen = 38
+	for _, item in ipairs(all_tests) do
+		local template = item[1]
+		if template then
+			local templen = mw.ustring.len(template)
+			item.templen = templen
+			if maxlen < templen and templen <= 70 then
+				maxlen = templen
+			end
+		end
+	end
+	local result = collection()
+	for _, item in ipairs(all_tests) do
+		local template = item[1]
+		if template then
+			local actual = run_template(frame, template, forcename, true)
+			local pad = string.rep(' ', maxlen - item.templen) .. '  '
+			result:add(template .. pad .. actual)
+		else
+			local text = item.text
+			if text then
+				result:add(text)
+			end
+		end
+	end
+	-- Pre tags returned by a module are html tags, not like wikitext <pre>...</pre>.
+	return '<pre>\n' .. mw.text.nowiki(result:join()) .. '\n</pre>\n'
+end
 
-{{BookCat}}
+local function _run_tests(frame, all_tests, forcename)
+	local function safe_cell(text, multiline)
+		-- For testing {{convert}}, want wikitext like '[[kilogram|kg]]' to be unchanged
+		-- so the link works and so the displayed text is short (just "kg" in example).
+		text = text:gsub('(%[%[[^%[%]]-)|(.-%]%])', '%1\0%2')  -- replace pipe in piped link with a zero byte
+		text = text:gsub('{', '&#123;'):gsub('|', '&#124;')    -- escape '{' and '|'
+		text = text:gsub('%z', '|')                            -- restore pipe in piped link
+		if multiline then
+			text = text:gsub('\\n', '<br />')
+		end
+		return text
+	end
+	local function nowiki_cell(text, multiline)
+		text = mw.text.nowiki(text)
+		if multiline then
+			text = text:gsub('\\n', '<br />')
+		end
+		return text
+	end
+	local stats = { pass = 0, fail = 0, ignored = 0 }
+	local result = collection()
+	result:add('{| class="wikitable"')
+	result:add('! Template !! Expected !! Actual, if different !! Status')
+	for _, item in ipairs(all_tests) do
+		local template, expected = item[1], item[2] or ''
+		if template then
+			local actual = run_template(frame, template, forcename, true)
+			local sbox, isfail
+			actual, sbox, isfail = status_box(stats, expected, actual)
+			result:add('|-')
+			result:add('| ' .. safe_cell(template))
+			result:add('| ' .. safe_cell(expected, true))
+			result:add('| ' .. safe_cell(actual, true))
+			result:add('| ' .. sbox)
+			if isfail then
+				result:add('|-')
+				result:add('| align="center"| (above, nowiki)')
+				result:add('| ' .. nowiki_cell(expected, true))
+				result:add('| ' .. nowiki_cell(actual, true))
+				result:add('|')
+			end
+		else
+			local text = item.text
+			if text and text:sub(1, 3) == '---' then
+				actual, sbox, isfail = status_box(stats, '', '', true)
+				result:add('|-')
+				result:add('| colspan="3" style="color:white;background:silver;" | ' .. safe_cell(strip(text:sub(4)), true))
+				result:add('| ' .. sbox)
+			end
+		end
+	end
+	result:add('|}')
+	return status_text(stats) .. '\n\n' .. result:join()
+end
+
+local function get_page_content(page_title)
+	local t = mw.title.new(page_title)
+	if t then
+		local content = t:getContent()
+		if content then
+			if content:sub(-1) ~= '\n' then
+				content = content .. '\n'
+			end
+			return content
+		end
+	end
+	error('Could not read wikitext from "[[' .. page_title .. ']]".', 0)
+end
+
+local function _compare(frame, page_pairs)
+	local function diff_link(title1, title2)
+		return '<span class="plainlinks">[' ..
+			tostring(mw.uri.fullUrl('Special:ComparePages',
+				{ page1 = title1, page2 = title2 })) ..
+			' diff]</span>'
+	end
+	local function link(title)
+		return '[[' .. title .. ']]'
+	end
+	local function message(text, isgood)
+		local color = isgood and 'green' or 'darkred'
+		return '<span style="color:' .. color .. ';">' .. text .. '</span>'
+	end
+	local result = collection()
+	for _, item in ipairs(page_pairs) do
+		local label
+		local title1 = item[1]
+		local title2 = item[2]
+		if title1 == title2 then
+			label = message('same title', false)
+		else
+			local content1 = get_page_content(title1)
+			local content2 = get_page_content(title2)
+			if content1 == content2 then
+				label = message('same content', true)
+			else
+				label = message('different', false) .. ' (' .. diff_link(title1, title2) .. ')'
+			end
+		end
+		result:add('*' .. link(title1) .. ' • ' .. link(title2) .. ' • ' .. label)
+	end
+	return result:join() .. '\n'
+end
+
+local function sections(text)
+	return {
+		first = 1,  -- just after the newline at the end of the last heading
+		this_section = 1,
+		next_heading = function(self)
+			local first = self.first
+			while first <= #text do
+				local last, heading
+				first, last, heading = text:find('==+[\t ]*([^\n]-)[\t ]*==+[\t\r ]*\n', first)
+				if first then
+					if first == 1 or text:sub(first - 1, first - 1) == '\n' then
+						self.this_section = first
+						self.first = last + 1
+						return heading
+					end
+					first = last + 1
+				else
+					break
+				end
+			end
+			self.first = #text + 1
+			return nil
+		end,
+		current_section = function(self)
+			local first = self.this_section
+			local last = text:find('\n==[^\n]-==[\t\r ]*\n', first)
+			if not last then
+				last = -1
+			end
+			return text:sub(first, last)
+		end,
+	}
+end
+
+local function get_tests(frame, tests)
+	local args = frame.args
+	local page_title, section_title = args.page, args.section
+	local show_all = (args.show == 'all')
+	if not empty(page_title) then
+		if not empty(tests) then
+			error('Invoke must not set "page=' .. page_title .. '" if also setting p.tests.', 0)
+		end
+		if page_title:sub(1, 2) == '[[' and page_title:sub(-2) == ']]' then
+			page_title = strip(page_title:sub(3, -3))
+		end
+		tests = get_page_content(page_title)
+		if not empty(section_title) then
+			local s = sections(tests)
+			while true do
+				local heading = s:next_heading()
+				if heading then
+					if heading == section_title then
+						tests = s:current_section()
+						break
+					end
+				else
+					error('Section "' .. section_title .. '" not found in page [[' .. page_title .. ']].', 0)
+				end
+			end
+		end
+	end
+	if type(tests) ~= 'string' then
+		if type(tests) == 'table' then
+			return tests
+		end
+		error('No tests were specified; see [[Module:Convert/tester/doc]].', 0)
+	end
+	if tests:sub(-1) ~= '\n' then
+		tests = tests .. '\n'
+	end
+	local template_count = 0
+	local all_tests = collection()
+	for line in (tests):gmatch('([^\n]-)[\t\r ]*\n') do
+		local template, expected = line:match('^({{.-}})%s*(.-)%s*$')
+		if template then
+			template_count = template_count + 1
+			all_tests:add({ template, expected })
+		elseif show_all then
+			all_tests:add({ text = line })
+		end
+	end
+	if template_count == 0 then
+		error('No templates found; see [[Module:Convert/tester/doc]].', 0)
+	end
+	return all_tests
+end
+
+local function main(frame, p, worker)
+	local args = frame.args
+	local ok, result = pcall(get_tests, frame, p.tests)
+	if ok then
+		ok, result = pcall(worker, frame, result, args.template)
+		if ok then
+			return result
+		end
+	end
+	return '<strong class="error">Error</strong>\n\n' .. result
+end
+
+local modules = {
+	-- For convenience, a key defined here can be used to refer to the
+	-- corresponding list of modules.
+	convert = {
+		'Convert',
+		'Convert/data',
+		'Convert/text',
+		'Convert/extra',
+	},
+	cs1 = {
+		'Citation/CS1',
+		'Citation/CS1/Configuration',
+	},
+	cs1all = {
+		'Citation/CS1',
+		'Citation/CS1/Configuration',
+		'Citation/CS1/Whitelist',
+	},
+}
+
+local p = {}
+
+function p.compare(frame)
+	local pairs = p.pairs
+	if not pairs then
+		local args = frame.args
+		if not args[2] then
+			local builtins = modules[args[1] or 'convert']
+			if builtins then
+				args = builtins
+			end
+		end
+		pairs = {}
+		for i, title in ipairs(args) do
+			if not title:find(':', 1, true) then
+				title = 'Module:' .. title
+			end
+			pairs[i] = { title, title .. '/sandbox' }
+		end
+	end
+	local ok, result = pcall(_compare, frame, pairs)
+	if ok then
+		return result
+	end
+	return '<strong class="error">Error</strong>\n\n' .. result
+end
+
+p.check_sandbox = p.compare
+
+function p.make_tests(frame)
+	return main(frame, p, _make_tests)
+end
+
+function p.run_tests(frame)
+	return main(frame, p, _run_tests)
+end
+
+return p
