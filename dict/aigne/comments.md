@@ -94,3 +94,46 @@ set), and therefore can be considered to be an eigenvector (for every
 generalization of eigenspace), in Lojbanic mathematics (culture), in some
 sense?	"Degenerate" versus "nondegenerate"?  Everything else?)
 
+
+## 2014-01-13T05:11:58Z — krtisfranks (comment 864, on definition 42482, in reply to 863)
+
+Re: “associated with/”
+
+Formatting messed up (I forgot about how the mark-up is handled). 
+Hopefully this works.
+
+> So, x1 and x2 both are associated [in the backward direction from/wrt
+the previous usage of "associated with"] ...
+
+I was just bracketing out commentary information, indicating that the
+present usage of the word "associated" was essentially a semantic inverse
+of the previous usage of the same word.  I was trying not to disrupt the
+flow of the explanation too much by this interjection of information, as
+well as distinguishing one type of parenthetical with this (more meta)
+usage of an aside.  So, the hyperlinked text should be considered merely
+an aside.
+
+> x3 = {Transpose[(r,0)],+,*} for real r 
+
+Should be: x3 is the vectorspace of column vectors of two entries, the
+first entry being any real number and the second entry being 0
+identically. (Basically any vector pointing along a given line.)
+
+> [the vectorspace of (column) vectors of form (r,0) for real r]
+
+Same thing.  I was just trying to explain what I meant the first time, but
+the explanation was hyperlinked.
+
+
+> will tell us that any transformation that can work in x2 will be of
+form:
+> a b	 0 b
+>     = 
+> c d	 0 d.
+
+
+I was making a square matrix of four entries (id est a 2-by-2 matrix). 
+The entry in the first column and first row is a = 0, the entry in the
+second column and first row is b, the entry in the second row and first
+column is c = 0, and the entry in the second row and second column is d.
+
