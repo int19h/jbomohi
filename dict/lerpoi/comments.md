@@ -19,3 +19,13 @@ This definition is almost fine, but the x3 place seems a bit misplaced. It
 implies that any string represents something, which is not the case in my
 understanding.
 
+
+## 2014-01-13T09:43:13Z — filipos (comment 875, on definition 44226, in reply to 873)
+
+Re: Strings don’t always represent something.
+
+I have the same understanding with regards to lerfu3 (and ckaji1). You
+just need ontological circumventions, and occasional "zi'o" to get on with
+these. Now, here you have to point why lerpoi3 is more misplaced than
+lerfu3.
+
