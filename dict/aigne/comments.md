@@ -39,3 +39,58 @@ krtisfranks wrote:
 
 I do not mean "group" in the mathematical sense, although...
 
+
+## 2014-01-13T04:47:23Z — krtisfranks (comment 863, on definition 42482, in reply to 812)
+
+Re: “associated with/”
+
+Wuzzy wrote:
+> Assoicated with what?
+
+x1 is the eigenvalue of linear transformation x2; x3 is the (generalized)
+eigenspace associated with eigenvalue x1 of linear transformation x3.  x3
+is the (generalized) eigenspace that belongs to x2 and x1 (in different
+slightly different, but related (obviously), senses for each). x1 is
+'owns' all (eigen)vectors (and the zero vector) in (generalized)
+eigenspace x3 (of linear transformation x2).
+
+So, x1 and x2 both are associated [in the backward direction from/wrt the
+previous usage of "associated with"] with (generalized) eigenspace x3;
+namely, x2 is the linear transformation that governs any possible
+(generalized) eigenspace x3, whereas x1 is the eigenvalue that which (one)
+of these possible (generalized) eigenspaces is being selected/referenced;
+elseways, x1 is an eigenvalue and can be associated with some
+(uncountably) infinite set of (generalized) eigenspaces (but definitely
+not ALL possible (generalized) eigenspaces), while the linear
+transformation x2 selects one such (generalized) eigenspace out of the
+crowd - and if we fix x1 and choose a bad x2, this (generalized)
+eigenspace will be trivial (id est: have only the zero vector (and
+possibly the infinite vector in each coordinate direction), which is/are-
+in a sense- (an) eigenvector(s) of all linear transformations).
+
+Note, therefore, that the typical ordering of important information will
+make x3 depend on x1, x2, and x4.  But, really, these are all mutually
+dependent objects: but exact specification may not be yielded in certain
+cases.	For example, setting x4 = 1 (so that the eigenspace is not
+generalized (it is basic)), x1 = 0, and x3 = {Transpose[(r,0)],+,*} for
+real r [the vectorspace of (column) vectors of form (r,0) for real r],
+will tell us that any transformation that can work in x2 will be of form:
+a b    0 b
+    = 
+c d    0 d.
+We get constraints on a and c, but b and d are free (they could be any
+numbers at all, including ones that are not even real, if we so desire).
+
+However, certain combinations of parameters (and/or constraints from
+context and previous definitions) will yield fully constrained parameters
+for the last x_i.
+
+
+:)
+Make sense?
+(Also, do you understand what is meant by x4 and "generalized eigenspace"?
+ How about the fact that the zero vector is an element of x3 (taken as a
+set), and therefore can be considered to be an eigenvector (for every
+generalization of eigenspace), in Lojbanic mathematics (culture), in some
+sense?	"Degenerate" versus "nondegenerate"?  Everything else?)
+
