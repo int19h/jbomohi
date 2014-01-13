@@ -10,3 +10,12 @@ would help.
 If not, I should post a definition which drops p2 and p3.
 Please say what you think of this definition.
 
+
+## 2014-01-13T09:25:13Z — Wuzzy (comment 873, on definition 44226)
+
+Strings don’t always represent something.
+
+This definition is almost fine, but the x3 place seems a bit misplaced. It
+implies that any string represents something, which is not the case in my
+understanding.
+
