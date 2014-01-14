@@ -45,3 +45,13 @@ selmugle would be something related to/pertaining to/reflective of
 specialist culture, which necessarily includes certain knowledge.  Thus, I
 think that we are good on that front.
 
+
+## 2014-01-14T10:40:45Z — gleki (comment 885)
+
+.oi
+
+definitely a slang.
+
+After al we have {makfa} with {te makfa fi no da} as the sorcerer doing
+zero magic. or {makfa tolcertu} etc.
+
