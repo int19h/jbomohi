@@ -101,3 +101,13 @@ off on that for now.  I just wanted to put some commentary out there.
 
 (I still do not see the examples, but I now suspect that it is just me.)
 
+
+## 2014-01-14T14:22:34Z — Wuzzy (comment 886, on definition 44200, in reply to 879)
+
+Re: Some notes
+
+> (I still do not see the examples, but I now suspect that it is just me.)
+
+
+The example is on the top of the page, rather than part of the definition.
+
