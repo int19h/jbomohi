@@ -12,3 +12,16 @@ This word lends itself to the following rafsi, which I support, the latter
 more than the former: {xiz}, {xig}.
 (I wish that "{gzo}" could be included too...)
 
+
+## 2014-01-14T10:38:22Z — gleki (comment 884)
+
+ko sisti
+
+i think this is too much. First we need to put all elementary particle
+into one table with their places defined.
+
+https://docs.google.com/spreadsheet/ccc?key=0Ahngu1CNj7wddDZBRzgwMm1EWlpKU
+EJRcTQtUGNCMFE&usp=drive_web#gid=8
+
+I suggested boson as {jbozoni} etc.
+
