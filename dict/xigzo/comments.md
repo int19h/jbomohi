@@ -42,3 +42,26 @@ jbozoni}, etc. Pick your favourite. :)
 I won’t add these words by myself, since this clearly is not my area of
 expertise. ;-)
 
+
+## 2014-01-14T14:42:54Z — gleki (comment 888, in reply to 887)
+
+Re: ko sisti
+
+Wuzzy wrote:
+> gleki wrote:
+> > i think this is too much.
+> I fully agree.
+> Besides: Am I the only one around here who uses the vote system? ;-(
+> 
+> > I suggested boson as {jbozoni} etc.
+> Maybe for Higgs-Boson: {kantrxigzo}, {xigz zei kantrbozoni}, {xigz zei
+> jbozoni}, etc. Pick your favourite. :)
+> 
+> I won’t add these words by myself, since this clearly is not my area
+of
+> expertise. ;-)
+
+
+I think it's unnecessary to emphasize that Higgs boson is a boson. Lengthy
+names are unlikely to be used by lojbanic space travellers.
+
