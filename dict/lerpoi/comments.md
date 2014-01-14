@@ -29,3 +29,22 @@ just need ontological circumventions, and occasional "zi'o" to get on with
 these. Now, here you have to point why lerpoi3 is more misplaced than
 lerfu3.
 
+
+## 2014-01-14T07:37:20Z — krtisfranks (comment 880, on definition 44205, in reply to 872)
+
+Re: Request for comments
+
+Wuzzy wrote:
+> I begin to question this definition. I am not sure if it was a good idea
+> to keep p2 and p3, since they don’t really apply to the concept of a
+> string.
+> If anyone could think of a meaningful usage and posts an example, that
+> would help.
+> If not, I should post a definition which drops p2 and p3.
+> Please say what you think of this definition.
+
+I do not really understand what p3 would be doing there, and p2 seems to
+me to be simply "the rule of spelling the 'word'/text string that I
+intend" (in the sense where "word" does not denote any meaning or value). 
+I too am interested in examples of the utility of these terbri.
+
