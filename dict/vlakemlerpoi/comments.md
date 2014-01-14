@@ -81,3 +81,40 @@ So, we do have words (the sequences), interpretations for these words (the
 values) and rules for how to determine the meaning of a composition of
 them from its parts (the group operation).
 
+
+## 2014-01-14T07:29:34Z — krtisfranks (comment 878, on definition 44227, in reply to 876)
+
+Re: Mathematics
+
+filipos wrote:
+> Wuzzy wrote:
+> > filipos wrote:
+> > > I guess you could alternatively use {valsi} (or a lujvo based on it)
+> as
+> > > 
+> > > "x1 is a sequence of generators with value x2 in group presentation
+> x3",
+> > No, no, no, NO!
+> > That’s WAY too far off from the original definitions.
+> > Those definitions certainly would need new words.
+> 
+> Ok, this is more for fun than for the original point, but here is a PEG
+> for the Klein group
+> 
+> I <- e I | a A | b B | c C | eps
+> A <- e A | a I | b C | c B
+> B <- e B | a C | b I | c A
+> C <- e C | a B | b A | c I
+> 
+> More trivially, it is straightforward to define an attribute grammar for
+> computing the product of a sequence of elements.
+> 
+> So, we do have words (the sequences), interpretations for these words
+(the
+> values) and rules for how to determine the meaning of a composition of
+> them from its parts (the group operation).
+
+
+That is what I was thinking.  One could always tack on a seltau indicating
+'math'-ness on some level.
+
