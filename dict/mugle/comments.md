@@ -33,3 +33,15 @@ just go ahead and make that decision, but it could be useful.
 overlap of roles. While space is limited, opposition to the word merely
 for reasons of 'synonymicity' are weakened.
 
+
+## 2014-01-14T08:02:20Z — krtisfranks (comment 882, on definition 44235, in reply to 881)
+
+Re: Possible issues
+
+6) I am also slightly worried about the possibility of sumti raising in m2
+and m3; for example: being a Muggle to specific knowledge is somewhat
+different from being a Muggle to a world/universe/culture.  However, lo
+selmugle would be something related to/pertaining to/reflective of
+specialist culture, which necessarily includes certain knowledge.  Thus, I
+think that we are good on that front.
+
