@@ -25,3 +25,20 @@ EJRcTQtUGNCMFE&usp=drive_web#gid=8
 
 I suggested boson as {jbozoni} etc.
 
+
+## 2014-01-14T14:31:44Z — Wuzzy (comment 887, in reply to 884)
+
+Re: ko sisti
+
+gleki wrote:
+> i think this is too much.
+I fully agree.
+Besides: Am I the only one around here who uses the vote system? ;-(
+
+> I suggested boson as {jbozoni} etc.
+Maybe for Higgs-Boson: {kantrxigzo}, {xigz zei kantrbozoni}, {xigz zei
+jbozoni}, etc. Pick your favourite. :)
+
+I won’t add these words by myself, since this clearly is not my area of
+expertise. ;-)
+
