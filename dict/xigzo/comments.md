@@ -65,3 +65,41 @@ of
 I think it's unnecessary to emphasize that Higgs boson is a boson. Lengthy
 names are unlikely to be used by lojbanic space travellers.
 
+
+## 2014-01-15T05:13:49Z — krtisfranks (comment 889, in reply to 884)
+
+Re: ko sisti
+
+There are already entries for a number of elementary particles and
+"light", "electricity", "magnet", "space", "time" have their own gismu. 
+Surely the other fundamental interactions deserve equal footing?  Why have
+a word for "cat" if you do not have a basic word for each of the building
+blocks of reality?  We had the space for it, so we should use it.  This is
+supposed to be a list of words, and nothing is stopping the addition of
+important gismu.  The fundamentals of reality are, pretty much by
+definition, objectively important and it is a travesty that the original
+Lojban gi'uste did not include these words. I would rather lack a word for
+"tiger" when I have "cat" than lack "Higgs" when I have "quantum".
+
+In writing a textbook on physics in Lojban, nothing short of a short
+one-word name for such a thing is acceptable.  One also would desire being
+able to compound it easily and without worrying overmuch about the
+grammaticality of how they do so.  Gismu are easy and therefore ideal for
+such a purpose.
+But I will discuss additions proposed before adding them in the future. 
+But, really, such words should be given priority.  And gismu space is not
+quite hallowed ground.
+
+I dislike {jbozoni} for two reasons: 1) it implies "jbo"/Lojban (even if
+it need not do so), 2) "boson" is named after Bose, the name of whom would
+be transcribes as "bocus".  Additionally, my proposal of {kantrbocuni} is
+no less immediately clear than {jbozoni}.
+
+As many people have said, if you do not like a word, do not use it.
+Synonyms are fine too.
+
+What would you propose the structure of such a fundamental entity in our
+universe be?  Recall that particles and not merely particles, and besides
+the Higgs mechanism and field are just as important as any given
+excitation of the latter.
+
