@@ -131,3 +131,20 @@ consistency among them).  So, what place structure would you propose?
 The form is attested for on the Lojban Wikipedia, by the way.  I was
 merely recording here its usage there.
 
+
+## 2014-01-15T06:08:45Z — gleki (comment 892, in reply to 889)
+
+Re: ko sisti
+
+krtisfranks wrote:
+> 
+Could you please write down the full table of particles and fill it so
+that we see that your proposal is with accordance with the names of other
+particles?
+
+You may start with my table for instance.
+I used pseudo-suffix {-ino} for sparticles for instance.
+
+Instead of {jbozoni} one might think of {boznoni}, {bocnoni}, {sbocnoni}
+etc.
+
