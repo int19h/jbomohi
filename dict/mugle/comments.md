@@ -55,3 +55,28 @@ definitely a slang.
 After al we have {makfa} with {te makfa fi no da} as the sorcerer doing
 zero magic. or {makfa tolcertu} etc.
 
+
+## 2014-01-15T05:17:34Z — krtisfranks (comment 890, in reply to 885)
+
+Re: .oi
+
+gleki wrote:
+> definitely a slang.
+> 
+> After al we have {makfa} with {te makfa fi no da} as the sorcerer doing
+> zero magic. or {makfa tolcertu} etc.
+
+
+I marked it as "jargon".
+
+"Sorcerer" and "lacking magical ability" do not quite capture all of the
+nuances of the word.  The word more generally means "an outsider"/"someone
+who is not in the know" and implies: 1) such a person, 2) something that
+is in-the-know (a culture, a group, an individual, or information), and 3)
+a culture to which the first person belongs or which they reflect in their
+Muggleness.
+Building up such a concept is rather difficult using only pre-existing
+words and constructs.
+
+Lots of gismu overlap semantically somewhat, by the way.
+
