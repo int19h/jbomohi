@@ -103,3 +103,31 @@ universe be?  Recall that particles and not merely particles, and besides
 the Higgs mechanism and field are just as important as any given
 excitation of the latter.
 
+
+## 2014-01-15T05:28:46Z — krtisfranks (comment 891, in reply to 887)
+
+Re: ko sisti
+
+
+> Maybe for Higgs-Boson: {kantrxigzo}
+
+That is an option for the boson of course, but what about the mechanism,
+the field, etc.?  How do you express pure, straight Higgsness without
+gaining a family of fu'ivla?  Besides, if we have {kantrxigzo} and no
+{xigzo}, why not just shorten it to {xigzo} anyway (along the lines of
+going up the types of fu'ivla, but resulting in a gismu rather than
+remaining a fu'ivla)? It is justifiable to have gismu space be occupied
+partially by fundamental constituents of reality if we can have various
+words for type of alcohol.  Gismu can be used in compounds in ways that
+other brivla cannot.
+
+Some other physical fundamentals (and not-so-fundamentals) have gismu.
+
+The only points of contention that I can see are a lack of other gismu for
+the fundamental interactions (about which I have thought, trust me) and
+the place structure of these brivla (especially trying to obtain
+consistency among them).  So, what place structure would you propose?
+
+The form is attested for on the Lojban Wikipedia, by the way.  I was
+merely recording here its usage there.
+
