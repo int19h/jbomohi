@@ -148,3 +148,15 @@ I used pseudo-suffix {-ino} for sparticles for instance.
 Instead of {jbozoni} one might think of {boznoni}, {bocnoni}, {sbocnoni}
 etc.
 
+
+## 2014-01-15T06:11:03Z — gleki (comment 893, in reply to 889)
+
+Re: ko sisti
+
+krtisfranks wrote:
+> 2) "boson" is named after Bose, the name of whom would
+be transcribes as "bocus".
+
+Are we to find the true etymology here or to make the word recognizable by
+most to'e mugle ?
+
