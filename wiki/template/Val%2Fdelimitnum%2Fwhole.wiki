@@ -1,0 +1,40 @@
+{{#ifexpr:{{{1|0}}}<1E3
+  |{{{1}}}
+  |{{#ifexpr:{{{1}}}<1E6
+     |{{#expr:trunc({{{1}}}/1E3)}}<!--
+   --><span style="margin-left:.25em"><!--
+   -->{{padleft:{{#expr:{{{1}}}mod1E3}}|3}}<!--
+   --></span>
+     |{{#ifexpr:{{{1}}}<1E9
+        |{{#expr:trunc({{{1}}}/1E6)}}<!--
+      --><span style="margin-left:.25em"><!--
+      -->{{padleft:{{#expr:(trunc({{{1}}}/1E3))mod1E3}}|3}}<!--
+      --><span style="margin-left:.25em"><!--
+      -->{{padleft:{{#expr:{{{1}}}mod1E3}}|3}}<!--
+      --></span></span>
+        |{{#ifexpr:{{{1}}}<1E12
+           |{{#expr:trunc({{{1}}}/1E9)}}<!--
+         --><span style="margin-left:.25em"><!--
+         -->{{padleft:{{#expr:(trunc({{{1}}}/1E6))mod1E3}}|3}}<!--
+         --><span style="margin-left:.25em"><!--
+         -->{{padleft:{{#expr:(trunc({{{1}}}/1E3))mod1E3}}|3}}<!--
+         --><span style="margin-left:.25em"><!--
+         -->{{padleft:{{#expr:{{{1}}}mod1E3}}|3}}<!--
+         --></span></span></span>
+           |{{#ifexpr:{{{1}}}<1E15
+              |{{#expr:trunc({{{1}}}/1E12)}}<!--
+            --><span style="margin-left:.25em"><!--
+            -->{{padleft:{{#expr:(trunc({{{1}}}/1E9))mod1E3}}|3}}<!--
+            --><span style="margin-left:.25em"><!--
+            -->{{padleft:{{#expr:(trunc({{{1}}}/1E6))mod1E3}}|3}}<!--
+            --><span style="margin-left:.25em"><!--
+            -->{{padleft:{{#expr:(trunc({{{1}}}/1E3))mod1E3}}|3}}<!--
+            --><span style="margin-left:.25em"><!--
+            -->{{padleft:{{#expr:{{{1}}}mod1E3}}|3}}<!--
+            --></span></span></span></span>
+              |{{{1}}}
+            }}
+         }}
+      }}
+   }}
+}}
