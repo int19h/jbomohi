@@ -18,3 +18,11 @@ Things can be subjective or objective. Whether or not a movie is
 interesting is subjective. Objective things don't depend on a person's
 mind. {sajra'a} is for things that are subjective.
 
+
+## 2014-01-15T19:05:32Z — Wuzzy (comment 898, on definition 44242, in reply to 897)
+
+Re: I don’t fully understand this. :-(
+
+Let me try: “lo du'u lo skina cu cinri cu sajra'a”—Is that a valid
+example?
+
