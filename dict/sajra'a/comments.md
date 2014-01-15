@@ -26,3 +26,14 @@ Re: I don’t fully understand this. :-(
 Let me try: “lo du'u lo skina cu cinri cu sajra'a”—Is that a valid
 example?
 
+
+## 2014-01-15T19:07:45Z — selpahi (comment 899, on definition 44242, in reply to 898)
+
+Re: I don’t fully understand this. :-(
+
+Wuzzy wrote:
+> Let me try: “lo du'u lo skina cu cinri cu sajra'a”—Is that > a
+valid example?
+
+Looks fine to me.
+
