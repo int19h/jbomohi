@@ -160,3 +160,15 @@ be transcribes as "bocus".
 Are we to find the true etymology here or to make the word recognizable by
 most to'e mugle ?
 
+
+## 2014-01-15T18:03:10Z — Wuzzy (comment 894, in reply to 889)
+
+Re: ko sisti
+
+krtisfranks wrote:
+> As many people have said, if you do not like a word, do not use it.
+> Synonyms are fine too.
+Ugh. You are right.
+And I better keep my mouth shut in this discussion for now since this is
+clearly not my area of expertise.
+
