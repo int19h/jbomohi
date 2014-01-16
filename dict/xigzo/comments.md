@@ -172,3 +172,25 @@ Ugh. You are right.
 And I better keep my mouth shut in this discussion for now since this is
 clearly not my area of expertise.
 
+
+## 2014-01-16T00:12:09Z — krtisfranks (comment 900, in reply to 893)
+
+Re: ko sisti
+
+gleki wrote:
+> krtisfranks wrote:
+> > 2) "boson" is named after Bose, the name of whom would
+> be transcribes as "bocus".
+> 
+> Are we to find the true etymology here or to make the word recognizable
+by
+> most to'e mugle ?
+
+Hahaha, good point.  I was thinking more along the lines of someone who
+has been educated about quantum mechanics in Lojban (without, necessarily,
+contact with non-Lojbanic physicists).	I would prefer "correcting" it
+where one can.	And someone who comes into Lojban to talk about Q. Mech.
+would simply have to learn its words for the same stuff, just like any
+other foreign language word.  But I can see how other options are
+justified and probably would seem more natural.
+
