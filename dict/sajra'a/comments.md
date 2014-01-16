@@ -37,3 +37,15 @@ valid example?
 
 Looks fine to me.
 
+
+## 2014-01-16T21:59:11Z — krtisfranks (comment 902)
+
+"Pertains to subjects"
+
+Obviously, subjectivity is not limited to (but does include) opinion and
+judgment.  But it is not immediately clear to me how subjectivity
+(non-objectivity) is related closely to pertaining to a subject.  I admit
+that I am interpreting "subject" to mean "topic" or "object"/"thing"; I am
+trying to expand my horizons here, but I am not sure that I can.  Please
+enlighten me?
+
