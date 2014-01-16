@@ -194,3 +194,22 @@ would simply have to learn its words for the same stuff, just like any
 other foreign language word.  But I can see how other options are
 justified and probably would seem more natural.
 
+
+## 2014-01-16T00:13:57Z — krtisfranks (comment 901, in reply to 894)
+
+Re: ko sisti
+
+Wuzzy wrote:
+> krtisfranks wrote:
+> > As many people have said, if you do not like a word, do not use it.
+> > Synonyms are fine too.
+> Ugh. You are right.
+> And I better keep my mouth shut in this discussion for now since this is
+> clearly not my area of expertise.
+
+No, please do discuss. Talk is good.
+
+I am sorry for having offended anyone or done something incredibly wrong. 
+I should have thought about it first and got it approved by at least one
+other person zo'o.  I will try to be better from now on.
+
