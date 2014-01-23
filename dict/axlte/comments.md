@@ -117,3 +117,21 @@ you
 well... I'm changing my spanish definition and voting my english
 definition, and natural selection will select the best.
 
+
+## 2014-01-23T03:04:20Z — krtisfranks (comment 907, on definition 18126)
+
+Pronounciation
+
+"x" in Nahuatl is essentially equivalent to "c" in Lojban.  Moreover,
+attempt to retain English recognition would fail in this proposal because
+"x" in Lojban is not pronounced as "x" is in English ("ks" in Lojbanic
+rendering).
+
+Also, "avocado" is proposed to be {grutraxuakatlu} based on "ahuacatl" (in
+Nahuatl). While I have issues with that rendering, I figure that we should
+systematically render Nahuatl words: if we are including the noun
+declension "-tl" (which is not part of gismu making, but that does not
+necessarily need apply here), any Nahuatl word ending with "-tl" should be
+borrowed and end with either "-te" (as was done here) or "-tlu" (as was
+done with "avocado") in Lojban.
+
