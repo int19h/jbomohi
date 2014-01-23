@@ -49,3 +49,21 @@ that I am interpreting "subject" to mean "topic" or "object"/"thing"; I am
 trying to expand my horizons here, but I am not sure that I can.  Please
 enlighten me?
 
+
+## 2014-01-23T11:32:02Z — selpahi (comment 910, in reply to 902)
+
+Re: 
+
+krtisfranks wrote:
+> Obviously, subjectivity is not limited to (but does include) opinion and
+> judgment.  But it is not immediately clear to me how subjectivity
+> (non-objectivity) is related closely to pertaining to a subject.  I
+admit
+> that I am interpreting "subject" to mean "topic" or "object"/"thing"; I
+am
+> trying to expand my horizons here, but I am not sure that I can.  Please
+> enlighten me?
+
+"Subject" doesn't mean "topic", it means "someone who is aware" as opposed
+to "something that someone is aware of" (object). 
+
