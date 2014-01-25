@@ -38,3 +38,21 @@ here.
 
 Happy urinating! xo'ona'i
 
+
+## 2014-01-25T06:32:05Z — krtisfranks (comment 929, on definition 17078, in reply to 928)
+
+Re: Mictua
+
+gleki wrote:
+> It'd be {cupra lo pinci}
+> 
+> lo pinci cu cliva lo xadni vau u'i
+> 
+
+Got it. Thanks for clarifying.
+
+> 
+> Happy urinating! xo'ona'i
+
+Hahaha, thanks! Hopefully, you too!
+
