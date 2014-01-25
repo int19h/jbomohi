@@ -107,3 +107,44 @@ are obviously important to the nature of chimaerity in this sense.]
 Meanwhile, we could (have) reserve(d) {tcimera} for, say, medical/genetic
 meanings.
 
+
+## 2014-01-25T13:45:02Z — Wuzzy (comment 940, on definition 52684, in reply to 916)
+
+Re: Pronunciation
+
+gleki wrote:
+> krtisfranks wrote:
+> > In Greek it would have been closer to "ximera".  Just a thing to
+> consider.
+> 
+> 
+> "Χιμαιρα" looks more like a name. 
+> 
+> But there are more of them:
+> 1. Greek Mythology. A fire-breathing she-monster usually represented as
+a
+> composite of a lion, goat, and serpent.
+> {la .ximeras.} ?
+> 
+> 2. An imaginary monster made up of grotesquely disparate parts.
+> {mixrymonsuta}? (need to coin {monsuta}="monster" into Lojban, hello
+> Sonja!)
+> 3. An organism, organ, or part consisting of two or more tissues of
+> different genetic composition, produced as a result of organ transplant,
+> grafting, or genetic engineering.
+> vrici cedra senta xadni?
+> Although, what's the word for "tissue"?
+> 
+> a'enai. I'm tired. Continue yourself:
+> 
+> 4. A substance, such as an antibody, created from the proteins or genes
+or
+> two different species.
+> 5. An individual who has received a transplant of genetically and
+> immunologically different tissue.
+> 6. A fanciful mental illusion or fabrication.
+
+
+Thanks for pointing this out. The current definition is still ambigious,
+it could mean 1 or 2.
+
