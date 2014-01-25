@@ -47,3 +47,35 @@ _ref=2
 
 ^^ hopefully those work
 
+
+## 2014-01-25T07:14:24Z — gleki (comment 935, on definition 52688, in reply to 932)
+
+Re: proposed by whom?
+
+krtisfranks wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > Gleki? Huh. mi co'u vedli
+> > 
+> > I believe so [that you invented it].	Sorry if I misattributed.
+I will
+> go check.
+> 
+>
+https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-prn2/t1/972203_381862015
+> 268388_41565272_n.jpg
+> 
+>
+https://www.facebook.com/groups/lojban/permalink/10151492843236705/?stream
+> _ref=2
+> 
+> ^^ hopefully those work
+
+Indeed. In past i proposed too many things to record them in one place.
+Now I'm concentrated on one integrated project.
+
+{digno} is fine then. It should've been {diagno} but JVS won't let it in
+as JVS is incompatible with camxes.
+And no, those links are broken here in chat. next time one has to use
+goo.gl or similar services.
+
