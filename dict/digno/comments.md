@@ -27,3 +27,23 @@ experimental gismu without conferring with others first.  I just that that
 it would be more okay in this circumstance since others had seen the post
 in question and it was well-received, I thought.
 
+
+## 2014-01-25T06:43:14Z — krtisfranks (comment 932, on definition 52688, in reply to 931)
+
+Re: proposed by whom?
+
+krtisfranks wrote:
+> gleki wrote:
+> > Gleki? Huh. mi co'u vedli
+> 
+> I believe so [that you invented it].	Sorry if I misattributed. I will
+go check.
+
+https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-prn2/t1/972203_381862015
+268388_41565272_n.jpg
+
+https://www.facebook.com/groups/lojban/permalink/10151492843236705/?stream
+_ref=2
+
+^^ hopefully those work
+
