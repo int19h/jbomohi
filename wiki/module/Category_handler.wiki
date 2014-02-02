@@ -9,14 +9,14 @@
 --      by altering the values in the "cfg" table.                                                      --
 --                                                                                                      --
 ----------------------------------------------------------------------------------------------------------
-
+ 
 ----------------------------------------------------------------------------------------------------------
 --                                          Configuration data                                          --
 --                      Language-specific parameter names and values can be set here.                   --
 ----------------------------------------------------------------------------------------------------------
-
+ 
 local cfg = {}
-
+ 
 -- The following config values set the names of parameters that suppress categorisation. They are used
 -- with Module:Yesno, and work as follows:
 --
@@ -33,38 +33,38 @@ local cfg = {}
 -- nil                                      Categorisation is allowed
 cfg.nocat = 'nocat'    
 cfg.categories = 'categories'
-
+ 
 -- The parameter name for the legacy "category2" parameter. This skips the blacklist if set to the
 -- cfg.category2Yes value, and suppresses categorisation if present but equal to anything other than
 -- cfg.category2Yes or cfg.category2Negative.
 cfg.category2 = 'category2'
 cfg.category2Yes = 'yes'
 cfg.category2Negative = '¬'
-
+ 
 -- cfg.subpage is the parameter name to specify how to behave on subpages. cfg.subpageNo is the value to
 -- specify to not categorise on subpages; cfg.only is the value to specify to only categorise on subpages.
 cfg.subpage = 'subpage'
 cfg.subpageNo = 'no'
 cfg.subpageOnly = 'only'
-
+ 
 -- The parameter for data to return in all namespaces.
 cfg.all = 'all'
-
+ 
 -- The parameter name for data to return if no data is specified for the namespace that is detected. This
 -- must be the same as the cfg.other parameter in [[Module:Namespace detect]].
 cfg.other = 'other'
-
+ 
 -- The parameter name used to specify a page other than the current page; used for testing and
 -- demonstration. This must be the same as the cfg.page parameter in [[Module:Namespace detect]].
 cfg.page = 'page'
-
+ 
 -- The categorisation blacklist. Pages that match Lua patterns in this list will not be categorised.
 -- (However, see the explanation of cfg.nocat, cfg.categories and cfg.category2 for some exceptions.)
 -- If the namespace name has a space in, it must be written with an underscore, e.g. "Wikipedia_talk".
 -- Other parts of the title can have either underscores or spaces.
 cfg.blacklist = {
     '^Main Page$', -- don't categorise the main page.
-    
+ 
     -- Don't categorise the following pages or their subpages.
     '^Wikipedia:Cascade%-protected items$',
     '^Wikipedia:Cascade%-protected items/.*$',
@@ -72,14 +72,14 @@ cfg.blacklist = {
     '^User:UBX/.*$',
     '^User_talk:UBX$',
     '^User_talk:UBX/.*$',
-    
+ 
     -- Don't categorise subpages of these pages, but allow
     -- categorisation of the base page.
     '^Wikipedia:Template messages/.+$',
-    
+ 
     '/[aA]rchive' -- Don't categorise archives.
 }
-
+ 
 -- This is a table of namespaces to categorise by default. They should be in the format of parameter
 -- names accepted by [[Module:Namespace detect]].
 cfg.defaultNamespaces = {
@@ -88,20 +88,20 @@ cfg.defaultNamespaces = {
     'help',
     'category'
 }
-
+ 
 ----------------------------------------------------------------------------------------------------------
 --                                          End configuration data                                      --
 ----------------------------------------------------------------------------------------------------------
-
+ 
 -- Get dependent modules
 local nsDetect = require('Module:Namespace detect')
 local yesno = require('Module:Yesno')
-
+ 
 ----------------------------------------------------------------------------------------------------------
 --                                          Local functions                                             --
 --      The following are internal functions, which we do not want to be accessible from other modules. --
 ----------------------------------------------------------------------------------------------------------
-
+ 
 -- Find whether we need to return a category or not.
 local function needsCategory(pageObject, args)
     -- Don't categorise if the relevant options are set.
@@ -131,7 +131,7 @@ local function needsCategory(pageObject, args)
     end
     return true
 end
-
+ 
 -- Find whether we need to check the blacklist or not.
 local function needsBlacklistCheck(args)
     if yesno(args[cfg.nocat]) == false
@@ -143,7 +143,7 @@ local function needsBlacklistCheck(args)
         return true
     end
 end
-
+ 
 -- Find whether any namespace parameters have been specified.
 -- Mappings is the table of parameter mappings taken from
 -- [[Module:Namespace detect]].
@@ -160,15 +160,15 @@ local function nsParamsExist(mappings, args)
     end
     return false
 end
-
+ 
 ----------------------------------------------------------------------------------------------------------
 --                                          Global functions                                            --
 --      The following functions are global, because we want them to be accessible from #invoke and      --
 --      from other Lua modules.                                                                         --
 ----------------------------------------------------------------------------------------------------------
-
+ 
 local p = {}
-
+ 
 -- Find if a string matches the blacklist. Returns the match if one is found, or nil otherwise.
 -- Input should be a page title with a namespace prefix, e.g. "Wikipedia talk:Articles for deletion".
 function p.matchesBlacklist(page)
@@ -180,7 +180,7 @@ function p.matchesBlacklist(page)
         end
     end
 end
-
+ 
 -- The main structure of the module. Checks whether we need to categorise,
 -- and then passes the relevant arguments to [[Module:Namespace detect]].
 function p._main(args)
@@ -189,9 +189,9 @@ function p._main(args)
     -- code.
     local pageObject = nsDetect.getPageObject(args[cfg.page])
     local mappings = nsDetect.getParamMappings()
-    
+ 
     if not needsCategory(pageObject, args) then return end
-    
+ 
     local ret = ''
     -- Check blacklist if necessary.
     if not needsBlacklistCheck(args) or not p.matchesBlacklist(pageObject.prefixedText) then
@@ -216,7 +216,7 @@ function p._main(args)
             if type(all) == 'string' then
                 ret = ret .. all
             end
-            
+ 
             -- Get the arguments to pass to [[Module:Namespace detect]].
             local ndargs = {}
             for ns, params in pairs(mappings) do
@@ -227,9 +227,9 @@ function p._main(args)
             ndargs.other = args.other
             ndargs.page = args.page
             ndargs.demospace = args.demospace
-            
+ 
             local data = nsDetect._main(ndargs)
-            
+ 
             -- Work out what to return based on the result of the namespace detect call.
             local datanum = tonumber(data)
             if type(datanum) == 'number' then
@@ -252,7 +252,7 @@ function p._main(args)
     end
     return ret
 end
-
+ 
 function p.main(frame)
     -- If called via #invoke, use the args passed into the invoking
     -- template, or the args passed to #invoke if any exist. Otherwise
@@ -267,7 +267,7 @@ function p.main(frame)
     else
         origArgs = frame
     end
-
+ 
     -- Trim whitespace and remove blank arguments for the following args:
     -- 1, 2, 3 etc., "nocat", "categories", "subpage", and "page".
     local args = {}
@@ -288,7 +288,7 @@ function p.main(frame)
             args[k] = v
         end
     end
-    
+ 
     -- Lower-case "nocat", "categories", "category2", and "subpage". These
     -- parameters are put in lower case whenever they appear in the old
     -- template, so we can just do it once here and save ourselves some work.
@@ -299,8 +299,8 @@ function p.main(frame)
             args[v] = mw.ustring.lower(argVal)
         end
     end
-    
+ 
     return p._main(args)
 end
-
+ 
 return p
