@@ -1,15 +1,15 @@
 -- This module provides easy processing of arguments passed to Scribunto from #invoke.
 -- It is intended for use by other Lua modules, and should not be called from #invoke directly.
-
+ 
 local libraryUtil = require('libraryUtil')
 local checkType = libraryUtil.checkType
-
+ 
 local arguments = {}
-
+ 
 local nilArg = {} -- Used for memoizing nil arguments in metaArgs.
-
+ 
 -- Generate four different tidyVal functions, so that we don't have to check the options every time we call it.
-
+ 
 local function tidyValDefault(key, val)
 	if type(val) == 'string' then
 		val = val:match('^%s*(.-)%s*$')
@@ -22,7 +22,7 @@ local function tidyValDefault(key, val)
 		return val
 	end
 end
-
+ 
 local function tidyValTrimOnly(key, val)
 	if type(val) == 'string' then
 		return val:match('^%s*(.-)%s*$')
@@ -30,7 +30,7 @@ local function tidyValTrimOnly(key, val)
 		return val
 	end
 end
-
+ 
 local function tidyValRemoveBlanksOnly(key, val)
 	if type(val) == 'string' then
 		if val:find('%S') then
@@ -42,17 +42,17 @@ local function tidyValRemoveBlanksOnly(key, val)
 		return val
 	end
 end
-
+ 
 local function tidyValNoChange(key, val)
 	return val
 end
-
+ 
 function arguments.getArgs(frame, options)
 	checkType('getArgs', 1, frame, 'table', true)
 	checkType('getArgs', 2, options, 'table', true)
 	frame = frame or {}
 	options = options or {}
-
+ 
 	-- Get the arguments from the frame object if available. If the frame object is not available, we are being called
 	-- from another Lua module or from the debug console, so assign the args to a new variable so we can differentiate them.
 	local fargs, pargs, luaArgs
@@ -69,12 +69,12 @@ function arguments.getArgs(frame, options)
 	else
 		luaArgs = frame
 	end
-
+ 
 	-- Set up the args and metaArgs tables. args will be the one accessed from functions, and metaArgs will hold the actual arguments.
 	-- The metatable connects the two together.
 	local args, metaArgs, metatable = {}, {}, {}
 	setmetatable(args, metatable)
-
+ 
 	-- Generate the tidyVal function. If it has been specified by the user, we use that; if not, we choose one of four functions
 	-- depending on the options chosen. This is so that we don't have to call the options table every time the function is called.
 	local tidyVal = options.valueFunc
@@ -95,7 +95,7 @@ function arguments.getArgs(frame, options)
 			tidyVal = tidyValNoChange
 		end
 	end
-
+ 
 	local function mergeArgs(iterator, tables)
 		-- Accepts multiple tables as input and merges their keys and values into one table using the specified iterator.
 		-- If a value is already present it is not overwritten; tables listed earlier have precedence.
@@ -114,13 +114,13 @@ function arguments.getArgs(frame, options)
 			end
 		end
 	end
-
+ 
 	-- Set the order of precedence of the argument tables. If the variables are nil, nothing will be added to the table,
 	-- which is how we avoid clashes between the frame/parent args and the Lua args.	
 	local argTables = {fargs}
 	argTables[#argTables + 1] = pargs
 	argTables[#argTables + 1] = luaArgs
-
+ 
 	--[[
 	-- Define metatable behaviour. Arguments are memoized in the metaArgs table, and are only fetched from the
 	-- argument tables once. Nil arguments are also memoized using the nilArg variable in order to increase
@@ -128,7 +128,7 @@ function arguments.getArgs(frame, options)
 	-- do not run pairs and ipairs on fargs and pargs more than once. We also do not run ipairs on fargs and
 	-- pargs if pairs has already been run, as all the arguments will already have been copied over.
 	--]]
-
+ 
 	metatable.__index = function (t, key)
 		local val = metaArgs[key]
 		if val ~= nil then
@@ -149,7 +149,7 @@ function arguments.getArgs(frame, options)
 		end
 		return nil
 	end
-
+ 
 	metatable.__newindex = function (t, key, val)
 		if options.readOnly then
 			error('could not write to argument table key "' .. tostring(key) .. '"; the table is read-only', 2)
@@ -161,7 +161,7 @@ function arguments.getArgs(frame, options)
 			metaArgs[key] = val
 		end
 	end
-
+ 
 	metatable.__pairs = function ()
 		if not metatable.donePairs then
 			mergeArgs(pairs, argTables)
@@ -176,7 +176,7 @@ function arguments.getArgs(frame, options)
 			return nk, val
 		end
 	end
-
+ 
 	metatable.__ipairs = function ()
 		if not metatable.doneIpairs then
 			mergeArgs(ipairs, argTables)
@@ -192,8 +192,8 @@ function arguments.getArgs(frame, options)
 			return i + 1, val
 		end, nil, 0
 	end
-
+ 
 	return args
 end
-
+ 
 return arguments
