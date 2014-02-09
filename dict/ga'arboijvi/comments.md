@@ -43,3 +43,23 @@ la fudbol (=soccer)
 
 Not sure about american football.
 
+
+## 2014-02-09T12:07:29Z — filipos (comment 945, on definition 17104, in reply to 943)
+
+Re: Similar concepts
+
+I would actually like native lujvo for sports, and I don't mind them being
+a little arbitrary, as long as the alternatives are reasonably dealt with
+(maybe golf would be kevboijvi for example).
+
+English does that: foot-ball, hand-ball, volley-ball, basket-ball,
+soft-ball, base-ball etc. It would be interesting to check if there are
+native names for these games in other languages that don't follow the
+English ones. 
+
+With extensive consideration, one could convincingly propose a rich
+vocabulary.
+
+In fact, lujvo can be more neutral than fu'ivla, since we don't have to
+commit to a specific foreign pronunciation.
+
