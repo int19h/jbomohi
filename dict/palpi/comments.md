@@ -11,3 +11,16 @@ Example?
 
 Can someone explain further/provide an example?
 
+
+## 2014-02-12T05:28:12Z — gleki (comment 957, on definition 42418, in reply to 949)
+
+Re: Example?
+
+krtisfranks wrote:
+> Can someone explain further/provide an example?
+
+This explains how it differs from {pencu}:
+http://mw.lojban.org/index.php?title=BPFK_Section:_sensory_gismu
+
+{mi palpi lo xutla} etc.
+
