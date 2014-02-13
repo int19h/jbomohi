@@ -15,3 +15,14 @@ krtisfranks wrote:
 
 probably.
 
+
+## 2014-02-13T21:05:05Z — selpahi (comment 970, on definition 52768, in reply to 965)
+
+Re: Redundancy
+
+krtisfranks wrote:
+> Is not {terdi} exactly equivalent?
+
+
+plini, rather.
+
