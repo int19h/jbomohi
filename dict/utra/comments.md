@@ -54,3 +54,21 @@ The quickest answer is that everything below species is definitely a cmene
 (jutsi2).
 Should we map class Mammalia to {mabru} and Animalia to {danlu}?
 
+
+## 2014-02-13T07:32:44Z — krtisfranks (comment 961, on definition 52721, in reply to 955)
+
+Re: Word choice
+
+Wuzzy wrote:
+> krtisfranks wrote:
+> > Why not "(c)s"
+> 
+> Because
+> “lutrinai” = “lu trinai” = “lu trina zei natmi” and
+> “clutrinai” = “culno zei trina zei natmi”.
+
+Just for the record, I knew that those words decomposed that way; I quoted
+it because I did not want to think to much about how to transcribe the
+basic word more properly into Lojban, but I still wanted to raise the
+point concretely.
+
