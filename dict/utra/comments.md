@@ -85,3 +85,27 @@ Do not forget the domains of Eukaryota, Bacteria, Archaea ({arxaia}?), and
 the superdomain of the latter two (prokaryota?)! 
 http://en.wikipedia.org/wiki/Three-domain_system
 
+
+## 2014-02-13T08:04:39Z — gleki (comment 967, on definition 52721, in reply to 962)
+
+Re: Word choice
+
+krtisfranks wrote:
+> > Should we map class Mammalia to {mabru} and Animalia to {danlu}?
+> 
+> I vote yay. Likewise for Plantae, Fungi, etc.
+
+{danlu} is not glossed as Animalia. It can be even bacteria imo. Probably
+I'll avoid mapping the practicists' taxonomy onto the biological one. I
+think I'll agree with {mabru}.
+
+> 
+> Do not forget the domains of Eukaryota, Bacteria, Archaea ({arxaia}?),
+and
+> the superdomain of the latter two (prokaryota?)! 
+> http://en.wikipedia.org/wiki/Three-domain_system
+
+{arxaia}, {e'ukariotas} (efkaria?), {prokariota}, nalskami u'i {vidru}.
+
+And Super-Empire Life :)
+
