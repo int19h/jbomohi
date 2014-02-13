@@ -72,3 +72,16 @@ it because I did not want to think to much about how to transcribe the
 basic word more properly into Lojban, but I still wanted to raise the
 point concretely.
 
+
+## 2014-02-13T07:38:22Z — krtisfranks (comment 962, on definition 52721, in reply to 960)
+
+Re: Word choice
+
+> Should we map class Mammalia to {mabru} and Animalia to {danlu}?
+
+I vote yay. Likewise for Plantae, Fungi, etc.
+
+Do not forget the domains of Eukaryota, Bacteria, Archaea ({arxaia}?), and
+the superdomain of the latter two (prokaryota?)! 
+http://en.wikipedia.org/wiki/Three-domain_system
+
