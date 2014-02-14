@@ -54,3 +54,10 @@ As for properties may be "lo algoritma poi ckaji" ?
 
 BTW, I have stolen the current definition from gua\spi.
 
+
+## 2014-02-14T09:32:39Z — gleki (comment 985, on definition 52715, in reply to 984)
+
+Re: Time
+
+One more point. It's very close to {tadji}, isnt it? just more precise.
+
