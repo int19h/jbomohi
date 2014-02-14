@@ -73,3 +73,41 @@ except
 I think the x2 of planeta should be removed. Otherwise I can't call
 uninhabited planets {planeta}, which is ridiculous. 
 
+
+## 2014-02-14T00:15:51Z — krtisfranks (comment 976, on definition 52768, in reply to 975)
+
+Re: Redundancy
+
+selpahi wrote:
+> krtisfranks wrote:
+> > selpahi wrote:
+> > > krtisfranks wrote:
+> > > > Is not {terdi} exactly equivalent?
+> > > 
+> > > 
+> > > plini, rather.
+> > 
+> > {terdi} is the planet that is home/inhabited by something. {plini} is
+a
+> > planet in the physical sense and is essentially the same as {mluni}
+> except
+> > for connotations of size of body and of orbit/focus of orbit; plini
+and
+> > mluni have physical characteristics pertaining to themselves and
+> > characteristics of orbit (pertaining to their orbital system).
+> > 
+> > Incidentally, if one ever wants a demonstration of synonym/redundancy
+in
+> > baselined Lojban, {plini} versus {mluni} would be it.
+> 
+> I think the x2 of planeta should be removed. Otherwise I can't call
+> uninhabited planets {planeta}, which is ridiculous. 
+
+
+I am generally not very happy with the word. While synonyms are okay, this
+just seems overly unnecessary whilst we have perfectly fine, functioning
+gismu for the same thing. If one were aiming for recognizability, I would
+argue that the person being accommodated by the introduction of such
+(natural language) words (for concepts that we already can express) should
+just learn Lojban or go away (preferably the former).
+
