@@ -47,3 +47,29 @@ characteristics of orbit (pertaining to their orbital system).
 Incidentally, if one ever wants a demonstration of synonym/redundancy in
 baselined Lojban, {plini} versus {mluni} would be it.
 
+
+## 2014-02-14T00:12:03Z — selpahi (comment 975, on definition 52768, in reply to 973)
+
+Re: Redundancy
+
+krtisfranks wrote:
+> selpahi wrote:
+> > krtisfranks wrote:
+> > > Is not {terdi} exactly equivalent?
+> > 
+> > 
+> > plini, rather.
+> 
+> {terdi} is the planet that is home/inhabited by something. {plini} is a
+> planet in the physical sense and is essentially the same as {mluni}
+except
+> for connotations of size of body and of orbit/focus of orbit; plini and
+> mluni have physical characteristics pertaining to themselves and
+> characteristics of orbit (pertaining to their orbital system).
+> 
+> Incidentally, if one ever wants a demonstration of synonym/redundancy in
+> baselined Lojban, {plini} versus {mluni} would be it.
+
+I think the x2 of planeta should be removed. Otherwise I can't call
+uninhabited planets {planeta}, which is ridiculous. 
+
