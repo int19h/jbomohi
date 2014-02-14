@@ -155,3 +155,13 @@ was
 
 Don't we have something like ISO for nations?
 
+
+## 2014-02-14T06:45:35Z — krtisfranks (comment 980, in reply to 979)
+
+Re: Further proposals
+
+> Don't we have something like ISO for nations?
+
+I honestly do not know.  For their languages, certainly, but that only
+goes so far. I will look into it.
+
