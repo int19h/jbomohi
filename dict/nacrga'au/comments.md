@@ -49,3 +49,13 @@ for purposes more like the one described in that link or for rarer numbers
 that are named for people. It works, of course, but it is just not
 preferable to me. Cheers!
 
+
+## 2014-02-14T14:32:04Z — Wuzzy (comment 987, on definition 52699, in reply to 974)
+
+Re: Dissimilarity with PA cmavo
+
+True. But this word still has a justification to exist: It serves as a
+non-experimental alternative to the experimental cmavo. So I see this word
+as a fallback solution if one wants to avoid experimental cmavo. And as a
+fallback solution, beauty and shortness are not primary goals.
+
