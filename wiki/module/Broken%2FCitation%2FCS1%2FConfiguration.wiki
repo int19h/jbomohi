@@ -1,50 +1,753 @@
-==Vocabulary 1==
-''See [[From Wikibooks: Lojban/Vocabulary 1|Vocabulary 1]].''
+citation_config = {};
 
-*doi
-*coi
-*be'e
-*je'e
-*je'enai
-*co'o
-*re'i
-*re'inai
-*zo
-*ma
-*la
-*mi
+--[[
+List of namespaces that should not be included in citation
+error categories.  Same as setting notracking = true by default
 
-*smuni
-*gismu
-*lujvo
-*tanru
-*sumti
-*bridi
-*cmavo
-*cmene
+Note: Namespace names should use underscores instead of spaces.
+]]
+citation_config.uncategorized_namespaces = { 'User', 'Talk', 'User_talk', 'Wikipedia_talk', 'File_talk', 'Template_talk',
+	'Help_talk', 'Category_talk', 'Portal_talk', 'Book_talk', 'Draft', 'Draft_talk', 'Education_Program_talk', 
+	'Module_talk', 'MediaWiki_talk' };
 
-==Vocabulary 2==
-''See [[From Wikibooks: Lojban/Vocabulary 2|Vocabulary 2]].''
+--[[
+Translation table
 
-*le
-*cu
-*ti
-*ta
-*tu
-*goi
-*ko'a
-*zo'o
-*zo'onai
+The following contains fixed text that may be output as part of a citation.
+This is separated from the main body to aid in future translations of this
+module.
+]]
+citation_config.messages = {
+  ['published'] = 'published $1',
+  ['lay summary'] = 'Lay summary',
+  ['retrieved'] = 'Retrieved $1',
+  ['inactive'] = 'inactive',
+  ['archived-dead'] = 'Archived from $1 on $2',
+  ['archived-not-dead'] = '$1 from the original on $2',
+  ['archived-missing'] = 'Archived from the original$1 on $2',
+  ['archived'] = 'Archived',
+  ['original'] = 'the original',
+  ['editor'] = 'ed.',
+  ['editors'] = 'eds.', 
+  ['edition'] = '($1 ed.)', 
+  ['episode'] = 'episode',
+  ['season'] = 'season', 
+  ['series'] = 'series',
+  ['cartography'] = 'Cartography by $1',
+  ['section'] = 'Section $1',
+  ['inset'] = '$1 inset',
+  ['written'] = 'Written at $1',
+  ['in'] = 'In',
+  ['et al'] = 'et al.', 
+  
+  ['subscription'] = '<span style="font-size:0.95em; font-size:90%; color:#555">(subscription required (<span title="Sources are not required to be available online. Online sources do not have to be freely available. The site may require a paid subscription." style="border-bottom:1px dotted;cursor:help">help</span>))</span>' ..
+  	'[[Category:Pages containing links to subscription-only content]]', 
 
-*broda
-*blanu
-*cusku
-*ciska
-*prenu
-*remna
-*nanmu
-*ninmu
-*gasnu
-*zukte
-*rinka
-[[Category:Lojban]]
+  ['registration']='<span style="font-size:0.95em; font-size:90%; color:#555">(registration required (<span title="Sources are not required to be available online. Online sources do not have to be freely available. The site may require registration." style="border-bottom:1px dotted;cursor:help">help</span>))</span>' ..
+  	'[[Category:Pages with login required references or sources]]',
+  
+  ['language'] = '(in $1)', 
+  ['via'] = " &ndash; via $1",
+  ['event'] = 'Event occurs at',
+  ['minutes'] = 'minutes in', 
+
+  ['quoted-title'] = '"$1"',
+  ['italic-title'] = "''$1''",
+  ['trans-quoted-title'] = "&#91;$1&#93;",
+  ['trans-italic-title'] = "&#91;''$1''&#93;",
+  ['quoted-text'] = '"$1"',
+
+  ['parameter'] = '<code>&#124;$1=</code>',
+  ['parameter-separator'] = ', ',
+  ['parameter-final-separator'] = ', and ',
+  ['parameter-pair-separator'] = ' and ',
+
+  -- Error output
+  ['hidden-error'] = '<span style="display:none;font-size:100%" class="error citation-comment">$1</span>',
+  ['visible-error'] = '<span style="font-size:100%" class="error citation-comment">$1</span>',
+  
+  -- Determines the location of the help page
+  ['help page link'] = 'Help:CS1 errors',
+  ['help page label'] = 'help',
+  
+  -- Internal errors (should only occur if configuration is bad)
+  ['undefined_error'] = 'Called with an undefined error condition',
+  ['unknown_manual_ID'] = 'Unrecognized manual ID mode',
+  ['unknown_ID_mode'] = 'Unrecognized ID mode',
+  ['unknown_argument_map'] = 'Argument map not defined for this variable',
+  ['bare_url_no_origin'] = 'Bare url found but origin indicator is nil or empty',
+}
+
+-- Aliases table for commonly passed parameters
+citation_config.aliases = {
+    ['AccessDate'] = 'accessdate',
+    ['Agency'] = 'agency',
+    ['AirDate'] = 'airdate',
+    ['ArchiveDate'] = {'archive-date', 'archivedate' },
+    ['ArchiveURL'] = {'archive-url', 'archiveurl' },
+    ['ASINTLD'] = {'ASIN-TLD', 'asin-tld'},
+    ['At'] = 'at',
+    ['Authors'] = {'authors', 'people', 'host'},
+    ['AuthorFormat'] = {"author-format", "authorformat" },
+    ['AuthorSeparator'] = 'author-separator',
+    ['AuthorNameSeparator'] = 'author-name-separator',
+    ['BookTitle'] = 'booktitle',
+    ['Cartography'] = 'cartography',
+    ['Chapter'] = {'chapter', 'contribution', 'entry', 'article', 'section' },
+    ['ChapterLink'] = 'chapterlink',
+    ['ChapterURL'] = {'chapter-url', 'chapterurl', 'contribution-url', 'contributionurl', 'sectionurl' },
+    ['Coauthors'] = {'coauthors', 'coauthor' },
+    ['Conference'] = {'conference', 'event' },
+    ['ConferenceURL'] = {'conference-url', 'conferenceurl', 'eventurl' },
+    ['Date'] = 'date',
+    ['Day'] = 'day',
+    ['DeadURL'] = 'deadurl',
+    ['Degree'] = 'degree',
+    ['DisplayAuthors'] = {"display-authors", "displayauthors"},
+    ['DisplayEditors'] = {"display-editors", "displayeditors"},
+    ['Docket'] = 'docket',
+    ['DoiBroken'] = {'doi_inactivedate', 'doi_brokendate', 'DoiBroken'},
+    ['Edition'] = 'edition',
+    ['Editors'] = 'editors',
+    ['EditorFormat'] = {"editor-format", "editorformat" },
+    ['EditorSeparator'] = 'editor-separator',
+    ['EditorNameSeparator'] = 'editor-name-separator',
+    ['Embargo'] = {'Embargo', 'embargo'},
+    ['Format'] = 'format',
+    ['ID'] = {'id', 'ID'},
+    ['IgnoreISBN'] = {'ignore-isbn-error', 'ignoreisbnerror'},
+    ['Inset'] = 'inset',
+    ['Issue'] = {'issue', 'number'},
+    ['Language'] = {'language', 'in'},
+    ['LastAuthorAmp'] = 'lastauthoramp',
+    ['LayDate'] = 'laydate',
+    ['LaySource'] = 'laysource',
+    ['LayURL'] = {'layurl', 'laysummary'},
+    ['Minutes'] = 'minutes',
+    ['Month'] = 'month',
+    ['NameSeparator'] = 'name-separator',
+    ['Network'] = 'network',
+    ['NoPP'] = 'nopp',
+    ['NoTracking'] = {"template doc demo", 'nocat', 
+        'notracking', "no-tracking"},
+    ['OrigYear'] = 'origyear',
+    ['Others'] = 'others',
+    ['Page'] = {'p', 'page'},
+    ['Pages'] = {'pp', 'pages'},
+    ['Periodical'] = {'journal', 'newspaper', 'magazine', 'work',
+        'website',  'periodical', 'encyclopedia', 'encyclopaedia', 'dictionary'},
+    ['Place'] = {'place', 'location'},
+    ['PPrefix'] = 'PPrefix',
+    ['PPPrefix'] = 'PPPrefix',
+    ['PostScript'] = 'postscript',
+    ['PublicationDate'] = {'publicationdate', 'publication-date' },
+    ['PublicationPlace'] = {'publication-place', 'publicationplace' },
+    ['PublisherName'] = {'publisher', 'distributor', 'institution'},
+    ['Quote'] = {'quote', 'quotation'},
+    ['Ref'] = {'ref', 'Ref'},
+    ['RegistrationRequired'] = 'registration',
+    ['Scale'] = 'scale',
+    ['Section'] = 'section',
+    ['Season'] = 'season',
+    ['Separator'] = 'separator',
+    ['Series'] = {'series', 'version'},
+    ['SeriesSeparator'] = 'series-separator',
+    ['SeriesLink'] = 'serieslink',
+    ['SeriesNumber'] = {'seriesnumber', 'seriesno'},
+    ['Station'] = 'station',
+    ['SubscriptionRequired'] = 'subscription',
+    ['Time'] = 'time',
+    ['TimeCaption'] = 'timecaption',
+    ['Title'] = 'title',
+    ['TitleLink'] = {'titlelink', 'episodelink' },
+    ['TitleNote'] = 'department',
+    ['TitleType'] = {'type', 'medium'},
+    ['TransChapter'] = {'trans-chapter', 'trans_chapter' },
+    ['Transcript'] = 'transcript',
+    ['TranscriptURL'] = {'transcript-url', 'transcripturl'},
+    ['TransTitle'] = {'trans-title', 'trans_title' },
+    ['URL'] = {'url', 'URL'},
+    ['Via'] = 'via',
+    ['Volume'] = 'volume',
+    ['Year'] = 'year',
+
+    ['AuthorList-First'] = {"author#-first", "author-first#",
+        "first#", "given#"},
+    ['AuthorList-Last'] = {"author#-last", "author-last#", 
+        "last#", "surname#", "Author#", "author#", "authors#"},
+    ['AuthorList-Link'] = {"author#-link", "author-link#", 
+        "author#link", "authorlink#"},
+    ['AuthorList-Mask'] = {"author#-mask", "author-mask#", 
+        "author#mask", "authormask#"},
+    
+    ['EditorList-First'] = {"editor#-first", 
+        "editor-first#", "EditorGiven#"},
+    ['EditorList-Last'] = {"editor#-last", "editor-last#",
+        "EditorSurname#", "Editor#", "editor#", "editors#"},
+    ['EditorList-Link'] = {"editor#-link", "editor-link#", 
+        "editor#link", "editorlink#"},
+    ['EditorList-Mask'] = {"editor#-mask", "editor-mask#", 
+        "editor#mask", "editormask#"},
+    
+}
+
+-- Default parameter values
+citation_config.defaults = {
+    ['DeadURL'] = 'yes',
+    ['PostScript'] = '.',
+    ['Separator'] = '.',
+    ['AuthorSeparator'] = ';',
+    ['EditorSeparator'] = ';',
+    ['NameSeparator'] = ',',
+    ['PPrefix'] = "p.&nbsp;",
+    ['PPPrefix'] = "pp.&nbsp;",    
+}
+
+--[[
+Error condition table
+
+The following contains a list of IDs for various error conditions defined in the 
+code.  For each ID, we specify a text message to display, an error category to
+include, and whether the error message should be wrapped as a hidden comment.
+
+Anchor changes require identical changes to matching anchor in Help:CS1 errors
+]]
+
+citation_config.error_conditions = {
+	accessdate_missing_url = {
+		message = '<code>&#124;accessdate=</code> requires <code>&#124;url=</code>',
+		anchor = 'accessdate_missing_url',
+		category = 'Pages using citations with accessdate and no URL',
+		hidden = true },
+	archive_missing_date = {
+		message = '<code>&#124;archiveurl=</code> requires <code>&#124;archivedate=</code>',
+		anchor = 'archive_missing_date',
+		category = 'Pages with archiveurl citation errors',
+		hidden = false },
+	archive_missing_url = {
+		message = '<code>&#124;archiveurl=</code> requires <code>&#124;url=</code>',
+		anchor = 'archive_missing_url',
+		category = 'Pages with archiveurl citation errors',
+		hidden = false },
+	bad_date = {
+		message = 'Check date values in: <code>$1</code>',
+		anchor = 'bad_date',
+		category = 'CS1 errors: dates',
+		hidden = true },
+	bad_doi = {
+		message = 'Check <code>&#124;doi=</code> value',
+		anchor = 'bad_doi',
+		category = 'Pages with DOI errors',
+		hidden = false },
+	bad_isbn = {
+		message = 'Check <code>&#124;isbn=</code> value',
+		anchor = 'bad_isbn',
+		category = 'Pages with ISBN errors',
+		hidden = false },
+	bad_issn = {
+		message = 'Check <code>&#124;issn=</code> value',
+		anchor = 'bad_issn',
+		category = 'CS1 errors: ISSN',
+		hidden = false },
+	bad_ol = {
+		message = 'Check <code>&#124;ol=</code> value',
+		anchor = 'bad_ol',
+		category = 'Pages with OL errors',
+		hidden = false },
+	bad_pmid = {
+		message = 'Check <code>&#124;pmid=</code> value',
+		anchor = 'bad_pmid',
+		category = 'CS1 errors: PMID',
+		hidden = false },
+	bad_url = {
+		message = 'Check <code>&#124;url=</code> scheme',
+		anchor = 'bad_url',
+		category = 'Pages with URL errors',
+		hidden = false },
+	bare_url_missing_title = {
+		message = '$1 missing title',
+		anchor = 'bare_url_missing_title',
+		category = 'Pages with citations having bare URLs',
+		hidden = false },
+	citation_missing_title = {
+		message = 'Missing or empty <code>&#124;title=</code>',
+		anchor = 'citation_missing_title',
+		category = 'Pages with citations lacking titles',
+		hidden = false },
+	cite_web_url = {											-- this error applies to cite web and to cite podcast
+		message = 'Missing or empty <code>&#124;url=</code>',
+		anchor = 'cite_web_url',
+		category = 'Pages using web citations with no URL',
+		hidden = true },
+	coauthors_missing_author = {
+		message = '<code>&#124;coauthors=</code> requires <code>&#124;author=</code>',
+		anchor = 'coauthors_missing_author',
+		category = 'CS1 errors: coauthors without author',
+		hidden = false },
+	deprecated_params = {
+		message = 'Cite uses deprecated parameters',
+		anchor = 'deprecated_params',
+		category = 'Pages containing cite templates with deprecated parameters',
+		hidden = true },
+	empty_citation = {
+		message = 'Empty citation',
+		anchor = 'empty_citation',
+		category = 'Pages with empty citations',
+		hidden = false },
+	extra_pages = {
+		message = 'Extra <code>&#124;pages=</code> or <code>&#124;at=</code>',
+		anchor = 'extra_pages',
+		category = 'Pages with citations using conflicting page specifications',
+		hidden = false },
+	format_missing_url = {
+		message = '<code>&#124;format=</code> requires <code>&#124;url=</code>',
+		anchor = 'format_missing_url',
+		category = 'Pages using citations with format and no URL',
+		hidden = true },
+	implict_etal_author = {
+		message = '<code>&#124;displayauthors=</code> suggested',
+		anchor = 'displayauthors',
+		category = 'Pages using citations with old-style implicit et al.',
+		hidden = true },
+	implict_etal_editor = {
+		message = '<code>&#124;displayeditors=</code> suggested',
+		anchor = 'displayeditors',
+		category = 'Pages using citations with old-style implicit et al. in editors',
+		hidden = true },
+	parameter_ignored = {
+		message = 'Unknown parameter <code>&#124;$1=</code> ignored',
+		anchor = 'parameter_ignored',
+		category = 'Pages with citations using unsupported parameters',
+		hidden = false },
+	parameter_ignored_suggest = {
+		message = 'Unknown parameter <code>&#124;$1=</code> ignored (<code>&#124;$2=</code> suggested)',
+		anchor = 'parameter_ignored_suggest',
+		category = 'Pages with citations using unsupported parameters',
+		hidden = false },
+	redundant_parameters = {
+		message = 'More than one of $1 specified',
+		anchor = 'redundant_parameters',
+		category = 'Pages with citations having redundant parameters',
+		hidden = false },
+	text_ignored = {
+		message = 'Text "$1" ignored',
+		anchor = 'text_ignored',
+		category = 'Pages with citations using unnamed parameters',
+		hidden = false },
+	trans_missing_chapter = {
+		message = '<code>&#124;trans_chapter=</code> requires <code>&#124;chapter=</code>',
+		anchor = 'trans_missing_chapter',
+		category = 'Pages with citations using translated terms without the original',
+		hidden = false },
+	trans_missing_title = {
+		message = '<code>&#124;trans_title=</code> requires <code>&#124;title=</code>',
+		anchor = 'trans_missing_title',
+		category = 'Pages with citations using translated terms without the original',
+		hidden = false },
+	wikilink_in_url = {
+		message = 'Wikilink embedded in URL title',
+		anchor = 'wikilink_in_url',
+		category = 'Pages with citations having wikilinks embedded in URL titles',
+		hidden = false },
+}
+
+citation_config.id_handlers = {
+    ['ARXIV'] = {
+        parameters = {'arxiv', 'ARXIV'}, 
+        link = 'arXiv',
+        label = 'arXiv',
+        mode = 'external',
+        prefix = '//arxiv.org/abs/', -- protocol relative tested 2013-09-04
+        encode = false,
+        COinS = 'info:arxiv',
+        separator = ':',
+    },
+    ['ASIN'] = {
+        parameters = { 'asin', 'ASIN' },       
+        link = 'Amazon Standard Identification Number',
+        label = 'ASIN',
+        mode = 'manual',
+        COinS = 'info:asin',
+        separator = '&nbsp;',
+        encode = false;
+    },
+    ['BIBCODE'] = {
+        parameters = {'bibcode', 'BIBCODE'}, 
+        link = 'Bibcode',
+        label = 'Bibcode',
+        mode = 'external',
+        prefix = 'http://adsabs.harvard.edu/abs/',
+        encode = false,
+        COinS = 'info:bibcode',
+        separator = ':',
+    },
+    ['DOI'] = {
+        parameters = { 'doi', 'DOI' },
+        link = 'Digital object identifier',
+        label = 'doi',
+        mode = 'manual',
+        prefix = 'http://dx.doi.org/',
+        COinS = 'info:doi',
+        separator = ':',
+        encode = true,
+    },
+    ['ISBN'] = {
+        parameters = {'isbn', 'ISBN', 'isbn13', 'ISBN13'}, 
+        link = 'International Standard Book Number',
+        label = 'ISBN',
+        mode = 'manual',
+        prefix = 'Special:BookSources/',
+        COinS = 'rft.isbn',
+        separator = '&nbsp;',
+    },
+    ['ISSN'] = {
+        parameters = {'issn', 'ISSN'}, 
+        link = 'International Standard Serial Number',
+        label = 'ISSN',
+        mode = 'manual',
+        prefix = '//www.worldcat.org/issn/',
+        COinS = 'rft.issn',
+        encode = false,
+        separator = '&nbsp;',
+    },
+    ['JFM'] = {
+        parameters = {'jfm', 'JFM'}, 
+        link = 'Jahrbuch über die Fortschritte der Mathematik',
+        label = 'JFM',
+        mode = 'external',
+        prefix = 'http://www.zentralblatt-math.org/zmath/en/search/?format=complete&q=an:',
+        COinS = 'rft.jfm',
+        encode = true,
+        separator = '&nbsp;',
+    },
+    ['JSTOR'] = {
+        parameters = {'jstor', 'JSTOR'}, 
+        link = 'JSTOR',
+        label = 'JSTOR',
+        mode = 'external',
+        prefix = '//www.jstor.org/stable/', -- protocol relative tested 2013-09-04
+        COinS = 'rft.jstor',
+        encode = true,
+        separator = '&nbsp;',
+    },
+    ['LCCN'] = {
+        parameters = {'LCCN', 'lccn'}, 
+        link = 'Library of Congress Control Number',
+        label = 'LCCN',
+        mode = 'external',
+        prefix = 'http://lccn.loc.gov/',
+        COinS = 'rft.lccn',
+        encode = false,
+        separator = '&nbsp;',
+    },
+    ['MR'] = {
+        parameters = {'MR', 'mr'}, 
+        link = 'Mathematical Reviews',
+        label = 'MR',
+        mode = 'external',
+        prefix = '//www.ams.org/mathscinet-getitem?mr=', -- protocol relative tested 2013-09-04
+        COinS = 'rft.mr',
+        encode = true,
+        separator = '&nbsp;',
+    },
+    ['OCLC'] = {
+        parameters = {'OCLC', 'oclc'}, 
+        link = 'OCLC',
+        label = 'OCLC',
+        mode = 'external',
+        prefix = '//www.worldcat.org/oclc/',
+        COinS = 'info:oclcnum',
+        encode = true,
+        separator = '&nbsp;',
+    },
+    ['OL'] = {
+        parameters = { 'ol', 'OL' },
+        link = 'Open Library',
+        label = 'OL',
+        mode = 'manual',
+        COinS = 'info:olnum',
+        separator = '&nbsp;',
+        endode = true,
+    },
+    ['OSTI'] = {
+        parameters = {'OSTI', 'osti'}, 
+        link = 'Office of Scientific and Technical Information',
+        label = 'OSTI',
+        mode = 'external',
+        prefix = '//www.osti.gov/energycitations/product.biblio.jsp?osti_id=', -- protocol relative tested 2013-09-04
+        COinS = 'info:osti',
+        encode = true,
+        separator = '&nbsp;',
+    },
+    ['PMC'] = {
+        parameters = {'PMC', 'pmc'}, 
+        link = 'PubMed Central',
+        label = 'PMC',
+        mode = 'manual',		-- changed to support unlinking of PMC identifier when article is embargoed
+        prefix = '//www.ncbi.nlm.nih.gov/pmc/articles/PMC', 
+        suffix = " ",
+        COinS = 'info:pmc',
+        encode = true,
+        separator = '&nbsp;',
+    },
+    ['PMID'] = {
+        parameters = {'PMID', 'pmid'}, 
+        link = 'PubMed Identifier',
+        label = 'PMID',
+        mode = 'manual',		-- changed from external manual to support PMID validation
+        prefix = '//www.ncbi.nlm.nih.gov/pubmed/',
+        COinS = 'info:pmid',
+        encode = false,
+        separator = '&nbsp;',
+    },
+    ['RFC'] = {
+        parameters = {'RFC', 'rfc'}, 
+        link = 'Request for Comments',
+        label = 'RFC',
+        mode = 'external',
+        prefix = '//tools.ietf.org/html/rfc',
+        COinS = 'info:rfc',
+        encode = false,
+        separator = '&nbsp;',
+    },
+    ['SSRN'] = {
+        parameters = {'SSRN', 'ssrn'}, 
+        link = 'Social Science Research Network',
+        label = 'SSRN',
+        mode = 'external',
+        prefix = '//ssrn.com/abstract=', -- protocol relative tested 2013-09-04
+        COinS = 'info:ssrn',
+        encode = true,
+        separator = '&nbsp;',
+    },
+    ['ZBL'] = {
+        parameters = {'ZBL', 'zbl'}, 
+        link = 'Zentralblatt MATH',
+        label = 'Zbl',
+        mode = 'external',
+        prefix = 'http://www.zentralblatt-math.org/zmath/en/search/?format=complete&q=an:',
+        COinS = 'info:zbl',
+        encode = true,
+        separator = '&nbsp;',
+    }
+}
+
+--iso639-1 language codes and names.
+citation_config.iso639_1 = {
+    ["aa"]  = "Afar",
+    ["ab"]  = "Abkhazian",
+    ["ae"]  = "Avestan",
+    ["af"]  = "Afrikaans",
+    ["ak"]  = "Akan",
+    ["am"]  = "Amharic",
+    ["an"]  = "Aragonese",
+    ["ar"]  = "Arabic",
+    ["as"]  = "Assamese",
+    ["av"]  = "Avaric",
+    ["ay"]  = "Aymara",
+    ["az"]  = "Azerbaijani",
+    ["ba"]  = "Bashkir",
+    ["be"]  = "Belarusian",
+    ["bg"]  = "Bulgarian",
+    ["bh"]  = "Bihari languages",
+    ["bi"]  = "Bislama",
+    ["bm"]  = "Bambara",
+    ["bn"]  = "Bengali",
+    ["bo"]  = "Tibetan",
+    ["br"]  = "Breton",
+    ["bs"]  = "Bosnian",
+    ["ca"]  = "Catalan",
+--  ["ca"]  = "Valencian",
+    ["ce"]  = "Chechen",
+    ["ch"]  = "Chamorro",
+    ["co"]  = "Corsican",
+    ["cr"]  = "Cree",
+    ["cs"]  = "Czech",
+    ["cu"]  = "Church Slavic",
+--  ["cu"]  = "Old Slavonic",
+--  ["cu"]  = "Church Slavonic",
+--  ["cu"]  = "Old Bulgarian",
+--  ["cu"]  = "Old Church Slavonic",
+    ["cv"]  = "Chuvash",
+    ["cy"]  = "Welsh",
+    ["da"]  = "Danish",
+    ["de"]  = "German",
+    ["dv"]  = "Divehi",
+    ["dv"]  = "Dhivehi",
+    ["dv"]  = "Maldivian",
+    ["dz"]  = "Dzongkha",
+    ["ee"]  = "Ewe",
+    ["el"]  = "Modern Greek",
+    ["en"]  = "English",
+    ["eo"]  = "Esperanto",
+    ["es"]  = "Spanish",
+--  ["es"]  = "Castilian",
+    ["et"]  = "Estonian",
+    ["eu"]  = "Basque",
+    ["fa"]  = "Persian",
+    ["ff"]  = "Fulah",
+    ["fi"]  = "Finnish",
+    ["fj"]  = "Fijian",
+    ["fo"]  = "Faroese",
+    ["fr"]  = "French",
+    ["fy"]  = "Western Frisian",
+    ["ga"]  = "Irish",
+--  ["gd"]  = "Gaelic",
+    ["gd"]  = "Scottish Gaelic",
+    ["gl"]  = "Galician",
+    ["gn"]  = "Guarani",
+    ["gu"]  = "Gujarati",
+    ["gv"]  = "Manx",
+    ["ha"]  = "Hausa",
+    ["he"]  = "Hebrew",
+    ["hi"]  = "Hindi",
+    ["ho"]  = "Hiri Motu",
+    ["hr"]  = "Croatian",
+--  ["ht"]  = "Haitian",
+    ["ht"]  = "Haitian Creole",
+    ["hu"]  = "Hungarian",
+    ["hy"]  = "Armenian",
+    ["hz"]  = "Herero",
+    ["ia"]  = "Interlingua",
+    ["id"]  = "Indonesian",
+    ["ie"]  = "Interlingue",
+    ["ie"]  = "Occidental",
+    ["ig"]  = "Igbo",
+--  ["ii"]  = "Sichuan Yi",
+    ["ii"]  = "Nuosu",
+    ["ik"]  = "Inupiaq",
+    ["io"]  = "Ido",
+    ["is"]  = "Icelandic",
+    ["it"]  = "Italian",
+    ["iu"]  = "Inuktitut",
+    ["ja"]  = "Japanese",
+    ["jv"]  = "Javanese",
+    ["ka"]  = "Georgian",
+    ["kg"]  = "Kongo",
+--  ["ki"]  = "Kikuyu",
+    ["ki"]  = "Gikuyu",
+--  ["kj"]  = "Kuanyama",
+    ["kj"]  = "Kwanyama",
+    ["kk"]  = "Kazakh",
+--  ["kl"]  = "Kalaallisut",
+    ["kl"]  = "Greenlandic",
+    ["km"]  = "Central Khmer",
+    ["kn"]  = "Kannada",
+    ["ko"]  = "Korean",
+    ["kr"]  = "Kanuri",
+    ["ks"]  = "Kashmiri",
+    ["ku"]  = "Kurdish",
+    ["kv"]  = "Komi",
+    ["kw"]  = "Cornish",
+--  ["ky"]  = "Kirghiz",
+    ["ky"]  = "Kyrgyz",
+    ["la"]  = "Latin",
+    ["lb"]  = "Luxembourgish",
+--  ["lb"]  = "Letzeburgesch",
+    ["lg"]  = "Ganda",
+--  ["li"]  = "Limburgan",
+--  ["li"]  = "Limburger",
+    ["li"]  = "Limburgish",
+    ["ln"]  = "Lingala",
+    ["lo"]  = "Lao",
+    ["lt"]  = "Lithuanian",
+    ["lu"]  = "Luba-Katanga",
+    ["lv"]  = "Latvian",
+    ["mg"]  = "Malagasy",
+    ["mh"]  = "Marshallese",
+    ["mi"]  = "Maori",
+    ["mk"]  = "Macedonian",
+    ["ml"]  = "Malayalam",
+    ["mn"]  = "Mongolian",
+    ["mr"]  = "Marathi",
+    ["ms"]  = "Malay",
+    ["mt"]  = "Maltese",
+    ["my"]  = "Burmese",
+    ["na"]  = "Nauru",
+    ["nb"]  = "Norwegian Bokmål",
+    ["nd"]  = "North Ndebele",
+    ["ne"]  = "Nepali",
+    ["ng"]  = "Ndonga",
+    ["nl"]  = "Dutch",
+--  ["nl"]  = "Flemish",
+    ["nn"]  = "Norwegian Nynorsk",
+    ["no"]  = "Norwegian",
+    ["nr"]  = "South Ndebele",
+    ["nv"]  = "Navajo",
+--  ["nv"]  = "Navaho",
+--  ["ny"]  = "Chichewa",
+--  ["ny"]  = "Chewa",
+    ["ny"]  = "Nyanja",
+    ["oc"]  = "Occitan",
+    ["oj"]  = "Ojibwa",
+    ["om"]  = "Oromo",
+    ["or"]  = "Oriya",
+    ["os"]  = "Ossetian",
+    ["os"]  = "Ossetic",
+--  ["pa"]  = "Panjabi",
+    ["pa"]  = "Punjabi",
+    ["pi"]  = "Pali",
+    ["pl"]  = "Polish",
+--  ["ps"]  = "Pushto",
+    ["ps"]  = "Pashto",
+    ["pt"]  = "Portuguese",
+    ["qu"]  = "Quechua",
+    ["rm"]  = "Romansh",
+    ["rn"]  = "Rundi",
+    ["ro"]  = "Romanian",
+--  ["ro"]  = "Moldavian",
+--  ["ro"]  = "Moldovan",
+    ["ru"]  = "Russian",
+    ["rw"]  = "Kinyarwanda",
+    ["sa"]  = "Sanskrit",
+    ["sc"]  = "Sardinian",
+    ["sd"]  = "Sindhi",
+    ["se"]  = "Northern Sami",
+    ["sg"]  = "Sango",
+    ["si"]  = "Sinhala",
+--  ["si"]  = "Sinhalese",
+    ["sk"]  = "Slovak",
+    ["sl"]  = "Slovenian",
+    ["sm"]  = "Samoan",
+    ["sn"]  = "Shona",
+    ["so"]  = "Somali",
+    ["sq"]  = "Albanian",
+    ["sr"]  = "Serbian",
+    ["ss"]  = "Swati",
+    ["st"]  = "Southern Sotho",
+    ["su"]  = "Sundanese",
+    ["sv"]  = "Swedish",
+    ["sw"]  = "Swahili",
+    ["ta"]  = "Tamil",
+    ["te"]  = "Telugu",
+    ["tg"]  = "Tajik",
+    ["th"]  = "Thai",
+    ["ti"]  = "Tigrinya",
+    ["tk"]  = "Turkmen",
+    ["tl"]  = "Tagalog",
+    ["tn"]  = "Tswana",
+    ["to"]  = "Tonga (Tonga Islands)",
+    ["tr"]  = "Turkish",
+    ["ts"]  = "Tsonga",
+    ["tt"]  = "Tatar",
+    ["tw"]  = "Twi",
+    ["ty"]  = "Tahitian",
+--  ["ug"]  = "Uighur",
+    ["ug"]  = "Uyghur",
+    ["uk"]  = "Ukrainian",
+    ["ur"]  = "Urdu",
+    ["uz"]  = "Uzbek",
+    ["ve"]  = "Venda",
+    ["vi"]  = "Vietnamese",
+    ["vo"]  = "Volapük",
+    ["wa"]  = "Walloon",
+    ["wo"]  = "Wolof",
+    ["xh"]  = "Xhosa",
+    ["yi"]  = "Yiddish",
+    ["yo"]  = "Yoruba",
+    ["za"]  = "Zhuang",
+--  ["za"]  = "Chuang",
+    ["zh"]  = "Chinese",
+    ["zu"]  = "Zulu",
+}
+return citation_config;
