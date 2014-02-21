@@ -1,1 +1,83 @@
-#REDIRECT [[jbocre: place structure]]
+{{Deprecated template|old=Module:HtmlBuilder|new=mw:Extension:Scribunto/Lua reference manual#HTML library{{!}}mw.html}}
+{{High-risk|10,000,000}}
+{{module rating|protected}}
+HtmlBuilder provides a way to construct complex HTML and CSS markup by creating a tree of nodes, similar to the [[Document Object Model]]. The result is a list of codes that are more comprehensible and maintainable than if you simply concatenated strings together.  It offers a [[fluent interface]] that should look familiar to any user of [[jQuery]].
+
+== Usage ==
+
+First, you need to load the module:
+
+<code>local HtmlBuilder = require('Module:HtmlBuilder')</code>
+
+Next, create the root HtmlBuilder instance:
+
+<code>local builder = HtmlBuilder.create()</code>
+
+Then, you can build HTML using the methods of the HtmlBuilder instance, listed below.
+
+Finally, get the resulting HTML markup as a string:
+
+<code>local s = tostring(builder)</code>
+
+== Methods ==
+To allow chaining, all methods return a reference to the builder, unless otherwise stated.
+
+===tag===
+<code>local div = builder.tag('div')</code>
+Appends a new child node to the builder, and returns an HtmlBuilder instance representing that new node.
+
+===done===
+<code>builder = div.done()</code>
+Returns the parent node under which the current node was created.  Like [http://api.jquery.com/end/ jQuery.end], this is a convenience function to allow the construction of several child nodes to be chained together into a single statement.
+
+===allDone===
+<code>builder = div.allDone()</code>
+Like <code>.done()</code>, but traverses all the way to the root node of the tree and returns it.
+
+===wikitext===
+<code><nowiki>div.wikitext('This is some [[example]] text.')</nowiki></code>
+Appends some markup to the node. It may include plain text, wiki markup, and even HTML markup.
+
+===newline===
+<code>div.newline()</code>
+Appends a newline character to the node. Equivalent to <code>.wikitext('\n')</code>.
+
+===attr===
+<code>div.attr('title', 'Attr value')</code>
+Set an HTML attribute on the node.
+
+===css===
+<code>div.css('color', '#f00')</code>
+Set a CSS property to be added to the node's <code>style</code> attribute.
+
+===cssText===
+<code>div.cssText('color:#f00; font-size:1.5em')</code>
+Add some raw CSS to the node's <code>style</code> attribute. This is typically used when a template allows some CSS to be passed in as a parameter, such as the <code>liststyle</code> parameter of {{tl|Navbox}}.
+
+===addClass===
+<code>div.addClass('even')</code>
+Adds a class name to the node's <code>class</code> attribute. Spaces will be automatically added to delimit each added class name.
+
+== Examples ==
+
+<syntaxhighlight lang="lua">
+local HtmlBuilder = require('Module:HtmlBuilder')
+
+local root = HtmlBuilder.create()
+
+root
+    .wikitext('Lorem ')
+    .tag('span')
+        .css('color', 'red')
+        .attr('title', 'ipsum dolor')
+        .wikitext('sit amet')
+        .done()
+    .tag('div')
+        .wikitext('consectetur adipisicing')
+
+local s = tostring(root)
+-- s = 'Lorem <span style="color:red;" title="ipsum dolor">sit amet</span><div>consectetur adipisicing</div>'
+</syntaxhighlight>
+
+
+For more examples, please see the [[Module:HtmlBuilder/testcases|test cases page]] and the [[Module talk:HtmlBuilder/testcases|test cases results]].
