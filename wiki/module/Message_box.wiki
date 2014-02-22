@@ -1,27 +1,28 @@
--- This is a meta-module for producing message box templates, including {{mbox}}, {{ambox}}, {{imbox}}, {{tmbox}}, {{ombox}}, {{cmbox}} and {{fmbox}}.
- 
+-- This is a meta-module for producing message box templates, including {{mbox}}, {{ambox}},
+-- {{imbox}}, {{tmbox}}, {{ombox}}, {{cmbox}} and {{fmbox}}.
+
 -- Require necessary modules.
 local getArgs = require('Module:Arguments').getArgs
 local htmlBuilder = require('Module:HtmlBuilder')
 local categoryHandler = require('Module:Category handler').main
 local yesno = require('Module:Yesno')
- 
+
 -- Load the configuration page.
 local cfgTables = mw.loadData('Module:Message box/configuration')
- 
+
 -- Get a language object for formatDate and ucfirst.
 local lang = mw.language.getContentLanguage()
- 
+
 -- Set aliases for often-used functions to reduce table lookups.
 local format = mw.ustring.format
 local tinsert = table.insert
 local tconcat = table.concat
 local trim = mw.text.trim
- 
+
 --------------------------------------------------------------------------------
 -- Helper functions
 --------------------------------------------------------------------------------
- 
+
 local function getTitleObject(page, ...)
 	if type(page) == 'string' then
 		-- Get the title object, passing the function through pcall 
@@ -32,7 +33,7 @@ local function getTitleObject(page, ...)
 		end
 	end
 end
- 
+
 local function union(t1, t2)
 	-- Returns the union of two arrays.
 	local vals = {}
@@ -49,7 +50,7 @@ local function union(t1, t2)
 	table.sort(ret)
 	return ret
 end
- 
+
 local function getArgNums(args, prefix)
 	local nums = {}
 	for k, v in pairs(args) do
@@ -61,20 +62,20 @@ local function getArgNums(args, prefix)
 	table.sort(nums)
 	return nums
 end
- 
+
 --------------------------------------------------------------------------------
 -- Box class definition
 --------------------------------------------------------------------------------
- 
+
 local box = {}
 box.__index = box
- 
+
 function box.new()
 	local obj = {}
 	setmetatable(obj, box)
 	return obj
 end
- 
+
 function box.getNamespaceId(ns)
 	if not ns then return end
 	if type(ns) == 'string' then
@@ -88,7 +89,7 @@ function box.getNamespaceId(ns)
 		return nsTable.id
 	end
 end
- 
+
 function box.getMboxType(nsid)
 	-- Gets the mbox type from a namespace number.
 	if nsid == 0 then
@@ -106,7 +107,7 @@ function box.getMboxType(nsid)
 		end
 	end
 end
- 
+
 function box:addCat(ns, cat, sort)
 	if type(cat) ~= 'string' then return end
 	local nsVals = {'main', 'template', 'all'}
@@ -129,13 +130,13 @@ function box:addCat(ns, cat, sort)
 		tinsert(self[tname], format('[[Category:%s]]', cat))
 	end
 end
- 
+
 function box:addClass(class)
 	if type(class) ~= 'string' then return end
 	self.classes = self.classes or {}
 	tinsert(self.classes, class)
 end
- 
+
 function box:setTitle(args)
 	-- Get the title object and the namespace.
 	self.pageTitle = getTitleObject(args.page ~= '' and args.page)
@@ -143,7 +144,7 @@ function box:setTitle(args)
 	self.demospace = args.demospace ~= '' and args.demospace or nil
 	self.nsid = box.getNamespaceId(self.demospace) or self.title.namespace
 end
- 
+
 function box:getConfig(boxType)
 	-- Get the box config data from the data page.
 	if boxType == 'mbox' then
@@ -160,7 +161,7 @@ function box:getConfig(boxType)
 	end
 	return cfg
 end
- 
+
 function box:removeBlankArgs(cfg, args)
 	-- Only allow blank arguments for the parameter names listed in cfg.allowBlankParams.
 	local newArgs = {}
@@ -174,7 +175,7 @@ function box:removeBlankArgs(cfg, args)
 	end
 	return newArgs
 end
- 
+
 function box:setBoxParameters(cfg, args)
 	-- Get type data.
 	self.type = args.type
@@ -183,12 +184,12 @@ function box:setBoxParameters(cfg, args)
 	typeData = typeData or cfg.types[cfg.default]
 	self.typeClass = typeData.class
 	self.typeImage = typeData.image
- 
+
 	-- Find if the box has been wrongly substituted.
 	if cfg.substCheck and args.subst == 'SUBST' then
 		self.isSubstituted = true
 	end
- 
+
 	-- Find whether we are using a small message box.
 	if cfg.allowSmall and (
 		cfg.smallParam and args.small == cfg.smallParam
@@ -199,7 +200,7 @@ function box:setBoxParameters(cfg, args)
 	else
 		self.isSmall = false
 	end
- 
+
 	-- Add attributes, classes and styles.
 	if cfg.allowId then
 		self.id = args.id
@@ -217,10 +218,10 @@ function box:setBoxParameters(cfg, args)
 	self:addClass(self.typeClass)
 	self:addClass(args.class)
 	self.style = args.style
- 
+
 	-- Set text style.
 	self.textstyle = args.textstyle
- 
+
 	-- Find if we are on the template page or not. This functionality is only used if useCollapsibleTextFields is set,
 	-- or if both cfg.templateCategory and cfg.templateCategoryRequireName are set.
 	self.useCollapsibleTextFields = cfg.useCollapsibleTextFields
@@ -233,7 +234,7 @@ function box:setBoxParameters(cfg, args)
 		end
 		self.isTemplatePage = self.templateTitle and mw.title.equals(self.title, self.templateTitle) or false
 	end
- 
+
 	-- Process data for collapsible text fields. At the moment these are only used in {{ambox}}.
 	if self.useCollapsibleTextFields then
 		-- Get the self.issue value.
@@ -256,7 +257,7 @@ function box:setBoxParameters(cfg, args)
 			tinsert(issues, text)
 			self.issue = tconcat(issues, ' ')
 		end
- 
+
 		-- Get the self.talk value.
 		local talk = args.talk
 		if talk == '' -- Show talk links on the template page or template subpages if the talk parameter is blank.
@@ -286,7 +287,7 @@ function box:setBoxParameters(cfg, args)
 				self.talk = talkText
 			end
 		end
- 
+
 		-- Get other values.
 		self.fix = args.fix ~= '' and args.fix or nil
 		local date
@@ -300,7 +301,7 @@ function box:setBoxParameters(cfg, args)
 		end
 		self.info = args.info
 	end
- 
+
 	-- Set the non-collapsible text field. At the moment this is used by all box types other than ambox,
 	-- and also by ambox when small=yes.
 	if self.isSmall then
@@ -308,17 +309,17 @@ function box:setBoxParameters(cfg, args)
 	else
 		self.text = args.text
 	end
- 
+
 	-- Set the below row.
 	self.below = cfg.below and args.below
- 
+
 	-- General image settings.
 	self.imageCellDiv = not self.isSmall and cfg.imageCellDiv and true or false
 	self.imageEmptyCell = cfg.imageEmptyCell
 	if cfg.imageEmptyCellStyle then
 		self.imageEmptyCellStyle = 'border:none;padding:0px;width:1px'
 	end
- 
+
 	-- Left image settings.
 	local imageLeft = self.isSmall and args.smallimage or args.image
 	if cfg.imageCheckBlank and imageLeft ~= 'blank' and imageLeft ~= 'none'
@@ -330,13 +331,13 @@ function box:setBoxParameters(cfg, args)
 			self.imageLeft = format('[[File:%s|%s|link=|alt=]]', self.typeImage or 'Imbox notice.png', imageSize)
 		end
 	end
- 
+
 	-- Right image settings.
 	local imageRight = self.isSmall and args.smallimageright or args.imageright
 	if not (cfg.imageRightNone and imageRight == 'none') then
 		self.imageRight = imageRight
 	end
- 
+
 	-- Add mainspace categories. At the moment these are only used in {{ambox}}.
 	if cfg.allowMainspaceCategories then
 		if args.cat then
@@ -377,7 +378,7 @@ function box:setBoxParameters(cfg, args)
 			end
 		end
 	end
- 
+
 	-- Add template-namespace categories.
 	if cfg.templateCategory then
 		if cfg.templateCategoryRequireName then
@@ -388,7 +389,7 @@ function box:setBoxParameters(cfg, args)
 			self:addCat('template', cfg.templateCategory)
 		end
 	end
- 
+
 	-- Add template error category.
 	if cfg.templateErrorCategory then
 		local templateErrorCategory = cfg.templateErrorCategory
@@ -414,7 +415,7 @@ function box:setBoxParameters(cfg, args)
 		end
 		self:addCat('template', templateCat, templateSort)
 	end
- 
+
 	-- Categories for all namespaces.
 	if self.invalidTypeError then
 		local allSort = (self.nsid == 0 and 'Main:' or '') .. self.title.prefixedText
@@ -423,7 +424,7 @@ function box:setBoxParameters(cfg, args)
 	if self.isSubstituted then
 		self:addCat('all', 'Pages with incorrectly substituted templates')
 	end
- 
+
 	-- Convert category tables to strings and pass them through [[Module:Category handler]].
 	self.categories = categoryHandler{
 		main = tconcat(self.mainCats or {}),
@@ -434,10 +435,10 @@ function box:setBoxParameters(cfg, args)
 		page = self.pageTitle and self.pageTitle.prefixedText or nil
 	}
 end
- 
+
 function box:export()
 	local root = htmlBuilder.create()
- 
+
 	-- Add the subst check error.
 	if self.isSubstituted and self.name then
 		root
@@ -448,7 +449,7 @@ function box:export()
 					mw.text.nowiki('{{'), self.name, self.name, mw.text.nowiki('}}')
 				))
 	end
- 
+
 	-- Create the box table.
 	local boxTable = root.tag('table')
 	boxTable
@@ -460,7 +461,7 @@ function box:export()
 	boxTable
 		.cssText(self.style)
 		.attr('role', 'presentation')
- 
+
 	-- Add the left-hand image.
 	local row = boxTable.tag('tr')
 	if self.imageLeft then
@@ -482,7 +483,7 @@ function box:export()
 			.addClass('mbox-empty-cell') 
 			.cssText(self.imageEmptyCellStyle)
 	end
- 
+
 	-- Add the text.
 	local textCell = row.tag('td').addClass('mbox-text')
 	if self.useCollapsibleTextFields then
@@ -515,7 +516,7 @@ function box:export()
 			.cssText(self.textstyle)
 			.wikitext(self.text)
 	end
- 
+
 	-- Add the right-hand image.
 	if self.imageRight then
 		local imageRightCell = row.tag('td').addClass('mbox-imageright')
@@ -525,7 +526,7 @@ function box:export()
 		imageRightCell
 			.wikitext(self.imageRight)
 	end
- 
+
 	-- Add the below row.
 	if self.below then
 		boxTable.tag('tr')
@@ -535,7 +536,7 @@ function box:export()
 				.cssText(self.textstyle)
 				.wikitext(self.below)
 	end
- 
+
 	-- Add error message for invalid type parameters.
 	if self.invalidTypeError then
 		root
@@ -543,14 +544,14 @@ function box:export()
 				.css('text-align', 'center')
 				.wikitext(format('This message box is using an invalid "type=%s" parameter and needs fixing.', self.type or ''))
 	end
- 
+
 	-- Add categories.
 	root
 		.wikitext(self.categories)
- 
+
 	return tostring(root)
 end
- 
+
 local function main(boxType, args)
 	local outputBox = box.new()
 	outputBox:setTitle(args)
@@ -559,21 +560,21 @@ local function main(boxType, args)
 	outputBox:setBoxParameters(cfg, args)
 	return outputBox:export()
 end
- 
+
 local function makeWrapper(boxType)
 	return function (frame)
 		local args = getArgs(frame, {trim = false, removeBlanks = false})
 		return main(boxType, args)
 	end
 end
- 
+
 local p = {
 	main = main,
 	mbox = makeWrapper('mbox')
 }
- 
+
 for boxType in pairs(cfgTables) do
 	p[boxType] = makeWrapper(boxType)
 end
- 
+
 return p
