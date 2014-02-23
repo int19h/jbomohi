@@ -87,3 +87,13 @@ suit, or we can actually build up a system of our own (which could be a
 fun a project!), identifying underlying features that can classify
 expressions of given "entities".
 
+
+## 2014-02-23T10:31:54Z — gleki (comment 997, on definition 52907, in reply to 995)
+
+Re: cmene
+
+krtisfranks wrote:
+> ...
+
+May be {selbukprnailoni} and {.enzimrnailoni} are the answers.
+
