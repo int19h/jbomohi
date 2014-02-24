@@ -43,3 +43,10 @@ Re: Etymology
 
 {spinacia} retains the visual form. I agree with John Clifford here.
 
+
+## 2014-02-24T18:56:21Z — selpahi (comment 1002, on definition 53059, in reply to 996)
+
+Re: Etymology
+
+mi nèlci zo spinàca
+
