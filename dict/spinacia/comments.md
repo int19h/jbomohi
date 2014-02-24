@@ -36,3 +36,10 @@ It is not clear how to deal with a “c”, but it strongly suggest to
 convert this little “c” into a “k”, which would create the word
 “{spinakia}” in Lojban. Are you happy with that?
 
+
+## 2014-02-24T06:25:56Z — gleki (comment 1001, on definition 53059, in reply to 1000)
+
+Re: Etymology
+
+{spinacia} retains the visual form. I agree with John Clifford here.
+
