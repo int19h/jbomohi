@@ -6,3 +6,17 @@ Jbovlaste only should have the lowest scoring form of a lujvo. Jbovlaste
 tells you that every time you want to create a new word. The lowest
 scoring form for this is not “cfilyfacki” but “{cfifa'i}”.
 
+
+## 2014-02-26T14:27:06Z — gleki (comment 1005, on definition 53109, in reply to 1004)
+
+Re: Not lowest scoring lujvo
+
+Wuzzy wrote:
+> Jbovlaste only should have the lowest scoring form of a lujvo. Jbovlaste
+> tells you that every time you want to create a new word. The lowest
+> scoring form for this is not “cfilyfacki” but “{cfifa'i}”.
+
+
+You've downvoted a lot of words but how many times you entered alternative
+solutions?
+
