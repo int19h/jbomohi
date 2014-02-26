@@ -20,3 +20,16 @@ Wuzzy wrote:
 You've downvoted a lot of words but how many times you entered alternative
 solutions?
 
+
+## 2014-02-26T15:26:29Z — Wuzzy (comment 1006, on definition 53109, in reply to 1005)
+
+Re: Not lowest scoring lujvo
+
+gleki wrote:
+> You've downvoted a lot of words
+Yes, that’s true.
+
+> but how many times you entered alternative
+> solutions?
+Not often.
+
