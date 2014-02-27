@@ -101,3 +101,22 @@ and
 I understand. This is a big topic and perhaps I will explain myself on the
 mailing list in detail.
 
+
+## 2014-02-27T06:08:36Z — gleki (comment 1010, on definition 53109, in reply to 1006)
+
+Re: Not lowest scoring lujvo
+
+Wuzzy wrote:
+> gleki wrote:
+> > You've downvoted a lot of words
+> Yes, that’s true.
+> 
+> > but how many times you entered alternative
+> > solutions?
+> Not often.
+
+
+So this leads to denying the existence of some concepts in Lojban, this is
+almost equivalent to just deleting words. What would others do when they
+try to find a word for a concept they need and fail to find it?
+
