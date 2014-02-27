@@ -191,3 +191,10 @@ the
 
 Okay. It's not a very fun topic, though. :)
 
+
+## 2014-02-27T11:10:36Z — gleki (comment 1012, on definition 53109, in reply to 1011)
+
+Re: Not lowest scoring lujvo
+
+li'a JyVySy enai le bangu cu fliba
+
