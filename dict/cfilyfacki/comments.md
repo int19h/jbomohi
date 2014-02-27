@@ -120,3 +120,74 @@ So this leads to denying the existence of some concepts in Lojban, this is
 almost equivalent to just deleting words. What would others do when they
 try to find a word for a concept they need and fail to find it?
 
+
+## 2014-02-27T11:02:10Z — selpahi (comment 1011, on definition 53109, in reply to 1008)
+
+Re: Not lowest scoring lujvo
+
+Wuzzy wrote:
+> selpahi wrote:
+> > Wuzzy wrote:
+> > > Jbovlaste only should have the lowest scoring form of a lujvo.
+> Jbovlaste
+> > > tells you that every time you want to create a new word. The lowest
+> > > scoring form for this is not “cfilyfacki” but “{cfifa'i}”.
+> > 
+> > So you also reject {ci'omle} because {citmle} has a better score?
+> Yes. I reject it being in the dictionary.
+> However, this does NOT mean that I reject “ci'omle” _in general_.
+> 
+> > What is
+> > the benefit of such a policy? 
+> To avoid reduncancy in jbovlaste. Consider the opposite case: You
+include
+> every possible word form of a given lujvo. But everything is treated in
+> jbovlaste as if it were a completely different word. This would mean
+> you’d repeat the definition over and over again. And if you want to
+edit
+> something, you would have to edit the other definitions as well. It is
+> very easy to become inconsistent then. To make life easier, the
+dictionary
+> only includes the lowest-scoring form. It is assumed the user can infer
+> all the other valid forms of the lujvo. The definition applies to all
+> lujvo forms equally.
+
+Okay, this is a valid point. Under the current rules, every two lujvo that
+contain rafsi of the same words in the same order are considered the same
+word, so it would be easier to have them organized more automatically.
+However, jbovlaste has no such feature, and it also doesn't seem to happen
+very much that multiple forms are added. 
+
+> > If lots of people prefer the sound of
+> > {ci'omle}, why should the score  matter?
+> The score only matters for dictionary purposes. In actual speech, the
+> score does not matter.
+
+Sure, but apparently the scoring algorithm can sometimes prefer words that
+humans don't prefer. When that happens, maybe we (the speakers) should
+have a bigger say than an artificial algorithm (whose initial purpose it
+was to make the shortest and most pleasing forms get the best scores).
+This sort of thing doesn't happen so often that adding an alternative form
+causes a lot of extra effort. I can think of {ci'omle} and {je'umlu},
+which some people prefer because they get rid of the "tml" cluster, or
+because they don't like {cit} in the word for "cute".
+
+
+> What about this compromise?: If you want a certain word form to be
+> included, mention it in the notes instead of creating an entire new
+entry.
+> Here’s an example: {malgli} (mentions “malglico”). There is no
+entry
+> for “malglico” because it is not needed.
+
+That would be an option.
+
+> > "The CLL says X so anything else is completely wrong and evil"
+> and
+> > I find this attitude very destructive.
+> I understand. This is a big topic and perhaps I will explain myself on
+the
+> mailing list in detail.
+
+Okay. It's not a very fun topic, though. :)
+
