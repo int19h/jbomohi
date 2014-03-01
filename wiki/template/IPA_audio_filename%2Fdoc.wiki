@@ -1,0 +1,95 @@
+{{Documentation subpage}}
+<!-- Categories and interwikis go at the bottom of this page. -->
+This template produces the '''filename''' of an IPA sound sample (not the sound or soundbutton itself). It is determined, by default, from the IPA symbol. For example: <code>{{tlx|IPA audio filename|m}}</code> → <code>{{IPA audio filename|m}}</code>. Optionally, a non-default filename can be entered here, so the template will produce that non-default filename. Also optionally, the existence of the file can be checked, and an error message can be overridden by a text or a blank.
+
+==Usage==
+Full input list is:
+<pre>
+{{IPA audio filename
+| ipa symbol =
+| soundfile  =
+| checkexist =
+| errortext  =
+}}</pre>
+:'''''First parameter'' or ''ipa symbol=''''' This first parameter (or named parameter ipa symbol=)is for the IPA symbol. The symbol is translated into the ''name'' of the sound (using the list in {{tl|IPAsym}}) and adding the extension <code>.ogg</code>. When the parameter is not used, the input <code>soundfile=</code> should be used. For any symbol, the ''default'' name can be permanently overruled through the list (see below).
+::<code>{{tlx|IPA audio filename|ʒ}}</code> &rarr; <code>{{IPA audio filename|ʒ}}</code>
+:'''''soundfile=''''' (optional, default=none) This parameter allows for entering any literal filename. Input here bypasses (overwrites) the first parameter. It can be used to enter a filename that does not have a default name as {{tl|IPAsym}} produces. ''Note: when used, this input should have the extension''.
+::<code>{{tlx|IPA audio filename|ʒ|soundfile{{=}}Accordian chords-01.ogg}}</code> &rarr; <code>{{IPA audio filename|ʒ|soundfile=Accordian chords-01.ogg}}</code>
+
+:'''''checkexist=''''' (optional, default=no) Can be "yes" or "no". When entered "yes", ''and the filename is not an error'', the template checks for the existence of the filename. If it does not exist, an error is produced. ''Note: Checking for existence is called an "expensive" function, in that it requires serious server-side action. The number of file checks per page is limited.
+::<code>{{tlx|IPA audio filename|n̪|checkexist{{=}}yes}}</code> &rarr; <code><span class="error">File "dental nasal.ogg" does not exist</span></code>
+:'''''errortext=''''' (optional, default=none) The errortext entered here overwrites any possible error-output. If there is no error, this errortext is not used. The tradeoff is: it hides any error information, but is cleans up the output. The errortext can be a blank, like {{tlx|IPA audio filename|m|errortext{{=}}}}.
+::<code>{{tlx|IPA audio filename|abc|errortext{{=}}Some error in the filename}}</code> &rarr; <code>Some error in the filename</code>
+
+===Permanent altered from default name===
+Some IPA symbols have soundfiles available in Wikipedia that are not the default name. These alternate names can be entered in this template, and will show up in the output.
+
+Subtemplate {{tlx|IPA audio filename/filename}} contains the list of alternate names. Example:
+* kʼ is named <code>{{IPA symbol|kʼ}}</code>, so this would yield default name: <code>{{IPA symbol|kʼ}}.ogg</code>
+The filename however differs from that default name. The list in {{tlx|IPA audio filename/filename}} produces that different name:
+* {{tlx|IPA audio filename|kʼ}} → {{IPA audio filename|kʼ}}
+Currently, the following non-default names are in the list:<br><code>
+:velar approximant = voiced velar approximant.ogg ( ɰ )
+:voiceless labio-velar approximant = voiceless labio-velar fricative.ogg ( ʍ )
+:labio-velar approximant = voiced labio-velar approximant.ogg ( w )
+:alveolar ejective = alveolar ejective plosive.ogg ( tʼ )
+:uvular ejective = uvular ejective plosive.ogg ( qʼ )
+:bilabial ejective = bilabial ejective plosive.ogg ( pʼ )
+:velar ejective = velar ejective plosive.ogg ( kʼ )
+:tenuis bilabial click = clic bilabial sourd.ogg ( ʘ )
+:tenuis dental click = dental click.ogg ( ǀ )
+:tenuis alveolar click = postalveolar click.ogg ( ǃ )
+:tenuis palatal click = palatoalveolar click.ogg ( ǂ )
+:tenuis alveolar lateral click = alveolar lateral click.ogg ( ǁ )
+:sj-sound = voiceless dorso-palatal velar fricative.ogg ( ɧ )
+:voiceless retroflex stop = voiceless retroflex stop.oga ( ʈ )
+:voiced retroflex stop = voiced retroflex stop.oga ( ɖ )
+:voiceless palatal stop = voiceless palatal plosive.ogg ( c )
+:voiced palatal stop = voiced palatal plosive.ogg ( ɟ )
+:voiceless uvular stop = voiceless uvular plosive.ogg ( q )
+:voiced uvular stop = voiced uvular stop.oga ( ɢ )
+:voiceless dental sibilant affricate = voiceless dental sibilant affricate.oga ( t̪s̪ )
+:voiced dental sibilant affricate = voiced dental sibilant affricate.oga ( d̪z̪ )
+:voiceless alveolar sibilant affricate = voiceless alveolar sibilant affricate.oga ( ts )
+:voiced alveolar sibilant affricate = voiced alveolar sibilant affricate.oga ( dz )
+:labial-velar nasal = labial-velar nasal stop.ogg ( ŋm )
+:near-open central vowel = near-open central unrounded vowel.ogg ( ɐ )
+:near-close near-back vowel = near-close near-back rounded vowel.ogg ( ʊ )
+:r-colored vowel = regular and r-colored vowels.ogg ( ɚ )
+</code>
+
+===Possible errors===
+Three error situations are covered:
+* No IPA symbol entered (and no soundfile name):
+::{{tlx|IPA audio filename|}} &rarr; <span class="error">Error using {{[[template:IPAsym|IPAsym]]}}: No input</span>
+* The IPA symbol may not be defined in {{tlx|IPAsym}}:
+::{{tlx|IPA audio filename|abc}} &rarr; <span class="error">Error using {{ [[template:IPAsym|IPAsym]]}}: IPA symbol "abc" not found in list</span>
+* Checkexist=yes is asked, and the file does not exist:
+::{{tlx|IPA audio filename|ⱱ̟|checkexist{{=}}yes}} &rarr; <span class="error">File "bilabial flap.ogg" does not exist</span>
+
+These error outputs can be overridden by using <code>errortext=</code>. This can be blank. This only has effect on the output, it does not alter the existing error situation.
+
+===Technical background===
+* The template uses nested sub-templates to prevent re-calculation of repeated data. e.g. the name from {{tlx|IPAsym}} is calculated only once, and then passed through to the next subtemplate in the nest. This is more important for the check on existence <nowiki>{{#ifexist:}}</nowiki>, which is "expensive" and should be performed only once. The nesting has three levels: {{tlx|IPA audio filename}} calls {{tlx|IPA audio filename/main1}} calls {{tlx|IPA audio filename/main2}}.
+* Error texts are passed through unaltered. At the end, in [[:template:IPA audio filename/main2|<code>/main2</code>]], any error is enveloped with the errortext (if provided).
+* Check existence is performed only when the filename is not an error in itself.
+
+====Issues====
+* Todo: the template should accept input "|ipa symbol=...", overriding current unnamed param #1.
+
+Subtemplates used:
+* {{tlx|IPA audio filename/main1}}
+* {{tlx|IPA audio filename/main2}}
+* {{tlx|IPA audio filename/filename}} (Here non-default filenames can be entered)
+* {{tlx|IPA audio filename/checkexist}}
+
+===See also===
+* {{tlx|IPAsym}} contains the list for translating IPA symbol into the name
+* {{tlx|IPA audio filename/filename}} (Here non-default filenames can be entered)
+* [[:Category:IPA pages with non-existing IPA audio soundfile]], tracking category
+{{IPA templates}}
+<includeonly>
+<!-- Categories and interwikis go here: -->
+
+[[Category:IPA audio templates]]
+</includeonly>
