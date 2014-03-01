@@ -1,0 +1,58 @@
+<table class="plainlinks imbox 
+{{#switch:{{{type|}}}
+| speedy     = imbox-speedy
+| delete     = imbox-delete
+| content    = imbox-content
+| style      = imbox-style
+| move       = imbox-move
+| protection = imbox-protection
+| license    = imbox-license
+| featured   = imbox-featured
+| notice          <!-- notice = default -->
+| #default   = imbox-notice
+}}" style="{{{style|}}}">
+<tr>
+{{#ifeq:{{{image|}}}|none
+| <!-- No image. Cell with some width or padding necessary for text cell to have 100% width. --><td class="mbox-empty-cell"></td>
+| <td class="mbox-image">
+  {{#if:{{{image|}}}
+  | {{{image}}}
+  | {{#switch:{{{type|}}}
+    | speedy     = [[File:Ambox warning pn.svg|40x40px|alt=|link=]] 
+    | delete     = [[File:Ambox warning pn.svg|40x40px|alt=|link=]] 
+    | content    = [[File:Ambox Content.svg|40x40px|alt=|link=]]
+    | style      = [[File:Edit-clear.svg|40x40px|link=]]
+    | move       = [[File:Merge-split-transwiki default.svg|40x40px|alt=|link=]]
+    | protection = [[File:Padlock-silver-medium.svg|40x40px|alt=|link=]]
+    | license    = [[File:Imbox license.png|40x40px|alt=|link=]]
+    | featured   = [[File:Featured article star.svg|40x40px|link=]]
+    | notice          <!-- notice = default -->
+    | #default   = [[File:Information icon4.svg|40x40px|alt=|link=]]
+    }}
+  }}</td>
+}}
+<td class="mbox-text" style="{{{textstyle|}}}"> {{{text}}} </td>
+{{#if:{{{imageright|}}}
+| <td class="mbox-imageright"> {{{imageright}}} </td>
+}}
+</tr>
+{{#if:{{{below|}}}
+| <tr><td colspan={{#if:{{{imageright|}}}|3|2}} class="mbox-text" style="{{{textstyle|}}}"> {{{below}}} </td></tr>
+}}
+</table><!-- Detect and report usage with faulty "type" parameter:
+-->{{#switch:{{{type|}}}
+|   <!-- No type fed, is also valid input -->
+| speedy
+| delete
+| content
+| style
+| move
+| protection
+| license
+| featured
+| notice     =    <!-- Do nothing, valid "type" -->
+| #default   = <div style="text-align: center;">This message box is using an invalid "type={{{type|}}}" parameter and needs fixing.</div>
+}}<noinclude>
+{{documentation}}
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude>
