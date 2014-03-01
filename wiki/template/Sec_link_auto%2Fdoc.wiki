@@ -1,0 +1,154 @@
+{{Documentation subpage}}
+{{used in system}}
+{{notice|The need for this template has virtually disappeared, because interwiki links now generate protocol independent links, and thus require no more wrapping with this template.}}
+<!-- PLEASE ADD CATEGORIES AND INTERWIKIS AT THE BOTTOM OF THIS PAGE -->
+
+This is the {{tl|sec link auto}} template.
+
+It creates a secure link only if the user is using the secure server, otherwise it makes a normal link. The link can be local or to any other Wikimedia project. It can for instance link to Wiktionary or the Portuguese Wikipedia. 
+
+Secure links go through the Wikimedia [[Wikipedia:Secure server|secure server]], so they give you an encrypted connection between your browser and the Wikimedia servers.
+
+This template is mostly meant for links to other projects, since local links that use the normal wikilink notation "<code><nowiki>[[Page]]</nowiki></code>" are already automatically changed to secure links when using the secure server. But hardcoded local links such as "<code><nowiki>[http://en.wikipedia.org/wiki/Example?action=history Example history]</nowiki></code>" are not auto-changed. Then you can use this template to fix that.
+
+If you want to make a link that sends ''all'' users to the secure server, then instead use {{tl|sec link}}. For other secure link templates see the [[#See also|see also]] section below.
+
+=== Usage ===
+
+<code><nowiki>{{sec link auto| project | Pagename | text | lang = de }}</nowiki></code>
+
+This templates takes one or more parameters: 
+* The first is the prefix of the Wikimedia project you want to link to. For instance "wiktionary" or "wikt" for Wiktionary, and "de" for the German Wikipedia. This parameter must always be fed. For the complete list of prefixes see [[Wikipedia:InterWikimedia links]], [[Special:SiteMatrix]] and {{sec link auto|meta|List of Wikipedias}}.
+* The second parameter is the full pagename you want to link to, such as "User:Example" or "São Paulo". If this parameter is omitted then this template links to the main page of the project.
+* The third parameter is the text that will be visible as the link. If this parameter is omitted the link address is instead shown.
+* There is also a named parameter "lang=". This parameter is usually not used. It takes a language prefix such as "de" or "pt". This enables to link to for instance the German version of Wiktionary. If this parameter is omitted, then this template links to the same language on the other project as you are on here. So if on the English Wikipedia, and you link to Wiktionary, per default you get a link to the English Wiktionary.
+
+To compare how the links on this page look and behave when using the secure server, follow this link: {{sec link| en | Template:Sec link auto | <nowiki>{{sec link auto}}</nowiki>}}
+
+And here's some examples:
+
+<pre>
+{{sec link auto| commons }}
+
+{{sec link auto| wikt }}
+
+{{sec link auto| de }}
+
+{{sec link auto| pt }}
+</pre>
+{{sec link auto| commons }}
+
+{{sec link auto| wikt }}
+
+{{sec link auto| de }}
+
+{{sec link auto| pt }}
+
+
+<pre>
+{{sec link auto| commons | São Paulo }}
+
+{{sec link auto| wikt | São Paulo }}
+
+{{sec link auto| de | São Paulo }}
+
+{{sec link auto| pt | São Paulo }}
+</pre>
+{{sec link auto| commons | São Paulo }}
+
+{{sec link auto| wikt | São Paulo }}
+
+{{sec link auto| de | São Paulo }}
+
+{{sec link auto| pt | São Paulo }}
+
+
+<pre>
+{{sec link auto| pt | São Paulo | São Paulo, in the Portuguese Wikipedia. }}
+</pre>
+{{sec link auto| pt | São Paulo | São Paulo, in the Portuguese Wikipedia. }}
+
+
+<pre>
+{{sec link auto| wikt | São Paulo | lang=pt }}
+
+{{sec link auto| lang=pt | wikt | São Paulo | São Paulo, in the Portuguese Wiktionary. }}
+</pre>
+{{sec link auto| wikt | São Paulo | lang=pt }}
+
+{{sec link auto| lang=pt | wikt | São Paulo | São Paulo, in the Portuguese Wiktionary. }}
+
+In the above example we fed "lang=pt" before the other parameters. That is okay since named parameters don't interfere with the numbering of unnamed parameters.
+
+=== Anchors and queries ===
+
+This template can also handle anchors and query parameters. Like this:
+
+<pre>
+{{sec link auto| en | Template:Sec link auto | anchor = See also }}
+
+{{sec link auto| en | Special:Search | query = search=secure+server&fulltext=Search&ns4=1&ns5=1 }}
+
+{{sec link auto| de | Wikipedia:Spielwiese | query = action=edit | Edit the German Wikipedia's sandbox }}
+</pre>
+
+{{sec link auto| en | Template:Sec link auto | anchor = See also }}
+
+{{sec link auto| en | Special:Search | query = search=secure+server&fulltext=Search&ns4=1&ns5=1 }}
+
+{{sec link auto| de | Wikipedia:Spielwiese | query = action=edit | Edit the German Wikipedia's sandbox }}
+
+When feeding query parameters you must manually change any spaces "<code>&nbsp;</code>" to plus signs "<code>+</code>". But feed anchors unchanged.
+
+=== The padlock ===
+
+When these links are seen from the secure server, then they all have a small padlock[[File:Lock icon blue.gif|16x13px]]. That padlock is automatically added to all https links by the global CSS in all Wikimedia projects. This template does not suppress that, since it makes it clearer when it is a secure link. 
+
+But if you want to suppress the padlock, then there are two ways. Like this:
+
+<pre>
+{{sec link auto| padlock=no | pt | São Paulo }}
+
+<span class="plainlinks">
+{{sec link auto| pt | São Paulo }}
+</span>
+</pre>
+
+{{sec link auto| padlock=no | pt | São Paulo }}
+
+<span class="plainlinks">
+{{sec link auto| pt | São Paulo }}
+</span>
+
+Using "<code>padlock=no</code>" is easier for a single link. But when having many links then surrounding the whole area with "<code>&lt;span class="plainlinks">&lt;/span></code>" can be more convenient. 
+
+Many templates such as the mboxes, navboxes and infoboxes use the "plainlinks" class since it also prevents the external link icon [[File:External.png|10x10px]]. Thus when this template is used inside such boxes it looses the padlock. Then you can turn on the padlock like this:
+
+<pre>
+{{sec link auto| padlock=yes | pt | São Paulo }}
+</pre>
+{{sec link auto| padlock=yes | pt | São Paulo }}
+
+Note: You will only see a padlock in the above example if you {{sec link| en | {{FULLPAGENAME}} | view this page }} from the secure server, since this template only makes secure links if you already are using the secure server.
+
+=== Technical details ===
+
+When you are connected to the secure server, then most local links in a project is automatically secure links. But hardcoded links and links to other projects are unfortunately not auto-changed to secure links. With this template you can work around that.
+
+This template doesn't handle the "[[bugzilla:]]" prefix, since it already points to a secure server.
+
+Some languages on Wikisource don't have their own language project, instead they are pages under the main "{{sec link auto| oldwikisource }}" address. For instance the Afrikaans main page on Wikisourse is not "<code><nowiki>{{sec link auto|wikisource|lang=af}}</nowiki></code>", but instead "<code><nowiki>{{sec link auto|oldwikisource|Tuisblad}}</nowiki></code>".
+
+This template internally uses the sub-templates {{tl|sec link/secure url}}, {{tl|sec link/normal url}}, {{tl|sec link/normal link}}, {{tl|sec link/text}} and {{tl|case preserving encode}}. Those sub-templates are also used by its sister templates.
+
+For more technical details see the [[Template talk:Sec link auto|talk page]].
+
+=== See also ===
+
+{{sec link see also}}
+
+<includeonly>
+<!-- CATEGORIES AND INTERWIKIS HERE, THANKS -->
+[[Category:Interwiki link templates]]
+
+</includeonly>
