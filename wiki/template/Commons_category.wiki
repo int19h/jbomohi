@@ -1,0 +1,26 @@
+{{Commons
+| position = {{{position|}}}
+  <!-- {{#if:x|}} strips whitespace from parameter 1, 
+       in case it is fed like this: {{Commons category| Some cat }}. -->
+|Category:{{#if:x| {{{1| {{PAGENAME}} }}} }}<!--
+-->|{{{2|{{{1|{{PAGENAME}}}}}}}}<!--
+-->}}<includeonly>{{#if:{{{1|}}}||[[Category:Commons category template with no category set]]}}</includeonly><noinclude>
+
+{{Documentation}}
+<!-- Add categories and interwikis to the /doc subpage, not here! -->
+</noinclude><includeonly><!-- Some tracking categories to see if we're ready to switch to Wikidata -->
+{{#switch:{{NAMESPACE}}||{{ns:14}}=<!-- Only articles and categories. -->
+ {{#if:{{#property:P373}}
+ | {{#if:{{{1|}}}
+  | {{#ifeq:{{#property:P373}}|{{#invoke:StringReplace|encode wiki page name|{{{1|}}}}}
+   | [[Category:Commons category with local link same as on Wikidata]] <!-- We want to end up here -->
+   | [[Category:Commons category with local link different than on Wikidata]] <!-- Figure out the best link -->
+   }}
+  | {{#ifeq:{{#property:P373}}|{{PAGENAME}}
+   | [[Category:Commons category with page title same as on Wikidata]] <!-- Ending up here is just fine -->
+   | [[Category:Commons category with page title different than on Wikidata]] <!-- Figure out the best link here too -->
+   }}
+  }}
+ | [[Category:Commons category without a link on Wikidata]] <!-- These we still need to import -->
+ }}
+}}</includeonly>
