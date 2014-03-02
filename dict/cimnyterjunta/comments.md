@@ -20,3 +20,22 @@ arguably least important), angular momentum (vector), and electric charge
 (scalar); specification of information contained, location, and origin (if
 known), and other things could be good too.
 
+
+## 2014-03-02T20:52:30Z — krtisfranks (comment 1021, on definition 17900, in reply to 1020)
+
+Re: Issues
+
+> I have been thinking about it for years but have not yet found a
+solution
+> that I fully enjoyed. I personally would prefer to base it on {cliva},
+> {tolcu'i}, and {canlu} (zo'o although I have considered {pacruxtutra}!).
+> But, again, I would like to make it a zi'evla.
+
+By the way, these words actually better characterize the event horizon
+(although I rather dislike the prosaïc style of such a description in
+comparison with the poetic and rather-hard-to-capture accuracy of the
+English word). The black hole is the physical entity that has an event
+horizon and other regions defined by the aforementioned properties
+('hairs'), rather like an atom can have overall charge, spin, etc. and
+these properties determine its appearance in other interactions.
+
