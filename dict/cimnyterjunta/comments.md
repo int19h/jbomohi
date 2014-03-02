@@ -39,3 +39,11 @@ horizon and other regions defined by the aforementioned properties
 ('hairs'), rather like an atom can have overall charge, spin, etc. and
 these properties determine its appearance in other interactions.
 
+
+## 2014-03-02T20:57:20Z — krtisfranks (comment 1022, on definition 17900, in reply to 1020)
+
+Re: Issues
+
+Dimensionality of the black hole probably would be good to specify too;
+luckily {canlu} does not exclude higher-dimension possibilities.
+
