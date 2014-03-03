@@ -172,3 +172,15 @@ I saw your response to the other bit. Thank you.
 The drawer terbri is not the last but is actually the penultimate terbri
 of this current proposal.
 
+
+## 2014-03-03T01:40:25Z — krtisfranks (comment 1031, on definition 53124, in reply to 1026)
+
+Re: Domain and range should be specified
+
+I would also argue that fancu1 is more dependent on the other terbri than
+on the reverse, but truly they are interrelated and that is not the main
+point of the argument anyway.  The plot of the function is expressed in a
+certain set but is independent of the set of definition of the function
+(which by the way better exhibits the dependency of the terbri, since the
+function and its domain specify the range, for example).
+
