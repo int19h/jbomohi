@@ -1,0 +1,115 @@
+# mail/lojban-list thread c60bd1c703a6-historical_%22finprims%22_gismu_algorithm_weigh | root 1695f304-a592-4e0f-b5ab-c215c6e80fcc@googlegroups.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2014-03-03T16:57:34Z | Riley Martinez-Lynch <shunpiker@gmail.com> | 1695f304-a592-4e0f-b5ab-c215c6e80fcc@googlegroups.com | mail/lojban-list/cur/1393865854.c60bd1c703a62060.jbomohi:2,S
+Hello!
+
+I have been working on the python implementation of the gismu algorithm 
+that Broca wrote. I made some updates and released it here:
+
+https://github.com/teleological/gimyzba
+
+
+I want to ensure that, despite changes to the program, the behavior 
+continues to conform to the definition of the gismu algorithm -- so I 
+started looking for authoritative scores for the gismu. I think I found 
+them here:
+
+http://www.lojban.org/publications/etymology/finprims
+
+
+The "finprims" file includes the lojbanized source language words and 
+scores associated with each gismu, but doesn't specify the per-language 
+weights that were used to calculate the scores. CLL says that the "language 
+weights used to make most of the gismu", based on "1985 number-of-speakers 
+data" were (Order: Chinese, English, Hindi, Spanish, Russian, Arabic):
+
+0.36, 0.21, 0.16, 0.11, 0.09, 0.07 
+http://dag.github.io/cll/4/14
+
+
+These look like rounded versions numbers given in the "langstat" documents, 
+which are described as the "1987 gismu-remaking" weights, "based on the 
+1985 Brittanica BotY":
+
+.360, .208, .156, .116, .087, .073
+http://www.lojban.org/publications/etymology/langstat.99
+
+
+Neither CLL nor the langstat documents mention finprims specifically, but 
+it seems plausible that finprims represent the "1987 gismu-remaking 
+process": Someone with knowledge of the history, please correct me if this 
+is not a valid assumption.
+
+I plugged both the rounded (CLL) and unrounded (langstat) weights into the 
+gismu scoring algorithm, but the resulting scores for the gismu that I 
+tested were quite different from those in finprims. Less surprisingly, the 
+updated weights from langstat94, langstat95 and langstat99 also failed to 
+reproduce the finprims scores.
+
+In retrospect, the finprims score of 98.00 for {mamta} -- the only gismu 
+that matches on all letters of all of the input words -- indicates that 
+none of these weight sets could have been used to produce that score: The 
+weight set used to score {mamta} sums to 98, whereas the weight sets from 
+CLL and the langstat documents sum to 100.
+
+By comparing the scores for various gismu, I was able to deduce a set of 
+weights that appear to have been used to score finprims:
+
+0.33, 0.18, 0.16, 0.12, 0.12, 0.07
+(Chinese, English, Hindi, Spanish, Russian, Arabic)
+
+
+I confirmed these values by using them to rescore the gismu. Aside from 
+some rounding errors, they appear to reproduce the finprims scores. Here, 
+for example, is {ninmu}, which has a match on each of the input words. 
+Finprims assigns it a score of 60.04. Here are the scores using each of the 
+other weight sets:
+
+CLL  :  62.56 (+/- 2.52)
+1987 :  62.58 (+/- 2.54)
+1994 :  61.97 (+/- 1.93)
+1995 :  61.92 (+/- 1.88)
+1999 :  61.19 (+/- 1.15)
+
+
+"CLL" represents the "language weights used to make most of the gismu" and 
+"1987" the "1987 gismu-remaking" weights from the langstat documents. The 
+weights for other years are also drawn from the langstat documents. None of 
+these weight sets produces a score close to the finprims value. But the 
+weight set that I derived from finprims scores it exactly as 60.04.
+
+Given all of this, I'd like to pose the following questions, particularly 
+to those who may be familiar with the genesis of the gismu:
+
+   1. Is the finprims document representative of the gismu-making process 
+   described in CLL and/or the "1987 gismu-remaking" process? Or were these 
+   separate efforts?
+   
+   2. Can anyone confirm the weights that I derived from finprims, or 
+   alternately, identify issues in the methodology I'm using to generate 
+   scores?
+   
+   3. If these weights are confirmed, is there a record of how were they 
+   derived? Have they been previously published?
+   
+   4. Does anyone with a memory of the gismu-making process remember how 
+   decimal precision and rounding was handled in calculating the scores? For 
+   example, the letter sequence length scores (2-5) for each input word are 
+   divided by the length of each corresponding input word. I'd be curious to 
+   know how the precision of these numbers were handled before they were 
+   multiplied by the language weighs. I'd also like to know how the precision 
+   of the products was handled, before or after they were summed to make the 
+   scores.
+
+Thank you for your consideration. I'm enjoying getting to know lojban!
+
+--Riley
+mi'e la mukti mu'o
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/groups/opt_out.
+
