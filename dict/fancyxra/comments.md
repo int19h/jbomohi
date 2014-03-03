@@ -184,3 +184,23 @@ certain set but is independent of the set of definition of the function
 (which by the way better exhibits the dependency of the terbri, since the
 function and its domain specify the range, for example).
 
+
+## 2014-03-03T16:01:37Z — Wuzzy (comment 1033, on definition 53124, in reply to 1028)
+
+Re: Domain and range should be specified
+
+Okay, to clarify: I clearly interpret the word “graph” here as
+“graphical representation”.
+To say a graph of a function has to be perfect, otherwise its not a graph
+is not practical to me. This would automatically disqualify any drawing by
+hand. Also graphs on a, let’s say, LCD monitor are not perfect, because
+of the pixels. You always have this tiny error. To say a graph *must* be
+perfect would disqualify all these images.
+So I still think the current definition of fancyxra is pretty good and
+practical and does not need to be changed.
+
+If you want to interpret “graph” in a strict mathematical sense
+(whatever that may be), I’d suggest to create a new lujvo, because I
+think you mean something different than I think. Maybe a new lujvo could
+settle these disputes, hopefully.
+
