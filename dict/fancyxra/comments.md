@@ -118,3 +118,47 @@ cannot be drawn but a parabola can be (arguably).
 
 What about the other proposed terbri?
 
+
+## 2014-03-03T01:32:29Z — krtisfranks (comment 1029, on definition 53124, in reply to 1026)
+
+Re: Domain and range should be specified
+
+Wuzzy wrote:
+> krtisfranks wrote:
+> > If I understand this word correctly as basically the drawings that one
+> > makes in elementary mathematics of various functions, then the domain
+> and
+> > range should be specified (and probably earlier in the definition than
+> > some terbri from, for example, {pixra}).
+> I think the lujvo is good right now and does not need to be changed.
+> This is because the domain and range are already places in {fancu}, and
+> all funca2, funca3 and funca4 are all dependent on funca1.
+> Read  for the concept of dependent
+places.
+> The main reasoning for this is of redundancy. And I think it makes much
+> sense and that it should be used as often as possible.
+> 
+> You could get the domain and range by the funca place, with relative
+> clauses, for example:
+> “ko'a fancyxra lo fancu poi XXX” where “XXX” can be replaced by
+> something to further spefify the function.
+
+But that is actually a different function. x^2 defined on the interval
+[-1,1] id a completely (well, not "completely", but very) different beast
+from x^2 defined on the entirety of the real numbers. Even though the
+traces may be the same, the underlying functions are not, which is an
+important distinction. The graph is some subset of the trace of a
+function, not the trace of a restriction of that function (even though
+they "appear" to amount to the same thing). Additionally, in computer
+programming, such as with TI calculators or Mathematica, the plot range
+and plot domain parameters are aspects of the plot and not of the function
+being plotted (which is correct usage); if Lojban is going to be
+compatible with these computer languages, it must have those parameters
+specified in its word for "graph"  ("plot").
+
+Example: I can plot log(x) on the interval [-e,e], but log itself is not
+defined for any x ≤ 0 and there is no clean way to make it so defined;
+your proposal seems to be incompatible with this truth.
+ (Note: I fell into a bad English habit. What I should have said is that
+the trace of log is a subset of R^2, not that I can plot it.)
+
