@@ -162,3 +162,13 @@ your proposal seems to be incompatible with this truth.
  (Note: I fell into a bad English habit. What I should have said is that
 the trace of log is a subset of R^2, not that I can plot it.)
 
+
+## 2014-03-03T01:34:04Z — krtisfranks (comment 1030, on definition 53124, in reply to 1028)
+
+Corrections Re: Domain and range should be specified
+
+I saw your response to the other bit. Thank you.
+
+The drawer terbri is not the last but is actually the penultimate terbri
+of this current proposal.
+
