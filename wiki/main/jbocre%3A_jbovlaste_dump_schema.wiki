@@ -1,2 +1,58 @@
-{{#ifeq:{{{1}}}|{{#titleparts:{{{1}}}|1|2}}||yes}}<noinclude>
-{{Documentation}}</noinclude>
+<code>
+<nowiki>
+<?xml version="1.0"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<xs:element name="dictionary" type="dictionary" />
+	
+  <xs:complexType name="dictionary">
+    <xs:sequence>
+      <xs:element name="direction" type="direction" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="direction">
+    <xs:sequence>
+      <xs:element name="valsi" type="valsi" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="nlword" type="nlword" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="from" type="xs:string" use="required"/>
+    <xs:attribute name="to" type="xs:string" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="valsi">
+    <xs:sequence>
+      <xs:element name="rafsi" type="xs:string" minOccurs="0" maxOccurs="3" />
+      <xs:element name="selmaho" type="xs:string" minOccurs="0"/>
+      <xs:element name="definition" type="xs:string"/>
+      <xs:element name="notes" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="unofficial" type="xs:boolean" default="false" />
+    <xs:attribute name="word" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="type-enum" use="required" />
+  </xs:complexType>
+  
+  <xs:simpleType name="type-enum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="cmavo" />
+      <xs:enumeration value="cmavo cluster" />
+      <xs:enumeration value="cmene" />
+      <xs:enumeration value="experimental cmavo" />
+      <xs:enumeration value="experimental gismu" />
+      <xs:enumeration value="fu'ivla" />
+      <xs:enumeration value="lujvo" />
+      <xs:enumeration value="gismu" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="nlword">
+    <xs:attribute name="word" type="xs:string" use="required" />
+    <xs:attribute name="sense" type="xs:string" use="optional"/>
+    <xs:attribute name="valsi" type="xs:string" use="required" />
+    <xs:attribute name="place" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+    
+</xs:schema>
+</nowiki>
+</code>
