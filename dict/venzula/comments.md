@@ -37,3 +37,22 @@ link in the menu on the left of the (at least my) screen.
 There are ways to discuss countries via country code per ISO by the way.
 Just a piece of information for you.  :)
 
+
+## 2014-03-12T00:36:40Z — nestor (comment 1039, on definition 53155, in reply to 1035)
+
+Re: Better substitution
+
+Hi, I am a newbie making fuhivla, I agree with you to the fact that venzla
+appears to be a lujvo because is a 6 letter word, but on the other side i
+think that the fewer gismo the better the language, because is simpler,
+anyway I suppose it will be a matter of votes to decide which way to
+follow, the other ones I have done are:
+
+klombia for Colombia
+kuardo	for Ecuador
+venzla	for Venezuela or
+venzula for Venezuela
+
+naming countries with the two letter iso standard is not very intuitive,
+in my opinion.
+
