@@ -84,3 +84,18 @@ don't you think ISO-fu'ivla are better?
 https://drive.google.com/#folders/0Bxngu1CNj7wdVU1yVHpWV2hhM0k ?
 Look at {gugdevu'e}.
 
+
+## 2014-03-13T18:26:42Z — nestor (comment 1048, on definition 53155, in reply to 1047)
+
+Re: Better substitution
+
+gleki wrote:
+> don't you think ISO-fu'ivla are better?
+
+Still in doubt, at least not for an informal conversation, maybe for
+technical documents, but IMHO the country brivla should resemble a similar
+name like the one we use to refer to, but I found hard to include all of
+them because of lojban strict grammatical rules which I consider veeeeery
+good, anyway we can refer to them like a cmene, so I think that's the best
+way.  This system must have a way to delete fuhivla or mark for deletion.
+
