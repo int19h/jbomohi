@@ -56,3 +56,31 @@ venzula for Venezuela
 naming countries with the two letter iso standard is not very intuitive,
 in my opinion.
 
+
+## 2014-03-13T12:13:42Z — gleki (comment 1047, on definition 53155, in reply to 1039)
+
+Re: Better substitution
+
+nestor wrote:
+> Hi, I am a newbie making fuhivla, I agree with you to the fact that
+venzla
+> appears to be a lujvo because is a 6 letter word, but on the other side
+i
+> think that the fewer gismo the better the language, because is simpler,
+> anyway I suppose it will be a matter of votes to decide which way to
+> follow, the other ones I have done are:
+> 
+> klombia for Colombia
+> kuardo	for Ecuador
+> venzla	for Venezuela or
+> venzula for Venezuela
+> 
+> naming countries with the two letter iso standard is not very intuitive,
+> in my opinion.
+
+
+
+don't you think ISO-fu'ivla are better?
+https://drive.google.com/#folders/0Bxngu1CNj7wdVU1yVHpWV2hhM0k ?
+Look at {gugdevu'e}.
+
