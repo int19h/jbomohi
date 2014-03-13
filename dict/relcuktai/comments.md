@@ -16,3 +16,19 @@ A form like "bullseye" that is U+25CE of Unicode. A similar form with a
 cross is called "multiplication sign in double circle" and is U+2A37 of
 Unicode. 
 
+
+## 2014-03-13T09:52:25Z — gleki (comment 1044, on definition 53166, in reply to 1043)
+
+Re: ?
+
+gusnikantu wrote:
+> krtisfranks wrote:
+> > What is a double circle? :)
+> 
+> A form like "bullseye" that is U+25CE of Unicode. A similar form with a
+> cross is called "multiplication sign in double circle" and is U+2A37 of
+> Unicode. 
+
+I thought double circle is what is placed on the Lojban flag (gleki has
+been pwned)
+
