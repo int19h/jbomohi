@@ -56,3 +56,36 @@ I first defined in Lojban that the center of two circles is {zo'e}. Maybe
 
 A form like Lojban flag may be relkucycuktai or something, pei?
 
+
+## 2014-03-13T11:44:25Z — gleki (comment 1046, on definition 53166, in reply to 1045)
+
+Re: ?
+
+gusnikantu wrote:
+> gleki wrote:
+> > gusnikantu wrote:
+> > > krtisfranks wrote:
+> > > > What is a double circle? :)
+> > > 
+> > > A form like "bullseye" that is U+25CE of Unicode. A similar form
+with
+> a
+> > > cross is called "multiplication sign in double circle" and is U+2A37
+> of
+> > > Unicode. 
+> > 
+> > I thought double circle is what is placed on the Lojban flag (gleki
+has
+> > been pwned)
+> 
+> I first defined in Lojban that the center of two circles is {zo'e}.
+Maybe
+> {lo pa zo'e} is better. I will modify it.
+> 
+> A form like Lojban flag may be relkucycuktai or something, pei?
+
+do jdice. 
+
+ta'oru'e it sometimes bothers me that {pensi'u} and {kucysi'u} are more
+useful than penmi and kruca. the list can be continued.
+
