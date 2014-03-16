@@ -122,3 +122,33 @@ deletion.
 
 The system allows you to downvote any word.
 
+
+## 2014-03-16T08:31:18Z — krtisfranks (comment 1051, on definition 53155, in reply to 1048)
+
+Re: Better substitution
+
+nestor wrote:
+> gleki wrote:
+> > don't you think ISO-fu'ivla are better?
+> 
+> Still in doubt, at least not for an informal conversation, maybe for
+> technical documents, but IMHO the country brivla should resemble a
+similar
+> name like the one we use to refer to […]
+
+I think that we should treat Lojban whensoever possible as if it were
+meant to become a native and only language of some large population of
+speakers, as best as we can. That means that lujvo should be preferred to
+zi'evla (and, in particular, fu'ivla) whensoever doing so is reasonable.
+But, also, when we make zi'evla, we should do so algorithmically,
+culturally-neutrally, and with as little reference to outside knowledge as
+possible while being sensible, logical, and predictable about the word and
+doing so. Thus, native only-lojban speakers will not presumably know the
+names of countries to which we do not expose them (by having those words
+in the vocabulary of Lojban); if we teach them that VE means Venezuela and
+is the only word for it, then thar will be natural to them - and in fact
+the systematicness of the scheme would be beneficial to them; therefore,
+we should make it so. Note also that going with "VE" is just as meaningful
+to someone who has never before heard it as going with "Venezuela" would
+be.
+
