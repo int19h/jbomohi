@@ -1,0 +1,37 @@
+<!--{{As of}} begin--><includeonly><!--
+
+## param 1 is the year
+## optional param 2 is the month
+## optional param 3 is the day of the month
+## optional named parameter alt=[text] is alternative display text (may include wiki markup)
+## optional named parameter df=US produces American date format in displayed text
+## optional named parameter lc=on gives lower-case-first output
+## optional named parameter url=[URL] gives statement reference
+
+## displayed text ([A/a]s of [Start date] by default)
+-->{{#if: {{{alt|}}} | {{{alt}}} | {{#ifeq: {{{lc}}} | {{{lc|}}} | a | A }}s of {{#if: {{{3|}}} | {{#ifeq:{{lc:{{{df|}}}}}|us|{{MONTHNAME|{{{2}}}}} {{#expr:{{{3}}}}},|{{#expr:{{{3}}}}} {{MONTHNAME|{{{2}}}}} }} {{{1}}} | {{#if: {{{2|}}} | {{MONTHNAME|{{{2}}}}} }} {{{1}}} }}}}<!--
+
+## ref/update inline banner (hidden by default)
+--><sup class="plainlinks noprint asof-tag {{#if:{{{url|}}}|ref|update}}" style="display:none;">[{{#if:{{{url|}}}|{{{url}}} &#91;ref&#93;|{{fullurl:{{PAGENAME}}|action=edit}} &#91;update&#93;}}]</sup><!--
+
+## categorisation disabled outside main namespace
+-->{{DMCA|Articles containing potentially dated statements|from|<!--
+
+## temporal category for template (word method)
+-->{{#if: {{#ifexpr: {{{1}}} = 1 }} | {{#ifexpr: {{#time:Y|{{{1}}}}} > 2004 | {{{1}}} | {{#ifexpr: {{#time:Y|{{{1}}}}} > 1989 | {{#time:Y|{{{1}}}}} | before 1990 }}}} | <!--
+
+## temporal category for template (parameter method)
+-->{{#ifexpr: {{{1}}} > 2004 | {{#if:{{{2|}}} | {{MONTHNAME|{{{2}}}}} }} {{{1}}} | {{#ifexpr:{{{1}}} > 1989 | {{{1}}} | before 1990 }}}}}}|<!--
+
+## global category for template
+-->All articles containing potentially dated statements}}</includeonly><!--{{As of}} end--><noinclude><!-- 
+
+## dynamic example (as of today, self ref)
+
+-->As of {{Start date|{{CURRENTYEAR}}|{{CURRENTMONTH}}|{{CURRENTDAY}}|df=yes}}<sup class="plainlinks">[http://en.wikipedia.org/wiki/Template:As_of &#91;ref&#93;]</sup>
+
+{{documentation}}
+
+<!-- Add categories and inter-wikis to the /doc subpage, not here! --> 
+
+</noinclude>
