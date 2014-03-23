@@ -19,7 +19,7 @@ use vars qw($opt_g $opt_p $opt_a $opt_c $opt_C $opt_l $opt_L
 use Getopt::Std;
 getopts("gcClLaRrp");
 if ($#ARGV < 0) {
-	print "pilno: viska [[aAg|aAg]] [[jbocre: -lrc  -C | -L | -R]] valsi\n";
+	print "pilno: viska [[aAg|aAg]] [[-lrc  -C | -L | -R]] valsi\n";
 	exit 1;
 }
 if ($opt_a) {
@@ -30,7 +30,7 @@ if ($opt_a) {
 # xxx
 $opt_c = 1;
 while ($#ARGV >= 0) {
-my $valsi="$ARGV[[jbocre: 0|0]]";
+my $valsi="$ARGV[[0|0]]";
 shift;
 $valsi =~ s/h/\'/g if !$opt_g;
 sub viska_valsi {
@@ -42,22 +42,22 @@ sub viska_valsi {
 	$smalldef = substr($v, $smallstart, $fullstart - $smallstart);
 	$v =~ /([[a-z\'|a-z\']]+)/;
 	$val = $1;
-	print "\33[jbocre: 1m" . $val . "\33[jbocre: 0m";
+	print "\33[1m" . $val . "\33[0m";
 	if ($wha != 2) {
 		print "\r\t\t" if $wha;
-		print " \33[jbocre: 36m";
+		print " \33[36m";
 		print "|" if !$wha;
 		print $rafsi;
 		print "|" if !$wha;
-		print "\33[jbocre: 0m";
-		print "\t\33[jbocre: 31m" . $smalldef . "\33[jbocre: 0m";
+		print "\33[0m";
+		print "\t\33[31m" . $smalldef . "\33[0m";
 	}
 	if (!$opt_p) {
 		$| = 1;
-		print "\n\33[jbocre: 33m";
+		print "\n\33[33m";
 		$fulldef =~ s/\'/\'\\\'\'/g;
 		system "echo \'$fulldef\' | fmt";
-		print "\33[jbocre: 0m";
+		print "\33[0m";
 		$| = 0;
 	} else {
 		print "\n";
@@ -91,7 +91,7 @@ if (!$opt_C && !$opt_L && !$opt_R) {
 	close GISMU;
 }
 # caku ko troci fi le cmavo
-if [jbocre: $opt_c || $opt_C) && !$opt_L && !$opt_R) {
+if [$opt_c || $opt_C) && !$opt_L && !$opt_R) {
 	open CMAVO, "< $mahoste" or die "open($mahoste): $!";
 	while (<CMAVO>) {
 		if ($opt_g) {
@@ -105,7 +105,7 @@ if [jbocre: $opt_c || $opt_C) && !$opt_L && !$opt_R) {
 	close CMAVO;
 }
 # ko ca troci fi le lujvo
-if [jbocre: $opt_l || $opt_L) && !$opt_R) {
+if [$opt_l || $opt_L) && !$opt_R) {
 	open LUJVO, "< $jvoste" or die "open($jvoste): $!";
 	while (<LUJVO>) {
 		if ($opt_g) {
