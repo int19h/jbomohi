@@ -9,7 +9,7 @@ Let me rephrase this statement.
 
 If we consider the Lojban language in a purely formal sense, involving an '''alphabet''' composed of its '''words''', supposedly classified into '''lexemes''', then '''any finite ''string''''' of lojban (stream of '''words''') can be proven either grammatically correct or not in a finite amount of time using a turing machine.
 
-This is what the Lojban grammar is for : it defines axioms and inference rules between its words (more precisely its '''lexemes''') in a form that can be fed into a [[jbocre: LALR|LALR]](1) parser. And because the [[jbocre: LALR|LALR]](1) parsing algorithm can be implemented using a [[jbocre: Turing Machine|Turing Machine]], and that it can tell, within a finite amount of time, whether a (finite) string of lexemes follow its grammar or not, we have the result stated above.
+This is what the Lojban grammar is for : it defines axioms and inference rules between its words (more precisely its '''lexemes''') in a form that can be fed into a [[LALR|LALR]](1) parser. And because the [[LALR|LALR]](1) parsing algorithm can be implemented using a [[Turing Machine|Turing Machine]], and that it can tell, within a finite amount of time, whether a (finite) string of lexemes follow its grammar or not, we have the result stated above.
 
 Now, what does that mean ?
 
@@ -25,11 +25,11 @@ Two facts :
 
 ==== Epilog ====
 
-As far as I can understand in the morphology of lojban, a complete lexer simply cannot be written using a [[jbocre: LR|LR]](k) nor [[jbocre: LL|LL]](k) grammar, for various reasons related to backtracking and the relation between semantics and morphology.
+As far as I can understand in the morphology of lojban, a complete lexer simply cannot be written using a [[LR|LR]](k) nor [[LL|LL]](k) grammar, for various reasons related to backtracking and the relation between semantics and morphology.
 
 ''What does anything have to do with semantics? brkwords.txt will correctly break up ''djan.polake'ebrIvlaboinoigIsmumu'' just as well as something grammatical. -- ''However, we still have a hard time with "su" and "sa", even "si" when it is used to erase a morphologically wrong piece of text. Not to mention that it is possible that the morphology in itself is possible, while altogether being unambiguous when considered together with the grammar (like an ambiguity that cannot happen because the ambiguous lexemes are not allowed in such or such place by the grammar).
 
-The attempt in [[jbofi'e|jbofi'e]] to solve the problem using [[jbocre: NFA|NFA]]'s is interesting, but leads to a huge graph of automata, which is very difficult to prove right.
+The attempt in [[jbofi'e|jbofi'e]] to solve the problem using [[NFA|NFA]]'s is interesting, but leads to a huge graph of automata, which is very difficult to prove right.
 
 While continuing to search for an elegant algorithmic solution to this issue, I nonetheless believe that real parsing of Lojban using computers (one which involves a real lexer) is a very difficult task unlikely to be done right soon.
 
@@ -48,9 +48,9 @@ One should see the file [http://www.lojban.org/files/software/B BRKWORDS.TXT] fo
 
 ----
 
-At one point I put some thought into trying to write a [[jbocre: Context Free Grammars ontext free grammar|Context Free Grammars ontext free grammar]] describing the morphology. (Not a context-free one, however. I was intending to use the grammar in conjunction with a generalized parser, like [[jbocre: General Parsing omita|General Parsing omita]]'s or [[jbocre: General Parsing arly|General Parsing arly]]'s). Didn't get anywhere. I think that if an [[jbocre: NFA|NFA]] can parse it, there should definitely be a [[jbocre: CFG|CFG]] which can describe it, however. ([[jbocre: CFG|(CFG]]s being more powerful language-recognition mechanisms than automata.) --[[jbocre: Jay Kominek|Jay]]
+At one point I put some thought into trying to write a [[jbocre: Context Free Grammars ontext free grammar|Context Free Grammars ontext free grammar]] describing the morphology. (Not a context-free one, however. I was intending to use the grammar in conjunction with a generalized parser, like [[jbocre: General Parsing omita|General Parsing omita]]'s or [[jbocre: General Parsing arly|General Parsing arly]]'s). Didn't get anywhere. I think that if an [[NFA|NFA]] can parse it, there should definitely be a [[jbocre: CFG|CFG]] which can describe it, however. ([[jbocre: CFG|(CFG]]s being more powerful language-recognition mechanisms than automata.) --[[jbocre: Jay Kominek|Jay]]
 
-Btw, parsing, even with an [[jbocre: NFA|NFA]] is Really Really fast. So even if the process is ugly, then just as long as it works unambiguously, you're all set. -[[jbocre: Jay Kominek|Jay Kominek]]
+Btw, parsing, even with an [[NFA|NFA]] is Really Really fast. So even if the process is ugly, then just as long as it works unambiguously, you're all set. -[[jbocre: Jay Kominek|Jay Kominek]]
 
 ----
 
@@ -64,6 +64,6 @@ However, there still remain two problems :
 
 At any rate, I would far prefer to invert the word formation algorithm.
 
-* All very well, except that there is no WFA for [[jbocre: Type 4 fu'ivla]]. -- ''Well, we have a general rule to recognize brivla, and morphology rules for every other type of brivla. Therefore a parser which can recognize a brivla will recognize type 4 fu'ivla using its "default" brivla rule.''
+* All very well, except that there is no WFA for [[Type 4 fu'ivla]]. -- ''Well, we have a general rule to recognize brivla, and morphology rules for every other type of brivla. Therefore a parser which can recognize a brivla will recognize type 4 fu'ivla using its "default" brivla rule.''
 
 It does not mean that a listener has to remember the string all the way up until the first pause. Humans are capable of performing lexical, syntactic and semantic processing of language simultaneously. As the lexical part of your mind tries to split up words, the syntactic part is looking to see if the series of words is valid, while the semantic part is looking to see if it makes sense. You'll discard parses which aren't syntactically or semantically valid. Further, there are parsing algorithms which won't be tripped up by bidirectionality of processing, so a computer isn't going to have a very big problem with it, ''just as long as it isn't ambiguous''. --jay
