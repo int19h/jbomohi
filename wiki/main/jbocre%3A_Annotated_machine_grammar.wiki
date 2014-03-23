@@ -41,12 +41,12 @@ discussing them collectively.
 
 * [[error|error]] (sic)
 
-The machine grammar of Lojban is not purely LALR(1). Some constructs need to be modified by a program before passing it on to the actual YACC parser. This program is referred to as the [[jbocre: lexer|lexer]] in literature about the machine grammar, but it does a lot more than simply lexing. There are two kinds of modifications the lexer can do to its input:
+The machine grammar of Lojban is not purely LALR(1). Some constructs need to be modified by a program before passing it on to the actual YACC parser. This program is referred to as the [[lexer|lexer]] in literature about the machine grammar, but it does a lot more than simply lexing. There are two kinds of modifications the lexer can do to its input:
 
 * Replace it with a pseudo-token ("lexer token")
 * Insert a lexer token ''in front of'' it
 
-An example where this is done, is with utterance ordinals, that consists of a letteral or number string, followed by [[jbocre: mai|mai]]. The lexer detects that such a string is followed by mai, and inserts [[jbocre: lexer_A_701]] in front of it. Thus, the "real" parser sees the resulting construct about the same way as it sees a parenthesis, with an introducing particle, a contained phrase, and a terminator. Needless to say, the conceptual "terminator" of the utterance ordinal, mai, is not elidable, because that is the word that the lexer has to detect to insert the lexer token in the first place.
+An example where this is done, is with utterance ordinals, that consists of a letteral or number string, followed by [[jbocre: mai|mai]]. The lexer detects that such a string is followed by mai, and inserts [[lexer_A_701]] in front of it. Thus, the "real" parser sees the resulting construct about the same way as it sees a parenthesis, with an introducing particle, a contained phrase, and a terminator. Needless to say, the conceptual "terminator" of the utterance ordinal, mai, is not elidable, because that is the word that the lexer has to detect to insert the lexer token in the first place.
 
 The lexer tokens and the preparsing process is not as well understood as the rest of the YACC grammar. In particular, it is not certain if they interact with each other. This project is trying to remedy this.
 
