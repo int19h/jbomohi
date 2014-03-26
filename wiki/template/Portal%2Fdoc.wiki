@@ -1,0 +1,198 @@
+{{#ifeq: {{{type|}}} | module ||
+{{documentation subpage}}
+{{high-risk|4,800,000+}}
+{{lua|Module:Portal}}
+<!---PLEASE ADD METADATA TO THE <includeonly> SECTION AT THE BOTTOM OF THIS PAGE.--->
+
+This {{{type|template}}} produces a box with links to a [[Portal:Contents/Portals|portal]] or to multiple portals. It is most often used in the "See also" section of an article.
+}}
+=== Usage ===
+{{Portal |Louisiana |Missouri |Arkansas |Texas |Minnesota |Kansas |Nebraska |Colorado |North Dakota |Montana |Wyoming |Saskatchewan |Alberta |Oklahoma |New Mexico |History }}
+
+;Basic usage
+<div style="overflow:auto">
+ <code>&#123;&#123;{{#ifeq: {{{type|}}} | module | &#35;invoke:Portal&#124;portal | Portal }} |''Portal 1'' |''Portal 2'' |''Portal 3'' |... &#125;&#125;</code>
+</div>
+
+;All options
+<div style="overflow:auto"><code>
+ &#123;&#123;{{#ifeq: {{{type|}}} | module | &#35;invoke:Portal&#124;portal | Portal }}
+  | ''Portal 1''
+  | ''Portal 2''
+  | ''Portal 3''
+  | ... 
+  | left = <!-- yes -->
+  | margin = <!-- CSS margin -->
+  | break = <!-- yes -->
+  | boxsize = <!-- custom box width in pixels -->
+ &#125;&#125;
+</code></div>
+
+=== Location ===
+Within articles, {{#ifeq: {{{type|}}} | module | the output of the portal function | this template }} is meant to be placed at the bottom of the article in the ''See also'' section. If there is no ''See also'' section, you can put it in the ''External links'' section instead; there is no need to create a new section just to house this template. If there is no ''External links'' section either, just put it below the article text in the place that seems most appropriate.
+
+There are no particular rules about the placement of portals on other kinds of page.
+
+=== Image ===
+The portal image names are stored in subpages of [[Module:Portal/images]], organised by the first letter of the portal name. For example, the first letter of [[Portal:Fishing]] is "F", so the image name is stored at [[Module:Portal/images/f]]. If there is an entry for a portal on the correct page then the corresponding image will be shown next to the portal link. If no image is found then [[:File:Portal-puzzle.svg]] will be shown instead. 
+
+It is also possible to specify aliases for portal images. For example, the code {{tlx|portal|Detroit}} produces the same image as the code {{tlx|portal|Metro Detroit}}. The "Detroit" alias is found on the page [[Module:Portal/images/aliases]].
+
+The image-detection algorithm is case-insensitive. For example, the code {{tlx|portal|Detroit}} will produce the same image as the code {{tlx|portal|detroit}} (although the portal links will be different). Portal names are stored in lower case in the image subpages, and input is converted to lower case before being checked.
+
+To add new images to the list, please <span class="plainlinks">[https://en.wikipedia.org/w/index.php?title=Template_talk:Portal&action=edit&preload=Template:Edit_protected/preload&editintro=Template:Edit_protected/editintro&preloadtitle=Image+edit+request+on+{{CURRENTDAY}}+{{CURRENTMONTHNAME}}+{{CURRENTYEAR}}&section=new make a protected edit request at Template talk:Portal]</span> to get an administrator to edit the correct subpage for you. Portal images must be either in the public domain or available under a [[WP:ICTIC|free license]] that allows commercial reuse and derivative works; [[Wikipedia:Non-free content|fair-use]] images are not acceptable.
+
+{{cot|List of image subpages}}
+{| class="wikitable"
+|-
+! Page !! Description
+|-
+| [[Module:Portal/images/a]] || For portal names beginning with "A".
+|-
+| [[Module:Portal/images/b]] || For portal names beginning with "B".
+|-
+| [[Module:Portal/images/c]] || For portal names beginning with "C".
+|-
+| [[Module:Portal/images/d]] || For portal names beginning with "D".
+|-
+| [[Module:Portal/images/e]] || For portal names beginning with "E".
+|-
+| [[Module:Portal/images/f]] || For portal names beginning with "F".
+|-
+| [[Module:Portal/images/g]] || For portal names beginning with "G".
+|-
+| [[Module:Portal/images/h]] || For portal names beginning with "H".
+|-
+| [[Module:Portal/images/i]] || For portal names beginning with "I".
+|-
+| [[Module:Portal/images/j]] || For portal names beginning with "J".
+|-
+| [[Module:Portal/images/k]] || For portal names beginning with "K".
+|-
+| [[Module:Portal/images/l]] || For portal names beginning with "L".
+|-
+| [[Module:Portal/images/m]] || For portal names beginning with "M".
+|-
+| [[Module:Portal/images/n]] || For portal names beginning with "N".
+|-
+| [[Module:Portal/images/o]] || For portal names beginning with "O".
+|-
+| [[Module:Portal/images/p]] || For portal names beginning with "P".
+|-
+| [[Module:Portal/images/q]] || For portal names beginning with "Q".
+|-
+| [[Module:Portal/images/r]] || For portal names beginning with "R".
+|-
+| [[Module:Portal/images/s]] || For portal names beginning with "S".
+|-
+| [[Module:Portal/images/t]] || For portal names beginning with "T".
+|-
+| [[Module:Portal/images/u]] || For portal names beginning with "U".
+|-
+| [[Module:Portal/images/v]] || For portal names beginning with "V".
+|-
+| [[Module:Portal/images/w]] || For portal names beginning with "W".
+|-
+| [[Module:Portal/images/x]] || For portal names beginning with "X".
+|-
+| [[Module:Portal/images/y]] || For portal names beginning with "Y".
+|-
+| [[Module:Portal/images/z]] || For portal names beginning with "Z".
+|-
+| [[Module:Portal/images/other]] || For portal names beginning with any other letters. This includes numbers, letters with diacritics, and letters in non-Latin alphabets.
+|-
+| [[Module:Portal/images/aliases]] || For adding aliases for existing portal names. Use this page for variations in spelling and diacritics, etc., no matter what letter the portal begins with.
+|-
+|}
+{{cob}}
+
+=== Example ===
+{| style="background:transparent;"
+|-
+! Code !! Result
+|-
+|
+  <span style="font-size: 90%;"><code>&#123;&#123;{{#ifeq: {{{type|}}} | module | &#35;invoke:Portal&#124;portal | Portal }}|Science&#125;&#125;</code></span>
+| {{Portal|Science}}
+|}
+
+=== Parameters ===
+
+{| class="wikitable"
+|-
+! Name !! Value !! Description
+|-
+| <code>'''1'''</code>, <code>'''2'''</code>, <code>'''3'''</code> ... || The portal name, e.g. <code>Literature</code> || The positional parameters specify the portals to be displayed.
+|-
+| <code>'''left'''</code> || <code>yes</code> || If set to <code>yes</code>, the portal appears on the left side of the page instead of the right.
+|-
+| <code>'''margin'''</code> || CSS margin value, e.g. <code>1.2em 3em 0.5em 1em</code>  || This allows you to set a custom margin. All valid CSS margin values are accepted.
+|-
+| <code>'''break'''</code> || <code>yes</code> || If set to <code>yes</code>, a line break is inserted after the portal name and before the word ''portal''.
+|-
+| <code>'''boxsize'''</code> || Size in pixels, e.g. <code>300</code> || This sets a custom box width in pixels.
+|}
+
+=== Maintenance ===
+
+The following tracking category lists instances where the {{{type|template}}} is used incorrectly:
+* [[:Category:Portal templates without a parameter]]
+{{#ifeq: {{{type|}}} | module ||
+=== See also ===
+* [[Template:Portal bar]]
+* [[Template:Portal-inline]]
+* [[Template:Related portals]]
+* [[Template:Related portals2]]
+<includeonly>
+[[Category:Internal link templates]]
+[[Category:Wikipedia Portal navflags]]
+[[Category:Exclude in print]]
+
+[[bn:টেমপ্লেট:Portal]]
+</includeonly>
+{{cot|TemplateData}}
+<TemplateData>
+{
+        "description": "A template to create a list of portals",
+        "params": {
+                "1": {
+                        "label": "Portal (1)",
+                        "description": "Inserts the portal image and text. Further portals can be added to the template by increasing the number",
+                        "type": "string",
+                        "required": true
+                },
+                "2": {
+                        "label": "Portal (2)",
+                        "description": "Insert the portal image and text",
+                        "type": "string"
+                },
+                "3": {
+                        "label": "Portal (3)",
+                        "inherits": "2"
+                },
+                "left": {
+                        "label": "Side",
+                        "description": "If set to yes, the portal appears on the left side of the page instead of the right.",
+                        "type": "string",
+                        "default": "no"
+                },
+                "margin": {
+                        "label": "Margin size",
+                        "description": "Alters the margin size. Any valid CSS margin is accepted",
+                        "type": "number"
+                },
+                "break": {
+                        "label": "Line break",
+                        "description": "If set to yes, a line break is inserted after the portal name and before the word portal",
+                        "type": "string"
+                },
+                "boxsize": {
+                        "label": "Box size",
+                        "description": "This sets a custom box width in pixels.",
+                        "type": "number"
+                }
+        }
+}
+</TemplateData>
+{{cob}}
+}}
