@@ -92,11 +92,14 @@ citation_config.aliases = {
     ['AuthorSeparator'] = 'author-separator',
     ['AuthorNameSeparator'] = 'author-name-separator',
     ['BookTitle'] = 'booktitle',
+	['Callsign'] = 'callsign',							-- cite interview
     ['Cartography'] = 'cartography',
-    ['Chapter'] = {'chapter', 'contribution', 'entry', 'article', 'section' },
+    ['Chapter'] = {'chapter', 'contribution', 'entry', 'article', 'section', 'notestitle'},		-- notestitle is deprecated used by old cite AV media notes; remove after 1 October 2014;
     ['ChapterLink'] = 'chapterlink',
     ['ChapterURL'] = {'chapter-url', 'chapterurl', 'contribution-url', 'contributionurl', 'sectionurl' },
+	['City'] = 'city',									-- cite interview
     ['Coauthors'] = {'coauthors', 'coauthor' },
+    ['Cointerviewers'] = 'cointerviewers',				-- cite interview
     ['Conference'] = {'conference', 'event' },
     ['ConferenceURL'] = {'conference-url', 'conferenceurl', 'eventurl' },
     ['Date'] = 'date',
@@ -114,9 +117,10 @@ citation_config.aliases = {
     ['EditorNameSeparator'] = 'editor-name-separator',
     ['Embargo'] = {'Embargo', 'embargo'},
     ['Format'] = 'format',
-    ['ID'] = {'id', 'ID'},
+    ['ID'] = {'id', 'ID', 'publisherid'},				-- publisherid is deprecated; used by old cite AV media notes and old cite DVD notes; remove after 1 October 2014;
     ['IgnoreISBN'] = {'ignore-isbn-error', 'ignoreisbnerror'},
     ['Inset'] = 'inset',
+    ['Interviewer'] = 'interviewer',					-- cite interview
     ['Issue'] = {'issue', 'number'},
     ['Language'] = {'language', 'in'},
     ['LastAuthorAmp'] = 'lastauthoramp',
@@ -130,8 +134,8 @@ citation_config.aliases = {
     ['NoPP'] = 'nopp',
     ['NoTracking'] = {"template doc demo", 'nocat', 
         'notracking', "no-tracking"},
-    ['OrigYear'] = 'origyear',
-    ['Others'] = 'others',
+    ['OrigYear'] = {'origyear', 'titleyear'},			-- titleyear is deprecated; used in old cite DVD notes; remove after 1 October 2014
+    ['Others'] = {'others', 'artist', 'director'},		-- artist and director are deprecated; used in old cite AV media notes and old cite DVD notes; remove after 1 October 2014
     ['Page'] = {'p', 'page'},
     ['Pages'] = {'pp', 'pages'},
     ['Periodical'] = {'journal', 'newspaper', 'magazine', 'work',
@@ -139,6 +143,7 @@ citation_config.aliases = {
     ['Place'] = {'place', 'location'},
     ['PPrefix'] = 'PPrefix',
     ['PPPrefix'] = 'PPPrefix',
+	['Program'] = 'program',							-- cite interview
     ['PostScript'] = 'postscript',
     ['PublicationDate'] = {'publicationdate', 'publication-date' },
     ['PublicationPlace'] = {'publication-place', 'publicationplace' },
@@ -159,7 +164,7 @@ citation_config.aliases = {
     ['Time'] = 'time',
     ['TimeCaption'] = 'timecaption',
     ['Title'] = 'title',
-    ['TitleLink'] = {'titlelink', 'episodelink' },
+    ['TitleLink'] = {'titlelink', 'episodelink', 'albumlink' },		-- albumlink is deprecated; used by old cite AV media notes; remove after 1 October 2014
     ['TitleNote'] = 'department',
     ['TitleType'] = {'type', 'medium'},
     ['TransChapter'] = {'trans-chapter', 'trans_chapter' },
@@ -174,9 +179,9 @@ citation_config.aliases = {
     ['AuthorList-First'] = {"author#-first", "author-first#",
         "first#", "given#"},
     ['AuthorList-Last'] = {"author#-last", "author-last#", 
-        "last#", "surname#", "Author#", "author#", "authors#"},
+        "last#", "surname#", "Author#", "author#", "authors#", "subject#"},
     ['AuthorList-Link'] = {"author#-link", "author-link#", 
-        "author#link", "authorlink#"},
+        "author#link", "authorlink#", "subjectlink#"},
     ['AuthorList-Mask'] = {"author#-mask", "author-mask#", 
         "author#mask", "authormask#"},
     
@@ -194,8 +199,6 @@ citation_config.aliases = {
 -- Default parameter values
 citation_config.defaults = {
     ['DeadURL'] = 'yes',
-    ['PostScript'] = '.',
-    ['Separator'] = '.',
     ['AuthorSeparator'] = ';',
     ['EditorSeparator'] = ';',
     ['NameSeparator'] = ',',
@@ -229,6 +232,11 @@ citation_config.error_conditions = {
 		anchor = 'archive_missing_url',
 		category = 'Pages with archiveurl citation errors',
 		hidden = false },
+	bad_authorlink = {
+		message = 'Check <code>&#124;authorlink=</code> value',
+		anchor = 'bad_authorlink',
+		category = 'CS1 errors: authorlink',
+		hidden = false },
 	bad_date = {
 		message = 'Check date values in: <code>$1</code>',
 		anchor = 'bad_date',
@@ -249,10 +257,20 @@ citation_config.error_conditions = {
 		anchor = 'bad_issn',
 		category = 'CS1 errors: ISSN',
 		hidden = false },
+	bad_lccn = {
+		message = 'Check <code>&#124;lccn=</code> value',
+		anchor = 'bad_lccn',
+		category = 'CS1 errors: LCCN',
+		hidden = false },
 	bad_ol = {
 		message = 'Check <code>&#124;ol=</code> value',
 		anchor = 'bad_ol',
 		category = 'Pages with OL errors',
+		hidden = false },
+	bad_pmc = {
+		message = 'Check <code>&#124;pmc=</code> value',
+		anchor = 'bad_pmc',
+		category = 'CS1 errors: PMC',
 		hidden = false },
 	bad_pmid = {
 		message = 'Check <code>&#124;pmid=</code> value',
@@ -434,7 +452,7 @@ citation_config.id_handlers = {
         parameters = {'LCCN', 'lccn'}, 
         link = 'Library of Congress Control Number',
         label = 'LCCN',
-        mode = 'external',
+        mode = 'manual',
         prefix = 'http://lccn.loc.gov/',
         COinS = 'rft.lccn',
         encode = false,
