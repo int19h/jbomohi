@@ -1,109 +1,89 @@
-----------------------------------------------------------------------------------------------------
---                                                                                                --
---                                           NAMESPACE DETECT                                     --
---                                                                                                --
---      This module implements the {{namespace detect}} template in Lua, with a few               --
---      improvements: all namespaces and all namespace aliases are supported, and namespace       --
---      names are detected automatically for the local wiki. The module can also use the          --
---      corresponding subject namespace value if it is used on a talk page. Parameter names       --
---      can be configured for different wikis by altering the values in the "cfg" table.          --
---                                                                                                --
-----------------------------------------------------------------------------------------------------
+--[[
+--------------------------------------------------------------------------------
+--                                                                            --
+--                            NAMESPACE DETECT                                --
+--                                                                            --
+-- This module implements the {{namespace detect}} template in Lua, with a    --
+-- few improvements: all namespaces and all namespace aliases are supported,  --
+-- and namespace names are detected automatically for the local wiki. The     --
+-- module can also use the corresponding subject namespace value if it is     --
+-- used on a talk page. Parameter names can be configured for different wikis --
+-- by altering the values in the "cfg" table in                               --
+-- Module:Namespace detect/config.                                            --
+--                                                                            --
+--------------------------------------------------------------------------------
+--]]
 
-----------------------------------------------------------------------------------------------------
---                                          Configuration data                                    --
---      Language-specific parameter names can be set here.                                        --
-----------------------------------------------------------------------------------------------------
-
-local cfg = {}
-
--- This parameter displays content for the main namespace:
-cfg.main = 'main'
-
--- This parameter displays in talk namespaces:
-cfg.talk = 'talk'
-
--- This parameter displays content for "other" namespaces (namespaces for which
--- parameters have not been specified, or for when cfg.demospace is set to cfg.other):
-cfg.other = 'other'
-
--- This parameter makes talk pages behave as though they are the corresponding subject namespace.
--- Note that this parameter is used with [[Module:Yesno]]. Edit that module to change
--- the default values of "yes", "no", etc.
-cfg.subjectns = 'subjectns'
-
--- This parameter sets a demonstration namespace:
-cfg.demospace = 'demospace'
-
--- This parameter sets a specific page to compare:
-cfg.page = 'page'
-
--- The header for the namespace column in the wikitable containing the list of possible subject-space parameters.
-cfg.wikitableNamespaceHeader = 'Namespace'
-
--- The header for the wikitable containing the list of possible subject-space parameters.
-cfg.wikitableAliasesHeader = 'Aliases'
-
-----------------------------------------------------------------------------------------------------
---                                       End configuration data                                   --
-----------------------------------------------------------------------------------------------------
+local data = mw.loadData('Module:Namespace detect/data')
+local argKeys = data.argKeys
+local cfg = data.cfg
+local mappings = data.mappings
 
 local yesno = require('Module:Yesno')
+local mArguments -- Lazily initialise Module:Arguments
+local mTableTools -- Lazily initilalise Module:TableTools
+local ustringLower = mw.ustring.lower
 
 local p = {}
 
+local function fetchValue(t1, t2)
+	-- Fetches a value from the table t1 for the first key in array t2 where
+	-- a non-nil value of t1 exists.
+	for i, key in ipairs(t2) do
+		local value = t1[key]
+		if value ~= nil then
+			return value
+		end
+	end
+	return nil
+end
+
+local function equalsArrayValue(t, value)
+	-- Returns true if value equals a value in the array t. Otherwise
+	-- returns false.
+	for i, arrayValue in ipairs(t) do
+		if value == arrayValue then
+			return true
+		end
+	end
+	return false
+end
+
 function p.getPageObject(page)
-	-- Get the page object, passing the function through pcall in case we are over the expensive function count limit.
+	-- Get the page object, passing the function through pcall in case of
+	-- errors, e.g. being over the expensive function count limit.
 	if page then
-		local noError, pageObject = pcall(mw.title.new, page)
-		if not noError then
-			return nil
-		else
+		local success, pageObject = pcall(mw.title.new, page)
+		if success then
 			return pageObject
+		else
+			return nil
 		end
 	else
 		return mw.title.getCurrentTitle()
 	end
 end
 
+-- Provided for backward compatibility with other modules
 function p.getParamMappings()
-	--[[ Returns a table of how parameter names map to namespace names. The keys are the actual namespace 
-	  names, in lower case, and the values are the possible parameter names for that namespace, also in
-	  lower case. The table entries are structured like this:
-		{
-			[''] = {'main'},
-			['wikipedia'] = {'wikipedia', 'project', 'wp'},
-			...
-		}
-	]] 
-	local mappings = {}
-	mappings[mw.ustring.lower(mw.site.namespaces[0].name)] = {cfg.main}
-	mappings[cfg.talk] = {cfg.talk}
-	for nsid, ns in pairs(mw.site.subjectNamespaces) do
-		if nsid ~= 0 then -- Exclude main namespace.
-			local nsname = mw.ustring.lower(ns.name)
-			local canonicalName = mw.ustring.lower(ns.canonicalName)
-			mappings[nsname] = {nsname}
-			if canonicalName ~= nsname then
-				table.insert(mappings[nsname], canonicalName)
-			end
-			for _, alias in ipairs(ns.aliases) do
-				table.insert(mappings[nsname], mw.ustring.lower(alias))
-			end
-		end
-	end
 	return mappings
 end
 
 local function getNamespace(args)
-	-- Gets the namespace name from the page object.
-	local page = args[cfg.page]
-	local demospace = args[cfg.demospace]
-	local subjectns = args[cfg.subjectns]
+	-- This function gets the namespace name from the page object.
+	local page = fetchValue(args, argKeys.page)
+	if page == '' then
+		page = nil
+	end
+	local demospace = fetchValue(args, argKeys.demospace)
+	if demospace == '' then
+		demospace = nil
+	end
+	local subjectns = fetchValue(args, argKeys.subjectns)
 	local ret
 	if demospace then
 		-- Handle "demospace = main" properly.
-		if mw.ustring.lower(demospace) == cfg.main then
+		if equalsArrayValue(argKeys.main, ustringLower(demospace)) then
 			ret = mw.site.namespaces[0].name
 		else
 			ret = demospace
@@ -112,11 +92,12 @@ local function getNamespace(args)
 		local pageObject = p.getPageObject(page)
 		if pageObject then
 			if pageObject.isTalkPage then
-				-- If cfg.subjectns is set, get the subject namespace, otherwise use cfg.talk.
+				-- Get the subject namespace if the option is set,
+				-- otherwise use "talk".
 				if yesno(subjectns) then
 					ret = mw.site.namespaces[pageObject.namespace].subject.name
 				else
-					ret = cfg.talk
+					ret = 'talk'
 				end
 			else
 				ret = pageObject.nsText
@@ -125,104 +106,91 @@ local function getNamespace(args)
 			return nil -- return nil if the page object doesn't exist.
 		end
 	end
-	ret = mw.ustring.gsub(ret, '_', ' ')
-	return mw.ustring.lower(ret)
+	ret = ret:gsub('_', ' ')
+	return ustringLower(ret)
 end
 
 function p._main(args)
-	-- Get the namespace to compare the parameters to, and the parameter mapping table.
-	local namespace = getNamespace(args)
-	local mappings = p.getParamMappings()
-	-- Check for any matches in the namespace arguments. The order we check them doesn't matter,
-	-- as there can only be one match.
-	for ns, params in pairs(mappings) do
-		if ns == namespace then
-			-- Check all aliases for matches. The default local namespace is checked first, as
-			-- {{namespace detect}} checked these before alias names.
-			for _, param in ipairs(params) do
-				if args[param] ~= nil then
-					return args[param]
-				end
-			end
-		end
-	end
-	-- If there were no matches, return parameters for other namespaces. This happens if there
-	-- was no text specified for the namespace that was detected or if the demospace parameter
-	-- is not a valid namespace. Note that the parameter for the detected namespace must be
+	-- Check the parameters stored in the mappings table for any matches.
+	local namespace = getNamespace(args) or 'other' -- "other" avoids nil table keys
+	local params = mappings[namespace] or {}
+	local ret = fetchValue(args, params)
+	--[[
+	-- If there were no matches, return parameters for other namespaces.
+	-- This happens if there was no text specified for the namespace that
+	-- was detected or if the demospace parameter is not a valid
+	-- namespace. Note that the parameter for the detected namespace must be
 	-- completely absent for this to happen, not merely blank.
-	if args[cfg.other] ~= nil then
-		return args[cfg.other]
+	--]]
+	if ret == nil then
+		ret = fetchValue(args, argKeys.other)
 	end
+	return ret
 end
 
 function p.main(frame)
-	-- If called via #invoke, use the args passed into the invoking template, or the args
-	-- passed to #invoke if any exist. Otherwise assume args are being passed directly in.
-	local origArgs
-	if frame == mw.getCurrentFrame() then
-		origArgs = frame:getParent().args
-		for k, v in pairs(frame.args) do
-			origArgs = frame.args
-			break
-		end
-	else
-		origArgs = frame
-	end
-	-- Trim whitespace and remove blank arguments for demospace and page parameters.
-	local args = {}
-	for k, v in pairs(origArgs) do
-		if type(v) == 'string' then
-			v = mw.text.trim(v) -- Trim whitespace.
-		end
-		if k == cfg.demospace or k == cfg.page then
-			if v ~= '' then
-				args[k] = v
-			end
-		else
-			args[k] = v
-		end
-	end
-	return p._main(args)
+	mArguments = require('Module:Arguments')
+	local args = mArguments.getArgs(frame, {removeBlanks = false})
+	local ret = p._main(args)
+	return ret or ''
 end
 
 function p.table(frame)
-	--[[ Create a wikitable of all subject namespace parameters, for documentation purposes. The talk 
-	  parameter is optional, in case it needs to be excluded in the documentation.
-	]]
-	local useTalk = type(frame) == 'table' and type(frame.args) == 'table' and frame.args.talk == 'yes' -- Whether to use the talk parameter.
-	local mappings = p.getParamMappings()
-	-- Start the wikitable.
+	--[[
+	-- Create a wikitable of all subject namespace parameters, for
+	-- documentation purposes. The talk parameter is optional, in case it
+	-- needs to be excluded in the documentation.
+	--]]
+	
+	-- Load modules and initialise variables.
+	mTableTools = require('Module:TableTools')
+	local namespaces = mw.site.namespaces
+	local cfg = data.cfg
+	local useTalk = type(frame) == 'table' 
+		and type(frame.args) == 'table' 
+		and yesno(frame.args.talk) -- Whether to use the talk parameter.
+	
+	-- Get the header names.
+	local function checkValue(value, default)
+		if type(value) == 'string' then
+			return value
+		else
+			return default
+		end
+	end
+	local nsHeader = checkValue(cfg.wikitableNamespaceHeader, 'Namespace')
+	local aliasesHeader = checkValue(cfg.wikitableAliasesHeader, 'Aliases')
+
+	-- Put the namespaces in order.
+	local mappingsOrdered = {}
+	for nsname, params in pairs(mappings) do
+		if useTalk or nsname ~= 'talk' then
+			local nsid = namespaces[nsname].id
+			-- Add 1, as the array must start with 1; nsid 0 would be lost otherwise.
+			nsid = nsid + 1 
+			mappingsOrdered[nsid] = params
+		end
+	end
+	mappingsOrdered = mTableTools.compressSparseArray(mappingsOrdered)
+
+	-- Build the table.
 	local ret = '{| class="wikitable"'
 		.. '\n|-'
-		.. '\n! ' .. cfg.wikitableNamespaceHeader
-		.. '\n! ' .. cfg.wikitableAliasesHeader
-	
-	-- Generate the row for the main namespace, as we want this to be first in the list.
-	ret = ret .. '\n|-'
-		.. '\n| <code>' .. cfg.main .. '</code>'
-		.. '\n|'
-	if useTalk then
-		ret = ret .. '\n|-'
-			.. '\n| <code>' .. cfg.talk .. '</code>'
-			.. '\n|'
-	end
-	-- Enclose all parameter names in <code> tags.
-	for ns, params in pairs(mappings) do
-		if ns ~= mw.site.namespaces[0].name then
-			for i, param in ipairs(params) do
-				mappings[ns][i] = '<code>' .. param .. '</code>'
+		.. '\n! ' .. nsHeader
+		.. '\n! ' .. aliasesHeader
+	for i, params in ipairs(mappingsOrdered) do
+		for j, param in ipairs(params) do
+			if j == 1 then
+				ret = ret .. '\n|-'
+					.. '\n| <code>' .. param .. '</code>'
+					.. '\n| '
+			elseif j == 2 then
+				ret = ret .. '<code>' .. param .. '</code>'
+			else
+				ret = ret .. ', <code>' .. param .. '</code>'
 			end
 		end
 	end
-	-- Generate the other wikitable rows.
-	for ns, params in pairs(mappings) do
-		if ns ~= mw.site.namespaces[0].name then -- Ignore the main namespace.
-			ret = ret .. '\n|-'
-				.. '\n| ' .. params[1]
-				.. '\n| ' .. table.concat(params, ', ', 2)
-		end
-	end
-	-- End the wikitable.
 	ret = ret .. '\n|-'
 		.. '\n|}'
 	return ret
