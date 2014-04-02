@@ -1,0 +1,160 @@
+<includeonly><!--
+--><span class="nowrap"><!--
+START ERROR CHECKING:
+-->{{#ifeq:{{valid|number={{{1|0}}}}}|false|<!-- Is arg1 not a valid number?
+  -->{{FormattingError|Error in {{tl|val}}: first argument is not a valid number or requires too much precision to display.|nocategory={{{nocategory|}}}}}<!--
+-->|<!-- Is arg1 not a valid number? NO
+  -->{{#ifeq:{{valid|number={{{2|0}}}}}|false|<!-- Is arg2 not a valid number?
+    -->{{FormattingError|Error in {{tl|val}}: second argument is not a valid number or requires too much precision to display.|nocategory={{{nocategory|}}}}}<!--
+  -->|<!-- Is arg2 not a valid number? NO
+    -->{{#ifeq:{{valid|number={{{3|0}}}}}|false|<!-- Is arg3 not a valid number?
+      -->{{FormattingError|Error in {{tl|val}}: third argument is not a valid number or requires too much precision to display.|nocategory={{{nocategory|}}}}}<!--
+    -->|<!-- Is arg3 not a valid number? NO
+      -->{{#ifexpr: {{{3|-1}}} >= 0|<!-- Is arg3 positive?
+        -->{{FormattingError|Error in {{tl|val}}: third argument is not negative.|nocategory={{{nocategory|}}}}}<!--
+      -->|<!-- Is arg3 positive? NO
+        -->{{#ifeq:{{valid|number={{{e|0}}}}}|false|<!-- Is arg "e" not a valid number?
+          -->{{FormattingError|Error in {{tl|val}}: exponent ('''e''') is not a valid number or requires too much precision to display.|nocategory={{{nocategory|}}}}}<!--
+        -->|<!-- Is arg "e" not a valid number? NO
+            -->{{#ifeq:{{{u}}}{{{ul}}}|{{{u|}}}{{{ul|}}}|<!-- Is arg "u" and "ul" specified?
+              -->{{FormattingError|Error in {{tl|val}}: unit ('''u''') and units with link ('''ul''') are both specified, only one is allowed.|nocategory={{{nocategory|}}}}}<!--
+            -->|<!-- Is arg "u" and "ul" specified? NO
+              -->{{#ifeq:{{{up}}}{{{upl}}}|{{{up|}}}{{{upl|}}}|<!-- Is arg "up" and "upl" specified?
+                -->{{FormattingError|Error in {{tl|val}}: unit per ('''up''') and units per with link ('''upl''') are both specified, only one is allowed.|nocategory={{{nocategory|}}}}}<!--
+              -->|<!-- Is arg "up" and "upl" specified? NO
+END OPENING OF ERROR CHECKING, START OUTPUT
+
+START OPENING BRACKET
+-->{{#if:{{{1|}}}|<!-- Are there any arguments?
+ -->{{#if:{{{2|}}}|<!-- Are there 2 arguments?
+  -->{{#if:{{{3|}}}|<!-- Are there 3 arguments?
+   -->|<!-- There are 2, but not 3 arguments
+    -->{{#if:{{#ifexpr:0{{{2}}}}}|<!-- Second argument is "(number)"? YES, do not check for bracket
+                              -->|<!-- Second argument is "(number)"? NO, check for bracket
+                               -->{{#if:{{{e|}}}|(<!-- Is there an exponent? YES, open bracket
+                               -->}}<!-- End is there an exponent?
+    -->}}<!-- End is second argument "(number)"?
+  -->}}<!-- end Are there 3 arguments?
+ -->}}<!-- end Are there 2 arguments?
+-->}}<!-- end Are there any arguments?
+END OPENING BRACKET
+
+START MAIN OUTPUT
+                -->{{{p|}}}<!-- If p (prefix) is defined, display it.
+                -->{{#if: {{{1|}}}|<!-- Are there any arguments?
+                 -->{{val/delimitnum|fmt={{{fmt|gaps}}}|{{{1|}}}|u={{{u|{{{ul}}}}}}}}<!-- 
+                             Output arg1, formatted.
+                 -->{{{end|}}}<!--
+  
+                  -->{{#if: {{{2|}}}|<!-- Are there 2 or more arguments?
+
+                   -->{{#if: {{{3|}}}|<!-- Are there 3 arguments?
+
+                           There are three arguments.
+                    -->{{val/angle|{{{u}}}|{{{ul}}}}}<!-- Uncertainty = +X/-Y
+                    --><span style="margin-left:0.3em;">{{su|<!--
+                        -->w={{{w|}}}|a={{{a|r}}}|<!-- 
+                              Option fixed width, default right aligned
+
+                        -->p=+{{val/delimitnum|fmt={{{fmt|gaps}}}|{{{2}}}}}<!--
+                              Output +arg2, formatted.
+                         -->{{{+errend|}}}{{val/angle|{{{u|{{{ul}}}}}}}}|<!--
+                              Append something and/or add angle/percent symbol.
+ 
+                        -->b={{val/delimitnum|fmt={{{fmt|gaps}}}|{{{3}}}}}<!--
+                              Output -arg3, formatted.
+                        -->{{{-errend|}}}{{val/angle|{{{u|{{{ul}}}}}}}}<!--
+                              Append something and/or add angle/percent symbol.
+
+                    -->}}</span><!-- End Uncertainty = +X/-Y
+
+                    -->|<!-- 
+
+                           There are there not three arguments.
+                      -->{{#if:{{#ifexpr: 0{{{2}}}}}<!-- Is second argument "(number)"?    
+                        -->|<!-- 
+                             Second argument is "(number)".
+                             Significance = (X)
+                         -->{{{2}}}{{val/angle|{{{u}}}|{{{ul}}}}}<!-- 
+                        -->|<!--
+                             Second argument is not "(number)".
+                             Uncertainty = ±X.
+                             Add angle/percent symbol.
+                        -->{{val/angle|{{{u}}}|{{{ul}}}}}<!--
+                             Add ± symbol.
+                        --><span style="margin-left:0.3em;margin-right:0.15em">±</span><!--
+                             Format number.
+                        -->{{val/delimitnum|fmt={{{fmt|gaps}}}|{{{2}}}}}<!--
+                             Append something and/or add angle/percent symbol.
+                        -->{{{errend|}}}{{val/angle|{{{u|{{{ul}}}}}}}}<!--
+ 
+                      -->}}<!-- End second argument is "(number)"?
+                   -->}}<!-- End Are there 3 arguments?
+  2 arguments? No -->|{{val/angle|{{{u}}}|{{{ul}}}}}<!--
+                  -->}}<!-- End Are there 2 or more arguments?
+                -->}}<!-- End Are there any arguments?
+END MAIN OUTPUT
+
+START CLOSING BRACKET
+-->{{#if:{{{1|}}}|<!-- Are there any arguments?
+ -->{{#if:{{{2|}}}|<!-- Are there 2 arguments?
+  -->{{#if:{{{3|}}}|<!-- Are there 3 arguments?
+   -->|<!-- There are 2, but not 3 arguments
+    -->{{#if:{{#ifexpr:0{{{2}}}}}|<!-- Second argument is "(number)"? YES, do not check for bracket
+                              -->|<!-- Second argument is "(number)"? NO, check for bracket
+                               -->{{#if:{{{e|}}}|)<!-- Is there an exponent? YES, close bracket
+                               -->}}<!-- End is there an exponent?
+    -->}}<!-- End is second argument "(number)"?
+  -->}}<!-- end Are there 3 arguments?
+ -->}}<!-- end Are there 2 arguments?
+ -->}}<!-- end Are there any arguments?
+END OPENING BRACKET
+
+START EXPONENT
+-->{{#if:{{{e|}}}<!-- Is there an exponent?
+          YES -->|{{#if:{{{1|}}}<!-- Are there any argument?
+                         YES -->|<span style="margin-left:0.25em;margin-right:0.15em">×</span>10<sup>{{val/delimitnum|fmt={{{fmt|gaps}}}|{{{e}}}}}</sup><!--
+                         NO  -->|10<sup>{{val/delimitnum|fmt={{{fmt|gaps}}}|{{{e}}}}}</sup><!--
+               -->}}<!-- End are there any argument?<!--
+-->}}<!-- End is there an exponent?
+END EXPONENT
+
+START UNITS
+
+-->{{#if:{{{up|}}}{{{upl|}}}<!--
+
+     If there is a up or upl, put brackets around any u or ul with a slash.
+
+  -->|{{#if:{{{u|}}}|{{val/units|{{{u}}}|nbsp|(|)}}}}<!--
+   -->{{#if:{{{ul|}}}|{{val/unitswithlink|{{{ul}}}|nbsp|(|)}}}}<!--
+
+    Add the slash and after it put brackets around any up or upl with a dot or another slash.
+
+   -->{{#if:{{{up|}}}<!-- 
+     -->|{{val/units|{{{up}}}|#47|(|)|(|)}}<!-- 
+     -->|{{val/unitswithlink|{{{upl}}}|#47|(|)|(|)}}<!-- 
+   -->}}<!--
+
+    No brackets are needed if there is no up or upl, just add the non-breaking space.
+
+  -->|{{#if:{{{u|}}}|{{val/units|{{{u}}}|nbsp}}}}<!--
+   -->{{#if:{{{ul|}}}|{{val/unitswithlink|{{{ul}}}|nbsp}}}}<!--
+-->}}<!-- 
+-->{{{s|}}}<!-- If s (suffix) is defined, display it.
+
+
+END UNITS
+
+START CLOSING OF ERROR CHECKING
+-->}}<!-- End Is arg "up" and "upl" specified?
+-->}}<!-- End Is arg "u" and "ul" specified?
+-->}}<!-- End Is arg "e" not a valid number?
+-->}}<!-- End Is arg3 positive?
+-->}}<!-- End Is arg3 not a valid number?
+-->}}<!-- End Is arg2 not a valid number?
+-->}}<!-- End Is arg1 not a valid number?
+END ERROR CHECKING
+--></span></includeonly><noinclude>
+{{documentation}}
+<!--PLEASE ADD CATEGORIES AND INTERWIKIS TO THE /doc SUBPAGE, THANKS-->
+</noinclude>
