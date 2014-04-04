@@ -1,97 +1,16 @@
-----------------------------------------------------------------------------------------------------
---                                                                                                --
---                                           PAGETYPE                                             --
---                                                                                                --
---      This is a meta-module intended to replace {{pagetype}} and similar templates. It          --
---      automatically detects namespaces, and allows for a great deal of customisation.           --
---      It can easily be ported to other wikis by changing the values in the configuration        --
---      table.                                                                                    --
---                                                                                                --
-----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--                                                                            --
+--                                PAGETYPE                                    --
+--                                                                            --
+--      This is a meta-module intended to replace {{pagetype}} and similar    --
+--      templates. It automatically detects namespaces, and allows for a      --
+--      great deal of customisation. It can easily be ported to other         --
+--      wikis by changing the values in the [[Module:Pagetype/config]].       --
+--                                                                            --
+--------------------------------------------------------------------------------
 
-local cfg = {}
-
-----------------------------------------------------------------------------------------------------
---                                          Configuration data                                    --
---      This module can be localised for other wikis by using the configuration parameters below. --
-----------------------------------------------------------------------------------------------------
-
--- This table holds the values to use for "main=true", "user=true", etc. Keys to this table should
--- be namespace parameters that can be used with [[Module:Namespace detect]]. 
-cfg.pagetypes = {
-	['main']              = 'article',
-	['user']              = 'user page',
-	['project']           = 'project page',
-	['wikipedia']         = 'project page',
-	['wp']                = 'project page',
-	['file']              = 'file',
-	['image']             = 'file',
-	['mediawiki']         = 'interface page',
-	['template']          = 'template',
-	['help']              = 'help page',
-	['category']          = 'category',
-	['portal']            = 'portal',
-	['book']              = 'book',
-	['draft']             = 'draft',
-	['education program'] = 'education program page',
-	['timedtext']         = 'Timed Text page',
-	['module']            = 'module',
-	['talk']              = 'talk page',
-	['special']           = 'special page',
-	['media']             = 'file'
-}
-
--- This table holds the names of the namespaces to be looked up from cfg.pagetypes by default.
-cfg.defaultNamespaces = {'main', 'file', 'template', 'category', 'module', 'book'}
-
--- This table holds the names of the namespaces to be looked up from cry.pagetypes if cfg.defaultnsExtended is set.
-cfg.extendedNamespaces = {'main', 'user', 'project', 'file', 'mediawiki', 'template', 'category', 'help', 'portal', 'module', 'book', 'draft'}
-
--- The parameter name to set which default namespace values to be looked up from cfg.pagetypes.
-cfg.defaultns = 'defaultns'
-
--- The value of cfg.defaultns to set all namespaces, including talk.
-cfg.defaultnsAll = 'all'
-
--- The value of cfg.defaultns to set the namespaces listed in cfg.extendedNamespaces
-cfg.defaultnsExtended = 'extended'
-
--- The value of cfg.defaultns to set no default namespaces.
-cfg.defaultnsNone = 'none'
-
--- The parameter name to use for disambiguation pages page.
-cfg.dab = 'dab'
-
--- This table holds the different possible aliases for disambiguation-class pages. These should be lower-case.
-cfg.dabAliases = {'disambiguation', 'disambig', 'disamb', 'dab'}
-
--- The default value for disambiguation pages.
-cfg.dabDefault = 'page'
-
--- The parameter name to use for N/A-class page.
-cfg.na = 'na'
-
--- This table holds the different possible aliases for N/A-class pages. These should be lower-case.
-cfg.naAliases = {'na', 'n/a'}
-
--- The default value for N/A-class pages.
-cfg.naDefault = 'page'
-
--- The parameter name to use for redirects.
-cfg.redirect = 'redirect'
-
--- The default value to use for redirects.
-cfg.redirectDefault = 'redirect'
-
--- The parameter name for undefined namespaces.
-cfg.other = 'other'
-
--- The value used if the module detects an undefined namespace.
-cfg.otherDefault = 'page'
-
-----------------------------------------------------------------------------------------------------
---                                       End configuration data                                   --
-----------------------------------------------------------------------------------------------------
+-- Load config.
+local cfg = mw.loadData('Module:Pagetype/config')
 
 -- Load required modules.
 local getArgs = require('Module:Arguments').getArgs
@@ -103,9 +22,21 @@ local getPageObject = nsDetectModule.getPageObject
 
 local p = {}
 
+local function shallowCopy(t)
+	-- Makes a shallow copy of a table.
+	local ret = {}
+	for k, v in pairs(t) do
+		ret[k] = v
+	end
+	return ret
+end
+
 local function checkPagetypeInput(namespace, val)
-	-- Checks to see whether we need the default value for the given namespace, and if so gets it from the pagetypes table.
-	local ret = yesno(val, val) -- Returns true/false for "yes", "no", etc., and returns val for other input.
+	-- Checks to see whether we need the default value for the given namespace,
+	-- and if so gets it from the pagetypes table.
+	-- The yesno function returns true/false for "yes", "no", etc., and returns
+	-- val for other input.
+	local ret = yesno(val, val)
 	if ret and type(ret) ~= 'string' then
 		ret = cfg.pagetypes[namespace]
 	end
@@ -113,9 +44,10 @@ local function checkPagetypeInput(namespace, val)
 end
 
 local function getPagetypeFromClass(class, param, aliasTable, default)
-	-- Gets the pagetype from a class specified from the first positional parameter.
+	-- Gets the pagetype from a class specified from the first positional
+	-- parameter.
 	param = yesno(param, param)
-	if param ~= false then -- Check for classes unless they are specifically disallowed.
+	if param ~= false then -- No check if specifically disallowed.
 		for _, alias in ipairs(aliasTable) do
 			if class == alias then
 				if type(param) == 'string' then
@@ -129,12 +61,14 @@ local function getPagetypeFromClass(class, param, aliasTable, default)
 end
 
 local function getNsDetectValue(args)
-	-- Builds the arguments to pass to [[Module:Namespace detect]] and returns the result.
-	-- First, get the default values.
+	-- Builds the arguments to pass to [[Module:Namespace detect]] and returns
+	-- the result.
+
+	-- Get the default values.
 	local ndArgs = {}
 	local defaultns = args[cfg.defaultns]
 	if defaultns == cfg.defaultnsAll then
-		ndArgs = cfg.pagetypes
+		ndArgs = shallowCopy(cfg.pagetypes)
 	else
 		local defaultnsArray
 		if defaultns == cfg.defaultnsExtended then
@@ -148,18 +82,32 @@ local function getNsDetectValue(args)
 			ndArgs[namespace] = cfg.pagetypes[namespace]
 		end
 	end
-	-- Add custom values passed in from the arguments. These overwrite the defaults.
-	-- The possible argument names are fetched from [[Module:Namespace detect]] automatically in case new namespaces are added.
-	-- Although we accept namespace aliases as parameters, we only pass the local namespace name as a parameter to [[Module:Namespace detect]].
-	-- This means that the "image" parameter can overwrite defaults for the File: namespace, which wouldn't work if we passed the parameters through separately.
+
+	--[[
+	-- Add custom values passed in from the arguments. These overwrite the
+	-- defaults. The possible argument names are fetched from
+	-- Module:Namespace detect automatically in case new namespaces are
+	-- added. Although we accept namespace aliases as parameters, we only pass
+	-- the local namespace name as a parameter to Module:Namespace detect.
+	-- This means that the "image" parameter can overwrite defaults for the
+	-- File: namespace, which wouldn't work if we passed the parameters through
+	-- separately.
+	--]]
 	local mappings = getParamMappings()
 	for ns, paramAliases in pairs(mappings) do
-		local paramName = paramAliases[1] 
-		for i = #paramAliases, 1, -1 do -- Iterate backwards along the array so that any values for the local namespace names overwrite those for namespace aliases.
+		-- Copy the aliases table, as # doesn't work with tables returned from
+		-- mw.loadData.
+		paramAliases = shallowCopy(paramAliases)
+		local paramName = paramAliases[1]
+		-- Iterate backwards along the array so that any values for the local
+		-- namespace names overwrite those for namespace aliases.
+		for i = #paramAliases, 1, -1 do
 			local paramAlias = paramAliases[i]
 			local ndArg = checkPagetypeInput(paramAlias, args[paramAlias])
 			if ndArg == false then
-				-- If any arguments are false, convert them to nil to protect against breakage by future changes to [[Module:Namespace detect]].
+				-- If any arguments are false, convert them to nil to protect
+				-- against breakage by future changes to
+				-- [[Module:Namespace detect]].
 				ndArgs[paramName] = nil
 			elseif ndArg then
 				ndArgs[paramName] = ndArg
@@ -173,23 +121,37 @@ local function getNsDetectValue(args)
 			-- Put in lower case so e.g. "Dab" and "dab" will both match.
 			class = mw.ustring.lower(class)
 		end
-		local dab = getPagetypeFromClass(class, args[cfg.dab], cfg.dabAliases, cfg.dabDefault)
+		local dab = getPagetypeFromClass(
+			class,
+			args[cfg.dab],
+			cfg.dabAliases,
+			cfg.dabDefault
+		)
 		if dab then
 			ndArgs.main = dab
 		else
-			local na = getPagetypeFromClass(class, args[cfg.na], cfg.naAliases, cfg.naDefault)
+			local na = getPagetypeFromClass(
+				class,
+				args[cfg.na],
+				cfg.naAliases,
+				cfg.naDefault
+			)
 			if na then
 				ndArgs.main = na
 			end
 		end
 	end
-	-- If there is no talk value specified, use the corresponding subject namespace for talk pages.
+	-- If there is no talk value specified, use the corresponding subject 
+	-- namespace for talk pages.
 	if not ndArgs.talk then
 		ndArgs.subjectns = true
 	end
-	-- Add the fallback value. This can also be customised, but it cannot be disabled.
+	-- Add the fallback value. This can also be customised, but it cannot be
+	-- disabled.
 	local other = args[cfg.other]
-	other = yesno(other, other) -- We will ignore true/false/nil results from yesno here, but using it anyway for consistency.
+	-- We will ignore true/false/nil results from yesno here, but using it
+	-- anyway for consistency.
+	other = yesno(other, other)
 	if type(other) == 'string' then
 		ndArgs.other = other
 	else
@@ -202,12 +164,23 @@ end
 
 local function detectRedirects(args)
 	local redirect = args[cfg.redirect]
-	redirect = yesno(redirect, redirect) -- Returns true/false for "yes", "no", etc., and returns redirect for other input.
-	if redirect == false then return end -- Detect redirects unless they have been explicitly disallowed with "redirect=no" or similar.
+	-- The yesno function returns true/false for "yes", "no", etc., and returns
+	-- redirect for other input.
+	redirect = yesno(redirect, redirect)
+	if redirect == false then
+		-- Detect redirects unless they have been explicitly disallowed with
+		-- "redirect=no" or similar.
+		return
+	end
 	local pageObject = getPageObject(args.page)
 	-- If we are using subject namespaces elsewhere, do so here as well.
-	if pageObject and not yesno(args.talk, true) then
-		pageObject = getPageObject(pageObject.subjectNsText .. ':' .. pageObject.text)
+	if pageObject
+		and not yesno(args.talk, true)
+		and args[cfg.defaultns] ~= cfg.defaultnsAll
+	then
+		pageObject = getPageObject(
+			pageObject.subjectNsText .. ':' .. pageObject.text
+		)
 	end
 	-- Allow custom values for redirects.
 	if pageObject and pageObject.isRedirect then
