@@ -17,14 +17,19 @@ end
 -- ensuring that default parameter names will always work. The cfg table
 -- values can be added as a string, or as an array of strings.
 
-local argKeys = {
-	main = {'main'},
-	talk = {'talk'},
-	other = {'other'},
-	subjectns = {'subjectns'},
-	demospace = {'demospace'},
-	page = {'page'}
+local defaultKeys = {
+	'main',
+	'talk',
+	'other',
+	'subjectns',
+	'demospace',
+	'demopage'
 }
+
+local argKeys = {}
+for i, defaultKey in ipairs(defaultKeys) do
+	argKeys[defaultKey] = {defaultKey}
+end
 
 for defaultKey, t in pairs(argKeys) do
 	local cfgValue = cfg[defaultKey]
