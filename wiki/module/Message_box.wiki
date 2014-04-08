@@ -1,5 +1,5 @@
--- This is a meta-module for producing message box templates, including {{mbox}}, {{ambox}},
--- {{imbox}}, {{tmbox}}, {{ombox}}, {{cmbox}} and {{fmbox}}.
+-- This is a meta-module for producing message box templates, including
+-- {{mbox}}, {{ambox}}, {{imbox}}, {{tmbox}}, {{ombox}}, {{cmbox}} and {{fmbox}}.
 
 -- Require necessary modules.
 local getArgs = require('Module:Arguments').getArgs
@@ -121,7 +121,10 @@ function box:addCat(ns, cat, sort)
 		for i, val in ipairs(nsVals) do
 			nsVals[i] = format('"%s"', val)
 		end
-		error('invalid ns parameter passed to box:addCat; valid values are ' .. mw.text.listToText(nsVals, nil, ' or '))
+		error(
+			'invalid ns parameter passed to box:addCat; valid values are '
+			.. mw.text.listToText(nsVals, nil, ' or ')
+		)
 	end
 	self[tname] = self[tname] or {}
 	if type(sort) == 'string' then
@@ -135,6 +138,12 @@ function box:addClass(class)
 	if type(class) ~= 'string' then return end
 	self.classes = self.classes or {}
 	tinsert(self.classes, class)
+end
+
+function box:addAttr(attr, val)
+	if type(attr) ~= 'string' or type(val) ~= 'string' then return end
+	self.attrs = self.attrs or {}
+	tinsert(self.attrs, attr)
 end
 
 function box:setTitle(args)
@@ -157,13 +166,18 @@ function box:getConfig(boxType)
 			tinsert(boxTypes, format('"%s"', k))
 		end
 		tinsert(boxTypes, '"mbox"')
-		error(format('invalid message box type "%s"; valid types are %s', tostring(boxType), mw.text.listToText(boxTypes)), 2)
+		error(format(
+			'invalid message box type "%s"; valid types are %s',
+			tostring(boxType),
+			mw.text.listToText(boxTypes)
+		), 2)
 	end
 	return cfg
 end
 
 function box:removeBlankArgs(cfg, args)
-	-- Only allow blank arguments for the parameter names listed in cfg.allowBlankParams.
+	-- Only allow blank arguments for the parameter names listed in
+	-- cfg.allowBlankParams.
 	local newArgs = {}
 	for k, v in pairs(args) do
 		if v ~= '' then
@@ -180,7 +194,11 @@ function box:setBoxParameters(cfg, args)
 	-- Get type data.
 	self.type = args.type
 	local typeData = cfg.types[self.type]
-	self.invalidTypeError = cfg.showInvalidTypeError and self.type and not typeData and true or false
+	self.invalidTypeError = cfg.showInvalidTypeError
+		and self.type
+		and not typeData
+		and true
+		or false
 	typeData = typeData or cfg.types[cfg.default]
 	self.typeClass = typeData.class
 	self.typeImage = typeData.image
@@ -205,37 +223,47 @@ function box:setBoxParameters(cfg, args)
 	if cfg.allowId then
 		self.id = args.id
 	end
-	self:addClass(cfg.usePlainlinksParam and yesno(args.plainlinks or true) and 'plainlinks')
+	self:addClass(
+		cfg.usePlainlinksParam and yesno(args.plainlinks or true) and 'plainlinks'
+	)
 	for _, class in ipairs(cfg.classes or {}) do
 		self:addClass(class)
 	end
 	if self.isSmall then
 		self:addClass(cfg.smallClass or 'mbox-small')
 	end
-	if yesno(args.hidden) then
-		self:addClass('infobox editsection')
-	end
 	self:addClass(self.typeClass)
 	self:addClass(args.class)
 	self.style = args.style
+	self.attrs = args.attrs
 
 	-- Set text style.
 	self.textstyle = args.textstyle
 
-	-- Find if we are on the template page or not. This functionality is only used if useCollapsibleTextFields is set,
-	-- or if both cfg.templateCategory and cfg.templateCategoryRequireName are set.
+	-- Find if we are on the template page or not. This functionality is only
+	-- used if useCollapsibleTextFields is set, or if both cfg.templateCategory
+	-- and cfg.templateCategoryRequireName are set.
 	self.useCollapsibleTextFields = cfg.useCollapsibleTextFields
-	if self.useCollapsibleTextFields or cfg.templateCategory and cfg.templateCategoryRequireName then
+	if self.useCollapsibleTextFields
+		or cfg.templateCategory
+		and cfg.templateCategoryRequireName
+	then
 		self.name = args.name
 		if self.name then
-			local templateName = mw.ustring.match(self.name, '^[tT][eE][mM][pP][lL][aA][tT][eE][%s_]*:[%s_]*(.*)$') or self.name
+			local templateName = mw.ustring.match(
+				self.name,
+				'^[tT][eE][mM][pP][lL][aA][tT][eE][%s_]*:[%s_]*(.*)$'
+			) or self.name
 			templateName = 'Template:' .. templateName
 			self.templateTitle = getTitleObject(templateName)
 		end
-		self.isTemplatePage = self.templateTitle and mw.title.equals(self.title, self.templateTitle) or false
+		self.isTemplatePage = self.templateTitle
+			and mw.title.equals(self.title, self.templateTitle)
+			or false
 	end
 
-	-- Process data for collapsible text fields. At the moment these are only used in {{ambox}}.
+	-- Process data for collapsible text fields. At the moment these are only
+	-- used in {{ambox}}.
 	if self.useCollapsibleTextFields then
 		-- Get the self.issue value.
 		if self.isSmall and args.smalltext then
@@ -260,29 +288,48 @@ function box:setBoxParameters(cfg, args)
 
 		-- Get the self.talk value.
 		local talk = args.talk
-		if talk == '' -- Show talk links on the template page or template subpages if the talk parameter is blank.
+		-- Show talk links on the template page or template subpages if the talk
+		-- parameter is blank.
+		if talk == ''
 			and self.templateTitle 
-			and (mw.title.equals(self.templateTitle, self.title) or self.title:isSubpageOf(self.templateTitle))
+			and (
+				mw.title.equals(self.templateTitle, self.title)
+				or self.title:isSubpageOf(self.templateTitle)
+			)
 		then
 			talk = '#'
 		elseif talk == '' then
 			talk = nil
 		end
 		if talk then
-			-- If the talk value is a talk page, make a link to that page. Else assume that it's a section heading,
-			-- and make a link to the talk page of the current page with that section heading.
+			-- If the talk value is a talk page, make a link to that page. Else
+			-- assume that it's a section heading, and make a link to the talk
+			-- page of the current page with that section heading.
 			local talkTitle = getTitleObject(talk)
 			local talkArgIsTalkPage = true
 			if not talkTitle or not talkTitle.isTalkPage then
 				talkArgIsTalkPage = false
-				talkTitle = getTitleObject(self.title.text, mw.site.namespaces[self.title.namespace].talk.id)
+				talkTitle = getTitleObject(
+					self.title.text,
+					mw.site.namespaces[self.title.namespace].talk.id
+				)
 			end
 			if talkTitle and talkTitle.exists then
 				local talkText = 'Relevant discussion may be found on'
 				if talkArgIsTalkPage then
-					talkText = format('%s [[%s|%s]].', talkText, talk, talkTitle.prefixedText)
+					talkText = format(
+						'%s [[%s|%s]].',
+						talkText,
+						talk,
+						talkTitle.prefixedText
+					)
 				else
-					talkText = format('%s the [[%s#%s|talk page]].', talkText, talkTitle.prefixedText, talk)
+					talkText = format(
+						'%s the [[%s#%s|talk page]].',
+						talkText,
+						talkTitle.prefixedText,
+						talk
+					)
 				end
 				self.talk = talkText
 			end
@@ -302,8 +349,8 @@ function box:setBoxParameters(cfg, args)
 		self.info = args.info
 	end
 
-	-- Set the non-collapsible text field. At the moment this is used by all box types other than ambox,
-	-- and also by ambox when small=yes.
+	-- Set the non-collapsible text field. At the moment this is used by all box
+	-- types other than ambox, and also by ambox when small=yes.
 	if self.isSmall then
 		self.text = args.smalltext or args.text
 	else
@@ -327,8 +374,11 @@ function box:setBoxParameters(cfg, args)
 	then
 		self.imageLeft = imageLeft
 		if not imageLeft then
-			local imageSize = self.isSmall and (cfg.imageSmallSize or '30x30px') or '40x40px'
-			self.imageLeft = format('[[File:%s|%s|link=|alt=]]', self.typeImage or 'Imbox notice.png', imageSize)
+			local imageSize = self.isSmall
+				and (cfg.imageSmallSize or '30x30px')
+				or '40x40px'
+			self.imageLeft = format('[[File:%s|%s|link=|alt=]]', self.typeImage
+				or 'Imbox notice.png', imageSize)
 		end
 	end
 
@@ -359,7 +409,8 @@ function box:setBoxParameters(cfg, args)
 		date = type(date) == 'string' and date
 		local preposition = 'from'
 		for _, num in ipairs(self.categoryParamNums) do
-			local mainCat = args['cat' .. tostring(num)] or args['category' .. tostring(num)]
+			local mainCat = args['cat' .. tostring(num)]
+				or args['category' .. tostring(num)]
 			local allCat = args['all' .. tostring(num)]
 			mainCat = type(mainCat) == 'string' and mainCat
 			allCat = type(allCat) == 'string' and allCat
@@ -368,7 +419,10 @@ function box:setBoxParameters(cfg, args)
 				self:addCat('main', catTitle)
 				catTitle = getTitleObject('Category:' .. catTitle)
 				if not catTitle or not catTitle.exists then
-					self:addCat('main', 'Articles with invalid date parameter in template')
+					self:addCat(
+						'main',
+						'Articles with invalid date parameter in template'
+					)
 				end
 			elseif mainCat and (not date or date == '') then
 				self:addCat('main', mainCat)
@@ -425,7 +479,8 @@ function box:setBoxParameters(cfg, args)
 		self:addCat('all', 'Pages with incorrectly substituted templates')
 	end
 
-	-- Convert category tables to strings and pass them through [[Module:Category handler]].
+	-- Convert category tables to strings and pass them through
+	-- [[Module:Category handler]].
 	self.categories = categoryHandler{
 		main = tconcat(self.mainCats or {}),
 		template = tconcat(self.templateCats or {}),
@@ -461,24 +516,29 @@ function box:export()
 	boxTable
 		.cssText(self.style)
 		.attr('role', 'presentation')
+	for attr, val in pairs(self.attrs or {}) do
+		boxTable
+			.attr(attr, val)
+	end
 
 	-- Add the left-hand image.
 	local row = boxTable.tag('tr')
 	if self.imageLeft then
 		local imageLeftCell = row.tag('td').addClass('mbox-image')
 		if self.imageCellDiv then
-			-- If we are using a div, redefine imageLeftCell so that the image is inside it.
-			-- Divs use style="width: 52px;", which limits the image width to 52px. If any
-			-- images in a div are wider than that, they may overlap with the text or cause
-			-- other display problems.
+			-- If we are using a div, redefine imageLeftCell so that the image
+			-- is inside it. Divs use style="width: 52px;", which limits the
+			-- image width to 52px. If any images in a div are wider than that,
+			-- they may overlap with the text or cause other display problems.
 			imageLeftCell = imageLeftCell.tag('div').css('width', '52px') 
 		end
 		imageLeftCell
 			.wikitext(self.imageLeft)
 	elseif self.imageEmptyCell then
-		-- Some message boxes define an empty cell if no image is specified, and some don't.
-		-- The old template code in templates where empty cells are specified gives the following hint:
-		-- "No image. Cell with some width or padding necessary for text cell to have 100% width."
+		-- Some message boxes define an empty cell if no image is specified, and
+		-- some don't. The old template code in templates where empty cells are
+		-- specified gives the following hint: "No image. Cell with some width
+		-- or padding necessary for text cell to have 100% width."
 		row.tag('td')
 			.addClass('mbox-empty-cell') 
 			.cssText(self.imageEmptyCellStyle)
@@ -487,8 +547,8 @@ function box:export()
 	-- Add the text.
 	local textCell = row.tag('td').addClass('mbox-text')
 	if self.useCollapsibleTextFields then
-		-- The message box uses advanced text parameters that allow things to be collapsible. At the
-		-- moment, only ambox uses this.
+		-- The message box uses advanced text parameters that allow things to be
+		-- collapsible. At the moment, only ambox uses this.
 		textCell
 			.cssText(self.textstyle)
 		local textCellSpan = textCell.tag('span')
@@ -521,7 +581,9 @@ function box:export()
 	if self.imageRight then
 		local imageRightCell = row.tag('td').addClass('mbox-imageright')
 		if self.imageCellDiv then
-			imageRightCell = imageRightCell.tag('div').css('width', '52px') -- If we are using a div, redefine imageRightCell so that the image is inside it.
+			-- If we are using a div, redefine imageRightCell so that the image
+			-- is inside it.
+			imageRightCell = imageRightCell.tag('div').css('width', '52px')
 		end
 		imageRightCell
 			.wikitext(self.imageRight)
@@ -542,7 +604,10 @@ function box:export()
 		root
 			.tag('div')
 				.css('text-align', 'center')
-				.wikitext(format('This message box is using an invalid "type=%s" parameter and needs fixing.', self.type or ''))
+				.wikitext(format(
+					'This message box is using an invalid "type=%s" parameter and needs fixing.',
+					self.type or ''
+				))
 	end
 
 	-- Add categories.
