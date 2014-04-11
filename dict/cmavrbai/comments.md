@@ -193,3 +193,37 @@ fu'ivla, that doesn’t render the words invalid.
 Because at the end, it is really more a matter of taste. It is not a bad
 thing you can say the same thing in multiple ways.
 
+
+## 2014-04-11T11:49:03Z — gleki (comment 1069, on definition 56191, in reply to 1068)
+
+Re: Usefulness?
+
+Wuzzy wrote:
+> > "zo bai poi se cmavo" and we are done. 
+> You do the same as danr here. This basically says that the WORD
+“bai”
+> is a selma'o. Probably not exactly what you wanted to say.
+> 
+> By the way, you here on jboselkei there is even an entry for that:
+> http://jboselkei.lojban.org/showpost.php?post=637
+
+But isn't it "zo bai cmavo zo bai"???
+If not what would be the use of {cmavo}2 then?
+
+You are doing the same with your definition:
+x1 is the selma'o "BAI".
+
+If cmavo2 is underdocumented then it is another issue.
+
+> 
+> > Populating the dictionary with
+> > these algorithmically created words is not of much use.
+> I am slightly annoyed that you come with this NOW, after you have
+> populated the dictionary with these words. Why didn’t you say that on
+> the mailing list in the first place? o_O
+
+Because it was my volunteer work. If others think they must be why should
+i stop them? The same for mw.lojban.org If almost no one helps me with it
+does it mean I should deny them to express other opinions?
+The problem can be only with voting this huge mass of words down at once.
+
