@@ -168,3 +168,28 @@ We'd need a brivla for "x1 is the country referenced to by the two-letter
 ISO-name in x1" so that
 "fyry poi broda" would just mean "France"
 
+
+## 2014-04-11T11:42:22Z — Wuzzy (comment 1068, on definition 56191, in reply to 1067)
+
+Re: Usefulness?
+
+> "zo bai poi se cmavo" and we are done. 
+You do the same as danr here. This basically says that the WORD “bai”
+is a selma'o. Probably not exactly what you wanted to say.
+
+By the way, you here on jboselkei there is even an entry for that:
+http://jboselkei.lojban.org/showpost.php?post=637
+
+> Populating the dictionary with
+> these algorithmically created words is not of much use.
+I am slightly annoyed that you come with this NOW, after you have
+populated the dictionary with these words. Why didn’t you say that on
+the mailing list in the first place? o_O
+
+Also I won’t agree with that these words are of “not much use”. Even
+if you may find other valid (!) ways to express selma'o without involving
+fu'ivla, that doesn’t render the words invalid.
+
+Because at the end, it is really more a matter of taste. It is not a bad
+thing you can say the same thing in multiple ways.
+
