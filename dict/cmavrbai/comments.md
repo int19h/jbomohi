@@ -277,3 +277,12 @@ Re: Usefulness?
 
 if so "zo bai cmavo zo bai" is a completely useless construct.
 
+
+## 2014-04-12T11:05:54Z — Wuzzy (comment 1072, on definition 56191, in reply to 1071)
+
+Re: Usefulness?
+
+gleki wrote:
+> if so "zo bai cmavo zo bai" is a completely useless construct.
+Yes. So what?
+
