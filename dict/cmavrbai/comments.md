@@ -270,3 +270,10 @@ This is because English lacks the possibility to make this fine
 distinction between words and the things referred to by words. There is no
 English “la'e” as far I know. English is not Lojban, sorry. :-(
 
+
+## 2014-04-12T04:13:06Z — gleki (comment 1071, on definition 56191, in reply to 1070)
+
+Re: Usefulness?
+
+if so "zo bai cmavo zo bai" is a completely useless construct.
+
