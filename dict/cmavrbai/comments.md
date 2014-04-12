@@ -227,3 +227,46 @@ i stop them? The same for mw.lojban.org If almost no one helps me with it
 does it mean I should deny them to express other opinions?
 The problem can be only with voting this huge mass of words down at once.
 
+
+## 2014-04-12T02:41:47Z — Wuzzy (comment 1070, on definition 56191, in reply to 1069)
+
+Re: Usefulness?
+
+> But isn't it "zo bai cmavo zo bai"???
+No. For the same reason I said it over and over again. The word “bai”
+is not a selma'o. Words are not grammatical structure classes.
+You probably wanted to say “zo bai cmavo la'e zo bai” or even “zo
+bai cmavo la'e zoi gy.BAI.gy.” (“the thing referred to by the word
+‘bai’/the string ‘BAI’”). The “la'e” is the crucial part
+here. Although I would prefer the latter version, since the upper-case
+strings are established (=they are explicitly mentioned in the CLL), but
+the lower-case words are not establishd as words to refer to selma'o. If
+you wanted to establish this kind of convention, it would be a good idea
+to formalize this as well by working out a seperate list (“word
+‘ABC’ refers to selma'o ‘XYZ’” etc.), just to be sure.
+Alternatively, you can also say “zo bai cmavo lo cmavrbai”. As every
+selma'o has a clear entry in the dictionary now, there should be
+theoretically no confusion anymore, well, at least to those who know the
+words or conventions.
+But as I said, at the end of the day it is all just a matter of
+convention. But the point is that there has to be at least SOME
+convention.
+TL;DR: Two safe methods to say some word is in some selma'o, in Lojban,
+are:
+1) “zo bai cmavo la'e zoi gy.BAI.gy.” (safe because every selma'o name
+is documented in the CLL)
+2) “zo bai cmavo lo cmavrbai” (safe because every selma'o has its own
+fu'ivla and is documented on jbovlaste.
+Dubious method (in my opinion):
+3) “zo bai cmavo la'e zo bai” (dubious because there is no complete
+list of valid selma'o-referring words yet. Also: Are other words from the
+same structure class allowed to refer to the same selma'o? For example
+“zo bai cmavo la'e zo du'o”. This can be fixed by working out such a
+new list.)
+
+> You are doing the same with your definition:
+> x1 is the selma'o "BAI".
+This is because English lacks the possibility to make this fine
+distinction between words and the things referred to by words. There is no
+English “la'e” as far I know. English is not Lojban, sorry. :-(
+
