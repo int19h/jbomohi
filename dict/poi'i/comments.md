@@ -110,3 +110,26 @@ wheather they always work.
 I challenge you to give me an example usage of “poi'i” which
 I am unable to rephrase correctly.
 
+
+## 2014-04-15T20:07:57Z — selpahi (comment 1077, on definition 56443, in reply to 1076)
+
+Re: ???
+
+You cannot replace {lo} with {da} and expect a reasonable result.
+
+Your sentences break because of that.
+
+If you are looking for an alternative expansion, it would be {ckaji be lo
+ka ce'u goi ko'a zo'u} (and then each {ko'a} does what {ke'a} does with
+{poi'i}).
+
+Introducing a {da} (even if you were to find a way to make it work) has
+the additional drawback of wasting a variable. But here it simply doesn't
+work. Not only does it have the wrong semantics, it also breaks as soon as
+the x1 is plural.
+
+Also, only because something can be expressed otherwise doesn't mean it is
+bad not to, or to look for different ways which have other advantages. A
+lot of cmavo in Lojban are shortcuts, but they are still good because they
+are so convenient and so commonly needed.
+
