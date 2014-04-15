@@ -142,3 +142,26 @@ Due to formatting mistake, here is the equivalence again:
 
 {poi'i} = "ckaji be lo ka ce'u goi ko'a zo'u"
 
+
+## 2014-04-15T23:10:13Z — Wuzzy (comment 1079, on definition 56443, in reply to 1078)
+
+Re: ???
+
+> {poi'i} = "ckaji be lo ka ce'u goi ko'a zo'u"
+This does not look like grammatically correct Lojban to me. How could you
+possibly place a “be” after a brivla?
+Please give an example, maybe I misunderstood something.
+
+> You cannot replace lo with da and expect a reasonable result.
+> Your sentences break because of that.
+
+> Not only does it have the wrong semantics, it also breaks as soon as the
+x1 is plural.
+I don’t see what’s wrong here. Please elaborate.
+
+I don’t see how my rewrites differ in meaning from the poi'i examples.
+If you think my sentences differ in meaning, then tell me please what they
+mean to you. To me my rewrites mean the same as the “poi'i” examples.
+Maybe it could also be the case that I simply did still not grasp how
+“poi'i” works (or how it is supposed to work). :(
+
