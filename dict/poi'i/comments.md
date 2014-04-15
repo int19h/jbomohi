@@ -30,3 +30,24 @@ If it turns out many people like it, I would rather have a different word
 for it (one with non-experimental shape), but first there needs to be a
 period of testing. The examples should speak for themselves.
 
+
+## 2014-04-15T05:41:09Z — gleki (comment 1075, on definition 56443, in reply to 1074)
+
+Re: ???
+
+> mi poi'i ke'a remna
+> "I am such that I'm a human."
+> 
+> lo gerku cu poi'i ke'a jersi lo rebla be ke'a
+> "Dogs are such that they chase their own tail."
+> 
+> mi ctuca lo poi'i ke'a na'o krici lo du'u ke'a fliba
+> "I teach those that always believe that they will fail."
+
+mi poi da'inai remna
+
+i le gerku cu ca'a na'o jersi da'inai lo rebla be lo nei
+i mi ctuca lo da'inai na'o krici lo du'u lo no'a cu fliba
+
+i doi la selpa'i mi na jimpe lo smuni vau u'u
+
