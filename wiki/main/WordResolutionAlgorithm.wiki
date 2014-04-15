@@ -16,7 +16,7 @@ It means that given any stream of Lojban text, if we are able to distinguish its
 
 And so ?
 
-Two facts :
+Two facts:
 * To this day, the way to distinguish the words in a lojban stream of text is very, very poorly documented (from a computer programmer's point of view). The only rules are given in the [[refgram|refgram]], are vague, and <u>were never proven unambiguous</u>.
 * The most precise lojban lexer to this day, the morph algorithm of [[jbofi'e|jbofi'e]], has not been proved complete nor unambiguous, while already beginning to be hugely complex. IIRC, the more a system is complex, the less it is credible to the human mind.
 
@@ -32,16 +32,16 @@ As far as I can understand in the morphology of lojban, a complete lexer simply 
 *** It is what the official LLG parser uses, isn't it?
 **** No.  As noted elsewhere, the official parser can only segment compound cmavo, and otherwise relies on spaces/dots (which it considers the same).
 **It seems to work quite well, but it could probably be polished up a little on type 4 fu'ivla.
-*At one point I put some thought into trying to write a [[Context Free Grammars|context free grammar]] describing the morphology. (Not a context-free one, however. I was intending to use the grammar in conjunction with a generalized parser, like [[General Parsing|Tomita]]'s or [[General Parsing|Early]]'s). Didn't get anywhere. I think that if an [[NFA|NFA]] can parse it, there should definitely be a [[CFG|CFG]] which can describe it, however. ([[CFG|(CFG]]s being more powerful language-recognition mechanisms than automata.) --[[Jay Kominek|Jay]]
+*[[Jay Kominek|Jay]]:
+*:At one point I put some thought into trying to write a [[context free grammars|context free grammar]] describing the morphology. (Not a context-free one, however. I was intending to use the grammar in conjunction with a generalized parser, like [[General Parsing|Tomita]]'s or [[General Parsing|Early]]'s). Didn't get anywhere. I think that if an [[NFA|NFA]] can parse it, there should definitely be a [[CFG|CFG]] which can describe it, however. ([[CFG|(CFG]]s being more powerful language-recognition mechanisms than automata.)
 **[[Jay Kominek|Jay Kominek]]:
-
 **:Btw, parsing, even with an [[NFA|NFA]] is Really Really fast. So even if the process is ugly, then just as long as it works unambiguously, you're all set.
 *Okay. I read thoroughly the brkwords.txt file. The algorithm described there can be coded with a "classic" programming language, which means (according to Church's law) that a Turing machine, or a possibly infinite-state automaton, can morphologically parse (using this algorithm) any lojban text.
-**However, there still remain two problems :
+**However, there still remain two problems:
 **First, we are still not sure that brkwords.txt describes the reverse of the word formation rules described in the refgram. In other words, it is not sure that is is exactly the reverse of the WordFormationAlgorithm. If it is, all is well (we have an algorithm which given a finite-sized word can classify it into a unique lexeme). If it is not (proving it or not), it won't mean anything, because it is not yet proven impossible to invert the formation algorithm by some other way.
 **In the case where brkwords.txt describes the opposite of the formation algorithm (which I doubt, but...), it is very unsatisfying. In particular, running this algorithm requires parsing the text in both directions from any "important" point. More practically, it requires the reader (be it computer or human) to memorize the whole of the text (when it is not cmavo-prefixed) upto the first pause (which may occur at an arbitrary point of time) before starting to parse. Although this is allowable for computers, I find this constraint very cumbersome as a human listener.
 **At any rate, I would far prefer to invert the word formation algorithm.
 ***All very well, except that there is no WFA for [[type 4 fu'ivla]].
 ****Well, we have a general rule to recognize brivla, and morphology rules for every other type of brivla. Therefore a parser which can recognize a brivla will recognize type 4 fu'ivla using its "default" brivla rule.
-*[[jay kominek]]:
+*[[Jay Kominek]]:
 *:It does not mean that a listener has to remember the string all the way up until the first pause. Humans are capable of performing lexical, syntactic and semantic processing of language simultaneously. As the lexical part of your mind tries to split up words, the syntactic part is looking to see if the series of words is valid, while the semantic part is looking to see if it makes sense. You'll discard parses which aren't syntactically or semantically valid. Further, there are parsing algorithms which won't be tripped up by bidirectionality of processing, so a computer isn't going to have a very big problem with it, <u>just as long as it isn't ambiguous</u>.
