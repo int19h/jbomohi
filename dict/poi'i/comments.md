@@ -133,3 +133,12 @@ bad not to, or to look for different ways which have other advantages. A
 lot of cmavo in Lojban are shortcuts, but they are still good because they
 are so convenient and so commonly needed.
 
+
+## 2014-04-15T20:11:07Z — selpahi (comment 1078, on definition 56443, in reply to 1077)
+
+Re: ???
+
+Due to formatting mistake, here is the equivalence again:
+
+{poi'i} = "ckaji be lo ka ce'u goi ko'a zo'u"
+
