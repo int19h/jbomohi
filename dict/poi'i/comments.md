@@ -51,3 +51,62 @@ i mi ctuca lo da'inai na'o krici lo du'u lo no'a cu fliba
 
 i doi la selpa'i mi na jimpe lo smuni vau u'u
 
+
+## 2014-04-15T13:10:35Z — Wuzzy (comment 1076, on definition 56443, in reply to 1074)
+
+Re: ???
+
+Thanks for you answer.
+Would you be so kind to update the definition accordingly?
+Since “poi'i” can also be used as a brivla (selma'o NU),
+the x1, x2, etc. places should be explicitly defined as well.
+So people have at least a chance to know what this is all about. ;)
+
+Anyways, you said this:
+> I would rather have a different word
+> for it (one with non-experimental shape),
+Okay, I try to rephrase your examples.
+
+Let’s start with the easy one:
+
+> mi ctuca lo poi'i ke'a na'o krici lo du'u ke'a fliba
+It looks difficult at the first glance, but then …
+“lo poi'i (…)” is just a sumti. So “da” can do the trick, and
+the rest (“ke'a na'o krici lo du'u ke'a fliba”) can be simply
+put into a relative phrase:
+“mi ctuca da poi ke'a na'o krici lo du'u ke'a fliba”
+
+> mi poi'i ke'a remna
+> "I am such that I'm a human."
+Now there’s no sumti here. This is a bit more difficult.
+But “me” comes to the rescue:
+“mi me da poi ke'a remna”
+
+Of course I could also just say “mi remna” ;-) but I think
+this is besides your point.
+
+> lo gerku cu poi'i ke'a jersi lo rebla be ke'a
+> "Dogs are such that they chase their own tail."
+With “me”, “da” and “poi”
+“lo gerku cu me da poi ke'a jersi lo rebla be ke'a”
+
+Again, such a complicated phrase is not neccessary:
+“lo gerku cu jersi lo rebla be vo'a”
+
+It seems to me that almost any use of “poi'i” can be replaced
+by “me da poi”. If “poi'i” is in a sumti that starts with
+“lo”, it can, alternatively, be replaced with “da poi”.
+
+Here are some rephrase rules I have come up with. I am not sure
+wheather they always work.
+“poi'i” as sumti:
+“lo poi'i ” → “da poi ” OR “lo me da poi
+”
+“le poi'i ” → “le me da poi ”
+
+“poi'i” as brivla:
+“poi'i ” → “me da poi ”
+
+I challenge you to give me an example usage of “poi'i” which
+I am unable to rephrase correctly.
+
