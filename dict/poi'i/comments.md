@@ -165,3 +165,16 @@ mean to you. To me my rewrites mean the same as the “poi'i” examples.
 Maybe it could also be the case that I simply did still not grasp how
 “poi'i” works (or how it is supposed to work). :(
 
+
+## 2014-04-16T05:35:06Z — gleki (comment 1080, on definition 56443, in reply to 1078)
+
+Re: ???
+
+selpahi wrote:
+> Due to formatting mistake, here is the equivalence again:
+> 
+> {poi'i} = "ckaji be lo ka ce'u goi ko'a zo'u"
+
+
+uasai i e'u do jmina lo lojbo ve ciksi JVS
+
