@@ -178,3 +178,20 @@ selpahi wrote:
 
 uasai i e'u do jmina lo lojbo ve ciksi JVS
 
+
+## 2014-04-16T20:28:26Z — selpahi (comment 1081, on definition 56443, in reply to 1079)
+
+Re: ???
+
+Wuzzy wrote:
+> > {poi'i} = "ckaji be lo ka ce'u goi ko'a zo'u"
+> This does not look like grammatically correct Lojban to me. How could
+you
+> possibly place a “be” after a brivla?
+
+{be} *only* works after brivla. It's a selbri operation.
+
+"broda be X [be'o]" is a selbri with the broda2 prefilled with X.
+
+I might answer your other questions later.
+
