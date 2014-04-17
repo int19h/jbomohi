@@ -1,4 +1,4 @@
-# mail/lojban-list thread 7a5822a200cf-lojban_semantics | root cc931b0e-1787-49fb-8622-435717056fce@googlegroups.com | 4 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 7a5822a200cf-lojban_semantics | root cc931b0e-1787-49fb-8622-435717056fce@googlegroups.com | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2014-04-13T20:36:36Z | shanoxilt <osiris_hades_deathland@hotmail.com> | cc931b0e-1787-49fb-8622-435717056fce@googlegroups.com | mail/lojban-list/cur/1397421396.7a5822a200cfa114.jbomohi:2,S
 
@@ -133,6 +133,390 @@ of a member of the universe of discourse D to each constant and of a
 function from D^n into {true, false} to each predicate.
 
 mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 5 | 2014-04-17T20:30:11Z | shanoxilt <osiris_hades_deathland@hotmail.com> | d3399a77-c7d5-442e-8492-433a63d8db19@googlegroups.com | mail/lojban-list/cur/1397766611.78154a09073c7744.jbomohi:2,S
+
+>
+> There's nothing to stop him from doing that. With the usual formalism 
+> predicates are just arbitrary letters, so you can assign the corresponding 
+> functions to them more or less at random, whereas in Lojban the predicates 
+> are words that will want to keep some consistency across interpretations, 
+> but you can provide any given interpretation in exactly the same way you 
+> would do it with the usual language of letters and symbols. If you wanted 
+> to, you could use "broda xi pa", "broda xi re", and so forth instead  and 
+> forget the standard meanings of brivla. Also you have some considerations 
+> such that if the speaker is a member of D, then you will want to assign it 
+> to the constant "mi", not to the constant "do", and so forth, but that 
+> seems to be beside the point. You are not forced to use those 
+> "predetermined" constants if you don't want, you can just use "ko'a xi pa", 
+> "ko'a xi re" and so on. An interpretation is basically just an assignment 
+> of a member of the universe of discourse D to each constant and of a 
+> function from D^n into {true, false} to each predicate.
+>
+> mu'o mi'e xorxes
+>
+
+Here's his response:
+
+"Thanks. That's a start, certainly. I'm going to ignore the Lojban words in 
+the paragraph as I don't have the foggiest clue on what they mean and even 
+less interest in finding that out, but instead concentrate on the logic 
+part of this as it contains enough hints for me to guess what it is 
+intending to say. You may correct me if I understand it incorrectly. (I 
+don't know what the author means with 'the usual formalism' but that isn't 
+relevant to what I'm going to write about)
+
+What this paragraph is saying that the meaning of a Lojban sentence is 
+given by a structure. When I have speaking of contexts, it corresponds with 
+some particular structure given by D and interpretation I. (Note that the 
+"to each constant" part seems to suggest that Lojban doesn't allow the use 
+of function symbols as a part of its syntax. It might be so or the writer 
+just forgot their existence. Whether they are allowed or not makes a great 
+difference on the theoretical capabilities of the language but, again, they 
+are mostly not relevant to what I'm going to post about so I'll mostly 
+ignore them, too).
+
+A structure of predicate logic starts with a universe that contains all 
+elements that have some kind of existence. The idea is that an element is 
+something that can have some property. The universe is typically written 
+with U but here the writer used D. One plausible reason why the writer use 
+D, instead, that you might want to think that U is the set of all things in 
+existence and D is its subset that is relevant to the one discussion.
+
+For example, let's consider the universe D that contains three most 
+important things of all:
+
+D = { a, b, c }
+
+Right now I'm using single letters for the things to emphasize that D 
+contains the stuff that we are going to talk about but they are not words 
+that we can use. They are the things that the words will refer to. It's the 
+old map/terrain distinction: a map shows what terrain is like but it is not 
+the terrain itself. You can't go strolling through a map but you can use 
+map to see where you are strolling about.
+
+So, we need names that we can use when we speak about the things in D. So, 
+let's introduce three names that we can later use to refer to the things 
+and call the set C (for constants):
+
+C = { Äkräs, Pope, pants }
+
+Next, we can start building an interpretation I that tells what our words 
+mean. For example, we can say that:
+
+I(Äkräs) = a
+I(Pope) = b
+I(pants) = c
+
+meaning that now I am a, the Pope is b, and pants are c. 
+
+Constants alone are not interesting, but for wild life we need some 
+predicates. The underlying idea is that the structure defines a set of 
+relationships between the elements of the universe, and predicates are 
+defined in the terms of those relationships. Let's define two relationships 
+for our structure:
+
+R_1 = { (a,a), (b,b), (c,c) } 
+R_2 = { (a,c) } 
+
+Intuitively, R_1 says that every element is in the relationship with each 
+other and nothing else (usually called the identity relationship), while 
+R_2 says that a is related with c.
+
+In the same way that we needed constants so that we can speak of the 
+elements of the universe, we need vocabulary to speak about the 
+relationships. The things that talk about the relationships are called 
+predicate symbols. Let's use the predicate symbol 'is' for R_1 and 'wears' 
+for R_2. So we get:
+
+I(is) = R_1
+I(wears) = R_2
+
+The intuitive idea is that is(x, y) is true when x and y are the same thing 
+while wears(x, y) is true when y is something that x wears.
+
+The interpretation of constants and predicate symbols induces a valuation 
+function V for logical sentences that are constructed using the predicate 
+symbols and constants. For each predicate symbol p and constant c_1 and c_2 
+we say:
+
+V(p(c_1,c_2)) = true, if and only if (I(c_1), I(c_2)) in I(p)
+
+We can check that wears(Äkräs, pants) is true because I(Äkräs) = a and 
+I(pants) = c and (a, c) is in R_2. On the other hand, wears(Pope, pants) is 
+false because I(Pope) = b, I(pants) = c and (b, c) is not in R_2.
+
+So far, so good. 
+
+Now, suppose that I want to say that I wear pants to someone. I do it by 
+asserting: "wears(Äkräs, pants)". From my point of view everything works 
+nicely. I'm saying a statement that is clearly true. 
+
+However, what if the recipient is using interpretation I' that is otherwise 
+similar to I except that 
+
+I'(Äkräs) = b and
+I'(pope) = a 
+
+Then, when the recipient interprets my statement, they interprete the 
+message into a pair (I'(Äkräs), I'(pants)) to get (b, c) and then notice 
+that (b, c) is not in R_2 so I'm clearly lying. 
+
+This is the problem of semantic ambiguity. And as this wall of text and 
+parentheses may have driven readers away, I'll say it here in bold:
+
+The approach taken in the paragraph will certainly fail unless all 
+participants of a discussion agree on what exactly D and I are.
+
+It is not enough that I know what the interpretation is, the other person 
+must also need to know it. 
+
+One particularly useless way to solve this would be to insist that there is 
+one single correct interpretation I that everyone should use. The problem 
+with this is that it works only with omniscient people so we can ignore it 
+out of hand. There's no way how an ordinary person could access this global 
+one-and-the-only interpretation. 
+
+ The paragraph from above contains this sentence: "you can provide any 
+given interpretation in exactly the same way you would do it with the usual 
+language of letters and symbols." which suggests that the idea is to have 
+some sort of procedure that allows people to reach an agreement on what the 
+I is. I will delve into that in the next post."
+
+"Let's consider a simple situation where there are two participants, A and 
+B, in a conversation. To recap, the initial situation is that A and B both 
+have existing opinion on what the domain of discource D and interpretation 
+I are. Let's call them D_A, I_A, D_B, and I_B, and the first goal is to 
+reach into situation where there exists a shared domain D_common and a 
+shared interpretation I_common.
+
+I'm going to ignore the problem of constructing D_common and just note that 
+it is far from trivial as D contains the actual things that we are talking 
+about. I'm just going to assume that we somehow get one. 
+
+To make things simpler I'm also going to assume that there are some sorts 
+of tags that allows us to specify the that "now I'm transmitting what words 
+we may use in this discussion to you" and "now I'm transimitting the 
+definition of I for those words to you". Without those tags the listener 
+will need to make a choice on whether I'm simply saying something something 
+false or if you should update your interpretation in some way that makes 
+the statement true. This is a part of the belief revision problem and I'll 
+ignore it at least for now. 
+
+When defining the interpretation I to communicate, there are a few 
+possibilities to approach it. One way would be to explicitly list all 
+tuples that belong to the interpretations of the relations corresponding 
+with predicate symbols. Basically, to do what I did in the definitions of 
+the previous post.
+
+Unfortunately, this doesn't work in practice. Apart from small toy examples 
+the interpretations are way too big to enumerate, and in some cases it 
+would be impossible even in theory. For example, suppose that our domain of 
+discourse are the natural numbers and that I want to establish the 
+interpretation of even numbers. If I tried to do it by listing 'zero is an 
+even number, two is an even number, four is an even number' and so on, I 
+would never reach the end of the list. 
+
+The way structures are usually defined is by using frame axioms. A frame 
+axiom is a logical sentence and the intuition is that we are interested 
+only in those structures where the axiom is true. For example, we could 
+define interpretation of even(x) using the axiom:
+
+forall x (even(x) is equivalent to not even(x+1)) and forall x (not even(x) 
+is equivalent to even(x+1))
+
+This isn't the complete definition, there's still the initial condition 
+missing. But suppose that I first gave that definition as a frame axiom, 
+and then later told you the base case "even(0)" as an ordinary sentence. 
+Then, you could use the inference rules of predicate logic to deduce that 
+even(1) is false so even(2) is true so even(3) is false and so on for any 
+number you wish to examine. This is presumably the very reason why someone 
+would like to use logic as a language: because it would allow the listener 
+to do sound reasoning about the logical consequences of someone's words.
+
+Still, this approach has the itsy-bitsy teeny-weeny problem that Lojban 
+contains words that are not possible to define using frame axioms. For 
+example, expressing that "because I walk from A to B and it is possible to 
+go from B to C, it is possible to go from A to C" is impossible to do 
+without function symbols with first-order logic. Other concepts are 
+practically impossible even with function symbols. For a more concrete 
+case, Lojban contains a word for 'typical' and it's not possible to define 
+it a usable way without completely changing your domain of discourse (*). 
+If you want to use 'typical', you need to speak about words and statements 
+instead of speaking about the things that the words and statements refer 
+to. And I can guarantee that absolutely no one can do the necessary 
+transformations on the fly.
+
+What we have here? Well, that there are three basic approaches that could 
+be used to ensure that all participants of a conversation speak about the 
+same things:
+
+* Use a global interpretation I. Problem: requires omniscient people.
+
+* Define I explicitly. Problem: too large, impossible to do except for 
+trivial toy examples. 
+
+* Define I implicitly. Problem: language contains words for concepts that 
+are not possible to define with first-order logic. 
+
+In practice, a Lojban speaker has to rely on the audience picking up the 
+context in the exactly same automatic, fuzzy, and imprecise way that the 
+speaker of an ordinary language does so. There will not be an 
+interpretation function that could be used to do sound reasoning in an 
+unambiguous way. 
+
+I will next move on to some of the more practical problems of first-order 
+logic. 
+
+ (*) If some reader wants to contradict this Proof by Blatant Assertion, 
+please do so by giving a usable first-order definition for 'typical', where 
+'usable' means that if someone says to me that 'x is a typical example of 
+y', that should tell me something about the properties of x."
+
+"Let's go back to the example from above with me and pants. In it we can 
+define the interpretation of 'is' with the frame axiom:
+
+forall x (is(x, x)) and forall x, y (x != y implies not is(x, y))
+
+(Note the unfortunate feature that we need to define both when 'is' is true 
+and when it is false. This is one of the inconvenient features of 
+first-order predicate logic - nothing can be assumed to be false if you 
+don't explicitly say it is false).
+
+Now, suppose that when I tell you the interpretation of 'wears' I have a 
+slip of mind and I accidentally say it as:
+
+wears(Äkräs, pants) and not wears(Äkräs, pants). 
+
+This looks like a silly example, but the problem is very real. When you 
+start to formalize things using predicate logic, you either spend 90% of 
+the time wondering why exactly is your formalization inconsistent this time 
+or you a professor in the philosophy department and you just don't test 
+your formalizations as you believe that they are correct. The reason for 
+that is that the first-order predicate logic is a bloody unnatural 
+semantics. It's nothing like how humans actually reason. There's nothing 
+intuitive in it.
+
+But let's say that I have told you that I wear pants whilst and at the same 
+time as I don't wear them. And then I just casually say you 'is(Äkräs, 
+Äkräs)', asserting that I'm actually me. Remember how in the previous post 
+the listener could deduce what the even numbers were from being told that 
+zero is even. What can you deduce from this statement?
+
+Everything. 
+
+Because in first-order logic, everything is a logical consequence of a 
+contradiction. A sentence is a logical consequence of a set of sentences if 
+it is true in every model of the set. This condition is trivially true when 
+there are no models at all. 
+
+Is Äkräs the Pope? Yes, because 'not is(Äkräs, Pope)' is never true. Is 
+Äkräs not the Pope? Yes, because 'is(Äkräs, Pope)' is never true. Does the 
+Pope wear pants? Yes, because 'not wears(Pope, pants)' is never true. Is 
+Äkräs pants? Yes, because 'not is(Äkräs, pants)' is never true. 
+
+If there is any inconsistency anywhere, the first-order logic breaks down 
+completely. You can't get anything useful out of it. I didn't say anything 
+about the Pope, but because of what I said about myself, you can conclude 
+absolutely everything about him. 
+
+The reason why this is not a problem for Lojban speakers is that they 
+aren't actually doing any first-order reasoning with it. They are using it 
+in exactly the same way as they would use an ordinary language, together 
+with all the fuzziness and imprecision of such languages. Lojban in reality 
+is a completely ordinary language with a slightly unusual grammar. 
+
+ In common sense reasoning we have no such problems with inconsistencies. 
+If we believe that two things are true and then someone demonstrates that 
+the things together lead into contradiction, we will quickly conclude that 
+at least one of the things is false and then ignore it. (We might even 
+continue believing in the two things and ignore the refutation). We 
+definitely don't propagate that contradiction to unrelated areas. This 
+doesn't work with first-order logic. Once you have concluded something with 
+it, it stays concluded. You need to build some system for belief revision 
+to account for the problems. This is a difficult thing to do and all ways 
+that are at all workable do so by either defining a new formalism on top of 
+the predicate logic to handle it or by ditching the predicate logic 
+altogether and using some other logic in its place."
+
+" Originally Posted by Äkräs 
+or you a professor in the philosophy department and you just don't test 
+your formalizations as you believe that they are correct.
+I want to clarify this a bit as what I wrote because on second thought it 
+came out as harsher than what I intended. Sorry, for all philosophers who 
+got offended.
+
+Where this comment comes from is that it is quite common that writings 
+about logic contain mistakes in their formulas. For a practical example, 
+suppose that we want to state that two persons are siblings if they have 
+the same parent. The first way that comes to mind is:
+
+forall x y z ( parent(x,z) and parent(y, z) implies sibling(x, y))
+
+That's intuitively obvious. If z is a parent of x and z is a parent of y, 
+then x and y are siblings. 
+
+Except that I just defined that I'm my own sibling. And even my family 
+isn't that messed up. I didn't take into account that x and y might be the 
+same. To make this work there needs to be the condition x != y added to the 
+left side of the implication. 
+
+These kinds of small mistakes are really easy to make. I make them all the 
+time (when writing logic that is nowadays rarer than it used to be). What 
+protects me from them is that my subfield is computational logic where the 
+aim is to solve practical problems with logic. This means that when I'm 
+doing a formalization, it is for some specific problem and there are some 
+concrete problem instances for me to test it on.
+
+When I make those common small mistakes, I get an immediate response in the 
+form of response 'UNSAT' (or more often 'False') from the solver to signify 
+that the set of sentences is inconsistent. This means that by the time I 
+was writing a paper, I had already ironed out the errors from the encoding 
+so the paper would contain the corrected version and I can remember only 
+one occasion where such an error got through into the published version.
+
+I came to logic from the computer science side of thing so I have this very 
+practical perspective. However, people who come to logic via other routes 
+often (but not always) have a different viewpoint. For example, many 
+logicians examine things like the relation between logic and language, 
+logics of argumentation, the relationship between logic and common sense 
+reasoning, and so on. In those areas there is much less emphasis on making 
+practical formalizations, the work is more on the level of "it is possible 
+to do it like this" than "doing it like that".
+
+When they write an example of logic, they don't have the automatic reaction 
+to run it through a solver. If they are working with a new semantics, there 
+probably isn't a solver at all (*). This means that the mistakes that they 
+make are not caught the same way that my similar mistakes are, and it is 
+much more likely that they creep into the finished publication.
+
+This problem is by no means limited to departments of philosophy but when I 
+wrote the post I had one specific professor of philosophical logic (who 
+shall remain nameless) in my mind. I once read his overview of various 
+semantics of logic and it contained trivial or even non-trivial errors in 
+most of the examples.
+
+ (*) One of the things that I did a lot in my university days was to create 
+prototype solvers for new logical semantics for visiting researchers. My 
+method was to translate the new logic into some existing semantics (usually 
+the stable model semantics of cardinality constraint logic programs, 
+sometimes propositional logic). Usually the semantics was simple enough 
+that it took only a few hours to write a simple translator for 
+variable-free programs, and sometimes I could extend that to programs with 
+variables without having to do excessive work. When a researcher gave a 
+presentation about the new semantics in one afternoon, I usually could give 
+him or her a prototype solver for simple testing the next morning. The 
+solvers could handle only toy problems, but having any automated reasoning 
+system at all is a large help when evaluating whether a new semantics is 
+useful for anything or not." 
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
