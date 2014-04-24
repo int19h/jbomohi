@@ -1,70 +1,45 @@
-
-
-A more modern flashcard program would be good [[introductory Learning Material|introductory Learning Material]].
+A more modern flashcard program would be good for [[Introductory Learning Material|introductory Learning Material]].
 
 Some people find it easier to learn vocabulary by drill. Some find it easier to learn by repeatedly looking words up as they need to. Learning by drill takes discipline, but you can build vocabulary faster.
 
-The DOS program [[LogFlash|LogFlash]] and the Mac program [[Flashcards|Flashcards]] work pretty well. But they're both based on a method that was originally designed for use with physical flash cards. The computer allows a more sophisticated design that should work even better.
+The DOS program [[LogFlash]] and the Mac program [[Flashcards|Flashcards]] work pretty well. But they're both based on a method that was originally designed for use with physical flash cards. The computer allows a more sophisticated design that should work even better.
 
 Problems with existing programs:
-
 * if you make only one error on a level, then you repeatedly practice that one error, wasting time and learning little
-* all errors are the same; make the typo "mo'ibubu" for "mo'ibu'u", and that word falls to the bottom
-
+* all errors are the same; make the typo '''mo'ibubu''' for '''mo'ibu'u''', and that word falls to the bottom
 ** This problem is partially solved with the "second try mode" in LogFlash.
 * there's no distinction made between a word you you finally slipped up on and a word that you can barely get a grip on; you waste time overpracticing some words that you know pretty well
-
 * there's not much flexibility in learning order; if you decide "today I want to practice cultural gismu", you have to set up the files yourself
 * the programs do not detect which words you get confused between; you'll learn faster if it brings those together and forces you to differentiate them
-
 * the software is aging and OS-dependent
-
 These problems can be solved. Some ideas:
-
 * a very simple statistical model can measure how well you know each word
-* a very simple model of human memory and learning can estimate how useful it is to practice each word now; for example, it's useless to present the same word twice in a row, because the second time you'll type by rote instead of re-retrieving from memory
-
+* a very simple model of human memory and learning can estimate how useful it is to practice each word now; for example, it's useless to present the same word twice in a row, because the second time you'll type by rote instead of retrieving from memory
 * an error measuring algorithm can can grade errors from "minor typo" to "you're clueless", and adjust the measure of how well you know the word accordingly
-* if you typed "rinka" when you should have typed "krinu", that's evidence that you're unsure about '''both''' of them
-
+* if you typed '''rinka''' when you should have typed '''krinu''', that's evidence that you're unsure about <u>both</u> of them
 * reaction time can be counted; a word that you answer correctly and quickly, you probably know well
 * calendar days since you last practiced a word can be counted; people forget over time
-
-The order of learning then becomes completely flexible. There is no "ladder", just a few numbers for each word saying stuff like how well you seem to know it and how recently you last messed up. The software chooses what word to practice next based on the whole picture--'''or''' the user can choose a set of words ("today I want to learn all the colors")--and it makes no difference.
+The order of learning then becomes completely flexible. There is no "ladder", just a few numbers for each word saying stuff like how well you seem to know it and how recently you last messed up. The software chooses what word to practice next based on the whole picture <u>or</u> the user can choose a set of words ("today I want to learn all the colors") - and it makes no difference.
 
 My estimate is that a program using these ideas could let people learn vocabulary just as thoroughly, using 80% to 90% of the time it takes with current software. That's not a huge difference. What's more important is that error-tolerant, user-controllable flashcard software should be much less frustrating to use.
 
-''moving towards a design:''
-
+==moving towards a design:==
 each pass should consist of:
-
 # looking over all the words, and calculating your ''need'' to study that word.
-
 ** ''need'' would take into account
 *** the frequency of the word. (you ''need'' '''mukti''' more than '''muzga'''.)
-
 *** how much you've screwed it up, and how recently
 *** how often you get it right, and how recently
-
 *** expressed desire to study differing portions of the vocabulary
 *** how recently the word has been tested. attempts to determine if you've slept since the last testing, based on timezone, etc, could be included.
-
 **** whether or not you've done '''any''' drilling at all recently could be important, as well.
-
 # choose a word at random to test you on, with the weights for each word being your ''need'' to learn that word.
-
 # construct an appropriate test for that word.
-
 ** are there any similar words (levenshtein distance <= 2, or semantically similar), which you also have a strong ''need'' to study?
 ** are there any similar words which you have a negligable need to study?
-
 ** adjust the choices presented to the testee to maximize confusion, and the number of ''need''ed words.
-
 # judge the answer
-
 ** the judging needs to be slightly forgiving, taking typos and such into account, while knowing something about the language. for instance, getting the last vowel wrong of a gismu isn't quite so big a problem as getting a different letter wrong. (by getting the last vowel wrong, you bring it within levenshtein distance 1 of a new set of words, but not levenshtein distance 2 of the original. i think. something along those lines. it is still a lesser error as the possible alternatives are fewer. maybe i should put some thought into the possibility of hausdorffian leveshtein distances. :)
 ** the relative positioning of the answers, based on the standard keyboard layout, should be taken into consideration. (for instance, if you have to pick the right answer by entering a single digit. the right answer and the wrong answer are right next to each other. maybe you shouldn't get as many 'points' for getting it right, as you would if the right answer and the wrong answer are 5 keys away.)
-
 # lots of information should be recorded.
-
-** reaction times, given the set of alternates presented, etc. it would be nice if absolutely everything was recorded, so that the flashcard session could be played back by researchers. (maybe not mouse movement, or inter-keystroke timings, but maybe how long it takes to start typing, and how long it takes to finish, etc)
+** reaction times, given the set of alternates presented, etc. it would be nice if absolutely everything was recorded, so that the flashcard session could be played back by researchers. (maybe not mouse movement, or inter-keystroke timings, but maybe how long it takes to start typing, and how long it takes to finish, etc.)
