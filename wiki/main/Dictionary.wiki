@@ -1,55 +1,38 @@
-
 This page is a summary of information about the Lojban Dictionary: It's history, current form, and future design.
 
 ===  Dictionary Software and Data ===
-
-* [http://jbovlaste.lojban.org bovlaste] is the Lojban dictionary.
-* [http://www.lojban.org/cgi-bin/dict.pl ojban Online Dictionary Query]. The jbovlaste search engine.
-
+* [http://jbovlaste.lojban.org jbovlaste] is the Lojban dictionary.
+* [http://www.lojban.org/cgi-bin/dict.pl Lojban Online Dictionary Query]. The jbovlaste search engine.
 * [[Dictionaries, Glossers and parsers|Dictionaries, Glossers and parsers]] contains links to software for using a Lojban Dictionary.
 * [[Word Lists|Word Lists]] contain dictionary information in a variety of formats.
 
 ===  Dictionary Discussion ===
-
 Several pages on the wiki discuss the Lojban Dictionary.  Those are collected here:
-
 * [[The Lojban Dictionary|The Lojban Dictionary]]
 * [[Great Dictionary Problem|Great Dictionary Problem]]
-
 * [[dictionary notes from 2001]]
 * [[BPFK Section: Dictionary Preface]]
-
 * [[Old Draft Dictionary|Old Draft Dictionary]]
 * [[Mini-dictionary|Mini-dictionary]]
-
 * [[Mini-dictionary To-do|Mini-dictionary To-do]]
 * [[Mini-dictionary paradigms|Mini-dictionary paradigms]]
-
 ===  Dictionary Design ===
-
-This section is an exploration of the issue started in this discussion about the [http://groups.google.com/group/lojban/browse_thread/thread/ac00bb38bebef953 ictionary backend].
+This section is an exploration of the issue started in this discussion about the [http://groups.google.com/group/lojban/browse_thread/thread/ac00bb38bebef953 dictionary backend].
 
 ====  What use cases will use Lojban dictionary data? ====
-
 What end-use will this data put put to?
-
 * A print version of the Lojban dictionary
 * jbovlaste, the online dictionary.  This includes editing and voting on dictionary entries
-
 * Flash card definitions, which are more concise.
 * Interactive tools, like glossers and parsers 
-
 ** Ideally, jbofihe could use this data instead of having its own version.
 ** Similarly, the list of rafsi for jvocuhadju could be extracted herefrom
 
 ====  What sorts of things *should* a Lojbanic dictionary store, ideally? ====
-
 * Are any of these use cases unsuitable for a dictionary?  Are there use cases we haven't thought of that are suitable?
 * Can we separate a definition from its grammatical context?  Are we treating Lojban gismu too much like a verb or noun in the way we handle them now?
-
 * Should we use some manner of spatial visualization?  (e.g., [[cpacuvisualization|cpacuvisualization]])
 * Versioning: it would be really really nice to be able to have BPFK proposals reference "checkpoint 123 in the dictionary software".  A possibility here: have an "official word" checkbox, and a button that says "checkpoint all the official words, give the checkpoint a number", and the ability to diff successive checkpoints.  Or possibly have the checkpoint button do everything, but be able to filter out the diffs to just show the official stuff, or not.  Then it could be of more general use: could also have a "this word is worth printing" button, and than any given official print run of the dictionary would be all those words, from checkpoint #123 or whatever.
-
 ** Related: You can't edit a definition with the "officially approved" and "official word" checkboxes. You can fork it, and then there's a button that outputs a diff between the fork and the officialdata version.  An admin could then move the "officially approved" checkbox around.
 
 ====  What storage format is going to work for all of these use cases? ====
@@ -58,130 +41,76 @@ What end-use will this data put put to?
 * Since the form of a dictionary entry is often unstructured text, What would a dictionary definition look like that supports all of our use cases without duplicating the definitions by changing their form?  (e.g., a brief definition for a study card, a full definition for a print dictionary, and an archive discussion for the online dictionary?)
 
 ====  What prior art is there? ====
-
 * Dictionaries are not a new problem, how do other people deal with this?
 * Is Lojban fundamentally different because of its formal grammar?  Is our thinking on this problem influenced by working with languages that don't have a formal grammar: Is a dictionary a compromise that we have a better solution for?
 
 ===  Design Proposal ===
-
 gismu, lujvo, and selma'o have different storage requirements.  The proposal below assumes they will be storted in a database, and describe the storage schema.
 
 ====  gismu ====
-
-{FANCYTABLE(head=" Field | Description ]]
-
-gismu      | the gismu this row defines
-
-lang       |  the language this row is in
-
-definition | the definition of the gismu
-
-x1         | gloss for x1
-
-x2         | gloss for x2, NULL if there is no x2
-
-x3         | gloss for x3, NULL if there is no x3
-
-x4         | gloss for x4, NULL if there is no x4
-
-x5         | gloss for x5, NULL if there is no x5
-
-xN         | gloss for xN, NULL if there is no xN
-
-{FANCYTABLE}
+<tab class="wikitable">Field	Description
+gismu	the gismu this row defines
+lang	the language this row is in
+definition	the definition of the gismu
+x1	gloss for x1
+x2	gloss for x2, NULL if there is no x2
+x3	gloss for x3, NULL if there is no x3
+x4	gloss for x4, NULL if there is no x4
+x5	gloss for x5, NULL if there is no x5
+xN	gloss for xN, NULL if there is no xN
+</tab>
 
 There is one entry in this table for each language/gismu.
 
 ====  lujvo ====
-
-{FANCYTABLE(head=" Field | Description ]]
-
-lujvo      | the lujvo this row defines
-
-lang       | the language this row is in
-
-definition | the definition of the lujvo
-
-x1         | gloss for x1
-
-x2         | gloss for x2, NULL if there is no x2
-
-x3         | gloss for x3, NULL if there is no x3
-
-x4         | gloss for x4, NULL if there is no x4
-
-x5         | gloss for x5, NULL if there is no x5
-
-xN         | gloss for xN, NULL if there is no xN
-
-{FANCYTABLE}
+<tab class="wikitable">
+Field	Description
+lujvo	the lujvo this row defines
+lang	the language this row is in
+definition	the definition of the lujvo
+x1	gloss for x1
+x2	gloss for x2, NULL if there is no x2
+x3	gloss for x3, NULL if there is no x3
+x4	gloss for x4, NULL if there is no x4
+x5	gloss for x5, NULL if there is no x5
+xN	gloss for xN, NULL if there is no xN
+</tab>
 
 ====  lujvo-component ====
-
-{FANCYTABLE(head=" Field | Description ]]
-
-lujvo      | the lujvo this row defines
-
-component  | the component gismu or lujvo that is one part of this lujvo
-
-lang       |
-
-x1         | The position this component's x1 place appears in the lujvo.  NULL if it does not appear.
-
-x2         | The position this component's x2 place appears in the lujvo.  NULL if it does not appear.
-
-x3         | The position this component's x3 place appears in the lujvo.  NULL if it does not appear.
-
-x4         | The position this component's x4 place appears in the lujvo.  NULL if it does not appear.
-
-x5         | The position this component's x5 place appears in the lujvo.  NULL if it does not appear.
-
-xN         | The position this component's xN place appears in the lujvo.  NULL if it does not appear.
-
-{FANCYTABLE}
+<tab class="wikitable">Field	Description ]]
+lujvo	the lujvo this row defines
+component	the component gismu or lujvo that is one part of this lujvo
+lang	
+x1	The position this component's x1 place appears in the lujvo.  NULL if it does not appear.
+x2	The position this component's x2 place appears in the lujvo.  NULL if it does not appear.
+x3	The position this component's x3 place appears in the lujvo.  NULL if it does not appear.
+x4	The position this component's x4 place appears in the lujvo.  NULL if it does not appear.
+x5	The position this component's x5 place appears in the lujvo.  NULL if it does not appear.
+xN	The position this component's xN place appears in the lujvo.  NULL if it does not appear.
+</wikitable>
 
 There is an entry in this table for each component of the lujvo.
 
 ====  selma'o ====
-
-{FANCYTABLE(head=" Field | Description ]]
-
-selma'o    | the selma'o this row defines
-
-lang       | the language this row is in
-
-class      | the selma'o class of this selma'o
-
-gloss      | the definition of this selma'o
-
-{FANCYTABLE}
+<tab class="wikitable">Field	Description ]]
+selma'o	the selma'o this row defines
+lang	the language this row is in
+class	the selma'o class of this selma'o
+gloss	the definition of this selma'o
+</tab>
 
 ====  Use Cases ====
-
 How will this format be used in each of the use cases we've identified?
 
 =====  A print version of the Lojban dictionary  =====
 
 Assuming we're printing the English language translation dictionary, the gismu table will be rendered as the string:
 
-<verbatim>
-
+<code>
 $gismu: $x1 $definition $x2 $x3 $x4 $x5 $xN
-
-</verbatim>
+</code>
 
 =====  jbovlaste, the online dictionary. =====
-
-<verbatim>
-
-TBD.
-
-</verbatim>
-
+To be done.
 =====  Flash Cards =====
-
-<verbatim>
-
-TBD.
-
-</verbatim>
+To be done.
