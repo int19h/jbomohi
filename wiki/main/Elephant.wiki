@@ -1,4 +1,4 @@
-Elephant is a concept that [[John Cowan]] has been contemplating for a while now, based on [http://www.touchstone.com/tr/wp/IBIS.html the IBIS approach] to discussing open-ended issues. So many points have been discussed back and forth over and over again throughout the decades of the Lojban project, that many of the participants wished a document of record would emerge instead of starting over every time. It's a debateware, named after the old phrase, "an elephant never forgets." 
+Elephant was a concept of [[John Cowan]] based on [http://www.touchstone.com/tr/wp/IBIS.html the IBIS approach] to discussing open-ended issues. So many points had been discussed back and forth over and over again throughout the decades of the Lojban project, that many of the participants wished a document of record would emerge instead of starting over every time. It was a debateware, named after the old phrase, "an elephant never forgets." 
 
 Elephant is a combined Web server and mailing list (hopefully the [[jboske]] mailing list); people post to the Web server, which forwards the postings to the mailing list.  To fully participate, one must sign up for both.
 
@@ -14,16 +14,16 @@ The idea here is to prevent the looping behavior of typical mailing lists, where
 
 (The advantage over wiki-based discussion, OTOH, is that it's more fascist (i.e. structured &amp; organised), so it's easier for a final Document Of Record to emerge, ''without requiring that consensus be achieved.'' -- [[User:Nick Nicholas|nitcion]])
 
-See [[ElephantRefinements|ElephantRefinements]] for more.
+==History.
+Elephant implementation effort was last restarted in 2003-02-08. Then the project was abandoned largely because the language became more or less complete.
 
-Current roles:
+Last active participants:
 * [[Matt Arnold|Matt Arnold]] aka [[Eppcott|Eppcott]], central organizer or 'Ankus'. Contact him at matt dot mattarn at gmail dot com 
 * Matthew Dunlap, one of the programmers
 * [[Bancus]], Models in Ruby on Rails
 * [[la cizra]], Controllers in Ruby on Rails
 * timonator, Views in Ruby on Rails
 * [[John Cowan]], designer and old fart
-
 
 Past participants:
 * Implementer: [[John Cowan]]
@@ -33,20 +33,170 @@ Past participants:
 * Trampled by Elephant, 2002-05: [[John Cowan|John Cowan]]
 * Trampled by Elephant, 2001: [[Robin Lee Powell|Robin Lee Powell]]
 * Trampled by Elephant, 2000: [[User:Mark Shoulson|Mark Shoulson]]
-'''-->''' [[ElephantStatus|ElephantStatus]]
-==lo nu casnu==
-.i le xanto ke casnu velsku cu se cmene ki'u le ka ce'u mutce morji poi se ckaji le'e xanto
-* .iku'i le xanto ba'e no'e mutce ckaji le ka morji .i le ranmi po le xanto morji cu se krinu le du'u go'o .i le nu le cifnu xanto cu rinju da poi skori cu rinka le nu le tolcifnu xanto cu ze'e krici le du'u da poi cmalu cu kakne rinju ke'a .i .o'ocu'i rinka lo danlu se ctuca .enai lo ka morji -[[Robin Lee Powell|Robin Lee Powell]]
-*doi nitcion pe'u pe'u sai sai do'u ko ko rere'u morjygau le sumti stura be zo ckaji --mi'e [[User:xorxes|xorxes]] '''ba'o dragau'''
-.i la djan. cusku le glico tcaci bo jufra poi se fanva fu "lu .i le'e xanto cu mutce morji .i ku'i ma poi vajni cu vamji lenu le'e xante cu morji li'u"
-.i le xanto velsku cu se stidi mu'i lenu loi vajni po'u lo krinu be lei seljdice cu ba se morji
 
-*P.S. ''Ankus'' was originally ''Ankh''
-**Ankh? .i pe'i mi jimpe gi'enai ku'i birti -- [[User:Nick Nicholas|nitcion]]
-***Ankh = xanto cranunmu'u mukti
-****.i mi mi'e [[User:Nick Nicholas|nitcion]]. cu sruma la'edi'u ki'u lenu la .anx. sinxa leka jmive kei
-** Oops.  The [http://www.ashmol.ox.ac.uk/gri/9sn007.html ankh] is the Egyptian symbol of life, whereas the Indian elephant-goad is the [http://therionarms.com/forsale/ttoy94.html Ankus]. So emended (And it's not a '''mukti''', it's a '''muktytci'''.)
+==Design==
+Here is the [[Elephant|Elephant]] status as of the date at the bottom of the page:
+* Infrastructure:
+** Message-base object: previous version abandoned, new design, '''implemented!'''
+** Message object: previous version abandoned, new design, '''coded'''
+** Wiki-compatibility interpreter: coded and tested
+** Entity interpreter: partially designed
+* Document types:
+** Document properties table: written
+** Document templates: written
+** Email templates: written
+** Form-filling templates: written
+* CGI programs:
+** Elephant viewer: designed
+** Elephant poster: designed
+** Elephant user editor: partially designed
+* ElephantClerk tools: barely thought about
 
-[[Lojban Central]] has drawn an analogy between the [http://www.wordfocus.com/word-act-blindmen.html six blind men and the elephant] ([[The Six Men and the Elephant|Lojban version]]) on the one hand, and the six source languages Chinese, Hindi, English, Spanish, Russian, Arabic and Lojban on the other. Of course, the <u>really</u> arrogant party in the poem is the narrator, who is convinced that <u>he</u> alone knows what the elephant really is!
+==Refinements==
+# Notes are messages that can be attached to any Elephant message to add information.  Unlike Wiki entries, you can't post-edit an Elephant message: it would be unreasonable to allow a Position to be changed after people have posted Arguments against it.  Notes can clarify, or serve as instructions to the ElephantClerk.
+# Specializations: you can attach a sub-Issue to an Issue, a sub-Position to a Position, or a sub-Argument to an Argument.  This allows complexity to be broken down.  An example of sub-Positions would be alternatives within a greater Position.
+# A new Issue can arise out of any other type of message.  These are of two types: Generalized Issues and Challenge Issues.  A Generalized Issue is a broader take on an existing problem that may be too narrow.  A Challenge Issue challenges the underlying assumptions of the existing problem.
+# When an Issue seems settled, the ElephantClerk can change one of the Positions on the Issue to a Decision.  This closes the Issue, but retains a permanent corporate memory of ''why'' the Issue was decided as it was.  Of course, some Issues may never be decided at all.
 
-It is great to see IBIS getting some traction. In the U.S., one of the strongest promoters of IBIS methodologies is Jeff Conklin, and at [http://www.compendiuminstitute.org/ Compendium Institute], there are links to papers and downloadable software. - [[JackPark|JackPark]]
+The message types are Aa, Ac, Af, Ap, Ic, Ig, Im, Is, No, Po, and Ps. The first letter indicates the main type and the second letter is the subtype. The main types of documents are Issues, Positions, Arguments, and Notes. The form of argumentation in Elephant is that someone posts an Issue, which is typically an open-ended question. The children of an Issue are Positions on the issue. The children of a Position are Arguments pro and con for that Position. Notes are for material outside the system, and they can be hooked in anywhere to provide background information or whatever. Im is a top-level issue, so when you add a completely new branch to the tree, it's an Im.
+
+The other two types of I? messages are for issues that arise out of the discussion of other issues.
+
+If the new issue is a *generalization* of something that arose during the discussion, you post an Ig to state it.
+
+But if the new issue is a *challenge to the assumptions* of the discussion, you post an Ic to state it.
+
+Each of these can be attached to any other type of message. An Is is placed under another I to indicate a subissue or specialization of the issue.
+
+So there are two trees in the system:
+
+the all-messages tree, which contains every message (every message has a single parent)
+
+The second tree is the issues tree, since each issue except an Im has a nearest ancestor issue.
+
+(The root of the tree would be a general description of the field from which the issues arise; this is not shown above.)
+
+A root could be strictly needed, or Ims could just be the tops of their own trees.
+
+A main Position, one directly under an Issue, is a Po.
+
+Perhaps a Topic to group main issues or something as a root.
+
+a Ps is a sub-position, which can appear under a Po or a Ps (sub-sub-positions, etc.) when it needs to be specialized.
+
+(A Topic could have Topics under it, too.)
+
+Next, Arguments.
+
+Ap and Ac are the children of Positions, and they are pro and con arguments respectively. 
+
+Af and Aa (for and against) are sub-arguments of pro and con arguments respectively. 
+
+An argument against isn't an opposition, it's a specialization. In other words, it does not *oppose* the argument above it, it supports it.
+
+The thing we want to avoid is long thin trees that go "Is!" "Is not!"  "Is too!"
+
+Instead we get bushy trees under a position that shows the arguments for and against in a reasonable fashion.
+
+"If you can argue against something while supporting it, why "against" and "for"?
+
+You can argue *against* a position by *supporting* another argument.
+
+So it's Po -> Ac -> Aa -> Aa -> Aa etc.
+
+It's why we need all four.
+
+The relationship between Ac and its Aa children is that the children are sub-arguments of the parent.  But all are arguments against the original position.
+
+Ditto(Ap, Af, for).
+
+A concurrant against.
+
+This does not mean we would also have arguments for arguments against arguments against arguments for an argument.
+
+Beneath a position we have pro arguments and their sub-arguments, and con-arguments and their sub-arguments.
+
+ie, if you want to disagree with an argument, you post an opposing argument, rather than arguing with the arguer.
+
+But internally the sub-argument of a pro argument is different from the sub-argument of a con argument.
+
+(It would be nice if there were hyperlink cross-referencing like "this sub-argument kills pro-argument #42".)
+
+Can Aa/Af be children of other Aa/Af?
+
+00:20 <@bancus> An Aa could only attach to an Aa?
+
+00:20 < jcowan> Right.
+
+Here's "what can attach to what"
+
+Anything can get an Ig or Ic or No child.
+
+Im can get Is or Po.
+
+Same for Is, Ig, and Ic.
+
+Po can get Ps or Ap or Ac.
+
+Ditto for Ps.
+
+An Ap can have an Af.
+
+Ditto for Af.
+
+An Ac can have an Aa
+
+Ditto for Aa
+
+A No can't have anything special, only Ig, Ic, or No.
+
+By convention, the background color of the page shows whether it's an I (yellow), P (blue), Ap/Af (green),
+
+Ac/Aa (red), or No (white)
+
+We want to make clear than an Af is still an argument pro, and an Aa is still an argument against.
+
+There could be simple vote-tallying.
+
+The "+1" convention will probably work okay for supporting-without-arguing, at least to start with.
+
+It can be hard to tabulate though.
+
+Most of these systems break down because people are unhappy with the rigidity of them, so I want to keep the rules as
+
+un-rigid as possible.
+
+Rather than simply being able to look at the title of the message and see "for: x against: y"
+
+Well, you could count the number of people who have contributed either Ap/Af or Ac/Aa messages.
+
+If someone later decides they no longer support a position they once did, you could add voting as a bag on the side of P messages, then; you can vote for a P, which revokes your votes for any other P.
+
+The biggest problem in the beginning of using such systems is people write too much in one message.
+
+On mailing lists, it's not uncommon for people to write a message that proposes a new issue (Im), takes a position on it (Po), and argues for that position (Ap).
+
+It takes some mental work to break it up into three separate postings.
+
+The forms for entering the data should remind the user of the separation.
+
+The ElephantClerk therefore has to have Godlike powers to change content and create new messages under other people's identities.
+
+And therefore has to be a very trusted person.
+
+John Cowan thinks it's important to keep this as simple as possible to get to 1.0 as fast as possible so people can try it out and find what refinements are actually needed.
+
+The interface should be English at least at first, and Lojban if desired.
+
+Elephant should be released to the larger world under a permissive license, with clean source.
+
+There are lots of groups that could really use it.
+---
+I hope it is recognized that in the early phases of a discussion one continually changes one's mind, so it is quite likely that a single person might issue a series of Positions on the same topic, each of which supersedes the previous one. ([[User:And Rosta|And Rosta]])
+
+Obviously; but it'd be polite to keep the old Position there: you may have changed your mind, but others may now think you were right in the first place. Of course, you should feel free to flood your former proposal with CONs: "I must have been insane to have ever considered proposing this, because..." -- [[User:Nick Nicholas|nitcion]].
+
+* Just so.  --[[John Cowan|John Cowan]]
+One should be able to indicate that one position obsoletes another position.
+* I think the righteous term would be something like "supersedes".  I will figure out how to incorporate this feature; my implementation strategy allows <u>lots</u> of flexibility about what kinds of documents exist, and what kinds of relationships exist between them.
+(So if you change your mind, you can see explicitly which position obsoletes which other position.) T'would be able to form a nice little chain. also, it might be amusing, if not useful, for people to be able to register their confidence/agreement with each position, so that one can sort of get a quick glance and see what position is "winning". and while i'm dreaming: each issue can have a timeline, on which will be indicate the time each post on the issue was made, and the running total confidence in each position. --[[Jay Kominek|Jay]]
