@@ -1,0 +1,72 @@
+This module produces a "See also: a, b and c" link. It implements the {{tl|see also}} template.
+
+== Usage from wikitext ==
+
+This module cannot be used directly from #invoke. Instead, it can only be used through the {{tl|see also}} template. Please see the template page for documentation.
+
+== Usage from other Lua modules ==
+
+Load the module:
+
+<source lang="lua">
+local mSeealso = require('Module:See also')
+</source>
+
+You can then use the _seealso function like this:
+
+<source lang="lua">
+mSeealso._seealso(options, ...)
+</source>
+
+The parameters following <var>options</var> are a list of link/display tables, used to generate the see also links. The first value in each table is the link, and is required. The link can be just a page name, or can include a section link if desired. Links specifying a section are automatically formatted as ''page § section'', rather than the MediaWiki default of ''page#section''.
+
+The second value in each table is the display value, and is optional.
+
+The <var>options</var> variable is an optional configuration table. The following fields are recognised:
+* ''altphrase'' - an alternative phrase to "See also". Should be a string, if specified.
+* ''selfref'' - set to true to flag the output as a self-reference to Wikipedia. (See the {{tl|selfref}} template for more details on self-references.)
+
+; Example 1
+<source lang="lua">
+mSeealso._seealso(nil, {'A'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote boilerplate seealso">See also: [[A]]</div></nowiki></code>
+Displays as:
+{{see also|A}}
+
+; Example 2
+<source lang="lua">
+mSeealso._seealso(nil, {'A'}, {'B'}, {'C'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote boilerplate seealso">See also: [[A]], [[B]] and [[C]]</div></nowiki></code>
+Displays as:
+{{see also|A|B|C}}
+
+; Example 3
+<source lang="lua">
+mSeealso._seealso(nil, {'A', 'the letter "A"'}, {'B', 'the letter "B"'}, {'C', 'the letter "C"'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote boilerplate seealso">See also: [[A|the letter "A"]], [[B|the letter "B"]] and [[C|the letter "C"]]</div></nowiki></code>
+Displays as:
+{{see also|A|B|C|l1=the letter "A"|l2=the letter "B"|l3=the letter "C"}}
+
+; Example 4
+<source lang="lua">
+mSeealso._seealso({altphrase = 'Another page to see', selfref = true}, {'A#B'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote boilerplate seealso selfref">Another page to see: [[A#B|A § B]]</div></nowiki></code>
+Displays as:
+{{see also|A#B|altphrase=Another page to see|selfref=true}}
+
+== Technical details ==
+
+This module uses [[Module:Hatnote]] to format the hatnote text, [[Module:TableTools]] to process the list of links, and [[Module:Arguments]] to fetch the arguments from wikitext.
+
+<includeonly>{{#ifeq:{{SUBPAGENAME}}|sandbox||
+<!-- Categories go here and interwikis go in Wikidata. -->
+
+}}</includeonly>
