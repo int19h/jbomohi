@@ -10,7 +10,7 @@ local args = {}
 local origArgs
 local root
  
-function union(t1, t2)
+local function union(t1, t2)
     -- Returns the union of the values of two tables, as a sequence.
     local vals = {}
     for k, v in pairs(t1) do
@@ -49,6 +49,7 @@ local function addRow(rowArgs)
                 .tag('th')
                     .attr('colspan', 2)
                     .addClass(rowArgs.class)
+                    .addClass(args.headerclass)
                     .css('text-align', 'center')
                     .cssText(args.headerstyle)
                     .wikitext(rowArgs.header)
@@ -149,8 +150,6 @@ local function renderImages()
         local data = HtmlBuilder.create().wikitext(args['image' .. tostring(num)])
         if caption then
             data
-                .tag('br', {selfClosing = true})
-                    .done()
                 .tag('div')
                     .cssText(args.captionstyle)
                     .wikitext(caption)
@@ -369,6 +368,7 @@ function p.infobox(frame)
         {prefix = 'rowclass'},
         {prefix = 'class'}
     }, 50)
+    preprocessSingleArg('headerclass')
     preprocessSingleArg('headerstyle')
     preprocessSingleArg('labelstyle')
     preprocessSingleArg('datastyle')
