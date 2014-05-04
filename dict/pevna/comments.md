@@ -47,3 +47,25 @@ dealing with the third issue:
 have many superfluous details that could safely go to "notes" (i.e.
 "comments") field.
 
+
+## 2014-05-04T18:13:46Z — Wuzzy (comment 1092, on definition 41958, in reply to 1091)
+
+Re: Lojban got an issue with specifying predicate structures
+
+Thanks, now I understand.
+You are talking about place names, but what has that to do with Lojban
+itself?
+
+Place naming is just a convention here. Yeah, admittedly it is messy. But
+I don’t consider these place naming conventions (i.e. “x1”,
+“x2”) part of Lojban itself. So it’s not a problem with Lojban,
+it’s a problem with the conventions.
+
+On the other hand, when these conventions are applied to a definition in
+Lojban, it gets even weirder, so that’s another problem.
+
+Maybe these place naming conventions should be completely rethought.
+
+A cool (partly) solution would be that jbovlaste stores information like
+that seperately.
+
