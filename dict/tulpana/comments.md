@@ -4,3 +4,10 @@ tujli
 
 {tujli} :-(
 
+
+## 2014-05-05T00:47:14Z — Universum (comment 1095, on definition 56489)
+
+This is redundant
+
+{tujli} is a gismu with the same definition.
+
