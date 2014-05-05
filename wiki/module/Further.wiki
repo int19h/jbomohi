@@ -1,0 +1,36 @@
+--[[
+-- This module produces a "Further information: a, b and c" link. It implements
+-- the {{further}} template.
+--]]
+
+local mHatnote = require('Module:Hatnote')
+local mTableTools -- lazily initialise
+local mArguments -- lazily initialise
+
+local p = {}
+
+function p.further(frame)
+	mTableTools = require('Module:TableTools')
+	mArguments = require('Module:Arguments')
+	local args = mArguments.getArgs(frame, {parentOnly = true})
+	local pages = mTableTools.compressSparseArray(args)
+	if #pages < 1 then
+		return mHatnote.makeWikitextError(
+			'no page names specified',
+			'Template:Further#Errors',
+			args.category
+		)
+	end
+	local options = {
+		selfref = args.selfref
+	}
+	return p._further(options, unpack(pages))
+end
+
+function p._further(options, ...)
+	local links = mHatnote.formatPages(...)
+	local text = 'Further information: ' .. mw.text.listToText(links)
+	return mHatnote._hatnote(text, options)
+end
+
+return p
