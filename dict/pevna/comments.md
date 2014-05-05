@@ -69,3 +69,37 @@ Maybe these place naming conventions should be completely rethought.
 A cool (partly) solution would be that jbovlaste stores information like
 that seperately.
 
+
+## 2014-05-05T06:29:54Z — gleki (comment 1097, on definition 41958, in reply to 1092)
+
+Re: Lojban got an issue with specifying predicate structures
+
+Wuzzy wrote:
+> Thanks, now I understand.
+> You are talking about place names, but what has that to do with Lojban
+> itself?
+> 
+> Place naming is just a convention here. Yeah, admittedly it is messy.
+But
+> I don’t consider these place naming conventions (i.e. “x1”,
+> “x2”) part of Lojban itself. So it’s not a problem with Lojban,
+> it’s a problem with the conventions.
+> 
+> On the other hand, when these conventions are applied to a definition in
+> Lojban, it gets even weirder, so that’s another problem.
+> 
+> Maybe these place naming conventions should be completely rethought.
+> 
+> A cool (partly) solution would be that jbovlaste stores information like
+> that seperately.
+
+
+Even if x1, x2, x3 is a convention this convention is unable to reflect
+interactions of places of the same predicate.
+
+Even if this is not the problem of Lojban it means currently Lojban is
+hugely underdocumented in its lexicon.
+
+Not that there is not solution to it. I'm working on a new gismte (but
+it'll be ke'u in Simple English direction).
+
