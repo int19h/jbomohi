@@ -1,0 +1,38 @@
+--[[
+-- This module produces a "For more details on this topic" link. It implements
+-- the {{details}} template.
+--]]
+
+local mHatnote = require('Module:Hatnote')
+local mArguments -- lazily initialise
+
+local p = {}
+
+function p.details(frame)
+	mArguments = require('Module:Arguments')
+	local args = mArguments.getArgs(frame, {parentOnly = true})
+	local page = args[1]
+	local topic = args[2]
+	if not page then
+		return mHatnote.makeWikitextError(
+			'no page name specified',
+			'Template:Details#Errors',
+			args.category
+		)
+	end
+	local options = {
+		selfref = args.selfref,
+	}
+	return p._details(page, topic, options)
+end
+
+function p._details(page, topic, options)
+	page = mHatnote._formatLink(page)
+	topic = topic or 'this topic'
+	local text = string.format('For more details on %s, see %s.', topic, page)
+	options = options or {}
+	options.extraclasses = 'boilerplate seealso'
+	return mHatnote._hatnote(text, options)
+end
+
+return p
