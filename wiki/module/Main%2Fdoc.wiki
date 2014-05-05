@@ -1,0 +1,77 @@
+This module produces a link to a main article or articles. It implements the {{tl|main}} template. Normally, it produces a link like "Main article: A". If used in the [[Help:Category|category]] namespace, it produces a link like "The main article for this category is A". It is possible to specify multiple articles, and in this case plural wording is used automatically. If the first link is not an article, the module uses the wording "Main page" instead of "Main article".
+
+== Usage from wikitext ==
+
+This module cannot be used directly from #invoke. Instead, it can only be used through the {{tl|main}} template. Please see the template page for documentation.
+
+== Usage from other Lua modules ==
+
+Load the module:
+
+<source lang="lua">
+local mMain = require('Module:Main')
+</source>
+
+You can then use the _main function like this:
+
+<source lang="lua">
+mMain._main(options, ...)
+</source>
+
+The parameters following <var>options</var> are a list of link/display tables, used to generate the links. The first value in each table is the link, and is required. The second value in each table is the display value, and is optional. Category or file links are automatically escaped using the [[Help:Colon trick|colon trick]]. If a link includes a section name, and no display value is set, links are automatically formatted as ''page § section'', rather than the MediaWiki default of ''page#section''.
+
+The <var>options</var> table can be used to configure the function's output. At current, the only option available is "selfref", which is used when the output is a self-reference to Wikipedia. to set this option, use {{code|1={selfref = true}|2=lua}}. (See the {{tl|selfref}} template for more details on self-references.)
+
+; Example 1
+<source lang="lua">
+mMain._main(nil, {'A'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote relarticle mainarticle">Main article: [[A]]</div></nowiki></code>
+Displays as:
+{{main|A}}
+
+; Example 2
+<source lang="lua">
+mMain._main(nil, {'Wikipedia:Categorization'}, {'Help:Category'}, {'Category:Wikipedia categories'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote relarticle mainarticle">Main pages: [[Wikipedia:Categorization]], [[Help:Category]] and [[:Category:Wikipedia categories]]</div></nowiki></code>
+Displays as:
+{{main|Wikipedia:Categorization|Help:Category|Category:Wikipedia categories}}
+
+; Example 3
+<source lang="lua">
+mMain._main(nil, {'A', 'the letter "A"'}, {'B', 'the letter "B"'}, {'C', 'the letter "C"'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote relarticle mainarticle">Main articles: [[A|the letter "A"]], [[B|the letter "B"]] and [[C|the letter "C"]]</div></nowiki></code>
+Displays as:
+{{main|A|B|C|l1=the letter "A"|l2=the letter "B"|l3=the letter "C"}}
+
+; Example 4
+<source lang="lua">
+mMain._main({selfref = true}, {'Wikipedia:Verifiability#Burden'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote relarticle mainarticle selfref">Main article: [[Wikipedia:Verifiability#Burden|Wikipedia:Verifiability § Burden]]</div></nowiki></code>
+Displays as:
+{{main|Wikipedia:Verifiability#Burden|selfref=true}}
+
+; Example 5 (if used in the category namespace)
+<source lang="lua">
+mMain._main(nil, {'A'})
+</source>
+Produces:
+:<code><nowiki><div class="hatnote relarticle mainarticle">The main article for this [[Wikipedia:Categorization|category]] is [[A]]</div></nowiki></code>
+Displays as:
+<div class="hatnote relarticle mainarticle">The main article for this [[Wikipedia:Categorization|category]] is [[A]]</div>
+
+== Technical details ==
+
+This module uses [[Module:Hatnote]] to format the hatnote text, [[Module:TableTools]] to process the list of links, and [[Module:Arguments]] to fetch the arguments from wikitext.
+
+<includeonly>{{#ifeq:{{SUBPAGENAME}}|sandbox||
+<!-- Categories go here and interwikis go in Wikidata. -->
+
+}}</includeonly>
