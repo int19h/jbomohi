@@ -18,3 +18,22 @@ be said about most emotional UI.
 Likewise, {iepei} and {ienaipei} are equivalent but with different
 emphasis.
 
+
+## 2014-05-07T17:54:19Z — Wuzzy (comment 1102, on definition 56530, in reply to 1101)
+
+Re: Equivalence
+
+gleki wrote:
+> Wuzzy wrote:
+> > Is “xu nai broda” equivalent to “xu na broda”?
+> 
+> I don't think so. {xunai} and {xu} are not copied by {go'i}. The same
+can
+> be said about most emotional UI.
+> 
+> Likewise, {iepei} and {ienaipei} are equivalent but with different
+> emphasis.
+
+Okay, can I then conclude that a “xunai” question is answered in the
+same manner as a “xu” question?
+
