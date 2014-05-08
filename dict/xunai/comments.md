@@ -60,3 +60,10 @@ Wuzzy wrote:
 
 Yes, and the same happens to all other UIpei questions.
 
+
+## 2014-05-08T10:10:14Z — Wuzzy (comment 1104, on definition 56530, in reply to 1103)
+
+Re: Equivalence
+
+OK, thanks.
+
