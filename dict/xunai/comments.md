@@ -37,3 +37,26 @@ can
 Okay, can I then conclude that a “xunai” question is answered in the
 same manner as a “xu” question?
 
+
+## 2014-05-08T06:19:15Z — gleki (comment 1103, on definition 56530, in reply to 1102)
+
+Re: Equivalence
+
+Wuzzy wrote:
+> gleki wrote:
+> > Wuzzy wrote:
+> > > Is “xu nai broda” equivalent to “xu na broda”?
+> > 
+> > I don't think so. {xunai} and {xu} are not copied by {go'i}. The same
+> can
+> > be said about most emotional UI.
+> > 
+> > Likewise, {iepei} and {ienaipei} are equivalent but with different
+> > emphasis.
+> 
+> Okay, can I then conclude that a “xunai” question is answered in the
+> same manner as a “xu” question?
+
+
+Yes, and the same happens to all other UIpei questions.
+
