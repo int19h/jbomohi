@@ -20,3 +20,15 @@ pro-bridi like {go'i}. So I (and the others who were briefly discussing
 this word on IRC) don't see any alternative to putting it in its own
 selma'o.
 
+
+## 2014-05-09T15:42:07Z — Wuzzy (comment 1110, on definition 56532, in reply to 1109)
+
+Re: Suggestion
+
+durka42 wrote:
+> The problem is that {zo} makes a sumti, but {go'oi} wants to be a
+> pro-bridi like {go'i}. So I (and the others who were briefly discussing
+> this word on IRC) don't see any alternative to putting it in its own
+> selma'o.
+Oh, okay.
+
