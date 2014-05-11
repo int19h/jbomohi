@@ -1,8 +1,10 @@
 --[[
-History of changes since last sync 2014-02-15
+History of changes since last sync: 2014-03-30
+2014-03-30: normalize lccn identifiers;
+2014-04-04: firstn/lastn mismatch;
+2014-05-05: arXiv validation; No spaces in CitationClass values;
+2014-05-11: limit reducetoinitials() to two initials for Vancouver system;
 
-2014-02-23: PMC error checking;
-2014-02-23: Fix c. year validation bug;
 ]]
 
 local z = {
@@ -10,12 +12,6 @@ local z = {
     error_ids = {};
     message_tail = {};
 }
-
--- Include translation message hooks, ID and error handling configuration settings.
-local cfg = mw.loadData( 'Module:Citation/CS1/Configuration/sandbox' );
-
--- Contains a list of all recognized parameters
-local whitelist = mw.loadData( 'Module:Citation/CS1/Whitelist/sandbox' );
 
 -- Whether variable is set or not
 function is_set( var )
@@ -53,7 +49,8 @@ details of which parameter caused the error message are not provided.  Only one 
 function deprecated_parameter()
 	if true ~= Page_in_deprecated_cat then	-- if we haven't been here before then set a 
 		Page_in_deprecated_cat=true;		-- sticky flag so that if there are more than one deprecated parameter the category is added only once
-		table.insert( z.message_tail, { seterror( 'deprecated_params', {error_message}, true ) } );		-- add error message
+--		table.insert( z.message_tail, { seterror( 'deprecated_params', {error_message}, true ) } );		-- add error message
+		table.insert( z.message_tail, { seterror( 'deprecated_params', {}, true ) } );		-- add error message
 	end
 end
 
@@ -269,6 +266,142 @@ function amazon(id, domain)
 end
 
 --[[
+format and error check arXiv identifier.  There are two valid forms of the identifier:
+the first form, valid only between date codes 9108 and 0703 is:
+	arXiv:<archive>.<class>/<date code><number>
+where:
+	<archive> is a string of alpha characters - may be hyphenated; no other punctuation
+	<class> is a string of alpha characters - may be hyphenated; no other punctuation
+	<date code> is four digits in the form YYMM where YY is the last two digits of the four-digit year and MM is the month number January = 01
+		first digit of YY for this form can only 9 and 0
+	<number> is a three-digit number
+	
+the second form, valid from April 2007 is:
+	arXiv:<date code>.<number><version>
+where:
+	<date code> is four digits in the form YYMM where YY is the last two digits of the four-digit year and MM is the month number January = 01
+	<number> is a four-digit number
+	<version> is a 1 or more digit number preceded with a lowercase v; no spaces
+]]
+
+function arxiv (id)
+	local handler = cfg.id_handlers['ARXIV'];
+	local year, month, version;
+	local err_cat = ""
+	
+	year, month = id:match("^%a[%a%.%-]+/([90]%d)([01]%d)%d%d%d$");				-- test for the 9108-0703 format
+	if not year then		-- arXiv id is not proper 9108-0703 form
+		year, month, version = id:match("^(%d%d)([01]%d)%.%d%d%d%d([v%d]*)$");	-- test for the 0704- format
+		if not year then	
+			err_cat = ' ' .. seterror( 'bad_arxiv' );							-- arXiv id doesn't match either format
+		else	-- id is the 0704- format
+			year = tonumber(year);
+			month = tonumber(month);
+			if ((7 > year) or (1 > month and 12 < month)) or					-- is year invalid or is month invalid? (doesn't test for future years)
+				((7 == year) and (4 > month)) or								-- when year is 07, is month invalid (before April)?
+				is_set (version) and nil == version:match("v%d+") then			-- is version proper format of single 'v' followed by digits?
+					err_cat = ' ' .. seterror( 'bad_arxiv' );					-- set error message
+			end
+		end
+	else	-- id is the 9108-0703 format; are the date values ok
+		year = tonumber(year);
+		month = tonumber(month);
+		if ((91 > year and 7 < year) or (1 > month and 12 < month)) or			-- if invalid year or invalid month
+			((91 == year and 8 > month) or (7 == year and 3 < month)) then 		-- if years ok, are starting and ending months ok?
+				err_cat = ' ' .. seterror( 'bad_arxiv' );						-- set error message
+		end
+	end
+
+	return externallinkid({link = handler.link, label = handler.label,
+			prefix=handler.prefix,id=id,separator=handler.separator, encode=handler.encode}) .. err_cat;
+end
+
+--[[
+lccn normalization (http://www.loc.gov/marc/lccn-namespace.html#normalization)
+1. Remove all blanks.
+2. If there is a forward slash (/) in the string, remove it, and remove all characters to the right of the forward slash.
+3. If there is a hyphen in the string:
+	a. Remove it.
+	b. Inspect the substring following (to the right of) the (removed) hyphen. Then (and assuming that steps 1 and 2 have been carried out):
+		1. All these characters should be digits, and there should be six or less. (not done in this function)
+		2. If the length of the substring is less than 6, left-fill the substring with zeros until the length is six.
+
+Returns a normalized lccn for lccn() to validate.  There is no error checking (step 3.b.1) performed in this function.
+]]
+
+function normalize_lccn (lccn)
+	lccn = lccn:gsub ("%s", "");									-- 1. strip whitespace
+
+	if nil ~= string.find (lccn,'/') then
+		lccn = lccn:match ("(.-)/");								-- 2. remove forward slash and all character to the right of it
+	end
+
+	local prefix
+	local suffix
+	prefix, suffix = lccn:match ("(.+)%-(.+)");						-- 3.a remove hyphen by splitting the string into prefix and suffix
+
+	if nil ~= suffix then											-- if there was a hyphen
+		suffix=string.rep("0", 6-string.len (suffix)) .. suffix;	-- 3.b.2 left fill the suffix with 0s if suffix length less than 6
+		lccn=prefix..suffix;										-- reassemble the lccn
+	end
+	
+	return lccn;
+	end
+
+--[[
+Format LCCN link and do simple error checking.  LCCN is a character string 8-12 characters long. The length of the LCCN dictates the character type of the first 1-3 characters; the
+rightmost eight are always digits. http://info-uri.info/registry/OAIHandler?verb=GetRecord&metadataPrefix=reg&identifier=info:lccn/
+
+length = 8 then all digits
+length = 9 then lccn[1] is alpha
+length = 10 then lccn[1] and lccn[2] are both alpha or both digits
+length = 11 then lccn[1] is alpha, lccn[2] and lccn[3] are both alpha or both digits
+length = 12 then lccn[1] and lccn[2] are both alpha
+
+]]
+function lccn(lccn)
+	local handler = cfg.id_handlers['LCCN'];
+	local err_cat =  '';								-- presume that LCCN is valid
+	local id = lccn;									-- local copy of the lccn
+
+	id = normalize_lccn (id);							-- get canonical form (no whitespace, hyphens, forward slashes)
+	local len = id:len();								-- get the length of the lccn
+
+	if 8 == len then
+		if id:match("[^%d]") then						-- if LCCN has anything but digits (nil if only digits)
+			err_cat = ' ' .. seterror( 'bad_lccn' );	-- set an error message
+		end
+	elseif 9 == len then								-- LCCN should be adddddddd
+		if nil == id:match("%a%d%d%d%d%d%d%d%d") then			-- does it match our pattern?
+			err_cat = ' ' .. seterror( 'bad_lccn' );	-- set an error message
+		end
+	elseif 10 == len then								-- LCCN should be aadddddddd or dddddddddd
+		if id:match("[^%d]") then							-- if LCCN has anything but digits (nil if only digits) ...
+			if nil == id:match("^%a%a%d%d%d%d%d%d%d%d") then	-- ... see if it matches our pattern
+				err_cat = ' ' .. seterror( 'bad_lccn' );	-- no match, set an error message
+			end
+		end
+	elseif 11 == len then								-- LCCN should be aaadddddddd or adddddddddd
+		if not (id:match("^%a%a%a%d%d%d%d%d%d%d%d") or id:match("^%a%d%d%d%d%d%d%d%d%d%d")) then	-- see if it matches one of our patterns
+			err_cat = ' ' .. seterror( 'bad_lccn' );	-- no match, set an error message
+		end
+	elseif 12 == len then								-- LCCN should be aadddddddddd
+		if not id:match("^%a%a%d%d%d%d%d%d%d%d%d%d") then	-- see if it matches our pattern
+			err_cat = ' ' .. seterror( 'bad_lccn' );	-- no match, set an error message
+		end
+	else
+		err_cat = ' ' .. seterror( 'bad_lccn' );		-- wrong length, set an error message
+	end
+
+	if not is_set (err_cat) and nil ~= lccn:find ('%s') then
+		err_cat = ' ' .. seterror( 'bad_lccn' );		-- lccn contains a space, set an error message
+	end
+
+	return externallinkid({link = handler.link, label = handler.label,
+			prefix=handler.prefix,id=lccn,separator=handler.separator, encode=handler.encode}) .. err_cat;
+end
+
+--[[
 Format PMID and do simple error checking.  PMIDs are sequential numbers beginning at 1 and counting up.  This code checks the PMID to see that it
 contains only digits and is less than test_limit; the value in local variable test_limit will need to be updated periodically as more PMIDs are issued.
 ]]
@@ -315,13 +448,13 @@ The embargo parameter takes a date for a value. If the embargo date is in the fu
 the PMC identifier will not be linked to the article.  If the embargo specifies a date in the past, or if it is empty or omitted, then
 the PMC identifier is linked to the article through the link at cfg.id_handlers['PMC'].prefix.
 
-PMCs are sequential numbers beginning at 1 and counting up.  This code checks the PMID to see that it contains only digits and is less
+PMCs are sequential numbers beginning at 1 and counting up.  This code checks the PMC to see that it contains only digits and is less
 than test_limit; the value in local variable test_limit will need to be updated periodically as more PMCs are issued.
 ]]
 function pmc(id, embargo)
 	local test_limit = 5000000;							-- update this value as PMCs approach
 	local handler = cfg.id_handlers['PMC'];
-	local err_cat =  '';								-- presume that PMID is valid
+	local err_cat =  '';								-- presume that PMC is valid
     
 	local text;
 
@@ -423,7 +556,7 @@ function issn(id)
 
 	id=id:gsub( "[%s-–]", "" );									-- strip spaces, hyphens, and ndashes from the issn
 
-	if 8 ~= id:len() or nil == id:match( "^%d*X?$" ) then		-- validate the issn: 8 didgits long, containing only 0-9 or X in the last position
+	if 8 ~= id:len() or nil == id:match( "^%d*X?$" ) then		-- validate the issn: 8 digits long, containing only 0-9 or X in the last position
 		valid_issn=false;										-- wrong length or improper character
 	else
 		valid_issn=is_valid_isxn(id, 8);						-- validate issn
@@ -457,7 +590,10 @@ function set_titletype(cite_class, title_type)
 		return title_type;						-- if |type= has been set to any other value use that value
 	end
 
-	if "podcast" == cite_class then				-- if this citation is cite podcast
+	if "AV-media-notes" == cite_class or "DVD-notes" == cite_class then		-- if this citation is cite AV media notes or cite DVD notes
+		return "Media notes";					-- display AV media notes / DVD media notes annotation
+
+	elseif "podcast" == cite_class then			-- if this citation is cite podcast
 		return "Podcast";						-- display podcast annotation
 
 	elseif "pressrelease" == cite_class then	-- if this citation is cite press release
@@ -469,235 +605,6 @@ function set_titletype(cite_class, title_type)
 	elseif "thesis" == cite_class then			-- if this citation is cite thesis (degree option handled after this function returns)
 			return "Thesis";					-- display simple thesis annotation (without |degree= modification)
 	end
-end
-
--- returns a number according to the month in a date: 1 for January, etc.  Capitalization and spelling must be correct. If not a valid month, returns 0
-function get_month_number (month)
-local long_months = {['January']=1, ['February']=2, ['March']=3, ['April']=4, ['May']=5, ['June']=6, ['July']=7, ['August']=8, ['September']=9, ['October']=10, ['November']=11, ['December']=12};
-local short_months = {['Jan']=1, ['Feb']=2, ['Mar']=3, ['Apr']=4, ['May']=5, ['Jun']=6, ['Jul']=7, ['Aug']=8, ['Sep']=9, ['Oct']=10, ['Nov']=11, ['Dec']=12};
-local temp;
-	temp=long_months[month];
-	if temp then return temp; end				-- if month is the long-form name
-	temp=short_months[month];
-	if temp then return temp; end				-- if month is the short-form name
-	return 0;									-- misspelled, improper case, or not a month name
-end
-
--- returns a number according to the sequence of seasons in a year: 1 for Winter, etc.  Capitalization and spelling must be correct. If not a valid season, returns 0
-function get_season_number (season)
-local season_list = {['Winter']=1, ['Spring']=2, ['Summer']=3, ['Fall']=4, ['Autumn']=4}
-local temp;
-	temp=season_list[season];
-	if temp then return temp; end				-- if season is a valid name return its number
-	return 0;									-- misspelled, improper case, or not a season name
-end
-
---[[
-Returns true if day is less than or equal to the number of days in month; else returns false.
-
-Assumes Julian calendar prior to year 1582 and Gregorian calendar thereafter. Accounts for Julian calendar leap years before 1582 and Gregorian leap years after 1582.
-Where the two calendars overlap (1582 to approximately 1923) dates are assumed to be Gregorian.
-]]
-function is_valid_date (year, month, day)
-local days_in_month = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-local month_length;
-	if (2==month) then							-- if February
-		month_length = 28;						-- then 28 days unless
-		if 1582 > tonumber(year) then			-- Julian calendar
-			if 0==(year%4) then
-				month_length = 29;
-			end
-		else									-- Gregorian calendar
-			if (0==(year%4) and (0~=(year%100) or 0==(year%400))) then	-- is a leap year?
-				month_length = 29;				-- if leap year then 29 days in February
-			end
-		end
-	else
-		month_length=days_in_month[month];
-	end
-
-	if tonumber (day) > month_length then
-		return false;
-	end
-	return true;
-end
-
---[[
-Check a pair of months or seasons to see if both are valid members of a month or season pair.
-
-Month pairs are expected to be left to right, earliest to latest in time.  Similarly, seasons are also left to right, earliest to latest in time.  There is
-an oddity with seasons.  Winter is assigned a value of 1, spring 2, ..., fall and autumn 4.  Because winter can follow fall/autumn at the end of a calender year, a special test
-is made to see if |date=Fall-Winter yyyy (4-1) is the date.
-]]
-
-function is_valid_month_season_range(range_start, range_end)
-	local range_start_number = get_month_number (range_start);
-	
-	if 0 == range_start_number then								-- is this a month range?
-		local range_start_number = get_season_number (range_start);		-- not a month; is it a season? get start season number
-		local range_end_number = get_season_number (range_end);			-- get end season number
-
-		if 0 ~= range_start_number then							-- is start of range a season?
-			if range_start_number < range_end_number then		-- range_start is a season
-				return true;									-- return true when range_end is also a season and follows start season; else false
-			end
-			if 4 == range_start_number and 1 == range_end_number then	-- special case when range is Fall-Winter or Autumn-Winter
-				return true;
-			end
-		end
-		return false;		-- range_start is not a month or a season; or range_start is a season and range_end is not; or improper season sequence
-	end
-
-	local range_end_number = get_month_number (range_end);		-- get end month number
-	if range_start_number < range_end_number then				-- range_start is a month; does range_start precede range_end?
-		return true;											-- if yes, return true
-	end
-	return false;												-- range_start month number is greater than or equal to range end number; or range end isn't a month
-end
-
---[[
-Check date format to see that it is one of the formats approved by MOS:DATE: MMMM D, YYYY; D MMMM YYYY; MMMM YYYY; YYYY-MM-DD; YYYY.
-Additionally, check the date to see that it is a real date: no 31 in 30-day months; no 29 February when not a leap year.  Months, both long-form and three
-character abbreviations, and seasons must be spelled correctly.
-
-If the date fails the fomat tests, this function returns false but does not return values for anchor_year and COinS_date.  When this happens, the date parameter is
-used in the COinS metadata and the CITEREF identifier gets its year from the year parameter if present.
-
-Inputs:
-	date_string - date string from date-holding parameters (date, year, accessdate, embargo, archivedate, etc)
-
-Returns:
-	false if date string is not a real date; else
-	true, anchor_year, COinS_date
-		anchor_year can be used in CITEREF anchors
-		COinS_date is date_string without anchor_year disambiguator if any
-]]
-function check_date (date_string)
-	local year;
-	local month=0;		-- assume that month and day are not used; if either is zero then final year/month/day validation is not necessary
-	local day=0;
-	local day2=0;		-- second day in a day range	
-	local anchor_year;
-	local coins_date;
-
-	if date_string:match("^%d%d%d%d%-%d%d%-%d%d$") then			-- Year-initial numerical year month day format
-		year, month, day=string.match(date_string, "(%d%d%d%d)%-(%d%d)%-(%d%d)");
-		month=tonumber(month);
-		if 12 < month or 1 > month or 1583 > tonumber(year) then return false; end	-- month number not valid or not Gregorian calendar
-		anchor_year = year;
-
-	elseif date_string:match("^%a+ +[1-9]%d?, +[1-9]%d%d%d%a?$") then	-- month-initial: month day, year
-		month, day, anchor_year, year=string.match(date_string, "(%a+)%s*(%d%d?),%s*((%d%d%d%d)%a?)");
-		month = get_month_number (month);
-		if 0 == month then return false; end					-- return false if month text isn't one of the twelve months
-				
-	elseif date_string:match("^%a+ +[1-9]%d?–[1-9]%d?, +[1-9]%d%d%d%a?$") then	-- month-initial day range: month day–day, year; days are separated by endash
-		month, day, day2, anchor_year, year=string.match(date_string, "(%a+) +(%d%d?)–(%d%d?), +((%d%d%d%d)%a?)");
-		if tonumber(day) >= tonumber(day2) then return false; end				-- date range order is left to right: earlier to later; dates may not be the same;
-		month = get_month_number (month);
-		if 0 == month then return false; end					-- return false if month text isn't one of the twelve months
-
-	elseif date_string:match("^[1-9]%d? +%a+ +[1-9]%d%d%d%a?$") then		-- day-initial: day month year
-		day, month, anchor_year, year=string.match(date_string, "(%d%d*)%s*(%a+)%s*((%d%d%d%d)%a?)");
-		month = get_month_number (month);
-		if 0 == month then return false; end					-- return false if month text isn't one of the twelve months
-
-	elseif date_string:match("^[1-9]%d?–[1-9]%d? +%a+ +[1-9]%d%d%d%a?$") then	-- day-range-initial: day–day month year; days are separated by endash
-		day, day2, month, anchor_year, year=string.match(date_string, "(%d%d?)–(%d%d?) +(%a+) +((%d%d%d%d)%a?)");
-		if tonumber(day) >= tonumber(day2) then return false; end				-- date range order is left to right: earlier to later; dates may not be the same;
-		month = get_month_number (month);
-		if 0 == month then return false; end					-- return false if month text isn't one of the twelve months
-
-	elseif mw.ustring.match (date_string, "^%a+–%a+ +[1-9]%d%d%d%a?$") then		-- month/season range year; months separated by endash 
-		local month2
-		month, month2, anchor_year, year=mw.ustring.match (date_string, "(%a+)[%-/–](%a+)%s*((%d%d%d%d)%a?)");
-		if false == is_valid_month_season_range(month, month2) then
-			return false;
-		end
-		
-	elseif date_string:match("^%a+ +%d%d%d%d%a?$") then			-- month/season year
-		month, anchor_year, year=string.match(date_string, "(%a+)%s*((%d%d%d%d)%a?)");
-		if 0 == get_month_number (month) then					-- if month text isn't one of the twelve months, might be a season
-			if 0 == get_season_number (month) then				-- not a month, is it a season?
-				return false;									-- return false not a month or one of the five seasons
-			end
-		end
-
-	elseif date_string:match("^[1-9]%d%d%d?%a?$") then			-- year; here accept either YYY or YYYY
-		anchor_year, year=string.match(date_string, "((%d%d%d%d?)%a?)");
-
-	else
-		return false;											-- date format not one of the MOS:DATE approved formats
-	end
-
-	if 0~=month and 0~=day then									-- check year month day dates for validity
-		if 0~=day2 then											-- If there is a second day (d–d Mmm YYYY or Mmm d–d, YYYY) test the second date
-			if false==is_valid_date(year,month,day2) then
-				return false;									-- second date in date range string is not a real date return false; unset anchor_year and coins_date
-			end													-- if second date range string is valid, fall through to test the first date range
-		end
-		if false==is_valid_date(year,month,day) then
-			return false;										-- date string is not a real date return false; unset anchor_year and coins_date
-		end
-	end
-
-	coins_date= mw.ustring.gsub( date_string, "–", "-" );		-- if here, then date_string is valid; set coins_date and replace any ndash with a hyphen
-	
-	return true, anchor_year, coins_date;						-- format is good and date string represents a real date
-end	
-
---[[
-Cycle the date-holding parameters in passed table date_parameters_list through check_date() to check compliance with MOS:DATE. For all valid dates, check_date() returns
-true and values for anchor_year (used in CITEREF identifiers) and COinS_date (used in the COinS metadata).  The |date= parameter test is unique.  This function only 
-accepts anchor_year and COinS_date results from the |date= parameter test and |date= is the only date-holding parameter that is allowed to contain the no-date keywords
-"n.d." or "nd" (without quotes).
-
-Unlike most error messages created in this module, only one error message is created by this function. Because all of the date holding parameters are processed serially,
-a single error message is created as the dates are tested.
-]]
-
-function dates(date_parameters_list)
-	local anchor_year;		-- will return as nil if the date being tested is not |date=
-	local COinS_date;		-- will return as nil if the date being tested is not |date=
-	local error_message ="";
-	local good_date=false;
-	
-	for k, v in pairs(date_parameters_list) do		-- for each date-holding parameter in the list
-		if is_set(v) then							-- if the parameter has a value
-			if v:match("^c%. [1-9]%d%d%d?%a?$") then	-- special case for c. year or with or without CITEREF disambiguator - only |date= and |year=
-				if 'date'==k then
-					good_date, anchor_year, COinS_date = true, v:match("((c%. [1-9]%d%d%d?)%a?)");	-- anchor year and COinS_date only from |date= parameter
-				elseif 'year'==k then
-					good_date =  true;
-				end
-			elseif 'year'==k then					-- if the parameter is |year= (but not c. year)
-				if v:match("^[1-9]%d%d%d?%a?$") then	-- year with or without CITEREF disambiguator
-					good_date =  true;
-				end
-			elseif 'date'==k then					-- if the parameter is |date=
-				if v:match("n%.d%.%a?") then		-- if |date=n.d. with or without a CITEREF disambiguator
-					good_date, anchor_year, COinS_date = true, v:match("((n%.d%.)%a?)");	--"n.d."; no error when date parameter is set to no date
-				elseif v:match("nd%a?$") then		-- if |date=nd with or without a CITEREF disambiguator
-					good_date, anchor_year, COinS_date = true, v:match("((nd)%a?)");	--"nd";	no error when date parameter is set to no date
-				else
-					good_date, anchor_year, COinS_date = check_date (v);	-- go test the date
-				end
-			else									-- any other date-holding parameter
-				good_date = check_date (v);			-- go test the date
-			end
-			if false==good_date then				-- assemble one error message so we don't add the tracking category multiple times
-				if is_set(error_message) then		-- once we've added the first portion of the error message ...
-					error_message=error_message .. ", ";	-- ... add a comma space separator
-				end
-				error_message=error_message .. "&#124;" .. k .. "=";	-- add the failed parameter
-			end
-		end
-	end
-	if is_set(error_message) then
-		table.insert( z.message_tail, { seterror( 'bad_date', {error_message}, true ) } );	-- add this error message
-	end
-
-	return anchor_year, COinS_date;		-- and done
 end
 
 --[[
@@ -717,6 +624,23 @@ end
 -- Similar to that used for Special:BookSources
 function cleanisbn( isbn_str )
     return isbn_str:gsub( "[^-0-9X]", "" );
+end
+
+-- Extract page numbers from external wikilinks in any of the |page=, |pages=, or |at= parameters for use in COinS.
+--TODO: Fix so this code supports urls like this:
+--	http://www.history.navy.mil/download/va125153.pdf#page=13 %w/:\.
+function get_coins_pages (pages)
+	if not is_set (pages) then return pages; end			-- if no page numbers then we're done
+	
+    while true do
+		pattern = pages:match("%[(%w*:?//[^ ]+%s+)[%w%d].*%]");	-- pattern is the opening bracket, the url and following space(s): "[url "
+		if nil == pattern then break; end					-- no more urls
+		pages = pages:gsub(pattern, "");					-- remove as many instances of pattern as possible
+	end
+	pages = pages:gsub("[%[%]]", "");						-- remove the brackets
+	pages = pages:gsub("–", "-" );							-- replace endashes with hyphens
+	pages = pages:gsub("&%w+;", "-" );						-- and replace html entities (&ndash; etc) with hyphens; do we need to replace numerical entities like &#32; and the like?
+	return pages;
 end
 
 --[[
@@ -808,8 +732,12 @@ function safeforitalics( str )
 end
 
 --[[
-Joins a sequence of strings together while checking for duplicate separation
-characters.
+Joins a sequence of strings together while checking for duplicate separation characters.
+
+TODO: safejoin() has a flaw where it won't remove the duplicate character from a |title= / |url= combination.
+This is because by the time we get here, |title=http://somesite.com and |title=Document Title. have been combined:
+	[http://somesite.com and ''Document Title.'']
+so that now, the last character is not sepc but is ] (unless sepc == ']' which breaks the external link)
 ]]
 function safejoin( tbl, duplicate_char )
     --[[
@@ -882,11 +810,14 @@ end
 
 -- Attempts to convert names to initials.
 function reducetoinitials(first)
-    local initials = {}
-    for word in string.gmatch(first, "%S+") do
-        table.insert(initials, string.sub(word,1,1)) -- Vancouver format does not include full stops.
-    end
-    return table.concat(initials) -- Vancouver format does not include spaces.
+	local initials = {}
+	local i = 0;										-- counter for number of initials
+	for word in string.gmatch(first, "%S+") do
+		table.insert(initials, string.sub(word,1,1))	-- Vancouver format does not include full stops.
+		i = i + 1;										-- bump the counter 
+		if 2 <= i then break; end						-- only two initials allowed in Vancouver system; if 2, quit
+	end
+	return table.concat(initials)						-- Vancouver format does not include spaces.
 end
 
 -- Formats a list of people (e.g. authors / editors) 
@@ -959,27 +890,50 @@ function anchorid( options )
     return "CITEREF" .. table.concat( options );
 end
 
--- Gets name list from the input arguments
+--[[
+Gets name list from the input arguments
+
+Searches through args in sequential order to find |lastn= and |firstn= parameters (or their aliases), and their matching link and mask parameters.
+Stops searching when both |lastn= and |firstn= are not found in args after two sequential attempts: found |last1=, |last2=, and |last3= but doesn't
+find |last4= and |last5= then the search is done.
+
+This function emits an error message when there is a |firstn= without a matching |lastn=.  When there are 'holes' in the list of last names, |last1= and |last3=
+are present but |last2= is missing, an error message is emitted. |lastn= is not required ot have a matching |firstn=.
+]]
 function extractnames(args, list_name)
-    local names = {};
-    local i = 1;
-    local last;
-    
+	local names = {};			-- table of names
+	local i = 1;				-- loop counter/indexer
+	local count = 0;			-- used to count the number of times we haven't found a |last= (or alias for authors, |editor-last or alias for editors)
+	
+	local err_msg_list_name = list_name:match ("(%w+)List") .. 's list';		-- modify AuthorList or EditorList for use in error messages if necessary
+
     while true do
-        last = selectone( args, cfg.aliases[list_name .. '-Last'], 'redundant_parameters', i );
-        if not is_set(last) then
-            -- just in case someone passed in an empty parameter
-            break;
-        end
-        names[i] = {
-            last = last,
-            first = selectone( args, cfg.aliases[list_name .. '-First'], 'redundant_parameters', i ),
-            link = selectone( args, cfg.aliases[list_name .. '-Link'], 'redundant_parameters', i ),
-            mask = selectone( args, cfg.aliases[list_name .. '-Mask'], 'redundant_parameters', i )
-        };
-        i = i + 1;
-    end
-    return names;
+        names[i] =				-- search through args for name components beginning at 1
+        	{
+			last = selectone( args, cfg.aliases[list_name .. '-Last'], 'redundant_parameters', i ),
+			first = selectone( args, cfg.aliases[list_name .. '-First'], 'redundant_parameters', i ),
+			link = selectone( args, cfg.aliases[list_name .. '-Link'], 'redundant_parameters', i ),
+			mask = selectone( args, cfg.aliases[list_name .. '-Mask'], 'redundant_parameters', i )
+			};
+		if names[i].first and not names[i].last then							-- if there is a firstn without a matching lastn
+			names[i].first = nil;												-- set first to nil so we don't confuse the implict et al message code
+			table.insert( z.message_tail, { seterror( 'first_missing_last', {err_msg_list_name, i}, true ) } );	-- add this error message
+			break;																-- and done because lastn not found
+		elseif not names[i].first and not names[i].last then					-- if both firstn and lastn aren't found, are we done?
+			count = count + 1;													-- number of times we haven't found last and first
+			if 2 == count then													-- two missing names and we give up
+				break;															-- normal exit or there is a two-name hole in the list; can't tell which
+			end
+		else																	-- last with or without a first
+			if 1 == count then													-- if the previous name was missing
+				table.insert( z.message_tail, { seterror( 'missing_name', {err_msg_list_name, i-1}, true ) } );		-- add this error message
+			end
+			count = 0;															-- reset the counter, we're looking for two consecutive missing names
+		end
+
+		i = i + 1;																-- bump to the next name
+	end
+	return names;																-- all done, return our list of names
 end
 
 -- Populates ID table from arguments using configuration settings
@@ -1010,8 +964,12 @@ function buildidlist( id_list, options )
             error( cfg.messages['unknown_ID_mode'] );
         elseif k == 'DOI' then
             table.insert( new_list, {handler.label, doi( v, options.DoiBroken ) } );
+        elseif k == 'ARXIV' then
+            table.insert( new_list, {handler.label, arxiv( v ) } ); 
         elseif k == 'ASIN' then
             table.insert( new_list, {handler.label, amazon( v, options.ASINTLD ) } ); 
+        elseif k == 'LCCN' then
+            table.insert( new_list, {handler.label, lccn( v ) } );
         elseif k == 'OL' then
             table.insert( new_list, {handler.label, openlibrary( v ) } );
         elseif k == 'PMC' then
@@ -1234,6 +1192,113 @@ function citation0( config, args)
     local ConferenceURLorigin = A:ORIGIN('ConferenceURL');
     local Periodical = A['Periodical'];
 
+	local Series = A['Series'];
+    local Volume = A['Volume'];
+    local Issue = A['Issue'];
+    local Position = '';
+    local Page = A['Page'];
+    local Pages = hyphentodash( A['Pages'] );	
+    local At = A['At'];
+
+    local Edition = A['Edition'];
+    local PublicationPlace = A['PublicationPlace']
+    local Place = A['Place'];
+    
+    local PublisherName = A['PublisherName'];
+    local RegistrationRequired = A['RegistrationRequired'];
+    local SubscriptionRequired = A['SubscriptionRequired'];
+    local Via = A['Via'];
+    local AccessDate = A['AccessDate'];
+    local ArchiveDate = A['ArchiveDate'];
+    local Agency = A['Agency'];
+    local DeadURL = A['DeadURL']
+    local Language = A['Language'];
+    local Format = A['Format'];
+    local Ref = A['Ref'];
+	local DoiBroken = A['DoiBroken'];
+	local ID = A['ID'];
+    local ASINTLD = A['ASINTLD'];
+    local IgnoreISBN = A['IgnoreISBN'];
+    local Embargo = A['Embargo'];
+
+    local ID_list = extractids( args );
+    
+    -- special case for cite newsgroup which uses |id= for a usenet article or post id
+    -- |id= is not included in COinS so here we convert it to an ID that will be included in COinS
+    if ('newsgroup' == config.CitationClass) and (is_set (ID)) then
+    	ID_list['USENETID']=ID;			-- add this new 'id' to the list of IDs
+    	ID = '';						-- and unset
+    end
+    
+    local Quote = A['Quote'];
+    local PostScript = A['PostScript'];
+
+    local LayURL = A['LayURL'];
+    local LaySource = A['LaySource'];
+    local Transcript = A['Transcript'];
+    local TranscriptURL = A['TranscriptURL'] 
+    local TranscriptURLorigin = A:ORIGIN('TranscriptURL');
+    local sepc = A['Separator'];
+
+    local LastAuthorAmp = A['LastAuthorAmp'];
+    local no_tracking_cats = A['NoTracking'];
+
+--these are used by cite interview
+	local Callsign = A['Callsign'];
+	local City = A['City'];
+	local Cointerviewers = A['Cointerviewers'];			-- deprecated
+	local Interviewer = A['Interviewer'];				-- deprecated
+	local Program = A['Program'];
+
+--local variables that are not cs1 parameters
+    local page_type;									-- is this needed?  Doesn't appear to be used anywhere;
+    local use_lowercase = ( sepc ~= '.' );
+    local this_page = mw.title.getCurrentTitle();		--Also used for COinS and for language
+	local anchor_year;									-- used in the CITEREF identifier
+	local COinS_date;									-- used in the COinS metadata
+
+-- Set postscript default.
+	if not is_set (PostScript) then						-- if |postscript= has not been set (Postscript is nil which is the default for {{citation}}) and
+		if (config.CitationClass ~= "citation") then	-- this template is not a citation template
+			PostScript = '.';							-- must be a cite xxx template so set postscript to default (period)
+		end
+	else
+		if PostScript:lower() == 'none' then			-- if |postscript=none then
+			PostScript = '';							-- no postscript
+		end
+	end
+
+--check this page to see if it is in one of the namespaces that cs1 is not supposed to add to the error categories.
+	if not is_set(no_tracking_cats) then				-- ignore if we are already not going to categorize this page
+		for k, v in pairs( cfg.uncategorized_namespaces ) do	-- otherwise, spin through the list of namespaces we don't include in error categories
+			if this_page.nsText == v then				-- if we find one
+				no_tracking_cats = "true";				-- set no_trackin_cats
+				break;									-- and we're done
+            end
+        end
+    end
+
+-- check for extra |page=, |pages= or |at= parameters. 
+    if is_set(Page) then
+        if is_set(Pages) or is_set(At) then
+            Page = Page .. " " .. seterror('extra_pages');	-- add error message
+            Pages = '';										-- unset the others
+            At = '';
+        end
+    elseif is_set(Pages) then
+        if is_set(At) then
+            Pages = Pages .. " " .. seterror('extra_pages');	-- add error messages
+            At = '';											-- unset
+        end
+    end    
+
+-- both |publication-place= and |place= (|location=) allowed if different
+    if not is_set(PublicationPlace) and is_set(Place) then
+        PublicationPlace = Place;							-- promote |place= (|location=) to |publication-place
+    end
+    
+    if PublicationPlace == Place then Place = ''; end		-- don't need both if they are the same
+    
 --[[
 Parameter remapping for cite encyclopedia:
 When the citation has these parameters:
@@ -1262,55 +1327,26 @@ All other combinations of |encyclopedia, |title, and |article are not modified
 		end
 	end
 
-local Series = A['Series'];
-    local Volume = A['Volume'];
-    local Issue = A['Issue'];
-    local Position = '';
-    local Page, Pages, At, page_type;
-    
-    Page = A['Page'];
-    Pages = hyphentodash( A['Pages'] );
-    At = A['At'];
-    
-    if is_set(Page) then
-        if is_set(Pages) or is_set(At) then
-            Page = Page .. " " .. seterror('extra_pages');
-            Pages = '';
-            At = '';
-        end
-    elseif is_set(Pages) then
-        if is_set(At) then
-            Pages = Pages .. " " .. seterror('extra_pages');
-            At = '';
-        end
-    end    
-    
-    local Edition = A['Edition'];
-    local PublicationPlace = A['PublicationPlace']
-    local Place = A['Place'];
-    
-    if not is_set(PublicationPlace) and is_set(Place) then
-        PublicationPlace = Place;
-    end
-    
-    if PublicationPlace == Place then Place = ''; end
-    
-    local PublisherName = A['PublisherName'];
-    local RegistrationRequired = A['RegistrationRequired'];
-    local SubscriptionRequired = A['SubscriptionRequired'];
-    local Via = A['Via'];
-    local AccessDate = A['AccessDate'];
-    local ArchiveDate = A['ArchiveDate'];
-    local Agency = A['Agency'];
-    local DeadURL = A['DeadURL']
-    local Language = A['Language'];
-    local Format = A['Format'];
-    local Ref = A['Ref'];
-    
-    local DoiBroken = A['DoiBroken'];
-	
+--special cases for citation.
+	if (config.CitationClass == "citation") then		-- for citation templates
+		if not is_set (Ref) then						-- if |ref= is not set
+			Ref = "harv";								-- set default |ref=harv
+		end
+		if not is_set (sepc) then						-- if |separator= is not set
+			sepc = ',';									-- set citation separator to its default (comma)
+		end
+	else												-- not a citation template
+		if not is_set (sepc) then						-- if |separator= has not been set
+			sepc = '.';									-- set cite xxx separator to its default (period)
+		end
+	end
+
+-- check for special case where |separator=none
+	if 'none' == sepc:lower() then						-- if |separator=none
+		sepc = '';										-- then set it to a empty string
+	end
+
 -- Special case for cite techreport.
-	local ID = A['ID'];
 	if (config.CitationClass == "techreport") then	-- special case for cite techreport
 		if is_set(Issue) then						-- cite techreport uses 'number', which other citations aliase to 'issue'
 			if not is_set(ID) then					-- can we use ID for the "number"?
@@ -1320,39 +1356,92 @@ local Series = A['Series'];
 				ID = ID .. " " .. seterror('redundant_parameters', '<code>&#124;id=</code> and <code>&#124;number=</code>');
 			end
 		end	
-	end	
-			
-    local ASINTLD = A['ASINTLD'];
-    local IgnoreISBN = A['IgnoreISBN'];
-    local Embargo = A['Embargo'];
+	end
 
-    local ID_list = extractids( args );
-    
-    local Quote = A['Quote'];
-    local PostScript = A['PostScript'];
-    local LayURL = A['LayURL'];
-    local LaySource = A['LaySource'];
-    local Transcript = A['Transcript'];
-    local TranscriptURL = A['TranscriptURL'] 
-    local TranscriptURLorigin = A:ORIGIN('TranscriptURL');
-    local sepc = A['Separator'];
-    local LastAuthorAmp = A['LastAuthorAmp'];
-    local no_tracking_cats = A['NoTracking'];
+-- special case for cite interview
+	if (config.CitationClass == "interview") then
+		if is_set(Program) then
+			ID = ' ' .. Program;
+		end
+		if is_set(Callsign) then
+			if is_set(ID) then
+				ID = ID .. sepc .. ' ' .. Callsign;
+			else
+				ID = ' ' .. Callsign;
+			end
+		end
+		if is_set(City) then
+			if is_set(ID) then
+				ID = ID .. sepc .. ' ' .. City;
+			else
+				ID = ' ' .. City;
+			end
+		end
 
-    local use_lowercase = ( sepc ~= '.' );
-    local this_page = mw.title.getCurrentTitle();  --Also used for COinS and for language
-    
-    if not is_set(no_tracking_cats) then
-        for k, v in pairs( cfg.uncategorized_namespaces ) do
-            if this_page.nsText == v then
-                no_tracking_cats = "true";
-                break;
-            end
-        end
-    end
+		if is_set(Interviewer) then
+			if is_set(TitleType) then
+				Others = ' ' .. TitleType .. ' with ' .. Interviewer;
+				TitleType = '';
+			else
+				Others = ' ' .. 'Interview with ' .. Interviewer;
+			end
+			if is_set(Cointerviewers) then
+				Others = Others .. sepc .. ' ' .. Cointerviewers;
+			end
+		else
+			Others = '(Interview)';
+		end
+	end
 
-	local anchor_year;		-- used in the CITEREF identifier
-	local COinS_date;		-- used in the COinS metadata
+--Account for the oddity that is {{cite journal}} with |pmc= set and |url= not set
+	if config.CitationClass == "journal" and not is_set(URL) and is_set(ID_list['PMC']) then
+		if not is_embargoed(Embargo) then
+			URL=cfg.id_handlers['PMC'].prefix .. ID_list['PMC'];	-- set url to be the same as the PMC external link if not embargoed
+			URLorigin = cfg.id_handlers['PMC'].parameters[1];		-- set URLorigin to parameter name for use in error message if citation is missing a |title=
+		end
+	end
+
+-- Account for the oddity that is {{cite conference}}, before generation of COinS data.
+--TODO: if this is only for {{cite conference}}, shouldn't we be checking? (if config.CitationClass=='conference' then ...)
+	if is_set(BookTitle) then
+		Chapter = Title;
+		ChapterLink = TitleLink;
+		TransChapter = TransTitle;
+		Title = BookTitle;
+		TitleLink = '';
+		TransTitle = '';
+	end
+
+-- Account for the oddity that is {{cite episode}}, before generation of COinS data.
+--[[	-- {{cite episode}} is not currently supported by this module
+	if config.CitationClass == "episode" then
+		local AirDate = A['AirDate'];
+		local SeriesLink = A['SeriesLink'];
+		local Season = A['Season'];
+		local SeriesNumber = A['SeriesNumber'];
+		local Network = A['Network'];
+		local Station = A['Station'];
+		local s, n = {}, {};
+		local Sep = (first_set(A["SeriesSeparator"], A["Separator"]) or "") .. " ";
+		
+		if is_set(Issue) then table.insert(s, cfg.messages["episode"] .. " " .. Issue); Issue = ''; end
+		if is_set(Season) then table.insert(s, cfg.messages["season"] .. " " .. Season); end
+		if is_set(SeriesNumber) then table.insert(s, cfg.messages["series"] .. " " .. SeriesNumber); end
+		if is_set(Network) then table.insert(n, Network); end
+		if is_set(Station) then table.insert(n, Station); end
+		
+		Date = Date or AirDate;
+		Chapter = Title;
+		ChapterLink = TitleLink;
+		TransChapter = TransTitle;
+		Title = Series;
+		TitleLink = SeriesLink;
+		TransTitle = '';
+		
+		Series = table.concat(s, Sep);
+		ID = table.concat(n, Sep);
+	end
+-- end of {{cite episode}} stuff]]
 
 -- legacy: promote concatenation of |day=, |month=, and |year= to Date if Date not set; or, promote PublicationDate to Date if neither Date nor Year are set.
 	if not is_set(Date) then
@@ -1373,59 +1462,21 @@ local Series = A['Series'];
 
 	if PublicationDate == Date then PublicationDate = ''; end	-- if PublicationDate is same as Date, don't display in rendered citation
 
--- Go test all of the date-holding parameters for valid MOS:DATE format and make sure that dates are real dates.
--- TODO: 2013-10-27: AirDate is nil when dates() is called because it hasn't been set yet.  Move the call to dates() or set AirDate earlier.
-	anchor_year, COinS_date = dates({['accessdate']=AccessDate, ['airdate']=AirDate, ['archivedate']=ArchiveDate, ['date']=Date, ['doi_brokendate']=DoiBroken,
+
+--[[
+Go test all of the date-holding parameters for valid MOS:DATE format and make sure that dates are real dates. This must be done before we do COinS because here is where
+we get the date used in the metadata.
+
+Date validation supporting code is in Module:Citation/CS1/Date_validation
+]]
+	anchor_year, COinS_date, error_message = dates({['accessdate']=AccessDate, ['airdate']=AirDate, ['archivedate']=ArchiveDate, ['date']=Date, ['doi_brokendate']=DoiBroken,
 		['embargo']=Embargo, ['laydate']=LayDate, ['publicationdate']=PublicationDate, ['year']=Year});
+	if is_set(error_message) then
+		table.insert( z.message_tail, { seterror( 'bad_date', {error_message}, true ) } );	-- add this error message
+	end
 
 -- At this point fields may be nil if they weren't specified in the template use.  We can use that fact.
 
-	--Account for the oddity that is {{cite journal}} with |pmc= set and |url= not set
-	if config.CitationClass == "journal" and not is_set(URL) and is_set(ID_list['PMC']) then
-		if not is_embargoed(Embargo) then
-			URL=cfg.id_handlers['PMC'].prefix .. ID_list['PMC'];	-- set url to be the same as the PMC external link if not embargoed
-			URLorigin = cfg.id_handlers['PMC'].parameters[1];		-- set URLorigin to parameter name for use in error message if citation is missing a |title=
-		end
-	end
-
-    -- Account for the oddity that is {{cite conference}}, before generation of COinS data.
-    if is_set(BookTitle) then
-        Chapter = Title;
-        ChapterLink = TitleLink;
-        TransChapter = TransTitle;
-        Title = BookTitle;
-        TitleLink = '';
-        TransTitle = '';
-    end
-    -- Account for the oddity that is {{cite episode}}, before generation of COinS data.
-    if config.CitationClass == "episode" then
-        local AirDate = A['AirDate'];
-        local SeriesLink = A['SeriesLink'];
-        local Season = A['Season'];
-        local SeriesNumber = A['SeriesNumber'];
-        local Network = A['Network'];
-        local Station = A['Station'];
-        local s, n = {}, {};
-        local Sep = (first_set(A["SeriesSeparator"], A["Separator"]) or "") .. " ";
-        
-        if is_set(Issue) then table.insert(s, cfg.messages["episode"] .. " " .. Issue); Issue = ''; end
-        if is_set(Season) then table.insert(s, cfg.messages["season"] .. " " .. Season); end
-        if is_set(SeriesNumber) then table.insert(s, cfg.messages["series"] .. " " .. SeriesNumber); end
-        if is_set(Network) then table.insert(n, Network); end
-        if is_set(Station) then table.insert(n, Station); end
-        
-        Date = Date or AirDate;
-        Chapter = Title;
-        ChapterLink = TitleLink;
-        TransChapter = TransTitle;
-        Title = Series;
-        TitleLink = SeriesLink;
-        TransTitle = '';
-        
-        Series = table.concat(s, Sep);
-        ID = table.concat(n, Sep);
-    end
-    
     -- COinS metadata (see <http://ocoins.info/>) for
     -- automated parsing of citation information.
     local OCinSoutput = COinS{
@@ -1437,7 +1488,7 @@ local Series = A['Series'];
         ['Series'] = Series,
         ['Volume'] = Volume,
         ['Issue'] = Issue,
-        ['Pages'] = first_set(Page, Pages, At),
+        ['Pages'] = get_coins_pages (first_set(Page, Pages, At)),	-- pages stripped of external links
         ['Edition'] = Edition,
         ['PublisherName'] = PublisherName,
         ['URL'] = first_set( URL, ChapterURL ),
@@ -1454,6 +1505,15 @@ local Series = A['Series'];
         TitleLink = '';
         TransTitle = '';
     end
+
+-- special case for cite newsgroup.  Do this after COinS because we are modifying Publishername and ID
+	if 'newsgroup' == config.CitationClass then
+		if is_set (PublisherName) then
+			PublisherName = '[[Newsgroup]]:&nbsp;' ..  externallink( 'news:' .. PublisherName, PublisherName );
+		end
+	end
+
+
 
     -- Now perform various field substitutions.
     -- We also add leading spaces and surrounding markup and punctuation to the
@@ -1634,7 +1694,7 @@ local Series = A['Series'];
 		Title = kern_quotes (Title);				-- if necessary, separate title's leading and trailing quote marks from Module provided quote marks
         Title = wrap( 'quoted-title', Title );
         TransTitle = wrap( 'trans-quoted-title', TransTitle );
-    elseif inArray(config.CitationClass, {"web","news","pressrelease","conference","podcast"}) and
+    elseif inArray(config.CitationClass, {"web","news","pressrelease","conference","podcast","newsgroup"}) and
             not is_set(Chapter) then
 		Title = kern_quotes (Title);				-- if necessary, separate title's leading and trailing quote marks from Module provided quote marks
         Title = wrap( 'quoted-title', Title );
@@ -1770,7 +1830,7 @@ local Series = A['Series'];
 
 -- handle type parameter for those CS1 citations that have default values
 
-	if inArray(config.CitationClass, {"podcast","pressrelease","techreport","thesis"}) then
+	if inArray(config.CitationClass, {"AV-media-notes", "DVD-notes", "podcast", "pressrelease", "techreport", "thesis"}) then
 		TitleType = set_titletype (config.CitationClass, TitleType);
 		if is_set(Degree) and "Thesis" == TitleType then	-- special case for cite thesis
 			TitleType = Degree .. " thesis";
@@ -1787,14 +1847,25 @@ local Series = A['Series'];
     Series = is_set(Series) and (sepc .. " " .. Series) or "";
     OrigYear = is_set(OrigYear) and (" [" .. OrigYear .. "]") or "";
     Agency = is_set(Agency) and (sepc .. " " .. Agency) or "";
-    
+
     if is_set(Volume) then
         if ( mw.ustring.len(Volume) > 4 )
           then Volume = sepc .." " .. Volume;
           else Volume = " <b>" .. hyphentodash(Volume) .. "</b>";
         end
     end
-    
+
+--[[ This code commented out while discussion continues until after week of 2014-03-23 live module update;
+    if is_set(Volume) then
+        if ( mw.ustring.len(Volume) > 4 )
+          then Volume = sepc .. " " .. Volume;
+          else
+              Volume = " <b>" .. hyphentodash(Volume) .. "</b>";
+              if is_set(Series) then Volume = sepc .. Volume;
+              end
+        end
+    end
+]]    
     ------------------------------------ totally unrelated data
     --[[ Loosely mimic {{subscription required}} template; Via parameter identifies a delivery source that is not the publisher; these sources often, but not always, exist
     behind a registration or paywall.  So here, we've chosen to decouple via from subscription (via has never been part of the registration required template).
@@ -1835,9 +1906,7 @@ local Series = A['Series'];
             Quote = Quote:sub(2,-2);
         end
         Quote = sepc .." " .. wrap( 'quoted-text', Quote ); 
-        PostScript = "";
-    elseif PostScript:lower() == "none" then
-        PostScript = "";
+        PostScript = "";							-- CS1 does not supply terminal punctuation when |quote= is set
     end
     
     local Archived
@@ -2043,10 +2112,11 @@ the annotation directly follows the |title= parameter value in the citation rath
         end
     end
     
-    if is_set(PostScript) and PostScript ~= sepc then
-        text = safejoin( {text, sepc}, sepc );  --Deals with italics, spaces, etc.
-        text = text:sub(1,-2); --Remove final seperator    
-    end    
+	if is_set(PostScript) and PostScript ~= sepc then
+		text = safejoin( {text, sepc}, sepc );  --Deals with italics, spaces, etc.
+		text = text:sub(1,-sepc:len()-1);
+--		text = text:sub(1,-2);	--Remove final separator (assumes that sepc is only one character)
+	end    
     
     text = safejoin( {text, PostScript}, sepc );
 
@@ -2125,6 +2195,16 @@ end
 function z.citation(frame)
     local pframe = frame:getParent()
     
+    if nil ~= string.find( frame:getTitle(), 'sandbox', 1, true ) then				-- did the {{#invoke:}} use sandbox version?
+    	cfg = mw.loadData( 'Module:Citation/CS1/Configuration/sandbox' );	-- load sandbox versions of Configuration and Whitelist and ...
+    	whitelist = mw.loadData( 'Module:Citation/CS1/Whitelist/sandbox' );
+    	dates = require('Module:Citation/CS1/Date_validation/sandbox').dates	-- ... sandbox version of date validation code
+    else																	-- otherwise
+    	cfg = mw.loadData( 'Module:Citation/CS1/Configuration' );			-- load live versions of Configuration and Whitelist and ...
+    	whitelist = mw.loadData( 'Module:Citation/CS1/Whitelist' );
+    	dates = require('Module:Citation/CS1/Date_validation').dates		-- ... live version of date validation code
+	end
+	
     local args = {};
     local suggestions = {};
     local error_text, error_state;
