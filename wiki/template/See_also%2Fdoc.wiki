@@ -1,0 +1,126 @@
+{{documentation subpage}}
+{{lua|Module:See also}}
+
+This template is used to create [[WP:Hatnotes|hatnotes]] to point to a small number of other, related, titles at the '''top''' of [[Help:Section|article sections]] according to [[Wikipedia:Layout]]. It looks like this:
+
+{{see also|Article}}
+
+It is not for use in the "See also" ''section'' at the end of an article.
+
+== Usage ==
+
+; Basic usage:
+ &#123;{see also|''page1''|''page2''|''page3''|...}}
+
+; All parameters:
+ &#123;{see also
+ | ''page1'' | ''page2'' | ''page3'' | ...
+ | label 1 = ''label 1'' | label 2 = ''label2'' | label 3 = ''label3'' | ...
+ | l1 = ''label1'' | l2 = ''label2'' | l3 = ''label3'' | ...
+ | selfref = ''yes''
+ | category = ''no''
+ }}
+
+== Parameters ==
+
+* <code>1</code>, <code>2</code>, <code>3</code>, ... - the pages to link to. At least one page name is required. Categories and files are automatically escaped with the [[Help:Colon trick|colon trick]], and links to sections are automatically formatted as ''page § section'', rather than the MediaWiki default of ''page#section''.
+* <code>label 1</code>, <code>label 2</code>, <code>label 3</code>, ...; or <code>l1</code>, <code>l2</code>, <code>l3</code>, ...; optional labels for each of the pages to link to.
+* <code>selfref</code> - if set to "yes", "y", "true" or "1", adds the CSS class "selfref". This is used to denote self-references to Wikipedia. See [[Template:Selfref]] for more information.
+* <code>category</code> - if set to "no", "n", "false", or "0", suppresses the error tracking category ([[:Category:Hatnote templates with errors]]). This only has an effect if the first positional parameter (the page to link to) is omitted.
+
+== Examples ==
+
+* <code><nowiki>{{see also|Article}}</nowiki></code> &rarr; {{see also|Article}}
+* <code><nowiki>{{see also|Article#Section}}</nowiki></code> &rarr; {{see also|Article#Section}}
+* <code><nowiki>{{see also|Article#Section|label 1=Custom section label}}</nowiki></code> &rarr; {{see also|Article#Section|label 1=Custom section label}}
+* <code><nowiki>{{see also|Article1|Article2|Article3}}</nowiki></code> &rarr; {{see also|Article1|Article2|Article3}}
+* <code><nowiki>{{see also|Article1|l1=Custom label 1|Article2|l2=Custom label 2}}</nowiki></code> &rarr; {{see also|Article1|l1=Custom label 1|Article2|l2=Custom label 2}}
+
+== Errors ==
+
+If no page names are supplied, the template will output the following message:
+* {{see also|category=no}}
+
+If you see this error message, it is for one of four reasons:
+# No parameters were specified (the template code was <code><nowiki>{{see also}}</nowiki></code>). Please use <code><nowiki>{{see also|</nowiki>''page''<nowiki>}}</nowiki></code> instead.
+# Some parameters were specified, but no page names were included. For example, the template text <code><nowiki>{{see also|selfref=yes}}</nowiki></code> will produce this error. Please use (for example) <code><nowiki>{{see also|</nowiki>''page''<nowiki>|selfref=yes}}</nowiki></code> instead.
+# A page name was specified, but it contains an equals sign ("="). The equals sign has a special meaning in template code, and because of this it cannot be used in template parameters that do not specify a parameter name. For example, the template code <code><nowiki>{{see also|1+1=2|2+2=4}}</nowiki></code> will produce this error. To work around this, you can specify the parameter name explictly by using <code>1=</code>, <code>2</code>, etc., before the page name, like this: <code><nowiki>{{see also|1=1+1=2|2=2+2=4}}</nowiki></code>.
+# You tried to access [[Module:See also]] directly by using <code><nowiki>{{#invoke:see also|seealso|</nowiki>''text''<nowiki>}}</nowiki></code>. Use of #invoke in this way has been disabled for performance reasons. Please use <code><nowiki>{{see also|</nowiki>''text''<nowiki>}}</nowiki></code> instead.
+
+If you see this error message and are unsure of what to do, please post a message on [[WP:HD|the help desk]], and someone should be able to help you.
+
+Pages that contain this error message are tracked in [[:Category:Hatnote templates with errors]].
+
+{{Hatnote templates documentation}}
+{{Collapse top|TemplateData}}
+{{TemplateDataHeader}}
+<templatedata>
+{
+	"description": "This template creates a hatnote to point to a small number of related pages. It is placed at the top of a section, directly underneath the section heading.",
+	"params": {
+		"1": {
+			"label": "Page 1",
+			"description": "The name of the first page that you want to link to.",
+			"type": "string/line",
+			"required": true
+		},
+		"2": {
+			"label": "Page 2",
+			"description": "The name of the second page that you want to link to.",
+			"type": "string/line",
+			"required": false
+		},
+		"3": {
+			"label": "Page 3",
+			"description": "The name of the third page that you want to link to. More pages can be added using the parameters \"4\", \"5\", \"6\", etc.",
+			"type": "string/line",
+			"required": false
+		},
+		"label 1": {
+			"label": "Label 1",
+			"type": "string/line",
+			"description": "What the first linked article is to be displayed as. ",
+			"aliases": [
+				"l1"
+			]
+		},
+		"label 2": {
+			"label": "Label 2",
+			"type": "string/line",
+			"description": "What the second linked article is to be displayed as.",
+			"aliases": [
+				"l2"
+			]
+		},
+		"selfref": {
+			"type": "string/line",
+			"label": "Self reference",
+			"description": "Set to \"yes\" if the template is a self-reference to Wikipedia that would not make sense on mirrors or forks of the Wikipedia site."
+		},
+		"category": {
+			"label": "Category",
+			"description": "Set to \"no\", \"n\", \"false\", or \"0\" to suppresses the error tracking category (Category:Hatnote templates with errors). This only has an effect if no page names are specified."
+		},
+		"label 3": {
+			"aliases": [
+				"l3"
+			],
+			"type": "string/line",
+			"label": "Label 3",
+			"description": "What the third linked article is to be displayed as. Other labels can be added by using increasing numbers (starting with \"label 4\" or \"l4\" for page 4) as parameter names."
+		}
+	}
+}
+</templatedata>
+{{Collapse bottom}}
+
+<includeonly>{{#ifeq:{{SUBPAGENAME}}|sandbox||
+<!-- Categories go here and interwikis go in Wikidata. -->
+{{DEFAULTSORT:{{PAGENAME}}}}
+[[Category:Wikipedia page-section templates]]
+[[Category:List templates]]
+[[Category:Exclude in print]]
+[[Category:Hatnote templates]]
+[[Category:Related-topic templates]]
+
+}}</includeonly>
