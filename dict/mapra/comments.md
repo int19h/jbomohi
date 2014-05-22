@@ -15,3 +15,10 @@ arguably a cloud, are arguably not porous.
 A froth/foam/bubbly substance or an aerogel are not fluffy (and the former
 may not even be able to be touched for a long period of time).
 
+
+## 2014-05-22T06:38:17Z — gleki (comment 1114, on definition 56592, in reply to 1113)
+
+Re: Justification
+
+Sorry for a probably silly question but what is the etymology?
+
