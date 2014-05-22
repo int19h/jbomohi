@@ -22,3 +22,13 @@ Re: Justification
 
 Sorry for a probably silly question but what is the etymology?
 
+
+## 2014-05-22T06:51:04Z — krtisfranks (comment 1115, on definition 56592, in reply to 1114)
+
+Re: Justification
+
+gleki wrote:
+> Sorry for a probably silly question but what is the etymology?
+
+«{mapnysmi} {ranti }»: "Cotton-like 'soft'".
+
