@@ -32,3 +32,10 @@ gleki wrote:
 
 «{mapnysmi} {ranti }»: "Cotton-like 'soft'".
 
+
+## 2014-05-22T06:52:56Z — krtisfranks (comment 1116, on definition 56592, in reply to 1115)
+
+Re: Justification
+
+«mapnysmi ranti»: "Cotton-like 'soft'".
+
