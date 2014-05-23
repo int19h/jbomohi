@@ -25,3 +25,10 @@ commonly {ka}-places).
 (An applied {ka}-abstraction often translates quite nicely to an
 infinitive.)
 
+
+## 2014-05-23T18:55:20Z — Wuzzy (comment 1138, on definition 56597, in reply to 1128)
+
+Re: Property?
+
+Thanks!
+
