@@ -34,3 +34,15 @@ or more correctly is
 lo nu x1 spaune x2 cu fasnu = lo nu x1 tolcanci gau x2 cu fasnu gi'e
 spontane ?
 
+
+## 2014-05-23T16:51:42Z — krtisfranks (comment 1133, on definition 56601, in reply to 1127)
+
+Re: Are conditions the same thing as something that causes something to appear?
+
+Wuzzy wrote:
+> I find it confusing that $x_2$ can be considered to be conditions or
+> something that causes something to appear. I think these are two
+different
+
+I was debating that issue too.
+
