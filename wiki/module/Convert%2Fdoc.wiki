@@ -1,0 +1,68 @@
+{{module rating|protected}}
+{{Transwiki guide|text=See [[Template:Convert/Transwiki guide|'''how to copy the convert template''']] for information on copying this module and modifying it for use on another wiki.}}
+This module converts a value from one unit of measurement to another. For example:
+*<code><nowiki>{{convert|123|lb|kg}}</nowiki></code> → 123 pounds (56 kg)
+
+The module is called using a template—parameters passed to the template are used by this module to control how a conversion is performed. For example, units can be abbreviated (like <code>kg</code>), or displayed as names (like <code>kilogram</code>), and the output value can be rounded to a specified precision. For usage information, see [[Help:Convert]].
+
+The template that invokes this module is:
+*[[Template:Convert]]
+
+The following modules are required:
+*[[Module:Convert]] – ''(this module)'' code to convert units
+*[[Module:Convert/data]] – unit definitions
+*[[Module:Convert/text]] – text messages, and parameter names and values
+
+The following modules are optional and are used only if required and if the module exists:
+*[[Module:Convert/extra]] – extra (temporary) unit definitions; used if a unit is not found in [[Module:Convert/data]]
+*[[Module:ConvertNumeric]] – code to spell an input value in words (only English is supported)
+
+The following help pages are available:
+*[[Help:Convert]] – overview
+*[[Help:Convert messages]] – describes error and warning messages; messages link to this page so it is required when the module is copied to another wiki
+*[[Help:Convert units]] – overview of units
+
+A page containing a convert error is added to one of the following categories, providing the page is in a specified [[WP:Namespace|namespace]] (articles, by default):
+*[[:Category:Convert invalid units]]
+*[[:Category:Convert invalid options]]
+
+Units are defined in the wikitext of the master list of units.
+*[[Module:Convert/documentation/conversion data/doc]] – master list of unit definitions
+*[[Module:Convert/makeunits]] – translates wikitext from the master list to Lua
+*[[Module talk:Convert/makeunits]] – makeunits results; copy the text to [[Module:Convert/data]]
+
+[[Module:Convert/data]] is transcluded into every page using the convert module, so experimenting with a new unit in that module would involve a significant overhead. The [[Module:Convert/extra]] module is an alternative which is only transcluded on pages with a unit that is not defined in the main data module.
+
+===Sandbox===
+When making a change, copy the current modules to the sandbox pages, then edit the sandbox copies:
+*[[Module:Convert/sandbox]]
+*[[Module:Convert/data/sandbox]]
+*[[Module:Convert/text/sandbox]]
+*[[Module:Convert/extra/sandbox]]
+
+Use the following template to test the results (example <code><nowiki>{{convert/sandbox|123|lb|kg}}</nowiki></code>):
+*[[Template:Convert/sandbox]]
+
+[[Template:Convert/sandbox]] invokes [[Module:Convert/sandbox]] with parameter {{para|sandbox|on}} which causes convert to use the sandbox modules rather than the normal modules.
+
+The following should be used to test the results of editing the convert modules.
+*[[Module:Convert/tester]] – module to run tests by comparing template output with fixed text
+*[[Module:Convert/sandbox/testcases]] – templates to be tested, with expected outputs (uses the tester module)
+*[[Module talk:Convert/sandbox/testcases]] – view test results
+
+It is not necessary to save the testcases page before viewing test results. For example, [[Module:Convert/sandbox/testcases]] could be edited to change the tests. While still editing that page, paste {{nowrap|"<code>Module talk:Convert/sandbox/testcases</code>"}} (without quotes) into the page title box under "Preview page with this template", then click "Show preview".
+
+===Configuration===
+The template that invokes this module can define options to configure the module. For example:
+*<code><nowiki>{{#invoke:convert|convert|numdot=,|numsep=.}}</nowiki></code>
+:Sets the [[decimal mark]] to be a comma, and the thousands separator to be a dot.
+
+Other options, with default values, are:
+*<code>|maxsigfig=14</code> – maximum number of significant figures
+*<code>|nscat=0</code> – [[WP:Namespace|namespaces]] (comma separated) in which an error or warning adds a category to the page
+*<code>|warnings=0</code> – 0 (zero) disables warnings; 1 shows important warnings; 2 shows all warnings
+
+An option in the template can specify that the sandbox versions of the modules be used. If specified, the text on the right-hand side of the equals sign must be the name of the subpage for each sandbox module.
+*<code>|sandbox=sandbox</code> – omit for normal operation
+
+All text used for input parameters and for output messages and categories can be customized. For example, at enwiki the option <code>|lk=on</code> can be used to link each displayed unit to its article. The "<code>lk</code>" and "<code>on</code>" can be replaced with any desired text. In addition, input and output numbers can be formatted and can use digits in the local language. See the [[Template:Convert/Transwiki guide/translate|translation guide]] for more information.
