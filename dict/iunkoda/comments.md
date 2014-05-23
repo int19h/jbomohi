@@ -29,3 +29,20 @@ order of places
 
 The order of places has been reversed because of its relative importance
 
+
+## 2014-05-23T15:22:57Z — Wuzzy (comment 1125, on definition 56590, in reply to 1112)
+
+Re: Misunderstood Unicode?
+
+krtisfranks wrote:
+> Wuzzy wrote:
+> > But Unicode is not an encoding, Unicode is just a big list of glyphs
+> which
+> > are assigned a number. This alone is not sufficient, you still have to
+> use
+> > an actual encoding, for example UTF-8, UTF-16, and so on.
+> > Or the definition is simply too unclear.
+> 
+> Is it adequately better now?
+OK, but I had to fix a typo ($x_2$ was accidentally called “$x_1$”).
+
