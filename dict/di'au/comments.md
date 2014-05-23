@@ -62,3 +62,17 @@ implicit {zo'e}). In other words, it is just a way to more emphatically
 acknowledge that one/the utterer recognizes and means the default value of
 that terbri, without actually saying it.
 
+
+## 2014-05-23T18:34:16Z — gleki (comment 1137, in reply to 1136)
+
+Re: zu'i
+
+It's getting harder for me to remember all your proposals. Could you
+please register on mw.lojban.org and create a new page/pages with all your
+suggestions copying the definitions and your comments from here.
+
+It could result in something like
+http://mw.lojban.org/index.php?title=Tsani%27s_Interpretations:_Abstractor
+s
+or http://mw.lojban.org/index.php?title=ELG:_Subjunctives_in_detail
+
