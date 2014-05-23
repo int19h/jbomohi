@@ -76,3 +76,23 @@ http://mw.lojban.org/index.php?title=Tsani%27s_Interpretations:_Abstractor
 s
 or http://mw.lojban.org/index.php?title=ELG:_Subjunctives_in_detail
 
+
+## 2014-05-23T19:03:57Z — krtisfranks (comment 1139, in reply to 1137)
+
+Re: zu'i
+
+gleki wrote:
+> It's getting harder for me to remember all your proposals. Could you
+> please register on mw.lojban.org and create a new page/pages with all
+your
+> suggestions copying the definitions and your comments from here.
+> 
+> It could result in something like
+>
+http://mw.lojban.org/index.php?title=Tsani%27s_Interpretations:_Abstractor
+> s
+> or http://mw.lojban.org/index.php?title=ELG:_Subjunctives_in_detail
+
+Yes, I will do so. I am not sure that I can do so this weekend (including
+today and this upcoming Monday), but by Wednesday, I will do it
+
