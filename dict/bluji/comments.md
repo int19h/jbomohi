@@ -11,3 +11,13 @@ So the only possible way is to take it's synonym.
 American "blue jeans" means exactly the same as "jeans".
 "Blue jeans" -> [bludjinz] -> {bluji}
 
+
+## 2014-05-23T05:17:35Z — krtisfranks (comment 1119, on definition 18421)
+
+Paralleling other garments
+
+In order to parallel certain other garments, should not the
+purpose/characteristics/style (x2) and the material (x3) be specified?
+(Even if all blue jeans are made of denim, I still would like that terbri
+to be around.)
+
