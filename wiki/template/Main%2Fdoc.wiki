@@ -1,0 +1,96 @@
+{{Lua|icononly=on|Module:Main}}
+
+When a [[Wikipedia:What is an article|Wikipedia article]] is large, it is often rewritten in [[Wikipedia:summary style|summary style]]. This [[Wikipedia:Template messages|template]] is used after the heading of the summary, to link to the sub-article that has been (or will be) summarised. This template can also be used in the [[Help:Category|Category namespace]], but the preferred template for categories is '''{{tl|Cat main}}'''.
+
+This template can also be used in articles leads when an article is not the "main" article for its subject, but this is controversial. When there are multiple articles, distinct enough to warrant separate articles, but not enough to be very separate subjects. One to be the main article describing the topic, and the others avoiding unnecessary duplication of the main article. A good example would be geography articles where two terms have somewhat different meanings or "contexts", but refer to roughly the same geographic area, e.g. [[Balkans]] and [[Southeast Europe]]. The Balkans article is the main article, the Southeast Europe article doesn't try to be a duplicate of the Balkans article by having much info on History, natural resources, etc., it leaves that to the Balkans article. This can be thought of as a halfway point between having fully separate articles, and having a redirect.
+
+Its usage should be restricted to the purposes described above. This template is '''not''' to be used as a substitute for inline links or as a "[[Template:See also|see also]]". The latter includes e.g. when a section has a title that happens to have a main article, but the section actually refers to a specific aspect of the article at hand. In [[Phthalate]], for example, the template under the section ''Endocrine disruptor'' should '''not''' be ''Main: Endocrine disruptor'', because the section specifically deals with phtalate as an endocrine disruptor and not endocrine disruptors in general.
+
+{{TOC limit}}
+
+== Usage ==
+
+; Basic usage:
+ &#123;{main|''page''}}
+
+; All parameters:
+ &#123;{main
+ | ''page1'' | ''page2'' | ''page3'' | ...
+ | l1 = ''label1'' | l2 = ''label2'' | l3 = ''label3'' | ...
+ | selfref = ''yes''
+ }}
+
+== Parameters ==
+
+* <code>1</code>, <code>2</code>, <code>3</code>, ... - the pages to link to. If no page names are specified, the current page name is used instead (without the [[WP:NS|namespace]] prefix). Categories and files are automatically escaped with the [[Help:Colon trick|colon trick]], and links to sections are automatically formatted as ''page § section'', rather than the MediaWiki default of ''page#section''.
+* <code>l1</code>, <code>l2</code>, <code>l3</code>, ...; optional labels for each of the pages to link to (this is for articles where a piped link would be used). Note that the extra parameters use a lower case 'L', for example, <code>l1</code>, <u>not</u> <code>11</code>.
+* <code>selfref</code> - if set to "yes", "y", "true" or "1", adds the CSS class "selfref". This is used to denote self-references to Wikipedia. See [[Template:Selfref]] for more information.
+
+== Examples ==
+
+* <code><nowiki>{{main|Article}}</nowiki></code> &rarr; {{main|Article}}
+* <code><nowiki>{{main|Article#Section}}</nowiki></code> &rarr; {{main|Article#Section}}
+* <code><nowiki>{{main|Article#Section|l1=Custom section label}}</nowiki></code> &rarr; {{main|Article#Section|l1=Custom section label}}
+* <code><nowiki>{{main|Article1|Article2|Article3}}</nowiki></code> &rarr; {{main|Article1|Article2|Article3}}
+* <code><nowiki>{{main|Article1|l1=Custom label 1|Article2|l2=Custom label 2}}</nowiki></code> &rarr; {{main|Article1|l1=Custom label 1|Article2|l2=Custom label 2}}
+* <code><nowiki>{{main|(15760) 1992 QB1|l1={{mp|(15760) 1992 QB|1}}}}</nowiki></code> &rarr; {{main|(15760) 1992 QB1|l1={{mp|(15760) 1992 QB|1}}}}
+
+{{Hatnote templates documentation}}
+{{Collapse top|TemplateData}}
+{{TemplateDataHeader}}
+<templatedata>
+{
+	"description": "This template is used after the heading of a section, to link to a sub-article (or sub-articles) that is entirely about the topic of the section. The template will display, in italics, \"Main article: Article 1, Article 2 and Article 3\"",
+	"params": {
+		"1": {
+			"label": "Page 1",
+			"description": "The name of the first page that you want to link to. If this is not specified, the current page name (with no namespace prefix) is used instead. ",
+			"type": "string/line",
+			"required": false
+		},
+		"2": {
+			"label": "Page 2",
+			"description": "The name of the second page that you want to link to.",
+			"type": "string/line",
+			"required": false
+		},
+		"3": {
+			"label": "Page 3",
+			"description": "The name of the third page that you want to link to. More pages can be added using the parameters \"4\", \"5\", \"6\", etc.",
+			"type": "string/line",
+			"required": false
+		},
+		"l1": {
+			"type": "string/line",
+			"label": "Label 1",
+			"description": "What the first linked page is to be displayed as."
+		},
+		"l2": {
+			"label": "Label 2",
+			"description": "What the second linked page is to be displayed as.",
+			"type": "string/line"
+		},
+		"l3": {
+			"label": "Label 3",
+			"description": "What the third linked page is to be displayed as. Other labels can be added by using increasing numbers (starting with \"l4\" for page 4) as parameter names.",
+			"type": "string/line"
+		},
+		"selfref": {
+			"type": "string/line",
+			"label": "Self reference",
+			"description": "Set to \"yes\" if the template is a self-reference to Wikipedia that would not make sense on mirrors or forks of the Wikipedia site."
+		}
+	}
+}
+</templatedata>
+{{Collapse bottom}}
+
+<includeonly>{{#ifeq:{{SUBPAGENAME}}|sandbox||
+<!-- Categories go here and interwikis go in Wikidata. -->
+[[Category:Cross-reference templates]]
+[[Category:Exclude in print]]
+[[Category:Hatnote templates]]
+[[Category:List templates]]
+[[Category:Wikipedia page-section templates]]
+
+}}</includeonly>
