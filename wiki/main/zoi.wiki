@@ -85,6 +85,153 @@ zoi  | zoi                   | [[ungrammatical|ungrammatical]] | zoi does not fi
 
 '''A''': su cannot erase an improperly quoted zoi, just like sa cannot.  A zoi must be closed before su will be considered to have erased it.  This prevents ambigious situations like {zoi su broda su}
 
+=== Issues ===
+==== zoi (and la'o) can’t quote whitespace and periods unambigously ====
+This issue was brought up by Wuzzy 
+
+ TL;DR: Quoting with ZOI can be ambigious. I point out the flaws and show
+ how the Reference Grammar does not help here. Then I propose a change—or
+ more precisely: a clarification—to the grammar which hopefully fixes
+ the flaws.
+ 
+ Full text:
+ I noticed that you run into trouble when your ZOI quote has trailing
+ or leading whitespace, or trailing or leading periods. Also you run
+ into trouble if you want to decode a ZOI quote because you can’t tell
+ if the text truly has trailing/leading whitespace/periods or not.
+ 
+ Just for extra clarity: In this e-mail I will make use of the so-called
+ logical quotation style so you know exactly what I’m talking about and
+ because the British quotation style is just damn awful.
+ Logical quotation style is basically this: All characters which are
+ between the quotation marks are quoted. No magic! ;-)
+ <https://en.wikipedia.org/wiki/Quotation_mark#Punctuation>
+ 
+ Let’s go!
+ Just look at this:
+ What does “zoi gy..gy” quote?
+ I could think of these answers:
+ (1) “” (empty string (string = sequence of characters))
+ (2) “..” (two periods)
+ (3) “.” (one period)
+ 
+ All three answers seem plausible to me. Remember: according to the
+ Reference Grammar, all periods are optional:
+ “Technically, the period is an optional reminder to the reader of a
+ mandatory pause that is dictated by the rules of the language;
+ because these rules are unambiguous, a missing period can be inferred
+ from otherwise correct text. Periods are included only as an aid to
+ the reader.”—Reference Grammar, chapter 3, section 3.
+ 
+ (1) would be true if both periods are considered to be part of the
+ delimeter, therefore, they are part of the Lojban text and not of the
+ quoted text.
+ (2) would be true if the “pause periods” of Lojban have
+ been ommitted. Therefore, the periods must be part of the quoted text.
+ (3) is a weird case which could be true if one of the “pause periods”
+ has been ommited, but not the other one. Therefore, there is one period
+ left which is therefore part of the quoted text.
+ 
+ All three possibilities are plausible to me under the rules. But
+ under these rules, I can’t tell which is the correct one.
+ 
+ There is another problem, with whitespace:
+ “zoi gy gy” = “” or “ ”?
+ 
+ Here are more examples (look closely at spaces and periods):
+ “zoi gy. .gy” = “ ”, “”, “. ”, “.”, “. ”?
+ “zoi gy.Peter Smith.gy” = “Peter Smith”, “.Peter Smith”, “Peter Smith.”,
+                           “.Peter Smith.”?
+ “zoi gy. Peter Smith .gy” = “Peter Smith”, “ Peter Smith”,
+                             “Peter Smith ”, “ Peter Smith ”?
+                             With or without periods?
+ “zoi gy.pdf.gy” = “pdf”, “.pdf”, “.pdf.”, “pdf.”?
+ “zoi gy..pdf.gy” = “pdf”, “.pdf”, “.pdf.”, “pdf.”, “..pdf” or even
+                    “..pdf.”?
+ 
+ Now here comes the real problem:
+ The Reference Grammar does NOT have an answer,
+ so any of these answers I suggested could be true.
+ 
+ Here is what the grammar chapter of the Reference Grammar says:
+ “a. If the Lojban word ‘zoi’ (selma'o ZOI) is identified, take the
+ following Lojban word (which should be end delimited with a pause for
+ separation from the following non-Lojban text) as an opening delimiter.
+ Treat all text following that delimiter, until that delimiter recurs
+ after a pause, as grammatically a single token (labelled ‘anything_699’
+ in this grammar). There is no need for processing within this text
+ except as necessary to find the closing delimiter.”
+ This text does not explicitly state wheather to write down the periods.
+ I only know all periods are optional, leading to the situation
+ I pointed out before (pun intended).
+ The section on ZO and ZOI is of no help either.
+ 
+ The point I want to make here is that the Reference Grammar does NOT say
+ which possiblity to choose. So please don’t argue about what you think
+ would be the correct choice here. There is no correct choice, the
+ Reference Grammer does not define these borderline cases at all. Which
+ means: It is impossible to reliably quote any string with whitespace or
+ a period at the beginning or end.
+ 
+ Since the Reference Grammar is disappointing me here, there must be a
+ clear definition for these cases.
+ 
+ I therefore suggest the following rule changes to be applied to the
+ Reference Grammar:
+ - Written Lojban:
+   - periods are MANDATORY at the following places: Right after the
+     opening delimeter word and right before the closing delimeter word.
+     The mandatory period is considered part of the delimeter.
+   - The period of the opening and closing delimeter may not be merged
+     into one period.
+   And just to be sure:
+   - The quote starts after the period of the opening delimeter.
+   - The quote ends before the period of the closing delimeter.
+   - Everything, even whitespace between those two periods is considered
+     quoted.
+ - Spoken Lojban:
+   - The sound of the delimeter word may not appear in the quoted text,
+     no matter if there’s a glottal stop before or after it.
+ 
+ Here are some valid and invalid examples under these proposed rules:
+ “zoi gy..gy”			= “”. The opening delmeter is “gy.”,
+                                 the closing delimeter is “.gy”.
+ “zoi gy.gy”			is an error! 2nd delimeter missing
+ “zoi gygy”			is an error! 1st delimeter missing
+ “zoi gy. .gy”			= “ ”
+ “zoi gy..pdf.gy”		= “.pdf”
+ “zoi gy.pdf.gy”		= “pdf”
+ “zoi gy.Peter Smith.gy.”	= “Peter Smith”
+ “zoi gy.Peter Smith.gy”	= “Peter Smith” (note the period
+ 				AFTER the closing delimeter is still
+ 				optional)
+ “zoi gy.Wuzzy eats Pizza..gy.”	= “Wuzzy eats Pizza.”
+ “zoi gy. Peter Smith .gy.” 	= “ Peter Smith ”
+ “zoi lo..lo.lo”		= “” followed by an article
+ “zoi gy...gy”			= “.”
+ “zoi gy. . .gy”		= “ . ”
+ “zoi gy.....gy”		= “...”
+ 
+ Here are some borderline cases:
+ “zoi gy.gy.gy” violates the spoken Lojban rule iff the 2nd
+                “gy” has the sound of Lojban’s “gy”.
+ “zoi gy.gy.gy” is valid and is “gy” iff the 2nd “gy” has NOT the sound
+                of Lojban’s “gy”.
+ “zoi gy.gyrations.gy”: same as previous ones.
+ 
+ Note the last three cases are borderline cases and should be used with
+ care. The pronounciation of the quoted text must be known for this to
+ work. While these may be valid, at best such borderline cases are
+ avoided by choosing another delimeter. Because you aren’t going to
+ tortue the recipient, aren’t you? ;-)
+ 
+ That’s it.
+ I have made some research and it seems nobody has pointed out these
+ problems before. Anyhow, this looks like serious trouble and
+ certainly must be fixed.
+ It is embarrassing that I am able to quote more precisely with English
+ than with Lojban. ;-) ;-) ;-)
+
 ===  See Also ===
 
 * [[zo|zo]] for quoting a single Lojban word.
