@@ -129,3 +129,15 @@ For
 
 .oi cibysmu
 
+
+## 2014-05-25T12:47:31Z — selpahi (comment 1143, on definition 56616, in reply to 1140)
+
+Re: Difference from “ge'e”?
+
+durka42 wrote:
+> I agree, in the current ma'oste {ge'e} seems to me to have two different
+> meanings.
+
+That's because it's a relative of {zo'e}, which has the same kind of
+duality.
+
