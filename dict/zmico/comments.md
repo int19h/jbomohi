@@ -42,3 +42,19 @@ zmico
   /sumyzmico-intersect-KOhA7: {di'au}, {di'oi}, {di'ei}
 .
 
+
+## 2014-05-30T04:40:41Z — krtisfranks (comment 1152, in reply to 1151)
+
+Re: List of words that belong to the set of all zmico
+
+Reformatting for clarity,
+
+zmico
+> gafyzmico
+> > gafyzmico-intersect-DAhO:  {do'ai}, {dai'o}
+> > gafyzmico-intersect-DEhAU: {de'au}, {de'oi}, {dau'a}, {doi'a}
+> > gafyzmico-intersect-DEhAI: {de'ai}
+> sumyzmico
+> > sumyzmico-intersect-KOhA7: {di'au}, {di'oi}, {di'ei}
+.
+
