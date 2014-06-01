@@ -1,0 +1,321 @@
+# mail/wikichanges thread 5a0b384bbc36-wiki_page_magic_words_changed_by_mukti | root n6idyt.3pb6aj@www.lojban.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2014-06-01T21:20:53Z | Apache <apache@digitalkingdom.org> | n6idyt.3pb6aj@www.lojban.org | mail/wikichanges/cur/1401657653.5a0b384bbc363c51.jbomohi:2,S
+The page Magic Words was changed by mukti at 17:20 EDT
+Comment: SA erasure depends on following word, so "SA+brivla", not "brivla+SA"
+
+You can view the page by following this link:
+ 
+http://www.lojban.org/tiki/Magic%20Words
+
+You can view a diff back to the previous version by following this link: 
+http://www.lojban.org/tiki/tiki-pagehistory.php?page=Magic%20Words&compare=1&oldver=41&newver=42
+
+
+***********************************************************
+The changes in this version follow below, followed after by the current full page text.
+***********************************************************
+
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+@@ -Lines: 61-65 changed to +Lines: 61-65 @@
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+Main Article: ((zei))
+
+- __ZEI__ binds with the preceding word and the following word.  The combination is considered a single brivla (i.e. it is treated as just one word).  ZEI+BU grabs back to the last ZEI, brivla+SA grabs back to the last brivla, which may consume a whole ZEI clause.
++ __ZEI__ binds with the preceding word and the following word.  The combination is considered a single brivla (i.e. it is treated as just one word).  ZEI+BU grabs back to the last ZEI, SA+brivla grabs back to the last brivla, which may consume a whole ZEI clause.
+
+!!! ZO
+
+
+
+
+***********************************************************
+The new page content follows below.
+***********************************************************
+
+This pages is based on me collecting what I thought was the best options out of ((Magic Words Alternatives)).  The core is Cowan's version, which in turn uses xorxes' LTR processing idea.
+
+
+
+! Magic Words
+
+
+
+Magic words are all cmavo that have some interaction with words as words irrespective of the function of those words.  These are SI SA SU ZO ZOI LOhU LEhU ZEI BU and FAhO. (BAhE, even though it can modify any word, is not a magic word, because it doesn't affect the function of the word it modifies).
+
+
+
+Many magic words convert the words they affect into a member of the special grammatical classes ''any-word'' and ''any-string''.  A member of one of these special grammatical classes has no selma'o for purposes of the rest of the Lojban grammar.
+
+
+
+!!Meta-Rules
+
+
+
+# Y+BU (i.e. ".y. bu") is considered a single word of selma'o BY.  This conversion is done before any other processing of any kind.
+
+# Magic words are processed left-to-right.
+
+# Y is not a word (i.e. it is considered whitespace) for the purposes of these definitions.
+
+
+
+!!Mini-Definitions
+
+
+
+!!! BU
+
+
+
+Main Article ((bu))
+
+
+
+__BU__ binds with the preceding word.  The combination is considered a single word of selma'o BY.  SA+BU grabs back to the last BU, SA+BY grabs back to the last word+BU, consuming it entirely. 
+
+
+
+!!! FAhO
+
+
+
+Main Article: ((fa'o))
+
+
+
+__FAhO__ terminates the text.  No words are read to the right of FAhO, unconditionally.  This means FAhO+BU is not the FAhO letteral.  SI, SA, and SU are ignored if they occur after FAhO.
+
+
+
+!!! LEhU
+
+
+
+Main Article: ((le'u))
+
+
+
+__LEhU__ terminates a LOhU-quote. It is never elidable.
+
+
+
+!!! LOhU
+
+
+
+Main Article: ((lo'u))
+
+
+
+__LOhU__  turns all following Lojban words up and including a LEhU into a single word of the pseudo selma'o ''any-string'' (which acts as a sumti in all respects).  The selma'o of LOhU and LEhU are retained for SA matching purposes, however.  In other words, SA LOhU destroys everything since the beginning of the last LOhU...LEhU quote, replacing it with a new LOhU, and SA LEhU destroys everything since the end of the last LOhU...LEhU quote, replacing the terminating LEhU with a new LEhU (i.e. not changing the quote at all).  LOhU...LEhU quotes cannot be re-opened; to attach more information to a closed quote, use JOI LOhU...LEhU.  To quote a LOhU...LEhU quote ''including'' the LEhU, use ZOI.
+
+
+
+!!! SA
+
+
+
+Main Article: ((sa))
+
+
+
+__SA__ erases the preceding text back until it sees a word of the same selma'o as the word that follows SA, which replaces it. Words whose selma'o has been changed to ''any-word'' or ''any-string'' are invisible to SA for purposes to decided what to erase; they are erased as any other word would be.  If a word of the same selma'o is not found (which will ''always'' be the case with SI and SU), it erases back to the beginning of text.  Multiple SA before a word erase back to successively further instances of the same selma'o, one for each SA.  SA at the beginning of text have no effect, but are not in error.  To back out of a SA spoken in error, simply follow the SA with the word that preceded it.
+
+
+
+!!! SI
+
+
+
+Main Article: ((si))
+
+
+
+__SI__ erases the preceding word.  This construct can appear anywhere in the text (or be removed completely) and has no affect on the grammar.  SI at the beginning of text have no effect, but are not in error.
+
+
+
+!!! SU
+
+
+
+Main Article: ((su))
+
+
+
+__SU__ erases all words back to the beginning of text.  More precisely, "su" erases back to the previous word of selma'o NIhO, LU, TUhE, or TO.  This construct has no affect on the grammar and may be removed completely.  SU at the beginning of text have no effect, but are not in error.
+
+
+
+!!! ZEI
+
+
+
+Main Article: ((zei))
+
+
+
+__ZEI__ binds with the preceding word and the following word.  The combination is considered a single brivla (i.e. it is treated as just one word).  ZEI+BU grabs back to the last ZEI, SA+brivla grabs back to the last brivla, which may consume a whole ZEI clause.
+
+
+
+!!! ZO
+
+
+
+Main Article: ((zo))
+
+
+
+__ZO__ binds with the following word.  The combination is considered a single word of the pseudo selma'o ''any-word'' (which acts as a sumti in all respects), except for SA matching purposes, where it retains the selma'o ZO.
+
+
+
+!!! ZOI
+
+
+
+Main Article: ((zoi))
+
+
+
+__ZOI__ uses the following word as a delimiting word and binds with it and further text until the same word is repeated, inclusive of both delimiters.  Both delimiter words lose their grammatical function.  Neither delimiter can be elided.  The combination is considered a single word of the pseudo selma'o ''any-string'' (which acts as a sumti in all respects), except for SA matching purposes, where it retains the selma'o ZOI.
+
+
+
+!! Marking Words
+
+
+
+* __BAhE__ marks the following word but does not change its meaning.  __BAhE__ cannot be used to mark __BU__, __BU__ wins.
+
+* Attitudinals (__UI__ and __CAI__ cmavo) mark the previous word, quoted word, LOhU-quote, ZEI-lujvo, lerfu word, or ZOI-phrase, but do not change its nature and do not bind with it.    One __NAI__ can follow any UI or CAI cmavo.  Attitudinals do not blend into a single word with the word they modify, but remain as separate words for the purposes of magic words that come after them.  Multiple UI cmavo may be used in succession. They may also be used at the beginning of text.
+
+* __DAhO__, __FUhE__, and __FUhO__ are the same as UI, but do not absorb a following NAI.
+
+
+
+!! Unique Cases
+
+
+
+The rules for interaction between Magic Words creates some unique cases, documented below:
+
+
+
+* [[controversial] {.abu sa bu} is the same as {.abu}.  While .abu is the BY letteral, {sa bu} backs up to the last BU, being unique amongst Magic Words in pulling an already constructed pseudo-word apart to find BU.
+
+* bu and le'u are never grammatical by themselves, but are grammatical as part of an utterance erased by sa, si, or su.  si is a particularly noteworthy exception, as it erases the previous word, which could be BU or a BY pseudo-word.
+
+* [[controversial] zei can quote constructs on the right that it cannot quote on the left.
+
+
+
+!! Examples
+
+
+
+||
+
+Subject Phrase | Result | Comments
+
+lo'u co co co le'u si | Nothing |
+
+lo'u co co le'u sa lo'u si | Unclosed lo'u |
+
+lo'u co co co le'u bu | The letter "co co co" |
+
+lo'u co co le'u bu co le'u | Error | co le'u outside of a lo'u quote
+
+lo'u co co co le'u si bo le'u | Error | bo le'u outside of a lo'u quote
+
+lo'u co le'u si si si le'u | Error | le'u outside of a lo'u quote
+
+lo'u co co zo le'u co le'u | Error | "co le'u" outside of a lo'u...le'u quote
+
+broda .y. bu | broda and the letter y |
+
+zoi si stuff si | "stuff" |
+
+da zoi sa da joi de | Error | Unclosed zoi
+
+da zei fa'o | Lujvo of da and fa'o |
+
+zoi si doi do | Error | Unclosed zoi
+
+zo da si | Nothing |
+
+co zo da si si | Nothing |
+
+co co zo da si si | Error | One bare co left
+
+da zei de bu | Letter "da type of de" | You're going to hell if you actually use this
+
+bu zei de | Error | Nothing for bu to use
+
+zo bu zei de | "bu" type-of de |
+
+ba'e bu | "ba'e" letter |
+
+broda zei brode si brodi | brodi |
+
+zei zei zei | Error | Nothing for the leftmost zei to bind to
+
+da zei zei | da type-of zei |
+
+broda ba'e si | broda |
+
+broda ba'e da si da | broda ba'e da |
+
+zo da bu | The letter "da" |
+
+zoi zoi That letter that you use between a user id and a host name in an e-mail address zoi bu | @ |
+
+broda brode si bu | The letter broda |
+
+zoi zoi stuff zoi si | Nothing |
+
+zoi zoi lots of stuff zoi sa zoi si | Open zoi | The delimiter is si
+
+le broda sa le si | Nothing | sa leaves le, which si eats
+
+mi ba'e | Error | Nothing for ba'e to mark
+
+bu mi | Error | Nothing for bu to bind to
+
+fa'o si | Nothing | FAhO ends all text *
+
+lu fa'o li'u | Unclosed lu * |
+
+zoi vy fa'o vy | "fa'o" | Contents of ZOI are ignored by meta-syntax *
+
+||
+
+
+
+(*According to purpleposeidon. The rumors of me being full of crap are crap.)
+
+!!Terminology
+
+Some people think that "Magic Words" is not a particularly good term, as it would necessarily end up in formal descriptions of this particular part of the grammar. The following replacements have been suggested:
+
+
+
+* Extra-syntactical word. (ie. a word outside the regular grammar)
+
+* Meta-syntactical word.
+
+* Super-syntactical word. (ie. a word that works on a higher level than the regular phrase structure rules)
+
+
+
+
+_______________________________________________
+Wikichanges mailing list
+Wikichanges@lojban.org
+http://mail.lojban.org/mailman/listinfo/wikichanges
+
+
