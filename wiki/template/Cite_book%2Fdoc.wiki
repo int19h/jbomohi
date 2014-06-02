@@ -9,10 +9,10 @@
 
 {{csdoc|usage common}}
 ;To cite a book with a credited author
-<code><nowiki>{{cite book |last= |first= |date= |title= |url= |location= |publisher= |isbn= |accessdate= }}</nowiki></code>
+<code><nowiki>{{cite book |last= |first= |date= |title= |url= |location= |publisher= |page= |isbn= |accessdate= }}</nowiki></code>
 <br />
 ;To cite a book with no credited author
-<code><nowiki>{{cite book |author=<!--Staff writer(s); no by-line.--> |title= |url= |location= |publisher= |date= |isbn= |accessdate= }}</nowiki></code>
+<code><nowiki>{{cite book |author=<!--Staff writer(s); no by-line.--> |title= |url= |location= |publisher= |page= |date= |isbn= |accessdate= }}</nowiki></code>
 <br />
 ;To cite an online book that has been archived
 <code><nowiki>{{cite book |last= |first= |date= |title= |url= |deadurl= |location= |publisher= |isbn= |archiveurl= |archivedate= |accessdate= }}</nowiki></code>
@@ -287,7 +287,7 @@
 &nbsp;
 &nbsp;
 &nbsp;choose one: |page=, |pages= or |at=
-&nbsp;choose one: |page=, |pages= or |at=
+&nbsp;choose one: |page=, |pages= or |at=. When content on multiple pages supports the article text.
 &nbsp;choose one: |page=, |pages= or |at=
 &nbsp;set |nopp=yes to suppress the "p." or "pp." before page numbers
 &nbsp;
@@ -452,536 +452,512 @@
 ====Subscription or registration required====
 {{csdoc|registration}}
 
-==Template data==
+==TemplateData==
 {{TemplateDataHeader}}
 <templatedata>
 {
-    "description": "This template formats a citation to a book using the provided bibliographic information (such as author and title) as well as various formatting options.",
-    "params": {
-        "url": {
-            "label": "URL",
-            "description": "The URL of the online location where the text of the publication can be found",
-            "type": "string"
-        },
-        "title": {
-            "label": "Title",
-            "description": "The title of the book; displays in italics",
-            "type": "string",
-            "required": true
-        },
-        "last": {
-            "label": "Last name",
-            "description": "The surname of the author; don't wikilink, use 'authorlink'; can suffix with a numeral to add additional authors",
-            "type": "string/line",
-            "aliases": ["last1", "author", "authors", "author1"],
-            "required": true
-        },
-        "first": {
-            "label": "First name",
-            "description": "Given or first name, middle names, or initials of the author; don't wikilink, use 'authorlink'; can suffix with a numeral to add additional authors",
-            "type": "string/line",
-            "aliases": ["first1"],
-            "required": true
-        },
-        "authorlink": {
-            "label": "Author link",
-            "description": "Title of existing Wikipedia article about the author; can suffix with a numeral to add additional authors",
-            "type": "string/wiki-page-name",
-            "aliases": ["authorlink1"]
-        },
-        "last2": {
-            "label": "Last name of second author",
-            "description": "The surname of the second author; don't wikilink, use 'authorlink2'; can suffix with a numeral to add additional authors",
-            "aliases": ["author2"],
-            "type": "string/line"
-        },
-        "first2": {
-            "label": "First name of second author",
-            "description": "Given or first name, middle names, or initials of the second author; don't wikilink, use 'authorlink'; can suffix with a numeral to add additional authors",
-            "type": "string/line"
-        },
-        "authorlink2": {
-            "label": "Author link for second author",
-            "description": "Title of existing Wikipedia article about the second author; can suffix with a numeral to add additional authors",
-            "type": "string/wiki-page-name"
-        },
-        "date": {
-            "label": "date",
-            "description": "Full date of the source; do not wikilink",
-            "type": "string",
-            "required": false
-        },
-        "work": {
-            "label": "Work",
-            "description": "Name of the work in which the cited book text is found",
-            "type": "string",
-            "required": false
-        },
-        "publisher": {
-            "label": "Publisher",
-            "description": "Name of the publisher; displays after title",
-            "type": "string",
-            "required": true
-        },
-        "accessdate": {
-            "label": "URL access date",
-            "description": "The full date when the original URL was accessed; do not wikilink",
-            "type": "string"
-        },
-        "others": {
-            "label": "Others",
-            "description": "Used to record other contributions to the work, such as 'Illustrated by John Smith' or 'Translated by John Smith'",
-            "type": "string"
-        },
-        "year": {
-            "label": "Year of publication",
-            "description": "Year of the source being referenced; use 'date' instead, if month and day are also known",
-            "type": "string",
-            "required": true
-        },
-        "origyear": {
-            "label": "Original year",
-            "description": "Original year of publication; provide specifics",
-            "type": "string",
-            "required": false
-        },
-        "isbn": {
-            "label": "ISBN",
-            "description": "International Standard Book Number; use the 13-digit ISBN where possible",
-            "type": "string",
-            "required": true
-        },
-        "editor-last": {
-            "label": "Editor last name",
-            "description": "The surname of the editor; don't wikilink, use 'editor-link'; can suffix with a numeral to add additional editors",
-            "aliases": ["editor1-last", "editor", "editors"],
-            "type": "string/line"
-        },
-        "editor-first": {
-            "label": "Editor first name",
-            "description": "Given or first name, middle names, or initials of the editor; don't wikilink, use 'editor-link'; can suffix with a numeral to add additional editors",
-            "aliases": ["editor1-first"],
-            "type": "string/line"
-        },
-        "editor-link": {
-            "label": "Editor link",
-            "description": "Title of existing Wikipedia article about the editor; can suffix with a numeral to add additional editors",
-            "aliases": ["editor1-link"],
-            "type": "string/wiki-page-name"
-        },
-        "edition": {
-            "label": "Edition",
-            "description": "When the publication has more than one edition; for example: '2nd', 'Revised' etc.; suffixed by ' ed.'",
-            "type": "string"
-        },
-        "series": {
-            "label": "Series identifier",
-            "description": "Series identifier when the source is part of a series, such as a book series or a journal",
-            "aliases": ["version"],
-            "type": "string"
-        },
-        "volume": {
-            "label": "Volume",
-            "description": "For one publication published in several volumes",
-            "type": "string"
-        },
-        "location": {
-            "label": "Location of publication",
-            "description": "Geographical place of publication; usually not wikilinked; omit when the publication name includes place",
-            "aliases": ["place"],
-            "type": "string",
-            "required": true
-        },
-        "publication-place": {
-            "label": "Place of publication",
-            "description": "Publication place shows after title; if 'place' or 'location' are also given, they are displayed before the title prefixed with 'written at'",
-            "type": "string"
-        },
-        "publication-date": {
-            "label": "Publication date",
-            "description": "Date of publication when different from the date the work was written; do not wikilink",
-            "type": "string"
-        },
-        "page": {
-            "label": "Page",
-            "description": "The number of a single page in the source that supports the content; displays after 'p.'; use either page= or pages=, but not both",
-            "type": "string"
-        },
-        "pages": {
-            "label": "Pages",
-            "description": "A range of pages in the source that support the content (not an indication of the number of pages in the source); displays after 'pp.'; use either page= or pages=, but not both",
-            "type": "string",
-            "required": true
-        },
-        "nopp": {
-            "label": "No pp",
-            "description": "Set to 'y' to suppress the 'p.' or 'pp.' display with 'page' or 'pages' when inappropriate (such as 'Front cover')",
-            "type": "string"
-        },
-        "at": {
-            "label": "At",
-            "description": "May be used instead of 'page' or 'pages' where a page number is inappropriate or insufficient",
-            "type": "string"
-        },
-        "language": {
-            "label": "Language",
-            "description": "The language in which the source is written, if not English; use the full language name; do not use icons or templates",
-            "type": "string"
-        },
-        "trans_title": {
-            "label": "Translated title",
-            "description": "An English language title, if the source cited is in a foreign language; 'language' is recommended",
-            "type": "string"
-        },
-        "chapter": {
-            "label": "Chapter",
-            "description": "The chapter heading of the source; may be wikilinked or with 'chapterurl' but not both",
-            "type": "string"
-        },
-        "trans_chapter": {
-            "label": "Translated chapter",
-            "description": "An English language chapter heading, if the source cited is in a foreign language; 'language' is recommended",
-            "type": "string"
-        },
-        "chapterurl": {
-            "label": "Chapter URL",
-            "description": "The URL of the online location where the text of the chapter can be found",
-            "aliases": ["chapter-url"],
-            "type": "string"
-        },
-        "type": {
-            "label": "Type",
-            "description": "Additional information about the media type of the source; format in sentence case",
-            "type": "string"
-        },
-        "format": {
-            "label": "Format",
-            "description": "Format of the work referred to by 'url'; examples: PDF, DOC, XLS; do not specify HTML",
-            "type": "string"
-        },
-        "arxiv": {
-            "label": "arXiv identifier",
-            "description": "An identifier for arXive electronic preprints of scientific papers",
-            "type": "string"
-        },
-        "asin": {
-            "label": "ASIN",
-            "description": "Amazon Standard Identification Number; 10 characters",
-            "type": "string"
-        },
-        "asin-tld": {
-            "label": "ASIN TLD",
-            "description": "ASIN top-level domain for Amazon sites other than the US",
-            "type": "string"
-        },
-        "bibcode": {
-            "label": "Bibcode",
-            "description": "Bibliographic Reference Code (REFCODE); 19 characters",
-            "type": "string"
-        },
-        "doi": {
-            "label": "DOI",
-            "description": "Digital Object Identifier; begins with '10.'",
-            "type": "string"
-        },
-        "doi_brokendate": {
-            "label": "DOI broken date",
-            "description": "The date that the DOI was determined to be broken",
-            "type": "string"
-        },
-        "issn": {
-            "label": "ISSN",
-            "description": "International Standard Serial Number; 8 characters; may be split into two groups of four using a hyphen",
-            "type": "string"
-        },
-        "jfm": {
-            "label": "jfm code",
-            "description": "Jahrbuch über die Fortschritte der Mathematik classification code",
-            "type": "string"
-        },
-        "jstor": {
-            "label": "JSTOR",
-            "description": "JSTOR identifier",
-            "type": "string"
-        },
-        "lccn": {
-            "label": "LCCN",
-            "description": "Library of Congress Control Number",
-            "type": "string"
-        },
-        "mr": {
-            "label": "MR",
-            "description": "Mathematical Reviews identifier",
-            "type": "string"
-        },
-        "oclc": {
-            "label": "OCLC",
-            "description": "Online Computer Library Center number",
-            "type": "string"
-        },
-        "ol": {
-            "label": "OL",
-            "description": "Open Library identifier",
-            "type": "string"
-        },
-        "osti": {
-            "label": "OSTI",
-            "description": "Office of Scientific and Technical Information identifier",
-            "type": "string"
-        },
-        "pmc": {
-            "label": "PMC",
-            "description": "PubMed Center article number",
-            "type": "string"
-        },
-        "pmid": {
-            "label": "PMID",
-            "description": "PubMed Unique Identifier",
-            "type": "string"
-        },
-        "rfc": {
-            "label": "RFC",
-            "description": "Request for Comments number",
-            "type": "string"
-        },
-        "ssrn": {
-            "label": "SSRN",
-            "description": "Social Science Research Network",
-            "type": "string"
-        },
-        "zbl": {
-            "label": "Zbl",
-            "description": "Zentralblatt MATH journal identifier",
-            "type": "string"
-        },
-        "id": {
-            "label": "id",
-            "description": "A unique identifier used where none of the specialized ones are applicable",
-            "type": "string"
-        },
-        "archiveurl": {
-            "label": "Archive URL",
-            "description": "The URL of an archived copy of a web page, if or in case the URL becomes unavailable; requires 'archivedate'",
-            "type": "string"
-        },
-        "archivedate": {
-            "label": "Archive date",
-            "description": "Date when the original URL was archived; do not wikilink",
-            "type": "string"
-        },
-        "deadurl": {
-            "label": "Dead URL",
-            "description": "If set to 'no', the title display is adjusted; useful for when the URL is archived preemptively but still live",
-            "type": "string"
-        },
-        "quote": {
-            "label": "Quote",
-            "description": "Relevant text quoted from the source; displays last, enclosed in quotes; needs to include terminating punctuation",
-            "type": "string"
-        },
-        "ref": {
-            "label": "Ref",
-            "description": "An anchor identifier; can be made the target of wikilinks to full references; special value 'harv' generates an anchor suitable for the harv template",
-            "type": "string"
-        },
-        "separator": {
-            "label": "Separator",
-            "description": "The punctuation used to separate lists of authors, editors, etc.; a space must be encoded as &#32; do not use an asterisk, colon, or hash mark",
-            "type": "string",
-            "default": "."
-        },
-        "postscript": {
-            "label": "Postscript",
-            "description": "The closing punctuation for the citation; ignored if 'quote' is defined",
-            "type": "string",
-            "default": "."
-        },
-        "layurl": {
-            "label": "Lay URL",
-            "description": "URL link to a non-technical summary or review of the source",
-            "aliases": ["laysummary"],
-            "type": "string"
-        },
-        "laysource": {
-            "label": "Lay source",
-            "description": "Name of the source of the laysummary; displays in italics, preceded by an en dash",
-            "type": "string"
-        },
-        "laydate": {
-            "label": "Lay date",
-            "description": "Date of the summary; displays in parentheses",
-            "type": "string"
-        },
-                "last3": {
-                        "label": "Last name",
-                        "description": "The surname of the third author; don't wikilink, use 'authorlink3'.",
-                        "type": "string/line",
-                        "aliases": ["author3"],
-                        "required": false
-                },
-                "first3": {
-                        "label": "First name",
-                        "description": "Given or first name, middle names, or initials of the third author; don't wikilink.",
-                        "type": "string/line",
-                        "required": false
-                },
-                "authorlink3": {
-                        "label": "Author link",
-                        "description": "Title of existing Wikipedia article about the third author.",
-                        "type": "string/wiki-page-name",
-                        "aliases": ["author3-link"],
-                        "required": false
-                },
-                "last4": {
-                        "label": "Last name",
-                        "description": "The surname of the forth author; don't wikilink, use 'authorlink4'.",
-                        "type": "string/line",
-                        "aliases": ["author4"],
-                        "required": false
-                },
-                "first4": {
-                        "label": "First name",
-                        "description": "Given or first name, middle names, or initials of the forth author; don't wikilink.",
-                        "type": "string/line",
-                        "required": false
-                },
-                "authorlink4": {
-                        "label": "Author link",
-                        "description": "Title of existing Wikipedia article about the forth author.",
-                        "type": "string/wiki-page-name",
-                        "aliases": ["author4-link"],
-                        "required": false
-                },
-                "last5": {
-                        "label": "Last name",
-                        "description": "The surname of the fifth author; don't wikilink, use 'authorlink5'.",
-                        "type": "string/line",
-                        "aliases": ["author5"],
-                        "required": false
-                },
-                "first5": {
-                        "label": "First name",
-                        "description": "Given or first name, middle names, or initials of the fifth author; don't wikilink.",
-                        "type": "string/line",
-                        "required": false
-                },
-                "authorlink5": {
-                        "label": "Author link",
-                        "description": "Title of existing Wikipedia article about the sixth author.",
-                        "type": "string/wiki-page-name",
-                        "aliases": ["author5-link"],
-                        "required": false
-                },
-                "last6": {
-                        "label": "Last name",
-                        "description": "The surname of the sixth author; don't wikilink, use 'authorlink6'.",
-                        "type": "string/line",
-                        "aliases": ["author6"],
-                        "required": false
-                },
-                "first6": {
-                        "label": "First name",
-                        "description": "Given or first name, middle names, or initials of the sixth author; don't wikilink.",
-                        "type": "string/line",
-                        "aliases": ["author6-link"],
-                        "required": false
-                },
-                "authorlink6": {
-                        "label": "Author link",
-                        "description": "Title of existing Wikipedia article about the sixth author.",
-                        "type": "string/wiki-page-name",
-                        "required": false
-                },
-                "last7": {
-                        "label": "Last name",
-                        "description": "The surname of the seventh author; don't wikilink, use 'authorlink7'.",
-                        "type": "string/line",
-                        "aliases": ["author7"],
-                        "required": false
-                },
-                "first7": {
-                        "label": "First name",
-                        "description": "Given or first name, middle names, or initials of the seventh author; don't wikilink.",
-                        "type": "string/line",
-                        "required": false
-                },
-                "authorlink7": {
-                        "label": "Author link",
-                        "description": "Title of existing Wikipedia article about the seventh author.",
-                        "type": "string/wiki-page-name",
-                        "aliases": ["author7-link"],
-                        "required": false
-                },
-                "last8": {
-                        "label": "Last name",
-                        "description": "The surname of the eighth author; don't wikilink, use 'authorlink8'.",
-                        "type": "string/line",
-                        "aliases": ["author8"],
-                        "required": false
-                },
-                "first8": {
-                        "label": "First name",
-                        "description": "Given or first name, middle names, or initials of the eighth author; don't wikilink.",
-                        "type": "string/line",
-                        "required": false
-                },
-                "authorlink8": {
-                        "label": "Author link",
-                        "description": "Title of existing Wikipedia article about the eighth author.",
-                        "type": "string/wiki-page-name",
-                        "aliases": ["author8-link"],
-                        "required": false
-                },
-                "last9": {
-                        "label": "Last name",
-                        "description": "The surname of the ninth author; don't wikilink, use 'authorlink9'. If nine authors are defined, then only eight will show and 'et al.' will show in place of the last author.",
-                        "type": "string/line",
-                        "aliases": ["author9"],
-                        "required": false
-                },
-                "first9": {
-                        "label": "First name",
-                        "description": "Given or first name, middle names, or initials of the ninth author; don't wikilink.",
-                        "type": "string/line",
-                        "required": false
-                },
-                "authorlink9": {
-                        "label": "Author link",
-                        "description": "Title of existing Wikipedia article about the ninth author.",
-                        "type": "string/wiki-page-name",
-                        "aliases": ["author9-link"],
-                        "required": false
-                },
-        "author-mask": {
-            "label": "Author mask",
-            "description": "Replaces the name of the first author with em dashes or text; set to a numeric value 'n' to set the dash 'n' em spaces wide; set to a text value to display the text without a trailing author separator; for example, 'with' instead",
-            "type": "string"
-        },
-        "author-name-separator": {
-            "label": "Author name separator",
-            "description": "Changes the separator between last and first names; defaults to a comma and space; a space must be encoded as &#32; do not use an asterisk, colon, or hash mark",
-            "type": "string",
-            "default": ", "
-        },
-        "author-separator": {
-            "label": "Author separator",
-            "description": "Changes the separator between authors; defaults to a semicolon and space; a space must be encoded as &#32; do not use an asterisk, colon, or hash mark",
-            "type": "string",
-            "default": "; "
-        },
-        "display-authors": {
-            "label": "Display authors",
-            "description": "number of authors to display before 'et al.' is used; default is to do so after 8 of 9 are listed",
-            "type": "number",
-            "aliases": ["displayauthors"],
-            "default": "8"
-        },
-        "lastauthoramp": {
-            "label": "Last author ampersand",
-            "description": "When set to any value, changes the separator between the last two names of the author list to 'space ampersand space'",
-            "type": "string"
-        }
-    }
+	"description": "This template formats a citation to a book using the provided bibliographic information (such as author and title) as well as various formatting options.",
+	"params": {
+		"url": {
+			"label": "URL",
+			"description": "The URL of the online location where the text of the publication can be found",
+			"type": "string"
+		},
+		"title": {
+			"label": "Title",
+			"description": "The title of the book; displays in italics",
+			"type": "string",
+			"required": true
+		},
+		"last": {
+			"label": "Last name",
+			"description": "The surname of the author; don't wikilink, use 'authorlink'; can suffix with a numeral to add additional authors",
+			"type": "string/line",
+			"aliases": ["last1", "author", "authors", "author1"],
+			"required": true
+		},
+		"first": {
+			"label": "First name",
+			"description": "Given or first name, middle names, or initials of the author; don't wikilink, use 'authorlink'; can suffix with a numeral to add additional authors",
+			"type": "string/line",
+			"aliases": ["first1"],
+			"required": true
+		},
+		"authorlink": {
+			"label": "Author link",
+			"description": "Title of existing Wikipedia article about the author; can suffix with a numeral to add additional authors",
+			"type": "string/wiki-page-name",
+			"aliases": ["authorlink1"]
+		},
+		"last2": {
+			"label": "Last name of second author",
+			"description": "The surname of the second author; don't wikilink, use 'authorlink2'; can suffix with a numeral to add additional authors",
+			"aliases": ["author2"],
+			"type": "string/line"
+		},
+		"first2": {
+			"label": "First name of second author",
+			"description": "Given or first name, middle names, or initials of the second author; don't wikilink, use 'authorlink'; can suffix with a numeral to add additional authors",
+			"type": "string/line"
+		},
+		"authorlink2": {
+			"label": "Author link for second author",
+			"description": "Title of existing Wikipedia article about the second author; can suffix with a numeral to add additional authors",
+			"type": "string/wiki-page-name"
+		},
+		"date": {
+			"label": "date",
+			"description": "Full date of the source; do not wikilink",
+			"type": "string"
+		},
+		"work": {
+			"label": "Work",
+			"description": "Name of the work in which the cited book text is found",
+			"type": "string"
+		},
+		"publisher": {
+			"label": "Publisher",
+			"description": "Name of the publisher; displays after title",
+			"type": "string",
+			"suggested": true
+		},
+		"accessdate": {
+			"label": "URL access date",
+			"description": "The full date when the original URL was accessed; do not wikilink",
+			"type": "string"
+		},
+		"others": {
+			"label": "Others",
+			"description": "Used to record other contributions to the work, such as 'Illustrated by John Smith' or 'Translated by John Smith'",
+			"type": "string"
+		},
+		"year": {
+			"label": "Year of publication",
+			"description": "Year of the source being referenced; use 'date' instead, if month and day are also known",
+			"type": "string",
+			"suggested": true
+		},
+		"origyear": {
+			"label": "Original year",
+			"description": "Original year of publication; provide specifics",
+			"type": "string"
+		},
+		"isbn": {
+			"label": "ISBN",
+			"description": "International Standard Book Number; use the 13-digit ISBN where possible",
+			"type": "string",
+			"suggested": true
+		},
+		"editor-last": {
+			"label": "Editor last name",
+			"description": "The surname of the editor; don't wikilink, use 'editor-link'; can suffix with a numeral to add additional editors",
+			"aliases": ["editor1-last", "editor", "editors"],
+			"type": "string/line"
+		},
+		"editor-first": {
+			"label": "Editor first name",
+			"description": "Given or first name, middle names, or initials of the editor; don't wikilink, use 'editor-link'; can suffix with a numeral to add additional editors",
+			"aliases": ["editor1-first"],
+			"type": "string/line"
+		},
+		"editor-link": {
+			"label": "Editor link",
+			"description": "Title of existing Wikipedia article about the editor; can suffix with a numeral to add additional editors",
+			"aliases": ["editor1-link"],
+			"type": "string/wiki-page-name"
+		},
+		"edition": {
+			"label": "Edition",
+			"description": "When the publication has more than one edition; for example: '2nd', 'Revised' etc.; suffixed by ' ed.'",
+			"type": "string"
+		},
+		"series": {
+			"label": "Series identifier",
+			"description": "Series identifier when the source is part of a series, such as a book series or a journal",
+			"aliases": ["version"],
+			"type": "string"
+		},
+		"volume": {
+			"label": "Volume",
+			"description": "For one publication published in several volumes",
+			"type": "string"
+		},
+		"location": {
+			"label": "Location of publication",
+			"description": "Geographical place of publication; usually not wikilinked; omit when the publication name includes place",
+			"aliases": ["place"],
+			"type": "string",
+			"suggested": true
+		},
+		"publication-place": {
+			"label": "Place of publication",
+			"description": "Publication place shows after title; if 'place' or 'location' are also given, they are displayed before the title prefixed with 'written at'",
+			"type": "string"
+		},
+		"publication-date": {
+			"label": "Publication date",
+			"description": "Date of publication when different from the date the work was written; do not wikilink",
+			"type": "string"
+		},
+		"page": {
+			"label": "Page",
+			"description": "The number of a single page in the source that supports the content; displays after 'p.'; use either page= or pages=, but not both",
+			"type": "string"
+		},
+		"pages": {
+			"label": "Page(s) cited",
+			"description": "A range of pages in the source that support the content (not an indication of the number of pages in the source); displays after 'pp.'; use either page= or pages=, but not both",
+			"type": "string",
+			"suggested": true
+		},
+		"nopp": {
+			"label": "No pp",
+			"description": "Set to 'y' to suppress the 'p.' or 'pp.' display with 'page' or 'pages' when inappropriate (such as 'Front cover')",
+			"type": "string"
+		},
+		"at": {
+			"label": "At",
+			"description": "May be used instead of 'page' or 'pages' where a page number is inappropriate or insufficient",
+			"type": "string"
+		},
+		"language": {
+			"label": "Language",
+			"description": "The language in which the source is written, if not English; use the full language name; do not use icons or templates",
+			"type": "string"
+		},
+		"trans_title": {
+			"label": "Translated title",
+			"description": "An English language title, if the source cited is in a foreign language; 'language' is recommended",
+			"type": "string"
+		},
+		"chapter": {
+			"label": "Chapter",
+			"description": "The chapter heading of the source; may be wikilinked or with 'chapterurl' but not both",
+			"type": "string"
+		},
+		"trans_chapter": {
+			"label": "Translated chapter",
+			"description": "An English language chapter heading, if the source cited is in a foreign language; 'language' is recommended",
+			"type": "string"
+		},
+		"chapterurl": {
+			"label": "Chapter URL",
+			"description": "The URL of the online location where the text of the chapter can be found",
+			"aliases": ["chapter-url"],
+			"type": "string"
+		},
+		"type": {
+			"label": "Type",
+			"description": "Additional information about the media type of the source; format in sentence case",
+			"type": "string"
+		},
+		"format": {
+			"label": "Format",
+			"description": "Format of the work referred to by 'url'; examples: PDF, DOC, XLS; do not specify HTML",
+			"type": "string"
+		},
+		"arxiv": {
+			"label": "arXiv identifier",
+			"description": "An identifier for arXive electronic preprints of scientific papers",
+			"type": "string"
+		},
+		"asin": {
+			"label": "ASIN",
+			"description": "Amazon Standard Identification Number; 10 characters",
+			"type": "string"
+		},
+		"asin-tld": {
+			"label": "ASIN TLD",
+			"description": "ASIN top-level domain for Amazon sites other than the US",
+			"type": "string"
+		},
+		"bibcode": {
+			"label": "Bibcode",
+			"description": "Bibliographic Reference Code (REFCODE); 19 characters",
+			"type": "string"
+		},
+		"doi": {
+			"label": "DOI",
+			"description": "Digital Object Identifier; begins with '10.'",
+			"type": "string"
+		},
+		"doi_brokendate": {
+			"label": "DOI broken date",
+			"description": "The date that the DOI was determined to be broken",
+			"type": "string"
+		},
+		"issn": {
+			"label": "ISSN",
+			"description": "International Standard Serial Number; 8 characters; may be split into two groups of four using a hyphen",
+			"type": "string"
+		},
+		"jfm": {
+			"label": "jfm code",
+			"description": "Jahrbuch über die Fortschritte der Mathematik classification code",
+			"type": "string"
+		},
+		"jstor": {
+			"label": "JSTOR",
+			"description": "JSTOR identifier",
+			"type": "string"
+		},
+		"lccn": {
+			"label": "LCCN",
+			"description": "Library of Congress Control Number",
+			"type": "string"
+		},
+		"mr": {
+			"label": "MR",
+			"description": "Mathematical Reviews identifier",
+			"type": "string"
+		},
+		"oclc": {
+			"label": "OCLC",
+			"description": "Online Computer Library Center number",
+			"type": "string"
+		},
+		"ol": {
+			"label": "OL",
+			"description": "Open Library identifier",
+			"type": "string"
+		},
+		"osti": {
+			"label": "OSTI",
+			"description": "Office of Scientific and Technical Information identifier",
+			"type": "string"
+		},
+		"pmc": {
+			"label": "PMC",
+			"description": "PubMed Center article number",
+			"type": "string"
+		},
+		"pmid": {
+			"label": "PMID",
+			"description": "PubMed Unique Identifier",
+			"type": "string"
+		},
+		"rfc": {
+			"label": "RFC",
+			"description": "Request for Comments number",
+			"type": "string"
+		},
+		"ssrn": {
+			"label": "SSRN",
+			"description": "Social Science Research Network",
+			"type": "string"
+		},
+		"zbl": {
+			"label": "Zbl",
+			"description": "Zentralblatt MATH journal identifier",
+			"type": "string"
+		},
+		"id": {
+			"label": "id",
+			"description": "A unique identifier used where none of the specialized ones are applicable",
+			"type": "string"
+		},
+		"archiveurl": {
+			"label": "Archive URL",
+			"description": "The URL of an archived copy of a web page, if or in case the URL becomes unavailable; requires 'archivedate'",
+			"type": "string"
+		},
+		"archivedate": {
+			"label": "Archive date",
+			"description": "Date when the original URL was archived; do not wikilink",
+			"type": "string"
+		},
+		"deadurl": {
+			"label": "Dead URL",
+			"description": "If set to 'no', the title display is adjusted; useful for when the URL is archived preemptively but still live",
+			"type": "string"
+		},
+		"quote": {
+			"label": "Quote",
+			"description": "Relevant text quoted from the source; displays last, enclosed in quotes; needs to include terminating punctuation",
+			"type": "string"
+		},
+		"ref": {
+			"label": "Ref",
+			"description": "An anchor identifier; can be made the target of wikilinks to full references; special value 'harv' generates an anchor suitable for the harv template",
+			"type": "string"
+		},
+		"separator": {
+			"label": "Separator",
+			"description": "The punctuation used to separate lists of authors, editors, etc.; a space must be encoded as &#32; do not use an asterisk, colon, or hash mark",
+			"type": "string",
+			"default": "."
+		},
+		"postscript": {
+			"label": "Postscript",
+			"description": "The closing punctuation for the citation; ignored if 'quote' is defined",
+			"type": "string",
+			"default": "."
+		},
+		"layurl": {
+			"label": "Lay URL",
+			"description": "URL link to a non-technical summary or review of the source",
+			"aliases": ["laysummary"],
+			"type": "string"
+		},
+		"laysource": {
+			"label": "Lay source",
+			"description": "Name of the source of the laysummary; displays in italics, preceded by an en dash",
+			"type": "string"
+		},
+		"laydate": {
+			"label": "Lay date",
+			"description": "Date of the summary; displays in parentheses",
+			"type": "string"
+		},
+		"last3": {
+			"label": "Last name",
+			"description": "The surname of the third author; don't wikilink, use 'authorlink3'.",
+			"type": "string/line",
+			"aliases": ["author3"]
+		},
+		"first3": {
+			"label": "First name",
+			"description": "Given or first name, middle names, or initials of the third author; don't wikilink.",
+			"type": "string/line"
+		},
+		"authorlink3": {
+			"label": "Author link",
+			"description": "Title of existing Wikipedia article about the third author.",
+			"type": "string/wiki-page-name",
+			"aliases": ["author3-link"]
+		},
+		"last4": {
+			"label": "Last name",
+			"description": "The surname of the fourth author; don't wikilink, use 'authorlink4'.",
+			"type": "string/line",
+			"aliases": ["author4"]
+		},
+		"first4": {
+			"label": "First name",
+			"description": "Given or first name, middle names, or initials of the fourth author; don't wikilink.",
+			"type": "string/line"
+		},
+		"authorlink4": {
+			"label": "Author link",
+			"description": "Title of existing Wikipedia article about the fourth author.",
+			"type": "string/wiki-page-name",
+			"aliases": ["author4-link"]
+		},
+		"last5": {
+			"label": "Last name",
+			"description": "The surname of the fifth author; don't wikilink, use 'authorlink5'.",
+			"type": "string/line",
+			"aliases": ["author5"]
+		},
+		"first5": {
+			"label": "First name",
+			"description": "Given or first name, middle names, or initials of the fifth author; don't wikilink.",
+			"type": "string/line"
+		},
+		"authorlink5": {
+			"label": "Author link",
+			"description": "Title of existing Wikipedia article about the sixth author.",
+			"type": "string/wiki-page-name",
+			"aliases": ["author5-link"]
+		},
+		"last6": {
+			"label": "Last name",
+			"description": "The surname of the sixth author; don't wikilink, use 'authorlink6'.",
+			"type": "string/line",
+			"aliases": ["author6"]
+		},
+		"first6": {
+			"label": "First name",
+			"description": "Given or first name, middle names, or initials of the sixth author; don't wikilink.",
+			"type": "string/line",
+			"aliases": ["author6-link"]
+		},
+		"authorlink6": {
+			"label": "Author link",
+			"description": "Title of existing Wikipedia article about the sixth author.",
+			"type": "string/wiki-page-name"
+		},
+		"last7": {
+			"label": "Last name",
+			"description": "The surname of the seventh author; don't wikilink, use 'authorlink7'.",
+			"type": "string/line",
+			"aliases": ["author7"]
+		},
+		"first7": {
+			"label": "First name",
+			"description": "Given or first name, middle names, or initials of the seventh author; don't wikilink.",
+			"type": "string/line"
+		},
+		"authorlink7": {
+			"label": "Author link",
+			"description": "Title of existing Wikipedia article about the seventh author.",
+			"type": "string/wiki-page-name",
+			"aliases": ["author7-link"]
+		},
+		"last8": {
+			"label": "Last name",
+			"description": "The surname of the eighth author; don't wikilink, use 'authorlink8'.",
+			"type": "string/line",
+			"aliases": ["author8"]
+		},
+		"first8": {
+			"label": "First name",
+			"description": "Given or first name, middle names, or initials of the eighth author; don't wikilink.",
+			"type": "string/line"
+		},
+		"authorlink8": {
+			"label": "Author link",
+			"description": "Title of existing Wikipedia article about the eighth author.",
+			"type": "string/wiki-page-name",
+			"aliases": ["author8-link"]
+		},
+		"last9": {
+			"label": "Last name",
+			"description": "The surname of the ninth author; don't wikilink, use 'authorlink9'. If nine authors are defined, then only eight will show and 'et al.' will show in place of the last author.",
+			"type": "string/line",
+			"aliases": ["author9"]
+		},
+		"first9": {
+			"label": "First name",
+			"description": "Given or first name, middle names, or initials of the ninth author; don't wikilink.",
+			"type": "string/line"
+		},
+		"authorlink9": {
+			"label": "Author link",
+			"description": "Title of existing Wikipedia article about the ninth author.",
+			"type": "string/wiki-page-name",
+			"aliases": ["author9-link"]
+		},
+		"author-mask": {
+			"label": "Author mask",
+			"description": "Replaces the name of the first author with em dashes or text; set to a numeric value 'n' to set the dash 'n' em spaces wide; set to a text value to display the text without a trailing author separator; for example, 'with' instead",
+			"type": "string"
+		},
+		"author-name-separator": {
+			"label": "Author name separator",
+			"description": "Changes the separator between last and first names; defaults to a comma and space; a space must be encoded as &#32; do not use an asterisk, colon, or hash mark",
+			"type": "string",
+			"default": ", "
+		},
+		"author-separator": {
+			"label": "Author separator",
+			"description": "Changes the separator between authors; defaults to a semicolon and space; a space must be encoded as &#32; do not use an asterisk, colon, or hash mark",
+			"type": "string",
+			"default": "; "
+		},
+		"display-authors": {
+			"label": "Display authors",
+			"description": "number of authors to display before 'et al.' is used; default is to do so after 8 of 9 are listed",
+			"type": "number",
+			"aliases": ["displayauthors"],
+			"default": "8"
+		},
+		"lastauthoramp": {
+			"label": "Last author ampersand",
+			"description": "When set to any value, changes the separator between the last two names of the author list to 'space ampersand space'",
+			"type": "string"
+		}
+	}
 }
 </templatedata>
 
