@@ -22,3 +22,16 @@ Oh no!!! Thank you for catching that horrible error. I am so dumb. At this
 point, we might as well propose a definition for "sex investor" though, or
 try to delete all definitions for this word altogether.
 
+
+## 2014-06-03T11:48:17Z — Wuzzy (comment 1163, in reply to 1162)
+
+Re: Bad rafsi
+
+> Oh no!!! Thank you for catching that horrible error. I am so dumb. At
+this
+> point, we might as well propose a definition for "sex investor" though,
+or
+> try to delete all definitions for this word altogether.
+
+Nah, let’s just pretend this word never existed. ;-)
+
