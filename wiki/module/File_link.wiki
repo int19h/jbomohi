@@ -1,0 +1,365 @@
+-- This module provides a library for formatting file wikilinks.
+
+local libraryUtil = require('libraryUtil')
+local checkType = libraryUtil.checkType
+
+local fileLink = {}
+
+function fileLink.new(filename)
+	checkType('fileLink.new', 1, filename, 'string', true)
+	local obj, data = {}, {}
+	
+	local checkSelf = libraryUtil.makeCheckSelfFunction(
+		'fileLink',
+		'fileLink',
+		obj,
+		'fileLink object'
+	)
+	
+	-- Set the filename if we were passed it as an input to fileLink.new.
+	if filename then
+		data.theName = filename
+	end
+	
+	function data:name(s)
+		checkSelf(self, 'name')
+		checkType('fileLink:name', 1, s, 'string')
+		data.theName = s
+		return self
+	end
+	
+	function data:format(s, filename)
+		checkSelf(self, 'format')
+		checkType('fileLink:format', 1, s, 'string', true)
+		checkType('fileLink:format', 2, format, 'string', true)
+		local validFormats = {
+			thumb = true,
+			thumbnail = true,
+			frame = true,
+			framed = true,
+			frameless = true
+		}
+		if s == nil or validFormats[s] then
+			data.theFormat = s
+			data.theFormatFilename = filename
+		else
+			error(string.format(
+				"bad argument #1 to 'fileLink:format' ('%s' is not a valid format)",
+				s
+			), 2)
+		end
+		return self
+	end
+
+	local function sizeError(methodName)
+		-- Used for formatting duplication errors in size-related methods.
+		error(string.format(
+			"duplicate size argument detected in '%s'"
+			.. " ('upright' cannot be used in conjunction with height or width)",
+			methodName
+		), 3)
+	end
+	
+	function data:width(px)
+		checkSelf(self, 'width')
+		checkType('fileLink:width', 1, px, 'number', true)
+		if px and data.isUpright then
+			sizeError('fileLink:width')
+		end
+		data.theWidth = px
+		return self
+	end
+	
+	function data:height(px)
+		checkSelf(self, 'height')
+		checkType('fileLink:height', 1, px, 'number', true)
+		if px and data.isUpright then
+			sizeError('fileLink:height')
+		end
+		data.theHeight = px
+		return self
+	end
+	
+	function data:upright(isUpright, factor)
+		checkSelf(self, 'upright')
+		checkType('fileLink:upright', 1, isUpright, 'boolean', true)
+		checkType('fileLink:upright', 2, factor, 'number', true)
+		if isUpright and (data.theWidth or data.theHeight) then
+			sizeError('fileLink:upright')
+		end
+		data.isUpright = isUpright
+		data.uprightFactor = factor
+		return self
+	end
+	
+	function data:resetSize()
+		checkSelf(self, 'resetSize')
+		for i, field in ipairs{'theWidth', 'theHeight', 'isUpright', 'uprightFactor'} do
+			data[field] = nil
+		end
+		return self
+	end
+	
+	function data:location(s)
+		checkSelf(self, 'location')
+		checkType('fileLink:location', 1, s, 'string', true)
+		local validLocations = {
+			right = true,
+			left = true,
+			center = true,
+			none = true
+		}
+		if s == nil or validLocations[s] then
+			data.theLocation = s
+		else
+			error(string.format(
+				"bad argument #1 to 'fileLink:location' ('%s' is not a valid location)",
+				s
+			), 2)
+		end
+		return self
+	end
+	
+	function data:alignment(s)
+		checkSelf(self, 'alignment')
+		checkType('fileLink:alignment', 1, s, 'string', true)
+		local validAlignments = {
+			baseline = true,
+			middle = true,
+			sub = true,
+			super = true,
+			['text-top'] = true,
+			['text-bottom'] = true,
+			top = true,
+			bottom = true
+		}
+		if s == nil or validAlignments[s] then
+			data.theAlignment = s
+		else
+			error(string.format(
+				"bad argument #1 to 'fileLink:alignment' ('%s' is not a valid alignment)",
+				s
+			), 2)
+		end
+		return self
+	end
+	
+	function data:border(hasBorder)
+		checkSelf(self, 'border')
+		checkType('fileLink:border', 1, hasBorder, 'boolean', true)
+		data.hasBorder = hasBorder
+		return self
+	end
+	
+	function data:link(s)
+		checkSelf(self, 'link')
+		checkType('fileLink:link', 1, s, 'string', true)
+		data.theLink = s
+		return self
+	end
+	
+	function data:alt(s)
+		checkSelf(self, 'alt')
+		checkType('fileLink:alt', 1, s, 'string', true)
+		data.theAlt = s
+		return self
+	end
+	
+	function data:page(num)
+		checkSelf(self, 'page')
+		checkType('fileLink:page', 1, num, 'number', true)
+		data.thePage = s
+		return self
+	end
+	
+	function data:class(s)
+		checkSelf(self, 'class')
+		checkType('fileLink:class', 1, s, 'string', true)
+		data.theClass = s
+		return self
+	end
+	
+	function data:lang(s)
+		checkSelf(self, 'lang')
+		checkType('fileLink:lang', 1, s, 'string', true)
+		data.theLang = s
+		return self
+	end
+
+	local function checkTypeStringOrNum(funcName, pos, arg)
+		local argType = type(arg)
+		if argType ~= 'nil' and argType ~= 'string' and argType ~= 'number' then
+			error(string.format(
+				"bad argument #%d to '%s' (string or number expected, got %s)",
+				pos,
+				funcName,
+				argType
+			), 3)
+		end
+	end
+	
+	function data:startTime(time)
+		checkSelf(self, 'startTime')
+		checkTypeStringOrNum('fileLink:startTime', 1, time)
+		data.theStartTime = time
+		return self
+	end
+	
+	function data:endTime(time)
+		checkSelf(self, 'endTime')
+		checkTypeStringOrNum('fileLink:endTime', 1, time)
+		data.theEndTime = time
+		return self
+	end
+	
+	function data:thumbTime(time)
+		checkSelf(self, 'thumbTime')
+		checkTypeStringOrNum('fileLink:thumbTime', 1, time)
+		data.theThumbTime = time
+		return self
+	end
+	
+	function data:caption(s)
+		checkSelf(self, 'caption')
+		checkType('fileLink:caption', 1, s, 'string', true)
+		data.theCaption = s
+		return self
+	end
+	
+	function data:render()
+		checkSelf(self, 'render')
+		local ret = {}
+		
+		-- Filename
+		if not data.theName then
+			error('fileLink:render: no filename was found')
+		end
+		ret[#ret + 1] = 'File:' .. data.theName
+		
+		-- Format
+		if data.theFormat and data.theFormatFilename then
+			ret[#ret + 1] = data.theFormat .. '=' .. data.theFormatFilename
+		elseif data.theFormat then
+			ret[#ret + 1] = data.theFormat
+		end
+		
+		-- Border
+		if data.hasBorder then
+			ret[#ret + 1] = 'border'
+		end
+		
+		-- Location
+		ret[#ret + 1] = data.theLocation
+
+		-- Alignment
+		ret[#ret + 1] = data.theAlignment
+		
+		-- Size
+		if data.isUpright and data.uprightFactor then
+			ret[#ret + 1] = 'upright=' .. tostring(data.uprightFactor)
+		elseif data.isUpright then
+			ret[#ret + 1] = 'upright'
+		elseif data.theWidth and data.theHeight then
+			ret[#ret + 1] = string.format('%dx%dpx', data.theWidth, data.theHeight)
+		elseif data.theWidth then
+			ret[#ret + 1] = tostring(data.theWidth) .. 'px'
+		elseif data.theHeight then
+			ret[#ret + 1] = string.format('x%dpx', data.theHeight)
+		end
+		
+		-- Render named parameters.
+		-- That includes link, alt, page, class, lang, start, end, and thumbtime.
+		do
+			local namedParameters = {
+				{'link', 'theLink'},
+				{'alt', 'theAlt'},
+				{'page', 'thePage'},
+				{'class', 'theClass'},
+				{'lang', 'theLang'},
+				{'start', 'theStartTime'},
+				{'end', 'theEndTime'},
+				{'thumbtime', 'theThumbTime'}
+			}
+			for i, t in ipairs(namedParameters) do
+				local parameter = t[1]
+				local value = data[t[2]]
+				if value then
+					ret[#ret + 1] = parameter .. '=' .. tostring(value)
+				end
+			end
+		end
+
+		-- Caption
+		ret[#ret + 1] = data.theCaption
+		
+		return string.format('[[%s]]', table.concat(ret, '|'))
+	end
+	
+	local privateFields = {
+		theName = true,
+		theFormat = true,
+		theFormatFilename = true,
+		theWidth = true,
+		theHeight = true,
+		isUpright = true,
+		uprightFactor = true,
+		theLocation = true,
+		theAlignment = true,
+		hasBorder = true,
+		theLink = true,
+		theAlt = true,
+		thePage = true,
+		theClass = true,
+		theLang = true,
+		theCaption = true
+	}
+	
+	local readOnlyFields = {}
+	for field in pairs(data) do
+		readOnlyFields[field] = true
+	end
+	readOnlyFields.theName = nil -- This is set if a filename is given to fileLink.new, so remove it.
+	
+	local function restrictedFieldError(key, restriction)
+		error(string.format(
+			"fileLink object field '%s' is %s",
+			tostring(key),
+			restriction
+		), 3)
+	end
+	
+	setmetatable(obj, {
+		__index = function (t, key)
+			if privateFields[key] then
+				restrictedFieldError(key, 'private')
+			else
+				return data[key]
+			end
+		end,
+		__newindex = function (t, key, value)
+			if privateFields[key] then
+				restrictedFieldError(key, 'private')
+			elseif readOnlyFields[key] then
+				restrictedFieldError(key, 'read-only')
+			else
+				data[key] = value
+			end
+		end,
+		__tostring = function (t)
+			return t:render()
+		end,
+		__pairs = function ()
+			local temp = {}
+			for k, v in pairs(data) do
+				if not privateFields[k] then
+					temp[k] = v
+				end
+			end
+			return pairs(temp)
+		end
+	})
+	
+	return obj
+end
+
+return fileLink
