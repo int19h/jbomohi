@@ -12,3 +12,14 @@ reflects the common statement that "[product] is Better" (essentially with
 the capital "B", even if not spelled that way; "better than" what is made
 obvious by life/context).
 
+
+## 2014-06-04T18:09:33Z — krtisfranks (comment 1169)
+
+Defaults
+
+The defaults in this word are purposefully excessive. Partially, this
+choice is to simply add comedic value. But I also designed the word in
+order to illustrate various zmico. So, really, this word is meant to be a
+humourous learning and/or illustrative tool for discussing an aspect of
+Lojban concretely.
+
