@@ -1,43 +1,25 @@
 === Why doesn't "le broda joi le brode" parse? ===
-
 ''After appearance of [[camxes]] it parses so the rest of this article is obsolete.''
 *... cu'u la gleki, ma'i ma? I suggest not to mislead people who are looking for [http://www.lojban.org/files/roadmap.html#software_parser ''official'' Lojban], whether one likes ''official'' Lojban or not, or considers it broken or not. I also find it misleading at least to call a reformed version of Lojban ''Optimized Lojban.'' mu'o mi'e .[[User:iesk|iesk]]. 21:42, 22 oktobero 2013 (UTC)
-**That's right. The official parser is written in YACC that requires '''joi ku'''. Although, camxes parser written by [[Robin Lee Powell]] and [[la xorxes]] allows to omit '''ku''' no one ever declared camxes official. mu'o mi'e [[la gleki]]
------
+**That's right. The official parser is written in YACC that requires '''joi ku'''. Although, camxes parser written by [[Robin Lee Powell]] and [[la .xorxes.]] allows to omit '''ku''' no one ever declared camxes official. mu'o mi'e [[la gleki]]
+*[[joiks|joiks]] are both [[sumti|sumti]] and [[tanru|tanru]] connectives. Thus, the parser gets to broda joi and expects another [[brivla|brivla]] afterwards, and when it encounters le, reports an error. The solution is to explicitly terminate "le broda" with "ku", which in this case is not elidable.
+*do skudji '''lu le broda ku joi le brode li'u''' .e '''lu le broda joi brode li'u'''
+*The longer answer to this is that Lojban is defined by a LALR(1) grammar, so that any ambiguities have to be resolved with at most one token of lookahead. ''le broda joi le brode'' has to be disambiguated as early as ''broda'': it has to know whether the [[selbri|selbri]] is over by the time it hits ''joi'', or will be continued through ''joi''. To resolve this, though, it would have to look past ''joi'', at ''le''. This means two tokens of lookahead, which is thus disallowed. (Yes, it's counterintuitive, but that's what you get for using [[YACC|YACC]] to define a human language.) For further discussion, see:
+** [http://wiw.org/~jkominek/lojban/9511/msg00535.html wiw.org/~jkominek/lojban/9104/msg00011.html] (where Guy Steele points out issues with [[YACC|YACC]]);
+** and for amusement value, [http://wiw.org/~jkominek/lojban/9110/msg00033.html] (where [[User:Nick Nicholas|Nick Nicholas]] first discovered this issue to his acute indignation).
+*''Yes, it's counterintuitive, but that's what you get for using [[YACC|YACC]] to define a human language.''
+*Well, it's counterintuitive to English speakers, but someone with a lot of practice in Lojban (a native speaker?) might find it clearer. For example, take a phrase like:
+**:'''le broda nu brode joi le brodi'''
+**It starts to get a little tricky even for a human to quickly pick out whether the joi attaches to the "brode", the "nu brode" or the whole "le"-sumti when there's no "ku" before the "joi".
+**Lojban ''really'' likes terminators, and so if you find adding an extra one or two to be counterintuitive, you're probably going to have a hard time. :-)
+**[[Adam Raizen|Adam Raizen]]:
+**:(I also had a hard time accepting this, until I came across something like the above example, which made me do a double-take and rethink how counterintuitive this situation really is.)
+*Lojban does '''not''' like terminators, it only puts up with them when they are necessary. One mark of good style is phrasing your sentences in such a way that the use of terminators in minimized. Unfortunately, this ''kujoi'' case is one of the unavoidables. It is about the only time that the terminator ''ku'' needs to be used.
+*:Terminators are such an integral part of Lojban that it shouldn't seem counterintuitive to a good speaker to add them. If the ''ku'' of "le broda ku joi le brode" is counterintuitive, what makes the ''ku'o'' in "mi viska le nanmu poi slabu mi ku'o bu'u le panka" any more intuitive? Personally, I think that having to rearrange a sentence in order to be able to elide terminators is at least as counterintuitive as saying the terminators themselves. -- Adam
+**Nick Nicholas:
+**:*shrug* Adding ku before joi in this context has become a reflex action for me anyway. Just because I think something's wrong doesn't mean I won't do it :-) . Very good example, btw.
+***xod:
+***:So what ''would'' that parse as? I assume, since the second argument of joi is clearly a sumti, then the 1st one must be too, which means the proper interpretation should be le broda nu brode '''keiku''' joi le brodi
+****[[User:Nick Nicholas|nitcion]]:
 
-[[joiks|joiks]] are both [[sumti|sumti]] and [[tanru|tanru]] connectives. Thus, the parser gets to broda joi and expects another [[brivla|brivla]] afterwards, and when it encounters le, reports an error. The solution is to explicitly terminate "le broda" with "ku", which in this case is not elidable.
-
-----
-
-do skudji '''lu le broda ku joi le brode li'u''' .e '''lu le broda joi brode li'u'''
-
-----
-
-The longer answer to this is that Lojban is defined by a LALR(1) grammar, so that any ambiguities have to be resolved with at most one token of lookahead. ''le broda joi le brode'' has to be disambiguated as early as ''broda'': it has to know whether the [[selbri|selbri]] is over by the time it hits ''joi'', or will be continued through ''joi''. To resolve this, though, it would have to look past ''joi'', at ''le''. This means two tokens of lookahead, which is thus disallowed. (Yes, it's counterintuitive, but that's what you get for using [[YACC|YACC]] to define a human language.) For further discussion, see:
-* [http://wiw.org/~jkominek/lojban/9511/msg00535.html wiw.org/~jkominek/lojban/9104/msg00011.html] (where Guy Steele points out issues with [[YACC|YACC]]);
-* and for amusement value, [http://wiw.org/~jkominek/lojban/9110/msg00033.html] (where [[User:Nick Nicholas|Nick Nicholas]] first discovered this issue to his acute indignation).
-----
-
-''Yes, it's counterintuitive, but that's what you get for using [[YACC|YACC]] to define a human language.''
-
-Well, it's counterintuitive to English speakers, but someone with a lot of practice in Lojban (a native speaker?) might find it clearer.
-
-For example, take a phrase like:
-
-;:le broda nu brode joi le brodi
-
-It starts to get a little tricky even for a human to quickly pick out whether the joi attaches to the "brode", the "nu brode" or the whole "le"-sumti when there's no "ku" before the "joi".
-
-Lojban ''really'' likes terminators, and so if you find adding an extra one or two to be counterintuitive, you're probably going to have a hard time. :-)
-
-''(I also had a hard time accepting this, until I came across something like the above example, which made me do a double-take and rethink how counterintuitive this situation really is.)'' -- [[Adam Raizen|Adam Raizen]]
-
-Lojban does '''not''' like terminators, it only puts up with them when they are necessary. One mark of good style is phrasing your sentences in such a way that the use of terminators in minimized. Unfortunately, this ''kujoi'' case is one of the unavoidables. It is about the only time that the terminator ''ku'' needs to be used.
-
-Terminators are such an integral part of Lojban that it shouldn't seem counterintuitive to a good speaker to add them. If the ''ku'' of "le broda ku joi le brode" is counterintuitive, what makes the ''ku'o'' in "mi viska le nanmu poi slabu mi ku'o bu'u le panka" any more intuitive? Personally, I think that having to rearrange a sentence in order to be able to elide terminators is at least as counterintuitive as saying the terminators themselves. -- Adam
-
-'' *shrug* Adding ku before joi in this context has become a reflex action for me anyway. Just because I think something's wrong doesn't mean I won't do it :-) . Very good example, btw. '' -- Nick Nicholas
-
-So what ''would'' that parse as? I assume, since the second argument of joi is clearly a sumti, then the 1st one must be too, which means the proper interpretation should be le broda nu brode '''keiku''' joi le brodi -- xod
-
-''You're doing more than one token of lookahead, I'm afraid. There is no reason for ''broda nu brode joi le brodi'' to be any more grammatical than ''le brode joi le brodi''; the parser still doesn't know whether the [[selbri|selbri]] (now embedded in a ''nu''-clause) is over by the time it hits ''joi''. '' -- [[User:Nick Nicholas|nitcion]]
+****:You're doing more than one token of lookahead, I'm afraid. There is no reason for ''broda nu brode joi le brodi'' to be any more grammatical than ''le brode joi le brodi''; the parser still doesn't know whether the [[selbri|selbri]] (now embedded in a ''nu''-clause) is over by the time it hits ''joi''.
