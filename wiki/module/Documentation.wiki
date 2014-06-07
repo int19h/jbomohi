@@ -145,7 +145,6 @@ function p._main(args)
 				.done()
 			.done()
 		.wikitext(p._endBox(args, env))
-		.newline()
 		.wikitext(p.addTrackingCategories(env))
 	return tostring(root)
 end
@@ -332,7 +331,7 @@ function p.sandboxNotice(args, env)
 	-- @env - environment table containing title objects, etc., generated with p.getEnvironment
 	-- 
 	-- Messages:
-	-- 'sandbox-notice-image' --> '[[Image:Sandbox.png|50px|alt=|link=]]'
+	-- 'sandbox-notice-image' --> '[[Image:Sandbox.svg|50px|alt=|link=]]'
 	-- 'sandbox-notice-blurb' --> 'This is the $1 for $2.'
 	-- 'sandbox-notice-diff-blurb' --> 'This is the $1 for $2 ($3).'
 	-- 'sandbox-notice-pagetype-template' --> '[[Wikipedia:Template test cases|template sandbox]] page'
@@ -379,9 +378,17 @@ function p.sandboxNotice(args, env)
 	-- "See also the companion subpage for [[Template:Foo/testcases|test cases]]."
 	local testcasesTitle = env.testcasesTitle
 	if testcasesTitle and testcasesTitle.exists then
-		local testcasesLinkDisplay = message('sandbox-notice-testcases-link-display')
-		local testcasesLink = makeWikilink(testcasesTitle.prefixedText, testcasesLinkDisplay)
-		text = text .. '<br />' .. message('sandbox-notice-testcases-blurb', {testcasesLink})
+		if testcasesTitle.namespace == mw.site.namespaces.Module.id then
+			local testcasesLinkDisplay = message('sandbox-notice-testcases-link-display')
+			local testcasesRunLinkDisplay = message('sandbox-notice-testcases-run-link-display')
+			local testcasesLink = makeWikilink(testcasesTitle.prefixedText, testcasesLinkDisplay)
+			local testcasesRunLink = makeWikilink(testcasesTitle.talkPageTitle.prefixedText, testcasesRunLinkDisplay)
+			text = text .. '<br />' .. message('sandbox-notice-testcases-run-blurb', {testcasesLink, testcasesRunLink})
+		else
+			local testcasesLinkDisplay = message('sandbox-notice-testcases-link-display')
+			local testcasesLink = makeWikilink(testcasesTitle.prefixedText, testcasesLinkDisplay)
+			text = text .. '<br />' .. message('sandbox-notice-testcases-blurb', {testcasesLink})
+		end
 	end
 	-- Add the sandbox to the sandbox category.
 	text = text .. makeCategoryLink(message('sandbox-category'))
@@ -544,7 +551,7 @@ function p.makeStartBoxData(args, env, links)
 	-- @links - a string containing the [view][edit][history][purge] links - could be nil if there's an error.
 	--
 	-- Messages:
-	-- 'documentation-icon-wikitext' --> '[[File:Template-info.png|50px|link=|alt=Documentation icon]]'
+	-- 'documentation-icon-wikitext' --> '[[File:Test Template Info-Icon - Version (2).svg|50px|link=|alt=Documentation icon]]'
 	-- 'template-namespace-heading' --> 'Template documentation'
 	-- 'module-namespace-heading' --> 'Module documentation'
 	-- 'file-namespace-heading' --> 'Summary'
@@ -639,12 +646,23 @@ function p._content(args, env)
 	local docTitle = env.docTitle
 	local content = args.content
 	if not content and docTitle and docTitle.exists then
-		local frame = mw.getCurrentFrame()
-		content = frame:expandTemplate{title = docTitle.prefixedText}
+		content = args._content or mw.getCurrentFrame():expandTemplate{title = docTitle.prefixedText}
 	end
 	-- The line breaks below are necessary so that "=== Headings ===" at the start and end
 	-- of docs are interpreted correctly.
 	return '\n' .. (content or '') .. '\n' 
+end
+
+p.contentTitle = makeInvokeFunc('_contentTitle')
+
+function p._contentTitle(args, env)
+	env = env or p.getEnvironment(args)
+	local docTitle = env.docTitle
+	if not args.content and docTitle and docTitle.exists then
+		return docTitle.prefixedText
+	else
+		return ''
+	end
 end
 
 ----------------------------------------------------------------------------
