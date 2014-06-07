@@ -1,0 +1,64 @@
+The '''Resource Description Framework Schema (RDFS or RDF Schema) '''is a semantic extension of [http://www.ontotext.com/factforge/rdf RDF]. RDF Schema complements [http://www.ontotext.com/factforge/rdf RDF] by providing a schema language which allows the definition of RDF vocabularies. RDF Schema is [http://www.ontotext.com/factforge/rdf RDF]'s vocabulary which allows to define concepts and their relationships. It provides mechanisms for describing groups of related resources and the relationships between these resources - simple ontologies, models about concepts and their properties.
+
+RDF Schema vocabulary descriptions are written in [http://www.ontotext.com/factforge/rdf RDF]. These resources are used to determine characteristics of other resources. RDF Schema defines constructs for specifying which classes, predicates and individuals exist in the vocabulary. It specifies how concepts may relate to one another.
+
+== Classes and Individuals ==
+
+RDF Schema deals with ''classes'' and ''individuals''. ''Classes'' are resources to which other resources can belong. The resources (instances) which belong to a ''class'' are ''individuals''.
+
+== Relationships between Classes and Individuals ==
+
+RDF Schema deals with the relationships between ''classes'' and ''individuals'' and between ''classes''. These relationships are <code>rdf:type</code>, <code>rdfs:subClassOf</code>.
+
+The '''individual - class''' relationship is expressed with <code>rdf:type</code>. For instance,
+
+[1] <code>Peter rdf:type Doctor</code>
+
+encodes the information that Peter belongs to the class of Doctors.
+
+The '''class - subclass''' relationship is expressed with <code>rdfs:subClassOf</code>. For instance,
+
+[2] <code>Doctor rdfs:subClassOf Person</code>
+
+encodes the information that the class of Doctors belongs to the class of Person.
+
+Using the [http://www.ontotext.com/factforge/inference-definition inference] mechanics one can infer from these two statements that
+
+[3] <code>Peter rdf:type Person</code>
+
+== Properties ==
+
+Properties in [http://www.ontotext.com/factforge/rdf RDF] are the predicates connecting two entities (''subject'' and ''object''). In RDF Schema ''properties'' have '''''domain''''' and '''''range'''''.
+
+The ''domain'' refers to the class of the ''subject'' of the property. The ''range'' refers to the class of the object of the property. For instance,
+
+<code>isBornIn rdfs:domain Person </code>
+<code>isBornIn rdfs:range Location</code>
+
+denotes that <code>Person</code> is the domain of the property <code>isBornIn</code> and <code>Location</code> is the range of the property <code>isBornIn</code>. This means that the individuals in a subject position of the property <code>isBornIn</code> have to be of class <code>Person</code>, and the individuals in object position of the same property have to be of class<code>Location</code>.
+
+This allows to infer from the statement:
+
+<code>Peter isBornIn Sofia</code>
+
+that <code>Peter</code> is a <code>Person</code> and <code>Sofia</code> is a <code>Location</code>.
+
+=== Subproperties ===
+
+Properties in RDFS have also subproperties, e.g. <code>rdfs:subPropertyOf</code>. This allows to define hierarchies of properties, and infer new knowledge with them.
+
+There are many techniques through which the meaning of classes and properties can be described.
+
+== RDFS semantics ==
+
+RDF Schema semantics supports 33 entailment rules. These entailment rules define the [http://www.ontotext.com/factforge/inference-definition inference] capabilities of RDFS. For instance, the rule below defines the relationship between an individual and two classes. It is of the two classes, because it is declared to be a member of a class which is a subclass of the other class. The transitive nature of the subclass relation makes the inference possible.
+
+<code>if a rdf:type x and x rdfs:subClassOf y 
+then a rdf:type y</code>
+
+Another example of an entailment rule pertains to the class of the range of a property. It states that if the range of a property is of a certain class, then the individual which is in the range of this property is of this class.
+
+<code>if P rdfs:range C and x P y 
+then y rdf:type C</code>
+
+The [http://www.ontotext.com/factforge/owl '''Web Ontology Language (OWL)'''] is an extension of RDF Schema. It makes richer models of knowledge about things possible, but at the cost of those models being more complex for a computer to process.
