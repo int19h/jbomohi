@@ -101,11 +101,7 @@ Missing Extensions:
 Stylistic Matters:
 * Auto-capitalization is removed; "Fanva" and "Ralju Ckupau" don't look like correct Lojban.
 
-==Done==
-* Install a forum extension. WikiForum extension works. Although, this is not an ideal extension.
-* Install VisualEditor so people not familiar with MediaWiki syntax can start developing LMW immediately.
-
-==Managing LMW==
+==Managing LMW. Patched extensions==
 If you are in charge of LMW you should do the following:
 # Open LMW once in a while to see if there are new requests from users for being registered. ConfirmAccount extension is installed requiring every new user to fill in a short bio about them. So you have to manually let users in. Don't disable this feature otherwise spambots or vandals might come in. Don't use captcha as it is cracked by vicarious.com
 # Update extensions once in a while. Note that some of them require manual patches. <u>'''ConfirmAccount requires the following: '''</u>
@@ -113,6 +109,11 @@ If you are in charge of LMW you should do the following:
 #run 
 #:chgrp -R apache /home/gleki/public_html/mediawiki-1.19.2/
 #:chmod -R g+rwX /home/gleki/public_html/mediawiki-1.19.2/
+
+===Wikiforum===
+in Wikiforum.php the following line was commented out:
+
+<code>//$wgHooks['SkinTemplateToolboxEnd'][] = 'WikiForumHooks::addNavigationLinkToToolbox';</code>
 ===SimpleTable===
 As of Mediawiki 1.23 only SimpleTable version 1.2a (not later!) works.
 
@@ -316,7 +317,7 @@ I started a fortune file a while ago (I like fortune) - cmacis [http://www.lojba
 * That search bar seems kindof iffy.
 * Put the logout stuff on the top-right corner
 
-* '''Put the logo at the top.
+* '''Put the logo at the top.'''
 
 * '''Having a long wait (nearly 5 seconds!?!?) for the homepage to load is not acceptable. Maybe "latest forum posts" slows stuff down? In that case, three possibilities: Don't have it (sadness); use an iframe (flashback to 2003); ajax (more effort). Consider putting a caching/proxy server in front of the website. It would probably be the easiest way to try to speed things up. (You could have HTTP running on port 81, and the cache running on :80)'''
 
