@@ -74,3 +74,32 @@ them
 
 I think the fuzziness of {sorta} is exactly what Lojban strives to avoid.
 
+
+## 2014-06-10T06:24:53Z — krtisfranks (comment 1176, on definition 56797, in reply to 1175)
+
+Re: Joke?
+
+durka42 wrote:
+> I think the fuzziness of {sorta} is exactly what Lojban strives to
+avoid.
+
+On some level, I agree. I think that Lojban aims to express all possible
+distinctions and shades, which is why its inventory is supplied with the
+likes of (for example) {no'e}, {milxe}, {simsa}, and sort of {sorta}.
+
+But, on the other hand, sometimes semantic fuzziness is unavoidable
+because real-life is messy and fuzzy, and sometimes even the speaker does
+not know how to express (in brief at least) certain qualities and
+classifications.  Or perhaps, the speaker knows how to express them
+(and/or the fuzziness of the situation), and accurately does so with a
+'fuzzy' word. In either case, the expression is enabled in Lojban,
+including by perhaps {sorta}. Embrace semantic and identification
+fuzziness when necessary or possible, express what is needed or desired,
+and do so in a syntactically unambiguous manner. There is no real conflict
+there.
+
+But this may be a philosophical difference. I think that {sorta} and its
+productions can be taken seriously and can be useful.
+
+:)
+
