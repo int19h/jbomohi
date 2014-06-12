@@ -104,20 +104,18 @@ Stylistic Matters:
 ==Managing LMW. What extensions to patch==
 If you are in charge of LMW you should do the following:
 # Open LMW once in a while to see if there are new requests from users for being registered. ConfirmAccount extension might be installed requiring every new user to fill in a short bio about them. So you have to manually let users in. Don't disable this feature otherwise spambots or vandals might come in. Don't use captcha as it has been cracked by vicarious.com.
-# Update extensions once in a while. Note that some of them require manual patches. <u>'''ConfirmAccount requires the following: '''</u>
 # Update LMW once in a while by running in the root of LMW folder
-
-<code>git checkout master ; git pull </code> and
-
-<code>php maintenance/update.php</code> to update all mysql tables.
-
-In case of fresh install run
-
-<code>git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git</code> and then
-
-<code>chgrp -R apache /home/gleki/public_html/mediawiki-1.19.2/ ; chmod -R g+rwX /home/gleki/public_html/mediawiki-1.19.2/</code> replacing the paths acording to where you are moving LMW to.
+#:<code>cd extensions</code> and then:
+#:<code>cd .. ; git checkout master ; git pull ; cd extensions</code> and
+#:<code>php ../maintenance/update.php</code> to update all mysql tables.
+#:In case of fresh install run
+#:<code>cd .. ; git clone https://gerrit.wikimedia.org/r/p/mediawiki/core.git ; cd extensions</code> and then
+#:<code>chgrp -R apache /home/gleki/public_html/mediawiki-1.19.2/ ; chmod -R g+rwX /home/gleki/public_html/mediawiki-1.19.2/</code> replacing the paths acording to where you are moving LMW to.
+# Update extensions once in a while. Ensure you are in /extensions folder of the root of your mediawiki deployment.
+#:Note that some of extensions require manual patches.
 
 ===Wikiforum===
+
 <code>vim WikiForum/WikiForum.php</code>
 
 the following line has to be commented out:
@@ -129,7 +127,7 @@ As of Mediawiki 1.24alpha only SimpleTable version 1.2a (not later!) works.
 
 http://www.mediawiki.org/wiki/Extension:SimpleTable
 
-===ConfirmAccount===
+===ConfirmAccount (currently not used in LMW)===
 Since the author hasn't updated the extension yet we have to use the following patch in extensions/ConfirmAccount/business/AccountRequestSubmission.php:
 <pre># Check if biography is long enough
 $bioWordCount = preg_match_all("/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $this->bio, $matches);
@@ -139,7 +137,8 @@ if ($bioWordCount < $wgAccountRequestMinWords) {
 ===SocialProfile===
 If a user SomeName doesn't exist and when I create a page User:SomeName I can't edit it's code when SocialProfile is enabled. VisualEditor works okay, though.
 
-But what you should do after each update of this extension is to comment out lines 95-97 of /extensions/SocialProfile/UserProfile/UserProfile.php. After that, you should be able to edit the namespace like normal, and still have the ability for user profiles to appear on the user page.
+But what you should do after each update of this extension is to comment out lines 95-97 of
+SocialProfile/UserProfile/UserProfile.php. After that, you should be able to edit the namespace like normal, and still have the ability for user profiles to appear on the user page.
 
 ===UniversalLanguageSelector===
 You should apply this patch to ULS extension until it is included into the MediaWiki core.
@@ -148,7 +147,7 @@ https://gerrit.wikimedia.org/r/#/c/120475/
 If not done users after being registered and logged in will fall back to Lojban interface of LMW which is confusing.
 
 Just run
-<code>git fetch https://gerrit.wikimedia.org/r/mediawiki/core refs/changes/75/120475/5 && git checkout FETCH_HEAD</code>
+<code>cd .. ; git fetch https://gerrit.wikimedia.org/r/mediawiki/core refs/changes/75/120475/5 && git checkout FETCH_HEAD ; cd extensions</code>
 
 ==Broken pages==
 While importing the content of the old wiki into LMW the attachments with the following attachments couldn't be imported because they were files of zero length.
