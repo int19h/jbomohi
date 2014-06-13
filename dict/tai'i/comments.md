@@ -31,3 +31,13 @@ complete resolution of this issue, I propose that this word is more
 clearly designated to mean exactly one of these options and another word
 is created so as to mean the other.
 
+
+## 2014-06-13T07:58:53Z — krtisfranks (comment 1178, on definition 36771, in reply to 1177)
+
+Re: Generalization or Co-Equal?
+
+krtisfranks wrote:
+> phenomimes do not generalize ideomime
+
+*psychomimes
+
