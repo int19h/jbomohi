@@ -61,3 +61,21 @@ currently employed in order to reference the same thing as this word
 goes)). Other interesting conversations stemmed from:
 https://twitter.com/lai_az/status/475427887227473920
 
+
+## 2014-06-14T13:47:19Z — gleki (comment 1183, on definition 56825, in reply to 1180)
+
+Re: Typing
+
+krtisfranks wrote:
+> trimmed...
+
+I'm not a progger. Is {zai'o} for number/boolean = null, zai'o for string
+= ""?
+
+Looks like the concept of sumti types has been mostly diassembled by
+xorxes in Simple gimste revision ("text" and "sound" might be a subtype of
+"object/event" althought I'm retaining them for pragmatics purposes).
+
+However, what cannot be shut down are tersumti interactions (cpedu2
+clearly contains a hard link to cpedu3) and plurality.
+
