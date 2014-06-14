@@ -45,3 +45,19 @@ Discussion of Origin
 
 https://twitter.com/lai_krtisfranks/status/477484064773910529
 
+
+## 2014-06-14T08:22:09Z — krtisfranks (comment 1182, in reply to 1181)
+
+Re: Discussion of Origin
+
+krtisfranks wrote:
+> https://twitter.com/lai_krtisfranks/status/477484064773910529
+
+
+^^ Wherein some justification for the existence of this cmavo is provided
+(in showing inequivalence thereof with {zi'o}) and some structures
+currently employed in order to reference the same thing as this word
+(although data type is ignored (at least as far as explicit specification
+goes)). Other interesting conversations stemmed from:
+https://twitter.com/lai_az/status/475427887227473920
+
