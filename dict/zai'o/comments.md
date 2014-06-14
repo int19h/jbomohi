@@ -38,3 +38,10 @@ useful functionality of maximal genericness within allowed types as
 presented in the current definition while enabling this new functionality?
 (How do we unrestrict the typing?)
 
+
+## 2014-06-14T08:17:42Z — krtisfranks (comment 1181)
+
+Discussion of Origin
+
+https://twitter.com/lai_krtisfranks/status/477484064773910529
+
