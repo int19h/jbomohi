@@ -79,3 +79,42 @@ xorxes in Simple gimste revision ("text" and "sound" might be a subtype of
 However, what cannot be shut down are tersumti interactions (cpedu2
 clearly contains a hard link to cpedu3) and plurality.
 
+
+## 2014-06-14T16:53:39Z — krtisfranks (comment 1184, on definition 56825, in reply to 1183)
+
+Re: Typing
+
+gleki wrote:
+> krtisfranks wrote:
+> > trimmed...
+> 
+> I'm not a progger. Is {zai'o} for number/boolean = null, zai'o for
+string
+> = ""?
+Yes, I do think so.
+And even for language, it could possibly be the empty language (although
+that assumes a few things about the languages being considered and
+requires that language is being thought of as a type).
+
+> Looks like the concept of sumti types has been mostly diassembled by
+> xorxes in Simple gimste revision ("text" and "sound" might be a subtype
+of
+> "object/event" althought I'm retaining them for pragmatics purposes).
+I am not sure what you mean. But I do think that some terbri specify (at
+least some of the acceptable) types in their official definitions. If
+typing is not really a thing in Lojban, or is done only by individual
+interpretation, then pretty much all of the mentions and discussion about
+type can be ignored and this word can be of as general of a type as
+desired/reasonable. I reälize that the whole topic of types is a big one;
+a more in-depth conversation should be conducted elsewhere; I was just
+trying to address the issue in case it came up.
+(If types are ignored, either we have to come up with a whole bunch of
+cmavo for each empty/null object (of each type) or we have to allow for
+type specification/restriction by possibly wordy and inconvenient means in
+basically every situation)
+
+> However, what cannot be shut down are tersumti interactions (cpedu2
+> clearly contains a hard link to cpedu3) and plurality.
+How do you think that these interactions can affect the reference of this
+word?
+
