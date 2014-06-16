@@ -9,3 +9,7 @@ po'o ca lo nu gau cpana lo ko'a xanloi gi'e tai'i .suut. se lafti cu cinmo lo ge
 ## 2012-11-15T07:44:31Z — gusnikantu (example 232)
 
 .i je ra'i lo ri kevna ty so'o roi tai'i .puxpux. danmo vasxu
+
+## 2014-06-16T16:57:42Z — gusnikantu (example 230)
+
+ra'i lo vensa cmana ku tai'i korokoron rokspi
