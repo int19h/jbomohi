@@ -13,3 +13,7 @@ po'o ca lo nu gau cpana lo ko'a xanloi gi'e tai'i .suut. se lafti cu cinmo lo ge
 ## 2014-06-16T16:57:42Z — gusnikantu (example 230)
 
 ra'i lo vensa cmana ku tai'i korokoron rokspi
+
+## 2014-06-16T16:59:18Z — gusnikantu (example 229)
+
+to'o lo lunra ku tai'i xirarin farlu gi'e pezli lo persimo
