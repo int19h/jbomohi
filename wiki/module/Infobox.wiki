@@ -46,8 +46,10 @@ local function addRow(rowArgs)
         root
             .tag('tr')
                 .addClass(rowArgs.rowclass)
+                .attr('id', rowArgs.rowid)
                 .tag('th')
                     .attr('colspan', 2)
+                    .attr('id', rowArgs.headerid)
                     .addClass(rowArgs.class)
                     .addClass(args.headerclass)
                     .css('text-align', 'center')
@@ -56,10 +58,12 @@ local function addRow(rowArgs)
     elseif rowArgs.data then
         local row = root.tag('tr')
         row.addClass(rowArgs.rowclass)
+        row.attr('id', rowArgs.rowid)
         if rowArgs.label then
             row
                 .tag('th')
                     .attr('scope', 'row')
+                    .attr('id', rowArgs.labelid)
                     .css('text-align', 'left')
                     .cssText(args.labelstyle)
                     .wikitext(rowArgs.label)
@@ -73,6 +77,7 @@ local function addRow(rowArgs)
                 .css('text-align', 'center') 
         end
         dataCell
+            .attr('id', rowArgs.dataid)
             .addClass(rowArgs.class)
             .cssText(rowArgs.datastyle)
             .newline()
@@ -175,7 +180,11 @@ local function renderRows()
             data = args['data' .. tostring(num)],
             datastyle = args.datastyle,
             class = args['class' .. tostring(num)],
-            rowclass = args['rowclass' .. tostring(num)]
+            rowclass = args['rowclass' .. tostring(num)],
+            dataid = args['dataid' .. tostring(num)],
+            labelid = args['labelid' .. tostring(num)],
+            headerid = args['headerid' .. tostring(num)],
+            rowid = args['rowid' .. tostring(num)]
         })
     end
 end
@@ -366,7 +375,11 @@ function p.infobox(frame)
         {prefix = 'header'},
         {prefix = 'data', depend = {'label'}},
         {prefix = 'rowclass'},
-        {prefix = 'class'}
+        {prefix = 'class'},
+        {prefix = 'dataid'},
+        {prefix = 'labelid'},
+        {prefix = 'headerid'},
+        {prefix = 'rowid'}
     }, 50)
     preprocessSingleArg('headerclass')
     preprocessSingleArg('headerstyle')
