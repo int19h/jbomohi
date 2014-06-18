@@ -1,0 +1,96 @@
+{{Documentation subpage}}
+{{high-risk|575,000+}}
+{{shortcut|T:HAT}}
+{{lua|Module:Hatnote}}
+
+This template formats text into the standard stylistic for a [[Wikipedia:Hatnote|Wikipedia hatnote]]. It produces a short note placed at the top of an article to provide disambiguation of closely related terms or summarise a topic, explaining its boundaries. Hatnotes look like this:
+
+{{hatnote|Example hatnote text.}}
+
+{{TOC limit}}
+
+== Function ==
+This template is primarily used to add a correctly formatted ''hatnote'' to a page. Often, but not always, this is a ''disambiguation link'' at the top of article pages. It places an HTML <code>div-</code> / <code>div</code> block around the text entered as its only argument, which provides standardized formatting (contents are indented and italicized in most displays); it also isolates the contained code to make sure that it is interpreted correctly.
+
+This template is also used as the "meta-template" for additional specialized disambiguation link templates; see [[:Category:Hatnote templates]] for a list.
+
+The template does not automatically create links of any kind. Links and other desired formatting must be explicitly added, using normal [[Wikipedia:Cheatsheet|Wikipedia markup]].
+
+== Usage ==
+
+; Basic usage:
+ &#123;{hatnote|''text''}}
+
+; All parameters:
+ &#123;{hatnote|''text''|extraclasses=''extra classes''|selfref=''yes''|category=''no''}}
+
+== Parameters ==
+
+This template accepts the following parameters:
+* <code>1</code> - the hatnote text. (required)
+* <code>extraclasses</code> - any extra CSS classes to be added. For example, the {{tl|see also}} template adds the classes {{para|extraclasses|boilerplate seealso}}.
+* <code>selfref</code> - if set to "yes", "y", "true" or "1", adds the CSS class "selfref". This is used to denote self-references to Wikipedia. See [[Template:Selfref]] for more information.
+* <code>category</code> - if set to "no", "n", "false", or "0", suppresses the error tracking category ([[:Category:Hatnote templates with errors]]). This only has an effect if the first positional parameter (the hatnote text) is omitted.
+
+== Example ==
+
+* <code><nowiki>{{hatnote|Example hatnote text}}</nowiki></code> &rarr; {{hatnote|Example hatnote text}}
+
+== Errors ==
+
+If no hatnote text is supplied, the template will output the following message:
+* {{hatnote|category=no}}
+
+If you see this error message, it is for one of four reasons:
+# No parameters were specified (the template code was <code><nowiki>{{hatnote}}</nowiki></code>). Please use <code><nowiki>{{hatnote|</nowiki>''text''<nowiki>}}</nowiki></code> instead.
+# Some parameters were specified, but the hatnote text wasn't included. For example, the template text <code><nowiki>{{hatnote|extraclasses=seealso}}</nowiki></code> will produce this error. Please use (for example) <code><nowiki>{{hatnote|</nowiki>''text''<nowiki>|extraclasses=seealso}}</nowiki></code> instead.
+# The hatnote text was specified, but that text contains an equals sign ("="). The equals sign has a special meaning in template code, and because of this it cannot be used in template parameters that do not specify a parameter name. For example, the template code <code><nowiki>{{hatnote|2+2=4}}</nowiki></code> will produce this error. To work around this, you can specify the parameter name explictly by using <code>1=</code> before the hatnote text, like this: <code><nowiki>{{hatnote|1=2+2=4}}</nowiki></code>.
+# You tried to access [[Module:Hatnote]] directly by using <code><nowiki>{{#invoke:hatnote|hatnote|</nowiki>''text''<nowiki>}}</nowiki></code>. Use of #invoke in this way has been disabled for performance reasons. Please use <code><nowiki>{{hatnote|</nowiki>''text''<nowiki>}}</nowiki></code> instead.
+
+If you see this error message and are unsure of what to do, please post a message on [[Template talk:Hatnote]], and someone should be able to help you.
+
+Pages that contain this error message are tracked in [[:Category:Hatnote templates with errors]].
+
+== Technical details ==
+
+The HTML code produced by this template looks like this:
+
+* <code><nowiki><div class="hatnote"></nowiki>''hatnote text''<nowiki></div></nowiki></code>
+
+The code is produced by [[Module:Hatnote]].
+
+{{Hatnote templates documentation}}
+{{Collapse top|TemplateData}}
+{{TemplateDataHeader}}
+<templatedata>
+{
+  "description": "Template for creating a standard Wikipedia hatnote. A hatnote is a short note placed at the top of an article to provide disambiguation of closely related terms or summarise a topic, explaining its boundaries.",
+  "params": {
+    "1": {
+      "label": "Text",
+      "description": "This field should contain the text that will be displayed in the hatnote.",
+      "type": "string",
+      "required": true
+    },
+    "extraclasses": {
+      "type": "string/line",
+      "label": "Extra classes",
+      "description": "Extra CSS classes to be added to the <div> tags surrounding the hatnote text."
+    },
+    "selfref": {
+      "type": "string/line",
+      "label": "Self reference",
+      "description": "Set to \"yes\" if the hatnote text is a self-reference to Wikipedia that would not make sense on mirrors or forks of the Wikipedia site. (E.g. \"For the Wikipedia Sandbox, see [[WP:SAND]]\".)"
+    },
+    "category": {
+      "label": "Category",
+      "description": "Set to \"no\", \"n\", \"false\", or \"0\" to suppresses the error tracking category (Category:Hatnote templates with errors). This only has an effect if the hatnote text is omitted."
+    }
+  }
+}
+</templatedata>
+{{Collapse bottom}}
+
+<includeonly>
+[[Category:Hatnote templates]]
+</includeonly>
