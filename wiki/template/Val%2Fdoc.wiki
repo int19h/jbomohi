@@ -1,0 +1,190 @@
+{{documentation subpage}}
+<!-- EDIT TEMPLATE DOCUMENTATION BELOW THIS LINE -->
+{{Intricate template}}
+{{High-use}}
+
+==Purpose==
+This template is used to easily present values in [[scientific notation]], including uncertainty and/or units, as prescribed by Wikipedia's [[WP:MOSNUM|Manual of Style]]. It wraps the entire result in a {{tl|nowrap}} block, so that it never gets broken into separate pieces at the end of a line. (See [[WP:NBSP]] for more information on the usage of non-breaking spaces.)
+
+== Arguments ==
+There are four ways this template can be used:
+* <code><nowiki>{{</nowiki>val|''number''<nowiki>}}</nowiki></code> - for displaying values without uncertainty/significance.
+* <code><nowiki>{{</nowiki>val|''number''|''uncertainty''<nowiki>}}</nowiki></code> - for displaying values with uncertainty like so {{val|1234|56}}.
+* <code><nowiki>{{</nowiki>val|''number''|''upper uncertainty''|''lower uncertainty''<nowiki>}}</nowiki></code> - for displaying values with uncertainty like so {{val|1234|+56|-78}}.
+* <code><nowiki>{{</nowiki>val|''number''|(''significance'')<nowiki>}}</nowiki></code> - for displaying values with significance like so {{val|1234|(56)}}.
+They all take roughly the same arguments
+
+{|
+|valign=top| '''1'''  || The value (must be a valid number)
+|-
+|valign=top| '''2'''  || The (upper limit of) uncertainty (must be a valid number) or significance (must be a valid number in parenthesis)
+|-
+|valign=top| '''3'''  || The lower limit of uncertainty (must be a valid negative number)
+|-
+|valign=top| '''e'''  || The exponent for the power of 10 (optional). This will show up in the result as: <span style="margin-left:0.25em;margin-right:0.15em">×</span>10{{su|p=e}}.
+:Values (arguments '''1'''–'''3''' and '''e''') are run through code copied from {{tl|delimitnum}} for readability, except for argument '''2''' when it is surrounded by parenthesis. '''This causes an error for large numbers, numbers that require high precision.''' Correction will require changes to the Wikipedia software.
+|-
+|valign=top| '''u''' / '''ul'''   || Activate units and any markup / with a link to a page about the unit (optional / optional)
+|-
+|valign=top| '''up''' / '''upl''' || Construct units, and this is the "per" unit that is the denominator / with a link to a page about the denominator (requires numerator from '''u''' or '''ul''') 
+:Units for the number, specified by '''u''' and '''ul''' (and '''up''' and '''upl'''), are replaced by a more aesthetically pleasing HTML representation and can get a link ('''ul''' and '''upl''' only) if they are in the list found in {{tl|val/unitswithlink}} or if they are supported by {{tl|convert}}). You can specify units using just '''u'''; a good example is "ul=m/s", which gets translated to "[[Meter per second|m·s<sup>-1</sup>]]", or you can use '''u''' and '''up''', as in "u/up"; a good example is "ul=m|up=s", which gets translated to "[[Metre|m]]/s".
+|-
+|valign=top| '''p'''  || A prefix for the value (such as ∆, ⌀, etc.; optional).
+|-
+|valign=top| '''s'''  || A suffix for the value (such as %, optional).
+:Prefixes (specified by '''p''') and suffixes (specified by '''s''') are put in front of or behind the value ''as is'': this includes spaces. They are inside the ''nowrap'' block and will always be on the same line as the value. The parameters that previously provided this functionality ('''h''' for header and '''f''' for footer) are ''deprecated'' and will be ignored.
+|-
+|-
+|valign=top| '''end''' || Appends something after the main value. For example, <nowiki>{{val|123.24|end=...}}</nowiki> gives {{val|123.24|end=...}}
+|-
+|valign=top| '''errend''' || Appends something after the uncertainty. For example, <nowiki>{{val|123.23|end=...|2.34|errend=...}}</nowiki> gives {{val|123.23|end=...|2.34|errend=...}}
+|-
+|align=top| {{nowrap|'''+errend'''}} & {{nowrap|'''-errend'''}} || Appends something after the positive/negative uncertainties. For example, <nowiki>{{val|123.23|end=...|+2.34|+errend=...|-1.23|-errend=...}}</nowiki> gives {{val|123.23|end=...|+2.34|+errend=...|-1.23|-errend=...}}
+|-
+|align=top| {{nowrap|'''fmt'''}} || Allows alternative formatting using commas to the left of the decimal point as opposed gaps either side. For example, <nowiki>{{val|123123.123123|fmt=commas}}</nowiki> gives {{val|123123.123123|fmt=commas}}
+|-
+|valign=top| '''nocategory'''  || If set to any value, errors in the use of this template will not cause the page to be added to the [[:Category:Pages with incorrect formatting templates use|Pages with incorrect formatting templates use]] category. This is useful for documentation and test pages that do not need to be fixed.
+|}
+
+See {{tl|val/testcases}} for a list of examples of the correct output of {{tl|val}} and the errors it may return when incorrectly used.
+
+== Errors ==
+There is strict checking on the validity of arguments; any incorrect use will result in an error, which is displayed using {{tl|FormattingError}}. Pages that contain incorrect use of this template will show up on [[:Category:Pages with incorrect formatting templates use]].
+
+== Format of numbers ==
+{{tl|Val}} produces formatting compliant with Wikipedia's [[WP:MOSNUM|Manual of Style]]. 
+
+The [[Wikipedia:MOSNUM#Delimiting_(grouping_of_digits)|MOS]] recommends that numbers either be delimited using thin spaces either side of the decimal, or commas to the left and no delimiters to the right.  Articles should be consistent wrt the style of delimiting.  The template defaults to the former style, this can be adjusted using <code>|fmt=</code> (see [[#Arguments|above]]).
+
+== Examples ==
+:{|
+|-
+|<code><nowiki>{{val|1234567890}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1234567890}}
+|-
+|<code><nowiki>{{val|1.23456789}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.23456789}}
+|-
+|{{xpdop3c|gives={{!}}{{!}}&nbsp;→&nbsp;{{!}}{{!}}|d=|val|21563.252564425}}
+|-
+|colspan=3|'''Uncertainty/significance'''
+|-
+|<code><nowiki>{{val|1.234|0.005}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|0.005}}
+|-
+|<code><nowiki>{{val|1.234|+0.005|-0.006}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|+0.005|-0.006}}
+|-
+|<code><nowiki>{{val|1.234|(5)}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|(5)}}
+|-
+|colspan=3|'''Units'''
+|-
+|<code><nowiki>{{val|1.234|u=m}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|u=m}}
+|-
+|<code><nowiki>{{val|1.234|u=m2}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|u=m2}}
+|-
+|<code><nowiki>{{val|1.234|ul=m}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|ul=m}}
+|-
+|<code><nowiki>{{val|123.4|ul=USgal}}</nowiki></code>||&nbsp;→&nbsp;||{{val|123.4|ul=USgal}}
+|-
+|<code><nowiki>{{val|12.34|ul=mpgimp}}</nowiki></code>||&nbsp;→&nbsp;||{{val|12.34|ul=mpgimp}}
+|-
+|<code><nowiki>{{val|12.34|u=deg}}</nowiki></code>||&nbsp;→&nbsp;||{{val|12.34|u=deg}}
+|-
+|<code><nowiki>{{val|1.234|0.005|u='}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|0.005|u='}}
+|-
+|<code><nowiki>{{val|1.234|+0.005|-0.006|u="}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|+0.005|-0.006|u="}}
+|-
+|colspan=3|'''Exponents'''
+|-
+|<code><nowiki>{{val|1.234|e=5|ul=m}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|e=5|ul=m}}
+|-
+|<code><nowiki>{{val|1.234|0.056|e=7}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|0.056|e=7}}
+|-
+|<code><nowiki>{{val|1.23456|+0.00007|-0.00008|e=-9|ul=m/s}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.23456|+0.00007|-0.00008|e=-9|ul=m/s}}
+|-
+|<code><nowiki>{{val|1.234|0.056|e=7|ul=psi}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|0.056|e=7|ul=psi}}
+|-
+|<code><nowiki>{{val|1.234|(5)|e=-2}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|(5)|e=-2}}
+|-
+|colspan=3|'''Prefix/suffix'''
+|-
+|<code><nowiki>{{val|p=Δ&amp;nbsp;|12.34}}</nowiki></code>||&nbsp;→&nbsp;||{{val|p=Δ&nbsp;|12.34}}
+|-
+|<code><nowiki>{{val|p=+|12.34|u=%}}</nowiki></code>||&nbsp;→&nbsp;||{{val|p=+|12.34|u=%}}
+|-
+|<code><nowiki>{{val|12.34|0.25|s=%}}</nowiki></code>||&nbsp;→&nbsp;||{{val|12.34|0.25|s=%}}
+|-
+|colspan=3|'''Numerator/Denominator'''
+|-
+|<code><nowiki>{{val|1.234|e=7|ul=W|up=m2}}</nowiki></code>||&nbsp;→&nbsp;||{{val|1.234|e=7|ul=W|up=m2}}
+|}
+
+:'''More examples'''<br/>See the testcases at [[Template:Val/testcases|Val/testcases]].
+
+==Performance impact==
+For most uses, in the text of articles, Template:Val will not restrict performance, but when used inside the wikitext markup of large templates, there are some restrictions. When displaying integer amounts, Template:Val has an internal [[m:HELP:Expansion depth|expansion depth]] of 15 levels, but for numbers with decimal portions, it uses 22 levels, or more.
+
+==How to add units==
+The unit you will add is required to have a link version and a non-link version for stylistic reasons (including the ability of editors to avoid [[WP:OVERLINKING|overlinking]]).  The link version will be added to '''''Val/unitswithlink''''' to process the <code>ul</code> and <code>upl</code> [[m:Templates#Parameters|parameter]]s.  The non-link version ''might'' need to be added to '''''Val/units''''' to process the <code>u</code> and <code>up</code> parameter; it depends on whether or not the unit needs [[Help:Wiki markup#Format|markup]], or if the characters users will give to the <code>ul</code> or <code>u</code> parameter are different than what is displayed, or if "technical reasons" are discovered. (See below.)
+
+Note these points before adding units:
+* For composite units you should probably link the whole, not individual units. For example the line you add would say <code> {{nowrap|{{xt|<nowiki>|m·s-1=[[Velocity|m·s{{sup|&minus;1}}]]</nowiki>}}}}</code> linking to ''Velocity'', not {{nowrap|<code>{{!xt|<nowiki>|m*s-1=[[Metre|m]]·[[Second|s]]{{sup|&minus;1}}</nowiki>}}</code>}}.  ''[[List of common physics notations]]'' has many examples of composite units that have their own page.
+* The val user can compose their own divisor unit from an existing unit, writing {{nowrap|<code><nowiki>{{val|ul=m|upl=s}}</nowiki></code>}} to render their own "{{val|ul=m|upl=s}}" with two links:  <code>m</code> to ''Meter'' and <code>s</code> to ''Second''.  
+* The val user can compose their own multiplier units by using the <code>end</code> parameter to prepend a string.  For example, to prepend "{{val|ul=Ma}}", they could write {{nowrap|<code><nowiki>{{val|333|end=&amp;nbsp;Ma|ul=uBP}}</nowiki></code>}}, rendering "{{val|333|end=&nbsp;Ma|ul=uBP}}". These cannot be linked.
+
+The technique involves activating "[[WP:Show changes|Show changes]]" to catch unintended changes that are otherwise difficult to detect in any of the many pages using val that would be affected.
+# Edit {{tl|Val/unitswithlink/test}}.  The [[Sides of an equation|LHS]] of the "=" sign is what val users will give to the <code>ul</code> (or <code>upl</code>) parameter. Activate "[[WP:Show preview|Show preview]]".  This will run your test data through val, which would be similar to running val itself in a sandbox. [[Wikipedia:TESTLINK|Prove the intended link]] and markup here because you will not be able to show a preview in the next steps. [[Cut and paste|Copy]] what you will be adding to the wiki with the next steps. Save the page to serve as a "current list".
+# Edit {{tl|Val/unitswithlink}}.  Paste the identical line proven in step 1.  Sort order is not important. Show changes, and then save.
+# If the unit will display differently from what is typed into <code>u=</code>, edit {{tl|Val/units}}. Paste the identical line, and remove any [[help:wikilinks|links]] from the RHS of the "=" sign, being careful to leave any rendering work. Show changes, and then save.
+# '''Important'''. Run <code><nowiki>{{Val|u=}}</nowiki></code> and <code><nowiki>{{Val|ul=}}</nowiki></code> in a [[WP:sand|sandbox]] and verify that your unit has an identical appearance in both cases. Edit {{tl|Val/units}} to make any corrections. (The discrepancy occurred for technical reasons.)
+The last step is an important to the [[WP:MOSNUM|manual of style for dates and numbers]].
+
+==FAQ and comments==
+* '''Q: Why should I use val?'''
+: A1: {{tl|Val}} formats numbers: 
+:*inserts spaces between groups of digits, approximating SI standards
+:*properly formats [[Uncertainty#Measurements|uncertainties in measurements]] and [[significant digits]], providing a ± character, etc.
+:*properly formats [[Exponentiation|exponents of 10]] and [[scientific notation]]
+:*replaces "-" (hyphen) with a "&minus;"  (minus sign)
+: A2: It preserves spacing:
+:* It makes sure the value does not [[Word wrap|wrap]] at the end of a line, so that it can always be read as a single value on one line in the text.
+:* It spaces the various parts of the value where they should be
+: A3: It automates the markup for, and a link to a displayed unit.
+: A4: Val helps make Wikipedia more consistent. It adheres to the [[Wikipedia:MOSNUM|Wikipedia Manual of Style for numbers]]. Updates to the [[Wikipedia:MOSNUM|Wikipedia Manual of Style for numbers]] can be applied to this template, and result in automatic modification on values that use it. All this makes sure all values on all pages have the same [[look and feel]] because they will all use the same [[Letter-spacing|spacing]], [[font|font size]], positioning, etc, and makes updating and checking by the bots easier because they can recognize a value for what it is.
+
+* '''Q: Why not use <nowiki><math></nowiki>?'''
+: A: For the same reasons [[Help:Math#Pros_of_HTML|HTML might be preferred over {{TeX}}]]:
+:* Because the [[font]] in math tags differs both in face and size from the prose, which can disturb the layout of a page when used inline with the prose.
+:*You cannot [[cut and paste]] a bitmap image rendered by the Latex.
+:*Images are slower to load and use more bandwidth, which is especially bad for the mobile version of Wikipedia.
+:* <nowiki><math></nowiki> does not automatically adhere to the [[Wikipedia:MOSNUM|Wikipedia Manual of Style for numbers]].
+
+* '''Q: Are there any known issues with val?'''
+: A1: Because numbers can only be stored with a limited precision by Wikipedia servers, val cannot handle very large numbers, such as 123456789123456789. This is reported using a {{tl|FormattingError}}, so it should be easy to spot. Since there is very limited use for such large numbers, there is no fix planned for this. 
+: A2: This template has been in full use on many pages for quite some time without major problems or [[wiktionary:breaking change|breaking changes]]. Technically, there is no good reason ''not'' to try val.
+
+* '''Q: How should I use val?'''
+: A1: Val probably already has your unit on [[Template:Val/unitswithlink/test|its current list]]. If not, then your unit [[#How_to_add_units|can be added]]. 
+: A2: To avoid [[WP:OVERLINKING|over linking]] switch from the ''ul='' to the ''u='' parameter of the given unit.
+
+== See also ==
+* {{tl|val}} subtemplates
+*: {{tl|val/delimitnum}}, for formatting a decimal number with delimiters between groups of digits.
+*: {{tl|val/units}}, for formatting unit names (contents of parameters <code>u</code> or <code>up</code>).
+*: {{tl|val/unitswithlink}}, for formatting unit names with links (contents of parameters <code>ul</code> or <code>upl</code>).
+* {{t1|±}}, for positive <code><nowiki><sup></nowiki></code> and negative <code><nowiki><sub></nowiki></code>.
+* {{tl|formatting error}}, for reporting inconsistent parameters.
+* {{tl|su}}, for formatting exponents or two-valued uncertainties, one below the other.
+* {{tl|valid}}, for checking number validity (parameters 1, 2, 3, e : value, and uncertainties, base-10 exponent).
+* {{tl|Sup/sub-related templates}}, a list/table of other templates that manipulate super/subscripting.
+
+
+{{Math templates |notation}}
+
+<includeonly>
+{{template other
+ | {{#ifeq:{{SUBPAGENAME}}|sandbox | |
+[[Category:Wikipedia formatting and function templates]]
+[[Category:Superscript and subscript templates]]
+[[Category:Subtemplates of Template Convert/wrapper templates]]<!--(Added 2013-12-10 to allow disentanglement from template {convert} proper. Related to Lua module introduction.)-->
+
+[[ka:თარგი:Val]]
+}} }}
+</includeonly>
