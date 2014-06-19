@@ -4,3 +4,10 @@ li so'a?
 
 Shouldn't it be default li _pi_ so'a?
 
+
+## 2014-06-19T05:16:21Z — krtisfranks (comment 1193)
+
+Etymology of {kanpe}
+
+I was just wondering: how was this word created?
+
