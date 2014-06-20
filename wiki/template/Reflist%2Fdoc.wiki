@@ -1,0 +1,393 @@
+{{Documentation subpage}}
+<includeonly>{{High-risk|3,000,000+}}</includeonly>
+{{Ombox | type=notice | text = Columns are not supported by some older browsers, most notably Internet Explorer 9 and below and Opera 11.0 and below. See [[#Browser support for columns|below]] for more information.}}
+
+{{hatnote|For a full overview of this template in use, see [[Help:Footnotes]]}}
+
+This [[Wikipedia:Citation templates|citation template]] provides formatting and organizational features for [[Help:Footnotes|footnotes]].  It encapsulates the {{tag|references|s}} tag used by the {{cite.php}} MediaWiki extension to show the list of references as defined by {{tag|ref|o}} tags. It adds support for a reduced font size, columns, groups and {{ldr}}.
+
+If you don't use any of the additional features, then it produces the same output as the simpler and slightly faster {{tag|references|s}} tag.
+
+==Parameters==
+* First unnamed parameter:
+: column-count: a [[natural number]] specifying fixed columns into which the reference list is to be rendered. Example: <code>|2|</code>.
+: column-width: a typographic unit of measurement such as [[em (typography)#CSS|em]], specifying the width for the reference list columns. Example: <code>|30em|</code>.
+* '''refs''': used with named references (e.g., {{tag|ref|s|params=name=name}}); it specifies a list of some or all named references used in the article.
+* '''group''': identifies by name the subset of references to be rendered; the value should correspond to that used inline, e.g., {{tlx|Reflist|2=group=groupname}} renders all references with groupname as the group name ({{tag|ref|o|paams=group=groupname}}).
+* '''liststyle''': specifies the style used when the reference list is enumerated; if none is specified, the default is to render a numbered list.
+* '''close=1''': forces the reference list to close and render all references defined to that point; see the [[#Multiple uses|section on multiple uses]] for details.
+
+==Usage==
+{{markup|title=Using only footnote-style references
+|<nowiki>Lorem ipsum.<ref>Source name, access date, etc.</ref>
+
+Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
+
+==References==
+{{Reflist}}</nowiki>
+|Lorem ipsum.<ref>Source name, access date, etc.</ref>
+Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
+
+{{fake heading|sub=3|References}}
+{{Reflist}}
+}}
+
+{{markup|title=Using only bibliographical style references (no direct references from the text)
+|<nowiki>Lorem ipsum. Lorem ipsum dolor sit amet.
+
+==References==
+{{Refbegin}}
+* reference 1
+* reference 2
+{{Refend}}</nowiki>
+|Lorem ipsum. Lorem ipsum dolor sit amet.
+
+{{fake heading|sub=3|References}}
+{{Refbegin}}
+* reference 1
+* reference 2
+{{Refend}}
+}}
+
+{{markup|title=Using both footnote-style and bibliography-style references
+|<nowiki>Lorem ipsum.<ref>Source name, access date, etc.</ref>
+
+Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
+
+==References==
+{{Reflist}}
+
+{{Refbegin}}
+* reference 1
+* reference 2
+{{Refend}}</nowiki>
+|Lorem ipsum.<ref>Source name, access date, etc.</ref>
+Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
+
+{{fake heading|sub=3|References}}
+{{Reflist|close=1}}
+
+{{Refbegin}}
+* reference 1
+* reference 2
+{{Refend}}
+}}
+
+===Columns===
+{{anchor|Columns}}
+:''Browser support: Internet Explorer 10+, Firefox 2+, Chrome 4+, Safari 3.1+, Opera 11.1+''
+Using {{tlx|Reflist|30em}} will create columns with a minimum width of 30 [[Em (typography)|em]], allowing the browser to automatically choose the number of columns based on the width of the web browser. Choose a column width that is appropriate for the average width of the references on the page. A width measurement must conform to the format given in [http://www.w3.org/TR/CSS21/syndata.html#length-units CSS 2.1 Syntax and basic data types: Lengths]; in particular, there must not be a space between the number and the unit.
+
+Using {{tlx|Reflist|2}} will force creation of a two-column reference list, and {{tlx|Reflist|3}} will force creation of a three-column list, and so on. This feature is now [[deprecated]] in favor of the option described above, which is better suited to flexible formatting for a variety of display screen sizes, ranging from mobile phones and tablets to wide-screen "cinema" displays. Forcing a fixed number of columns has been disabled in mobile view. To identify articles using this deprecated feature, see [[:Category:Articles using fixed number of columns in reflist]].
+
+====Widows and orphans====
+The use of columns can result in [[widows and orphans]], where a citation at the bottom of a column may be split to the top of the next column. [[MediaWiki:Common.css]] includes CSS rules to avoid list items from breaking between columns. Widows may still show in extreme circumstances, such as a reference list formatted in columns where only a single reference is defined.
+
+{{markup
+|<nowiki>Lorem ipsum.<ref>Source name, access date, etc.</ref>
+
+Lorem ipsum dolor sit amet.
+
+==References==
+{{Reflist|3}}</nowiki>
+|Lorem ipsum.<ref>Source name, access date, etc.</ref>
+Lorem ipsum dolor sit amet.
+
+{{fake heading|sub=3|References}}
+{{Reflist|3}}
+}}
+
+====Practices====
+The number of columns to use is up to the editor, but some major practices include:
+* 1 column (default): Where there are only a few {{fnote}}; see {{oldid|Silver State Arena|530211388#References|Silver State Arena (23:05, 28 December 2012)}}
+* 30em: Where there are many footnotes plus a page-width Bibliography subsection: see {{oldid|Ebola virus disease|561190497#References|Ebola virus disease (06:28, 23 June 2013)}}
+* 20em: Where {{sfnote}} are used; see {{oldid|NBR 224 and 420 Classes|442508215#Notes|NBR 224 and 420 Classes (13:32, 1 August 2011)}}.
+
+====Examples====
+{{markup|title=Two columns
+|<nowiki>Lorem ipsum.<ref>Source name, access date, etc.</ref>
+
+Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
+
+==References==
+{{Reflist|2}}</nowiki>
+|Lorem ipsum.<ref>Source name, access date, etc.</ref>
+Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
+
+{{fake heading|sub=3|References}}
+{{Reflist|2}}
+}}
+
+{{markup|title=30em wide columns
+|<nowiki>Lorem ipsum.<ref>Source name, access date, etc.</ref>
+
+Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
+
+==References==
+{{Reflist|30em}}</nowiki>
+|Lorem ipsum.<ref>Source name, access date, etc.</ref>
+Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
+
+{{fake heading|sub=3|References}}
+{{Reflist|30em}}
+}}
+
+===List styles===
+{{main|Help:Cite link labels}}
+
+Reference lists are by default numbered lists. By using the {{para|liststyle}} parameter, you can control how the list is rendered. For example, using {{para|liststyle|upper-roman}} will result in items being prefixed with [[roman numerals]] instead of decimal numbers. The parameter accepts any valid CSS value defined for <code>list-style-type</code> as shown below.
+
+The citations in the reference list will show the default decimal styling if:
+* The value for {{para|liststyle}} does not exactly match one of the predefined values
+* The value for {{para|liststyle}} is enclosed by quotes
+* {{tl|Reflist}} is indented with the : markup
+
+{{CSS list-style-type values}}
+
+===Multiple uses===
+{{see|HELP:MULTIREF}}
+<section begin=multiref />
+In previous versions of MediaWiki, using {{tl|Reflist}} multiple times in the same page required a dummy parameter to prevent template caching. The underlying bug causing the inappropriate caching has since been fixed, so dummy parameters are no longer needed and the template will work properly when used multiple times in all cases.
+<section end=multiref />
+
+===List-defined references===
+{{see|Help:List-defined references}}
+
+A list of references may be defined within {{tl|Reflist}} using the {{para|refs}} parameter, just like including named {{tag|ref|params=name="..."}} elements inside the {{tag|references}} container. This has been available since September 2009. There are new error messages associated with this feature, documented at [[Help:Cite errors]], including one for references defined in {{tl|Reflist}} but not used within the body.
+
+====Example====
+{{markup
+|<nowiki>This is reference 1.<ref name="refname1" />
+
+This is reference 2.<ref name="refname2" />
+
+==References==
+{{Reflist|refs=
+<ref name="refname1">content1</ref>
+<ref name="refname2">content2</ref>
+}}</nowiki>
+|This is reference 1.<ref name="refname1" group=decimal/>
+This is reference 2.<ref name="refname2" group=decimal/>
+
+{{fake heading|sub=3|References}}
+{{Reflist|group=decimal|refs=
+<ref name="refname1">content1</ref>
+<ref name="refname2">content2</ref>
+}}
+}}
+
+===Grouped references===
+{{see|WP:REFGROUP}}
+As of June 2008, the footnotes system supports the separation of references into groups. This allows groups for explanatory notes, table references and the like.
+
+The general format for the reference tag is:
+
+:{{tag|ref|open|params=group=<var>"groupname"</var>}}
+
+And using {{para|group}} for the reflist:
+:{{tlx|Reflist|2=group=''groupname''}}
+
+:Where ''groupname'' is a group identifier such as "notes", "nb" or "label".
+
+There are three pre-defined group names that will automatically cause the link labels and this template to display other characters instead of numbers (see [[#List styles|List styles]] above). These are: "lower-alpha" (a, b, c...), "lower-greek" (α, β, γ...) and "lower-roman" (i, ii, iii...) and must be written without quotes.
+
+===Image flow issues===
+{{reflist hide|close=1}}<!--Ensure previous references are closed-->
+When an image is inserted to the left of the reference list, the list may flow under the image, clipping the reference numbers or hiding them behind the image frame, depending upon the browser.
+
+{{markup
+|<nowiki>Lorem ipsum dolor sit amet.<ref>Lorem ipsum dolor sit amet.</ref><ref>Lorem ipsum dolor sit amet.</ref>
+
+==References==
+[[File:Example.png|left|thumb|100px]]
+{{Reflist}}
+</nowiki>
+|Lorem ipsum dolor sit amet.<ref>Lorem ipsum dolor sit amet.</ref><ref>Lorem ipsum dolor sit amet.</ref>
+{{fake heading|sub=3|References}}
+[[File:Example.png|left|thumb|100px]]
+{{Reflist|close=1}}
+}}
+
+To resolve this issue, use the columns feature. If columns are not desired, simply set it to one column using {{tlx|reflist|2=1}}. Note that if the list is longer than the image, it will cause the space below the image to remain empty. It is recommended that a comment be added so that follow-on editors will understand the use.
+
+{{markup
+|<nowiki>Lorem ipsum dolor sit amet.<ref>Lorem ipsum dolor sit amet.</ref><ref>Lorem ipsum dolor sit amet.</ref>
+
+==References==
+[[File:Example.png|left|thumb|100px]]
+{{Reflist|1}}<!--Set one column to resolve flow issues with left floated image.-->
+</nowiki>
+|Lorem ipsum dolor sit amet.<ref>Lorem ipsum dolor sit amet.</ref><ref>Lorem ipsum dolor sit amet.</ref>
+{{fake heading|sub=3|References}}
+[[File:Example.png|left|thumb|100px]]
+{{Reflist|1|close=1}}<!--Set one column to resolve flow issues with left floated image.-->
+}}
+
+==Technical details==
+===Font size===
+The font size should reduce to 90% for most browsers, but may appear to show at 100% for Internet Explorer and possibly other browsers.<ref name=fontsize/> As of December 21, 2010, the standard {{tag|references|single}} tag has the same font styling. The smaller font may be disabled through {{myprefs|Gadgets|Disable smaller font sizes of elements such as Infoboxes, Navboxes and References lists}}.
+
+===Browser support for columns===
+{{shortcut|WP:REFCOLS}}
+
+{{CSS3 multiple column layout}}
+
+Multiple columns are generated by using [[Cascading Style Sheets|CSS3]], which is still in development; thus only browsers that properly support the multi-column property will show multiple columns with {{tl|Reflist}}.<ref name="stuffandnonsense" /><ref name="w3org1" />
+
+These browsers '''support''' CSS3 columns:
+* [[Gecko (layout engine)|Gecko]]-based browsers such as [[Mozilla Firefox]]
+* [[WebKit]]-based browsers such as [[Safari (web browser)|Safari]] and [[Google Chrome]]
+* [[Opera (web browser)|Opera]] from version 11.10 onward
+* [[Internet Explorer]] from version 10 onward
+
+These browsers do '''not support''' CSS3 columns:
+* Microsoft [[Trident (layout engine)|Trident]]-based browsers including Internet Explorer through to version 9<ref name="msdn" />
+* [[Opera (web browser)|Opera]] through to version 11
+
+===Supporting CSS===
+{{tl|Reflist}} uses a CSS rule in [[MediaWiki:Common.css]] to set the font size:
+* <code>div.reflist { font-size: 90%; }</code>
+
+One of the following classes is assigned by the template when either column count or column width is set:
+* <code>.references-column-count</code> and <code>.references-column-count-''n''</code> (where <code>''n''</code> is the number of columns)
+* <code>.references-column-width</code>
+
+The following CSS properties are utilized using the {{tl|column-count}} and {{tl|column-width}} templates:
+* <code>column-count</code> CSS3 standard
+* <code>column-width</code> CSS3 standard
+* <code>-moz-column-count</code> Mozilla CSS extension
+* <code>-moz-column-width</code> Mozilla CSS extension
+* <code>-webkit-column-count</code> Webkit CSS extension
+* <code>-webkit-column-width</code> Webkit CSS extension
+
+===Customizing the view===
+{{see|Help:Reference display customization}}
+
+By editing your CSS, the personal appearance of the reference list can be customized. From [[Special:Preferences|Preferences]], select the Appearance tab, then on the selected skin select Custom CSS. After editing and saving, follow the instructions at the top of the page to purge. See [[Wikipedia:Skin#Customisation (advanced users)]] for more help.
+
+'''Font size'''
+
+The font size for all reference lists defaults to 90% of the standard size. To change it, add:
+
+<source lang="css">
+ol.references,
+div.reflist,
+div.refbegin {
+  font-size: 90%;
+}
+</source>
+
+Change 90% to the desired size.
+
+'''Columns'''
+
+To disable columns, add:
+
+<source lang="css">
+.references-column-count, .references-column-width {
+  column-count: 1 !important;
+  column-width: auto !important;
+  -moz-column-count: 1 !important;
+  -moz-column-width: auto !important;
+  -webkit-column-count: 1 !important;
+  -webkit-column-width: auto !important;
+}
+</source>
+
+Similarly, to force all reference lists to a number of columns, change the number.
+
+'''Column dividers'''
+
+To add dividers (rules) between columns, add:
+
+<source lang="css">
+.references-column-count, .references-column-width {
+  column-rule: 1px solid #aaa;
+  -moz-column-rule: 1px solid #aaa;
+  -webkit-column-rule: 1px solid #aaa;
+}
+</source>
+
+You can alter the appearance of the dividers by changing the values.
+
+==Perennial suggestions==
+'''Collapsing and scrolling'''
+
+There have been a number of requests to add functionality for a collapsible or [[WP:SCROLLING|scrolling]] reference list. These requests have not been fulfilled due to issues with readability, accessibility, and printing. The applicable guidelines are at [[MOS:SCROLL]]. Links between the inline cite and the reference list do not work when the reference list is enclosed in a collapsed box.
+
+To display the reference list in a scrollbox or collapsed per user, see [[Help:Reference display customization]].
+
+For discussion on previous attempts to do this with a template, see the discussions for [[Wikipedia:Templates for deletion/Log/2007 June 11#Template:Scrollref|Scrollref]] and [[Wikipedia:Templates for discussion/Log/2010 May 26#Template:Refbox|Refbox]].
+
+'''Including the section title'''
+
+There have been suggestions to include section header markup such as <code>==References==</code>. This is inadvisable because:
+* There is no standard section name; see [[WP:FNNR]].
+* When transcluded, the article will have an edit link that will confusingly open the template for editing.
+
+==Template data==
+{{TemplateDataHeader}}
+<templatedata>
+{
+ "description": "This template displays the list of footnotes at the end of an article and provides additional formatting and organizing options.",
+ "params": {
+  "1": {
+   "label": "Columns / Column width",
+   "type": "string",
+   "required": false,
+   "description": "Two modes supported.  First mode: integer number of fixed columns into which the reference list is to be rendered.  Second mode: typographic unit of measurement such as 'em', specifying the width for the reference list columns, e.g. '33em'; note that '33\u00a0em' will not be recognized",
+   "default": "1",
+   "aliases": [
+    "colwidth"
+   ]
+  },
+  "liststyle": {
+   "label": "Liststyle",
+   "type": "string",
+   "required": false,
+   "description": "Specifies the style used when the reference list is enumerated; accepts any valid CSS value defined for list-style-type",
+   "default": "decimal"
+  },
+  "group": {
+   "label": "Group",
+   "type": "string",
+   "required": false,
+   "description": "Group is an identifier which restricts the references that are shown. Without this parameter, this template only shows references with no group identifier. With a group identifier specified, only references with a matching group identifier are handled. The rest are left alone."
+  },
+  "refs": {
+   "label": "List of references",
+   "type": "string",
+   "required": false,
+   "description": "Provides a space to define named references for use in the article. References defined in this space are not shown unless used somewhere in the article."
+  }
+ }
+}
+</templatedata>
+
+==See also==
+* [[bugzilla:51260|Bug 51260]] - Extend the <code><nowiki><references /></nowiki></code>  tag to mirror enwiki's {{tl|reflist}}
+* [[Wikipedia:Citing sources]]&nbsp;– style guide for the citation of sources
+* [[Wikipedia:Citation templates]]&nbsp;– templates for use with references
+* {{tl|Refbegin}} and {{tl|Refend}}&nbsp;– format reference lists
+
+'''Variants'''
+* {{tl|Template reference list}}&nbsp;– version of reflist for use in templates
+* {{tl|Reflist-talk}}&nbsp;– for use on talk pages
+* {{tl|Notelist}}&nbsp;– for use with explanatory notes; sets {{para|group|lower-alpha}}
+* {{tl|Notelist-ua}}&nbsp;– for use with explanatory notes; sets {{para|group|upper-alpha}}
+* {{tl|Notelist-lr}}&nbsp;– for use with explanatory notes; sets {{para|group|lower-roman}}
+
+==References==
+{{Reflist|refs=
+<ref name=fontsize>See [[User:Edokter/fonttest]] for a comparison of font sizes for various browsers; see [http://en.wikipedia.org/w/index.php?title=Special%3ASearch&redirs=1&search=fonttest+prefix%3AMediaWiki+talk%3ACommon.css%2F&fulltext=Search&ns0=1 previous discussions] on changing the font size to resolve the IE issue.</ref>
+
+<ref name=stuffandnonsense>{{cite web |accessdate=November 24, 2006 |date=December 30, 2005 |title=CSS3 Multi-Column Thriller |url=http://www.stuffandnonsense.co.uk/archives/css3_multi-column_thriller.html}}</ref>
+
+<ref name=w3org1>{{cite web |url=http://www.w3.org/TR/css3-multicol/ |title=CSS3 module: Multi-column layout |publisher=[[World Wide Web Consortium|W3C]] |date=December 15, 2005 |accessdate=November 24, 2006}}</ref>
+
+<ref name=msdn>{{cite web |url=http://msdn.microsoft.com/en-us/library/cc351024(VS.85).aspx#multicolumn |title=CSS Compatibility and Internet Explorer: Multi-column Layout |work=Microsoft Developer Network |publisher=Microsoft |accessdate=March 16, 2011}}</ref>
+}}<includeonly>
+[[Category:Footnote templates]]
+[[Category:Reference list templates]]
+
+</includeonly>
