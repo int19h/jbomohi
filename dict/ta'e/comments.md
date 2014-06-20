@@ -16,3 +16,18 @@ It was meant to be "jai ve'a" rather than "jai va'e".
 
 Fixed.
 
+
+## 2014-06-20T20:39:08Z — durka42 (comment 1198, on definition 13168, in reply to 616)
+
+Re: Lojban definition doesn't parse
+
+xorxes wrote:
+> Eimi wrote:
+> > And I can't tell what it's trying to be.
+> 
+> It was meant to be "jai ve'a" rather than "jai va'e".
+> 
+> Fixed.
+
+Did you mean "jai ze'a"?
+
