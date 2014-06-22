@@ -1,0 +1,49 @@
+^A tradução desta página está incompleta.^
+
+Contate ((Xavier)) se você gostaria de contribuir com esse projeto.
+
+Estamos fazendo progresso! Por agora, você pode checar as primeiras palavras aqui:
+[http://staticfree.info/projects/lojban_festvox/mi_nelci_la_lojban.ogg]
+
+Other TTS samples:
+{file name=lnc-tts.ogg showdesc=1} 
+{file name=kalifornias.ogg showdesc=1}. Contains at least one stress error: cabycte -> cabYcte
+{file name=since_masno.ogg showdesc=1} 
+
+Now, the rest of this probably only makes sense to those of you who are familiar with phonetics. I apologize in advance for the technical jargon.
+
+What we need to do now is to listen through the corpus, and decide where the diphone boundaries go. We also have to find the "middle" of the diphones. I don't know what the TTS system expects, but a preliminary rule of thumb that should at least yield __consistent__, if not correct, results is to put the middle point in the boundaries between the phones. If there are two consecutive diphones, the part between the two middle marks should sound as one phone.
+
+Dipthongs (two vowels together, eg.: ai, oi, au) should be split where the sound changes. So when you see "a" turning to "i" split it right there.
+
+For plosives (diphones like "a-p" and "k-u" where there is a burst of air coming from the mouth), the diphone split should be done before the opening phase of the plosive. E.g., for two diphones, "a-p", and "p-a", half of the "a" and the silent part should end up in "a-p". The explosion and half of the next "a" should end up in "p-a".
+
+See here for more information on diphone tagging conventions:
+[http://www-2.cs.cmu.edu/~awb/papers/festvox/festvox_5.html#SEC26]
+
+The format of the file is to be found at [http://www.cstr.ed.ac.uk/projects/festival/manual/festival_20.html#SEC80].
+
+A practical way of doing this is with Praat, [http://www.fon.hum.uva.nl/praat/]. Here is a short howto:
+
+# Praat objects window -> Read -> Read from file...
+# Select the file, and push Label and Segment -> To Textgrid...
+# Tier names: Diphone Middle. Leave Point tiers blank. Click OK.
+# Select both the sound file and the TextGrid. Push Edit.
+# Click anywhere in the waveform or spectrogram to move the cursor there. Click Boundary - Add on selected tier, tier 2, etc. You can always move the boundary later.
+# Click between two boundaries to select it. You can play it, and you will see the location of the start and end points in seconds.
+# Do the same with the middles, but this time, click on the boundaries instead of between them. The exact location will be shown.
+# To use Xavier's conversion script, simply label the segments with their diphone (a-t, #-d) in the text-box at the top of the edit window. Make sure you label the segment between the midpoints with the appropriate __phoneme__, not diphone as it really shouldn't be one. See [http://staticfree.info/projects/lojban_festvox/praat_timing.png] for an example.
+# Back in the main window, select all the TextGrids that you've been working on and Write -> Write to text file. __Note:__ if you save one TextGrid at a time, make sure to retain the original filename; otherwise the script won't have the sample name at all. Praat doesn't put the sample name in singular TextGrid files for some reason.
+# finally do:
+ ./util/TextGrid2index.pl -l ljb_diphone/ljb_diphone_hand_timed.index \
+ praat/praat.Collection > ljb_diphone/ljb_diphone.index
+
+(with the appropriate filenames, of course)
+
+See the documentation included in the distribution for more instructions on using Praat to time diphones.
+
+* {file name=ljbdiph.list showdesc=1}
+* {file name=ljb_schema_pseudocode.doc showdesc=1}
+* {file name=toi_ljb_phones.scm showdesc=1}
+* {file name=akwavs.zip showdesc=1}
+* {file name=akflacs.zip showdesc=1}
