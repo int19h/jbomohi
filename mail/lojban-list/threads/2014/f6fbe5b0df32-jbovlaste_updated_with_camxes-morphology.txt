@@ -1,0 +1,75 @@
+# mail/lojban-list thread f6fbe5b0df32-jbovlaste_updated_with_camxes-morphology | root e2790cb9-7844-4011-8529-8c0f923f06f5@googlegroups.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2014-06-24T13:16:26Z | Riley Martinez-Lynch <shunpiker@gmail.com> | e2790cb9-7844-4011-8529-8c0f923f06f5@googlegroups.com | mail/lojban-list/cur/1403615786.f6fbe5b0df325b56.jbomohi:2,S
+ 
+
+coi jbopre
+
+jbovlaste has been updated to apply camxes morphology when new words are 
+entered. The new morphological classifier, "vlatai.py" is part of the 
+camxes-py Python parser, and replaces "vlatai", which is bundled with the 
+jbofihe parser.
+
+vlatai.py adds two types: "bu-letterals" (previously classified as "cmavo" 
+or "cmavo cluster") and "zei-lujvo" (previously classified as "lujvo"). 
+These new types are subject to camxes parser rules: Invalid constructs such 
+as {bu bu} and {zei zei lujvo} are rejected.
+
+Other "magic words" such as {zo} and {zoi} are not currently supported in 
+combination with {bu} and {zei}. This is an oversight rather than a design 
+choice, so please feel free to file a bug report if you find this is needed.
+
+The 21,940 valsi currently registered in jbovlaste were verified with the 
+new classifier: 21,829 reported no change, 10 were reclassified as 
+bu-letterals, 26 were reclassified as zei-lujvo, 1 was reclassified from 
+fu'ivla to lujvo, and 74 valsi were marked as "obsolete": cmevla (22), 
+fu'ivla (51) and zei-lujvo (1). 
+
+Details of the reclassified words can be found here:
+
+https://github.com/lojban/jbovlaste/issues/47
+
+https://github.com/lojban/jbovlaste/issues/39
+
+https://github.com/lojban/jbovlaste/issues/40
+
+https://github.com/lojban/jbovlaste/issues/43
+
+https://github.com/lojban/jbovlaste/issues/44
+
+The new "obsolete" valsi types are currently treated like the 
+"experimental" types  in XML and PDF exports: They are marked with a 
+warning.
+
+la gleki raised the issue that some words (e.g. {relmast}) which don't 
+conform to this version of camxes, ought to in fact be valid. xorxes noted 
+that only older versions of the camxes/BPFK morphology prohibit such words.
+
+I checked {relmast} against the Java/Rats! version of camxes which is 
+linked on the "Issues With The Lojban Formal Grammar" page: It was not 
+accepted. It was also not accepted by camxes.js or either the standard or 
+experimental ilmentufa grammars. I also checked python-camxes, but it uses 
+the same version of the Java jar that was described above.
+
+I built a new camxes Java/Rats! jar using the latest morphology on the 
+tiki, and I can confirm that according to this version of the grammar, 
+{relmast} is valid. However, it's not clear whether such a jar is currently 
+distributed anywhere.
+
+Based on all of this, my inclination is to update camxes-py as soon as 
+possible to use the newest BPFK morphology (where "newest" may mean n years 
+old). However, if I do this, it will no longer be in sync with most other 
+implementations of camxes currently distributed. Thoughts, anyone?
+
+Thanks to rlpowell and tene for their assistance in getting the new 
+software installed.
+
+mi'e la mukti mu'o
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
