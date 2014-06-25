@@ -20,3 +20,21 @@ similarity conflicts according to the gismu creation algorithm, which is
 good. Finally, I would add the "according to rule/specification" terbri to
 {landa}.
 
+
+## 2014-06-25T05:54:27Z — gleki (comment 1211, on definition 56900, in reply to 1209)
+
+Re: If {landa} gets a gismu, why not this word?
+
+> Second, more on topic, if we think that {landa} deserves its own gismu,
+> then we might as well be somewhat consistent and make gismu for language
+
+{landa}, {lingua} and {lengua} are easily memorisiable. {lingo} is less
+memorisable. That is the only reason i chose these words. I don't care
+whether they are gismu or not. I care about learnability.
+
+Actually I don't know what is the variable type of the first place of
+lingua/landa.
+
+I might be "la'e lu fy.ry. li'u" but then I'm not sure how {poi}
+can restrict this lingua1 into the language only.
+
