@@ -90,3 +90,10 @@ Chemical nomenclature is a separate beast. May be just cmevla-ize there
 everything paunai? "eth-an-ol" is a lujvo but not lojbanizable without
 losing recognizability.
 
+
+## 2014-06-25T13:58:25Z — gleki (comment 1213, on definition 56888, in reply to 1208)
+
+Re: Gekkota?
+
+http://mw.lojban.org/index.php?title=Lojbanization_of_scientific_terms
+
