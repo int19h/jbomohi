@@ -17,3 +17,19 @@ gleki wrote:
 I searched for "January" and "February" first and I did not see them, so
 that is basically why. No other reason. I am sorry.
 
+
+## 2014-06-29T05:44:00Z — gleki (comment 1222, in reply to 1220)
+
+Re: What about {ianvari} and {februari}?
+
+krtisfranks wrote:
+> gleki wrote:
+> > What is the reason for ignoring {ianvari} and {februari} that are
+closer
+> > to the original words?
+> 
+> I searched for "January" and "February" first and I did not see them, so
+> that is basically why. No other reason. I am sorry.
+
+They were used in jbo.wikipedia.org.
+
