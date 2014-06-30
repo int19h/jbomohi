@@ -46,3 +46,13 @@ proposal.
 I also can imagine use with total-/partial-ordered sets. Either things
 compare or they do not.
 
+
+## 2014-06-30T08:41:54Z — gleki (comment 1232, on definition 56958, in reply to 1230)
+
+Re: What is the point?
+
+I also thought of "mi barda ma'i do" but this is kinda tokiponish if not
+worse.
+
+This word is borrowed from Ceqli
+
