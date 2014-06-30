@@ -70,3 +70,41 @@ krtisfranks wrote:
 > formal replacement of {kau'i} with {di} if .{i} were to be replaced with
 > .{i}{je}.
 
+
+## 2014-06-30T16:14:13Z — durka42 (comment 1237, on definition 56930, in reply to 1236)
+
+Re: what
+
+jbovlaste mangled my response pretty badly. Here it is again.
+
+All right, this makes some sense (and I like the elephant pun, now that
+it's explained). The definition could be much clearer. Also, since we
+already have the ko'V/fo'V series which does not forget its assignments,
+I'm not sure kau'V adds a ton of value: I believe (please correctly me if
+I missed some nuance) that your example is the same as «ko'i goi di poi
+ke'a gerku zo'u ko'i batci mi .i ko'i zvati ti». {di} may be lost in the
+next sentence but {ko'i} should persist until {da'o}.
+
+
+durka42 wrote:
+> All right, this makes some sense (and I like the elephant pun, now that
+> it's explained). The definition could be much clearer. Also, since we
+> already have the ko'V/fo'V series which does not forget its assignments,
+> I'm not sure kau'[aei] adds a ton of value: I believe (please correctly
+me
+> if I missed some nuance) that your example is the same as {ko'i goi di
+poi
+> ke'a gerku zo'u ko'i batci mi .i ko'i zvati ti}. {di} may be lost in the
+> next sentence but {ko'i} should persist until {da'o}.
+> 
+> krtisfranks wrote:
+> > durka42 wrote:
+> > >we're going to need some examples.
+> > 
+> > An example would be «kau'i poi ke'a gerku zo'u kau'i batci mi .i
+kau'i
+> > zvati ti» which is the same thing as what the utterance would be with
+> > formal replacement of {kau'i} with {di} if .{i} were to be replaced
+with
+> > .{i}{je}.
+
