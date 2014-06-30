@@ -35,3 +35,16 @@ transferred to all later uses (the cost is that the quantification must be
 made with {poi}-clauses or restated each time- overall, not a bad
 trade-off). I call it elephant {di} because it has a long memory.
 
+
+## 2014-06-30T08:07:11Z — krtisfranks (comment 1229, on definition 56930, in reply to 1225)
+
+Re: what
+
+durka42 wrote:
+>we're going to need some examples.
+
+An example would be «kau'i poi ke'a gerku zo'u kau'i batci mi .i kau'i
+zvati ti» which is the same thing as what the utterance would be with
+formal replacement of {kau'i} with {di} if .{i} were to be replaced with
+.{i}{je}.
+
