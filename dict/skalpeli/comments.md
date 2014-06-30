@@ -32,3 +32,18 @@ according to Wiktionary
 
 So may be "cmalu je ke kinli mutce ke'e dakfu" ?
 
+
+## 2014-06-30T15:57:27Z — durka42 (comment 1235, on definition 52746, in reply to 1233)
+
+Re: Bah.
+
+gejyspa wrote:
+> bah.	
+> Why use a fu'ivla when micydakfu is available?	Scalpel is a
+rather simple
+> concept, and if we just borrow 50% of our vocabulary instead of creating
+> words from our own roots, we might as well be speaking Esperanto.
+> YMMV
+
++1
+
