@@ -61,3 +61,12 @@ raising. It could just be an issue for philosophy. I would not specify
 right now one way or the other by linguistic fiat in the definition. On my
 part at least, much more thinking is necessary.
 
+
+## 2014-07-03T06:09:16Z — gleki (comment 1252, in reply to 1251)
+
+Re: lo terdi ka'e xu fisli?
+
+I suggest you provide a bunch of examples of where to use {fisli} bothas a
+sumti and as a selbri. Ofc. it'd perfectly okay if those examples are e.g.
+translations of some sentences from Wikipedia related to physics.
+
