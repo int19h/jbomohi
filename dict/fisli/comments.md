@@ -70,3 +70,17 @@ I suggest you provide a bunch of examples of where to use {fisli} bothas a
 sumti and as a selbri. Ofc. it'd perfectly okay if those examples are e.g.
 translations of some sentences from Wikipedia related to physics.
 
+
+## 2014-07-03T07:11:46Z — krtisfranks (comment 1253, in reply to 1252)
+
+Re: lo terdi ka'e xu fisli?
+
+gleki wrote:
+> I suggest you provide a bunch of examples of where to use {fisli} bothas
+a
+> sumti and as a selbri. Ofc. it'd perfectly okay if those examples are
+e.g.
+> translations of some sentences from Wikipedia related to physics.
+
+I will do that! Wonderful suggestion.
+
