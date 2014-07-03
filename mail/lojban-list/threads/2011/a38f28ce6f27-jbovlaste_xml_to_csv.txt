@@ -1,4 +1,4 @@
-# mail/lojban-list thread a38f28ce6f27-jbovlaste_xml_to_csv | root aanlktin7-s0fhtpy6_oiqoobz-ds+pet0l5cjff02xmb@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a38f28ce6f27-jbovlaste_xml_to_csv | root aanlktin7-s0fhtpy6_oiqoobz-ds+pet0l5cjff02xmb@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2011-03-17T11:32:24Z | Remo Dentato <rdentato@gmail.com> | aanlktin7-s0fhtpy6_oiqoobz-ds+pet0l5cjff02xmb@mail.gmail.com | mail/lojban-list/cur/1300361544.a38f28ce6f27dd93.jbomohi:2,S
 Just in case could be of any use to somebody, I whipped up a quick
@@ -46,4 +46,45 @@ To unsubscribe from this group, send email to lojban+unsubscribe@googlegroups.co
 For more options, visit this group at http://groups.google.com/group/lojban?hl=en.
 
 
+
+
+=== 2 | 2014-07-03T16:46:32Z | remod <rdentato@gmail.com> | ea2f25f3-10d7-4fa0-bb16-cd310f019da0@googlegroups.com | mail/lojban-list/cur/1404405992.ad1cdd3b7dba460e.jbomohi:2,S
+An updated version:
+
+! gema script to convert jbovlaste XML dump to a CSV file
+! vers. 2.0
+! 2014 Remo Dentato (rdentato@gmail.com)
+! Visit http://gema.sourceforge.net to download gema for your OS
+
+\A="type"\;"status"\;"selmaho"\;"rafsi1"\;"rafsi2"\;"rafsi3"\;"valsi"\;"definition"\;"note"\n
+\<valsi<vls>=$1
+?=
+
+vls:\A=@set{w;}@set{t;}@set{d;}@set{r;}@push{r;\;}@push{r;\;}@push{r;\;}@set{n;}@set{x;"std"}@set{s;""}
+vls:word\="*"=@set{w;"$1"}
+vls:type\="<typ>"=@set{t;"$1"}
+vls:\<rafsi\>*\<\/rafsi\>=@push{r;"$1"\;}
+vls:\<definition\><nsc>\<\/definition\>=@set{d;"$1"}
+vls:\<notes\><nsc>\<\/notes\>=@set{n;"$1"}
+vls:\<selmaho\>*\<\/selmaho\>=@set{s;"$1"}
+vls:?=
+vls:\<\/valsi\>=$t\;$x\;$s\;$r@pop{r}$r@pop{r}$r$w\;$d\;$n\n@terminate
+
+nsc:\;=,
+nsc:\n\r=
+nsc:"=''
+nsc:\n=
+
+typ:experimental =@set{x;"exp"}
+typ:obsolete =@set{x;"obs"}
+typ:cmavo cluster=cluster
+typ:cmavo-compound=cluster
+typ:bu-letteral=cmavo
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
 
