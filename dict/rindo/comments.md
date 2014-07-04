@@ -165,3 +165,26 @@ Re: Further proposals
 I honestly do not know.  For their languages, certainly, but that only
 goes so far. I will look into it.
 
+
+## 2014-07-04T18:43:02Z — krtisfranks (comment 1261, on definition 38542, in reply to 971)
+
+Re: Commentary
+
+krtisfranks wrote:
+> I definitely think that a word for "Native American" is necessary and
+> deserves gismu status.	I imagine that it is sort of along the
+same lines
+> as {ropno}, {bemro}, {ketco}, etc. - categorizing many groups of people
+> who do not necessarily have too much cultural connection inherently; it
+> contrasts with the latter two aforementioned because it has a different
+> domain: not only is it geographically wider than either of them
+> individually, but it pertains to a temporal and/or cultural subject now
+> displaced from the meanings of those words in many instances (although
+> historically, the same cannot be said).
+
+I have also considered this word to be more along the lines of a "race"
+rather than a mere culture (and thus following the definitions of {tutle},
+{kapli}, {maska}), which would be fairer. In this case, more terbri would
+need to be added. To be honest, I would also advocate that {xispo} should
+likewise be considered a "race".
+
