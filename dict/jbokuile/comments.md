@@ -14,3 +14,16 @@ gleki wrote:
 
 .i .uenaidai toi'e la'a toi'o no da ba'ei ca jbokuile gerna cukta
 
+
+## 2014-07-05T18:34:13Z — durka42 (comment 1262, in reply to 1259)
+
+Re: y
+
+krtisfranks wrote:
+> gleki wrote:
+> > yzo'oru'e ma judri lo jbokuile gerna cukta
+> 
+> .i .uenaidai toi'e la'a toi'o no da ba'ei ca jbokuile gerna cukta
+
+.i .u'i xu do troci co jai se jalge lo sevzi gasnu bavyxusra bangu
+
