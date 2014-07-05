@@ -91,9 +91,12 @@ function arguments.getArgs(frame, options)
 				elseif options.wrappers == title then
 					found = true
 				end
-				if found then
+				
+				-- We test for false specifically here so that nil (the default) acts like true.
+				if found or options.frameOnly == false then
 					pargs = parent.args
-				else
+				end
+				if not found or options.parentOnly == false then
 					fargs = frame.args
 				end
 			end
@@ -106,9 +109,9 @@ function arguments.getArgs(frame, options)
 				local parent = frame:getParent()
 				pargs = parent and parent.args or nil
 			end
-			if options.parentFirst then
-				fargs, pargs = pargs, fargs
-			end
+		end
+		if options.parentFirst then
+			fargs, pargs = pargs, fargs
 		end
 	else
 		luaArgs = frame
