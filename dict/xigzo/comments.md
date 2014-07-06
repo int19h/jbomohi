@@ -213,3 +213,29 @@ I am sorry for having offended anyone or done something incredibly wrong.
 I should have thought about it first and got it approved by at least one
 other person zo'o.  I will try to be better from now on.
 
+
+## 2014-07-06T03:16:17Z — krtisfranks (comment 1263, in reply to 884)
+
+Re: ko sisti
+
+gleki wrote:
+> i think this is too much. First we need to put all elementary particle
+> into one table with their places defined.
+> 
+>
+https://docs.google.com/spreadsheet/ccc?key=0Ahngu1CNj7wddDZBRzgwMm1EWlpKU
+> EJRcTQtUGNCMFE&usp=drive_web#gid=8
+> 
+> I suggested boson as {jbozoni} etc.
+
+I have (without editing this definition) been treating the Higgs mechanism
+as I have been treating gravitation ({grava}) and other fundamental
+interactions (since the mediator is a elementary boson to the best of our
+knowledge; not that while its spin is 0*hbar and spin of the other
+discovered bosons that mediate fundamental interactions are 1*hbar, the
+spin of the graviton is expected to be 2*hbar). The Higgs boson is not the
+only thing that is xigzo. Thus, I think that this word is justified and
+its gismu nature is too (if we consider the other interactions deserving
+of gismu too (and I do opine so)). I also do not think that this word in
+anyway gets in the way of the rest of the nomenclature.
+
