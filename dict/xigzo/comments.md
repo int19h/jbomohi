@@ -239,3 +239,36 @@ its gismu nature is too (if we consider the other interactions deserving
 of gismu too (and I do opine so)). I also do not think that this word in
 anyway gets in the way of the rest of the nomenclature.
 
+
+## 2014-07-06T03:37:40Z — krtisfranks (comment 1264, in reply to 1263)
+
+Re: ko sisti
+
+krtisfranks wrote:
+> I have (without editing this definition) been treating the Higgs
+mechanism
+> as I have been treating gravitation ({grava}) and other fundamental
+> interactions (since the mediator is a elementary boson to the best of
+our
+> knowledge; not that while its spin is 0*hbar and spin of the other
+
+*note
+[Typo]
+
+> discovered bosons that mediate fundamental interactions are 1*hbar, the
+> spin of the graviton is expected to be 2*hbar). The Higgs boson is not 
+I was saying that the difference is bosonic nature betwixt the Highs and
+the photon, the W_(±) and Z_0 bosons, and gluons is not conceptually
+great enough to justify treating them differently since the graviton is
+treated as the latter four are and is somewhat similarly different
+therefrom.
+
+the
+> only thing that is xigzo. Thus, I think that this word is justified and
+> its gismu nature is too (if we consider the other interactions deserving
+> of gismu too (and I do opine so)). I also do not think that this word in
+> anyway gets in the way of the rest of the nomenclature.
+[Except for the fact that we can be briefer and more "obvious" with the
+meaning of lujvo (rather than zi'evla). For example, {xigyka'u} would be
+"Higgs boson" (like {tsabyka'u} would be "gluon").]
+
