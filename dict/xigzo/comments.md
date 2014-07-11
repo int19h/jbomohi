@@ -272,3 +272,13 @@ the
 meaning of lujvo (rather than zi'evla). For example, {xigyka'u} would be
 "Higgs boson" (like {tsabyka'u} would be "gluon").]
 
+
+## 2014-07-11T14:51:36Z — krtisfranks (comment 1269, on definition 44239)
+
+Higgs Mechanism Explained, Somewhat
+
+I found this explanation of the Higgs mechanism and thought that it might
+be useful in discussions:
+http://www.quora.com/Higgs-Field/What-is-the-Higgs-Mechanism/answer/Barak-
+Shoshany
+
