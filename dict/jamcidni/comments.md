@@ -22,3 +22,19 @@ Ilmen wrote:
 
 pamoi loglybau tadji vau u'i
 
+
+## 2014-07-18T20:56:34Z — gejyspa (comment 1275, on definition 16562, in reply to 1274)
+
+Re: tolmapti rafsi
+
+gleki wrote:
+> Ilmen wrote:
+> > xu ba'e jamna cidni :)
+> 
+> 
+> pamoi loglybau tadji vau u'i
+
+
+  na srana .i la totus cu jai balvi tu'a la balrafydesku .i ty cu srera ca
+lo nu setca lo vi valsi la jbovlaste
+
