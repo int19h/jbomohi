@@ -11,3 +11,14 @@ tolmapti rafsi
 
 xu ba'e jamna cidni :)
 
+
+## 2014-07-18T18:27:46Z — gleki (comment 1274, on definition 16562, in reply to 1273)
+
+Re: tolmapti rafsi
+
+Ilmen wrote:
+> xu ba'e jamna cidni :)
+
+
+pamoi loglybau tadji vau u'i
+
