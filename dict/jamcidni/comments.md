@@ -38,3 +38,24 @@ gleki wrote:
   na srana .i la totus cu jai balvi tu'a la balrafydesku .i ty cu srera ca
 lo nu setca lo vi valsi la jbovlaste
 
+
+## 2014-07-18T21:10:15Z — gejyspa (comment 1276, on definition 16562, in reply to 1275)
+
+Re: tolmapti rafsi
+
+gejyspa wrote:
+> gleki wrote:
+> > Ilmen wrote:
+> > > xu ba'e jamna cidni :)
+> > 
+> > 
+> > pamoi loglybau tadji vau u'i
+> 
+> 
+>   na srana .i la totus cu jai balvi tu'a la balrafydesku .i ty cu srera
+ca
+> lo nu setca lo vi valsi la jbovlaste
+
+ji'a zo jam ze'e rafsi zo jamna .i ko viska la'o net
+http://www.lojban.org/files/history/bothraf.txt net
+
