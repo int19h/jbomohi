@@ -1,0 +1,54 @@
+
+== Attempt at translating a piece of C code to Lojban ==
+
+<syntaxhighlight lang="c">
+char* str_fill(char string[], char filling, uint_t count) {
+   if (string) { 
+      if (!count) while(string[count]) count++; 
+      string[count] = '\0'; 
+      while (count--) string[count] = filling; 
+   } 
+   return string; 
+}
+</syntaxhighlight>
+
+'''English translation:'''
+<code>
+Function str_fill returning char pointer, taking parameters:
+    'string', of type char array; 'filling', of type char; 'count', of type uint_t. 
+Variable list: empty.
+Instruction list:
+    if 'string' is not equal to 0: 
+    >   if 'count' is equal to 0: 
+    >   >   as long as the offset number 'count' of the array 'string' is not equal to 0: 
+    >   >   >   we add 1 to 'count' 
+    >   we set the offset number 'count' of the array 'string' to 0 
+    >   as long as 'count' is not equal to 0: 
+    >   >   we substract 1 from 'count' 
+    >   >   we copy 'filling' into the offset number 'count' of the array 'string' 
+    we return to the calling function giving the value 'string' 
+End of function.
+</code>
+
+'''Lojban translation (to be improved)'''
+<code>
+ni'o ni'o ca'e pruce fa la lerpoiclugau fo di'e
+fe la lerpoi noi me'oi .char. judri
+ce'o la selclu noi me'oi .char.
+ce'o la selzilkancu noi me'oi .uint_t.
+fi lo me'oi .char. judri
+
+ni'o to ve pruce liste toi
+la lerpoi na du li no .i jo tu'e {
+>   la selzilkancu cu du li no .i jo tu'e {
+>   >   lo me la selzilkancu moi be la lerpoi na du li no .i jo
+>   >   ko'oi rapli co'u lo nu ja'a go'i ku fa lo nu
+>   >   ko'oi la selzilkancu cu dubze'a li pa
+>   } tu'u
+>   .i la selzilkancu na du li no .i jo
+>   ko'oi rapli co'u lo nu ja'a go'i ku fa lo nu
+>   ge ko'oi la selzilkancu cu dubjdika li pa
+>   gi ko'oi lo me la selzilkancu moi be la lerpoi cu fukpi la selclu
+} tu'u
+.i ko'oi zilxru gi'e pruce fi la lerpoi
+</code>
