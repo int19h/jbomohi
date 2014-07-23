@@ -29,3 +29,10 @@ enter that sort of thing in jbovlaste; I just got here. :)
 
 mu'o mi'e .bret. 
 
+
+## 2014-07-23T08:04:50Z — krtisfranks (comment 1278, on definition 13820)
+
+No way
+
+I will go on a rampage if we calque "imaginary number".
+
