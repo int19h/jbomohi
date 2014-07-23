@@ -4,3 +4,15 @@ This page contains, in rather unwieldy formats I'm sorry to say, data from the o
 
 [http://www.lojban.org/tiki/tiki-download_wiki_attachment.php?attId=3|BPFK data from the old TWiki, as zip of text files] is about 38KiB.
 -Robin
+
+This query extracts posted text chronologically from the PHPBB database:
+
+{CODE(colors="sql")}
+select t.topic_title, pt.post_subject, u.username, from_unixtime(p.post_time) as post_time, pt.post_text
+from phpbb_posts p
+join phpbb_posts_text pt on pt.post_id = p.post_id 
+join phpbb_users u on p.poster_id = u.user_id 
+join phpbb_topics t on t.topic_id = p.topic_id 
+order by p.post_time
+\G
+{CODE}
