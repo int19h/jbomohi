@@ -2113,3 +2113,82 @@ For ''half past eleven'' we can also use '''pi''' and say '''li pa pa pimu''' ''
 23:38 < gerna> (0[{mi <ca da>} CU {broda VAU}])0                                
 23:38 < zahlman> notice that {ca da} is not part of the selbri here             
 23:38 < zahlman> gi'e connects bridi-tails, so they have to start with selbri.
+
+== member vs. full set ==
+
+<code>
+10:04 < latro`a> gleki: I think in the gismu themselves, it is best if these are polymorphic
+10:04 < latro`a> then you can specify later
+10:05 < latro`a> unfortunately this does lead to odd interaction with quantifiers, because polymorphic selbri really are polyvalent
+10:05 < latro`a> so {mi po'o se bangu la lojban} makes sense for one of the manifestations of {bangu}
+10:06 < latro`a> in haskell this problem is solved by the typechecker: a polymorphic function comes with a dictionary that maps values of the variable input types to implementations
+10:07 < latro`a> for example, if I define "f x = 3*x+1", I get a function that carries around a dictionary that tells it to use (*) and (+) from Int if x is an Int, from Double if x is a Double, etc.
+10:08 < latro`a> it'd be interesting if we could somehow implement something like this
+10:08 < latro`a> but we probably can't, which means you really shouldn't use quantifiers in polymorphic places
+10:16 < latro`a> I suppose to a limited extent this could be done with SE, though this would get rather cumbersome if we had more distinctions than distributive/nondistributive and exhaustive/nonexhaustive
+10:17 < latro`a> or NAhE
+10:24 < gleki> latro`a: what should i use {poi se gunma} and {poi cmima}?
+10:24 < latro`a> that's not enough, unfortunately, you have to tweak the selbri instead
+10:25 < latro`a> because this isn't really about the type of the argument
+10:25 < latro`a> skina with skina4=nonexhaustive and skina with skina4=exhaustive are different predicates
+10:25 < gleki> to tweak? how?
+10:26 < gleki> for skina i can say {mi catlu lo skina}
+10:26 < latro`a> NAhE or SE are the syntax you want
+10:26 < gleki> but about the other cases?
+10:26 < latro`a> I'm imagining a NAhE for "x1 is exhaustive"
+10:26 < latro`a> then "x2 is exhaustive" is {se NAhE* se}
+10:26 < gleki> "this is a language of French people" = ko'a bangu lo fraso
+10:27 < gleki> "this is a language of some French people (my friends)" = ko'a bangu lo fraso
+10:27 < gleki> how to distinguish them?
+10:30 < gleki> seriously i understood nothin from ur proposal
+10:33 < latro`a> ko'a se NAhE* se bangu mi == ko'a is a language of me exclusively
+10:33 < latro`a> where NAhE* is a new NAhE
+10:33 < latro`a> this is a bit stronger than the {po'o} version
+10:44 < Ilmen> coi. What do you mean by «exhaustive»?
+10:48 < gleki> cipra: ko'a se na'e se bangu mi
+10:48 < cipra> (ko'a [CU {se <na'e (¹se bangu¹)>} {mi VAU}])
+10:53 < gleki> that would be nice ofc. to have them polymorphic but then what would be the difference between cmima and se gunma? ;)
+10:59 < latro`a> cmima isn't really a thing in post-set jbo
+10:59 < gleki> what is it then?
+10:59 < latro`a> cmima?
+10:59 < gleki> yes
+10:59 < latro`a> it's the way you refer to sets
+10:59 < latro`a> which we don't use
+11:00 < gleki> so now we dont need {cmima} gismu at all?
+11:00 < latro`a> not really no
+11:00 < latro`a> se gunma is mass membership
+11:00 < gleki> So "I am a member of this committee" would be ...
+11:00 < gleki> en: kamni
+11:00 < mensi> kamni = x1 (mass) is a committee with task/purpose x2 of body x3. |>>> Board of directors/trustees/cabinet (= trukamni, gritrukamni). See also bende, kagni. |>>> noralujv
+11:01 < gleki> would be what?
+11:02 < latro`a> mi se gunma ti noi kamni
+11:02 < Ilmen> So, what is an exhaustive tersu'i? Do you mean things like gunma2 which doesn't require to list all the members of the mass?
+11:02 < latro`a> being literal
+11:02 < latro`a> maybe this will help
+11:02 < gleki> latro`a: do you think i should remove {cmima} from my analog of L4B ?
+11:02 < latro`a> mi se gunma mi joi do
+11:02 < latro`a> mi na se NAhE* se gunma mi joi do
+11:03 < latro`a> mi jo'u do se NAhE* se gunma mi joi do
+11:03 < latro`a> this also gives you a way to extract the individual-blob from a mass, provided that makes sense
+11:03 < gleki> why {na} in the first sentence?
+11:03 < latro`a> {lo se NAhE* se gunma be ...} is unambiguously all of the individuals inside, in one lo-blob
+11:04 < Ilmen> Hmm
+11:04 < gleki> could u at least give translations?
+11:04 < latro`a> {mi se gunma mi joi do} = I am a member of the mass {mi joi do}
+11:04 < Ilmen> What means {lo ro se gunma be ko'a}?
+11:05 < latro`a> {mi na se NAhE* se gunma mi joi do} = I do not satisfy "x1 (individuals) is the collection of all individual members of x2"
+11:05 < latro`a> it is a slightly more vague version of the same thing
+11:05 < latro`a> "all of the members of ko'a that we are talking about
+11:05 < latro`a> "
+11:05 < latro`a> but we might not be talking about *all* of them
+11:05 < latro`a> this NAhE* is sort of an explicit UD-twiddler
+11:06 < gleki> this is one of the three questions that stop me from completing a new gimste with examples, te sumti interactions, variable types, blackjack and hookers
+11:06 < latro`a> {lo ro ve skina} may not contain the entire audience of the film, because we might just be talking about a small group of friends that watch movies together
+11:07 < latro`a> also I made a mistake, the first {se} in my previous examples wasn't supposed to be there
+11:07 < latro`a> {mi na NAhE* se gunma mi joi do}
+11:07 < Ilmen> To me, skina4 is the *intended* audience, not the people who actually watch skina1
+11:07 < Ilmen> ie pei
+11:07 < gleki> as for "intended" te sumti this is actually my second question :D
+11:07 < latro`a> to me that's the exhaustive skina4, but I regularly use ve skina for "watch"
+11:08 < latro`a> I do not really like kinzga
+</code>
