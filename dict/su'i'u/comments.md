@@ -75,3 +75,18 @@ gleki wrote:
 nei
 > ca ko'a
 
+
+## 2014-07-30T15:49:01Z — gleki (comment 1284, on definition 57154, in reply to 1283)
+
+Re: selma'o
+
+durka42 wrote:
+> All right, interesting. The BPFK section for CAhA says the ka'e-tagged
+> sumti is an "under conditions" so maybe {va'o} or {fau} is better than
+> {ca}
+
+Yes, {fau} as a generalization of ca/bu'u/va'o.
+
+Since many perceive {fau} not as la gleki then it's better to point at a
+better understood cmavo, namely, {ca}, the most common case of {fau}.
+
