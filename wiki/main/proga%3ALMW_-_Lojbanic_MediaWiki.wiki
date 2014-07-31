@@ -116,8 +116,27 @@ If you are in charge of LMW you should do the following:
 #:and then
 #:<code>chgrp -R apache /home/gleki/public_html/mediawiki-1.19.2/ ; chmod -R g+rwX /home/gleki/public_html/mediawiki-1.19.2/</code>
 #:replacing the paths acording to where you are moving LMW to.
-# Update extensions once in a while. Ensure you are in /extensions folder of the root of your MediaWiki deployment directory.
+=== Update extensions once ===
+in a while. Ensure you are in /extensions folder of the root of your MediaWiki deployment directory.
 #:Note that some of extensions require manual patches.
+<code>
+for ext in Babel cldr CleanChanges LocalisationUpdate Translate UniversalLanguageSelector
+ do
+   if [ ! -d "$ext" ]
+   then
+     git clone https://gerrit.wikimedia.org/r/p/mediawiki/extensions/$ext.git
+   fi
+   cd $ext; git fetch --tags; git checkout 2014.07; cd ..
+ done
+
+cd VisualEditor
+git pull
+
+git submodule update --init
+
+cd ..
+</code>
+
 ===Scribunto===
 For it to work you might need to run
 
