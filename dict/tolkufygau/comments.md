@@ -3,3 +3,13 @@
 kufna?
 
 
+
+## 2014-08-07T06:46:24Z — durka42 (comment 1293, in reply to 1290)
+
+Re: kufna?
+
+gleki wrote:
+> 
+
+Obvious typo. Fixed.
+
