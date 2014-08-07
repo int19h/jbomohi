@@ -13,3 +13,9 @@ gleki wrote:
 
 Obvious typo. Fixed.
 
+
+## 2014-08-07T08:36:43Z — gleki (comment 1294)
+
+tolkufyselja'e too
+
+
