@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2cebff2b4514-the_cll_project,_technical_directions | root 20131227041501.ga21848@stodi.digitalkingdom.org | 23 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2cebff2b4514-the_cll_project,_technical_directions | root 20131227041501.ga21848@stodi.digitalkingdom.org | 24 messages | rendered by jbomohi mail-v1
 
 === 1 | 2013-12-27T04:15:01Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20131227041501.ga21848@stodi.digitalkingdom.org | mail/lojban-list/cur/1388117701.2cebff2b4514d34c.jbomohi:2,S
 
@@ -1201,4 +1201,127 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To post to this group, send email to lojban@googlegroups.com.
 Visit this group at http://groups.google.com/group/lojban.
 For more options, visit https://groups.google.com/d/optout.
+
+
+=== 24 | 2014-08-09T20:23:09Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20140809202309.ga23392@stodi.digitalkingdom.org | mail/lojban-list/cur/1407615789.326a5138aba0c67c.jbomohi:2,S
+On Sat, Aug 09, 2014 at 05:44:17AM -0700, TR NS wrote:
+> 
+> On Thursday, August 7, 2014 9:19:44 PM UTC-4, Robin Powell wrote:
+> >
+> >
+> > So let me start off by saying that pandoc is certainly not out of 
+> > the question and you're welcome to try to do something like that.  I 
+> > played with it myself for a while. 
+> >
+>
+> Would it be possible for me to get a copy of the source material,
+> even just a chapter or two portion, to work with? 
+
+Oh, yes, absolutely.
+
+The current state of affairs is on github, and works as-is.  The
+problem is that the current state of affairs uses XSLT *heavily*,
+really just because docbook uses that and so I followed along.
+
+It turns out that unlike Ruby or Python or Haskell or to a certain
+extent Perl, where people in the Lojban community might
+theoretically help out, *NO-ONE* will touch XSLT.
+
+Having done a bunch of XSLT work, frankly, *neither will I*.  At
+least, I won't ever touch it again.
+
+Hence all this back and forth.
+
+By the way, our docbook is heavily modified, things like the cmavo
+tables take like a billion tags in docbook, so I basically made
+macros.  That's what the XSLT is for.  I still wouldn't use XSLT if
+I had it to do over.
+
+https://github.com/lojban/cll
+
+Note that the toolchain is a bit harsh; find me in #jbopre on
+freenode if you want an account on the server that already has it
+all.
+
+The Ruby branch is origin/docbook-ruby , but it's just way not
+ready.  Soon.  Keep bugging me, please, I really mean it.
+
+> > Teaching a system that has no concept of an index whatsoever how to 
+> > render one means thoroughly learning a new system that, at the time, 
+> > I had no indication that anyone else would be familiar with or be 
+> > able to help with.  That sounds tedious and upleasent to me, just 
+> > because of the time that would be required to learn pandoc. 
+> >
+> > In addition to my primary goal being accessibility for other coders 
+> > and the specific issue of the index, though, it's not just the 
+> > index. 
+> >
+> > http://vrici.lojban.org/~rlpowell/media/public/pandoc_vs_docbook/ 
+> >
+> > Look at the HTML, specifically the "I sell this-thing/these-things 
+> > to that-buyer/those-buyers." example.  I don't know why the tables 
+> > align differently; I'd have to go figure that out.  The examples 
+> > have no numbers.  etc, etc, etc; there's a ton of work there 
+> >
+> 
+> The HTML shouldn't be too hard to fix, at least mostly. I am more concerned 
+> about the PDF output though, that a bit harder to fix.and pass
+> them through dblatex with special tags, which pandoc doesn't know
+> about.
+
+At least some of that is the fact that the PDF table management was
+*so bad* with dblatex that I actually write the tables in LaTeX and
+pass them through dblatex with special tags, which pandoc doesn't
+know about, so raw LaTeX is arriving in the output.
+
+> > I have no idea how much work it will take to teach pandoc
+> > everything I need to teach it.  I have a pretty good idea how
+> > long the Ruby solution will take, though (I'd say on the order
+> > of a hundred hours). 
+> >
+> 
+> Ok. Well, maybe that is best choice at this time then. I am a
+> (very good) Ruby programmer so I may be able to help a bit there
+> too.
+> 
+> But I would like to see how far I can get the Pandoc solution to
+> work.
+
+I'm totally OK with that.
+
+> Thing is, I have my own book to publish eventually. So I have an
+> ulterior motive of perfecting a publishing platform for myself as
+> well, and I am absolutely adamant about KISS. Using the LLC as
+> base material for working that out should be perfect b/c it
+> contain many of the same kinds of constructs I will need
+> (examples, tables, index, etc). 
+> 
+> If I can't get the Pandoc to work, or find something similar, than
+> I may just join your Ruby-platform alliance ;-)
+
+Nice to have someone motivated.  :)  I must say I'm *quite* startled
+by how hard this (multi-format book output using only FOSS tools)
+is.  If you want to stick to free tools and you don't want to
+descend in the mire that is docbook-to-pdf, it appears that Sphinx
+and Pandoc are really the only two choices, and neither of them do
+serious books out of the box (i.e., multiple indexes).
+
+The reason I didn't do Sphinx, by the way, is that I would have had
+to write a converter from our modified version of docbook too
+Sphinx's markdown(?).  I figured if I was going to have to write a
+converter for *every* tag *anyway*...
+
+-- 
+http://intelligence.org/ :  Our last, best hope for a fantastic future.
+.i ko na cpedu lo nu stidi vau loi jbopre .i dafsku lu na go'i li'u .e
+lu go'i li'u .i ji'a go'i lu na'e go'i li'u .e lu go'i na'i li'u .e
+lu no'e go'i li'u .e lu to'e go'i li'u .e lu lo mamta be do cu sofybakni li'u
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
 
