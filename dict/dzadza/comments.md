@@ -48,3 +48,11 @@ sentences with curly brackets, which resulted in those awful dead links.
 u'u
 I can't edit my own message, malmabla. =q
 
+
+## 2014-08-18T13:22:37Z — Wuzzy (comment 1303, on definition 57234, in reply to 1300)
+
+Re: Request for example
+
+Thanks a lot, yeah this helped me understand this thing.
+Good entry btw.
+
