@@ -38,3 +38,13 @@ I hope this helped. :)
 (I'll probably write a cleaner explanation of how to expand scopes into
 nested bridi levels somewhere.)
 
+
+## 2014-08-18T11:13:10Z — Ilmen (comment 1301, on definition 57234, in reply to 1300)
+
+Re: Request for example
+
+I'm sorry for the broken links, I intended to surround my example
+sentences with curly brackets, which resulted in those awful dead links.
+u'u
+I can't edit my own message, malmabla. =q
+
