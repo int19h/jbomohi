@@ -18,3 +18,21 @@ fi'o gunma proposed by latro'a.
 The advantage is to explain the grammar in fewer selma'o.
 Don't multiply entities when the sufficient tools are at hand already!
 
+
+## 2014-08-28T16:36:59Z — durka42 (comment 1307, in reply to 1306)
+
+Re: lu'o
+
+gleki wrote:
+> durka42 wrote:
+> > Why is this needed when {lu'o} exists?
+> 
+> 
+> fi'o gunma proposed by latro'a.
+> 
+> The advantage is to explain the grammar in fewer selma'o.
+It doesn't seem like LAhE is going away anytime soon.
+
+> Don't multiply entities when the sufficient tools are at hand already!
+Uh... yes? That was exactly the motivation for my question.
+
