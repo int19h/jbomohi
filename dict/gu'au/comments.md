@@ -63,3 +63,37 @@ even worse (just use lo su'u co'e).
 Whereas {fi'o} {gunma} is pretty straightforward and you know what brivla
 is inside.
 
+
+## 2014-08-28T16:59:05Z — durka42 (comment 1309, in reply to 1308)
+
+Re: lu'o
+
+gleki wrote:
+> durka42 wrote:
+> > gleki wrote:
+> > > durka42 wrote:
+> > > > Why is this needed when {lu'o} exists?
+> > > 
+> > > 
+> > > fi'o gunma proposed by latro'a.
+> > > 
+> > > The advantage is to explain the grammar in fewer selma'o.
+> > It doesn't seem like LAhE is going away anytime soon.
+> 
+> The same question goes for {la'e}. It doesn't explain a lot. {tu'a} is
+> even worse (just use lo su'u co'e).
+> 
+> > 
+> > > Don't multiply entities when the sufficient tools are at hand
+already!
+> > Uh... yes? That was exactly the motivation for my question.
+> 
+> {lu'o} doesnt explain distributivity. What bridi is it based on?
+> Whereas {fi'o} {gunma} is pretty straightforward and you know what
+brivla
+> is inside.
+
+I guess I would advocate for writing Lojban definitions of {la'e} and
+{lu'o} and the rest instead of adding more cmavo. {gu'au} {je} {fa} is
+kind of unwieldy and doesn't even work without tag unification.
+
