@@ -97,3 +97,43 @@ I guess I would advocate for writing Lojban definitions of {la'e} and
 {lu'o} and the rest instead of adding more cmavo. {gu'au} {je} {fa} is
 kind of unwieldy and doesn't even work without tag unification.
 
+
+## 2014-08-28T17:04:12Z — gleki (comment 1310, in reply to 1309)
+
+Re: lu'o
+
+durka42 wrote:
+> gleki wrote:
+> > durka42 wrote:
+> > > gleki wrote:
+> > > > durka42 wrote:
+> > > > > Why is this needed when {lu'o} exists?
+> > > > 
+> > > > 
+> > > > fi'o gunma proposed by latro'a.
+> > > > 
+> > > > The advantage is to explain the grammar in fewer selma'o.
+> > > It doesn't seem like LAhE is going away anytime soon.
+> > 
+> > The same question goes for {la'e}. It doesn't explain a lot. {tu'a} is
+> > even worse (just use lo su'u co'e).
+> > 
+> > > 
+> > > > Don't multiply entities when the sufficient tools are at hand
+> already!
+> > > Uh... yes? That was exactly the motivation for my question.
+> > 
+> > {lu'o} doesnt explain distributivity. What bridi is it based on?
+> > Whereas {fi'o} {gunma} is pretty straightforward and you know what
+> brivla
+> > is inside.
+> 
+> I guess I would advocate for writing Lojban definitions of {la'e} and
+> {lu'o} and the rest instead of adding more cmavo. {gu'au} {je} {fa} is
+> kind of unwieldy and doesn't even work without tag unification.
+
+la'e ~= lo se sinxa be lo
+
+I can't see any ways of expressing {loi} otherwise than what is presented.
+Ask latro'a
+
