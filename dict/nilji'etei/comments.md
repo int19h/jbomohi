@@ -27,3 +27,15 @@ But I suppose you could express this with:
 
 So do you think the place x3 is unnecessary?
 
+
+## 2014-09-03T15:37:53Z — Wuzzy (comment 1318, on definition 57285, in reply to 1317)
+
+Re: How to specify the time scale x3?
+
+No, because the time scale is part of {ni}, and it shouldn’t just be
+dropped.
+
+Still, as long as the specification of the time scale is ill-defined,
+everyone would just come up with his/her ad-hoc time scale. That probably
+would not help much …
+
