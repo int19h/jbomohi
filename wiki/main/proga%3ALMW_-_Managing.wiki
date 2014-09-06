@@ -17,13 +17,16 @@ If you are in charge of LMW you should do the following:
 once in a while. Ensure you are in /extensions folder of the root of your MediaWiki deployment directory.
 
 Note that some of extensions require manual patches.
-<pre>for ext in Babel cldr CleanChanges LocalisationUpdate Translate UniversalLanguageSelector
+<pre>
+rm -rf Babel ; rm -rf cldr ; rm -rf CleanChanges ; rm -rf LocalisationUpdate ; rm -rf Translate ; rm -rf UniversalLanguageSelector
+
+for ext in Babel cldr CleanChanges LocalisationUpdate Translate UniversalLanguageSelector
  do
    if [ ! -d "$ext" ]
    then
      git clone https://gerrit.wikimedia.org/r/p/mediawiki/extensions/$ext.git
    fi
-   cd $ext; git fetch --tags; git checkout 2014.07; cd ..
+   cd $ext; git fetch --tags; git checkout 2014.08; cd ..
  done
 cd VisualEditor
 git pull
