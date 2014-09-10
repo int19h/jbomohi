@@ -1,0 +1,106 @@
+{{#ifexist:{{FULLPAGENAME}}s
+ |{{Did you mean/box|{{FULLPAGENAME}}s}}
+}}{{#ifexist:{{FULLPAGENAME}})
+ |{{Did you mean/box|{{FULLPAGENAME}})}}
+}}{{#switch: {{FULLPAGENAME}}
+ | Enter your new article name here = {{Editnotices/Page/Enter your new article name here}}
+ | Wikipedia talk:Articles for creation/Enter your new article name here = {{Editnotices/Page/Wikipedia talk:Articles for creation/Enter your new article name here}}
+ | #default = {{#switch: {{lc: {{SUBJECTSPACE}}#{{SUBPAGENAME}} }}
+  | user#skin.js  
+  | user#skin.css = {{skin-file disambig}}
+  | #default = {{fmbox
+   | type  = system
+   | id    = noarticletext
+   | image = none
+   | textstyle = padding: 0.6em 0.9em;  <!--Large box needs more padding-->
+   | text = {{#ifeq: {{#ifeq:{{FULLPAGENAME}}|Template:No article text||{{NAMESPACE}}}}
+    | {{ns:0}}
+    | <div class="infobox" id="sisterproject" style="width:20em; font-size:90%; float:right; padding:0.5em;">Look for '''{{PAGENAME}}''' on one of Wikipedia's [[Special:SiteMatrix|sister projects]]:
+<table style="background:none; margin:auto;" cellpadding="1" cellspacing="0">
+<tr>
+<td align="center" >[[File:Wiktionary-logo-en.png|30x30px| ]]</td>
+<td>{{sec link auto|wiktionary|Special:Search/{{PAGENAME}}|Wiktionary}} (free dictionary)</td></tr>
+<tr>
+<td align="center" >[[File:Wikibooks-logo.svg|30x30px| ]]</td>
+<td>{{sec link auto|wikibooks|Special:Search/{{PAGENAME}}|Wikibooks}} (free textbooks)</td></tr>
+<tr>
+<td align="center" >[[File:Wikiquote-logo.svg|30x30px| ]]</td>
+<td>{{sec link auto|wikiquote|Special:Search/{{PAGENAME}}|Wikiquote}} (quotations)</td></tr>
+<tr>
+<td align="center" >[[File:Wikisource-logo.svg|30x30px| ]]</td>
+<td>{{sec link auto|wikisource|Special:Search/{{PAGENAME}}|Wikisource}} (free library)</td></tr>
+<tr>
+<td align="center" >[[File:Wikiversity-logo.svg|30x30px| ]]</td>
+<td>{{sec link auto|wikiversity|Special:Search/{{PAGENAME}}|Wikiversity}} (free learning resources)</td></tr>
+<tr>
+<td align="center" >[[File:Commons-logo.svg|30x30px| ]]</td>
+<td>{{sec link auto|commons|Special:Search/{{PAGENAME}}|Commons}} (images and media)</td></tr>
+<tr>
+<td align="center" >[[File:Wikivoyage-Logo-v3-icon.svg|30x30px| ]]</td>
+<td>{{sec link auto|wikivoyage|Special:Search/{{PAGENAME}}|Wikivoyage}} (free travel guide)</td></tr>
+<tr>
+<td align="center" >[[File:Wikinews-logo.svg|30x30px| ]]</td>
+<td>{{sec link auto|wikinews|Special:Search/{{PAGENAME}}|Wikinews}} (free news source)</td></tr>
+</table></div>
+   }}{{#ifeq: {{NAMESPACE}} | User talk
+    | '''No messages''' have been posted for this user yet.
+    | '''Wikipedia does not have {{#switch: {{NAMESPACE}}
+     | {{ns:0}} = an article
+     | {{TALKSPACE}} = a [[{{ns:Help}}:Talk page|talk page]]
+     | {{ns:Category}} = a [[{{ns:Project}}:Category|category]]
+     | {{ns:Help}} = a [[{{ns:Help}}:Contents|help]] page
+     | {{ns:Portal}} = a [[{{ns:Project}}:Portal|portal]]
+     | {{ns:Template}} = a [[{{ns:Project}}:Template messages|template]]
+     | {{ns:User}} = a [[{{ns:Project}}:User page|user page]]
+     | {{ns:Project}} = a [[{{ns:Project}}:Project namespace|project page]]
+     | #default = a {{NAMESPACE}} page
+    }} with this exact name.''' {{#ifeq: {{PAGENAME}} | {{SUBPAGENAME}}
+     | {{#switch: {{NAMESPACE}}
+      | {{ns:0}} = Please [[{{ns:Special}}:Search/{{PAGENAME}}|search for ''{{PAGENAME}}'' in Wikipedia]] to check for alternative titles or spellings.
+      | {{ns:Category}} = Please browse the [[Portal:Contents|existing categories]] to check if the category is covered under another name.
+      | {{ns:Help}} = Please browse the [[{{ns:Help}}:Contents|existing help pages]] to check if the help topic is covered under another name.
+      | {{ns:Portal}} = Please browse the [[{{ns:Portal}}:Browse|existing portals]] to check for similar topics.
+      | {{ns:Template}} = Please browse the [[{{ns:Project}}:Template messages|existing templates]] to check if the standardized message is available under another name.
+      | {{ns:User}} = In general, this page should be created and edited by [[{{ns:User}}:{{PAGENAME}}]]. If in doubt, please verify that "{{PAGENAME}}" [{{fullurl:Special:ListUsers|username={{urlencode:{{PAGENAME}}}}&limit=1}} '''exists'''].
+     }}
+     | Before creating this page, please see [[{{ns:Project}}:Subpages]].
+    }}
+   }}{{#ifeq:{{{nopermission}}}|yes
+    |* {{#switch:{{PROTECTIONLEVEL:create|{{FULLPAGENAME}}}}
+     |sysop=This page is protected from creation, so only [[WP:SYSOP|administrators]] can create it.
+|autoconfirmed=This page is semi-protected from creation, so only [[WP:User access levels#Autoconfirmed users|autoconfirmed users]] can create it.
+     |[{{fullurl:Special:UserLogin|returnto={{urlencode:{{FULLPAGENAME}}}}}} Log in or create an account] to start the '''''{{FULLPAGENAME}}''''' {{#if:{{NAMESPACE}}|page|article}}{{#switch: {{NAMESPACE}}
+      | {{ns:0}} =, alternatively use the [[Wikipedia:Article wizard|Article Wizard]], or [[{{ns:Project}}:Requested articles|add a request for it]].
+      | {{ns:Category}} =, alternatively use the [[Wikipedia:Article wizard/Category|Article Wizard]].
+      | #default=.
+     }}
+    }}
+    |* '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} {{#switch: {{NAMESPACE}} 
+     | User talk = Post a message to ''{{PAGENAME}}'' 
+     | #default = Start the ''{{FULLPAGENAME}}'' {{#if:{{NAMESPACE}}|page|article}}
+    }}]'''{{#switch: {{NAMESPACE}}
+     | {{ns:0}} = , using the [[Wikipedia:Article wizard|Article Wizard]] if you wish, or [[{{ns:Project}}:Requested articles|add a request for it]].
+   }}
+  }}{{#switch: {{NAMESPACE}} 
+   | User talk = 
+   | #default = 
+* [[{{ns:Special}}:Search/{{#ifeq:{{NAMESPACE}}|{{ns:0}}||{{NAMESPACE}}:}}{{PAGENAME}} |Search for "''{{#ifeq:{{NAMESPACE}}|{{ns:0}}||{{NAMESPACE}}:}}{{PAGENAME}}''"]] in existing {{#if:{{NAMESPACE}}|pages|articles}}{{#ifeq:{{NAMESPACE}}|{{ns:0}}|| &nbsp;of namespace {{NAMESPACE}}}}.
+* [[{{ns:Special}}:WhatLinksHere/{{FULLPAGENAME}}|Look for pages within Wikipedia that link to this title]].
+  }}
+<div id="noarticletext_technical">
+----
+
+'''Other reasons this message may be displayed:'''
+* If {{#switch: {{NAMESPACE}}
+  | {{ns:File}} = an image
+  | a page
+  }} was recently created here, it may not yet be visible because of a delay in updating the database; wait a few minutes and try the [{{fullurl:{{FULLPAGENAME}}|action=purge}} purge] function.
+* Titles on Wikipedia are '''[[Case sensitivity|case sensitive]]''' except for the first character; please check alternative capitalizations and consider adding a [[Wikipedia:Redirect|redirect]] here to the correct title.
+* If the page has been deleted, check the '''[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log]''', and see [[Wikipedia:Why was the page I created deleted?|Why was the page I created deleted?]].
+</div>
+}}<!--End fmbox-->
+
+  }}
+}}<!--End switch: {{FULLPAGENAME}}--><noinclude>
+{{documentation}}
+</noinclude>
