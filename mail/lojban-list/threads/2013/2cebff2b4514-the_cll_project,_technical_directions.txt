@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2cebff2b4514-the_cll_project,_technical_directions | root 20131227041501.ga21848@stodi.digitalkingdom.org | 38 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2cebff2b4514-the_cll_project,_technical_directions | root 20131227041501.ga21848@stodi.digitalkingdom.org | 39 messages | rendered by jbomohi mail-v1
 
 === 1 | 2013-12-27T04:15:01Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20131227041501.ga21848@stodi.digitalkingdom.org | mail/lojban-list/cur/1388117701.2cebff2b4514d34c.jbomohi:2,S
 
@@ -2084,6 +2084,64 @@ For more options, visit https://groups.google.com/d/optout.
 === 38 | 2014-09-14T15:09:57Z | TR NS <transfire@gmail.com> | b1c98219-255e-431c-89e0-61b38a60e251@googlegroups.com | mail/lojban-list/cur/1410707397.dbf6ddc95c46574b.jbomohi:2,S
 Btw, is the Ruby work far enough along that I can take a look? Is it the 
 `docbook-ruby` branch, or is it something else you are working on?
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 39 | 2014-09-14T16:29:46Z | TR NS <transfire@gmail.com> | b049b5f7-637f-4e0e-9b18-36fccd233d7d@googlegroups.com | mail/lojban-list/cur/1410712186.2f26da752187f200.jbomohi:2,S
+
+
+On Sunday, September 14, 2014 9:30:18 AM UTC-4, Robin Powell wrote:
+>
+>
+> That sounds like you're talking about doing it by hand? 
+>
+> If so, I think you're badly underestimating how cross-reference 
+> heavy (i.e. index and glossary entries) this book is; that's a 
+> staggering amount of work. 
+>
+> More importantly, the problem with by-hand changes is that it's hard 
+> to demonstrate that the *content* hasn't changed.  I would 
+> definitely consider the burden of proof that the text is all the 
+> same to be on you in that case. 
+>
+>
+Here's a preliminary example of chapter 
+1: https://github.com/trans/cll/blob/markdown/source/01.md (better to look 
+at it in raw format in you favorite text editor though)
+
+A couple of points about it:
+
+1. The changes that would have to be accounted for when the markdown is 
+transformed to XHTML are: `<p>` instead of `<para>`, `<q>` instead of 
+`<quote>`, `<li>` instead of `<listitem>` and a few others along the same 
+lines. Basically XHTML instead of Docbook XML in the places where markdown 
+is used. (All other XML is untouched and passed thru.) I still don't fully 
+know what you have planned for the Ruby code, but these could be 
+transformed at that level, or by adding some additional XSL transforms. Not 
+a big deal either way. Probably the most difficult adjustment will be 
+converting `<h*>` to `<section>` markup, but even that isn't terribly 
+difficult.
+
+2. indexterm could be marked-up better. I already wrote a plugin for pandoc 
+to do it. But a Ruby solution would do just as well. This would make the 
+source document even cleaner.
+
+3. In this particular chapter, the image captions section is a bit odd. I 
+wonder how useful these linkends are. I also considered using a table, but 
+wasn't sure what would be best. I just ended up making them separate `pre` 
+sections. Personally I think it would be better if they were first page 
+footnotes of their respective chapters.
+
+So look it over and let me know what you think. It isn't particularly 
+revolutionary to use markdown as a first stage format, but it does make a 
+big difference to the readability (and hence edit-ability) of the source 
+documents.
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
