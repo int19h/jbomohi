@@ -1,82 +1,95 @@
 =A Guide to the IRC Bots of #lojban (also #ckule and ##jboselbau)=
-You might think all ~120 logged on users of #lojban are watching you and/or participating in the conversation. You'd be wrong, because most of them are inactive. But also, there are a bunch of robots! Some of them are even helpful. Read on for more.
+You might think all ~120 logged on users of #lojban are watching you and/or participating in the conversation. Well, no, we all live in different timezones and at any given moment of time most of them are inactive. But also, there are a bunch of robots! Some of them are even helpful. Read on for more.
 
 ==Lojban assistance==
-;'''valsi'''
-: This is a bidirectional Lojban-English dictionary. It works from a dump of [http://jbovlaste.lojban.org/ Jbovlaste], so it may not be completely up to date.
-: Run by [[la donri]] ([https://github.com/lojban/vlasisku/blob/master/vlasisku/irc.py source]).
-: You can invoke '''valsi''' in the channel by prefixing a message with "valsi ", or send a private message to the bot (with no prefix).
-: The content of the message is just a word. If it's a Lojban word, you'll get its definition. If it's an English word, you'll get a list of suggested translations.
-: Accepted options for Lojban word lookup: (you can give up to one option, in parentheses, e.g. "valsi lercu'aca'a (components)")
-:* affix
-:: Get the affix (rafsi) form of the word.
-:* class
-:: Get the selma'o (grammatical category) of the word.
-:* type
-:: Get the type (cmavo/gismu/lujvo/etc) of the word.
-:* notes
-:: Return the notes field of the definition (without this option it isn't shown).
-:* cll
-:: Get the link to the section of the CLL that discusses the word (not always accurate).
-:* url
-:: Get the link to Vlasisku's page for the word.
-:* components
-:: Break a lujvo into its component gismu (works on nonce lujvo). Beware: lujvo with missing hyphens are still parsed, so you can't rely on this to check your construction.
-:* rafsi
-:: Treat the word as a rafsi for the purposes of the search (many cmavo are also rafsi of other words).
-::* I don't see this option in the source, so maybe what's running is a slightly different version? [[User:Durka42|Durka42]] ([[User talk:Durka42|talk]])
-:* You can also send queries in vlasisku's internal query language, like "valsi class:BAI" or "valsi affix:ka'i".
-; '''vlaste'''
-: Another instance of '''valsi''', run by [[la durka]], which contains an updated jbovlaste database, bug fixes and new features.
-: It supports the following additional commands, which '''valsi''' does not:
-:* lujvo
-:: Combine a tanru into a lujvo, using [[jvocu'adju]]. If the canonical form is defined, the definition is shown.
-:: Relatedly, if you ask '''vlaste''' for a lujvo not in canonical form, and no definition is found, it will try to help you by silently correcting it to canonical form.
-:* finti
-:: Show the [[jbovlaste]] user who created the word.
-; '''gerna'''
-: This is a grammar checker based on [[jbofi'e]].
-: Run by [[la donri]] ([https://github.com/lojban/vlasisku/blob/master/vlasisku/irc.py source], same as '''valsi''').
-: You can invoke '''gerna''' in the channel by prefix a message with "gerna ", or send a private message to the bot (with no prefix).
-: The message is just a Lojban sentence. If it parses, you'll get the structure. If it doesn't parse or jbofi'e crashes, it will say "not grammatical" and try to show you which word broke the parse.
-: There are no options.
-;'''tcepru'''
-: This is another instance of '''gerna''', but instead of [[jbofi'e]] it runs the (very old) official LLG parser, based on the YACC grammar.
+
+==='''valsi'''===
+This is a bidirectional Lojban-English dictionary. It works from a dump of [http://jbovlaste.lojban.org/ Jbovlaste], so it may not be completely up to date.
+
+Run by [[la donri]] ([https://github.com/lojban/vlasisku/blob/master/vlasisku/irc.py source]).
+
+You can invoke '''valsi''' in the channel by prefixing a message with "valsi ", or send a private message to the bot (with no prefix).
+
+The content of the message is just a word. If it's a Lojban word, you'll get its definition. If it's an English word, you'll get a list of suggested translations.
+
+Accepted options for Lojban word lookup: (you can give up to one option, in parentheses, e.g. "valsi lercu'aca'a (components)")
+* affix
+: Get the affix (rafsi) form of the word.
+* class
+: Get the selma'o (grammatical category) of the word.
+* type
+: Get the type (cmavo/gismu/lujvo/etc) of the word.
+* notes
+: Return the notes field of the definition (without this option it isn't shown).
+* cll
+: Get the link to the section of the CLL that discusses the word (not always accurate).
+* url
+: Get the link to Vlasisku's page for the word.
+* components
+: Break a lujvo into its component gismu (works on nonce lujvo). Beware: lujvo with missing hyphens are still parsed, so you can't rely on this to check your construction.
+* rafsi
+: Treat the word as a rafsi for the purposes of the search (many cmavo are also rafsi of other words).
+:* I don't see this option in the source, so maybe what's running is a slightly different version? [[User:Durka42|Durka42]] ([[User talk:Durka42|talk]])
+* You can also send queries in vlasisku's internal query language, like "valsi class:BAI" or "valsi affix:ka'i".
+==='''vlaste'''===
+Another instance of '''valsi''', run by [[la durka]], which contains an updated jbovlaste database, bug fixes and new features.
+
+It supports the following additional commands, which '''valsi''' does not:
+* lujvo
+: Combine a tanru into a lujvo, using [[jvocu'adju]]. If the canonical form is defined, the definition is shown.
+: Relatedly, if you ask '''vlaste''' for a lujvo not in canonical form, and no definition is found, it will try to help you by silently correcting it to canonical form.
+* finti
+: Show the [[jbovlaste]] user who created the word.
+==='''gerna'''===
+This is a grammar checker based on [[jbofi'e]].
+
+Run by [[la donri]] ([https://github.com/lojban/vlasisku/blob/master/vlasisku/irc.py source], same as '''valsi''').
+
+You can invoke '''gerna''' in the channel by prefix a message with "gerna ", or send a private message to the bot (with no prefix).
+
+The message is just a Lojban sentence. If it parses, you'll get the structure. If it doesn't parse or jbofi'e crashes, it will say "not grammatical" and try to show you which word broke the parse.
+
+There are no options.
+==='''tcepru'''===
+This is another instance of '''gerna''', but instead of [[jbofi'e]] it runs the (very old) official LLG parser, based on the YACC grammar.
+
 : Run by [[la durka]]. You can download the [http://home.ccil.org/~cowan/ parser source].
-; '''mensi''', '''livla'''
-: These bots are parts of [[ilmentufa]] project and start talking when the channel ##jboselbau is dead for 15 minutes, so that there are no long stretches of time without Lojban being transmitted over the Internet.
-: Run by [[la gleki]] ([https://github.com/lagleki/glekitufa/tree/master/ircbot source]).
-: '''livla''' repeats sentences from [[Tatoeba]], while '''mensi''' has a list of canned replies.
-: If you catch any mistakes, you should probably tell someone, since it means a Lojban entry on Tatoeba is wrong.
-; Command line flags used by mensi
-; "'''camxes:"''', "'''cipra:"'''
-: These are parser bots based on [[camxes]]. '''camxes''' parses regular Lojban while '''cipra''' has (most of?) the [[ELG]] implemented.
-: You send this bot a sentence by prefixing it with the bot's name and a colon (the colon is mandatory, unlike other bots), e.g. "camxes: coi". You can also private-message it with no prefix.
-: Accepted options (put them before the sentence, like "camxes: +s coi"):
-:* +s
+==='''mensi''', '''livla'''===
+These bots are parts of [[ilmentufa]] project and start talking when the channel ##jboselbau is dead for 15 minutes, so that there are no long stretches of time without Lojban being transmitted over the Internet.
+
+Run by [[la gleki]] ([https://github.com/lagleki/glekitufa/tree/master/ircbot source]).
+
+'''livla''' repeats sentences from [[Tatoeba]], while '''mensi''' has a list of canned replies.
+
+If you catch any mistakes, you should probably tell someone, since it means a Lojban entry on Tatoeba is wrong.
+
+Command line flags used by mensi:
+*"'''off:'''", "'''exp:'''"
+:These are parser options based on [[camxes]]. '''off''' parses regular Lojban while '''exp''' has (most of?) the [[ELG]] implemented.
+:You send this bot a sentence by prefixing it with the bot's name and a colon (the colon is mandatory, unlike other bots), e.g. "off: coi". You can also private-message it with no prefix.
+: Accepted options (put them before the sentence, like "off:+s coi"):
+** +s
 :: Show the selma'o of each word.
-:* -f
+** -f
 :: Don't show terminators.
-:* -f+s (not +s-f)
+** -f+s (not +s-f)
 :: Both of the above.
-; Searching jbovlaste with '''mensi'''
+*Searching jbovlaste with '''mensi''':
 :Entering "en:coi" into the chat will output the definition of  for English.
-:Other languages are supported: "jbo: ", "ja: " (Japanese), "ru: " (Russian), "fr: " (French), "de: " (German), "es: " (Spanish). The databases are autoupdated once every 24 hour.
-:"/full " flag performs a search for a given sequence in definitions and notes. E.g. "en: /full greets".
-:Entering "mensi: s [SEQUENCE]" displays an arbitrary sentence from tatoeba.org database, containing that sequence. Useful for finding examples of words.
-; Alternative orthography with '''mensi'''
+:Other languages are supported: "jbo: ", "ja: " (Japanese), "ru: " (Russian), "fr: " (French), "de: " (German), "es: " (Spanish). The databases are autoupdated once every 12 hours.
+:"/full " flag performs a search for a given sequence in definitions and notes. E.g. "en:/full greets".
+*"Tatoeba:" outputs an arbitrary Lojban sentence from Tatoeba with a substring given
+*Alternative orthography with '''mensi''':
 :"rot13:" prefix performs ROT13 encoding on a given string
 :"mensi: j " performs [[jbopomofo]] encoding on a given string
 :"mensi: r " performs Cyrillic encoding on a given string
-; Searching Tatoeba with mensi
-: "Tatoeba:" outputs an arbitrary Lojban sentence from Tatoeba with a substring given
-; Messaging
-::* "mensi: tell <nick> <message>"
+*Messaging
+: "mensi: doi <nick> <message>"
 :: Delayed messaging service. Next time <nick> says something in the channel, '''mensi''' will relay the message. You can use regular expressions in the nick.
-; Loglan to Lojban conversion
+*Loglan to Lojban conversion
 : "loi:" converts Lojban text to Loglan (not perfect!). Failed words are marked with "*".
 : "coi:" converts Loglan text to Lojban (not perfect!). Failed words are marked with "*".
-; Glossing
+*Glossing
 : "gloss:" converts Lojban text to glossed English words.
 
 ==Other==
