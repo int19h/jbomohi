@@ -35,3 +35,26 @@ hm, what would be {dikca} with all places filled?
 Do you think {dikca} = 'x1 (number/quantity) is the electrical charge of
 x2 (object) in units x3' or what?
 
+
+## 2014-09-17T03:08:20Z — durka42 (comment 1341, in reply to 1340)
+
+Re: invert places?
+
+Unfortunately dikca1 says it's "[electric charge or current]" which are
+totally different things.
+
+gleki wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > I'd suggest to invert the order of places so that it matches {snidu}
+> > etc.
+> > 
+> > I was actually following analogy with {dikca}. {snidu} is a unit that
+> > measures a property, {majga} and {dikca} are properties if an entity.
+> 
+> okay, i even had {grake} in mind.
+> 
+> hm, what would be {dikca} with all places filled?
+> Do you think {dikca} = 'x1 (number/quantity) is the electrical charge of
+> x2 (object) in units x3' or what?
+
