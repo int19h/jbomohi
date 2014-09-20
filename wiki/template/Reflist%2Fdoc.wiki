@@ -6,7 +6,7 @@
 
 This [[Wikipedia:Citation templates|citation template]] provides formatting and organizational features for [[Help:Footnotes|footnotes]].  It encapsulates the {{tag|references|s}} tag used by the {{cite.php}} MediaWiki extension to show the list of references as defined by {{tag|ref|o}} tags. It adds support for a reduced font size, columns, groups and {{ldr}}.
 
-If you don't use any of the additional features, then it produces the same output as the simpler and slightly faster {{tag|references|s}} tag.
+If you don't use any of the additional features, then it produces the same output as the {{tag|references|s}} tag.
 
 ==Parameters==
 * First unnamed parameter:
@@ -15,7 +15,8 @@ If you don't use any of the additional features, then it produces the same outpu
 * '''refs''': used with named references (e.g., {{tag|ref|s|params=name=name}}); it specifies a list of some or all named references used in the article.
 * '''group''': identifies by name the subset of references to be rendered; the value should correspond to that used inline, e.g., {{tlx|Reflist|2=group=groupname}} renders all references with groupname as the group name ({{tag|ref|o|paams=group=groupname}}).
 * '''liststyle''': specifies the style used when the reference list is enumerated; if none is specified, the default is to render a numbered list.
-* '''close=1''': forces the reference list to close and render all references defined to that point; see the [[#Multiple uses|section on multiple uses]] for details.
+{{anchor|Multiple uses}}
+* '''close''': Obsolete. Until 2014 the parameter {{para|close|1}} was used to work around a bug involving multiple uses of {{tl|Reflist}} on the same page. The bug has been fixed, and remaining uses of {{para|close}} should be removed.
 
 ==Usage==
 {{markup|title=Using only footnote-style references
@@ -65,7 +66,7 @@ Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
 Lorem ipsum dolor sit amet.<ref>Source name, access date, etc.</ref>
 
 {{fake heading|sub=3|References}}
-{{Reflist|close=1}}
+{{Reflist}}
 
 {{Refbegin}}
 * reference 1
@@ -144,12 +145,6 @@ The citations in the reference list will show the default decimal styling if:
 
 {{CSS list-style-type values}}
 
-===Multiple uses===
-{{see|HELP:MULTIREF}}
-<section begin=multiref />
-In previous versions of MediaWiki, using {{tl|Reflist}} multiple times in the same page required a dummy parameter to prevent template caching. The underlying bug causing the inappropriate caching has since been fixed, so dummy parameters are no longer needed and the template will work properly when used multiple times in all cases.
-<section end=multiref />
-
 ===List-defined references===
 {{see|Help:List-defined references}}
 
@@ -192,7 +187,7 @@ And using {{para|group}} for the reflist:
 There are three pre-defined group names that will automatically cause the link labels and this template to display other characters instead of numbers (see [[#List styles|List styles]] above). These are: "lower-alpha" (a, b, c...), "lower-greek" (α, β, γ...) and "lower-roman" (i, ii, iii...) and must be written without quotes.
 
 ===Image flow issues===
-{{reflist hide|close=1}}<!--Ensure previous references are closed-->
+{{reflist hide}}
 When an image is inserted to the left of the reference list, the list may flow under the image, clipping the reference numbers or hiding them behind the image frame, depending upon the browser.
 
 {{markup
@@ -205,7 +200,7 @@ When an image is inserted to the left of the reference list, the list may flow u
 |Lorem ipsum dolor sit amet.<ref>Lorem ipsum dolor sit amet.</ref><ref>Lorem ipsum dolor sit amet.</ref>
 {{fake heading|sub=3|References}}
 [[File:Example.png|left|thumb|100px]]
-{{Reflist|close=1}}
+{{Reflist}}
 }}
 
 To resolve this issue, use the columns feature. If columns are not desired, simply set it to one column using {{tlx|reflist|2=1}}. Note that if the list is longer than the image, it will cause the space below the image to remain empty. It is recommended that a comment be added so that follow-on editors will understand the use.
@@ -220,7 +215,7 @@ To resolve this issue, use the columns feature. If columns are not desired, simp
 |Lorem ipsum dolor sit amet.<ref>Lorem ipsum dolor sit amet.</ref><ref>Lorem ipsum dolor sit amet.</ref>
 {{fake heading|sub=3|References}}
 [[File:Example.png|left|thumb|100px]]
-{{Reflist|1|close=1}}<!--Set one column to resolve flow issues with left floated image.-->
+{{Reflist|1}}<!--Set one column to resolve flow issues with left floated image.-->
 }}
 
 ==Technical details==
@@ -329,43 +324,43 @@ There have been suggestions to include section header markup such as <code>==Ref
 {{TemplateDataHeader}}
 <templatedata>
 {
- "description": "This template displays the list of footnotes at the end of an article and provides additional formatting and organizing options.",
- "params": {
-  "1": {
-   "label": "Columns / Column width",
-   "type": "string",
-   "required": false,
-   "description": "Two modes supported.  First mode: integer number of fixed columns into which the reference list is to be rendered.  Second mode: typographic unit of measurement such as 'em', specifying the width for the reference list columns, e.g. '33em'; note that '33\u00a0em' will not be recognized",
-   "default": "1",
-   "aliases": [
-    "colwidth"
-   ]
-  },
-  "liststyle": {
-   "label": "Liststyle",
-   "type": "string",
-   "required": false,
-   "description": "Specifies the style used when the reference list is enumerated; accepts any valid CSS value defined for list-style-type",
-   "default": "decimal"
-  },
-  "group": {
-   "label": "Group",
-   "type": "string",
-   "required": false,
-   "description": "Group is an identifier which restricts the references that are shown. Without this parameter, this template only shows references with no group identifier. With a group identifier specified, only references with a matching group identifier are handled. The rest are left alone."
-  },
-  "refs": {
-   "label": "List of references",
-   "type": "string",
-   "required": false,
-   "description": "Provides a space to define named references for use in the article. References defined in this space are not shown unless used somewhere in the article."
-  }
- }
+	"description": "This template displays the list of footnotes at the end of an article and provides additional formatting and organizing options. After hitting \"Apply changes\" and turning back to VE read mode, you will not see the references list. After hitting \"Save page\" and turning back to normal read mode the reference list will reappear with the changes applied, see [[bugzilla:51146|Bug 51146]].",
+	"params": {
+		"1": {
+			"label": "Columns / Column width",
+			"type": "string",
+			"required": false,
+			"description": "Two modes supported.  First mode: integer number of fixed columns into which the reference list is to be rendered.  Second mode: typographic unit of measurement such as 'em', specifying the width for the reference list columns, e.g. '33em'; note that '33 em' will not be recognized",
+			"default": "1",
+			"aliases": [
+				"colwidth"
+			]
+		},
+		"liststyle": {
+			"label": "Liststyle",
+			"type": "string",
+			"required": false,
+			"description": "Specifies the style used when the reference list is enumerated; accepts any valid CSS value defined for list-style-type",
+			"default": "decimal"
+		},
+		"group": {
+			"label": "Group",
+			"type": "string",
+			"required": false,
+			"description": "Group is an identifier which restricts the references that are shown. Without this parameter, this template only shows references with no group identifier. With a group identifier specified, only references with a matching group identifier are handled. The rest are left alone."
+		},
+		"refs": {
+			"label": "List of references",
+			"type": "string",
+			"required": false,
+			"description": "Provides a space to define named references for use in the article. References defined in this space are not shown unless used somewhere in the article."
+		}
+	}
 }
 </templatedata>
 
 ==See also==
-* [[bugzilla:51260|Bug 51260]] - Extend the <code><nowiki><references /></nowiki></code>  tag to mirror enwiki's {{tl|reflist}}
+* {{bug|51260}} - Cite: Support multi-column and alternative list-style for {{tag|references|s}} tag (like enwiki {{tl|reflist}})
 * [[Wikipedia:Citing sources]]&nbsp;– style guide for the citation of sources
 * [[Wikipedia:Citation templates]]&nbsp;– templates for use with references
 * {{tl|Refbegin}} and {{tl|Refend}}&nbsp;– format reference lists
@@ -376,11 +371,11 @@ There have been suggestions to include section header markup such as <code>==Ref
 * {{tl|Notelist}}&nbsp;– for use with explanatory notes; sets {{para|group|lower-alpha}}
 * {{tl|Notelist-ua}}&nbsp;– for use with explanatory notes; sets {{para|group|upper-alpha}}
 * {{tl|Notelist-lr}}&nbsp;– for use with explanatory notes; sets {{para|group|lower-roman}}
+* {{tl|Reflistp}}&nbsp;– for us in previews; it does not show a reference list when saved and it adds a tracking category for later cleanup
 
 ==References==
 {{Reflist|refs=
 <ref name=fontsize>See [[User:Edokter/fonttest]] for a comparison of font sizes for various browsers; see [http://en.wikipedia.org/w/index.php?title=Special%3ASearch&redirs=1&search=fonttest+prefix%3AMediaWiki+talk%3ACommon.css%2F&fulltext=Search&ns0=1 previous discussions] on changing the font size to resolve the IE issue.</ref>
-
 <ref name=stuffandnonsense>{{cite web |accessdate=November 24, 2006 |date=December 30, 2005 |title=CSS3 Multi-Column Thriller |url=http://www.stuffandnonsense.co.uk/archives/css3_multi-column_thriller.html}}</ref>
 
 <ref name=w3org1>{{cite web |url=http://www.w3.org/TR/css3-multicol/ |title=CSS3 module: Multi-column layout |publisher=[[World Wide Web Consortium|W3C]] |date=December 15, 2005 |accessdate=November 24, 2006}}</ref>
