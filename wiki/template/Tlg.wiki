@@ -1,71 +1,48 @@
 <includeonly><!--
-   -- begin span of class "nowrap" if nowrap=yes
--->{{#if:{{{nowrap|}}}|<span class="nowrap">}}<!--
-   -- begin code style if code=yes or tt=yes
--->{{#if:{{{code|{{{tt|}}}}}}|<code>}}<!--
-   -- opening brace unless braceinside=yes
--->{{#if:{{{braceinside|}}}||<nowiki>{{</nowiki>}}<!--
-   -- add subst prefix, if subst=yes
--->{{#if:{{{subst|}}}|[[Help:Substitution|subst]]:}}<!--
-   -- begin boldface if bold=yes
--->{{#if:{{{bold|}}}|'''}}<!--
+ -->{{#if:{{{nowrap|}}}        |<span class="nowrap">}}<!--
+ -->{{#if:{{{code|{{{tt|}}}}}} |<code> |{{#if:{{{plaincode|}}}|<code style="border:none;background:transparent;">}} }}<!--
+ -->{{#if:{{{braceinside|}}}   | |<nowiki>{{</nowiki>}}<!--
+ -->{{#if:{{{subst|}}}         |[[Help:Substitution|subst]]:}}<!--
 
--- create actual link (if not nolink=yes)
--->{{#if:{{{nolink|}}}
-      |<!-- nolink=yes -->
-      |{{#if:{{{braceinside|}}}|<nowiki>{</nowiki>}}<!-- first opening brace before link if braceinside=yes
-    -->{{!((}}:<!-- opening brackets of link
-    -->{{#ifeq:{{padleft:|1|{{{1}}}}} <!-- check whether we have a colon at the beginning -->
-         |:
-         |{{FULLPAGENAME:{{{1}}}}} <!-- if yes: link to article ns or assume other valid link, e.g. Interwikilink -->
-         |{{#switch:{{NAMESPACE:{{#if:{{{1|}}}|{{{1}}}|{{FULLPAGENAME}}}}}}
-            |{{ns:0}}={{ns:10}}:{{#if:{{{1|}}}|{{PAGENAME:{{{1}}}}}|{{PAGENAME}}}} <!-- No ns given: we want to link to template ns -->
-            |#default={{#if:{{{1|}}}|{{FULLPAGENAME:{{{1}}}}}|{{FULLPAGENAME}}}}<!--
-       -->}}<!--
-    -->}}{{!}}<!-- <<--- pipe character in link
--->}}<!--
+ -->{{#if:{{{bold|{{{boldlink|{{{boldname|}}}}}}}}} |'''}}<!--
+ -->{{#if:{{{nolink|}}} |<!--then omit template link, else:
+  -->| {{#if:{{{braceinside|}}} |<nowiki>{</nowiki>}}<!--
+       -->{{!((}}:<!--(start building link with "[[:")
+                   -->{{#ifeq:{{padleft:|1|{{{1}}}}}|: <!--i.e. if {{{1}}}'s first character is a colon,
+              then:--> |{{FULLPAGENAME:{{{1}}}}}<!--
+              else:--> |{{#switch:{{NAMESPACE:{{#if:{{{1|}}}|{{{1}}}|{{FULLPAGENAME}}}}}}
+                         | {{ns:0}} = {{ns:10}}:{{#if:{{{1|}}}|{{PAGENAME:{{{1}}}}}|{{PAGENAME}}}}
+                         | #default = {{#if:{{{1|}}}|{{FULLPAGENAME:{{{1}}}}}|{{FULLPAGENAME}}}}
+                      }}}}<!--
+       -->{{!}}<!--(pipe between link and label, i.e. [[:link|label]])
+ -->}}<!--
+ -->{{#if:{{{braceinside|}}} |<nowiki>{</nowiki>}}<!--
+ label / template name:
+ -->{{{alttext|{{#if:{{{1|}}}|{{{1}}}|{{#ifeq:{{NAMESPACE}}|{{ns:Template}}|{{PAGENAME}}|{{FULLPAGENAME}}}}}}}}}<!--
+ -->{{#if:{{{braceinside|}}} |<nowiki>}</nowiki>}}<!--
+ -->{{#if:{{{nolink|}}} | |<!--
+       -->{{!))}}<!--(end link)
+    -->{{#if:{{{braceinside|}}} |<nowiki>}</nowiki>}}<!-- 
+ -->}}<!--
+ -->{{#if:{{{bold|{{{boldlink|{{{boldname|}}}}}}}}} |'''}}<!--
 
--- create link text
-   -- second opening brace if braceinside=yes
--->{{#if:{{{braceinside|}}}|<nowiki>{</nowiki>}}<!--
-   -- surface text of link
--->{{{alttext|{{#if:{{{1|}}}|{{{1}}}|{{#ifeq:{{NAMESPACE}}|{{ns:Template}}|{{PAGENAME}}|{{FULLPAGENAME}}}}}}}}}<!--
-   -- first closing brace if braceinside=yes
--->{{#if:{{{braceinside|}}}|<nowiki>}</nowiki>}}<!--
-   -- end of link, unless nolink=yes
--->{{#if:{{{nolink|}}}||]]<!--
-   -- second closing brace after link if braceinside=yes
--->{{#if:{{{braceinside|}}}|<nowiki>}</nowiki>}}<!-- 
--->}}<!--
+ -->{{#if:{{{italic|{{{italics|}}}}}} |<span style="font-style:italic;">}}<!--
+ -->{{#ifeq:{{{2|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{2}}}}}}}<!--
+ -->{{#ifeq:{{{3|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{3}}}}}}}<!--
+ -->{{#ifeq:{{{4|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{4}}}}}}}<!--
+ -->{{#ifeq:{{{5|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{5}}}}}}}<!--
+ -->{{#ifeq:{{{6|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{6}}}}}}}<!--
+ -->{{#ifeq:{{{7|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{7}}}}}}}<!--
+ -->{{#ifeq:{{{8|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{8}}}}}}}<!--
+ -->{{#ifeq:{{{9|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{9}}}}}}}<!--
+ -->{{#ifeq:{{{10|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{10}}}}}}}<!--
+ -->{{#ifeq:{{{11|¬}}}|¬ | |&#124;{{#tag:nowiki|{{{11}}}}}}}<!--
+ -->{{#if:{{{12|}}} |&#124;…}}<!--
+ -->{{#if:{{{italic|{{{italics|}}}}}} |</span>}}<!--
 
-   -- end boldface if bold=yes
--->{{#if:{{{bold|}}}|'''}}<!--
-   -- begin italic style if italic=yes
--->{{#if:{{{italic|}}}|<span style="font-style: italic;">}}<!--
-
--- add parameters
--->{{#ifeq:{{{2|¬}}}|¬||&#124;{{#tag:nowiki|{{{2}}}}}}}<!--
--->{{#ifeq:{{{3|¬}}}|¬||&#124;{{#tag:nowiki|{{{3}}}}}}}<!--
--->{{#ifeq:{{{4|¬}}}|¬||&#124;{{#tag:nowiki|{{{4}}}}}}}<!--
--->{{#ifeq:{{{5|¬}}}|¬||&#124;{{#tag:nowiki|{{{5}}}}}}}<!--
--->{{#ifeq:{{{6|¬}}}|¬||&#124;{{#tag:nowiki|{{{6}}}}}}}<!--
--->{{#ifeq:{{{7|¬}}}|¬||&#124;{{#tag:nowiki|{{{7}}}}}}}<!--
--->{{#ifeq:{{{8|¬}}}|¬||&#124;{{#tag:nowiki|{{{8}}}}}}}<!--
--->{{#ifeq:{{{9|¬}}}|¬||&#124;{{#tag:nowiki|{{{9}}}}}}}<!--
--->{{#ifeq:{{{10|¬}}}|¬||&#124;{{#tag:nowiki|{{{10}}}}}}}<!--
--->{{#ifeq:{{{11|¬}}}|¬||&#124;{{#tag:nowiki|{{{11}}}}}}}<!--
--->{{#if:{{{12|}}}|&#124;…}}<!--
-
-   -- end italic style if italic=yes
--->{{#if:{{{italic|}}}|</span>}}<!--
-   -- closing brace unless braceinside=yes
--->{{#if:{{{braceinside|}}}||<nowiki>}}</nowiki>}}<!--
-   -- end code style if code=yes or tt=yes
--->{{#if:{{{code|{{{tt|}}}}}}|</code>}}<!--
-   -- end span of class "nowrap" if nowrap=yes
--->{{#if:{{{nowrap|}}}|</span>}}<!--
-   -- end
+ -->{{#if:{{{braceinside|}}} | |<nowiki>}}</nowiki>}}<!--
+ -->{{#if:{{{code|{{{tt|}}}}}}{{{plaincode|}}} |</code>}}<!--
+ -->{{#if:{{{nowrap|}}} |</span>}}<!--
 --></includeonly><noinclude>
 {{Documentation}}
-<!-- Add categories and interwikis to the /doc subpage, not here! -->
 </noinclude>
