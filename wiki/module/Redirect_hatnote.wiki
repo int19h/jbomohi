@@ -1,0 +1,173 @@
+--[[
+-- This module produces a "redirect" hatnote. It looks like this:
+-- '"X" redirects here. For other uses, see Y.'
+-- It implements the {{redirect}} template.
+--]]
+
+local mHatnote = require('Module:Hatnote')
+local libraryUtil = require('libraryUtil')
+local checkType = libraryUtil.checkType
+
+local p = {}
+
+local function getTitle(...)
+	local success, titleObj = pcall(mw.title.new, ...)
+	if success then
+		return titleObj
+	else
+		return nil
+	end
+end
+
+function p.redirect(frame)
+	-- Get the args table and work out the maximum arg key.
+	local origArgs = frame:getParent().args
+	local args = {}
+	local maxArg = 0
+	for k, v in pairs(origArgs) do
+		if type(k) == 'number' and k > maxArg then
+			maxArg = k
+		end
+		v = v:match('^%s*(.-)%s*$') -- Trim whitespace
+		if v ~= '' then
+			args[k] = v
+		end
+	end
+
+	-- Return an error if no redirect was specified.
+	local redirect = args[1]
+	if not redirect then
+		return mHatnote.makeWikitextError(
+			'no redirect specified',
+			'Template:Redirect#Errors',
+			args.category
+		)
+	end
+
+	-- Create the data table.
+	local data = {}
+	local iArg = 0
+	local iData = 1
+	repeat
+		iArg = iArg + 2
+		local useTable = data[iData] or {}
+		local pages = useTable.pages or {}
+		local use = args[iArg]
+		local page = args[iArg + 1]
+		local nextUse = args[iArg + 2]
+		pages[#pages + 1] = page
+		useTable.pages = pages
+		if use ~= 'and' then
+			useTable.use = use
+		end
+		data[iData] = useTable
+		if nextUse ~= 'and' then
+			iData = iData + 1
+		end
+	until iArg >= maxArg - 1
+
+	-- Create the options table.
+	local options = {}
+	options.selfref = args.selfref
+		
+	return p._redirect(redirect, data, options)
+end
+
+local function formatUseTable(useTable, isFirst, redirect)
+	-- Formats one use table. Use tables are the tables inside the data array.
+	-- Each one corresponds to one use. (A use might be the word "cats" in the
+	-- phrase "For cats, see [[Felines]]".)
+	-- Returns a string, or nil if no use was specified.
+	-- The isFirst parameter is used to apply special formatting for the first
+	-- table in the data array. If isFirst is specified, the redirect parameter
+	useTable = useTable or {}
+	local use
+	if isFirst then
+		use = useTable.use or 'other uses'
+	elseif not useTable.use then
+		return nil
+	elseif tonumber(useTable.use) == 1 then
+		use = 'other uses'
+	else
+		use = useTable.use
+	end
+	local pages = useTable.pages or {}
+	if isFirst then
+		redirect = redirect or error(
+			'isFirst was set in formatUseTable, but no redirect was supplied',
+			2
+		)
+		pages[1] = pages[1] or redirect .. ' (disambiguation)'
+	else
+		pages[1] = pages[1] or useTable.use .. ' (disambiguation)'
+	end
+	pages = mHatnote.formatPages(unpack(pages))
+	pages = mw.text.listToText(pages)
+	return string.format(
+		'For %s, see %s.',
+		use,
+		pages
+	)
+end
+
+function p._redirect(redirect, data, options, currentTitle, redirectTitle, targetTitle)
+	-- Validate the input. Don't bother checking currentTitle, redirectTitle or
+	-- targetTitle, as they are only used in testing.
+	checkType('_redirect', 1, redirect, 'string')
+	checkType('_redirect', 2, data, 'table', true)
+	checkType('_redirect', 3, options, 'table', true)
+	data = data or {}
+	options = options or {}
+	currentTitle = currentTitle or mw.title.getCurrentTitle()
+
+	-- Generate the text.
+	local text = {}
+	text[#text + 1] = '"' .. redirect .. '" redirects here.'
+	text[#text + 1] = formatUseTable(data[1] or {}, true, redirect)
+	if data[1] and data[1].use and data[1].use ~= 'other uses' then
+		for i = 2, #data do
+			text[#text + 1] = formatUseTable(data[i] or {}, false)
+		end
+	end
+	text = table.concat(text, ' ')
+	
+	-- Generate the tracking category.
+	-- We don't need a tracking category if the template invocation has been
+	-- copied directly from the docs, or if we aren't in mainspace.
+	local category
+	if not redirect:find('^REDIRECT%d*$') and redirect ~= 'TERM' -- 
+		and currentTitle.namespace == 0
+	then
+		redirectTitle = redirectTitle or getTitle(redirect)
+		if not redirectTitle or not redirectTitle.exists then
+			category = 'Missing redirects'
+		elseif not redirectTitle.isRedirect then
+			category = 'Invalid redirects'
+		else
+			local mRedirect = require('Module:Redirect')
+			local target = mRedirect.getTarget(redirectTitle)
+			targetTitle = targetTitle or target and getTitle(target)
+			if targetTitle and targetTitle ~= currentTitle then
+				category = 'Invalid redirects'
+			end
+		end
+	end
+	category = category and string.format('[[Category:%s]]', category) or ''
+
+	-- Generate the options to pass to [[Module:Hatnote]].
+	local mhOptions = {}
+	if currentTitle.namespace == 0
+		and redirectTitle and redirectTitle.namespace ~= 0
+	then
+		-- We are on a mainspace page, and the hatnote starts with something
+		-- like "Wikipedia:Foo redirects here", so automatically label it as a
+		-- self-reference.
+		mhOptions.selfref = true
+	else
+		mhOptions.selfref = options.selfref
+	end
+
+	return mHatnote._hatnote(text, mhOptions) .. category
+end
+ 
+return p
