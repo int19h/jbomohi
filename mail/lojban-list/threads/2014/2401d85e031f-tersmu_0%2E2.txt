@@ -1,0 +1,71 @@
+# mail/lojban-list thread 2401d85e031f-tersmu_0%2E2 | root 20140927163121.go28734@gonzales | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2014-09-27T16:31:21Z | Martin Bays <mbays@sdf.org> | 20140927163121.go28734@gonzales | mail/lojban-list/cur/1411835481.2401d85e031fc5ca.jbomohi:2,S
+I am pleased to announce a new release of tersmu, a semantic parser for
+lojban.
+
+Some of you may remember a preliminary release I made towards the end of 2011;
+I picked up the project again a few months ago, and have reworked and
+significantly extended it. The project is not complete, but it has reached a
+natural point for a release.
+
+It now accepts almost arbitrary grammatical lojban, and translates the input
+to a predicate logic form. It currently mostly ignores indicators and frees,
+even those which arguably should be rendered in the logic, but otherwise
+implements every construction bar a handful of obscure or difficult cases
+(detailed in the file BUGS in the source tree).
+
+Its primary purpose, at least in its current incarnation, is to implement a
+comprehensive set of rules to handle the interactions between the various
+logical features of lojban - such as the variously positioned connectives,
+embedded quantifiers and modal operators, sumti and bridi anaphora, and so on.
+
+You can test it without installing, either by talking to the bot 'tersmus' on
+irc (#lojban on irc.freenode.net), or by sshing to thegonz.net with username
+'tersmu', password 'tersmu'.
+
+The source (GPLv3; written in haskell) is here:
+    http://gitorious.org/tersmu
+
+If you have cabal, the haskell package management system, tersmu can be
+installed with "cabal update && cabal install tersmu".
+
+Some examples:
+    examples from CLL:
+	https://gitorious.org/tersmu/tersmu/raw/examples/16.loj
+	(that's chapter 16; change the number for other chapters)
+    alis (by paragraph):
+	https://gitorious.org/tersmu/tersmu/raw/alis:examples/alis.loj 
+
+
+I have attempted to implement baseline lojban, CLL+xorlo, where possible.
+
+I should probably briefly mention here where I have seemed obliged to depart
+from this baseline. Despite extensive attempts, I could not find reasonable
+comprehensive rules which incorporate CLL's account of {na} as a selbri tag,
+nor CLL's rules on scope of variables outside of a prenex. Instead, I treat
+bare {na} as identical to {naku}, and (roughly) unprenexed variables as
+scoping only over the remainder of the sentence in which they appear. I also
+ignore CLL's rules on rebinding bound variables and on "simultaneous
+quantification" in termsets, since neither fits with the idea that {PA da}
+should introduce a quantifier in the usual sense of predicate logic.
+
+There are also many cases, too numerous to list here, where baseline
+documentation is not detailed enough to completely determine the
+transformation rules. {go'i} is a good example. In these cases, I have been
+guided by the BPFK pages in the first instance, and then by parsimony, general
+logical and lojbanic intuition, usage, and in some cases simply what fits best
+with the rest of the algorithm. The writings of xorxes, on the BPFK sections
+and elsewhere, clarified many points; discussions on irc and/or this list were
+valuable in clarifying others. Many of the decisions are however certainly
+questionable, and I'm willing to be convinced that they are wrong!
+
+In many cases I have avoided making any questionable decisions at all by
+simply copying lojbanic constructs into the logic. So, for example, the logic
+allows for non-logically connected propositions precisely analogous to
+lojban's non-logically connected sentences. So what I'm calling a "logic"
+doesn't even have an obvious semantics, so arguably isn't worthy of the term;
+there's plenty of room here for future work.
+
+Martin
+
