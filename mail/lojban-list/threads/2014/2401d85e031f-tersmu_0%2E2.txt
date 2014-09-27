@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2401d85e031f-tersmu_0%2E2 | root 20140927163121.go28734@gonzales | 9 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2401d85e031f-tersmu_0%2E2 | root 20140927163121.go28734@gonzales | 10 messages | rendered by jbomohi mail-v1
 
 === 1 | 2014-09-27T16:31:21Z | Martin Bays <mbays@sdf.org> | 20140927163121.go28734@gonzales | mail/lojban-list/cur/1411835481.2401d85e031fc5ca.jbomohi:2,S
 I am pleased to announce a new release of tersmu, a semantic parser for
@@ -403,4 +403,37 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To post to this group, send email to lojban@googlegroups.com.
 Visit this group at http://groups.google.com/group/lojban.
 For more options, visit https://groups.google.com/d/optout.
+
+
+=== 10 | 2014-09-27T21:05:17Z | Martin Bays <mbays@sdf.org> | 20140927210517.gv28734@gonzales | mail/lojban-list/cur/1411851917.f5f2d7b76d1dc1a9.jbomohi:2,S
+* Saturday, 2014-09-27 at 17:53 -0300 - Jorge Llambías <jjllambias@gmail.com>:
+
+> Very interesting!
+
+Thanks for the interest!
+
+> Is there any reason why selbri names have to become "la poi'i ... ku'o" in
+> the final output? This may be ok for "lo", but I'm not sure it makes sense
+> for "la", since now "poi'i" and "ku'o" are part of the name.
+
+Yes, that's a result of the way the parsing is done currently. The
+original text is entirely swallowed and lost, regurgitated only in the
+logical form. From the BUGS file:
+
+"""
+We parse the name in "LA sumtiTail", whereas arguably we should just use
+the text. Similarly, we don't keep hold of the raw text of a lu-quote.
+"""
+
+When I next get inclination to do some major work on this (and I have
+the feeling I'll be taking a break for a while again, though hopefully
+not three years this time!), I'm planning to rip out the current method
+of parsing (which was built up gradually from scratch, with semantics of
+each construction implemented as I added the syntax to the parser) with
+a full camxes implementation (or perhaps just calling an external camxes
+implementation). That should allow indicators and frees to be done
+properly, which they currently aren't, and also should deal with this
+problem.
+
+Martin
 
