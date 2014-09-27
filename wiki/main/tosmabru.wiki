@@ -1,2 +1,25 @@
+A class of illegal [[lujvo|lujvo]].  '''*tosmabru''' looks like '''tos+mabru''' but in fact is '''to sma+bru'''.  Lujvo of this form can be built as '''tosymabru'''.
 
-A class of illegal [[lujvo|lujvo]].  ''Tosmabru'' looks like ''tos+mabru'' but in fact is ''to sma+bru''.  Lujvo of this form can be built as ''tosymabru''.
+=tosmabru test=
+A test for correctness that all [[lujvo|lujvo]] must pass. The word '''*tosmabru''' fails the test: it falls apart into '''to smabru'''.  To fix this, a '''y''' hyphen is inserted, leading to the morphologically correct lujvo '''tosymabru'''.
+
+Conditions for not being a tosmabru word:
+#the fourth letter not being a '''y'''
+#the word's length in letters being more than five,
+#the word's length in letters being congruent to two modulo three (a multiple of three plus two)
+#the entire portion of the word after the second letter consisting of consonant-consonant-vowel affixes (which consist of an initial consonant pair and a following vowel that is not a '''y''').
+However, it should check for the second condition and either the set of the remaining conditions or similar conditions, those being:
+#the fifth letter not being a '''y'''
+#the word's length in letters being divisible by three
+#the entire portion of the word after the third letter consisting of consonant-consonant-vowel affixes.
+
+
+
+
+<code>if is_initial_consonant_pair(word[:2]) == False or len(word) > 5 and (word[3] != "y" and len(word) % 3 == 2 and all([is_initial_consonant_pair(word[cluster:cluster + 2]) and is_regular_vowel(word[cluster + 2]) for cluster in range(2, len(word), 3)]) or word[4] != "y" and len(word) % 3 == 0 and all([is_initial_consonant_pair(word[cluster:cluster + 2]) and is_regular_vowel(word[cluster + 2]) for cluster in
+                      range(3, len(word), 3)])): return []
+
+</code>
+
+
+Full details are available in [http://www.lojban.org/files/reference-grammar/chap4.html#s11 CLL].
