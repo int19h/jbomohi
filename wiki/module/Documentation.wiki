@@ -404,11 +404,9 @@ function p.protectionTemplate(env)
 	-- Messages:
 	-- 'protection-template' --> 'pp-template'
 	-- 'protection-template-args' --> {docusage = 'yes'}
+	local protectionLevels, mProtectionBanner
 	local title = env.title
-	local protectionLevels
-	local protectionTemplate = message('protection-template')
-	local namespace = title.namespace
-	if not (protectionTemplate and (namespace == 10 or namespace == 828)) then
+	if title.namespace ~= 10 and title.namespace ~= 828 then
 		-- Don't display the protection template if we are not in the template or module namespaces.
 		return nil
 	end
@@ -416,12 +414,19 @@ function p.protectionTemplate(env)
 	if not protectionLevels then
 		return nil
 	end
-	local editLevels = protectionLevels.edit
-	local moveLevels = protectionLevels.move
-	if moveLevels and moveLevels[1] == 'sysop' or editLevels and editLevels[1] then
-		-- The page is full-move protected, or full, template, or semi-protected.
-		local frame = mw.getCurrentFrame()
-		return frame:expandTemplate{title = protectionTemplate, args = message('protection-template-args', nil, 'table')}
+	local editProt = protectionLevels.edit and protectionLevels.edit[1]
+	local moveProt = protectionLevels.move and protectionLevels.move[1]
+	if editProt then
+		-- The page is edit-protected.
+		mProtectionBanner = require('Module:Protection banner')
+		local reason = message('protection-reason-edit')
+		return mProtectionBanner._main{reason, small = true}
+	elseif moveProt and moveProt ~= 'autoconfirmed' then
+		-- The page is move-protected but not edit-protected. Exclude move
+		-- protection with the level "autoconfirmed", as this is equivalent to
+		-- no move protection at all.
+		mProtectionBanner = require('Module:Protection banner')
+		return mProtectionBanner._main{action = 'move', small = true}
 	else
 		return nil
 	end
@@ -725,8 +730,7 @@ function p._endBox(args, env)
 			-- We are in the user, template or module namespaces.
 			-- Add sandbox and testcases links.
 			-- "Editors can experiment in this template's sandbox and testcases pages."
-			-- text = text
-			-- .. p.makeExperimentBlurb(args, env)
+			text = text .. (p.makeExperimentBlurb(args, env) or '')
 			text = text .. '<br />'
 			if not args.content and not args[1] then
 				-- "Please add categories to the /doc subpage."
