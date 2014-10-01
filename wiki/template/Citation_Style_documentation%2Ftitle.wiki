@@ -1,12 +1,18 @@
 * '''{{#switch:{{{title_title}}}
 |encyclopedia=encyclopedia
-|#default = title}}''': Title of source. Can be wikilinked to an existing Wikipedia article or '''url''' may be used to add an external link, but not both. {{#switch:{{{title_format}}}
-|quotes = Displays in quotes.
-|work = If '''work''' is defined, then '''title''' is displayed in quotes, else displays in italics.
-|#default = Displays in italics.}}
-** '''trans_title''': English translation of the title if the source cited is in a foreign language. Displays in square brackets after '''{{#switch:{{{title_title}}}
+|#default = title}}''': Title of source. Can be wikilinked to an existing Wikipedia article or '''url''' may be used to add an external link, but not both. {{#switch:{{BASEPAGENAME}}
+|Cite journal
+|Cite web
+|Cite news
+|Cite press release
+|Cite conference
+|Cite podcast = Displays in quotes
+|#default = Displays in italics}}. {{#if:{{{lua|}}}|If '''script-title''' is defined, '''title''' holds romanized transliteration of title in '''script-title'''.}}{{#if:{{{lua|}}}|
+** '''script-title''': Original title for languages that do not use a Latin-based alphabet (Arabic, Chinese, Hebrew, Japanese, etc); not italicized, follows italicized transliteration defined in '''title'''. May be prefixed with an [[List of ISO 639-1 codes|ISO 639-1]] two-character code to help browsers properly display the script:
+**:<code><nowiki>... |title=Tōkyō tawā |script-title=ja:東京タワー |trans-title=Tokyo Tower ...</nowiki></code>}}
+** '''trans-title''': English translation of the title if the source cited is in a foreign language. Displays in square brackets after '''{{#switch:{{{title_title}}}
 |encyclopedia=encyclopedia
-|#default = title}}'''; if '''url''' is defined, then '''trans_title''' is included in the link. Use of the '''language''' parameter is recommended.
+|#default = title}}'''; if '''url''' is defined, then '''trans-title''' is included in the link. Use of the '''language''' parameter is recommended.
 :Titles containing certain characters will display and link incorrectly unless those characters are encoded.
 {| class="wikitable" style="margin-left: 5em"
 ! newline !! [ !! ] !! &#124;
