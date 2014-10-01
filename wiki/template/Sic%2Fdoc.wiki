@@ -1,0 +1,112 @@
+{{Documentation subpage}}
+<!-- PLEASE ADD CATEGORIES AND INTERWIKIS AT THE BOTTOM OF THIS PAGE. -->
+
+{{main|sic}}
+This template simplifies insertion of the "[sic]" notation, which is used where a textual error, or unexpected but intended text that may appear to be an error, has been faithfully reproduced from the original source. Note that [[MOS:QUOTE]] says: "'''trivial spelling and typographic errors should simply be corrected without comment... unless the slip is textually important.'''"
+
+*By default, it links to the article [[Sic]] for the benefit of readers, but this is disabled if the <code>{{para|nolink|y}}</code> parameter is added. When the template is used within the displayed anchor text (right-hand visible portion) of an internal or external link, this parameter is essential to prevent incorrect formatting, as the link will be truncated otherwise. Linking to the [[Sic]] article may be undesirable in certain other cases, for example when the template is used many times close together.
+
+*Additional unnamed parameters can be used to obfuscate spelling errors in quoted material in the wiki-text of a page, to help prevent automated or semi-automated correction by bot or human editors, which (although done in good faith) would be undesirable. In these cases, split the intentionally misspelled word or other character string into two parts and use them as the first two parameters of the template, and ''replace'' the original with the template: <code><nowiki>He said "{{sic|Irrega|rdless}}..."</nowiki></code> will display as <code>He said "{{sic|Irrega|rdless}}..."</code>
+
+*The template can be used with a <code>{{para||?}}</code> question mark parameter to mark situations where the correctness or incorrectness of an apparent error cannot readily be determined. This will add the article to [[:Category:Articles containing possible transcription errors]] for hopeful review by those more familiar with the subject and sources. If this feature is used in conjunction with the obfuscation feature above, <code>{{para||?}}</code> '''must''' come first: <code><nowiki>He said "{{sic|?|Irrega|rdless}}..."</nowiki></code> Examples of use cases:
+**The quoted source might not be available online, or not without a paid subscription, etc.
+**A quoted passage contains a spelling error but is ambiguous as to whether the statement was originally printed this way (in which case [''sic''] may be appropriate), or spoken aloud (in which case the typo should be corrected).
+
+#<code>...his April 1992 interview with the Dolly Llama <nowiki>{{sic}}</nowiki>...</code>
+#:yields:
+#::...his April 1992 interview with the Dolly Llama {{sic}}...
+#<code><nowiki>...spokesperson stated that "rescue efforts have been suspnded {{sic|?}} until further notice"...</nowiki></code>
+#:yields:
+#::...spokesperson stated that "rescue efforts have been suspnded {{sic|?}} until further notice"...
+#:This is used because the context does not make it clear whether the spelling error was made by the spokesperson (in a written statement), or by a reporter (listening to the spokesperson speak).
+
+
+==Template data==
+{{TemplateDataHeader}}
+
+<templatedata>
+{
+	"description": "This template simplifies insertion of the \"[sic]\" notation, which is used where a textual error, or unexpected but intended text that may appear to be an error, has been faithfully reproduced from the original source. Note that MOS:QUOTE says: \"trivial spelling and typographic errors should simply be corrected without comment... unless the slip is textually important.\"",
+	"params": {
+		"1": {
+			"label": "Question mark or the word",
+			"description": "To display [sic?] and indicate doubt, put a question mark here, and put the word in parameter 2. Otherwise, put the word here.",
+			"type": "string",
+			"required": true
+		},
+		"2": {
+			"description": "If using a question mark, put the word here. To obfuscate the word, it may be split over two unnamed parameters; if using the question mark, put the first half here and the second in 3. Otherwise, put the first half in 1 and the second in here.",
+			"type": "string"
+		},
+		"3": {
+			"description": "See 2.",
+			"type": "string"
+		},
+		"hide": {
+			"label": "Remove [sic]?",
+			"description": "Set to y to remove the label [sic] altogether; the template may still be used prevent automated or human editors from correcting the word.",
+			"type": "string"
+		},
+		"nolink": {
+			"label": "Remove link?",
+			"description": "Set to y to remove the link to the article on \"sic\". The purpose of the link is to explain the template to readers, but it may be awkward if the template is placed in a link.",
+			"type": "string"
+		},
+		"expected": {
+			"label": "A comment to editors",
+			"description": "Will not display; may contain some explanation for future editors.",
+			"type": "string"
+		}
+	}
+}
+</templatedata>
+
+==Controlling display (<code>{{para|nolink|y}}</code> and <code>{{para|hide|y}}</code>)==
+To suppress the link but keep the [''sic'']:
+:<code><nowiki>*[http://www.example.org/document_1.htm "{{sic|Conc|encus|nolink=y}} can Change!"]</nowiki></code>
+::yields:
+::*[http://www.example.org/document_1.htm "{{sic|Conc|encus|nolink=y}} can Change!"]
+
+Use {{tlx|sic|hide&#61;y|<var>word or phrase</var>}} to avoid the display of sic altogether but still get the other benefits of the template. As with obfuscation, above, ''replace'' the original material that is now inside the template with the template itself, and the nolink and obfuscation features can be combined: <code><nowiki>He said "{{sic|hide=y|Irrega|rdless}}..."</nowiki></code>
+
+Note: It is pointless to specify both nolink and hide, since one is a display feature, but the other disables display.
+
+==Documenting the problem==
+If the misspelling is an unusual one, it may be helpful to include an "expected" parameter: {{tlx|sic|<var>incorrect word or phrase</var>|expected&#61;<var>expected word or phrase</var>}}. This has no effect on the rendered page, but may assist later editors.
+
+==Simple examples==
+
+*Normal use: {{Tlx|Sic|templte}} yields: {{Sic|templte}}
+*Obfuscating: {{Tlx|Sic|tem|plte}} yields: {{Sic|tem|plte}}
+*Unlinked: {{Tlx|Sic|3=nolink=y|4=templte}} yields: {{Sic|nolink=y|templte}}
+*Hidden: {{Tlx|Sic|3=hide=y|4=templte}} yields: {{Sic|hide=y|templte}}
+*Query: {{Tlx|Sic|?|templte}} yields: {{Sic|?|templte}}
+*Explained: {{Tlx|Sic|templte|3=expected=template}} yields: {{Sic|templte|expected=template}}
+
+==Compound examples==
+
+*Unlinked and obfuscated: {{Tlx|Sic|3=nolink=y|4=temp|5=lte}} yields: {{Sic|nolink=y|temp|lte}}
+*Hidden and obfuscated: {{Tlx|Sic|3=hide=y|4=temp|5=lte}} yields: {{Sic|hide=y|temp|lte}}
+*Query and obfuscated: {{Tlx|Sic|?|temp|lte}} yields: {{Sic|?|temp|lte}}
+*Explained and unlinked: {{Tlx|Sic|templte|3=nolink=y|4=expected=template}} yields: {{Sic|templte|nolink=y|expected=template}}
+*Query and unlinked: {{Tlx|Sic|?|3=nolink=y|4=templte}} yields: {{Sic|?|nolink=y|templte}}
+*Query and hidden: {{Tlx|Sic|3=nolink=y|4=hide=y|5=templte}} yields: {{Sic|nolink=y|hide=y|templte}}
+*Unlinked, hidden and query: {{Tlx|Sic|?|3=nolink=y|4=hide=y|5=templte}} yields: {{Sic|?|nolink=y|hide=y|templte}}
+*Unlinked, query and obfuscated: {{Tlx|Sic|?|3=nolink=y|4=temp|5=lte}} yields: {{Sic|?|nolink=y|temp|lte}}
+*Unlinked, hidden and obfuscated: {{Tlx|Sic|3=nolink=y|4=hide=y|5=temp|6=lte}} yields: {{Sic|nolink=y|hide=y|temp|lte}}
+*Hidden, query and obfuscated: {{Tlx|Sic|?|3=hide=y|4=temp|5=lte}} yields: {{Sic|?|hide=y|temp|lte}}
+*Unlinked, hidden, query and obfuscated: {{Tlx|Sic|?|3=nolink=y|4=hide=y|5=temp|6=lte}} yields: {{Sic|?|nolink=y|hide=y|temp|lte}}
+
+==See also==
+* {{Tl|Bracket}}
+* {{Tl|Quote}}
+* {{Tl|Lang}}
+* {{Tl|Not a typo}}
+
+<includeonly><!--
+{{#ifeq:{{SUBPAGENAME}}|sandbox | |
+++++ PLEASE ADD CATEGORIES BELOW THIS LINE:-->
+[[Category:Inline templates]]
+[[Category:Quotation templates]]
+[[Category:Typing-aid templates]]
+</includeonly>
