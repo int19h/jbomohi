@@ -1,4 +1,4 @@
-# mail/lojban-list thread 2401d85e031f-tersmu_0%2E2 | root 20140927163121.go28734@gonzales | 26 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 2401d85e031f-tersmu_0%2E2 | root 20140927163121.go28734@gonzales | 27 messages | rendered by jbomohi mail-v1
 
 === 1 | 2014-09-27T16:31:21Z | Martin Bays <mbays@sdf.org> | 20140927163121.go28734@gonzales | mail/lojban-list/cur/1411835481.2401d85e031fc5ca.jbomohi:2,S
 I am pleased to announce a new release of tersmu, a semantic parser for
@@ -1233,7 +1233,119 @@ a matter of uniqueness, presumably? Some sort of maximality?
 Martin
 
 
-=== 24 | 2014-09-27T20:53:21Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2ek_y-gr_zv060qzr_779mnlsot6k3bgkh_xhv4_9wqkg@mail.gmail.com | mail/lojban-list/cur/1411851201.0ae0e76b8fba4a96.jbomohi:2,S
+=== 24 | 2014-10-06T01:33:35Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2cr1gsjasvyr_vctpb_d-wwagdstfxa67nn4wbdzn80sw@mail.gmail.com | mail/lojban-list/cur/1412559215.24a56efa201e5126.jbomohi:2,S
+On Sun, Oct 5, 2014 at 8:49 PM, Martin Bays <mbays@sdf.org> wrote:
+
+> * Sunday, 2014-10-05 at 19:38 -0300 - Jorge Llambías <jjllambias@gmail.com
+> >:
+> >
+> > That's assuming that "li mo'e ko'a .e ko'e" = "li mo'e ko'a je mo'e
+> ko'e" =
+> > "li mo'e ko'a .e li mo'e ko'e".
+>
+> The second one is a parse error,
+
+
+Ah yes, operands connect with ".e", not "je", it's operators that connect
+with "je".
+
+
+> but yes, I have the other two being
+> equivalent. I wouldn't use anything like that as a derivation, though,
+> it's just that I have logical sumti connection working the same way
+> wherever the sumti occurs.
+
+
+Does "broda tu'a ko'a .e ko'e" become "ge broda tu'a ko'a gi broda tu'a
+ko'e" rather than "broda lo du'u ko'a .e ko'e co'e"?
+
+
+
+> My take is that sumti-6 indeed returns a term, but in the process of
+> parsing some logical operations may take effect. My way of thinking
+> about this is entangled with the details of the Haskell implementation
+> (monadic values), but I'll try to describe it in English!
+>
+> So {ro da} returns the variable which subsequent {da} will return, but
+> it also causes a quantification; {ko'a .e ko'e} returns ko'a resp ko'e,
+> but it also causes a fork in processing, each side getting one of the
+> return values ko'a and ko'e, with the two sides then logically
+> connected. For this to make sense, you need a way of interpreting these
+> logical operations of quantification and connection. They apply in the
+> obvious ways to propositions and to predicates, and I think we agree
+> that this is how things work when parsing a sumti at main-bridi level or
+> within a description.
+>
+
+Within a decription? I would say "lo broda be ko'a .e ko'e" is "zo'e noi
+broda ko'a .e ko'e", and not "ge lo broda be ko'a gi lo broda be ko'e".
+Similarly for LAhE, which I take to be "lo broda be" for some suitable
+"broda".
+
+With li-expressions I'm less sure, since I don't have a clear grasp of the
+interface between mekso and the ordinary part of the language. Is "cy du li
+cy" always true, for example?
+
+If I understand you correctly, you want special rules for what happens
+> when we parse a sumti with such logical information during the parsing
+> of a value: so rather than passing the actions of quantification and
+> connection up to the logic, they should be caught at the level of the
+> value and evaluated there. Right?
+>
+
+Rather, the logic of connections/quantification, which always applies to
+propositions, intervenes in the description of the value and doesn't escape
+the description.
+
+I imagine that could be made to work, but I worry that any such rules
+> for how the logical operations work on values would be rather arbitrary
+> and non-obvious. Having them pass up and operate in the usual logical
+> way seems much more natural to me.
+>
+
+For me the leading case is "tu'a", which must be opaque to logical
+operators.
+
+Something analogous happens with sumtcita. Do you consider
+>     broda ca ro da
+> to mean something other than
+>     ro da zo'u broda ca da
+> (which is how tersmu currently handles it)?
+>
+
+No, but that's because "ca" has scope over broda:
+
+broda ca ro da
+= ro da cabna lo nu broda
+= ro da zo'u da cabna lo nu broda
+= ro da zo'u broda ca da
+
+
+> > The presupposition is that when you use "lo plise" there's something you
+> > are talking about, and that something is identified by their satisfying
+> the
+> > predicate "plise". Kinds may be one candidate interpretation, especially
+> > with so little context.
+>
+> What is the logical content of this presupposition? Not actually
+> a matter of uniqueness, presumably? Some sort of maximality?
+
+
+I think so, yes. I don't want to insist too much on that because its
+maximality within the universe of discourse, not some absolute maximality
+as suggested by the examples in CLL.
+
+mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 25 | 2014-09-27T20:53:21Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2ek_y-gr_zv060qzr_779mnlsot6k3bgkh_xhv4_9wqkg@mail.gmail.com | mail/lojban-list/cur/1411851201.0ae0e76b8fba4a96.jbomohi:2,S
 Very interesting!
 
 Is there any reason why selbri names have to become "la poi'i ... ku'o" in
@@ -1250,7 +1362,7 @@ Visit this group at http://groups.google.com/group/lojban.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 25 | 2014-09-27T21:05:17Z | Martin Bays <mbays@sdf.org> | 20140927210517.gv28734@gonzales | mail/lojban-list/cur/1411851917.f5f2d7b76d1dc1a9.jbomohi:2,S
+=== 26 | 2014-09-27T21:05:17Z | Martin Bays <mbays@sdf.org> | 20140927210517.gv28734@gonzales | mail/lojban-list/cur/1411851917.f5f2d7b76d1dc1a9.jbomohi:2,S
 * Saturday, 2014-09-27 at 17:53 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > Very interesting!
@@ -1283,7 +1395,7 @@ problem.
 Martin
 
 
-=== 26 | 2014-09-27T21:11:33Z | Martin Bays <mbays@sdf.org> | 20140927211133.gw28734@gonzales | mail/lojban-list/cur/1411852293.401dd9604dfce30d.jbomohi:2,S
+=== 27 | 2014-09-27T21:11:33Z | Martin Bays <mbays@sdf.org> | 20140927211133.gw28734@gonzales | mail/lojban-list/cur/1411852293.401dd9604dfce30d.jbomohi:2,S
 * Saturday, 2014-09-27 at 17:53 -0300 - Jorge Llambías <jjllambias@gmail.com>:
 
 > Very interesting!
