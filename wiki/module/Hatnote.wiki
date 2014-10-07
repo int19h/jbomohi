@@ -148,6 +148,14 @@ function p._formatLink(link, display)
 		colon = ''
 	end
 
+	-- Find whether a faux display value has been added with the {{!}} magic
+	-- word.
+	if not display then
+		local prePipe, postPipe = link:match('^(.-)|(.*)$')
+		link = prePipe or link
+		display = postPipe
+	end
+
 	-- Find the display value.
 	if not display then
 		local page, section = link:match('^(.-)#(.*)$')
