@@ -15,3 +15,14 @@ gleki wrote:
 
 No. Will move to a comment as you say.
 
+
+## 2014-10-11T17:08:42Z — durka42 (comment 1358)
+
+place structure
+
+{porsi}2 dropped because I think it's useless, but I'll accept
+disagreement on that point.
+
+We can also add additional places from {cukta} if they turn out to be
+useful.
+
