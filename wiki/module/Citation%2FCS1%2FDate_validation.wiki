@@ -189,16 +189,18 @@ function check_date (date_string)
 		month = get_month_number (month);
 		month2 = get_month_number (month2);
 
-	elseif date_string:match("^Winter +[1-9]%d%d%d–%d%d%a?$") then							-- special case Winter year-year (YYYY-YY); year separated with unspaced endash
+	elseif date_string:match("^%a+ +[1-9]%d%d%d–%d%d%a?$") then								-- special case Winter/Summer year-year (YYYY-YY); year separated with unspaced endash
+		if nil == date_string:match("^Winter") and nil == date_string:match("^Summer") then return false end;	-- 'month' can only be Winter or Summer
 		local century;
-		year, century, anchor_year, year2=date_string:match("Winter +((%d%d)%d%d)–((%d%d)%a?)");
+		year, century, anchor_year, year2=date_string:match("%a+ +((%d%d)%d%d)–((%d%d)%a?)");
 		anchor_year=year..'–'..anchor_year;													-- assemble anchor_year from both years
 		year2 = century..year2;																-- add the century to year2 for comparisons
 		if 1 ~= tonumber(year2) - tonumber(year) then return false; end						-- must be sequential years, left to right, earlier to later
 		if not is_valid_year(year2) then return false; end									-- no year farther in the future than next year
 
-	elseif date_string:match("^Winter +[1-9]%d%d%d–[1-9]%d%d%d%a?$") then					-- special case Winter year-year; year separated with unspaced endash
-		year, anchor_year, year2=date_string:match("Winter +(%d%d%d%d)–((%d%d%d%d)%a?)");
+	elseif date_string:match("^%a+ +[1-9]%d%d%d–[1-9]%d%d%d%a?$") then						-- special case Winter/Summer year-year; year separated with unspaced endash
+		if nil == date_string:match("^Winter") and nil == date_string:match("^Summer") then return false end;	-- 'month' can only be Winter or Summer
+		year, anchor_year, year2=date_string:match("%a+ +(%d%d%d%d)–((%d%d%d%d)%a?)");
 		anchor_year=year..'–'..anchor_year;													-- assemble anchor_year from both years
 		if 1 ~= tonumber(year2) - tonumber(year) then return false; end						-- must be sequential years, left to right, earlier to later
 		if not is_valid_year(year2) then return false; end									-- no year farther in the future than next year
