@@ -282,3 +282,29 @@ be useful in discussions:
 http://www.quora.com/Higgs-Field/What-is-the-Higgs-Mechanism/answer/Barak-
 Shoshany
 
+
+## 2014-10-13T06:20:27Z — gleki (comment 1361, on definition 44239, in reply to 883)
+
+Re: Potential Issues
+
+krtisfranks wrote:
+> Once again, I worry about taking up experimental gismu space, but this
+one
+> is fairly common in current (even popular) discourse, lacks simple way
+of
+> expression, and is fundamental to nature (just as much as electricity
+is).
+>  All of the fundamental interactions and important verified facets
+thereof
+> deserve gismu in my opinion.
+> 
+> This word lends itself to the following rafsi, which I support, the
+latter
+> more than the former: {xiz}, {xig}.
+> (I wish that "{gzo}" could be included too...)
+
+
+
+please, add an example filling all places of xigzo. Since  jvs doesnt
+allow adding translations will you please add translation in this thread?
+
