@@ -75,3 +75,45 @@ From these points of view, I will "correct" the definitions of ganlo and
 kalri in lojban and some other languages. If you don't agree with la
 jbofi'e, kpreid and me, just vote down and add another definition.
 
+
+## 2014-10-13T13:31:17Z — gleki (comment 1364, on definition 382, in reply to 1363)
+
+Re: x3
+
+gusnikantu wrote:
+> > For example, a screen door, or a door with a dog-door set in it, would
+> > allow air, or dogs, through even if closed to humans; ganlo fi lo
+remna.
+> > 
+> > Stretching a bit for an inverse example: an airlock (as a whole, not
+the
+> > doors that make it up) ganlo fi lo litki .enai lo remna.
+> 
+> I agree to kpreid. In fact, la jbofi'e says:
+> -----
+> That is to say, x3 of ganlo/kalri is something being blocked / given
+> access.
+> 
+> 
+> Moreover, the note of the defintion of ganlo says that "a semi-permeable
+> membrane" is also suitable to ganlo. In such a case, x3 of ganlo/kalri
+in
+> the meaning above is very useful. For example:
+> lo vi boxfo ti kalri lo vacri gi'e ganlo lo djacu
+> 
+> That is to say, as long as "a semi-permeable membrane" is said to be a
+> kind of ganlo, lo pagre is more important than lo ve pagre for general
+use
+> of ganlo.
+> 
+> From these points of view, I will "correct" the definitions of ganlo and
+> kalri in lojban and some other languages. If you don't agree with la
+> jbofi'e, kpreid and me, just vote down and add another definition.
+
+
+Thank you. I used to understand it incorrectly.
+Russian definitions of {kalri} and {ganlo} changed.
+
+I hope you'll change the definition in French facile in the google
+spreadsheet.
+
