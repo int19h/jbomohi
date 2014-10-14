@@ -125,7 +125,7 @@ function Protection.new(args, cfg, title)
 	end
 
 	-- Set level
-	obj.level = effectiveProtectionLevel(obj.action, obj.title)
+	obj.level = args.demolevel or effectiveProtectionLevel(obj.action, obj.title)
 	if obj.level == 'accountcreator' then
 		-- Lump titleblacklisted pages in with template-protected pages,
 		-- since templateeditors can do both.
@@ -870,7 +870,7 @@ function p._main(args, cfg, title)
 
 	-- If a page's edit protection is equally or more restrictive than its protection from some other action,
 	-- then don't bother displaying anything for the other action (except categories).
-	if protectionObj.action == 'edit' or not walkHierarchy(cfg.hierarchy, protectionObj.level)[effectiveProtectionLevel('edit', protectionObj.title)] then
+	if protectionObj.action == 'edit' or args.demolevel or not walkHierarchy(cfg.hierarchy, protectionObj.level)[effectiveProtectionLevel('edit', protectionObj.title)] then
 		-- Initialise the blurb object
 		local blurbObj = Blurb.new(protectionObj, args, cfg)
 	
