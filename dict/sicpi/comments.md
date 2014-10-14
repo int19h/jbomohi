@@ -28,3 +28,13 @@ Redundant
 
 Seems like a lujvo would work fine for this. {carjau}, perhaps.
 
+
+## 2014-10-14T23:08:01Z — gusnikantu (comment 1365, on definition 15069, in reply to 463)
+
+Re: zoi ly lunba ly ki'a
+
+arj wrote:
+> zoi ly lunba ly la'a na jai drani
+
+.ei zo lunsa basti
+
