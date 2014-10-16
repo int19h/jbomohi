@@ -1,0 +1,22 @@
++++
+id = 61611
+word = "jukni"
+lang = "fr-facile"
+author = "glekizmiku"
+updated = "2014-10-16T10:39:57Z"
+version = 0
+score = 1
+score_as_of = "2026-09-13"
+status = "current"
+jargon = ""
+selmaho = ""
+keywords = []
++++
+
+$x_1$ est une araignée de type $x_2$ arthropode n'étant pas un insecte
+
+## Notes
+
+
+
+## Examples
