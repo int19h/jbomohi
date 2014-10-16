@@ -1,0 +1,22 @@
++++
+id = 63218
+word = "voki'o"
+lang = "fr-facile"
+author = "glekizmiku"
+updated = "2014-10-16T18:21:24Z"
+version = 0
+score = 1
+score_as_of = "2026-09-13"
+status = "current"
+jargon = ""
+selmaho = ""
+keywords = []
++++
+
+4000
+
+## Notes
+
+
+
+## Examples
