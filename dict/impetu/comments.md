@@ -8,3 +8,10 @@ either energy-momentum ({nejnimpetu}, a four-vector) or a strictly spatial
 ("Newtonian") linear momentum ({sirmpetu}, a three-vector), or perhaps
 even angular momentum ({cnampetu}, typically a three-vector).
 
+
+## 2014-10-21T13:36:59Z — gleki (comment 1378)
+
+lo finti
+
+Proposed by: lai_krtisfranks
+
