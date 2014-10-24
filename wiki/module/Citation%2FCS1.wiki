@@ -1,7 +1,10 @@
+
 local z = {
-	error_categories = {};
+	error_categories = {};		-- for categorizing citations that contain errors
 	error_ids = {};
 	message_tail = {};
+	maintenance_cats = {};		-- for categorizing citations that aren't erroneous per se, but could use a little work
+	properties_cats = {};		-- for categorizing citations based on certain properties, language of source for instance
 }
 
 -- Whether variable is set or not
@@ -40,7 +43,6 @@ details of which parameter caused the error message are not provided.  Only one 
 function deprecated_parameter()
 	if true ~= Page_in_deprecated_cat then	-- if we haven't been here before then set a 
 		Page_in_deprecated_cat=true;		-- sticky flag so that if there are more than one deprecated parameter the category is added only once
---		table.insert( z.message_tail, { seterror( 'deprecated_params', {error_message}, true ) } );		-- add error message
 		table.insert( z.message_tail, { seterror( 'deprecated_params', {}, true ) } );		-- add error message
 	end
 end
@@ -68,6 +70,74 @@ function kern_quotes (str)
 		str = string.gsub( str, "[\"\']$", right, 1 );			-- replace (captured) trailing single or double quote with right-side <span>
 	end
 	return str;
+end
+
+--[[--------------------------< F O R M A T _ S C R I P T _ V A L U E >----------------------------------------
+
+|script-title= holds title parameters that are not written in Latin based scripts: Chinese, Japanese, Arabic, Hebrew, etc. These scripts should
+not be italicized and may be written right-to-left.  The value supplied by |script-title= is concatenated onto Title after Title has been wrapped
+in italic markup.
+
+Regardless of language, all values provided by |script-title= are wrapped in <bdi>...</bdi> tags to isolate rtl languages from the English left to right.
+
+|script-title= provides a unique feature.  The value in |script-title= may be prefixed with a two-character ISO639-1 language code and a colon:
+	|script-title=ja:*** *** (where * represents a Japanese character)
+Spaces between the two-character code and the colon and the colon and the first script character are allowed:
+	|script-title=ja : *** ***
+	|script-title=ja: *** ***
+	|script-title=ja :*** ***
+Spaces preceding the prefix are allowed: |script-title = ja:*** ***
+
+The prefix is checked for validity.  If it is a valid ISO639-1 language code, the lang attribute (lang="ja") is added to the <bdi> tag so that browsers can
+know the language the tag contains.  This may help the browser render the script more correctly.  If the prefix is invalid, the lang attribute
+is not added.  At this time there is no error message for this condition.
+
+At this writing, only |script-title= is supported.  It is anticipated that additional parameters will be created to use this function.
+
+TODO: error messages when prefix is invalid ISO639-1 code; when script_value has prefix but no script;
+]]
+
+function format_script_value (script_value)
+	local lang='';																-- initialize to empty string
+	local name;
+	if script_value:match('^%l%l%s*:') then										-- if first 3 non-space characters are script language prefix
+		lang = script_value:match('^(%l%l)%s*:%s*%S.*');						-- get the language prefix or nil if there is no script
+		if not is_set (lang) then
+			return '';															-- script_value was just the prefix so return empty string
+		end
+																				-- if we get this far we have prefix and script
+		name = mw.language.fetchLanguageName( lang, "en" );						-- get language name so that we can use it to categorize
+		if is_set (name) then													-- is prefix a proper ISO 639-1 language code?
+			script_value = script_value:gsub ('^%l%l%s*:%s*', '');				-- strip prefix from script
+			if inArray (lang, {'ar', 'ja', 'ko', 'he', 'zh'}) then				-- is prefix one of these language codes?
+				table.insert( z.properties_cats, 'CS1 uses ' .. name .. '-language script ('..lang..')');	-- categorize in language-specific categories
+			else
+				table.insert( z.properties_cats, 'CS1 uses foreign language script');	-- use this category as a catchall until language-specific category is available
+			end
+			lang = ' lang="' .. lang .. '" ';									-- convert prefix into a lang attribute
+		else
+			lang = '';															-- invalid so set lang to empty string
+		end
+	end
+	script_value = '<bdi' .. lang .. '>' .. script_value .. '</bdi>';			-- isolate incase script is rlt
+
+	return script_value;
+end
+
+--[[--------------------------< S C R I P T _ C O N C A T E N A T E >------------------------------------------
+
+Initially for |title= and |script-title=, this function concatenates those two parameter values after the script value has been 
+wrapped in <bdi> tags.
+]]
+
+function script_concatenate (title, script)
+	if is_set (script) then
+		script = format_script_value (script);									-- <bdi> tags, lang atribute, categorization, etc; returns empty string on error
+		if is_set (script) then
+			title = title .. ' ' .. script;										-- concatenate title and script title
+		end
+	end
+	return title;
 end
 
 -- Wraps a string using a message_list configuration taking one argument
@@ -245,10 +315,15 @@ end
 
 -- Formats a link to Amazon
 function amazon(id, domain)
+	if checkisbn( id ) then														-- see if asin value is a 10-digit isbn
+		table.insert( z.maintenance_cats, "CS1 maint: ASIN uses ISBN");			-- add to maint category so a bot or awb script can replace |asin= with |isbn=
+	end
 	if not is_set(domain) then 
-		domain = "com"
-	elseif ( "jp" == domain or "uk" == domain ) then
-		domain = "co." .. domain
+		domain = "com";
+	elseif inArray (domain, {'jp', 'uk'}) then			-- Japan, United Kingdom
+		domain = "co." .. domain;
+	elseif inArray (domain, {'au', 'br', 'mx'}) then	-- Australia, Brazil, Mexico
+		domain = "com." .. domain;
 	end
 	local handler = cfg.id_handlers['ASIN'];
 	return externallinkid({link = handler.link,
@@ -346,10 +421,10 @@ Format LCCN link and do simple error checking.  LCCN is a character string 8-12 
 rightmost eight are always digits. http://info-uri.info/registry/OAIHandler?verb=GetRecord&metadataPrefix=reg&identifier=info:lccn/
 
 length = 8 then all digits
-length = 9 then lccn[1] is alpha
-length = 10 then lccn[1] and lccn[2] are both alpha or both digits
-length = 11 then lccn[1] is alpha, lccn[2] and lccn[3] are both alpha or both digits
-length = 12 then lccn[1] and lccn[2] are both alpha
+length = 9 then lccn[1] is lower case alpha
+length = 10 then lccn[1] and lccn[2] are both lower case alpha or both digits
+length = 11 then lccn[1] is lower case alpha, lccn[2] and lccn[3] are both lower case alpha or both digits
+length = 12 then lccn[1] and lccn[2] are both lower case alpha
 
 ]]
 function lccn(lccn)
@@ -365,21 +440,21 @@ function lccn(lccn)
 			err_cat = ' ' .. seterror( 'bad_lccn' );	-- set an error message
 		end
 	elseif 9 == len then								-- LCCN should be adddddddd
-		if nil == id:match("%a%d%d%d%d%d%d%d%d") then			-- does it match our pattern?
+		if nil == id:match("%l%d%d%d%d%d%d%d%d") then			-- does it match our pattern?
 			err_cat = ' ' .. seterror( 'bad_lccn' );	-- set an error message
 		end
 	elseif 10 == len then								-- LCCN should be aadddddddd or dddddddddd
 		if id:match("[^%d]") then							-- if LCCN has anything but digits (nil if only digits) ...
-			if nil == id:match("^%a%a%d%d%d%d%d%d%d%d") then	-- ... see if it matches our pattern
+			if nil == id:match("^%l%l%d%d%d%d%d%d%d%d") then	-- ... see if it matches our pattern
 				err_cat = ' ' .. seterror( 'bad_lccn' );	-- no match, set an error message
 			end
 		end
 	elseif 11 == len then								-- LCCN should be aaadddddddd or adddddddddd
-		if not (id:match("^%a%a%a%d%d%d%d%d%d%d%d") or id:match("^%a%d%d%d%d%d%d%d%d%d%d")) then	-- see if it matches one of our patterns
+		if not (id:match("^%l%l%l%d%d%d%d%d%d%d%d") or id:match("^%l%d%d%d%d%d%d%d%d%d%d")) then	-- see if it matches one of our patterns
 			err_cat = ' ' .. seterror( 'bad_lccn' );	-- no match, set an error message
 		end
 	elseif 12 == len then								-- LCCN should be aadddddddddd
-		if not id:match("^%a%a%d%d%d%d%d%d%d%d%d%d") then	-- see if it matches our pattern
+		if not id:match("^%l%l%d%d%d%d%d%d%d%d%d%d") then	-- see if it matches our pattern
 			err_cat = ' ' .. seterror( 'bad_lccn' );	-- no match, set an error message
 		end
 	else
@@ -509,8 +584,9 @@ end
 
 -- Formats an OpenLibrary link, and checks for associated errors.
 function openlibrary(id)
-	local code = id:sub(-1,-1)
+	local code = id:match("^%d+([AMW])$");					-- only digits followed by 'A', 'M', or 'W'
 	local handler = cfg.id_handlers['OL'];
+
 	if ( code == "A" ) then
 		return externallinkid({link=handler.link, label=handler.label,
 			prefix="http://openlibrary.org/authors/OL",id=id, separator=handler.separator,
@@ -619,19 +695,85 @@ function cleanisbn( isbn_str )
 	return isbn_str:gsub( "[^-0-9X]", "" );
 end
 
--- Extract page numbers from external wikilinks in any of the |page=, |pages=, or |at= parameters for use in COinS.
---TODO: Fix so this code supports urls like this:
---	http://www.history.navy.mil/download/va125153.pdf#page=13 %w/:\.
+--[[--------------------------< E S C A P E _ L U A _ M A G I C _ C H A R S >----------------------------------
+
+Returns a string where all of lua's magic characters have been escaped.  This is important because functions like
+string.gsub() treat their pattern and replace strings as patterns, not literal strings.
+]]
+function escape_lua_magic_chars (argument)
+	argument = argument:gsub("%%", "%%%%");										-- replace % with %%
+	argument = argument:gsub("([%^%$%(%)%.%[%]%*%+%-%?])", "%%%1");				-- replace all other lua magic pattern characters
+	return argument;
+end
+
+--[[--------------------------< S T R I P _ A P O S T R O P H E _ M A R K U P >--------------------------------
+
+Strip wiki italic and bold markup from argument so that it doesn't contaminate COinS metadata.
+This function strips common patterns of apostrophe markup.  We presume that editors who have taken the time to
+markup a title have, as a result, provided valid markup. When they don't, some single apostrophes are left behind.
+
+]]
+function strip_apostrophe_markup (argument)
+	if not is_set (argument) then return argument; end
+
+	while true do
+		if argument:match ("%'%'%'%'%'") then									-- bold italic (5)
+			argument=argument:gsub("%'%'%'%'%'", "");							-- remove all instances of it
+		elseif argument:match ("%'%'%'%'") then									-- italic start and end without content (4)
+			argument=argument:gsub("%'%'%'%'", "");
+		elseif argument:match ("%'%'%'") then									-- bold (3)
+			argument=argument:gsub("%'%'%'", "");
+		elseif argument:match ("%'%'") then										-- italic (2)
+			argument=argument:gsub("%'%'", "");
+		else
+			break;
+		end
+	end
+	return argument;															-- done
+end
+
+--[[--------------------------< M A K E _ C O I N S _ T I T L E >----------------------------------------------
+
+Makes a title for COinS from Title and / or ScriptTitle (or any other name-script pairs)
+
+Apostrophe markup (bold, italics) is stripped from each value so that the COinS metadata isn't correupted with strings
+of %27%27...
+]]
+
+function make_coins_title (title, script)
+	if is_set (title) then
+		title = strip_apostrophe_markup (title);								-- strip any apostrophe markup
+	else
+		title='';																-- if not set, make sure title is an empty string
+	end
+	if is_set (script) then
+		script = script:gsub ('^%l%l%s*:%s*', '');								-- remove language prefix if present (script value may now be empty string)
+		script = strip_apostrophe_markup (script);								-- strip any apostrophe markup
+	else
+		script='';																-- if not set, make sure script is an empty string
+	end
+	if is_set (title) and is_set (script) then
+		script = ' ' .. script;													-- add a space before we concatenate
+	end
+	return title .. script;														-- return the concatenation
+end
+
+--[[--------------------------< G E T _ C O I N S _ P A G E S >------------------------------------------------
+
+Extract page numbers from external wikilinks in any of the |page=, |pages=, or |at= parameters for use in COinS.
+
+]]
 function get_coins_pages (pages)
-	if not is_set (pages) then return pages; end			-- if no page numbers then we're done
+	local pattern;
+	if not is_set (pages) then return pages; end								-- if no page numbers then we're done
 	
 	while true do
-		pattern = pages:match("%[(%w*:?//[^ ]+%s+)[%w%d].*%]");	-- pattern is the opening bracket, the url and following space(s): "[url "
-		if nil == pattern then break; end					-- no more urls
-		pattern = pattern:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])", "%%%1");	-- pattern is not a literal string; escape lua's magic pattern characters
-		pages = pages:gsub(pattern, "");					-- remove as many instances of pattern as possible
+		pattern = pages:match("%[(%w*:?//[^ ]+%s+)[%w%d].*%]");					-- pattern is the opening bracket, the url and following space(s): "[url "
+		if nil == pattern then break; end										-- no more urls
+		pattern = escape_lua_magic_chars (pattern);								-- pattern is not a literal string; escape lua's magic pattern characters
+		pages = pages:gsub(pattern, "");										-- remove as many instances of pattern as possible
 	end
-	pages = pages:gsub("[%[%]]", "");						-- remove the brackets
+	pages = pages:gsub("[%[%]]", "");											-- remove the brackets
 	pages = pages:gsub("–", "-" );							-- replace endashes with hyphens
 	pages = pages:gsub("&%w+;", "-" );						-- and replace html entities (&ndash; etc.) with hyphens; do we need to replace numerical entities like &#32; and the like?
 	return pages;
@@ -850,7 +992,10 @@ function listpeople(control, people)
 					if ( "vanc" == format ) then first = reducetoinitials(first) end
 					one = one .. namesep .. first 
 				end
-				if is_set(person.link) then one = "[[" .. person.link .. "|" .. one .. "]]" end
+				if is_set(person.link) and person.link ~= control.page_name then
+					one = "[[" .. person.link .. "|" .. one .. "]]"		-- link author/editor if this page is not the author's/editor's page
+				end
+
 				if is_set(person.link) and nil ~= person.link:find("//") then one = one .. " " .. seterror( 'bad_authorlink' ) end	-- check for url in author link;
 			end
 			table.insert( text, one )
@@ -894,67 +1039,43 @@ find |last4= and |last5= then the search is done.
 This function emits an error message when there is a |firstn= without a matching |lastn=.  When there are 'holes' in the list of last names, |last1= and |last3=
 are present but |last2= is missing, an error message is emitted. |lastn= is not required to have a matching |firstn=.
 ]]
---Original function
-function extractnames(args, list_name)
-    local names = {};
-    local i = 1;
-    local last;
- 
-    while true do
-        last = selectone( args, cfg.aliases[list_name .. '-Last'], 'redundant_parameters', i );
-        if not is_set(last) then
-            -- just in case someone passed in an empty parameter
-            break;
-        end
-        names[i] = {
-            last = last,
-            first = selectone( args, cfg.aliases[list_name .. '-First'], 'redundant_parameters', i ),
-            link = selectone( args, cfg.aliases[list_name .. '-Link'], 'redundant_parameters', i ),
-            mask = selectone( args, cfg.aliases[list_name .. '-Mask'], 'redundant_parameters', i )
-        };
-        i = i + 1;
-    end
-    return names;
-end
-
---[[ Broken.  Editor CITEREF IDs are broken by this code (no editor list). Author CITEREF ID render correctly
 function extractnames(args, list_name)
 	local names = {};			-- table of names
+	local last;					-- individual name components
+	local first;
+	local link;
+	local mask;
 	local i = 1;				-- loop counter/indexer
+	local n = 1;				-- output table indexer
 	local count = 0;			-- used to count the number of times we haven't found a |last= (or alias for authors, |editor-last or alias for editors)
 	
 	local err_msg_list_name = list_name:match ("(%w+)List") .. 's list';		-- modify AuthorList or EditorList for use in error messages if necessary
 
 	while true do
-		names[i] =				-- search through args for name components beginning at 1
-			{
-			last = selectone( args, cfg.aliases[list_name .. '-Last'], 'redundant_parameters', i ),
-			first = selectone( args, cfg.aliases[list_name .. '-First'], 'redundant_parameters', i ),
-			link = selectone( args, cfg.aliases[list_name .. '-Link'], 'redundant_parameters', i ),
-			mask = selectone( args, cfg.aliases[list_name .. '-Mask'], 'redundant_parameters', i )
-			};
-		if names[i].first and not names[i].last then							-- if there is a firstn without a matching lastn
-			names[i].first = nil;												-- set first to nil so we don't confuse the implicit et al message code
+		last = selectone( args, cfg.aliases[list_name .. '-Last'], 'redundant_parameters', i );		-- search through args for name components beginning at 1
+		first = selectone( args, cfg.aliases[list_name .. '-First'], 'redundant_parameters', i );
+		link = selectone( args, cfg.aliases[list_name .. '-Link'], 'redundant_parameters', i );
+		mask = selectone( args, cfg.aliases[list_name .. '-Mask'], 'redundant_parameters', i );
+
+		if first and not last then												-- if there is a firstn without a matching lastn
 			table.insert( z.message_tail, { seterror( 'first_missing_last', {err_msg_list_name, i}, true ) } );	-- add this error message
-			break;																-- and done because lastn not found
-		elseif not names[i].first and not names[i].last then					-- if both firstn and lastn aren't found, are we done?
+		elseif not first and not last then										-- if both firstn and lastn aren't found, are we done?
 			count = count + 1;													-- number of times we haven't found last and first
 			if 2 == count then													-- two missing names and we give up
 				break;															-- normal exit or there is a two-name hole in the list; can't tell which
 			end
-		else																	-- last with or without a first
+		else																	-- we have last with or without a first
+			names[n] = {last = last, first = first, link = link, mask = mask};	-- add this name to our names list
+			n = n + 1;															-- point to next location in the names table
 			if 1 == count then													-- if the previous name was missing
 				table.insert( z.message_tail, { seterror( 'missing_name', {err_msg_list_name, i-1}, true ) } );		-- add this error message
 			end
 			count = 0;															-- reset the counter, we're looking for two consecutive missing names
 		end
-		i = i + 1;																-- bump to the next name
+		i = i + 1;																-- point to next args location
 	end
 	return names;																-- all done, return our list of names
 end
-]]
-
-
 
 -- Populates ID table from arguments using configuration settings
 function extractids( args )
@@ -1158,7 +1279,95 @@ function COinS(data)
 	return table.concat(OCinSoutput, "&");
 end
 
---[[
+
+--[[--------------------------< G E T _ I S O 6 3 9 _ C O D E >------------------------------------------------
+
+Validates language names provided in |language= parameter if not an ISO639-1 code.  Handles the special case that is Norwegian where
+ISO639-1 code 'no' is mapped to language name 'Norwegian Bokmål' by Extention:CLDR.
+
+Returns the language name and associated ISO639-1 code.  Because case of the source may be incorrect or different from the case that Wikimedia
+uses, the name comparisons are done in lower case and when a match is found, the Wikimedia version (assumed to be correct) is returned along
+with the code.  When there is no match, we return the original language name string.
+
+mw.language.fetchLanguageNames() will return a list of languages that aren't part of ISO639-1. Names that aren't ISO639-1 but that are included
+in the list will be found if that name is provided in the |language= parameter.  For example, if |language=Samaritan Aramaic, that name will be
+found with the associated code 'sam', not an ISO639-1 code.  When names are found and the associated code is not two characters, this function
+returns only the Wikimedia language name.
+
+Adapted from code taken from Module:Check ISO 639-1.
+]]
+
+function get_iso639_code (lang)
+	if 'Norwegian' == lang then
+		return lang, 'no';														-- special case related to Wikimedia remap of code 'no' at Extension:CLDR
+	end
+	
+	local languages = mw.language.fetchLanguageNames('en', 'all')				-- get a list of language names known to Wikimedia
+																				-- ('all' is required for North Ndebele, South Ndebele, and Ojibwa)
+	local langlc = mw.ustring.lower(lang);										-- lower case version for comparisons
+	
+	for code, name in pairs(languages) do										-- scan the list to see if we can find our language
+		if langlc == mw.ustring.lower(name) then
+			if 2 ~= code:len() then												-- ISO639-1 codes only
+				return name;													-- so return the name but not the code
+			end
+			return name, code;													-- found it, return name to ensure proper capitalization and the ISO639-1 code
+		end
+	end
+	return lang;																-- not valid language; return language in original case and nil for ISO639-1 code
+end
+
+--[[--------------------------< L A N G U A G E _ P A R A M E T E R >------------------------------------------
+
+Get language name from ISO639-1 code value provided.  If a code is valid use the returned name; if not, then use the value that was provided with the language parameter.
+
+There is an exception.  There are three ISO639-1 codes for Norewegian language variants.  There are two official variants: Norwegian Bokmål (code 'nb') and
+Norwegian Nynorsk (code 'nn').  The third, code 'no',  is defined by ISO639-1 as 'Norwegian' though in Norway this is pretty much meaningless.  However, it appears
+that on enwiki, editors are for the most part unaware of the nb and nn variants (compare page counts for these variants at Category:Articles with non-English-language external links.
+
+Because Norwegian Bokmål is the most common language variant, Media wiki has been modified to return Norwegian Bokmål for ISO639-1 code 'no'. Here we undo that and
+return 'Norwegian' when editors use |language=no.  We presume that editors don't know about the variants or can't descriminate between them.
+
+See Help talk:Citation Style_1#An ISO 639-1 language name test
+
+When |language= contains a valid ISO639-1 code, the page is assigned to the category for that code: Category:Norwegian-language sources (no) if
+the page is a mainspace page and the ISO639-1 code is not 'en'.  Similarly, if the  parameter is |language=Norwegian, it will be categorized in the same way.
+
+TODO: Error message when language or language code is not ISO639-1?
+]]
+
+function language_parameter (lang, namespace)
+	local code;			-- the ISO639-1 two character code
+	local name;			-- the language name
+	local test='';
+		
+	if 0 == namespace and (('en' == lang:lower()) or ('english' == lang:lower())) then
+		table.insert (z.maintenance_cats, 'CS1 maint: English language specified');		-- add maintenance category if |language=English or |language=en in article space
+	end
+
+	if 2 == lang:len() then														-- ISO639-1 language code are 2 characters (fetchLanguageName also supports 3 character codes)
+		name = mw.language.fetchLanguageName( lang:lower(), "en" );				-- get ISO 639-1 language name if Language is a proper code
+	end
+
+	if is_set (name) then														-- if Language specified a valid ISO639-1 code
+		code = lang:lower();													-- save it
+	else
+		name, code = get_iso639_code (lang);									-- attempt to get code from name (assign name here so that we are sure of proper capitalization)
+	end
+
+	if is_set (code) then
+		if 'no' == code then name = 'Norwegian' end;							-- override wikimedia when code is 'no'
+			if 0 == namespace and 'en' ~= code then					-- is this page main / article space and English not the language?
+				table.insert( z.properties_cats, 'CS1 ' .. name .. '-language sources (' .. code .. ')');	-- in main space and not English: categorize
+			end
+		end
+	return (" " .. wrap( 'language', name));									-- wrap with '(in ...)'
+end
+
+
+
+
+--[[--------------------------< C I T A T I O N 0 >------------------------------------------------------------
 This is the main function doing the majority of the citation
 formatting.
 ]]
@@ -1192,6 +1401,7 @@ function citation0( config, args)
 	local LayDate = A['LayDate'];
 	------------------------------------------------- Get title data
 	local Title = A['Title'];
+	local ScriptTitle = A['ScriptTitle'];
 	local BookTitle = A['BookTitle'];
 	local Conference = A['Conference'];
 	local TransTitle = A['TransTitle'];
@@ -1205,11 +1415,11 @@ function citation0( config, args)
 	local Docket = A['Docket'];
 	local ArchiveURL = A['ArchiveURL'];
 	local URL = A['URL']
-	local URLorigin = A:ORIGIN('URL');
+	local URLorigin = A:ORIGIN('URL');											-- get name of parameter that holds URL
 	local ChapterURL = A['ChapterURL'];
-	local ChapterURLorigin = A:ORIGIN('ChapterURL');
+	local ChapterURLorigin = A:ORIGIN('ChapterURL');							-- get name of parameter that holds ChapterURL
 	local ConferenceURL = A['ConferenceURL'];
-	local ConferenceURLorigin = A:ORIGIN('ConferenceURL');
+	local ConferenceURLorigin = A:ORIGIN('ConferenceURL');						-- get name of parameter that holds ConferenceURL
 	local Periodical = A['Periodical'];
 
 	local Series = A['Series'];
@@ -1257,7 +1467,7 @@ function citation0( config, args)
 	local LaySource = A['LaySource'];
 	local Transcript = A['Transcript'];
 	local TranscriptURL = A['TranscriptURL'] 
-	local TranscriptURLorigin = A:ORIGIN('TranscriptURL');
+	local TranscriptURLorigin = A:ORIGIN('TranscriptURL');						-- get name of parameter that holds TranscriptURL
 	local sepc = A['Separator'];
 
 	local LastAuthorAmp = A['LastAuthorAmp'];
@@ -1290,11 +1500,8 @@ function citation0( config, args)
 
 --check this page to see if it is in one of the namespaces that cs1 is not supposed to add to the error categories.
 	if not is_set(no_tracking_cats) then				-- ignore if we are already not going to categorize this page
-		for k, v in pairs( cfg.uncategorized_namespaces ) do	-- otherwise, spin through the list of namespaces we don't include in error categories
-			if this_page.nsText == v then				-- if we find one
-				no_tracking_cats = "true";				-- set no_tracking_cats
-				break;									-- and we're done
-			end
+		if inArray (this_page.nsText, cfg.uncategorized_namespaces) then
+			no_tracking_cats = "true";					-- set no_tracking_cats
 		end
 	end
 
@@ -1499,16 +1706,17 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 
 	-- COinS metadata (see <http://ocoins.info/>) for
 	-- automated parsing of citation information.
+	-- this is the function call to COinS()
 	local OCinSoutput = COinS{
 		['Periodical'] = Periodical,
-		['Chapter'] = Chapter,
-		['Title'] = Title,
+		['Chapter'] = strip_apostrophe_markup (Chapter),						-- Chapter stripped of bold / italic wikimarkup
+		['Title'] = make_coins_title (Title, ScriptTitle),						-- Title and ScriptTitle stripped of bold / italic wikimarkup
 		['PublicationPlace'] = PublicationPlace,
 		['Date'] = first_set(COinS_date, Date),		-- COinS_date has correctly formatted date if Date is valid; any reason to keep Date here?  Should we be including invalid dates in metadata?
 		['Series'] = Series,
 		['Volume'] = Volume,
 		['Issue'] = Issue,
-		['Pages'] = get_coins_pages (first_set(Page, Pages, At)),	-- pages stripped of external links
+		['Pages'] = get_coins_pages (first_set(Page, Pages, At)),				-- pages stripped of external links
 		['Edition'] = Edition,
 		['PublisherName'] = PublisherName,
 		['URL'] = first_set( URL, ChapterURL ),
@@ -1516,7 +1724,7 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 		['ID_list'] = ID_list,
 		['RawPage'] = this_page.prefixedText,
 	};
-
+--[[Why is this here?  Why are we mapping Title to Chapter when Periodical is set?
 	if is_set(Periodical) and not is_set(Chapter) and is_set(Title) then
 		Chapter = Title;
 		ChapterLink = TitleLink;
@@ -1525,6 +1733,7 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 		TitleLink = '';
 		TransTitle = '';
 	end
+]]
 --[[ Hide unfinished cite newsgroup code so that long delayed update can take place
 -- special case for cite newsgroup.  Do this after COinS because we are modifying Publishername and ID
 	if 'newsgroup' == config.CitationClass then
@@ -1554,7 +1763,8 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 			namesep = (first_set(A["AuthorNameSeparator"], A["NameSeparator"]) or "") .. " ",
 			format = A["AuthorFormat"],
 			maximum = Maximum,
-			lastauthoramp = LastAuthorAmp
+			lastauthoramp = LastAuthorAmp,
+			page_name = this_page.text				-- get current page name so that we don't wikilink to it via authorlinkn
 		};
 		
 		-- If the coauthor field is also used, prevent ampersand and et al. formatting.
@@ -1586,7 +1796,8 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 			namesep = (first_set(A["EditorNameSeparator"], A["NameSeparator"]) or "") .. " ",
 			format = A['EditorFormat'],
 			maximum = Maximum,
-			lastauthoramp = LastAuthorAmp
+			lastauthoramp = LastAuthorAmp,
+			page_name = this_page.text				-- get current page name so that we don't wikilink to it via authorlinkn
 		};
 
 		Editors, EditorCount = listpeople(control, e);
@@ -1635,12 +1846,11 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 	end
 	
 	-- Test if citation has no title
-	if  not is_set(Chapter) and
-		not is_set(Title) and
+	if	not is_set(Title) and
 		not is_set(Periodical) and
 		not is_set(Conference) and
 		not is_set(TransTitle) and
-		not is_set(TransChapter) then
+		not is_set(ScriptTitle) then
 		table.insert( z.message_tail, { seterror( 'citation_missing_title', {}, true ) } );
 	end
 	
@@ -1659,19 +1869,15 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 	if is_set(Chapter) and is_set(ChapterLink) then 
 		Chapter = "[[" .. ChapterLink .. "|" .. Chapter .. "]]";
 	end
-	if is_set(Periodical) and is_set(Title) then
-		Chapter = wrap( 'italic-title', Chapter );
-		TransChapter = wrap( 'trans-italic-title', TransChapter );
-	else
-		Chapter = kern_quotes (Chapter);				-- if necessary, separate chapter title's leading and trailing quote marks from Module provided quote marks
-		Chapter = wrap( 'quoted-title', Chapter );
-		TransChapter = wrap( 'trans-quoted-title', TransChapter );
-	end
-	
+
+	Chapter = kern_quotes (Chapter);				-- if necessary, separate chapter title's leading and trailing quote marks from Module provided quote marks
+	Chapter = wrap( 'quoted-title', Chapter );
+	TransChapter = wrap( 'trans-quoted-title', TransChapter );
+
 	local TransError = ""
 	if is_set(TransChapter) then
 		if not is_set(Chapter) then
-			TransError = " " .. seterror( 'trans_missing_chapter' );
+			TransError = " " .. seterror( 'trans_missing_chapter' );		-- add error message
 		else
 			TransChapter = " " .. TransChapter;
 		end
@@ -1695,8 +1901,7 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 				Chapter = Chapter .. TransError;
 			end			
 		elseif is_set(ChapterURL) then
-			Chapter = Chapter .. " " .. externallink( ChapterURL, nil, ChapterURLorigin ) .. 
-				TransError;
+			Chapter = Chapter .. " " .. externallink( ChapterURL, nil, ChapterURLorigin ) .. TransError;	-- ChapterURLorigin holds the name of parameter
 		else
 			Chapter = Chapter .. TransError;
 		end
@@ -1709,29 +1914,25 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 	if is_set(TitleLink) and is_set(Title) then
 		Title = "[[" .. TitleLink .. "|" .. Title .. "]]"
 	end
-	
-	if is_set(Periodical) then
-		Title = kern_quotes (Title);				-- if necessary, separate title's leading and trailing quote marks from Module provided quote marks
+
+	if inArray(config.CitationClass, {"web","news","journal","pressrelease","conference","podcast"}) then
+		Title = kern_quotes (Title);											-- if necessary, separate title's leading and trailing quote marks from Module provided quote marks
 		Title = wrap( 'quoted-title', Title );
+		Title = script_concatenate (Title, ScriptTitle);						-- <bdi> tags, lang atribute, categorization, etc; must be done after title is wrapped
 		TransTitle = wrap( 'trans-quoted-title', TransTitle );
---[[ Hide unfinished cite newsgroup code so that long delayed update can take place
-	elseif inArray(config.CitationClass, {"web","news","pressrelease","conference","podcast","newsgroup"}) and
-]]	elseif inArray(config.CitationClass, {"web","news","pressrelease","conference","podcast"}) and
-			not is_set(Chapter) then
-		Title = kern_quotes (Title);				-- if necessary, separate title's leading and trailing quote marks from Module provided quote marks
-		Title = wrap( 'quoted-title', Title );
-		TransTitle = wrap( 'trans-quoted-title', TransTitle );
+--		Chapter = '';								-- chapter not allowed - disabled because doing this here doesn't display error msg and promoted url is lost
 	else
 		Title = wrap( 'italic-title', Title );
+		Title = script_concatenate (Title, ScriptTitle);						-- <bdi> tags, lang atribute, categorization, etc; must be done after title is wrapped
 		TransTitle = wrap( 'trans-italic-title', TransTitle );
 	end
-	
+
 	TransError = "";
 	if is_set(TransTitle) then
-		if not is_set(Title) then
-			TransError = " " .. seterror( 'trans_missing_title' );
-		else
+		if is_set(Title) then
 			TransTitle = " " .. TransTitle;
+		else
+			TransError = " " .. seterror( 'trans_missing_title' );
 		end
 	end
 	
@@ -1746,7 +1947,7 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 			Title = Title .. TransError;
 		end
 	end
-	
+
 	if is_set(Place) then
 		Place = " " .. wrap( 'written', Place, use_lowercase ) .. sepc .. " ";
 	end
@@ -1827,25 +2028,10 @@ Date validation supporting code is in Module:Citation/CS1/Date_validation
 		At = At .. Section .. Inset;		
 	end	
 
-	--[[Look in the list of iso639-1 language codes to see if the value provided in the language parameter matches one of them.  If a match is found, 
-	use that value; if not, then use the value that was provided with the language parameter.
-	
-	Categories are assigned in a manner similar to the {{xx icon}} templates - categorizes only mainspace citations and only when the language code is not 'en' (English).
-	]]
 	if is_set (Language) then
---		local name = mw.language.fetchLanguageName( Language:lower(), "en" );	-- experiment: this seems to return correct ISO 639-1 language names
-		local name = cfg.iso639_1[Language:lower()];		-- get the language name if Language parameter has a valid iso 639-1 code
-		if nil == name then
-			Language=" " .. wrap( 'language', Language );	-- no match, use parameter's value
-		else
-			if 0 == this_page.namespace and 'en' ~= Language:lower() then	--found a match; is this page main / article space and English not the language?
-				Language=" " .. wrap( 'language', name .. '[[Category:Articles with ' .. name .. '-language external links]]' );	-- in main space and not English: categorize
-			else
-				Language=" " .. wrap( 'language', name );	--not in mainspace or language is English so don't categorize
-			end
-		end
+		Language = language_parameter (Language, this_page.namespace);			-- format, categories (article namespace only), name from ISO639-1, etc
 	else
-		Language="";	-- language not specified so make sure this is an empty string;
+		Language="";															-- language not specified so make sure this is an empty string;
 	end
 
 	Others = is_set(Others) and (sepc .. " " .. Others) or "";
@@ -2206,6 +2392,12 @@ the annotation directly follows the |title= parameter value in the citation rath
 	no_tracking_cats = no_tracking_cats:lower();
 	if inArray(no_tracking_cats, {"", "no", "false", "n"}) then
 		for _, v in ipairs( z.error_categories ) do
+			text = text .. '[[Category:' .. v ..']]';
+		end
+		for _, v in ipairs( z.maintenance_cats ) do								-- append maintenance categories
+			text = text .. '[[Category:' .. v ..']]';
+		end
+		for _, v in ipairs( z.properties_cats ) do								-- append maintenance categories
 			text = text .. '[[Category:' .. v ..']]';
 		end
 	end
