@@ -79,11 +79,19 @@ local placeholder_image = {
 	"UploadAnImage.gif",
 	"UploadAnImage.svg",
 	"UploadAnImageShort.svg",
+	"CarersLogo.gif",
+	"Diagram Needed.svg",
+	"No male portrait.svg",
+	"NoDVDcover copy.png",
+	"Placeholder barnstar ribbon.png",
+	"Project Trains no image.png",
+	"Image-request.png",
 }
 
 function i.IsPlaceholder(image)
     -- change underscores to spaces
     image = mw.ustring.gsub(image, "_", " ");
+    assert(image ~= nil, 'mw.ustring.gsub must not return nil')
     -- if image starts with [[ then remove that and anything after |
     if mw.ustring.sub(image,1,2) == "[[" then
         image = mw.ustring.sub(image,3);
@@ -194,7 +202,7 @@ function i.InfoboxImage(frame)
             -- check to see if size bigger than maxsize
             if size ~= "" and size ~= nil then
                 local sizenumber = tonumber(mw.ustring.match(size,"%d*")) or 0;
-                local maxsizenumber = tonumber(mw.ustring.match(maxsize,"%d*"));
+                local maxsizenumber = tonumber(mw.ustring.match(maxsize,"%d*")) or 0;
                 if sizenumber>maxsizenumber and maxsizenumber>0 then
                     size = maxsize;
                 end
