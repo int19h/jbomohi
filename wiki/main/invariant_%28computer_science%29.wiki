@@ -1,0 +1,39 @@
+An ''invariant'' is a condition that can be relied upon to be true during execution of a program, or during some portion of it. It is a [[logical assertion]] that is held to always be true during a certain phase of execution. For example, a [[loop invariant]] is a condition that is true at the beginning and end of every execution of a loop.
+
+==Use==
+Invariants are especially useful when reasoning about whether a computer program is correct.
+
+==Example==
+The MU puzzle is a good example of a logical problem where determining an invariant is useful. 
+The puzzle asks one to start with the word MI and transform it into the word MU using in each step one of the following transformation rules:
+# If a string ends with an I, a U may be appended (''x''I → ''x''IU)
+# The string after the M may be completely duplicated (M''x'' → M''xx'')
+# Any three consecutive I's (III) may be replaced with a single U (''x''III''y'' → ''x''U''y'')
+# Any two consecutive U's may be removed (''x''UU''y'' → ''xy'')
+An example derivation (superscripts indicating the applied rules) is
+:MI →<sup>2</sup> MII →<sup>2</sup> MIIII →<sup>3</sup> MUI →<sup>2</sup> MUIUI →<sup>1</sup> MUIUIU →<sup>2</sup> MUIUIUUIUIU →<sup>4</sup> MUIUIIUIU → ...
+
+Is it possible to convert MI into MU using these four transformation rules only?
+
+One could spend many hours applying these transformation rules to strings. However, it might be quicker to find a [[Predicate (mathematical logic)|predicate]] that's invariant to all rules, and makes getting to ''MU'' impossible. Logically looking at the puzzle, the only way to get rid of any I's is to have three consecutive I's in the string. This makes the following invariant interesting to consider: 
+
+:''The number of I's in the string is not a multiple of 3''.
+
+This is an invariant to the problem if for each of the transformation rules the following holds: if the invariant held before applying the rule, it will also hold after applying it. If we look at the net effect of applying the rules on the number of I's and U's we can see this actually is the case for all rules:
+
+:{| class=wikitable
+|-
+! Rule !! #I's !! #U's !! Effect on invariant
+|-
+| style="text-align: center;" | 1 || style="text-align: right;" | +0 || style="text-align: right;" | +1 || Number of I's is unchanged. If the invariant held, it still does.
+|-
+| style="text-align: center;" |  2 || style="text-align: right;" | ×2 || style="text-align: right;" | ×2 || If ''n'' is not a multiple of 3, then 2×''n'' isn't either. The invariant still holds.
+|-
+| style="text-align: center;" |  3 || style="text-align: right;" | −3 || style="text-align: right;" | +1 || If ''n'' is not a multiple of 3, ''n''−3 isn't either. The invariant still holds.
+|-
+| style="text-align: center;" |  4 || style="text-align: right;" | +0 || style="text-align: right;" | −2 || Number of I's is unchanged. If the invariant held, it still does.
+|}
+
+The table above shows clearly that the invariant holds for each of the possible transformation rules, which basically means that whichever rule we pick, at whatever state, if the number of I's was not a multiple of three before applying the rule, it won't be afterwards either.
+
+Given that there is a single I in the starting string MI, and one is not a multiple of three, it's impossible to go from MI to MU as zero is a multiple of three.
