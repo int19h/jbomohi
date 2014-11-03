@@ -8,3 +8,19 @@ pe'i
 
 {selte'i} = only x1 is characterized by x2 among x3
 
+
+## 2014-11-03T11:54:08Z — Wuzzy (comment 1386, on definition 13241, in reply to 1385)
+
+Re: hm?
+
+gleki wrote:
+> I think the definition contradicts {se} {steci}.
+> 
+> pe'i
+> 
+> {selte'i} = only x1 is characterized by x2 among x3
+
+
+I agree. Lujvo with a SE rafsi shouldn’t be irregular. I posted the
+obvious definition which just flips the places (also for Lojban).
+
