@@ -79,3 +79,15 @@ lujvo.
 (In the meantime, I created a zi'evla equivalent {fanduse} for this
 meaning.)
 
+
+## 2014-11-05T14:49:50Z — Ilmen (comment 1397, on definition 57515, in reply to 1395)
+
+Re: What's wrong?
+
+gleki wrote:
+> Usage examples showing why we need this word are needed.
+> 
+> In fact usage examples should be made a rule for every new word added.
+
+Example added.
+
