@@ -91,3 +91,28 @@ gleki wrote:
 
 Example added.
 
+
+## 2014-11-05T18:53:15Z — Wuzzy (comment 1401, on definition 57515, in reply to 1396)
+
+Re: What's wrong?
+
+> I made this lujvo with the assumption that dukse = "x1 is/does too much
+x2
+> (property) for x3 to happen". {dukse} is usually used this way on IRC.
+Then IRC is wrong, because this definition differes from that one in the
+dictionary. It would be better to create a new word for this “IRC
+definition” instead of overloading the meaning of “dukse”.
+
+> Then, {faurdu'e} was meant to be the jvajvo "fasnu+dukse" = x1 dukse lo
+ka
+> fasnu ku x2 (= x1 happens too much for x2 to happen).
+I can’t imagine how anything can happen “too much”. Either something
+happens or it doesn’t.
+I wonder how this word can be useful.
+
+Most importantly, you still did not specify what can go into x2. Specify
+this properly and you get my upvote.
+
+I am aware of the example, I think I get a vague idea, but I am still not
+sure.
+
