@@ -51,3 +51,14 @@ causal
 i voted down until the discussion is removed from the notes files that is
 exported to .pdf
 
+
+## 2014-11-05T17:59:58Z — Ilmen (comment 1400, on definition 63547, in reply to 1399)
+
+Re: Subjective?
+
+gleki wrote:
+> i voted down until the discussion is removed from the notes files that
+is exported to .pdf
+
+Note removed.
+
