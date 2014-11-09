@@ -1,4 +1,4 @@
-# mail/bpfk thread 79b63a816932-extended_rafsi_and_a_tosmabru%2Fslinku'i_boondo | root 0ecda8252db74b6a924a302a02d55629@gmail.com | 9 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread 79b63a816932-extended_rafsi_and_a_tosmabru%2Fslinku'i_boondo | root 0ecda8252db74b6a924a302a02d55629@gmail.com | 10 messages | rendered by jbomohi mail-v1
 
 === 1 | 2014-11-06T22:12:52Z | Alex Burka <durka42@gmail.com> | 0ecda8252db74b6a924a302a02d55629@gmail.com | mail/bpfk/cur/1415311972.79b63a816932ddd8.jbomohi:2,S
 This word came up on IRC today: 
@@ -211,7 +211,51 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 7 | 2014-11-07T17:05:31Z | Ilmen <ilmen.pokebip@gmail.com> | 545cfbdb.5050405@gmail.com | mail/bpfk/cur/1415379931.98f19555249e53c5.jbomohi:2,S
+=== 7 | 2014-11-09T20:19:01Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2ebtpzm3ufwhzppqr_audrxontv4hquh+tvxkkaxv_zqq@mail.gmail.com | mail/bpfk/cur/1415564341.78d2dab5152b9fbb.jbomohi:2,S
+On Fri, Nov 7, 2014 at 4:19 PM, Alex Burka <durka42@gmail.com> wrote:
+
+>  I'm looking at the parse tree for "sporte'y" as a brivla_rafsi and I
+> don't understand it, because it shows "sporte" as a brivla_head. But that
+> should never happen because brivla_head has a !slinkuhi guard. What's going
+> on?
+>
+
+OK, I think I figured it out. The problem is that because "orte'y" is a
+brivla rafsi, it thinks that "porte'y" is a slinku'i, and so "sporte'y" is
+fine. An additional problem with the slinku'i change is that it will also
+not accept "sprageti'y" as a rafsi because "prageti'y" is one, but
+"sprageti" is not a slinku'i!
+
+So, we must go back to the original slinkuhi rule, and we add instead three
+final cases to the rafsi-string rule:
+
+slinkuhi <- consonant rafsi-string
+
+rafsi-string <- y-less-rafsi* (gismu / CVV-final-rafsi /
+stressed-y-less-rafsi short-final-rafsi / y-rafsi / stressed-y-rafsi /
+stressed-y-less-rafsi? initial-pair y / long-rafsi vowel h y /
+CCV-rafsi h y / CVV-rafsi h y)
+
+
+And I think we need to add the !h in this one as well:
+
+y-less-rafsi <- !y-rafsi (CVC-rafsi !y / CCV-rafsi / CVV-rafsi) !h
+!any-extended-rafsi
+
+
+Fingers crossed.
+
+mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 8 | 2014-11-07T17:05:31Z | Ilmen <ilmen.pokebip@gmail.com> | 545cfbdb.5050405@gmail.com | mail/bpfk/cur/1415379931.98f19555249e53c5.jbomohi:2,S
 
 On 06/11/2014 23:12, Alex Burka wrote:
 > (Assume for the sake of argument that the extended rafsi stress fix, 
@@ -232,7 +276,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 8 | 2014-11-07T23:00:52Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2d3gf0_brvfd_z+6sbgzbksstgvwkrec90kgkgrvs-jsg@mail.gmail.com | mail/bpfk/cur/1415401252.10db65113493dea4.jbomohi:2,S
+=== 9 | 2014-11-07T23:00:52Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2d3gf0_brvfd_z+6sbgzbksstgvwkrec90kgkgrvs-jsg@mail.gmail.com | mail/bpfk/cur/1415401252.10db65113493dea4.jbomohi:2,S
 On Fri, Nov 7, 2014 at 2:05 PM, Ilmen <ilmen.pokebip@gmail.com> wrote:
 
 >
@@ -273,7 +317,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 9 | 2014-11-08T21:01:13Z | Ilmen <ilmen.pokebip@gmail.com> | 545e8499.9040100@gmail.com | mail/bpfk/cur/1415480473.a7d9dcf65d717989.jbomohi:2,S
+=== 10 | 2014-11-08T21:01:13Z | Ilmen <ilmen.pokebip@gmail.com> | 545e8499.9040100@gmail.com | mail/bpfk/cur/1415480473.a7d9dcf65d717989.jbomohi:2,S
 
 On 08/11/2014 00:00, Jorge Llambías wrote:
 >
