@@ -229,3 +229,10 @@ Since {mluni}-{plini} clash is pu'o solved, since the default value of
 terdi2 is equal to Sol3 planet aka "The Earth" and thus not very useful
 I'm removing planeta2.
 
+
+## 2014-11-12T19:59:35Z — gleki (comment 1412, on definition 52768, in reply to 978)
+
+Re: Redundancy
+
+Definition edited. The distinction between {planeta} and {plini} added.
+
