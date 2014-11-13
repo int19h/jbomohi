@@ -61,3 +61,11 @@ fine),
 My main complaint is actually i wasn't expecting other than numbers inside
 {} in x_{1jai}.
 
+
+## 2014-11-13T08:03:39Z — gleki (comment 1418, in reply to 1417)
+
+Re: formatting
+
+My main complaint is actually i wasn't expecting other than numbers inside
+\{\} in x_\{1jai\}.
+
