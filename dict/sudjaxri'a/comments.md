@@ -77,3 +77,10 @@ Re: formatting
 My main complaint is actually i wasn't expecting other than numbers inside
 \\{\\} in x_\\{1jai\\}.
 
+
+## 2014-11-13T08:05:47Z — gleki (comment 1420, in reply to 1419)
+
+Re: formatting
+
+well i dont know how to escape curly brackets.
+
