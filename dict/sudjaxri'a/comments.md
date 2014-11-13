@@ -41,3 +41,23 @@ gleki wrote:
 What do you think? If $r_{1jai}$ is too confusing (I thought it was fine),
 perhaps $jr_1$ and then $r_1$ can be used instead of $r_{fai}$?
 
+
+## 2014-11-13T08:03:11Z — gleki (comment 1417, in reply to 1414)
+
+Re: formatting
+
+durka42 wrote:
+> gleki wrote:
+> > x_1=r_{1jai}
+> > 
+> > I think this "1jai" should be thought over.
+> 
+> What do you think? If $r_{1jai}$ is too confusing (I thought it was
+fine),
+> perhaps $jr_1$ and then $r_1$ can be used instead of $r_{fai}$?
+
+
+
+My main complaint is actually i wasn't expecting other than numbers inside
+{} in x_{1jai}.
+
