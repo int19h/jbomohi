@@ -69,3 +69,11 @@ Re: formatting
 My main complaint is actually i wasn't expecting other than numbers inside
 \{\} in x_\{1jai\}.
 
+
+## 2014-11-13T08:04:52Z — gleki (comment 1419, in reply to 1418)
+
+Re: formatting
+
+My main complaint is actually i wasn't expecting other than numbers inside
+\\{\\} in x_\\{1jai\\}.
+
