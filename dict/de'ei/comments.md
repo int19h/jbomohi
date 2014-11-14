@@ -18,3 +18,17 @@ it's a good question how to define it. It's not just "za lo djedi be li"
 since "tomorrow" is what starts at 0:00am and ends at 23:59 which pure
 {djedi} isnt always equal to since djedi can start at any time.
 
+
+## 2014-11-14T19:31:59Z — cogas (comment 1423, on definition 63704, in reply to 1422)
+
+Re: good question
+
+gleki wrote:
+> it's a good question how to define it. It's not just "za lo djedi be li"
+> since "tomorrow" is what starts at 0:00am and ends at 23:59 which pure
+> {djedi} isnt always equal to since djedi can start at any time.
+
+
+I tried to translate into Lojban, but I failed :(
+I have any idea of translating it..
+
