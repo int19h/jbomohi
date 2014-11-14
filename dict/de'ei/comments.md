@@ -52,3 +52,30 @@ Oops,
 
 I have no idea of translating it..
 
+
+## 2014-11-14T19:39:34Z — gleki (comment 1425, on definition 63704, in reply to 1424)
+
+Re: good question
+
+cogas wrote:
+> cogas wrote:
+> > gleki wrote:
+> > > it's a good question how to define it. It's not just "za lo djedi be
+> li"
+> > > since "tomorrow" is what starts at 0:00am and ends at 23:59 which
+pure
+> > > {djedi} isnt always equal to since djedi can start at any time.
+> > 
+> > 
+> > I tried to translate into Lojban, but I failed :(
+> > I have any idea of translating it..
+> 
+> Oops, 
+> 
+> I have no idea of translating it..
+
+
+Neither do I. I call this concept "splicing time intervals"
+
+https://groups.google.com/d/topic/lojban/xfawt6XTkW4/discussion
+
