@@ -21,3 +21,20 @@ cogas wrote:
 I added another definition wit hopefully better English. Did I get it
 right?
 
+
+## 2014-11-15T21:32:07Z — cogas (comment 1430, on definition 63719, in reply to 1429)
+
+Re: I'm afraid that I couldn't translate into English.
+
+durka42 wrote:
+> cogas wrote:
+> > I'm afraid that I couldn't sufficiently translate what I meant into
+> > English.
+> > 
+> > I'm sure that this definition's English is too poor.
+> 
+> I added another definition wit hopefully better English. Did I get it
+> right?
+
+ki'esai do I think that you correctly understood what I meant.
+
