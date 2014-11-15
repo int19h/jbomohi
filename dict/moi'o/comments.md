@@ -38,3 +38,35 @@ durka42 wrote:
 
 ki'esai do I think that you correctly understood what I meant.
 
+
+## 2014-11-15T22:00:57Z — cogas (comment 1431, on definition 63721)
+
+better translation x4
+
+(Thank you for better translation)
+
+I wonder whether there is a better expression of x_4(by calender).
+
+The splicing method depends on x4.
+
+For instance:
+if they will splice time by "day", most people regarded a time block as
+0:00 - 23:59 GMT. Probably, time is merely spliced into 9:12 - 9:11, for
+example.
+
+The style/method of splicing is dependent on the speaker's custom/culture.
+It should be specified by x_4. (however, like berti_3, a concrete value
+merely fills with x_4, I think)
+
+Also, many time-interval words [day, month, year, hour, minute, second,
+century, and so on] are associated with splicing. Maybe, We first splice
+time, and then we use value which a time-block made by splicing has, which
+is a time-interval.
+
+Thus, moi'o_4 is similar to nanca_3, masti_3, djedi_3, cacra_3, mentu_3,
+snidu_3.. 
+
+Sorry for my poor English. I hope that you get what I meant.
+
+mu'o
+
