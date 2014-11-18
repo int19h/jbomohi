@@ -70,3 +70,45 @@ Sorry for my poor English. I hope that you get what I meant.
 
 mu'o
 
+
+## 2014-11-18T23:58:41Z — durka42 (comment 1435, on definition 63721, in reply to 1431)
+
+Re: better translation x4
+
+cogas wrote:
+> (Thank you for better translation)
+> 
+> I wonder whether there is a better expression of x_4(by calender).
+> 
+> The splicing method depends on x4.
+> 
+> For instance:
+> if they will splice time by "day", most people regarded a time block as
+> 0:00 - 23:59 GMT. Probably, time is merely spliced into 9:12 - 9:11, for
+> example.
+> 
+> The style/method of splicing is dependent on the speaker's
+custom/culture.
+> It should be specified by x_4. (however, like berti_3, a concrete value
+> merely fills with x_4, I think)
+> 
+> Also, many time-interval words [day, month, year, hour, minute, second,
+> century, and so on] are associated with splicing. Maybe, We first splice
+> time, and then we use value which a time-block made by splicing has,
+which
+> is a time-interval.
+> 
+> Thus, moi'o_4 is similar to nanca_3, masti_3, djedi_3, cacra_3, mentu_3,
+> snidu_3.. 
+> 
+> Sorry for my poor English. I hope that you get what I meant.
+> 
+> mu'o
+
+I think we need to come up with a way to fill moi'o_4 in Lojban. Ideally
+at least two ways (the default, and something else). Then it would be
+easier to write a definition. As it is, I don't know how to fill the
+place.
+
+So do you have any examples of moi'o_4 in mind?
+
