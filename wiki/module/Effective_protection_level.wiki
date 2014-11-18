@@ -49,6 +49,8 @@ function p._main(action, pagename)
 	local blacklistentry = mw.ext.TitleBlacklist.test(action, pagename)
 	if blacklistentry then
 		return blacklistentry.params.autoconfirmed and 'autoconfirmed' or 'accountcreator'
+	elseif level == 'editsemiprotected' then -- create-semiprotected pages return this for some reason
+		return 'autoconfirmed'
 	elseif level then
 		return level
 	elseif action == 'upload' then
