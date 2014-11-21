@@ -141,3 +141,30 @@ durka42 wrote:
 That's because it's a relative of {zo'e}, which has the same kind of
 duality.
 
+
+## 2014-11-21T10:54:47Z — gleki (comment 1437, on definition 56616, in reply to 1132)
+
+Re: Difference from “ge'e”?
+
+krtisfranks wrote:
+> Wuzzy wrote:
+> > How does this one differ from {ge'e}?
+> 
+> It does not have the elliptical aspect to it. Also, "no particular
+> feeling" can sometimes be different from a very active sense of absence
+of
+> emotion. Sometimes, when one focuses, is undergoing clinical depression
+> (which does not mean only constant sadness), is meditating, etc., one
+has
+> purposefully or otherwise actively banished emotion. It is not "no
+> particular feeling", it is the 'feeling' of emotional absence entirely.
+> 
+> I personally object to {ge'e} being both elliptical and "no particular
+> feeling"; those are two distinct meanings to me. This word is related to
+> the latter and helps separate them out, but it does not solve that
+> problem.
+
+
+What about usage examples where {ne'au} and {ne'aunai} are used?
+Without them it'd be hard to start using this particle.
+
