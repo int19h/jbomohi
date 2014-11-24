@@ -25,3 +25,33 @@ word for “x1 is invisible for x2 under conditions x3” so
 
 Also: “nar” (na) vs “nal” (na'e).
 
+
+## 2014-11-24T10:38:15Z — gleki (comment 1445, in reply to 1444)
+
+Re: invisible
+
+Wuzzy wrote:
+> durka42 wrote:
+> > Hmm. So "blind" (unable to see) is {narviska'e} but "invisible"
+(unable
+> to
+> > be seen) is {selvisnalka'e}. This seems undesirably asymmetric to me.
+> 
+> 
+> I am not really happy with the definition of selvisnalka'e. I always
+> understood “kakne” to mean something along the lines of “innately
+> capable”. So a capability like “to be seen” is not really a
+> capability at all, it’s completely passive. Maybe I should find a
+better
+> word for “x1 is invisible for x2 under conditions x3” so
+> “selvisnalka'e” can be “deprecated”.
+> 
+> Also: “nar” (na) vs “nal” (na'e).
+
+
+It should be "ko'a na jai cumki fai lo ka se viska"
+
+which results in {selvisnarjaxycu'i}.
+
+Not sure it's worth it.
+
