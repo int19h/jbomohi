@@ -13,3 +13,10 @@ interpretation and/or representation.
 
 So what do you intend for this word?
 
+
+## 2014-11-26T06:50:06Z — krtisfranks (comment 1451)
+
+Cognates
+
+I would expect this word to mean "armour" or "armoury". Just a thought.
+
