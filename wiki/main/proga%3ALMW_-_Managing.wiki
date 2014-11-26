@@ -13,6 +13,9 @@ If you are in charge of LMW you should do the following:
 #:and then
 #:<code>chgrp -R apache /home/gleki/public_html/mediawiki-1.19.2/ ; chmod -R g+rwX /home/gleki/public_html/mediawiki-1.19.2/</code>
 #:replacing the paths acording to where you are moving LMW to.
+#:<code>chcon -R -t httpd_user_rw_content_t /home/gleki/public_html/mediawiki-1.19.2/images</code>
+#:However, it's possible that additional steps may be necessary to make this permanent: SELINUX has a notion of centrally configured contexts which can be restored, and it may be the case that the central configuration needs to be updated, else this will be reversed if "restorecon" is run on these directories. It's also possible that restorecon is automatically run from time to time by puppet, etc.
+
 ===Make LMW faster===
 *http://techwelkin.com/slow-mediawiki-enhance-apache-webservers-performance
 
