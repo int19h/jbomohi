@@ -48,3 +48,15 @@ that
 blazone = se armori ?
 armori was made parallel to first two places of lanci
 
+
+## 2014-11-26T07:16:20Z — gleki (comment 1453, in reply to 1451)
+
+Re: Cognates
+
+krtisfranks wrote:
+> I would expect this word to mean "armour" or "armoury". Just a thought.
+
+
+Taken from the French "armoiries", English, Spanish and Irish words
+containing "arm-".
+
