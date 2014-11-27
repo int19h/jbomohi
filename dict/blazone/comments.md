@@ -17,3 +17,12 @@ krtisfranks wrote:
 
 Not that I dislike the word. I just want to be involved in such a project.
 
+
+## 2014-11-27T09:39:47Z — gleki (comment 1454)
+
+pixra?
+
+i think "lo se pixra be lo armori" can be used to achieve the same effect
+as blazone1.
+pei
+
