@@ -37,3 +37,14 @@ Probably, if we are to reboot the gimste specifying what sumti types can
 be taken by this or that place then this definition as well as many other
 past usages of glico1 might become obsolete.
 
+
+## 2014-11-29T13:12:12Z — gleki (comment 1455)
+
+dispreferred
+
+since some people complain about "c" sounds in Lojban i disprefer this
+word now.
+
+Use either {traduki} or may be {traduze} (portuguese) can be invented
+instead with the same place structure.
+
