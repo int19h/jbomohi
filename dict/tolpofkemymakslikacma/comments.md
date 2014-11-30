@@ -33,3 +33,16 @@ Magnetic Resonance Imaging technology, it seems that "functional" here
 means "brain activity", so {tolpo'u} is not the adequate word indeed.
 "Brain activity" could be rendered as «besna nuny'akti», I think.
 
+
+## 2014-11-30T16:41:04Z — durka42 (comment 1459, on definition 63860, in reply to 1458)
+
+Re: tolpof?
+
+Ilmen wrote:
+> Oops, I've overlooked the context. In the context of the Functional
+> Magnetic Resonance Imaging technology, it seems that "functional" here
+> means "brain activity", so {tolpo'u} is not the adequate word indeed.
+> "Brain activity" could be rendered as «besna nuny'akti», I think.
+
+Or {zumfau}? Indeed it means "functional" as in "stuff happening".
+
