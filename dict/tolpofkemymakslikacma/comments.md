@@ -23,3 +23,13 @@ mean "functional/operational". You may get different nuances by using
 «na'e spofu» (nalpo'u) or «na spofu» (narpo'u), though I'm not sure
 whether there's a significant difference between nalpo'u and tolpo'u.
 
+
+## 2014-11-30T14:02:24Z — Ilmen (comment 1458, on definition 63860, in reply to 1457)
+
+Re: tolpof?
+
+Oops, I've overlooked the context. In the context of the Functional
+Magnetic Resonance Imaging technology, it seems that "functional" here
+means "brain activity", so {tolpo'u} is not the adequate word indeed.
+"Brain activity" could be rendered as «besna nuny'akti», I think.
+
