@@ -46,3 +46,18 @@ Ilmen wrote:
 
 Or {zumfau}? Indeed it means "functional" as in "stuff happening".
 
+
+## 2014-12-01T07:07:54Z — gleki (comment 1460, on definition 63860, in reply to 1458)
+
+Re: tolpof?
+
+Ilmen wrote:
+> Oops, I've overlooked the context. In the context of the Functional
+> Magnetic Resonance Imaging technology, it seems that "functional" here
+> means "brain activity", so {tolpo'u} is not the adequate word indeed.
+> "Brain activity" could be rendered as «besna nuny'akti», I think.
+
+
+{akti} is related to {ca'a}, a demonstrated potential still in action.
+Brain activity is just {pruce} or {fasnu}
+
