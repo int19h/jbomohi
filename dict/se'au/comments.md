@@ -4,3 +4,15 @@ dare
 
 Produce an example of this word... I double-dare you.
 
+
+## 2014-12-04T22:53:14Z — Ilmen (comment 1465, in reply to 1464)
+
+Re: dare
+
+I humbly recommend to always create a predicate word (brivla) before
+considering making a cmavo shorthand, may it be a mathematical operator or
+anything else. Because Lojban is meant to be primarily a predicate
+language. ;-)
+
+mi'e la .ilmen. mu'o
+
