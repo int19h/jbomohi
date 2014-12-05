@@ -55,3 +55,34 @@ own
 
 probably {rindo}, a Loglandic legacy.
 
+
+## 2014-12-05T12:44:22Z — gusnikantu (comment 1468, on definition 57041, in reply to 1467)
+
+Re: It's only my sentiment
+
+gleki wrote:
+> krtisfranks wrote:
+> > gusnikantu wrote:
+> > > I feel alienation seeing that only American major tribes have their
+> own
+> > > gismu. There are too many tribes in the world to let them occupy the
+> > > limited gismu space. Please think of creating lujvo instead, or
+> > > cmevla/fu'ivla may be enough for them.
+> > 
+> > What "American major tribes"?
+> 
+> 
+> probably {rindo}, a Loglandic legacy.
+
+
+Do you need connotation or denotation of "American major tribes"?
+
+The connotation is tribes that are not minor in the USA.
+
+The denotation includes a tribe that committed massacre of native
+Americans and slave trade of Africans; it includes tribes that are victims
+of them; it excludes a tribe in the islands of the Far East that committed
+massacre of Asian people; it excludes tribes that are victims of them; it
+excludes tribes that are committing  massacre in the Middle East; it
+excludes tribes that are victims of them; it excludes many other tribes.
+
