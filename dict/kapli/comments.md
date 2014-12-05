@@ -24,3 +24,16 @@ sounds a bit like the old debate (before my time) about which countries
 satisfaction within the gismu space, so let's leave it to lujvo/fu'ivla
 like you said.
 
+
+## 2014-12-05T03:03:01Z — krtisfranks (comment 1466, on definition 57041, in reply to 1461)
+
+Re: It's only my sentiment
+
+gusnikantu wrote:
+> I feel alienation seeing that only American major tribes have their own
+> gismu. There are too many tribes in the world to let them occupy the
+> limited gismu space. Please think of creating lujvo instead, or
+> cmevla/fu'ivla may be enough for them.
+
+What "American major tribes"?
+
