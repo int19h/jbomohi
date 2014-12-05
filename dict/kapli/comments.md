@@ -37,3 +37,21 @@ gusnikantu wrote:
 
 What "American major tribes"?
 
+
+## 2014-12-05T09:24:48Z — gleki (comment 1467, on definition 57041, in reply to 1466)
+
+Re: It's only my sentiment
+
+krtisfranks wrote:
+> gusnikantu wrote:
+> > I feel alienation seeing that only American major tribes have their
+own
+> > gismu. There are too many tribes in the world to let them occupy the
+> > limited gismu space. Please think of creating lujvo instead, or
+> > cmevla/fu'ivla may be enough for them.
+> 
+> What "American major tribes"?
+
+
+probably {rindo}, a Loglandic legacy.
+
