@@ -10,3 +10,14 @@ exactly for a given color.
 Probably the easiest way would be to make a sumti for each element (C, M,
 Y and K).
 
+
+## 2014-12-07T15:14:50Z — phma (comment 1473, on definition 63900, in reply to 1472)
+
+Re: Too vague to be useful
+
+I was thinking of four numbers separated by "ce'o". The maximum could be
+255, 100, or 1, which maybe should go in x3.
+
+I've been designing my business card in Scribus. Some colors are RGB and
+some are CMYK; that's what prompted me to enter this.
+
