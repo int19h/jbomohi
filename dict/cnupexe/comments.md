@@ -37,3 +37,18 @@ What about using ratios instead of 0-255 numbers? It would allow for more
 precision flexibility.
 Example: «li pi mu ce'o li pi ro ce'o li pi no» for "127:255:0".
 
+
+## 2014-12-07T23:13:52Z — phma (comment 1477, on definition 63900, in reply to 1476)
+
+Re: Too vague to be useful
+
+Ilmen wrote:
+> What about using ratios instead of 0-255 numbers? It would allow for
+more
+> precision flexibility.
+> Example: «li pi mu ce'o li pi ro ce'o li pi no» for "127:255:0".
+
+Colors are specified both ways. In Scribus, orange (which I added) is
+"#00a0ff00" in the file and "C:0% M:63% Y:100% K:0%" in the tooltip. In
+Postscript, it would be "0 0.627451 1 0".
+
