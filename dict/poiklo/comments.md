@@ -65,3 +65,31 @@ Oh, and that counting begins by 0 is not at all a “standard” in
 programming languages. There are a couple of languages where counting
 starts by 1. I have removed that part of the sentence from the notes.
 
+
+## 2014-12-07T22:20:11Z — Ilmen (comment 1475, on definition 63897, in reply to 1471)
+
+Re: Offset?
+
+Wuzzy wrote:
+> A string is an arbitrary sequence of characters (see {lerpoi}). The
+> closest equivalent in Lojban for this are zoi-quotes, not lu-quotes.
+> Your “lu” seems a bit contrived, since spacing in Lojban is a bit
+> liberal. Thus, “lu mi ti do dunda li'u” is (and should be) treated
+as
+> identical to “lu mitido dunda li'u”. Unless you invent a rule to
+count
+> positions in “lu” strings, I suggest to avoid “lu” and
+“lo'u”
+> quotes as sumti for poiklo.
+> 
+> I think that poiklo is most useful with zoi-quotes.
+
+I think lu-quotes are either lerpoi (phoneme sequences), or vlapoi (word
+sequences). If they are lerpoi, there needs to be a default spacing,
+probably either fully-spaced Lojban or spaceless Lojban, so that «lu mi
+ti dunda do li'u» is considered as identical to «lumitidúndadoli'u».
+If the default is spaceless Lojban, then no matter how many space do you
+put in the lu-quote, the resulting lerpoi would contain spaceless Lojban.
+If lu-quotes are vlapoi, there's no spacing issue though, because each
+word is in a different slot in the sequence.
+
