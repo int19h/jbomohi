@@ -16,3 +16,20 @@ language. ;-)
 
 mi'e la .ilmen. mu'o
 
+
+## 2014-12-07T16:32:12Z — gleki (comment 1474, in reply to 1465)
+
+Re: dare
+
+Ilmen wrote:
+> I humbly recommend to always create a predicate word (brivla) before
+> considering making a cmavo shorthand, may it be a mathematical operator
+or
+> anything else. Because Lojban is meant to be primarily a predicate
+> language. ;-)
+> 
+> mi'e la .ilmen. mu'o
+
+In addition I can recommend always adding an examples showing possible
+usage for every te sumti.
+
