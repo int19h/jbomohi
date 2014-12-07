@@ -21,3 +21,19 @@ I was thinking of four numbers separated by "ce'o". The maximum could be
 I've been designing my business card in Scribus. Some colors are RGB and
 some are CMYK; that's what prompted me to enter this.
 
+
+## 2014-12-07T22:27:41Z — Ilmen (comment 1476, on definition 63900, in reply to 1473)
+
+Re: Too vague to be useful
+
+phma wrote:
+> I was thinking of four numbers separated by "ce'o". The maximum could be
+> 255, 100, or 1, which maybe should go in x3.
+> 
+> I've been designing my business card in Scribus. Some colors are RGB and
+> some are CMYK; that's what prompted me to enter this.
+
+What about using ratios instead of 0-255 numbers? It would allow for more
+precision flexibility.
+Example: «li pi mu ce'o li pi ro ce'o li pi no» for "127:255:0".
+
