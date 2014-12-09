@@ -63,3 +63,28 @@ different word for this.
 
 And I am not sure what to do with {jifmluske} then.
 
+
+## 2014-12-09T20:21:01Z — Ilmen (comment 1486, on definition 57312, in reply to 1485)
+
+Re: Why this definition is better
+
+Wuzzy wrote:
+> Sigh. OK. I changed my mind.
+> 
+> There goes the definition for “pseudo”. Probably I have to find a
+> different word for this.
+> 
+> And I am not sure what to do with {jifmluske} then.
+
+Hmm as for the concept of "pseudo-", jvojva rules would probably gives
+something like "mlujvenarkai" (X seems to have property Y to Z but has not
+property Y), although that's a little long.
+"skemlu" would be "X seems to be a science....", without saying whether it
+actually is a science.
+
+Maybe "jifske" would make it, as "science of falseness" doesn't seem a
+very useful interpretation for this word.
+But it could be a little weird if "jetske" gets used for "epistemology" or
+something.
+"nalske" is also an option.
+
