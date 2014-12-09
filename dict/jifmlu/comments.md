@@ -51,3 +51,15 @@ tmlu
 http://korp.alexburka.com/#?cqp=[]&stats_reduce=word&page=0&search=word|fa
 umlu
 
+
+## 2014-12-09T19:04:26Z — Wuzzy (comment 1485, on definition 57312, in reply to 1483)
+
+Re: Why this definition is better
+
+Sigh. OK. I changed my mind.
+
+There goes the definition for “pseudo”. Probably I have to find a
+different word for this.
+
+And I am not sure what to do with {jifmluske} then.
+
