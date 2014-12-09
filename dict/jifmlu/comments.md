@@ -31,3 +31,23 @@ However that's not what I'm most concerned about: the biggest problem with
 korpora zei sisku, neither {faumlu} (49 usage hits). As for {jifmlu}, it
 currently has no usage in the Lojban corpus.
 
+
+## 2014-12-09T18:27:23Z — Ilmen (comment 1484, on definition 57312, in reply to 1483)
+
+Re: Why this definition is better
+
+Ilmen wrote:
+> However that's not what I'm most concerned about: the biggest problem
+with
+> #57312 is that it doesn't parallel {jetmlu}, which has 91 usage hits in
+la
+> korpora zei sisku, neither {faumlu} (49 usage hits). As for {jifmlu}, it
+> currently has no usage in the Lojban corpus.
+
+•
+http://korp.alexburka.com/#?cqp=[]&stats_reduce=word&page=0&search=word|je
+tmlu
+•
+http://korp.alexburka.com/#?cqp=[]&stats_reduce=word&page=0&search=word|fa
+umlu
+
