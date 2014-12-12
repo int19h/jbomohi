@@ -90,3 +90,22 @@ Yes, {fau} as a generalization of ca/bu'u/va'o.
 Since many perceive {fau} not as la gleki then it's better to point at a
 better understood cmavo, namely, {ca}, the most common case of {fau}.
 
+
+## 2014-12-12T13:53:03Z — gleki (comment 1493, on definition 57154, in reply to 1284)
+
+Re: selma'o
+
+gleki wrote:
+> durka42 wrote:
+> > All right, interesting. The BPFK section for CAhA says the ka'e-tagged
+> > sumti is an "under conditions" so maybe {va'o} or {fau} is better than
+> > {ca}
+> 
+> Yes, {fau} as a generalization of ca/bu'u/va'o.
+> 
+> Since many perceive {fau} not as la gleki then it's better to point at a
+> better understood cmavo, namely, {ca}, the most common case of {fau}.
+
+
+downvoted due to {su'ei}
+
