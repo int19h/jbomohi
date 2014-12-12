@@ -12,3 +12,16 @@ ce
 A bit confused by the notes. Shouldn't it be just "mi do su'ei damba"? If
 you put "mi ce do" there, it's apparently about sets fighting with sets.
 
+
+## 2014-12-12T18:33:57Z — gleki (comment 1495, on definition 63921, in reply to 1494)
+
+Re: ce
+
+durka42 wrote:
+> A bit confused by the notes. Shouldn't it be just "mi do su'ei damba"?
+If
+> you put "mi ce do" there, it's apparently about sets fighting with sets.
+
+
+Sorry, fixed. {ce} removed.
+
