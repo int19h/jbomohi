@@ -80,3 +80,15 @@ words and constructs.
 
 Lots of gismu overlap semantically somewhat, by the way.
 
+
+## 2014-12-17T17:49:28Z — gleki (comment 1502)
+
+Hyperlinks to other words in JVS 2.0
+
+A question. If e.g. {mogle} is downvoted {mugle} still contains a link to
+it.
+
+This isn't nice in the pdf output since {mogle} won't show up there.
+
+Thoughts (e.g. for JVS 2.0) ?
+
