@@ -3,7 +3,7 @@
 
 -- Initialise necessary modules.
 require('Module:No globals')
-local newFileLink = require('Module:File link').new
+local makeFileLink = require('Module:File link')._main
 local effectiveProtectionLevel = require('Module:Effective protection level')._main
 local yesno = require('Module:Yesno')
 
@@ -771,12 +771,13 @@ function BannerTemplate:renderImage()
 	local filename = self._imageFilename
 		or self._cfg.msg['image-filename-default']
 		or 'Transparent.gif'
-	return newFileLink(filename)
-		:width(self._imageWidth or 20)
-		:alt(self._imageAlt)
-		:link(self._imageLink)
-		:caption(self._imageCaption)
-		:render()
+	return makeFileLink{
+		file = filename,
+		size = (self._imageWidth or 20) .. 'px',
+		alt = self._imageAlt,
+		link = self._imageLink,
+		caption = self._imageCaption
+	}
 end
 
 --------------------------------------------------------------------------------
