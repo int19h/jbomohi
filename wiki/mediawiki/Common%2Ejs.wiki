@@ -19,3 +19,18 @@ includePage( 'MediaWiki:Edittools.js' );
 // install [[Wikipedia:User:Cacycle/wikEd]] in-browser text editor
 importScriptURI('//en.wikipedia.org/w/index.php?title=User:Cacycle/wikEd.js'
 + '&action=raw&ctype=text/javascript');
+
+function hashCode(str) { // java String#hashCode
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+} 
+
+function intToARGB(i){
+    return ((i>>24)&0xFF).toString(16) + 
+           ((i>>16)&0xFF).toString(16) + 
+           ((i>>8)&0xFF).toString(16) + 
+           (i&0xFF).toString(16);
+}
