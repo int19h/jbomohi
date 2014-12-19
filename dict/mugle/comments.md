@@ -92,3 +92,23 @@ This isn't nice in the pdf output since {mogle} won't show up there.
 
 Thoughts (e.g. for JVS 2.0) ?
 
+
+## 2014-12-19T07:47:08Z — krtisfranks (comment 1503, in reply to 1502)
+
+Re: Hyperlinks to other words in JVS 2.0
+
+gleki wrote:
+> A question. If e.g. {mogle} is downvoted {mugle} still contains a link
+to
+> it.
+> 
+> This isn't nice in the pdf output since {mogle} won't show up there.
+> 
+> Thoughts (e.g. for JVS 2.0) ?
+
+
+We can just remove the link while copying all of the relevant information
+over (That would be the simplest solution in this case). But the problem
+is larger than just this pair of words. I have no advice for the general
+case, I am sorry. :/
+
