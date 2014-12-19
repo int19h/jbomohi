@@ -1,12 +1,21 @@
-[[User:{{{1}}}|<span style="display: inline-block;
+{{#vardefine:col|{{{1}}}}}
+{{#vardefine:col|{{#invoke: BaseConvert 
+   | convert 
+   | n={{#invoke:String|replace|source={{#var:col}}|pattern=[^A-Za-z%d]|replace=|count=all|plain=false}}
+   | base=10
+   | from=36
+   | precision=0 
+}}}}
+{{#vardefine:col|{{#expr: {{#var:col}} - {{#expr: floor({{#var:col}}/360) }}*360}}}}[[User:{{{1}}}|<span style="display: inline-block;
+
 color: #000000;
 background: #ffffff; /* Old browsers */
-background: -moz-linear-gradient(left, #ffffff 0%, #60abf8 98%, #4096ee 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(98%,#60abf8), color-stop(100%,#4096ee)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(left, #ffffff 0%,#60abf8 98%,#4096ee 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(left, #ffffff 0%,#60abf8 98%,#4096ee 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(left, #ffffff 0%,#60abf8 98%,#4096ee 100%); /* IE10+ */
-background: linear-gradient(to right, #ffffff 0%,#60abf8 98%,#4096ee 100%); /* W3C */
+background: -moz-linear-gradient(left, #ffffff 0%, hsl({{#var:col}},92%,67%) 98%, hsl({{#var:col}},84%,59%) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(98%,hsl({{#var:col}},92%,67%)), color-stop(100%,hsl({{#var:col}},84%,59%) 100%))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left, #ffffff 0%,hsl({{#var:col}},92%,67%) 98%,hsl({{#var:col}},84%,59%) 100%) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left, #ffffff 0%,hsl({{#var:col}},92%,67%) 98%,hsl({{#var:col}},84%,59%) 100%) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left, #ffffff 0%,hsl({{#var:col}},92%,67%) 98%,hsl({{#var:col}},84%,59%) 100%) 100%); /* IE10+ */
+background: linear-gradient(to right, #ffffff 0%,hsl({{#var:col}},92%,67%) 98%,hsl({{#var:col}},84%,59%) 100%) 100%); /* W3C */
 font-weight: bold;
 font-size: 12px;
 text-align: right;
