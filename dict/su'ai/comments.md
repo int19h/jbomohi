@@ -101,3 +101,29 @@ krtisfranks wrote:
 This question would be rather applied to {su'ei} that doesn't merge/remove
 any places.
 
+
+## 2014-12-24T09:38:08Z — gleki (comment 1513, in reply to 1510)
+
+Re: Interaction with Modals and Connectives
+
+gleki wrote:
+> krtisfranks wrote:
+> > 2) What does «su'ai JE» (for example) mean, if anything?	This case
+is
+> > less obvious to me in general. It is possible that it does not mean
+> > anything, despite the syntactic allowance that its classification as
+SE
+> > provides (confer «by te .e cy»), but I again want to check.
+> 
+> This question would be rather applied to {su'ei} that doesn't
+merge/remove
+> any places.
+
+{su'ei} explained
+here:http://jbovlaste.lojban.org/comments.html?valsi=27812;commentid=1512;
+definition=0
+
+Now "{su'ai} JA":
+"mi ce do ce abu su'ai jo citka" = We three eat only and only if we three
+all eat.
+
