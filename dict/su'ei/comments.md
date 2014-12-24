@@ -107,3 +107,33 @@ FTTF & FTTF = FTTF. So, just «broda jonai brode».
 "Walking regardless of eating, and eating regardless of walking", you
 mean?
 
+
+## 2014-12-24T19:10:33Z — krtisfranks (comment 1518, in reply to 1511)
+
+Re: interaction with JA/A
+
+gleki wrote:
+> {se je} = {je}. {se} exchanges the order of first two places.
+> 
+> broda je brode = brode se je broda
+> 
+> {su'ei je}. {su'ei} retains the order + exchanges the order + makes two
+> previous meanings joined with {je} since "su'ei = se xi vei pa *.e* re".
+> 
+> So "su'ei je" is just "[broda je brode] je ke [brode je broda] ke'e"
+> 
+> With other prepositions it should become more interesting:
+> 
+> "su'ei jonai" is "[broda jonai brode] je ke [brode jonai broda] ke'e"
+> Should we assume that this is self-contradiction or it's the same as
+> "broda jonai brode"?
+> 
+> "su'ei ju" is "[cadzu ju citka] je ke [citka ju cadzu] ke'e"
+> 
+> Walking only and only if eating, and eating only and only if eating.
+
+
+What about with nonlogical connectives? Reciprocity might be useful or at
+least interesting in masses, jointness, and "respectively" phrases and
+/might might/ be so for sequences and some operations on sets.
+
