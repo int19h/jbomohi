@@ -173,3 +173,47 @@ re".
 
 ouch, it should have been {jo}!!!
 
+
+## 2014-12-24T19:32:14Z — gleki (comment 1521, in reply to 1518)
+
+Re: interaction with JA/A
+
+krtisfranks wrote:
+> gleki wrote:
+> > {se je} = {je}. {se} exchanges the order of first two places.
+> > 
+> > broda je brode = brode se je broda
+> > 
+> > {su'ei je}. {su'ei} retains the order + exchanges the order + makes
+two
+> > previous meanings joined with {je} since "su'ei = se xi vei pa *.e*
+re".
+> > 
+> > So "su'ei je" is just "[broda je brode] je ke [brode je broda] ke'e"
+> > 
+> > With other prepositions it should become more interesting:
+> > 
+> > "su'ei jonai" is "[broda jonai brode] je ke [brode jonai broda] ke'e"
+> > Should we assume that this is self-contradiction or it's the same as
+> > "broda jonai brode"?
+> > 
+> > "su'ei ju" is "[cadzu ju citka] je ke [citka ju cadzu] ke'e"
+> > 
+> > Walking only and only if eating, and eating only and only if eating.
+> 
+> 
+> What about with nonlogical connectives? Reciprocity might be useful or
+at
+> least interesting in masses, jointness, and "respectively" phrases and
+> /might might/ be so for sequences and some operations on sets.
+
+"mi do su'ei prami" expands into "mi do prami ije do mi prami" which
+breaks "Don't copy yourself" programmer's rule but isn't that
+mind-breaking as {su'ei} or "se xi vei pa e re".
+
+It's better to start from these expansions and at some more readable place
+like mriste rather than this forum.
+
+Or you can have my another shorter answer for this:
+mi na pu pensi tu'a lo nalylogji terjonma'o vau u'iru'e
+
