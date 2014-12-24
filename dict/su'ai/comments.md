@@ -67,3 +67,23 @@ less obvious to me in general. It is possible that it does not mean
 anything, despite the syntactic allowance that its classification as SE
 provides (confer «by te .e cy»), but I again want to check.
 
+
+## 2014-12-24T06:58:35Z — durka42 (comment 1509, in reply to 1508)
+
+Re: Interaction with Modals and Connectives
+
+krtisfranks wrote:
+> 1) What does «su'ai xi xo'e BAI» mean? My guess is the obvious «fi'o
+> su'ai xi xo'e BAPLI fe'u», but I just want to confirm.
+> 
+> 2) What does «su'ai JE» (for example) mean, if anything?  This case is
+> less obvious to me in general. It is possible that it does not mean
+> anything, despite the syntactic allowance that its classification as SE
+> provides (confer «by te .e cy»), but I again want to check.
+
+I would guess that you're right about {su'ai BAI} because that's the way
+all the other SE work with BAI. Also as for connectives, as far as I know,
+only seju (or se.u, segi'u etc) is meaningful, no other SE+connective
+combination is useful. So I would guess that su'ai+JE is GCG
+(grammatically correct garbage).
+
