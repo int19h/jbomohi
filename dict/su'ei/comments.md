@@ -217,3 +217,40 @@ like mriste rather than this forum.
 Or you can have my another shorter answer for this:
 mi na pu pensi tu'a lo nalylogji terjonma'o vau u'iru'e
 
+
+## 2014-12-24T20:13:24Z — gleki (comment 1522, in reply to 1521)
+
+Re: interaction with JA/A
+
+gleki wrote:
+> krtisfranks wrote:
+> > What about with nonlogical connectives? Reciprocity might be useful or
+> at
+> > least interesting in masses, jointness, and "respectively" phrases and
+> > /might might/ be so for sequences and some operations on sets.
+> 
+> "mi do su'ei prami" expands into "mi do prami ije do mi prami" which
+> breaks "Don't copy yourself" programmer's rule but isn't that
+> mind-breaking as {su'ei} or "se xi vei pa e re".
+> 
+> It's better to start from these expansions and at some more readable
+place
+> like mriste rather than this forum.
+> 
+> Or you can have my another shorter answer for this:
+> mi na pu pensi tu'a lo nalylogji terjonma'o vau u'iru'e
+
+
+we should distinguish between symmetrical connectives like je, joi, ce,
+jo'u, ju'e, bi'i, ku'a, pi'u, jo'e
+and assymetric like
+ja, jo, ju, bi'o, mi'i, ce'o, fa'u.
+
+mi su'eifa'u do citka lo plise (su'ei) fa'u lo perli = Each of us eats
+both an apple and a pear.
+su'eimi'i can be for people living in 3d space inside a 4d hypercube thus
+every point for them is the centre and the surroundings.
+bi'o and ce'o can probably be used for describing oscilations.
+
+as for ce'oi i dont know what it means.
+
