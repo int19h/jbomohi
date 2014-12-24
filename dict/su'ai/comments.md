@@ -54,3 +54,16 @@ current place.
 
 "su'ai xi re" will probably merge x2 and x3
 
+
+## 2014-12-24T04:22:29Z — krtisfranks (comment 1508)
+
+Interaction with Modals and Connectives
+
+1) What does «su'ai xi xo'e BAI» mean? My guess is the obvious «fi'o
+su'ai xi xo'e BAPLI fe'u», but I just want to confirm.
+
+2) What does «su'ai JE» (for example) mean, if anything?  This case is
+less obvious to me in general. It is possible that it does not mean
+anything, despite the syntactic allowance that its classification as SE
+provides (confer «by te .e cy»), but I again want to check.
+
