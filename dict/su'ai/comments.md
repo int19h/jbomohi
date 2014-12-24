@@ -196,3 +196,43 @@ merge/remove
 
 Well, what does «zi'o» do with «.e»?
 
+
+## 2014-12-24T19:28:47Z — gleki (comment 1520, in reply to 1517)
+
+Re: Interaction with Modals and Connectives
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > 2) What does «su'ai JE» (for example) mean, if anything?       
+This case
+> is
+> > > less obvious to me in general. It is possible that it does not mean
+> > > anything, despite the syntactic allowance that its classification as
+> SE
+> > > provides (confer «by te .e cy»), but I again want to check.
+> > 
+> > This question would be rather applied to {su'ei} that doesn't
+> merge/remove
+> > any places.
+> 
+> Well, what does «zi'o» do with «.e»?
+
+you mean what is that in JA that gets deleted ({zi'o}-fied) with {su'ai}?
+It should result from "i broda jo brode vau" to
+"i broda su'ai jo vau" since {jo} can't have any third place since
+connectives can take two and only two arguments.
+
+Here both of them are merged into one, the second argument is zi'ofied.
+Still, it's understandable: "It brodas only and only if all members
+broda".
+
+
+Still I don't think it can have any reasonable usage except artistic one.
+{su'ai} is primarily necessary for simxu-relations where the number of
+participants >=3.
+For simxu itself, tavysi'u it's useless.
+For "uinai they it is not reciprocal" brivla like {tavla} and {jikca} the
+sibling particle {su'ei} is to be used (saves one syllable compared to
+{su'ai}).
+
