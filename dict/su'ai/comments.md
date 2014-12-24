@@ -159,3 +159,20 @@ three
 
 Er, what? That doesn't make any sense, and "SE JA BRIVLA" does not parse.
 
+
+## 2014-12-24T15:56:06Z — gleki (comment 1515, in reply to 1514)
+
+Re: Interaction with Modals and Connectives
+
+> 
+> Er, what? That doesn't make any sense, and "SE JA BRIVLA" does not
+parse.
+
+oops, i just looked at what i wrote. {su'ei} explanation still stands imo.
+but pls, ignore the rest.
+
+what i actually mean, if {su'ai} deletes first two places then {su'ai}
+{jo} probably means that it's {jo} and {se}{jo} with their meanings
+merged. Since connective take only two arguments it shouldn't have any
+pragmatic usage compared to {su'ei} {jo}.
+
