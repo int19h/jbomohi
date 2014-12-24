@@ -49,3 +49,29 @@ Should we assume that this is self-contradiction or it's the same as
 
 Walking only and only if eating, and eating only and only if eating.
 
+
+## 2014-12-24T09:30:15Z — gleki (comment 1512, in reply to 1511)
+
+Re: interaction with JA/A
+
+A copy reformatted:
+
+se je = {je}. {se} exchanges the order of first two places.
+
+broda je brode = brode se je broda
+
+su'ei je. {su'ei} retains the order + exchanges the order + makes two
+previous meanings joined with {je} since "su'ei = se xi vei pa *.e* re".
+
+So "su'ei je" is just "[broda je brode] je ke [brode je broda] ke'e"
+
+With other prepositions it should become more interesting:
+
+"su'ei jonai" is "[broda jonai brode] je ke [brode jonai broda] ke'e"
+Should we assume that this is self-contradiction or it's the same as
+"broda jonai brode"?
+
+"su'ei ju" is "[cadzu ju citka] je ke [citka ju cadzu] ke'e"
+
+Walking only and only if eating, and eating only and only if eating.
+
