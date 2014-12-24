@@ -87,3 +87,17 @@ only seju (or se.u, segi'u etc) is meaningful, no other SE+connective
 combination is useful. So I would guess that su'ai+JE is GCG
 (grammatically correct garbage).
 
+
+## 2014-12-24T09:09:23Z — gleki (comment 1510, in reply to 1508)
+
+Re: Interaction with Modals and Connectives
+
+krtisfranks wrote:
+> 2) What does «su'ai JE» (for example) mean, if anything?  This case is
+> less obvious to me in general. It is possible that it does not mean
+> anything, despite the syntactic allowance that its classification as SE
+> provides (confer «by te .e cy»), but I again want to check.
+
+This question would be rather applied to {su'ei} that doesn't merge/remove
+any places.
+
