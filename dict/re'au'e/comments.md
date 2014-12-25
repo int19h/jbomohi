@@ -62,3 +62,21 @@ would be too repetitious, while "ai" was too sharp and "oi" too bloated
 and ugly; the contrast of "au" was euphonious and pleasing to me. So,
 there you have it, in all of its nasty detail and workings.
 
+
+## 2014-12-25T13:07:37Z — zozeizeizeizeifaho (comment 1539, in reply to 1538)
+
+Re: Etymology?
+
+krtisfranks wrote:
+> (a novel)
+
+That is quite an explanation, thanks for taking the time. I've warmed up
+to the length of it now, mostly because I can see it being used as a type
+of {ja'a} for SE (to mu'a tu'e
+> i sei A cusku mi broda
+> i sei B cusku do se xu broda
+> i sei A cusku se'u je'u nai mi re'au'e broda
+toi) - the ja'a-type words are usually a syllable longer than the
+corresponding na-type word so being two syllables longer isn't that bad
+really.
+
