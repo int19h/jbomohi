@@ -80,3 +80,13 @@ toi) - the ja'a-type words are usually a syllable longer than the
 corresponding na-type word so being two syllables longer isn't that bad
 really.
 
+
+## 2014-12-25T13:22:30Z — zozeizeizeizeifaho (comment 1540, in reply to 1539)
+
+Re: Etymology?
+
+zozeizeizeizeifaho wrote:
+> > i sei A cusku se'u je'u nai mi re'au'e broda
+
+ouch, s/je'u nai/je'u nai i/
+
