@@ -195,3 +195,23 @@ you
 
 I might answer your other questions later.
 
+
+## 2014-12-25T02:17:13Z — krtisfranks (comment 1531, on definition 56443, in reply to 1081)
+
+Re: ???
+
+selpahi wrote:
+> Wuzzy wrote:
+> > > {poi'i} = "ckaji be lo ka ce'u goi ko'a zo'u"
+> > This does not look like grammatically correct Lojban to me. How could
+> you
+> > possibly place a “be” after a brivla?
+> 
+> {be} *only* works after brivla. It's a selbri operation.
+> 
+> "broda be X [be'o]" is a selbri with the broda2 prefilled with X.
+> 
+> I might answer your other questions later.
+
+Ding! (Just a reminder)
+
