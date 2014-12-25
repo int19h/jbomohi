@@ -12,3 +12,21 @@ expansions too.
 We now have a word for coefficient of a polynomial, which was not
 immediately clear before.
 
+
+## 2014-12-25T05:18:45Z — krtisfranks (comment 1533)
+
+terbri
+
+The current definition is: x1 is a formal polynomial with coefficients x2
+(ordered list) of degree x3 over structure/ring x4 (to which coefficients
+x2 all belong) and in indeterminant x5
+
+I am thinking that it should be:
+y1 is a formal polynomial over structure/ring y2 (to which coefficients y5
+all belong) and in indeterminant y3 that is of degree y4 with specific
+coefficients y5 (ordered list, each element belongs to structure y2;
+default is the list: (y1_0, y1_1, y1_1, ..., y1_((y4) + 1)) ).
+
+This definition better matches the frequency with which higher math makes
+uses of the various terbri.  Does anyone have any comments?
+
