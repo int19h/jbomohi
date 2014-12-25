@@ -215,3 +215,53 @@ selpahi wrote:
 
 Ding! (Just a reminder)
 
+
+## 2014-12-25T14:43:15Z — selpahi (comment 1541, on definition 56443, in reply to 1076)
+
+Re: ???
+
+krtisfranks asked me to come back to this. A few months ago, I claimed
+that the rewrites in terms of "me da poi" do not work. Let me try again to
+explain why.
+
+Wuzzy wrote:
+> > lo gerku cu poi'i ke'a jersi lo rebla be ke'a
+> > "Dogs are such that they chase their own tail."
+> With “me”, “da” and “poi”
+> “lo gerku cu me da poi ke'a jersi lo rebla be ke'a”
+
+The problem in your paraphrase has not much to do with {poi'i}, but with
+the differences between {da} and {lo}, which are not equivalent. {da} is a
+singular variable, and {lo} is a referring plural expression.
+
+We can see how the kind of paraphrase you propose breaks even without
+{poi'i}.
+
+Let J be the (distributive) predicate "to chase one's own tail". Let G be
+"to [be a] dog". Let <= denote the among relation.
+
+{lo gerku} is the constant g. 
+
+J(g) would denote "lo gerku cu jersi lo rebla be vo'a". 
+
+If you replace {jersi} with "me da poi jersi", your logic changes to:
+
+[∃x : J(x)] g <= x
+
+which is false for example when g is plural, and is not the same kind of
+statement anyway. It is an existential statement, while the original
+phrase makes a claim about certain referents.
+
+So you can't rewrite "lo poi'i" as "da poi" either. {lo} is plural, {da}
+is singular. {lo} is a constant, {da} is a variable and creates scope.
+They are not interchangeable.
+
+{poi'i} (see also: http://mw.lojban.org/index.php?title=new_voi) is very
+useful and allows for more flexibility (see the examples on the page I
+linked). 
+
+Again, while you can try to come up with paraphrases (I already showed
+"ckaji be lo ka ce'u goi ko'a zo'u", which is equivalent but way too
+long), it's like trying to prove, say, {poi} useless by showing that it's
+redundant to {je}.
+
