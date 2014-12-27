@@ -236,3 +236,49 @@ For "uinai they it is not reciprocal" brivla like {tavla} and {jikca} the
 sibling particle {su'ei} is to be used (saves one syllable compared to
 {su'ai}).
 
+
+## 2014-12-27T06:55:32Z — gleki (comment 1549, in reply to 1514)
+
+Re: Interaction with Modals and Connectives
+
+durka42 wrote:
+> gleki wrote:
+> > gleki wrote:
+> > > krtisfranks wrote:
+> > > > 2) What does «su'ai JE» (for example) mean, if anything?	 
+> This case
+> > is
+> > > > less obvious to me in general. It is possible that it does not
+mean
+> > > > anything, despite the syntactic allowance that its classification
+as
+> > SE
+> > > > provides (confer «by te .e cy»), but I again want to check.
+> > > 
+> > > This question would be rather applied to {su'ei} that doesn't
+> > merge/remove
+> > > any places.
+> > 
+> > {su'ei} explained
+> >
+>
+here:http://jbovlaste.lojban.org/comments.html?valsi=27812;commentid=1512;
+> > definition=0
+> > 
+> > Now "{su'ai} JA":
+> > "mi ce do ce abu su'ai jo citka" = We three eat only and only if we
+> three
+> > all eat.
+> 
+> Er, what? That doesn't make any sense, and "SE JA BRIVLA" does not
+parse.
+
+An issue added to ilmentufa:
+https://github.com/Ilmen-vodhr/ilmentufa/issues/78
+
+It's "mi ce do ce abu su'ai jo" that does't parse, not "su'ai jo broda".
+
+Also {ce} lists objects to be put into "su'ai jo" function, an evidence
+that JA connectives should have been rather prepositions in this language
+rather than something similar to ce/ce'o.
+
