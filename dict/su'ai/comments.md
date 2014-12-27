@@ -490,3 +490,16 @@ sumti from the right into one left sumti with the right sumti zi'o-fied.
 That's why "mi .o do" is the same as "mi ce do su'ai .o"
 "mi ce do su'ai .o broda" would show this example better.
 
+
+## 2014-12-27T18:30:38Z — durka42 (comment 1554, in reply to 1552)
+
+Re: Interaction with Modals and Connectives
+
+Oh yes, I see. Still I'm not sure it would be worth it to change the
+grammar to make this work. For example
+
+"broda be mi je brode" would change from "(broda be mi) je (brode)" to
+"broda be (mi je broda)"
+
+(in experimental grmmar) and that would be weird.
+
