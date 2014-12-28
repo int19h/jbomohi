@@ -503,3 +503,19 @@ grammar to make this work. For example
 
 (in experimental grmmar) and that would be weird.
 
+
+## 2014-12-28T06:50:01Z — gleki (comment 1555, in reply to 1554)
+
+Re: Interaction with Modals and Connectives
+
+durka42 wrote:
+> Oh yes, I see. Still I'm not sure it would be worth it to change the
+> grammar to make this work. For example
+> 
+> "broda be mi je brode" would change from "(broda be mi) je (brode)" to
+> "broda be (mi je broda)"
+> 
+> (in experimental grmmar) and that would be weird.
+
+It won't change since there is no {zi'o} generator there. {su'ai} is one.
+
