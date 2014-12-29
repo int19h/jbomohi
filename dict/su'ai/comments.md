@@ -532,3 +532,22 @@ it no longer connects things but just attaches to the sumti before it. But
 if {su'ai} has that power it can't be in SE, since the grammar will treat
 ``su'ai jo'' the same way as ``se ju''.
 
+
+## 2014-12-29T04:47:51Z — durka42 (comment 1557, in reply to 1556)
+
+Re: Interaction with Modals and Connectives
+
+durka42 wrote:
+> > It won't change since there is no {zi'o} generator there. {su'ai} is
+> one.
+> 
+> Hmm so {su'ai} modifies the behavior of the following connective so that
+> it no longer connects things but just attaches to the sumti before it.
+But
+> if {su'ai} has that power it can't be in SE, since the grammar will
+treat
+> "su'ai jo" the same way as "se ju".
+
+There's no winning when working with undocumented wiki syntax, is there.
+See above quote for corrected version.
+
