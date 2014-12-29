@@ -334,3 +334,14 @@ skin-colors/hair-curliness etc. or races/tribes/cultures, because I want
 the space to be used for more valuable concepts. I will therefore continue
 downvoting gismu for those.
 
+
+## 2014-12-29T18:45:20Z — gleki (comment 1560, on definition 57041, in reply to 1559)
+
+Re: It's only my sentiment
+
+gusnikantu wrote:
+> I will therefore continue
+> downvoting gismu for those.
+
+have u downvoted {xispo}?
+
