@@ -551,3 +551,40 @@ treat
 There's no winning when working with undocumented wiki syntax, is there.
 See above quote for corrected version.
 
+
+## 2014-12-29T06:53:43Z — gleki (comment 1558, in reply to 1557)
+
+Re: Interaction with Modals and Connectives
+
+durka42 wrote:
+> durka42 wrote:
+> > > It won't change since there is no {zi'o} generator there. {su'ai} is
+> > one.
+> > 
+> > Hmm so {su'ai} modifies the behavior of the following connective so
+that
+> > it no longer connects things but just attaches to the sumti before it.
+> But
+> > if {su'ai} has that power it can't be in SE, since the grammar will
+> treat
+> > "su'ai jo" the same way as "se ju".
+> 
+> There's no winning when working with undocumented wiki syntax, is there.
+> See above quote for corrected version.
+
+
+{su'ai} deletes x2 in selbri and moves its value into a unified x1 where
+former x1 and x2 are connected using {ce} or {jo'u} depending on your
+dialect.
+
+It works exactly the same with connectives: x2 is deleted.
+
+SE changes selbri and that's what is needed here: a new selbri with a new
+place structure appears.
+
+If it can't be in SE then okay. Neither it put syntactically a zi'o into
+x2 since zi'o can be reached with {fe} but in "su'ai broda" former x2 can
+never be reached again.
+
+So {su'ai} is rather similar to "zil-" but not {zi'o}.
+
