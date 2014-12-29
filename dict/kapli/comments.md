@@ -345,3 +345,19 @@ gusnikantu wrote:
 
 have u downvoted {xispo}?
 
+
+## 2014-12-29T19:04:51Z — gusnikantu (comment 1561, on definition 57041, in reply to 1560)
+
+Re: It's only my sentiment
+
+gleki wrote:
+> gusnikantu wrote:
+> > I will therefore continue
+> > downvoting gismu for those.
+> 
+> have u downvoted {xispo}?
+
+
+Yes, I did it, though I did not touch most of official gismu because one
+downvote is too powerless against 100000 upvotes.
+
