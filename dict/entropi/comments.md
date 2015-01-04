@@ -197,3 +197,25 @@ dislike it, downvote it (but I do think that it is generally helpful to
 have around as a functionality). If you have alternative solutions, feel
 free to propose them. :)
 
+
+## 2015-01-04T17:42:52Z — Wuzzy (comment 1579, in reply to 1568)
+
+Answer: “boltsman zei entropi”
+
+gleki wrote:
+> Since notes go to the output pdf file the readers would wonder what's
+the
+> word for Boltzman enthropy.
+
+I have an idea!
+Not a single word (but still a single lujvo), but the quick and easy
+answer would be:
+
+{boltsman zei entropi}
+
+I *think* it was named after Ludwig Boltzmann, who was an Austrian, so I
+lojbanized the German pronounciation.
+Since I do not know what the Boltzman(n) entropy is or how it is defined,
+I will leave the task of actually defining this lujvo in Lojban for those
+who know better. :)
+
