@@ -15,3 +15,17 @@ krtisfranks wrote:
 
 lol
 
+
+## 2015-01-04T10:31:34Z — krtisfranks (comment 1577, on definition 64087, in reply to 1576)
+
+Re: What does 
+
+gleki wrote:
+> krtisfranks wrote:
+> > (In the sense of "is kek")
+> 
+> 
+> lol
+
+But how can something be lol in a certain aspect?
+
