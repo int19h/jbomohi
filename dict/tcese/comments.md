@@ -12,3 +12,14 @@ Alternatives
 I think that these words should exist. If you do not like these gismu,
 might I suggest making exactly synonymous zi'evla?
 
+
+## 2015-01-05T08:36:16Z — krtisfranks (comment 1583)
+
+tcese3
+
+tcese3 is directly influenced by and directly influences {tcelerita}3 -
+the two are essentially identical (they are definitely bijective).
+
+Using a vague description or a name is probably best, simplest, and
+easiest and should be clear enough in most contexts.
+
