@@ -30,7 +30,7 @@ function p._main(action, pagename)
 		return 'sysop'
 	end
 	local level = title.protectionLevels[action] and title.protectionLevels[action][1]
-	if level == 'sysop' then
+	if level == 'sysop' or level == 'editprotected' then
 		return 'sysop'
 	elseif title.cascadingProtection.restrictions[action] and title.cascadingProtection.restrictions[action][1] then -- used by a cascading-protected page
 		return 'sysop'
@@ -39,7 +39,7 @@ function p._main(action, pagename)
 	elseif action == 'move' then
 		local blacklistentry = mw.ext.TitleBlacklist.test('edit', pagename) -- Testing action edit is correct, since this is for the source page. The target page name gets tested with action move.
 		if blacklistentry and not blacklistentry.params.autoconfirmed then
-			return 'accountcreator'
+			return 'templateeditor'
 		elseif title.namespace == 6 then
 			return 'filemover'
 		else
@@ -48,7 +48,7 @@ function p._main(action, pagename)
 	end
 	local blacklistentry = mw.ext.TitleBlacklist.test(action, pagename)
 	if blacklistentry then
-		return blacklistentry.params.autoconfirmed and 'autoconfirmed' or 'accountcreator'
+		return blacklistentry.params.autoconfirmed and 'autoconfirmed' or 'templateeditor'
 	elseif level == 'editsemiprotected' then -- create-semiprotected pages return this for some reason
 		return 'autoconfirmed'
 	elseif level then
