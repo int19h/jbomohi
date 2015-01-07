@@ -4,3 +4,19 @@ This proposal is most agreeable
 
 I have been wanting this for a long time. Thank you.
 
+
+## 2015-01-07T01:32:40Z — selpahi (comment 1593, on definition 63993, in reply to 1542)
+
+Re: This proposal is most agreeable
+
+krtisfranks wrote:
+> I have been wanting this for a long time. Thank you.
+
+Cool, but why did you add notes to all the words saying that they are
+invalid? They are presently permitted, so that note should either be
+removed or changed to specify which version of Lojban it would not be
+permitted in.
+
+I'd prefer bringing it up in a discussion before simply adding such notes
+to someone else's word.
+
