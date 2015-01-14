@@ -27,3 +27,14 @@ Re: This proposal is most agreeable
 
 Shall we remove the notes, then?
 
+
+## 2015-01-14T16:56:09Z — selpahi (comment 1602, on definition 63993, in reply to 1601)
+
+Re: This proposal is most agreeable
+
+durka42 wrote:
+> Shall we remove the notes, then?
+
+I would. They are simply not accurate, plus it makes it look like *I*
+added them. 
+
