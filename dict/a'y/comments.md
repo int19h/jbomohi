@@ -20,3 +20,10 @@ permitted in.
 I'd prefer bringing it up in a discussion before simply adding such notes
 to someone else's word.
 
+
+## 2015-01-14T16:52:12Z — durka42 (comment 1601, on definition 63993, in reply to 1593)
+
+Re: This proposal is most agreeable
+
+Shall we remove the notes, then?
+
