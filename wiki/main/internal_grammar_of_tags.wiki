@@ -1,122 +1,83 @@
-
-'''Tense grammar simplification proposal''', by [[User:xorxes|xorxes]]
-
-=== Current grammar: ===
-
-^ 
-
+Tense grammar simplification proposal, by [[User:xorxes|xorxes]].
+=Current grammar=
+<pre>
 tense-modal = simple-tense-modal # | FIhO # selbri /FEhU#/ 
 
-simple-tense-modal = [[NAhE|NAhE]] [[SE|SE]] BAI [[NAI|NAI]] [[KI|KI]]
-
-| [[NAhE|NAhE]] (time [[space|space]]  space [[time|time]]) &amp; CAhA [[KI|KI]]
-
-| KI
-
+simple-tense-modal = [NAhE] [SE] BAI [NAI] [KI] 
+| [NAhE] (time [space] | space [time]) & CAhA [KI] 
+| KI 
 | CUhE
 
-time = ZI &amp; time-offset ... &amp; ZEhA [[PU [NAI|NAI]] &amp; interval-property ...
+time = ZI & time-offset ... & ZEhA [[PU [[NAI]] & interval-property ...
 
-time-offset = PU [[NAI|NAI]] [[ZI|ZI]]
+time-offset = PU [NAI] [ZI]
 
-space = VA &amp; space-offset ... &amp; space-interval &amp; (MOhI space-offset)
+space = VA & space-offset ... & space-interval & (MOhI space-offset)
 
-space-offset = FAhA [[NAI|NAI]] [[VA|VA]]
+space-offset = FAhA [NAI] [VA]
 
-space-interval = [[VEhA &amp; VIhA) [FAhA [NAI|NAI]]) &amp; space-int-props
+space-interval = ((VEhA & VIhA) [[FAhA [[NAI]]) & space-int-props
 
 space-int-props = (FEhE interval-property) ...
 
-interval-property = number ROI [[NAI|NAI]]  TAhE [[NAI|NAI]] | ZAhO [[NAI|NAI]]
+interval-property = number ROI [NAI] | TAhE [NAI] | ZAhO [NAI]
+</pre>
+=Proposed grammar=
+<pre>
+tense-modal = ([NAhE] [SE] tag-unit [NAI] #) ... 
 
-^
+tag-unit = BAI 
+| CAhA 
+| CUhE 
+| KI 
+| ZI 
+| PU 
+| VA 
+| [MOhI] FAhA 
+| ZEhA 
+| VEhA 
+| VIhA 
+| [FEhE] number ROI 
+| [FEhE] TAhE 
+| [FEhE] ZAhO 
+| FIhO # selbri /FEhU/
+</pre>
+=Rationale=
+SE-conversion
 
-=== Proposed grammar: ===
+Every tag-unit can be used as a tag, and therefore as a connective. It is arbitrary and inconvenient that SE is currently disallowed with some tags. 
 
-^
+NAhE
 
-tense-modal = ([[NAhE|NAhE]] [[SE|SE]] tag-unit [[NAI|NAI]] #) ...
+{NAhE PU}, {NAhE CAhA} and {NAhE PU CAhA} are all allowed, but{NAhE PU NAhE CAhA} is not. This is arbitrary and inconvenient. Similarly for other combinations. 
 
-tag-unit = BAI
+Order of units
 
-| CAhA
+{co'a na'o broda} "starting to typically broda" is allowed, but {na'o co'a broda} "typically starting to broda" is not. It will be accepted by the parser, but parsed as {na'oku co'a broda}. Similarly for all other order restrictions. Note: arbitrary combinations of tag-units are already allowed in selbri-tags as long as there is an intervening {ja'a}, for example: {na'o ja'a co'a broda} is allowed, without ku's. 
 
-| CUhE
+NAI
 
-| KI
+There's no good reason to allow it selectively here and there instead of everywhere. 
 
-| ZI
+=Backwards compatibility=
 
-| PU
+Fully compatible. Everything currently grammatical remains grammatical. 
 
-| VA
+<del>--</del><del>--</del><del>--</del>--
 
-| [[MOhI|MOhI]] FAhA
-
-| ZEhA
-
-| VEhA
-
-| VIhA
-
-| [[FEhE|FEhE]] number ROI
-
-| [[FEhE|FEhE]] TAhE
-
-| [[FEhE|FEhE]] ZAhO
-
-| FIhO # selbri /FEhU/ 
-
-^
-
-=== Rationale: ===
-
-==== SE-conversion ====
-
-Every tag-unit can be used as a tag, and therefore as a connective. It is arbitrary and inconvenient that SE is currently disallowed with some tags.
-
-==== NAhE ====
-
-{NAhE PU}, {NAhE CAhA} and {NAhE PU CAhA} are all allowed, but{NAhE PU NAhE CAhA} is not. This is arbitrary and inconvenient. Similarly for other combinations.
-
-==== Order of units ====
-
-{co'a na'o broda} "starting to typically broda" is allowed, but {na'o co'a broda} "typically starting to broda" is not. It will be accepted by the parser, but parsed as {na'oku co'a broda}. Similarly for all other order restrictions. Note: arbitrary combinations of tag-units are already allowed in selbri-tags as long as there is an intervening {ja'a}, for example: {na'o ja'a co'a broda} is allowed, without ku's.
-
-==== NAI ====
-
-There's no good reason to allow it selectively here and there instead of everywhere.
-
-==== Backwards compatibility ====
-
-Fully compatible. Everything currently grammatical remains grammatical.
-
---------------------
-
-=== Notes ===
-
-#In the original proposal I had kept PU [[ZI|ZI]], FAhA [[VA|VA]], ZEhA[[PU|PU]], VEhA [[FAhA|FAhA]] and VIhA [[FAhA|FAhA]] as separate forms because I thought their compound meaning might follow special compositional rules. I don't think that is the case, though. Just as the Imaginary Journey composition follows the ordinary left-to-right scope rule, these componds follow the rule too. For example {ze'u pu} indicates a long duration of an event in the past of some reference point, where the event is in the past for the whole duration.
-
-#Originally I had only redefined the simple-tense-modal, but since the exclusion of FIhO-modals from the general case was due to the LR(1) restriction which no longer applies, we can now generalize the full tense-modal. 
-
---------------------
-
-(comments)
-
-And's:
-
-SE: Absolutely, yes.
-
-NAhE: Yes.
-
+=Notes=
+# In the original proposal I had kept PU [ZI], FAhA [VA], ZEhA[PU], VEhA [FAhA] and VIhA [FAhA] as separate forms because I thought their compound meaning might follow special compositional rules. I don't think that is the case, though. Just as the Imaginary Journey composition follows the ordinary left-to-right scope rule, these componds follow the rule too. For example {ze'u pu} indicates a long duration of an event in the past of some reference point, where the event is in the past for the whole duration.
+# Originally I had only redefined the simple-tense-modal, but since the exclusion of FIhO-modals from the general case was due to the LR(1) restriction which no longer applies, we can now generalize the full tense-modal.
+<del>--</del><del>--</del><del>--</del>-- 
+=Comments=
+And's: 
+SE: Absolutely, yes. 
+NAhE: Yes. 
 Order: Is {lo na'o(ku) co'a broda} grammatical? If not, then that is an argument in favour of your proposal. If it is grammatical, then I think it would be better if all selbri tags were instead sumti tags, since otherwise we have a syntactic distinction with no semantic import.
-
-*{lo na'oku co'a broda} is not grammatical. {lo na'o ja'a co'a broda} is grammatical. But having to remember for which combinations you need to insert ja'a is absurd.
-**OK, then. I am in favour.
+* {lo na'oku co'a broda} is not grammatical. {lo na'o ja'a co'a broda} is grammatical. But having to remember for which combinations you need to insert ja'a is absurd.
+** OK, then. I am in favour.
 
 NAI: Certainly the status quo seems arbitrary. But IMO NAI is a Bad Thing when it contributes to logical form, because it doesn't follow the usual scope rules. Allowing NAI everywhere is probably better than allowing it arbitrarily, but better would be to disallow it everywhere except for places where na can't do the job.
-
-*NAI only affects the meaning of the previous word. For example {ru'inai} means "intermittently". It follows the usual scope rule for UIs, the scope is always the previous word. If you prefer, the complex word+nai is a new word with a new meaning. The new meaning is not strictly compositional, but it is usually easy to guess.
-**So it functions like NAhE, then? I agree the status quo is an ugly mess, but the risk of fixing it by allowing NAI anywhere is that we end up with a semantic mess. Are we (BF) really going to say for every cmavo what it means when followed by NAI? Or is it like a tanru, dependent on glorking?
-
-***I will restrict it, for the purposes of this proposal, to words in tags. NAI is already allowed after most of them anyway, so we already have to do that.
+* NAI only affects the meaning of the previous word. For example {ru'inai} means "intermittently". It follows the usual scope rule for UIs, the scope is always the previous word. If you prefer, the complex word+nai is a new word with a new meaning. The new meaning is not strictly compositional, but it is usually easy to guess.
+** So it functions like NAhE, then? I agree the status quo is an ugly mess, but the risk of fixing it by allowing NAI anywhere is that we end up with a semantic mess. Are we (BF) really going to say for every cmavo what it means when followed by NAI? Or is it like a tanru, dependent on glorking?
+*** I will restrict it, for the purposes of this proposal, to words in tags. NAI is already allowed after most of them anyway, so we already have to do that.
