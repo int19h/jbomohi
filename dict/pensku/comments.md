@@ -48,3 +48,13 @@ Also, why intentionally abusing the meaning of rafsi? I cannot see any
 good reason for abusing the system here, especially since this word adds
 nothing new.
 
+
+## 2015-01-16T23:14:05Z — selpahi (comment 1607, on definition 64188, in reply to 1606)
+
+Re: Badly chosen rafsi
+
+Wuzzy wrote:
+> What's the point?
+
+Testing the waters.
+
