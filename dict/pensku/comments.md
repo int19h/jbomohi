@@ -69,3 +69,20 @@ questionable/weird lujvo? ;-)
 
 I am sure this is going to be a controversial thing.
 
+
+## 2015-01-16T23:38:48Z — selpahi (comment 1609, on definition 64188, in reply to 1608)
+
+Re: Badly chosen rafsi
+
+Wuzzy wrote:
+> Maybe I don't know what you are up to and what your goals are, but have
+> you asked the mailing list before you start to intentionally coin
+> questionable/weird lujvo? ;-)
+
+Just this one lujvo.
+
+> I am sure this is going to be a controversial thing.
+
+It is very controversial. I expect to get flamed and insulted, as I've
+already been. :)
+
