@@ -34,3 +34,17 @@ I intentionally didn't.
 
 I know.
 
+
+## 2015-01-16T22:49:32Z — Wuzzy (comment 1606, on definition 64188, in reply to 1605)
+
+Re: Badly chosen rafsi
+
+What's the point?
+
+{peisku} is already there, the definition is basically the same. {pensku}
+seems to be redundant, also misleading because of its rafsi.
+
+Also, why intentionally abusing the meaning of rafsi? I cannot see any
+good reason for abusing the system here, especially since this word adds
+nothing new.
+
