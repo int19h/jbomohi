@@ -11,3 +11,26 @@ rafsi.
 {pensi} has the short rafsi “pei” and “pes”.
 This would make “{peisku}” a reasonable lujvo.
 
+
+## 2015-01-16T22:40:44Z — selpahi (comment 1605, on definition 64188, in reply to 1604)
+
+Re: Badly chosen rafsi
+
+Wuzzy wrote:
+> “pen” comes from “{penmi}” and “cku” from “{cusku}”.
+> {pemni} is not {pensi}.
+
+I know. Hence the notes.
+
+> 
+> But most importantly: No “contraction” is needed, just use the
+correct
+> rafsi.
+
+I intentionally didn't.
+
+> {pensi} has the short rafsi “pei” and “pes”.
+> This would make “{peisku}” a reasonable lujvo.
+
+I know.
+
