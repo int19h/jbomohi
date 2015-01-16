@@ -58,3 +58,14 @@ Wuzzy wrote:
 
 Testing the waters.
 
+
+## 2015-01-16T23:33:01Z — Wuzzy (comment 1608, on definition 64188, in reply to 1607)
+
+Re: Badly chosen rafsi
+
+Maybe I don't know what you are up to and what your goals are, but have
+you asked the mailing list before you start to intentionally coin
+questionable/weird lujvo? ;-)
+
+I am sure this is going to be a controversial thing.
+
