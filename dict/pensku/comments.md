@@ -122,3 +122,18 @@ goes.
 
 Thanks. I'm only trying to get a discussion going, no more, no less.
 
+
+## 2015-01-17T00:44:45Z — Wuzzy (comment 1612, on definition 64188, in reply to 1611)
+
+Re: Badly chosen rafsi
+
+Selpa'i still has not made his intentions clear.
+Selpa'i still has not brought a single argument here defending the
+practise of intentionally breaking the rafsi meaning.
+Pensku is redundant and misleading. Being there “to test the waters”,
+this word certainly has no place in a printed dictionary.
+
+And this is the last thing I want to say about this on Jbovlaste, please
+go to the mailing list if you still insist on this word or want to discuss
+this in detail (jbovlaste is not really well suited for long discussions).
+
