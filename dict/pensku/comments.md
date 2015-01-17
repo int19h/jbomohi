@@ -182,3 +182,16 @@ are
 
 ta'i ma do sa'a'a'a'anji .i .oi xo drata cu cmene do vau .u'i
 
+
+## 2015-01-17T06:32:52Z — gleki (comment 1615, on definition 64188)
+
+ei panra lo lujvo poi simsa zo'ei ra'oi sku
+
+zo retsku e zo spusku e zo piksku plixau gi'e se pilno
+
+i zo retsku zo'u cusku lo preti
+i zo spusku zo'u spuda fi lo ka cusku
+i zo piksku zo'u cusku lo pinka
+i da'i zo pensku smuni ma i la'acu'i srana zoi gy. say in person gy. e lu
+cusku ca lo nu lo no'a cu penmi li'u
+
