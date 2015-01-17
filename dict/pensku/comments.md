@@ -109,3 +109,16 @@ Well, I wish I agreed that this was good idea, but anyway I upvoted
 {pensku} back into positives because I can't wait to see where this goes.
 Let's not attack anyone for their ideas!
 
+
+## 2015-01-17T00:17:44Z — selpahi (comment 1611, on definition 64188, in reply to 1610)
+
+Re: Badly chosen rafsi
+
+durka42 wrote:
+> Well, I wish I agreed that this was good idea, but anyway I upvoted
+> {pensku} back into positives because I can't wait to see where this
+goes.
+> Let's not attack anyone for their ideas!
+
+Thanks. I'm only trying to get a discussion going, no more, no less.
+
