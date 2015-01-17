@@ -137,3 +137,34 @@ And this is the last thing I want to say about this on Jbovlaste, please
 go to the mailing list if you still insist on this word or want to discuss
 this in detail (jbovlaste is not really well suited for long discussions).
 
+
+## 2015-01-17T00:49:17Z — selpahi (comment 1613, on definition 64188, in reply to 1612)
+
+Re: Badly chosen rafsi
+
+Wuzzy wrote:
+> Selpa'i still has not made his intentions clear.
+> Selpa'i still has not brought a single argument here defending the
+> practise of intentionally breaking the rafsi meaning.
+> Pensku is redundant and misleading. Being there “to test the
+waters”,
+> this word certainly has no place in a printed dictionary.
+
+(You can use that argument when we get to making a printed dictionary, and
+then we'll have to erase a lot more than just this one word)
+
+> 
+> And this is the last thing I want to say about this on Jbovlaste, please
+> go to the mailing list if you still insist on this word
+
+(I'm not here to "insist" on anything. Although technically everyone is
+allowed to define words as they wish)
+
+ or want to discuss
+> this in detail (jbovlaste is not really well suited for long
+discussions).
+
+I didn't intend to discuss this here; there is already a discussion going
+on on IRC (and it's by far not the first one about this topic). Others are
+discussing it, and that's the whole point. 
+
