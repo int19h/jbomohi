@@ -86,3 +86,26 @@ Just this one lujvo.
 It is very controversial. I expect to get flamed and insulted, as I've
 already been. :)
 
+
+## 2015-01-17T00:15:45Z — durka42 (comment 1610, on definition 64188, in reply to 1609)
+
+Re: Badly chosen rafsi
+
+selpahi wrote:
+> Wuzzy wrote:
+> > Maybe I don't know what you are up to and what your goals are, but
+have
+> > you asked the mailing list before you start to intentionally coin
+> > questionable/weird lujvo? ;-)
+> 
+> Just this one lujvo.
+> 
+> > I am sure this is going to be a controversial thing.
+> 
+> It is very controversial. I expect to get flamed and insulted, as I've
+> already been. :)
+
+Well, I wish I agreed that this was good idea, but anyway I upvoted
+{pensku} back into positives because I can't wait to see where this goes.
+Let's not attack anyone for their ideas!
+
