@@ -168,3 +168,17 @@ I didn't intend to discuss this here; there is already a discussion going
 on on IRC (and it's by far not the first one about this topic). Others are
 discussing it, and that's the whole point. 
 
+
+## 2015-01-17T00:56:34Z — durka42 (comment 1614, on definition 64188, in reply to 1613)
+
+Re: Badly chosen rafsi
+
+> 
+> I didn't intend to discuss this here; there is already a discussion
+going
+> on on IRC (and it's by far not the first one about this topic). Others
+are
+> discussing it, and that's the whole point. 
+
+ta'i ma do sa'a'a'a'anji .i .oi xo drata cu cmene do vau .u'i
+
