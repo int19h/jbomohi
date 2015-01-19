@@ -136,3 +136,38 @@ quoted text is treated as a single, whole semantic unit without internal
 components- this may be useful for saying "doghouse-builder', for a lame
 example, wherein "doghouse" is analyzed as a single atom of meaning.
 
+
+## 2015-01-19T17:21:01Z — maik (comment 1634, on definition 64197, in reply to 1627)
+
+Re: what about 
+
+krtisfranks wrote:
+> maik wrote:
+> > Rewrite: How do these proposed cmavo work differently than simply
+> placing
+> > {zei} next to an ordinary "{lu}...{li'u}" quote?
+> 
+> 
+> Good question. According to camxes, «lu broda brode li'u zei brodi li'u
+> brodo» is grammatical and is interpreted as "(lu broda brode (li'u zei
+> brodi) li'u) brodo", where paranthesis represent grouping.  Thus, «li'u
+> zei» does not end a quote and convert it to a lujvo (wherein the quote
+is
+> one or more rafsi (in a string) and the immediately following word is
+also
+> a rafsi/brivla), it converts «li'u» alone into a rafsi that is added
+to
+> the immediately following word and then that resultant lujvo and all
+> following text is part of the quotation until the next unpaired
+occurrence
+> of «li'u».
+Fair enough, I didn't realize that.  It might be worth reconsidering the
+camxes implementation.	Maybe there's some good reason otherwise, but it
+seems to me that when {li'u} comes first, then {li'u} should take
+precedence. If someone (really) needs to join the word {li'u} into a lujvo
+then "lo'u li'u le'u zei broda" is available.  I would also go so far as
+to consider "broda zei (lu ... li'u)" as more useful than the alternative
+parse.	
+
+Maybe the camxes experts can chime in.
+
