@@ -97,3 +97,20 @@ quote
 
 True. That is weird to me, but maybe that should just be used instead.
 
+
+## 2015-01-19T15:09:52Z — krtisfranks (comment 1632, on definition 64197, in reply to 1630)
+
+Re: what about 
+
+krtisfranks wrote:
+
+> True. That is weird to me, but maybe that should just be used instead.
+
+The only real difference that I see is that «lo'e» can quote
+nongrammatical text- which means that it is a little freer but also a
+little more in danger of containing just nonsense. Since the referent of
+the quote is being used, meaningless garbage is possibly very bad
+(although it could also occassionally be useful).
+
+I maintain that being able to distribute «zei»'s is helpful.
+
