@@ -48,3 +48,42 @@ be
 
 Seems to me it would be the same as "A-B broda Z-B" (or "B-A broda B-Z").
 
+
+## 2015-01-19T14:47:12Z — krtisfranks (comment 1631, on definition 64190, in reply to 1628)
+
+Re: Operation when mixed in with {fa'u}
+
+durka42 wrote:
+> I don't know about the usefulness of this cmavo, but...
+> 
+> Seems to me {fa'u} is associative, and {fa'u'ai} is associative, but in
+> combination they are not associative. Connectives are left-associative
+> (see CLL 14.7).
+> 
+> krtisfranks wrote:
+> > krtisfranks wrote:
+> > > I am not sure how «.a'y fa'u by fa'u cy fa'u dy broda zy fa'u'ai
+.ybu
+> > > fa'u xy fa'u'ai .uy» should be interpreted.
+> > 
+> 
+> fa'u(fa'u(fa'u(A, B), C), D) broda fa'u'ai(fa'u'ai(fa'u'ai(Z, Y), X), W)
+> fa'u(fa'u(fa'u(A, B), C), D) broda fa'u'ai(fa'u'ai(fa'u(Y, Z), X), W)
+> fa'u(fa'u(fa'u(A, B), C), D) broda fa'u'ai(fa'u(X, fa'u(Y, Z)), W)
+> fa'u(fa'u(fa'u(A, B), C), D) broda fa'u(W, fa'u(X, fa'u(Y, Z)))
+> 
+> So I guess it works out to "A-B-C-D broda W-X-Y-Z". (If done in speech,
+it
+> may also work out to your te cusku punching you in the face.)
+> 
+> > Or, for that matter, how «.a'y fa'u'ai by broda zy fa'u'ai by»
+should
+> be
+> > interpreted (although the syntax at least is clear in this case).
+> 
+> Seems to me it would be the same as "A-B broda Z-B" (or "B-A broda
+B-Z").
+
+I agree.
+(I use this word('s equivalent) frequently enough in English.)
+
