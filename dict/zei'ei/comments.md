@@ -171,3 +171,11 @@ parse.
 
 Maybe the camxes experts can chime in.
 
+
+## 2015-01-19T18:08:39Z — krtisfranks (comment 1635, on definition 64197, in reply to 1633)
+
+Re: what about 
+
+This also allows for implementing the empty rafsi, if that is interesting
+to anyone, lol.
+
