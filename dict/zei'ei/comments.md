@@ -114,3 +114,25 @@ the quote is being used, meaningless garbage is possibly very bad
 
 I maintain that being able to distribute «zei»'s is helpful.
 
+
+## 2015-01-19T16:21:48Z — krtisfranks (comment 1633, on definition 64197, in reply to 1630)
+
+Re: what about 
+
+> True. That is weird to me, but maybe that should just be used instead.
+
+Other differences:
+
+Error quotes are formal and are basically just taken as a string. In order
+to obtain the referent thereof, at least «la'e zei» must be appended to
+the beginning; otherwise, the lujvo has a quote in it (which may be useful
+for saying ""CCVC"-form words", for example). Although «zei'ei»-quotes
+currently must be grammatical (this functionality could be expanded if
+doing so is desired), the referent is automatically extracted.
+
+The result is treated as a single rafsi. Thus it may be quoted by
+«{ra'oi}», howsoever useful that may end up being. Additionally, the
+quoted text is treated as a single, whole semantic unit without internal
+components- this may be useful for saying "doghouse-builder', for a lame
+example, wherein "doghouse" is analyzed as a single atom of meaning.
+
