@@ -112,3 +112,35 @@ place.
 
 So do you have any examples of moi'o_4 in mind?
 
+
+## 2015-01-19T03:01:40Z — cogas (comment 1624, on definition 63721, in reply to 1435)
+
+Re: better translation x4
+
+durka42 wrote:
+> 
+> I think we need to come up with a way to fill moi'o_4 in Lojban. Ideally
+> at least two ways (the default, and something else). Then it would be
+> easier to write a definition. As it is, I don't know how to fill the
+> place.
+> 
+> So do you have any examples of moi'o_4 in mind?
+
+More casually, for example:
+
+(In Skype or telephone)
+I will sleep during this day from your point of view (your location).
+I will sleep during this day from my point of view (my location).
+
+If it is 22:00 19/1 on "your" location and it is 3:00 20/1 on "my"
+location, how long am "I" going to sleep? 2 hrs or 21 hrs?
+
+I think that x4 helps in case of that.
+
+however, probably, this case is not major to use x4 in. Quite rare cases
+(and quite casual).
+
+x4 = by calender, by standard, and, ...
+
+I'm afraid that I am not able to say well. oisai
+
