@@ -34,3 +34,31 @@ the immediately following word and then that resultant lujvo and all
 following text is part of the quotation until the next unpaired occurrence
 of «li'u».
 
+
+## 2015-01-19T05:00:10Z — durka42 (comment 1629, on definition 64197, in reply to 1627)
+
+Re: what about 
+
+krtisfranks wrote:
+> maik wrote:
+> > Rewrite: How do these proposed cmavo work differently than simply
+> placing
+> > {zei} next to an ordinary "{lu}...{li'u}" quote?
+> 
+> 
+> Good question. According to camxes, «lu broda brode li'u zei brodi li'u
+> brodo» is grammatical and is interpreted as "(lu broda brode (li'u zei
+> brodi) li'u) brodo", where paranthesis represent grouping.  Thus, «li'u
+> zei» does not end a quote and convert it to a lujvo (wherein the quote
+is
+> one or more rafsi (in a string) and the immediately following word is
+also
+> a rafsi/brivla), it converts «li'u» alone into a rafsi that is added
+to
+> the immediately following word and then that resultant lujvo and all
+> following text is part of the quotation until the next unpaired
+occurrence
+> of «li'u».
+
+{lo'u}..{le'u} {zei} {broda} would work, though.
+
