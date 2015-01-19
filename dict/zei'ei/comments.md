@@ -179,3 +179,19 @@ Re: what about
 This also allows for implementing the empty rafsi, if that is interesting
 to anyone, lol.
 
+
+## 2015-01-19T18:13:14Z — krtisfranks (comment 1636, on definition 64197, in reply to 1635)
+
+Re: what about 
+
+krtisfranks wrote:
+> This also allows for implementing the empty rafsi, if that is
+interesting
+> to anyone, lol.
+
+
+«la'e lo'u le'u zei» might work but it could also mean "the referent of
+the empty string", whatsoever that means. Without «la'e», it would be
+the empty string itself in rafsi form. Neither of these is actually the
+empty rafsi.
+
