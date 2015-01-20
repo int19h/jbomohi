@@ -1,4 +1,4 @@
-# mail/lojban-list thread cc9dc4ad76d9-nu_ningau_so'u_se_jbovlaste_%2F_updating_a_few_ | root 0cd5a578a47549238b8b046a01b8846c@gmail.com | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread cc9dc4ad76d9-nu_ningau_so'u_se_jbovlaste_%2F_updating_a_few_ | root 0cd5a578a47549238b8b046a01b8846c@gmail.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-01-20T18:28:38Z | And Rosta <and.rosta@gmail.com> | cacf3dpke=nrnnuz8jab6oph+qosec3liffvcnejkwxytscnvpq@mail.gmail.com | mail/lojban-list/cur/1421778518.d3b395066461abc6.jbomohi:2,S
 [moving this off llg-members list]
@@ -83,6 +83,85 @@ lojban definitions for words in such a way as to facilitate (4).
 Yes, I think everyone would agree with that.
 
 --And.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 2 | 2015-01-20T19:38:42Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2c9tstb6pnkgqzptrdqp7zu07a7s-vjp6qa8gwwobjjkq@mail.gmail.com | mail/lojban-list/cur/1421782722.7732aeb8bbe75adf.jbomohi:2,S
+On Tue, Jan 20, 2015 at 3:28 PM, And Rosta <and.rosta@gmail.com> wrote:
+>
+> On Tue, Jan 20, 2015 at 2:59 PM, Jorge Llambías <jjllambias@gmail.com>
+> wrote:
+>
+>>
+>> Would it be fair to say that what an actual grammar should do is, given
+>> some input of sound or written characters, tell us how to:
+>>
+>> (1) convert the input into a string of phonemes
+>> (2) convert the string of phonemes into a string of words
+>> (3) determine a tree structure for the string of words
+>> (4) determine which nodes of the tree are terms, which nodes are
+>> predicates, which terms are co-referring, and which terms are arguments of
+>> which predicates
+>>
+>
+> Rather:
+>
+> (1') convert the input into a string [or perhaps tree] of phonemes
+> (2') convert the string [or perhaps tree] of phonemes into a string [or
+> perhaps (prosodic) tree] of phonological words
+> (3') map the tree of phonological words to a structure of syntactic
+> 'words'/'nodes', which structure will specify which nodes of the tree are
+> terms, which nodes are predicates, which terms are co-referring, and which
+> terms are arguments of which predicates
+>
+
+You seem to have just merged (2) and (3) into (2'), which may be more
+general, but in the particular case of Lojban we know that (2') can be
+achieved in two independent steps, one step that takes any string of
+phonemes and unambiguously dissects it into a string of words (possibly
+including non-lojban words), and a second step that takes the resulting
+string of words as input and unambiguously gives a unique tree structure
+for them (or else rejects the string of words as ungrammatical). That
+probably doesn't work for natlangs in general.
+
+> If that's more or less on track, then we can say that the YACC/EBNF
+> formal grammars do (3). The PEG grammar does (2) and (3). Martin's tersmu
+> is trying to do (4). I would agree that the way our formal grammars do (3)
+> is probably not much like the way our brains do (3), but I'm not sure I see
+> what alternative we have.
+>
+> Right. So I think (3) is not a valid step.
+>
+
+But why is it invalid if it achieves the desired result? And what's the
+alternative, how else could we formalize (2')?
+
+
+> (3') should be doable, partly from Tersmu and partly by using some natural
+> language formalism to analyse the syntax (e.g. at minimum make all phrases
+> headed and forbid unary branching; binary branching would be a bonus if it
+> could be managed).
+>
+
+In order to do (3'), we first need to do (2'). PEG does (2') (and so does
+Yacc+its preparser, with some limitations). And the resulting tree has
+enough detail (in the labeling of its nodes) to give us a head start with
+(3'). I assume Tersmu uses the output of one of these as its input.
+
+The current PEG doesn't produce binary branching exclusively, although it
+can probably be tweaked to do that by adding many intermediate rules. Why
+is unary branching bad? There are many rules where one of the branches is
+optional, so that would result either in an empty leaf or a unary branch.
+Would you want binary branching all the way down to phonemes, or just to
+words?
+
+mu'o mi'e xorxes
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
