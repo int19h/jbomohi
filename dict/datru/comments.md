@@ -14,3 +14,13 @@ Ilmen wrote:
 
 do na srera .i ja'a {gimkamsmikezypro}
 
+
+## 2015-01-21T06:35:00Z — gleki (comment 1642, on definition 19602, in reply to 1640)
+
+Re: gismu collision
+
+Ilmen wrote:
+> This gismu collides with {tatru}, if I'm not mistaken.
+
+Just use {datre} or {datra}
+
