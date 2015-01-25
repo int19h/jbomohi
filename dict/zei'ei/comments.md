@@ -195,3 +195,21 @@ the empty string", whatsoever that means. Without «la'e», it would be
 the empty string itself in rafsi form. Neither of these is actually the
 empty rafsi.
 
+
+## 2015-01-25T23:21:48Z — selckiku (comment 1652)
+
+Do you actually need this particular word?
+
+This explanation seems vaguely interesting but it certainly isn't
+sufficient for anyone to put this word into practical use, is it? Has this
+word yet been used? Could you provide an example? 
+
+I thought of using this sound for the simpler meaning of concatenating two
+shorter lujvo in order to more easily pronounce clajvo, an actual problem
+I've actually encountered in my actual daily use of Lojban. Is there any
+good reason I shouldn't take this sound? Do you actually need this
+particular sound for this? Could you please ask experienced Lojbanists in
+the future before claiming a sound whether we think it's appropriate for
+the use you're proposing it for, before making the proposal as formally as
+entering it into a dictionary? 
+
