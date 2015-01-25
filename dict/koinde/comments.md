@@ -31,3 +31,15 @@ As suggested by Xorxes, I've added several -nde fu'ivla based on the .e'V
 series of attitudinals (such as .{e'ende}), with the same place structure.
 {koinde} is to be part of this series.
 
+
+## 2015-01-25T16:35:08Z — Ilmen (comment 1650, in reply to 1648)
+
+Re: command or generic hortative/imperative?
+
+gleki wrote:
+> is it a brivla of ko'oi or only for commands?
+
+It is to be a predicate form of {ko'oi}, so I think it is a superset of
+{minde}. Another form with only two sumti slots may also be needed, but
+I'm not sure yet what predicate word to give it.
+
