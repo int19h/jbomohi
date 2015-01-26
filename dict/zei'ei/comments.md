@@ -213,3 +213,47 @@ the future before claiming a sound whether we think it's appropriate for
 the use you're proposing it for, before making the proposal as formally as
 entering it into a dictionary? 
 
+
+## 2015-01-26T01:13:36Z — krtisfranks (comment 1653, in reply to 1652)
+
+Re: Do you actually need this particular word?
+
+selckiku wrote:
+> This explanation seems vaguely interesting but it certainly isn't
+> sufficient for anyone to put this word into practical use, is it? Has
+this
+> word yet been used? Could you provide an example? 
+> 
+> I thought of using this sound for the simpler meaning of concatenating
+two
+> shorter lujvo in order to more easily pronounce clajvo, an actual
+problem
+> I've actually encountered in my actual daily use of Lojban. Is there any
+> good reason I shouldn't take this sound? Do you actually need this
+> particular sound for this? Could you please ask experienced Lojbanists
+in
+> the future before claiming a sound whether we think it's appropriate for
+> the use you're proposing it for, before making the proposal as formally
+as
+> entering it into a dictionary? 
+
+
+Another comment thread discusses its usefulness in a little detail.
+
+You can downvote this definition or (I think: xor) upvote an alternative
+definition. This dictionary is not a final product yet. I created a word
+that I thought would be useful. Discussion is on-going, which is perfectly
+fine; conflict, in fact is useful for such ironings out.
+
+You are perfectly free to propose an alternative, although, if you think
+that your idea is a practicably utile and beneficial one (an opinion that
+I probably share at the moment), why not go for further refined simplicity
+and use {zei'e} or something of the like? Or, if you want the form zei'VV,
+there are several other options still open. I will not fight against you
+if you provide an alternative definition for this word, I do not
+particularly mind losing this spot (although I will probably end up
+proposing that another is used for the purpose that I originally proposed
+for this word since I do think that it is plausibly useful), but I do
+think that you might have better (and higher-importance) possibilities
+available to you. :)
+
