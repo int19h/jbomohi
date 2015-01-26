@@ -1,0 +1,13 @@
+<div>Posted by [http://www.lojban.org/tiki/user2 rlpowell] on Sun 30 of Apr., 2006 22:24 GMT posts: 14214</div><div>
+Storing this here for posterity; not putting it in fixed bugs in a meagre security-through-obscurity measure.
+
+Basically, the anti-spoofing is much better, but making it work in general is impossible, because people can always change their names.
+
+* The spoofing prevention code can be fooled. But it's a lot harder to do; write.c doesn't include spoof checking.
+
+** New anti-spoofing plan: So msg on thing strips any tags (actually, converts , & to html entities), inserts new ones iff it should (that is, for the object named $avatar, iff it appears in the callstack before the nearest stack boundary), and calls notice on all appropriate objects, which also ignore tags if the thing calling them isn't from mooix:concrete/thing's msg, and then calls write on the session, which also ignores any tags if the calling object is not the owner of the session.
+
+*** Partially implemented; checks in notice and write not done.
+
+** Another wrinkle is backgrounded spoofers. This should be fixable by having msg call ps -u geteuid() -o ppid | grep '^ *1 *$'. This works because each method call chain gets its own uid. Any such chain that terminates in PID 1 must have a fork in it where the parent has ended. In this case, respect only the immediately preceding callstack entry, rather than anything in the callstack.
+</div>
