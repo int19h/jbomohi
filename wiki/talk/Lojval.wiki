@@ -1,0 +1,103 @@
+Posted by namor on Sat 10 of May, 2008 21:35 GMT posts: 42
+The script doesn't find words you already learned in the Pauker-Vocabulary-File, so it adds them again as unlearned. :-\ 
+(This is because the Pauker Software adds a timestamp when the Voc. has been learned, so the 'stupid search routine' doesn't recognize the Voc. anymore as the one we've just searched for.)
+
+I made a rather dirty fix on this.:
+
+simply replace (line 163 or so): CODE 
+if card_search_term in lojbancards: 
+print "\nThat card is already in your flashcard deck." 
+return
+
+/CODEwith:CODE
+
+card_search_term = """%s
+
+  
+
+%s
+
+  
+""" % (front, back)
+
+if card_search_term in lojbancards: 
+print "\nThat card is already in your flashcard deck." 
+return
+
+/CODE
+
+As you can see, this simply doesn't search for the first line of the xml-entry, which contains the timestamp. Quick and dirty, but it works. :-)
+
+Best regards, 
+namor
+
+> Use this thread to discuss the page:: Lojval
+
+Score: 0.00 Vote:   1   2   3   4   5    top of page Reply
+ Edit  Delete  Report this post	
+
+Aw: File uploaded
+
+Posted by namor on Sat 10 of May, 2008 21:53 GMT posts: 42
+Apparently the listserver ate most of the inline fix, 
+so I uploaded the fixed lojval.py file to the wiki.
+
+Best regards, 
+Namor
+
+> Use this thread to discuss the page:: Lojval
+
+Score: 0.00 Vote:   1   2   3   4   5    top of page Reply
+ Edit  Delete  Report this post	
+
+Lojval
+
+Posted by namor on Sun 11 of May, 2008 07:25 GMT posts: 42
+Apparently the listserver ate most of the inline fix, 
+so I uploaded the fixed lojval.py file to the wiki.
+
+Best regards, 
+Namor
+
+Am Samstag 10 Mai 2008 23:35:27 schrieb namor: 
+> Aw: Lojval error with Pauker FIX included 
+> 
+> Author: namor 
+> 
+> The script doesn't find words you already learned in the 
+> Pauker-Vocabulary-File, so it adds them again as unlearned. :-\ (This is 
+> because the Pauker Software adds a timestamp when the Voc. has been 
+> learned, so the 'stupid search routine' doesn't recognize the Voc. anymore 
+> as the one we've just searched for.) 
+> 
+> I made a rather dirty fix on this.: 
+> 
+> simply replace (line 163 or so): CODE 
+> if card_search_term in lojbancards: 
+> print "\nThat card is already in your flashcard deck." 
+> return 
+> 
+> /CODEwith:CODE 
+> 
+> card_search_term = """%s 
+> 
+> 
+> 
+> %s 
+> 
+> 
+> """ % (front, back) 
+> 
+> if card_search_term in lojbancards: 
+> print "\nThat card is already in your flashcard deck." 
+> return 
+> 
+> /CODE 
+> 
+> As you can see, this simply doesn't search for the first line of the 
+> xml-entry, which contains the timestamp. Quick and dirty, but it works. :-) 
+> 
+> Best regards, 
+> namor 
+> 
+> > Use this thread to discuss the page:: Lojval
