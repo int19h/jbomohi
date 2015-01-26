@@ -257,3 +257,23 @@ for this word since I do think that it is plausibly useful), but I do
 think that you might have better (and higher-importance) possibilities
 available to you. :)
 
+
+## 2015-01-26T02:36:04Z — selckiku (comment 1654, in reply to 1653)
+
+Re: Do you actually need this particular word?
+
+It's just that "zei'ei" is what occurred to me, as someone very familiar
+with this language. So I wondered why you chose that sound for this
+purpose. Does the sound matter to you? Does the sound of Lojban matter to
+you in general? It seems that you've just been going around claiming cmavo
+all day long without much regard for which sounds in particular you're
+squatting and how other people might feel about that. 
+
+Of course I can try to fight you for this particular word, but I don't
+have the energy for a fight every time I want to make a word. Before you
+came along and started abusing this communal resource we had a tradition
+of discussing cmavo amicably before adding them, and cmavo inventors would
+often agree to amend their ideas to accord with the will of the community.
+You're forcing us into this more stressful, less friendly way of deciding
+before it really ought to be necessary. 
+
