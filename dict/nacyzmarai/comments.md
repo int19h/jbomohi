@@ -4,3 +4,10 @@
 
 Could you please translate this example to Lojban?
 
+
+## 2015-01-29T10:22:49Z — gleki (comment 1658, on definition 57221)
+
+DGS
+
+additionally, is there a deep gismu structure of this word?
+
