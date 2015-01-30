@@ -1,0 +1,22 @@
++++
+id = 64487
+word = "vokcinje"
+lang = "art-loglan"
+author = "Ilmen"
+updated = "2015-01-30T21:34:01Z"
+version = 0
+score = -1
+score_as_of = "2026-09-13"
+status = "current"
+jargon = ""
+selmaho = ""
+keywords = []
++++
+
+$x_1$ ge rango $x_2$ lo ka cupra lo voksa lo ka desku gi cinje lo galxe ke vasxu vorme
+
+## Notes
+
+
+
+## Examples
