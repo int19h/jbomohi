@@ -47,6 +47,11 @@ local function tidyValNoChange(key, val)
 	return val
 end
 
+local function matchesTitle(given, title)
+	local tp = type( given )
+	return (tp == 'string' or tp == 'number') and mw.title.new( given ).prefixedText == title
+end
+
 function arguments.getArgs(frame, options)
 	checkType('getArgs', 1, frame, 'table', true)
 	checkType('getArgs', 2, options, 'table', true)
@@ -81,15 +86,15 @@ function arguments.getArgs(frame, options)
 			else
 				local title = parent:getTitle():gsub('/sandbox$', '')
 				local found = false
-				if type(options.wrappers) == 'table' then
+				if matchesTitle(options.wrappers, title) then
+					found = true
+				elseif type(options.wrappers) == 'table' then
 					for _,v in pairs(options.wrappers) do
-						if v == title then
+						if matchesTitle(v, title) then
 							found = true
 							break
 						end
 					end
-				elseif options.wrappers == title then
-					found = true
 				end
 				
 				-- We test for false specifically here so that nil (the default) acts like true.
@@ -164,16 +169,15 @@ function arguments.getArgs(frame, options)
 	local args, metaArgs, nilArgs, metatable = {}, {}, {}, {}
 	setmetatable(args, metatable)
 
-	local function mergeArgs(iterator, tables)
+	local function mergeArgs(tables)
 		--[[
 		-- Accepts multiple tables as input and merges their keys and values
-		-- into one table using the specified iterator. If a value is already
-		-- present it is not overwritten; tables listed earlier have precedence.
-		-- We are also memoizing nil values, which can be overwritten if they
-		-- are 's' (soft).
+		-- into one table. If a value is already present it is not overwritten;
+		-- tables listed earlier have precedence. We are also memoizing nil
+		-- values, which can be overwritten if they are 's' (soft).
 		--]]
 		for _, t in ipairs(tables) do
-			for key, val in iterator(t) do
+			for key, val in pairs(t) do
 				if metaArgs[key] == nil and nilArgs[key] ~= 'h' then
 					local tidiedVal = tidyVal(key, val)
 					if tidiedVal == nil then
@@ -262,20 +266,23 @@ function arguments.getArgs(frame, options)
 	metatable.__pairs = function ()
 		-- Called when pairs is run on the args table.
 		if not metatable.donePairs then
-			mergeArgs(pairs, argTables)
+			mergeArgs(argTables)
 			metatable.donePairs = true
-			metatable.doneIpairs = true
 		end
 		return pairs(metaArgs)
 	end
-
-	metatable.__ipairs = function ()
-		-- Called when ipairs is run on the args table.
-		if not metatable.doneIpairs then
-			mergeArgs(ipairs, argTables)
-			metatable.doneIpairs = true
+	
+	local function inext(t, i)
+		-- This uses our __index metamethod
+		local v = t[i + 1]
+		if v ~= nil then
+			return i + 1, v
 		end
-		return ipairs(metaArgs)
+	end
+
+	metatable.__ipairs = function (t)
+		-- Called when ipairs is run on the args table.
+		return inext, t, 0
 	end
 
 	return args
