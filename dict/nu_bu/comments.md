@@ -25,3 +25,19 @@ is
 
 I like them.
 
+
+## 2015-02-07T05:29:33Z — durka42 (comment 1666, in reply to 1659)
+
+Re: e'o sidju mi
+
+gleki wrote:
+> {nu bu}, {ni bu}, {ka bu}, {du'u bu}
+> 
+> Please, help me find a better phrasing for these letterals.
+> 
+> They are to be used to refer to the last sumti starting with LE NU that
+is
+> complete at the moment of using this letteral.
+
+I added a rephrased English definition, what do you think?
+
