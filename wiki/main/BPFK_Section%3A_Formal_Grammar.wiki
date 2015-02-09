@@ -1,38 +1,30 @@
+{{BPFK Section from tiki|BPFK Section: Formal Grammar|30}}
+For non-BPFK discussion of the formal grammar, see [[Grammar]].
 
-For non-BPFK discussion of the formal grammar, see [[Grammar|Grammar]].
+This section describes a proposed update to the Formal Grammar, defining the grammar in [[PEG]] rather than [[YACC]].  This section requires cleanup and a shepherd.
 
-This section describes a proposed update to the Formal Grammar, defining the grammar in [[PEG|PEG]] rather than [[YACC|YACC]].  This section requires cleanup and a shepherd.
+===Proposed grammar changes ===
 
-=== Proposed grammar changes ===
+*[[Internal grammar of tags]]
+*[[Move NAI to CAI]]
+*[[Allow free modifiers anywhere]]
+*[[Make sei more permissive]]
+*Take away the official status of the [[YACC]] grammar, and instead make an official grammar in [[PEG]]
+*[http://groups.google.com/group/lojban/browse_thread/thread/f1ddd5ff0eff69ad Connectives + PU issues]
 
-*[[Internal grammar of tags|Internal grammar of tags]]
-*[[Move NAI to CAI|Move NAI to CAI]]
-
-*[[Allow free modifiers anywhere|Allow free modifiers anywhere]]
-*[[Make sei more permissive|Make sei more permissive]]
-
-*Take away the official status of the [[YACC|YACC]] grammar, and instead make an official grammar in [[PEG|PEG]]
-*[http://groups.google.com/group/lojban/browse_thread/thread/f1ddd5ff0eff69ad onnectives + PU issues]
-
-=== Issues ===
-
+===Issues ===
+* Trailing empty tags within a bridi-head forethought termset aren't absorbed into the following selbri as selbri tcita in Jbofi'e's output, while [http://ilmen.tk/lojban/camxes.html Camxes-pegjs] seems to parse it correctly. Concrete example: ''nu'i ge do gi mi pu klama'' parses as ''{ nu'i ge do gi mi '''pu KU''' NU'U CU klama VAU }'' in Jbofi'e, whereas it parses as ''{ nu'i ge do NUhU gi mi NUhU CU '''pu''' klama VAU }'' in Camxes-pegjs.
 * CLL 9.9, example 9.8: ''mi bai ke ge klama le zarci gi cadzu le bisli''. Camxes' PEG sees this like ''mi bai ku ke ge klama le zarci gi cadzu le bisli''. There doesn't appear to be a way to fill the tag in the gek-sentence production. Jbofihe and the official parser both get this right. Also relevant is example 18.15 from CLL 14.18: ''mi pu ge klama le zarci gi tervecnu lo cidja''. Jbofihe and the official parser both fail on this. Camxes sees it as ''mi pu ku ge klama le zarci gi tervecnu lo cidja''. Is this what is intended?
-** Good catch. I think what camxes does is the Right Thing™, and that the unreachable tag should just be eliminated from the grammar. mi'e [[User:xorxes|xorxes]]
-
-*[https://groups.google.com/group/lojban/tree/browse_frm/month/2007-01/185f36ddbf029663?hl=en&amp;rnum=31&amp;_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2007-01%3Fhl%3Den%26#doc_6828412041702b6a egular suffixing rules and regular rules for creating lujvo.]]
-* [https://groups.google.com/group/lojban/tree/browse_frm/month/2008-11/9fe8b6e82b3aa8b5?rnum=151&amp;_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2008-11%3F#doc_59b0c460473b4130 ore formal grammar stuffs]]
-
-* [https://groups.google.com/group/lojban/tree/browse_frm/month/2008-11/9b23e1824698f78e?rnum=171&amp;_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2008-11%3F#doc_c6b6df439debb5ca ore formal issues (re: tosmabru check)]]
-* [http://groups.google.com/group/lojban/tree/browse_frm/month/2008-05/782cb9b82e7524f2?rnum=21&amp;_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2008-05%3F#doc_3a097aaca47211a1 larity of assertion is necessary.]
-
-* [http://groups.google.com/group/lojban/tree/browse_frm/month/2008-06/14b4b356082d11a3?rnum=11&amp;_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2008-06%3F#doc_723ca0b890e3d04f nteraction of SE, NA, and JA.]
-* [http://groups.google.com/group/lojban/browse_thread/thread/ad25c54c578c03fa  proposal about cmevla] and [http://groups.google.com/group/lojban/browse_thread/thread/bc05cffacd38fc45 elma'o LA].
-
-* [http://groups.google.com/group/lojban/browse_thread/thread/04b2157a4a2f4ca2  very old discussion about] [http://groups.google.com/group/lojban/browse_thread/thread/bf1e9c176c296206 efault][https://groups.google.com/group/lojban/tree/browse_frm/month/2005-01/dcfc0e664ca0518b?rnum=141&amp;_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2005-01%3F#doc_dcfc0e664ca0518b uantifiers]][https://groups.google.com/group/lojban/tree/browse_frm/month/2005-04/221ca085617b5096?rnum=31&amp;_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2005-04%3F#doc_37f5e7fe861f3f5e or gadri]].
-* [http://groups.google.com/group/lojban/browse_thread/thread/880bad057758b750 lah about sumti raising (you can probably ignore this).]
-
-* [http://groups.google.com/group/lojban/browse_thread/thread/4e2858a625897f45  cu-like cmavo for terminators in general.]
-* [http://groups.google.com/group/lojban/browse_thread/thread/a1a7eb7236084fd4 hy x1 to the left?]
-
-* [http://groups.google.com/group/lojban/browse_frm/thread/8465f7b219e442fb an we drop lerfu+namcu strings]?  At least, can we do that if we drop lots of mekso crap too?  See that thread and the relevant bits of [[zasni gerna cenba vreji|zasni gerna cenba vreji]].
+** Good catch. I think what camxes does is the Right Thing™, and that the unreachable tag should just be eliminated from the grammar. mi'e [[xorxes]]
+*[https://groups.google.com/group/lojban/tree/browse_frm/month/2007-01/185f36ddbf029663?hl=en&rnum=31&_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2007-01%3Fhl%3Den%26#doc_6828412041702b6a Regular suffixing rules and regular rules for creating lujvo.]
+* [https://groups.google.com/group/lojban/tree/browse_frm/month/2008-11/9fe8b6e82b3aa8b5?rnum=151&_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2008-11%3F#doc_59b0c460473b4130 more formal grammar stuffs]
+* [https://groups.google.com/group/lojban/tree/browse_frm/month/2008-11/9b23e1824698f78e?rnum=171&_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2008-11%3F#doc_c6b6df439debb5ca more formal issues (re: tosmabru check)]
+* [http://groups.google.com/group/lojban/tree/browse_frm/month/2008-05/782cb9b82e7524f2?rnum=21&_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2008-05%3F#doc_3a097aaca47211a1 Clarity of assertion is necessary.]
+* [http://groups.google.com/group/lojban/tree/browse_frm/month/2008-06/14b4b356082d11a3?rnum=11&_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2008-06%3F#doc_723ca0b890e3d04f Interaction of SE, NA, and JA.]
+* [http://groups.google.com/group/lojban/browse_thread/thread/ad25c54c578c03fa a proposal about cmevla] and [http://groups.google.com/group/lojban/browse_thread/thread/bc05cffacd38fc45 selma'o LA].
+* [http://groups.google.com/group/lojban/browse_thread/thread/04b2157a4a2f4ca2 A very old discussion about] [http://groups.google.com/group/lojban/browse_thread/thread/bf1e9c176c296206 default][https://groups.google.com/group/lojban/tree/browse_frm/month/2005-01/dcfc0e664ca0518b?rnum=141&_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2005-01%3F#doc_dcfc0e664ca0518b quantifiers][https://groups.google.com/group/lojban/tree/browse_frm/month/2005-04/221ca085617b5096?rnum=31&_done=%2Fgroup%2Flojban%2Fbrowse_frm%2Fmonth%2F2005-04%3F#doc_37f5e7fe861f3f5e for gadri].
+* [http://groups.google.com/group/lojban/browse_thread/thread/880bad057758b750 Blah about sumti raising (you can probably ignore this).]
+* [http://groups.google.com/group/lojban/browse_thread/thread/4e2858a625897f45 A cu-like cmavo for terminators in general.]
+* [http://groups.google.com/group/lojban/browse_thread/thread/a1a7eb7236084fd4 Why x1 to the left?]
+* [http://groups.google.com/group/lojban/browse_frm/thread/8465f7b219e442fb can we drop lerfu+namcu strings]?  At least, can we do that if we drop lots of mekso crap too?  See that thread and the relevant bits of [[zasni gerna cenba vreji]].
 * The grammar has a difference between “operand” and “number” that probably isn't intentional; because of this, constructs like “mo'e zo'e” cannot be used where other numbers are allowed.
