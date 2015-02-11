@@ -22,3 +22,12 @@ ka ma kau va'o ce'u ni frili fa lo ka jimpe
 
 ni'o va'o ro da mi do ckire lo ka jboski mu'o
 
+
+## 2015-02-11T20:23:45Z — xorxes (comment 1673, on definition 64730, in reply to 1672)
+
+Re: lo velski porsi be fi lo terbri
+
+mi ba'o galfi fi lo do se zmanei
+
+mi'e xorxes
+
