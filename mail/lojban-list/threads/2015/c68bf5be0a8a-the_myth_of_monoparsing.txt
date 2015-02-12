@@ -1,4 +1,4 @@
-# mail/lojban-list thread c68bf5be0a8a-the_myth_of_monoparsing | root cao7bv+hztwiquy0gcta0xvjg2t+qnrt_dcy+xafdjyfa10l7ow@mail.gmail.com | 35 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread c68bf5be0a8a-the_myth_of_monoparsing | root cao7bv+hztwiquy0gcta0xvjg2t+qnrt_dcy+xafdjyfa10l7ow@mail.gmail.com | 36 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-02-03T08:42:32Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+hztwiquy0gcta0xvjg2t+qnrt_dcy+xafdjyfa10l7ow@mail.gmail.com | mail/lojban-list/cur/1422952952.c68bf5be0a8a6ad6.jbomohi:2,S
 Since the original post on monoparsing as something unique or defining
@@ -3581,6 +3581,73 @@ grammar and it has nothing to do with semantic analysis.
 > Visit this group at http://groups.google.com/group/lojban.
 > For more options, visit https://groups.google.com/d/optout.
 >
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 36 | 2015-02-12T16:24:47Z | Ilmen <ilmen.pokebip@gmail.com> | 54dcd3cf.1050300@gmail.com | mail/lojban-list/cur/1423758287.f6249754fc2f636c.jbomohi:2,S
+
+On 12/02/2015 16:10, Gleki Arxokuna wrote:
+>
+> 2015-02-12 18:00 GMT+03:00 v4hn <me@v4hn.de <mailto:me@v4hn.de>>:
+>
+>     Everything you proposed in this thread to make lojban "polyparse"
+>     is about semantic analysis, not about parsing.
+>
+>
+> Adding polyparsing to Lojban is possible by removing some parts of its 
+> grammar and it has nothing to do with semantic analysis.
+>
+
+As for the "Fred saw a plane flying over Zurich" sentence, it's 
+certainly possible to have a monoparse if we allow more than two 
+branches per node, like the below:
+
+sentence ← noun-clause finite-verb noun-clause verb-ing preposition 
+noun-clause
+(Here the node "sentence" has six branches.)
+
+But I guess that a true (and useful) parse analysis should not allow 
+more than two branches per node, so that for each word we know what 
+other word it attaches to. As the -ing verb-form can either represent an 
+adjectival present-participle (which attaches to a noun on its left) or 
+an adjectival present-participle (which attaches to the verb, I think), 
+it's not possible to produce a single **binary** parse tree.
+
+Here's a sketchy binary+unary branching grammar:
+
+sentence ← noun-phrase verb-clause
+verb-clause ← verb-clause-2 adverbial-phrase
+verb-clause-2 ← verb-phrase noun-phrase
+verb-phrase ← verb-past
+adverbial-phrase ← verb-ing preposition-clause
+noun-phrase ← name | article noun | noun-phrase 
+adjectival-present-participle-clause
+adjectival-present-participle-clause ← 
+adjectival-present-participle-clause preposition-clause| verb-ing
+preposition-clause ← preposition noun-phrase
+...
+
+If I made no mistake, the above grammar can parse the Zurich sentence as
+• (Fred [{saw <a plane>} {flying <over Zurich>}])  -- adverbial present 
+participle interpretation
+or as
+• (Fred [saw {<a plane> <flying (over Zurich)>}])  -- adjectival present 
+participle interpretation
+
+So I guess that the relevant concept here is "binary parsing", that is, 
+grouping the words so that each node contains no more than two child 
+nodes at once.
+
+Just my two cents.
+
+mi'e la .ilmen. mu'o
+
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
