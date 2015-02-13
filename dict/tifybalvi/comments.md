@@ -20,3 +20,18 @@ http://corpus.lojban.org/corpus/search/ca%20ti
 .i je za'a .u'i (to mi gugylsisku toi) la .lojbab. ku ji'a pu zu pilno lu
 ca ti li'u 
 
+
+## 2015-02-13T17:28:13Z — gleki (comment 1683, in reply to 1682)
+
+Re: xu ti ka'e fasnu
+
+selpahi wrote:
+> http://corpus.lojban.org/corpus/search/ca%20ti
+> 
+> .i je za'a .u'i (to mi gugylsisku toi) la .lojbab. ku ji'a pu zu pilno
+lu
+> ca ti li'u 
+
+
+la lojbab cu loglo i zo'oi ti poi loglo pu curmi lo fasnu
+
