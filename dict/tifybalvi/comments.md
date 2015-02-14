@@ -46,3 +46,18 @@ selpahi wrote:
 
 {ti}:{ca}::{nau'u}:{nau} ?
 
+
+## 2015-02-14T11:50:20Z — selpahi (comment 1685, in reply to 1684)
+
+Re: xu ti ka'e fasnu
+
+gleki wrote:
+> selpahi wrote:
+> > pe'i go'i .i lu ti nu lo gerku cu bajra li'u smudra pe'i 
+> 
+> 
+> {ti}:{ca}::{nau'u}:{nau} ?
+
+ie nai ru'e .i zo ti simsa je'u zo nau'u je zo dei .i lu ca ti li'u dunli
+ja jibni zo nau
+
