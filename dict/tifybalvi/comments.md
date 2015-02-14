@@ -35,3 +35,14 @@ lu
 
 la lojbab cu loglo i zo'oi ti poi loglo pu curmi lo fasnu
 
+
+## 2015-02-14T11:37:33Z — gleki (comment 1684, in reply to 1681)
+
+Re: xu ti ka'e fasnu
+
+selpahi wrote:
+> pe'i go'i .i lu ti nu lo gerku cu bajra li'u smudra pe'i 
+
+
+{ti}:{ca}::{nau'u}:{nau} ?
+
