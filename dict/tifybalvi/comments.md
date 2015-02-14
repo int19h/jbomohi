@@ -61,3 +61,24 @@ gleki wrote:
 ie nai ru'e .i zo ti simsa je'u zo nau'u je zo dei .i lu ca ti li'u dunli
 ja jibni zo nau
 
+
+## 2015-02-14T14:19:13Z — gleki (comment 1686, in reply to 1685)
+
+Re: xu ti ka'e fasnu
+
+selpahi wrote:
+> gleki wrote:
+> > selpahi wrote:
+> > > pe'i go'i .i lu ti nu lo gerku cu bajra li'u smudra pe'i 
+> > 
+> > 
+> > {ti}:{ca}::{nau'u}:{nau} ?
+> 
+> ie nai ru'e .i zo ti simsa je'u zo nau'u je zo dei .i lu ca ti li'u
+dunli
+> ja jibni zo nau
+
+xm i ja'o zo ti jai banzu ije zo nau'u na jai sarcu
+
+i ki'u ma uanai so'i lo jbopre pu djica tu'a lo valsi be zo nau'u
+
