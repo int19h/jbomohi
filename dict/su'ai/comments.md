@@ -588,3 +588,38 @@ never be reached again.
 
 So {su'ai} is rather similar to "zil-" but not {zi'o}.
 
+
+## 2015-02-16T16:42:35Z — gleki (comment 1687, in reply to 1558)
+
+Re: Interaction with Modals and Connectives
+
+gleki wrote:
+> durka42 wrote:
+> > > Hmm so {su'ai} modifies the behavior of the following connective so
+> that
+> > > it no longer connects things but just attaches to the sumti before
+it.
+> > But
+> > > if {su'ai} has that power it can't be in SE, since the grammar will
+> > treat
+> > > "su'ai jo" the same way as "se ju".
+> > 
+> 
+> SE changes selbri and that's what is needed here: a new selbri with a
+new
+> place structure appears.
+> 
+> If it can't be in SE then okay. Neither it put syntactically a zi'o into
+> x2 since zi'o can be reached with {fe} but in "su'ai broda" former x2
+can
+> never be reached again.
+> 
+> So {su'ai} is rather similar to "zil-" but not {zi'o}.
+
+xorxes	thinks that it's okay to be in SE since e.g. {zo'e} and {zi'o} are
+both in SE. Not even a subselmaho since zi'o and zo'e are both in koha7.
+
+Thus somewhere in subsubselmaho.
+
+And of course in {su'ai} {jo} the word {su'ai} modifies {jo}.
+
