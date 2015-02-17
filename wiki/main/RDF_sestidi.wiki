@@ -1,0 +1,58 @@
+This proposal is now in a very rough draft state.
+
+This is a proposal for encoding Lojban texts as a set of RDF triples (possibly quads). The primal intent behind this is to allow precise decomposition of Lojban structures into simple predicates. Other uses could arise in future.
+
+This document presumes on reader working knowledge of following semantic web topics: RDF and Turle. (It is possible what named graphs and notations to represent them, e.g. Notation 3 and/or TriG, will be needed later). It should be noted that this conversion is not yet intended to be sematic web technology, though it is possible in future.
+
+The examples of conversion will be given in two forms: Turtle (in this version) and simplified representation of RDF triples, with prefixes substituded for full URIs.
+
+Example of conversion:
+
+{mi djica lo nu tavla}
+
+n3 syntax:
+@prefix g: <http://www.lojban.org/RDF%20proposal%200.0/gismu> .
+@prefix c: <http://www.lojban.org/RDF%20proposal%200.0/cmavo> .
+@prefix cc: <http://www.lojban.org/RDF%20proposal%200.0/cmavo-ckaji> .
+@prefix x: <http://www.lojban.org/RDF%20proposal%200.0/xulta> .
+
+[                       # main bridi
+  a :bridi ;
+  c:fa c:mi ;
+  c:cu g:djica ;
+  c:fe [                # zo'e of lo
+    a c:zohe ;
+    c:fatne-fa [        # bridi of lo
+      a :bridi ;
+      c:cu [            # abstraction
+        a c:nu ;
+        cc:sucta [      # embedded bridi
+          a :bridi ;
+          c:cu g:tavla
+        ]
+      ]
+    ] 
+  ] ;
+
+  x:cuscu [
+    c:fa <http://example.com/person1> ;
+    c:fi <http://example.com/person3> ;
+    c:fo <http://example.com/group/lojban/post/1>
+  ]
+] .
+
+RDF triples:
+_:b1 rdf:type :bridi .
+_:b1 c:fa c:mi .
+_:b1 c:cu g:djica .
+_:b1 c:fe _:z1 .
+_:z1 rdf:type c:zohe .
+_:z1 c:fatne-fa _:b2 .
+_:b2 rdf:type :bridi .
+_:b2 c:cu _:n1 .
+_:n1 rdf:type c:nu .
+_:n1 cc:sucta _:b3 .
+_:b3 rdf:type :bridi .
+_:b3 c:cu g:tavla .
+
+Next actions: 1. Explain the example step by step. 2. Add scope operators to the example.
