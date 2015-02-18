@@ -6,7 +6,7 @@ This document presumes on reader working knowledge of following semantic web top
 
 The examples of conversion will be given in two forms: Turtle (in this version) and simplified representation of RDF triples, with prefixes substituded for full URIs.
 
-'''Example of conversion:'''
+==Example of conversion==
 
  {mi djica lo nu tavla}
 
@@ -55,7 +55,8 @@ The examples of conversion will be given in two forms: Turtle (in this version) 
  _:x1 :sesumti-fi <http://example.com/person2> .
  _:x1 :sesumti-fo <http://example.com/group/lojban/post/1>
 
-== Bridi ==
+== Converting individual elements ==
+=== Bridi ===
 As lojban selbri have variable varity, bridi based on them are to be splitted into multiple RDF triples. I choose http://www.w3.org/TR/swbp-n-aryRelations/#useCase3 for this, so for
  {mi broda do ma'a da'ai}
 corresponding RDF graph will be:
@@ -64,7 +65,7 @@ corresponding RDF graph will be:
       :sesumti-fe c:do ;
       :sesumti-fi c:maha ;
       :sesumti-fo c:dahai .
-== Gadri ==
+=== Gadri ===
 Gadri constructions are first expanded according to http://mw.lojban.org/papri/BPFK_Section:_gadri#Formal_definitions . For now, {noi} is treated just as introducing additional predicates; difference between {poi} and {noi} should be properly encoded later. Examples:
  # {lo broda}
  _:s1 :sumti-fa [:bridi g:broda] .
@@ -80,7 +81,7 @@ Gadri constructions are first expanded according to http://mw.lojban.org/papri/B
           :sesumt-fa c:cehu ;
           :bridi g:broda ]]] .
 
-== Scope operators ==
+=== Scope operators ===
 Scope operators for now are understood as working on a bridi abstraction:
   #{na ze'e mi tavla}
   _:b3 :bridi c:na ; # = g:jitfa
@@ -90,14 +91,17 @@ Scope operators for now are understood as working on a bridi abstraction:
            :sesumti-fa c:mi ;
            :bridi g:tavla ]] .
 
-== Abstractions ==
+=== Abstractions ===
 Abstractions for now are encoded in form [a c:KA ; cc:sucta BRIDI], KA being the type of abstraction and BRIDI, abstracted proposition.
+
+== Metadata ==
+(TBD)
 
 '''Next actions:'''
 
-#. Explain the example step by step.
-#. How RDF semantics interact with Lojban logic? E.g. it seems that [] is more like {da} than {zo'e}
-#. Possibly use http://www.w3.org/2004/03/trix/swp-1/ for x:cuscu (rename it x:xusra?).
-#. Define resources in lojban (e.g. :bridi is {bridi fi zi'o} and :sesumti-FA is {se sumti be fi FA.bu}).
-#. Named grapsh could be used for abstactions e.g. cc:sucta {[:bridi g:tavla ]}, but are superfluous now. May be they will be needed for when multiple statements will be introduced?
-#. Do RDFSchema (types are commented out in the example above)
+#Explain the example step by step.
+#How RDF semantics interact with Lojban logic? E.g. it seems that [] is more like {da} than {zo'e}
+#Possibly use http://www.w3.org/2004/03/trix/swp-1/ for x:cuscu (rename it x:xusra?).
+#Define resources in lojban (e.g. :bridi is {bridi fi zi'o} and :sesumti-FA is {se sumti be fi FA.bu}).
+#Named grapsh could be used for abstactions e.g. cc:sucta {[:bridi g:tavla ]}, but are superfluous now. May be they will be needed for when multiple statements will be introduced?
+#Do RDFSchema (types are commented out in the example above)
