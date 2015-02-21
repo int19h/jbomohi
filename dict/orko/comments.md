@@ -16,3 +16,21 @@ gleki wrote:
 
 It clashes. Use {orxo} or {gorguni} instead.
 
+
+## 2015-02-21T04:24:03Z — krtisfranks (comment 1689, in reply to 1688)
+
+Re: {orka} clash
+
+phma wrote:
+> gleki wrote:
+> > Clashes with {orka} which was added earlier. Or may be doesnt clash,
+you
+> > decide. Just noticing.
+> 
+> It clashes. Use {orxo} or {gorguni} instead.
+
+It clashes only by gismu creation rules (to my knowledge). I support using
+distinct words and think that there should be some rules in the books that
+regulate such occurrences, but there are none (again, to my knowledge) as
+of now.
+
