@@ -39,3 +39,17 @@ I don't know why you are bringing up any of that.
 But maybe you should read the Lojban definition of {guglsisku}, it uses
 sisku2 as property.
 
+
+## 2015-02-23T11:28:56Z — selpahi (comment 1701, on definition 64988, in reply to 1693)
+
+Re: {gugle}
+
+krtisfranks wrote:
+> Really, this proposal is just a reduced version of {gugle} (at least in
+> spirit) and is consequently less generally useful, especially since it
+is
+> somewhat longer.
+
+You are making a gazillion gismu for everything. Of course a fu'ivla is
+usually longer than a gismu.
+
