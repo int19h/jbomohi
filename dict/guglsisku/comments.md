@@ -6,3 +6,19 @@ Really, this proposal is just a reduced version of {gugle} (at least in
 spirit) and is consequently less generally useful, especially since it is
 somewhat longer.
 
+
+## 2015-02-23T04:20:04Z — krtisfranks (comment 1694, on definition 64988, in reply to 1693)
+
+Re: {gugle}
+
+krtisfranks wrote:
+> Really, this proposal is just a reduced version of {gugle} (at least in
+> spirit) and is consequently less generally useful, especially since it
+is
+> somewhat longer.
+
+Also notice that {sisku} is a search for a property or, somewhat
+loop-hole-ishly, an event or object, but never is it explicitly defined to
+cover a search for information (which might be considered different from
+any subset of the aforementioned items).
+
