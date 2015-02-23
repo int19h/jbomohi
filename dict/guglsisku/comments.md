@@ -22,3 +22,20 @@ loop-hole-ishly, an event or object, but never is it explicitly defined to
 cover a search for information (which might be considered different from
 any subset of the aforementioned items).
 
+
+## 2015-02-23T11:26:45Z — selpahi (comment 1700, on definition 64988, in reply to 1694)
+
+Re: {gugle}
+
+krtisfranks wrote:
+> Also notice that {sisku} is a search for a property or, somewhat
+> loop-hole-ishly, an event or object, but never is it explicitly defined
+to
+> cover a search for information (which might be considered different from
+> any subset of the aforementioned items).
+
+I don't know why you are bringing up any of that. 
+
+But maybe you should read the Lojban definition of {guglsisku}, it uses
+sisku2 as property.
+
