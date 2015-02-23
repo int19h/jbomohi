@@ -119,3 +119,17 @@ cnino
 lo do selsku zo'u ie sai sai .i mi pu cinmo lo mintu ca lo nu tcidu lo
 pinka
 
+
+## 2015-02-23T12:38:32Z — gleki (comment 1703, on definition 65000, in reply to 1702)
+
+Re: A few questions
+
+> selckiku wrote:
+> > .i mi pu za finti .i mi mutce troci gi'e cpedu lo nu pinka kei ro
+jbopli
+> > .i mi na cpedu lo nunpinka do ki'u ku'i lo za'i do na'e djuno .u'u
+cu'i
+> > mu'o 
+
+i simsa lo ka tersu'imei panra zo pilno xu i plixau ka'e
+
