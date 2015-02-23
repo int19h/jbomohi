@@ -4,19 +4,22 @@ Let us think about selbri as function taking its terbri as arguments and returni
   function claim(predication, context) {...} // returns boolean
   claim(tavla("me", "you", "lojban", "lojban"), context);
 
-To build functions returning other things, we can use {lo}. Let us not go into intricacies of descriptors and pretend what {lo selbri} returns simply ''some'' value s1 such that claim(selbri(s1, s2...sx), context) will be true for ''some'' values of s2...sx and ''some'' context.
+To build functions returning other things, we can use {lo}. Let us not go into intricacies of descriptors and pretend what {lo selbri} returns simply ''some'' value s1 such that claim(selbri(s1, s2...sx), context) will be true for ''some'' values of s2...sx and claimed with ''some'' context. Arguments other than context could be restricted with {be...bei...be'o}. So {lo selbri be sumti2 bei sumti3 be'o} is x1 = selbri1(sumti2, sumti3).
 
 {loka}- and {me'ei}-abstractions, then, are predication-returning functions as first-class values. {me'au} with these abstractions is function application; {kai'u} is immediate function application.
 
-We also need function with return types other than predication. {be...bei...be'o} allows for partial application of arguments to selbri, returning another selbri with some of arguments replaced by constants. So {lo selbri be sumti2 bei sumti3 be'o} is x1 = selbri1(sumti2, sumti3).
+We are now ready to construct function taking a function as argument and returning other function. Let's start with ''apply'' (for unary function):
 
-We are now ready to construct function taking a function as argument and returning other function. Let's start with ''apply'':
-
-  lo ka return buboi fun buboi arg buboi ce'ai
-    return buboi me'au fun buboi arg buboi kei goi apli buboi
+  lo ka result buboi fun buboi .arg buboi ce'ai
+    result buboi me'au fun buboi .arg buboi kei goi .apli buboi
 
   function apply(fun, arg) { return fun(arg);}                
 
 Now we can use it as such:
 
-  lo me'au apli buboi be me'ei tavla bei mi be'o
+  lo me'au .apli buboi be me'ei tavla bei mi be'o
+
+Function composition, ''compose'' (for unary functions, still):
+  lo ka result buboi fun buboi fu'un buboi ce'ai
+    result buboi ka resu'ult buboi arg buboi ce'ai
+      resu'ult buboi me'au fu'un buboi lo fun buboi be arg buboi kei kei goi compose buboi
