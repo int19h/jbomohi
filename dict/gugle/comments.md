@@ -29,3 +29,15 @@ the terbri in the current definition with a terbri that lets one specify
 exactly what (type of) information for which one is searching (possibly as
 well as the topic to which it pertains, which is the current x2).
 
+
+## 2015-02-23T07:02:01Z — gleki (comment 1699, on definition 56643, in reply to 1695)
+
+Re: Information terbri?
+
+krtisfranks wrote:
+> The current definition is this: "
+
+The current usage of this gismu in IRC suggests that it just means "x1
+uses Google to search for x2
+ (text)" although x2 can be a non-quote thus raised from a quote.
+
