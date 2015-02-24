@@ -53,3 +53,21 @@ is
 You are making a gazillion gismu for everything. Of course a fu'ivla is
 usually longer than a gismu.
 
+
+## 2015-02-24T00:34:21Z — selckiku (comment 1704, on definition 64988, in reply to 1701)
+
+Re: {gugle}
+
+selpahi wrote:
+> 
+> You are making a gazillion gismu for everything.
+> Of course a fu'ivla is usually longer than a gismu.
+
+
+Yeah what. I guess this explains something about all this malgi'u making.
+It's one thing to be making malgi'u because things "deserve" to be those
+three shapes, but this is actually going a step even further than that,
+actually complaining both that .VCCV is too short and that CVCC/CVCCV is
+too big. Apparently we're actually supposed to be speaking entirely in
+gismu. 
+
