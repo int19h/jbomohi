@@ -12,8 +12,8 @@ Through this draft, {cizra} consctruction {<u>NAME buboi</u>} is used for variab
 == apply ==
 We are now ready to construct functions taking functions as arguments and/or returning other functions. Let's start with ''apply'' (for unary function):
 
-  lo goi la .pliri'a. ge'u ka la .jalge. la fancu la .sumti. ce'ai
-    la .jalge. cu me'au la .fancu. la .sumti. kei
+  lo goi la pliri'a ge'u ka la jalge la fancu la sumti ce'ai
+    la jalge cu me'au la fancu la sumti kei
 
   function apply(fun, arg) {
     return fun(arg); } 
@@ -30,7 +30,7 @@ It could be rewritten in CLL Lojban, but would be (even) less readable:
 == compose ==
 
 Function composition, ''compose'' (for unary functions, still):
-  lo goi la finti ge'u ka la jalge la fancu xipa la fancu xire  ce'ai
+  lo goi la finti ge'u ka la jalge la fancu xipa la fancu xire ce'ai
     la jalge cu ka la jalge xipa la sumti ce'ai
       la jalge xipa cu me'au la fancu xipa lo me'au la fancu xire ku be la sumti kei kei
 
@@ -42,7 +42,7 @@ Function composition, ''compose'' (for unary functions, still):
 
 Infinite recursion (do not try it at home):
 
-  lo goi <u>.inf bu rec buboi</u> ge'u ka me'oi <u>.inf bu rec buboi</u> kei 
+  lo goi la cimnrekursi ge'u ka me'oi la cimnrekursi kei 
 
   function infRec() {
     infRec();
@@ -54,28 +54,29 @@ I am not sure of the last one. Maybe {goi} works only forward in scope. {me'oi k
 
 Confitional (taken from Tsani’s recursive predicate definition, replacing {ckaji} with {du}):
 
-  lo goi <u>.if buboi</u> ge'u ka <u>result buboi</u> <u>condition buboi</u> <u>by boi</u> <u>cy boi</u> ce'ai
-    ge ganai <u>condition buboi</u> gi <u>result buboi</u> du <u>by boi</u>
-       gi ga <u>condition buboi</u> gi <u>result buboi</u> du <u>cy boi</u> kei
+  lo goi la cuxna ge'u ka la jalge la krinu by boi cy ce'ai
+    ge ganai la krinu gi la jalge cu du by
+       gi ga la krinu gi la jalge cu du cy kei
 
 Maybe also la gleki's {ifle} will work:
 
-  lo goi <u>.if buboi</u> ge'u ka <u>result buboi</u> <u>condition buboi</u> <u>by boi</u> <u>cy boi</u> ce'ai
-    <u>condition buboi</u> ifle
-      lo du'u <u>result buboi</u> du <u>by boi</u> kei
-      lo du'u <u>result buboi</u> du <u>cy boi</u> kei
+  lo goi la cuxna ge'u ka la jalge la krinu by boi cy ce'ai
+    la krinu cu ifle
+      lo du'u la jalge cu du by kei
+      lo du'u la jalge cu du cy kei kei
+
 == Recursion (again) ==
 
 Now we are ready to build a simple recursion. {krasi} and {fanmo} are used to get first and last elements of sequence, respectively; I am not very sure if this is appropriate. Now if the style is to be developed in the direction of LISP, then functions working on sequences, like ''head'', ''tail'' and ''cons'' are to be defined.
 
 {ja'ebo goi} is a hack even dirtier than it is usual for these matters; it is used to both a) group the sequence as one sumti to attach relative clause to it and b) to move that clause to the front.
 
-  lo goi <u>len buboi</u> ge'u ka <u>result buboi</u> <u>list buboi</u> <u>.item buboi</u> ce'ai
-    <u>result buboi</u> me'au <u>.if buboi</u> lo du'u <u>.item buboi</u> cu fanmo <u>list buboi</u> kei li pa
-      lo sumji be li pa lo me'au <u>len buboi</u>
-        be <u>list buboi</u> bei lo bavla'i be <u>.item buboi</u> bei <u>list buboi</u> kei
-  je'abo goi <u>sample buboi</u> ge'u by ce'o cy ce'o dy zo'u
-  li ci cu me'au <u>len buboi</u> <u>sample buboi</u> lo krasi be <u>sample buboi</u>
+  lo goi la kancu ge'u ka la jalge la porsi la cabna ce'ai
+    la jalge cu me'au la cuxna lo du'u la cabna cu fanmo la porsi kei li pa
+      lo sumji be li pa lo me'au la kancu ku
+        be la porsi bei lo bavla'i be la cabna bei la porsi kei
+  je'abo goi la mupli ge'u by ce'o cy ce'o dy zo'u
+  li ci cu me'au la kancu la mupli lo krasi be la mupli
 
   // approximately
   function len(list, item) {
@@ -85,7 +86,7 @@ Now we are ready to build a simple recursion. {krasi} and {fanmo} are used to ge
   assert(3 === len(sample, sample[0]));
 
 == curry ==
-For now, let us pretend that we already have function for ''tail'', being {<u>rest buboi</u>}. We'll also use {tersu'imei} for getting function (selbri) arity (we could use {lo se pormei be lo se zilbri be lo ka broda}, or above defined {<u>len buboi</u>} instead of {se pormei}).
+For now, let us pretend that we already have function for ''tail'', being {la selyli'a}. We'll also use {tersu'imei} for getting function (selbri) arity (we could use {lo se pormei be lo se zilbri be lo ka broda}, or above defined {la kancu} instead of {se pormei}).
 
   lo goi <u>karis buboi</u> ge'u ka <u>result buboi</u> <u>fun buboi</u> ce'ai
   (to be done)        
