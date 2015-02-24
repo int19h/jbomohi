@@ -11,15 +11,15 @@ To build functions returning other things, we can use {lo}. Let us not go into i
 == apply ==
 We are now ready to construct functions taking functions as arguments and/or returning other functions. Let's start with ''apply'' (for unary function):
 
-  lo ka result buboi fun buboi .arg buboi ce'ai
-    result buboi me'au fun buboi .arg buboi kei goi .apli buboi
+  lo ka <u>result buboi</u> <u>fun buboi</u> <u>.arg buboi</u> ce'ai
+    <u>result buboi</u> me'au <u>fun buboi</u> <u>.arg buboi</u> kei goi <u>.apli buboi</u>
 
   function apply(fun, arg) {
     return fun(arg); } 
 
 Now we can use it as such:
 
-  lo me'au .apli buboi be me'ei tavla bei mi be'o
+  lo me'au <u>.apli buboi</u> be me'ei tavla bei mi be'o
 
 It could be rewritten in CLL Lojban, but would be (even) less readable:
   cylylypapi'epa jo'au
@@ -29,9 +29,9 @@ It could be rewritten in CLL Lojban, but would be (even) less readable:
 == compose ==
 
 Function composition, ''compose'' (for unary functions, still):
-  lo ka result buboi fun buboi fu'un buboi ce'ai
-    result buboi ka resu'ult buboi .arg buboi ce'ai
-      resu'ult buboi me'au fun buboi lo fu'un buboi be .arg buboi kei kei goi compose buboi
+  lo ka <u>result buboi</u> <u>fun buboi</u> <u>fu'un buboi</u> ce'ai
+    <u>result buboi</u> ka <u>resu'ult buboi</u> <u>.arg buboi</u> ce'ai
+      <u>resu'ult buboi</u> me'au <u>fun buboi</u> lo <u>fu'un buboi</u> be <u>.arg buboi</u> kei kei goi <u>compose buboi</u>
 
   function compose(fun, fuun) {
     return function (arg) {
@@ -41,7 +41,7 @@ Function composition, ''compose'' (for unary functions, still):
 
 Infinite recursion (do not try it at home):
 
-  lo ka me'oi .inf bu rec buboi kei goi .inf bu rec buboi
+  lo ka me'oi <u>.inf bu rec buboi</u> kei goi <u>.inf bu rec buboi</u>
 
   function infRec() {
     infRec();
@@ -53,10 +53,16 @@ I am not sure of the last one. Maybe {goi} works only forward in scope. {me'oi k
 
 Confitional (taken from Tsani’s recursive predicate definition, replacing {ckaji} with {du}):
 
-  lo ka result buboi condition buboi by boi cy boi ce'ai
-    ge ganai condition buboi gi result buboi du dy boi
-       gi ga condition buboi gi result buboi du cy boi kei goi .if buboi
+  lo ka <u>result buboi</u> <u>condition buboi</u> <u>by boi</u> <u>cy boi</u> ce'ai
+    ge ganai <u>condition buboi</u> gi <u>result buboi</u> du <u>by boi</u>
+       gi ga <u>condition buboi</u> gi <u>result buboi</u> du <u>cy boi</u> kei goi <u>.if buboi</u>
 
+Maybe also la gleki's {ifle} will work:
+
+  lo goi <u>.if buboi</u> ge'u ka <u>result buboi</u> <u>condition buboi</u> <u>by boi</u> <u>cy boi</u> ce'ai
+    <u>condition buboi</u> ifle
+      lo du'u <u>result buboi</u> du <u>by boi</u> kei
+      lo du'u <u>result buboi</u> du <u>cy boi</u> kei
 == Recursion (again) ==
 
 Now we are ready to build a simple recursion. {krasi} and {fanmo} are used to get first and last elements of sequence, respectively; I am not very sure if this is appropriate.
