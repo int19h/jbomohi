@@ -100,17 +100,28 @@ For now, let us pretend that we already have function for ''cons'', being {la zb
  function curry(fun) {
    function curry1(fun, args) {
      return function (arg) {
-         var new_args = args;
-         new_args.unshift(arg);
-         if (fun.length == new_args.length) {
-            return fun(new_args)
+         var args1 = args;
+         args1.unshift(arg);
+         if (fun.length == args1.length) {
+            return fun(args1)
          } else {
-            return curry1(fun, new_args);
+            return curry1(fun, args1);
          }
      }
    }
    return curry1(fun, []);
  }
+
+Usage:
+    la fanxu xinu cu me'au la karis. me'u la fancu
+ .i la fanxu xipu cu me'au la fancu xinu me'u li pu
+ .i la fanxu xire cu me'au la fancu xipu me'u li re
+ .i la jalge cu me'au la fanxu xire me'u li ci
+
+ var partialFun0 = curry(fun);
+ var partialFun1 = curriedFun(1);
+ var partialFun2 = curriedFun(2);
+ var result = curriedFun(3);
 
 == buboi ==
 In the first version of this draft, {cizra} consctruction {<u>NAME buboi</u>} was used for variable names. It was a hack, but I knew no better way to assign more-or-less meaningful names to assignable variables. Without {buboi}, I'd be up to my neck in {ko'a}s. Luckily, la menli proposed assigning values with {goi} to cmene. Though {goi} behavior is not fully standardized <ref>http://mw.lojban.org/papri/Lojban_application_issues</ref>, I consisently place name to be assigned after it, and value being assigned before.
