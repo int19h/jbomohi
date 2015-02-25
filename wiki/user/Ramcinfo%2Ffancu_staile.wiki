@@ -85,10 +85,32 @@ Now we are ready to build a simple recursion. {krasi} and {fanmo} are used to ge
   assert(3 === len(sample, sample[0]));
 
 == curry ==
-For now, let us pretend that we already have function for ''tail'', being {la selyli'a}. We'll also use {tersu'imei} for getting function (selbri) arity (we could use {lo se pormei be lo se zilbri be lo ka broda}, or above defined {la kancu} instead of {se pormei}).
+For now, let us pretend that we already have function for ''cons'', being {la zbasu} (x1 is sequence with head x2 and tail sequence x3. We'll also use {tersu'imei} for getting function (selbri) arity (we could use {lo se pormei be lo se zilbri be lo ka broda}, or above defined {la kancu} instead of {se pormei}).
 
-  lo goi <u>karis buboi</u> ge'u ka <u>result buboi</u> <u>fun buboi</u> ce'ai
-  (to be done)        
+ lo goi la karis. ge'u ka la jalge la fancu ce'oi
+   lo goi la karis.xipa ge'u ka la jalge xipa la fancu la terbri ce'oi
+     la jalge xipa ka la jalge xire la sumti ce'oi
+       zo'e goi la terbri xipa ge'u me'au la zbasu me'u la sumti la terbri  zo'u
+       la jalge cu me'au la cuxna me'u
+         lo du'u lo se tersu'imei be la fancu cu dubdu'i lo se pormei be la terbri xipa kei
+         lo poi'i ke'a bridi la fancu la terbri xipa kei
+         lo poi'i ke'a me'au la karis.xipa me'u la terbri xipa kei  kei  kei  zo'u
+   la jalge cu me'au la karis.xipa me'u la fancu lo kutpoi  kei
+
+ function curry(fun) {
+   function curry1(fun, args) {
+     return function (arg) {
+         var new_args = args;
+         new_args.unshift(arg);
+         if (fun.length == new_args.length) {
+            return fun(new_args)
+         } else {
+            return curry1(fun, new_args);
+         }
+     }
+   }
+   return curry1(fun, []);
+ }
 
 == buboi ==
 In the first version of this draft, {cizra} consctruction {<u>NAME buboi</u>} was used for variable names. It was a hack, but I knew no better way to assign more-or-less meaningful names to assignable variables. Without {buboi}, I'd be up to my neck in {ko'a}s. Luckily, la menli proposed assigning values with {goi} to cmene. Though {goi} behavior is not fully standardized <ref>http://mw.lojban.org/papri/Lojban_application_issues</ref>, I consisently place name to be assigned after it, and value being assigned before.
