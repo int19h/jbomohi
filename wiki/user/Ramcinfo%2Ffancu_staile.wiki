@@ -105,13 +105,13 @@ For now, let us pretend that we already have function for ''cons'', being {la zb
  function curry(fun) {
    function curry1(fun, args) {
      return function (arg) {
-         var args1 = args;
-         args1.unshift(arg);
-         if (fun.length == args1.length) {
-            return fun(args1)
-         } else {
-            return curry1(fun, args1);
-         }
+       var args1 = args;
+       args1.unshift(arg);
+       if (fun.length == args1.length) {
+         return fun(args1)
+       } else {
+         return curry1(fun, args1);
+       }
      }
    }
    return curry1(fun, []);
@@ -127,6 +127,33 @@ Usage:
  var curriedFun1 = curriedFun(1);
  var curriedFun2 = curriedFun(2);
  var result = curriedFun(3);
+
+Conditional could be rewritten shorter, but more cryptically (as this style is new):
+ lo goi la karis. ge'u ka
+   la jalge la fancu ce'oi
+   lo goi la karis.xipa ge'u ka
+     la jalge xipa la fancu xipa la terbri ce'oi
+     la jalge xipa cu ka
+       la jalge xire la sumti ce'oi
+       lo goi la terbri xipa ge'u poi'i
+         ke'a me'au la zbasu me'u la sumti la terbri kei zo'u
+       la jalge xire cu me'au lo me'au la cunxa me'u
+         lo du'u lo se tersu'imei be la fancu xipa cu dubdu'i
+           lo se pormei be la terbri xipa kei
+         me'ei bridi la karis.xipa me'u la fancu xipa la terbri xipa kei kei zo'u
+   la jalge cu me'au la karis.xipa me'u la fancu lo kutpoi kei
+
+ //function apply(fun, args) {return fun.apply(this, args); }
+ function curry(fun) {
+   function curry1(fun, args) {
+     return function (arg) {
+       var args1 = args;
+       args1.unshift(arg);
+       return ((fun.length == args1.length) ? apply : curry1)(fun, args1);
+     }
+   }
+   return curry1(fun, []);
+ }
 
 == buboi ==
 In the first version of this draft, {cizra} consctruction {<u>NAME buboi</u>} was used for variable names. It was a hack, but I knew no better way to assign more-or-less meaningful names to assignable variables. Without {buboi}, I'd be up to my neck in {ko'a}s. Luckily, la menli proposed assigning values with {goi} to cmene. Though {goi} behavior is not fully standardized <ref>http://mw.lojban.org/papri/Lojban_application_issues</ref>, I consisently place name to be assigned after it, and value being assigned before.
