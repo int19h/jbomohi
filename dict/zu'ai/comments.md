@@ -24,3 +24,20 @@ nei}:
 "ca'e re do cinba lo nei" - "now you two kiss each other and kiss
 yourselves too!"
 
+
+## 2015-02-27T22:10:29Z — selpahi (comment 1712, in reply to 1707)
+
+Re: krinu
+
+gleki wrote:
+> Here is another solution: {zu'ai} that is KOhA7 and is similar to {lo
+> nei}:
+> 
+> "ca'e re do cinba zu'ai" - "now you two kiss each other!"
+> 
+> "ca'e re do cinba lo nei" - "now you two kiss each other and kiss
+> yourselves too!"
+
+.i ku'i lu re do cinba lo nei li'u smudu'i lu re da poi ke'a me do zo'u da
+cinba da li'u .i ja'o sa'u na cinba lo drata
+
