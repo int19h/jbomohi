@@ -1,0 +1,67 @@
+There are two types of reflexive selbri right now. Lujvo of the first kind are created compositionally whereas lujvo of the second kind are created non-compositionally. Non-self-reflexive selbri are produced with '''simxu''', e.g. '''.i mi joi do simxu lo ka ce'u cinba ce'u''' "You and I kiss each other," which in a lujvo looks like '''mi joi do cinbysi'u''', whereas the self-reflexive counterpart is '''mi cinba mi/vo'a''' which in a lujvo looks like this '''mi sezycinba'''. The full Lojban definition of '''sezycinba''' is '''.i lo ka sezycinba cu ka ko'a ce'ai ko'a cinba lo sevzi be ko'a''' where '''lo sevzi be ko'a''' is taken to reduce into plain '''ko'a'''. This seems pretty hackish to me and is naljvajvo due to the invocation of '''lo sevzi'''.
+
+Making up a selbri to mean "x1 does x2 to itself" isn't as easy as it seems. Well, I'm not telling the whole truth when I say that. It's easy to make up a selbri meaning "x1 does x2 to itself" as long as the x2 is a function with fixed arity. This is probably a high percentage of the cases: '''mi mi tavla''' -> '''.i mi broda lo ka ce'u tavla ce'u''', where broda is that selbri. However, talking about yourself to yourself can't be expressed with that same selbri, due to its restriction on the arity of the function. The arity restriction arises from the naive lojban definition:
+
+ let ko'e = lo ka ce'u broda ce'u
+ .i ka ko'a ko'a me'au ko'e
+   = .i ka ko'a ko'a me'au lo ka ce'u broda ce'u
+   = .i ka ko'a broda ko'a
+
+Very straightforward. Make new selbri for every new '''ko'a''' you throw in. Very poorly extensible system.
+
+This brought me to the very important side-quest of figuring out currying in Lojban. '''be''' as we all know basically curries: '''lo broda be ko'a''' = '''zo'e noi ke'a broda ko'a''' = '''zo'e noi ke'a ckaji lo ka ce'u broda ko'a'''. Also as demonstrated right there, we can use '''ckaji''' (and therefore '''me'au''') to simulate the effect of '''be'''. This led me to produce the following selbri which produces a function with the x1 is filled by a definite parameter. I've called it kamni'oi for now, based on -kam- from '''ka''' and -ni'oi- from -ni'o- from '''cnino'''.
+
+ .i lo ka kamni'oi cu ka ko'a ko'e ko'i ce'ai ko'a ka ko'e me'au ko'i
+ x1 is the function derived from filling the x1 of x3 with x2.
+
+e.g. '''lo ka mi citka ce'u cu kamni'oi mi lo ka ce'u citka ce'u'''
+
+e.g. '''lo du'u mi citka lo plise cu kamni'oi lo plise lo ka mi citka ce'u'''
+
+Then I needed a selbri to get the arity of a function. This is possible by converting bridi3 into a set and they using zilkancu. This selbri could arguably be a lujvo, but I've decided to call it ka'ance'u, from '''zilkancu''' and '''ce'u''':
+
+ .i lo ka ka'ance'u cu ka ko'a ko'e ce'ai ko'a se zilkancu lu'i lo te bridi be ko'e
+ x1 (li) is the arity of function x2.
+
+e.g. '''.i li mu ka'ance'u me'ei klama'''
+
+e.g. '''.i li no ka'ance'u lo du'u mi citka lo plise'''
+
+Finally, these are all the tools required to build the definition of the self-reflexive selbri for arbitrary-arity functions. Call it '''sevzike''' for now.
+
+ .i lo ka sevzike cu ka
+ ko'a ko'e ce'ai
+ ge ganai lo ka'ance'u be ko'e cu zmadu li no (fi dubu)
+    gi sevzike lo kamni'oi be ko'e bei ko'a gi ganai lo ka'ance'u be ko'e cu du li no (fi dubu)
+ gi me'au ko'e
+
+Some examples.
+
+ .i mi sevzike lo ka ce'u lumci ce'u
+   = .i mi mi lumci
+ 
+ .i mi sevzike lo ka ce'u ce'u ce'u tavia
+   = .i mi mi mi tavla
+ 
+ .i mi sevzike lo ka ce'u ce'u ce'u tavla da poi ce'u finti ke'a ca lo nu ce'u citno mutce
+   = .i mi mi mi tavla da poi mi finti ke'a ca lo nu mi citno mutce
+
+An important identity of this function is that when applied to unary functions, it becomes equivalent to plain '''ckaji''' (or '''me'au''').
+
+ mi sevzike lo ka ce'u citka lo plise
+   = mi ckaji lo ka ce'u citka lo plise
+   = .i mi citka lo plise
+
+The function has an interesting quirk due to its definition, namely that if a du'u is supplied in the x2, the x1 becomes completely irrelevant to the relationship.
+
+'''sevzike lo du'u broda''' has the same truth value regardless of the sumti supplied in the x1.
+
+Now for an explanation of the definition. (The definition is recursive, which I think is a first for Lojban definitions. Still, this is a proof of concept of the sheer power that can be achieved with Lojban definitions.)  The function checks the arity of the x2. If it is greater than zero, it curries the x1 into the x2 to yield an intermediate function which it then passes back to itself. If the arity is zero, which will occur when all the ce'u-places have had x1s curried into them, the function simply evaluates the x2.
+
+With this selbri, it is now possible to create compositional self-reflexive lujvo:
+
+ .i mi cinba zei sevzike
+   = .i mi sevzike lo ka ce'u ce'u cinba
+   = .i mi mi cinba
+
+If sevzike were a gismu and had a CVV rafsi, it would be possible to neatly create shorter self-reflexive luvjo.
