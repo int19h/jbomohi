@@ -29,3 +29,16 @@ lo pa moi bangu be ke'a cu glibau mu'a (to va'o lo nu na cifnu sai toi) .i
 ja'e bo lo jbobau na pa moi lo bangu .i ku'i .i'a .e'u denpa .i ba facki
 lo du'u lo jbopilno ba pilno zo jbojbe ma kau
 
+
+## 2015-02-28T04:28:31Z — selckiku (comment 1715, on definition 65150, in reply to 1714)
+
+Re: .ia srana lo nunrirci je nai lo nunrorci
+
+.ue .ua nai .i ma terta'a .i zo jbojbe to'e cnino .i mi jmina mu'i lo nu
+la .ilmen. pu steci cpedu mu'i lo za'i zo jbojbe ze'u mutce cafne se pilno
+.i lo ca'abna rirni be lo ca'abna jbojbe cu ja'a pilno zo jbojbe .i pilno
+ze'u lo nanca be li su'o pa mu ba'u cu'i (to zoi .urli.
+https://groups.yahoo.com/neo/groups/lojban1/conversations/topics/1350
+.urli. toi) .i pilno pu zu pu lo nu lo jbojbe cu zasti .i pe'i bazde'a
+.u'i
+
