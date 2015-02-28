@@ -42,3 +42,31 @@ https://groups.yahoo.com/neo/groups/lojban1/conversations/topics/1350
 .urli. toi) .i pilno pu zu pu lo nu lo jbojbe cu zasti .i pe'i bazde'a
 .u'i
 
+
+## 2015-02-28T11:49:21Z — selpahi (comment 1718, on definition 65150, in reply to 1715)
+
+Re: .ia srana lo nunrirci je nai lo nunrorci
+
+selckiku wrote:
+> .ue .ua nai .i ma terta'a .i zo jbojbe to'e cnino .i mi jmina mu'i lo nu
+> la .ilmen. pu steci cpedu mu'i lo za'i zo jbojbe ze'u mutce cafne se
+pilno
+
+mi djuno lo du'u zo jbojbe to'e cnino
+
+> .i lo ca'abna rirni be lo ca'abna jbojbe cu ja'a pilno zo jbojbe .i
+pilno
+> ze'u lo nanca be li su'o pa mu ba'u cu'i (to zoi .urli.
+> https://groups.yahoo.com/neo/groups/lojban1/conversations/topics/1350
+> .urli. toi) .i pilno pu zu pu lo nu lo jbojbe cu zasti
+
+ma ve djuno lo du'u mintu fa lo pu zu smuni lo ca smuni .i cumki fa lo nu
+lo rirni be ca ti cu na'e steci pilno zo jbojbe .i pu ku no jbojbe je no
+simsa cu zasti .i ja'o no da poi lo nu pilno zo jbojbe lo ka skicu ke'a cu
+cumki pu zasti .i lo ca lojbo verba na la'a ba jbocre verba .i na ba jdice
+va'i .i ja'o ru'e na mintu lo xanri be be lo cusku be lu lo jbojbe ba
+jdice li'u
+
+.i ta'o nai mi na xusra lo du'u sarcu fa lo nu lo ka jbojbe cu ka jbena lo
+jbopre .i ku'i la'a fadni 
+
