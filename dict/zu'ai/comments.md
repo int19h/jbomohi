@@ -63,3 +63,30 @@ da
 
 ua cumki i ma drani se cusku i xu lu do jo'u do li'u
 
+
+## 2015-02-28T11:53:42Z — selpahi (comment 1719, in reply to 1716)
+
+Re: krinu
+
+gleki wrote:
+> selpahi wrote:
+> > gleki wrote:
+> > > Here is another solution: {zu'ai} that is KOhA7 and is similar to
+{lo
+> > > nei}:
+> > > 
+> > > "ca'e re do cinba zu'ai" - "now you two kiss each other!"
+> > > 
+> > > "ca'e re do cinba lo nei" - "now you two kiss each other and kiss
+> > > yourselves too!"
+> > 
+> > .i ku'i lu re do cinba lo nei li'u smudu'i lu re da poi ke'a me do
+zo'u
+> da
+> > cinba da li'u .i ja'o sa'u na cinba lo drata
+> 
+> 
+> ua cumki i ma drani se cusku i xu lu do jo'u do li'u
+
+sa'u vimcu zo re .i do cinba ro nei .i do cinba zu'ai
+
