@@ -254,3 +254,30 @@ bi'o and ce'o can probably be used for describing oscilations.
 
 as for ce'oi i dont know what it means.
 
+
+## 2015-03-02T10:35:05Z — gleki (comment 1721)
+
+zo su'ei ce zo zu'ai ce zo zu'ai
+
+More discussion is in {zu'ai} and {su'ai} threads.
+
+Although I previously said that {zu'ai} is better there is another option:
+to allow saying
+"mi ce do damba abu" = "mi ce do ce abu damba [zo'e???]" = "mi damba do ce
+abu" = "[zo'e???] damba mi ce do ce abu"
+
+When {su'ei} is used damba2 could be assumed not to mean {zo'e} but simply
+ignored when creating the array ["mi","do","abu"].
+
+It's convenient since:
+
+1. You don't have to relearn the place structure of {damba}. It's still
+the same brivla.
+2. "{su'ei} JA" won't require any special changes to parsers since nothing
+is zillified.
+
+The first feature (put elements of an array as you wish) is rather sloppy.
+
+The second feature can potentially it make better than {zu'ai} (although
+who stops you from saying "ko'a JA zu'ai"?)
+
