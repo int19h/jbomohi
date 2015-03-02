@@ -281,3 +281,20 @@ The first feature (put elements of an array as you wish) is rather sloppy.
 The second feature can potentially it make better than {zu'ai} (although
 who stops you from saying "ko'a JA zu'ai"?)
 
+
+## 2015-03-02T16:59:59Z — durka42 (comment 1722, in reply to 1721)
+
+Re: zo su'ei ce zo zu'ai ce zo zu'ai
+
+gleki wrote:
+> More discussion is in {zu'ai} and {su'ai} threads.
+> 
+> Although I previously said that {zu'ai} is better there is another
+option:
+> to allow saying
+> "mi ce do damba abu" = "mi ce do ce abu damba [zo'e???]" = "mi damba do
+ce
+> abu" = "[zo'e???] damba mi ce do ce abu"
+
+Did you mean to include a {su'ei} somewhere in this example?
+
