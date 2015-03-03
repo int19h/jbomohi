@@ -320,3 +320,13 @@ su'ei damba do ce abu" = "[zo'e???] su'ei damba mi ce do ce abu"
 
 we need to use a wiki instead to be able to edit discussions.
 
+
+## 2015-03-03T06:19:48Z — durka42 (comment 1724, in reply to 1723)
+
+Re: zo su'ei ce zo zu'ai ce zo zu'ai
+
+
+> we need to use a wiki instead to be able to edit discussions.
+
+iesai
+
