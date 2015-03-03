@@ -1,0 +1,71 @@
+{{documentation subpage}}
+
+{{TOCright}}
+
+== Usage ==
+
+In its basic version, this template sets the font for its argument to one which is likely to support special symbols. The argument is specified using [[Html_characters#HTML_character_references|HTML character encoding]], either in decimal (e.g. <code>&amp;#123;</code>) or hexadecimal (e.g. <code>&amp;#xA9;</code>), or by pasting it as plain text. Examples:
+
+* {{code|<nowiki>{{unicode|&amp;#x22CA;}}</nowiki>}} → {{unicode|&#x22CA;}}
+* {{code|<nowiki>{{unicode|&amp;#8906;}}</nowiki>}} → {{unicode|&#8906;}}
+* {{code|<nowiki>{{unicode|&#8906;}}</nowiki>}} → {{unicode|&#8906;}}
+or
+* {{code|<nowiki>{{unicode|&amp;#x22C9;}}</nowiki>}} → {{unicode|&#x22C9;}}
+* {{code|<nowiki>{{unicode|&amp;#8905;}}</nowiki>}} → {{unicode|&#8905;}}
+* {{code|<nowiki>{{unicode|&#8905;}}</nowiki>}} → {{unicode|&#8905;}}
+
+== Purpose ==
+
+This template was created to allow easy switching to [[Unicode font]]s. It helps some browsers in which characters which do not render correctly, such as [[Microsoft]] [[Internet Explorer]] on [[Windows XP]].
+
+The fonts selected are designed to maximize the probability of rendering uncommon [[Unicode]] characters correctly. However, different fonts cover different [[Unicode range]]s. It is probably mostly useful for various [[Unicode symbols]]. Do not use it for the following:
+
+* For strings in the [[International Phonetic Alphabet]], use {{tl|IPA}}.
+* For various non-Latin scripts, use {{tl|lang}} if possible, or {{tl|script}} otherwise.
+
+== Internals ==
+
+The source for the template is:
+<source lang="XML">
+<span class="Unicode">{{{1}}}</span>
+</source>
+and <code>class="Unicode"</code> is defined in [[MediaWiki:Common.js]] as follows:
+<source lang="CSS">
+.Unicode {
+    font-family: "Arial Unicode MS", "Lucida Sans Unicode";
+}
+</source>
+Note it is defined ''only'' for Windows XP. It does so by targeting XP in JavaScript.
+
+You can override this with your own <code>Unicode</code> class definition in your [[Help:User_style|personal stylesheet]] (e.g. <code>User:''username''/common.css</code>).
+
+== Template data ==
+{{TemplateDataHeader}}
+<templatedata>
+{
+	"description": "This template is used to set the font so that Unicode symbols are more likely to work.",
+	"params": {
+		"1": {
+			"label": "Symbol",
+			"type": "string",
+			"description": "The code, either in decimal, hexadecimal, or symbol form."
+		}
+	}
+}
+</templatedata>
+
+== See also ==
+
+* {{tl|IPA}} – To format symbols of the International Phonetic Alphabet
+* {{tl|PUA}} – To mark characters from the Private Use Area that should be retained
+* {{tl|transl}} – Generic [[romanization]]
+* {{tl|script}} – Scripts in Unicode navigation box
+* {{tl|UnicodeTitle}}
+* {{tl|unichar}} – to format an [[Unicode]] character description
+
+{{Unicode templates}}
+
+<includeonly>
+[[Category:MSIE font fix templates|{{PAGENAME}}]]
+[[Category:Unicode templates]]
+</includeonly>
