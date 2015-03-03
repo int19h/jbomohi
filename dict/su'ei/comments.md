@@ -330,3 +330,17 @@ Re: zo su'ei ce zo zu'ai ce zo zu'ai
 
 iesai
 
+
+## 2015-03-03T09:47:26Z — gleki (comment 1725, in reply to 1724)
+
+wiki (Re: zo su'ei ce zo zu'ai ce zo zu'ai)
+
+durka42 wrote:
+> 
+> > we need to use a wiki instead to be able to edit discussions.
+> 
+> iesai
+
+looks like a feature request. Not sure how to sync LMW and jbovlaste login
+credentials. Something like LDAP?
+
