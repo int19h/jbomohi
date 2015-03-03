@@ -298,3 +298,25 @@ ce
 
 Did you mean to include a {su'ei} somewhere in this example?
 
+
+## 2015-03-03T06:15:42Z — gleki (comment 1723, in reply to 1722)
+
+Re: zo su'ei ce zo zu'ai ce zo zu'ai
+
+durka42 wrote:
+> gleki wrote:
+> > "mi ce do damba abu" = "mi ce do ce abu damba [zo'e???]" = "mi damba
+do
+> ce
+> > abu" = "[zo'e???] damba mi ce do ce abu"
+> 
+> Did you mean to include a {su'ei} somewhere in this example?
+
+
+o'anaisai yes.
+
+"mi ce do su'ei damba abu" = "mi ce do ce abu su'ei damba [zo'e???]"= "mi
+su'ei damba do ce abu" = "[zo'e???] su'ei damba mi ce do ce abu"
+
+we need to use a wiki instead to be able to edit discussions.
+
