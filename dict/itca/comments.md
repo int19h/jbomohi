@@ -68,3 +68,21 @@ gleki wrote:
 je'u mi no'e birti lo du'u smudra .i xu na ku zo .i'u galfi zo pa .i ja'o
 lo namcu je nai lo prenu cu slabu do
 
+
+## 2015-03-05T12:37:40Z — gleki (comment 1731, in reply to 1730)
+
+Re: gadri xu
+
+selpahi wrote:
+> gleki wrote:
+> > lu
+> > pa i'u va ninmu ba speni mi
+> > li'u
+> > pei
+> 
+> je'u mi no'e birti lo du'u smudra .i xu na ku zo .i'u galfi zo pa .i
+ja'o
+> lo namcu je nai lo prenu cu slabu do
+
+fa i'u pa va ninmu
+
