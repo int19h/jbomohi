@@ -54,3 +54,17 @@ pei
 no'i li'a lo brivla cu jicmu i ku'i si'a zo da se jicmu zo dzadza ije zo
 i'u se jicmu zo slabu
 
+
+## 2015-03-05T12:09:21Z — selpahi (comment 1730, in reply to 1729)
+
+Re: gadri xu
+
+gleki wrote:
+> lu
+> pa i'u va ninmu ba speni mi
+> li'u
+> pei
+
+je'u mi no'e birti lo du'u smudra .i xu na ku zo .i'u galfi zo pa .i ja'o
+lo namcu je nai lo prenu cu slabu do
+
