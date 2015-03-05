@@ -86,3 +86,25 @@ ja'o
 
 fa i'u pa va ninmu
 
+
+## 2015-03-05T14:03:49Z — selpahi (comment 1732, in reply to 1731)
+
+Re: gadri xu
+
+gleki wrote:
+> selpahi wrote:
+> > gleki wrote:
+> > > lu
+> > > pa i'u va ninmu ba speni mi
+> > > li'u
+> > > pei
+> > 
+> > je'u mi no'e birti lo du'u smudra .i xu na ku zo .i'u galfi zo pa .i
+> ja'o
+> > lo namcu je nai lo prenu cu slabu do
+> 
+> fa i'u pa va ninmu
+
+cizra mi .i ji'a lo du'u dubyselju'o na nibli lo du'u slabu .i ta'o ki'u
+ma casnu
+
