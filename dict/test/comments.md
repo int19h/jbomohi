@@ -75,3 +75,10 @@ Re: Unicode test
 ／利口ということを意味し、それに対して「prije」は「
 知恵」の意味が伝わるような感じがありますが…
 
+
+## 2015-03-10T21:15:51Z — Ilmen (comment 1748, in reply to 1747)
+
+Re: Unicode test
+
+頭のいい／さかしい／利口ということを意味し
+
