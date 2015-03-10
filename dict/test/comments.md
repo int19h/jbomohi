@@ -16,3 +16,11 @@ Ilmen wrote:
 があり、その意味は「prije」という意味と違うと感じて
 います。
 
+
+## 2015-03-10T21:10:45Z — Ilmen (comment 1739, in reply to 1738)
+
+Re: Unicode test
+
+それに対して「prije」は「知恵」の意味が伝わるような
+感じがありますが…
+
