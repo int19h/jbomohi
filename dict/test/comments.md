@@ -124,3 +124,10 @@ Re: Unicode test
 
 broda/brode/brodo/brodi/brodu
 
+
+## 2015-03-10T21:26:20Z — Ilmen (comment 1755, in reply to 1754)
+
+Re: Unicode test
+
+インテリジェント／利口ということを意味し
+
