@@ -67,3 +67,11 @@ Re: Unicode test
 
 頭のいい／さかしい／利口
 
+
+## 2015-03-10T21:15:16Z — Ilmen (comment 1747, in reply to 1746)
+
+Re: Unicode test
+
+／利口ということを意味し、それに対して「prije」は「
+知恵」の意味が伝わるような感じがありますが…
+
