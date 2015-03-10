@@ -46,3 +46,10 @@ Re: Unicode test
 
 「mencre」とは intelligent
 
+
+## 2015-03-10T21:12:27Z — Ilmen (comment 1743, in reply to 1742)
+
+Re: Unicode test
+
+「mencre」とは intelligent ／インテリジェント
+
