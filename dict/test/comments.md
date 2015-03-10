@@ -39,3 +39,10 @@ Re: Unicode test
 intelligent
 ／インテリジェント／頭のいい／さかしい／利口
 
+
+## 2015-03-10T21:12:09Z — Ilmen (comment 1742, in reply to 1741)
+
+Re: Unicode test
+
+「mencre」とは intelligent
+
