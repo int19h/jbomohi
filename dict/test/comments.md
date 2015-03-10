@@ -53,3 +53,10 @@ Re: Unicode test
 
 「mencre」とは intelligent ／インテリジェント
 
+
+## 2015-03-10T21:14:11Z — Ilmen (comment 1745, in reply to 1743)
+
+Re: Unicode test
+
+利口ということを意味します。
+
