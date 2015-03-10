@@ -24,3 +24,10 @@ Re: Unicode test
 それに対して「prije」は「知恵」の意味が伝わるような
 感じがありますが…
 
+
+## 2015-03-10T21:11:21Z — Ilmen (comment 1740, in reply to 1739)
+
+Re: Unicode test
+
+X／Y
+
