@@ -192,3 +192,17 @@ ThisisatestmessagewithanintentionallylonglineAtwhichcharacterwillitgetauÉ
 maticallywordwrapped?ThisisatestmessagewithanintentionallylonglineAtwhichc
 haracterwillitgetautomaticallywordwrapped?
 
+
+## 2015-03-12T20:26:45Z — durka42 (comment 1765, in reply to 1764)
+
+Re: Unicode test
+
+zozeizeizeizeifaho wrote:
+>
+ThisisatestmessagewithanintentionallylonglineAtwhichcharacterwillitgetauÉ
+>
+maticallywordwrapped?ThisisatestmessagewithanintentionallylonglineAtwhichc
+> haracterwillitgetautomaticallywordwrapped?
+
+75! See: http://github.com/lojban/jbovlaste/issues/160
+
