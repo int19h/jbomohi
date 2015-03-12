@@ -152,3 +152,13 @@ Re: Unicode test
 
 ジェント／頭のいい／さかしい／利口ということを意
 
+
+## 2015-03-12T03:59:13Z — durka42 (comment 1761, in reply to 1758)
+
+Re: Unicode test
+
+This is a test message with an intentionally long line. At which character
+will it get automatically word-wrapped?
+
+This line is short.
+
