@@ -183,3 +183,12 @@ ThisisatestmessagewithanintentionallylonglineAtwhichcharacterwillitgetauto
 maticallywordwrapped?ThisisatestmessagewithanintentionallylonglineAtwhichc
 > haracterwillitgetautomaticallywordwrapped?
 
+
+## 2015-03-12T07:05:30Z — zozeizeizeizeifaho (comment 1764, in reply to 1763)
+
+Re: Unicode test
+
+ThisisatestmessagewithanintentionallylonglineAtwhichcharacterwillitgetauÉ
+maticallywordwrapped?ThisisatestmessagewithanintentionallylonglineAtwhichc
+haracterwillitgetautomaticallywordwrapped?
+
