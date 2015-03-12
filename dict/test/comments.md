@@ -162,3 +162,12 @@ will it get automatically word-wrapped?
 
 This line is short.
 
+
+## 2015-03-12T07:03:45Z — zozeizeizeizeifaho (comment 1762, in reply to 1761)
+
+Re: Unicode test
+
+ThisisatestmessagewithanintentionallylonglineAtwhichcharacterwillitgetauto
+maticallywordwrapped?ThisisatestmessagewithanintentionallylonglineAtwhichc
+haracterwillitgetautomaticallywordwrapped?
+
