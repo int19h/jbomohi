@@ -35,3 +35,42 @@ xrotu is what the emotions and intentions are about, what they're based
 upon. To merely intend that encounter is different from and less 
 fundamental than truly mutually experiencing it. 
 
+
+## 2015-03-20T07:05:54Z — gleki (comment 1778, on definition 65733, in reply to 1777)
+
+Re: Why the symmetry?
+
+selckiku wrote:
+> krtisfranks wrote:
+> > I think that one can be affectionate with something that 
+> > does not reciprocate. 
+> 
+> 
+> Ta'o, this adversarial format isn't actually appropriate for sensitive 
+> subjects. It would generally be considered appropriate in such a small 
+> group situation to say something kind before criticizing someone else's 
+> work in such a manner and I think we'd do well to adopt such a custom 
+here 
+> as well. 
+> 
+> Ta'onai, it's possible to feel that you are being xrotu with something or
+
+> someone who doesn't actually experience being xrocni, but it's a 
+> misperception. For instance to do something that's actually harmful to 
+> someone isn't to be in xrotu with them simply because you feel that you 
+> intended to be. 
+> 
+> This is important to me because what I'm centrally discussing is real 
+> encounter, real moments of relationship. The related emotions and 
+> intentions are secondary to the actual mutual symmetrical (or rather, 
+more 
+> deeply, identity-dissolving) encounter. The actual successful encounter 
+of 
+> xrotu is what the emotions and intentions are about, what they're based 
+> upon. To merely intend that encounter is different from and less 
+> fundamental than truly mutually experiencing it. 
+
+
+Then maybe one place {xrotu} could be better with xrotu1 as a te sumti of 
+plural type.
+
