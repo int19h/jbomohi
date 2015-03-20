@@ -74,3 +74,27 @@ of
 Then maybe one place {xrotu} could be better with xrotu1 as a te sumti of 
 plural type.
 
+
+## 2015-03-20T17:59:00Z — selckiku (comment 1779, on definition 65733, in reply to 1778)
+
+Re: Why the symmetry?
+
+gleki wrote:
+> 
+> Then maybe one place {xrotu} could be better with
+> xrotu1 as a te sumti of plural type.
+
+
+I agree actually in theory. The problem is that it's much more important to
+have it parallel the shape of {gletu} so they can be smoothly contrasted. 
+If in practice it were possible to harmonize them by having {gletu} change 
+to one plural place for its structure then that might be the way to go, but
+alas both estalbished usage and natlang misintuitions weigh against that 
+change. 
+
+It's also not clear yet how exactly these structures relate to events of 
+{gletu} or {xrotu} with more than two participants. It could be that 
+additional participants can get additional places and they're actually 
+infinite arity. I guess that's what I'd prefer, but again that requires 
+some change to our established intuitions. 
+
