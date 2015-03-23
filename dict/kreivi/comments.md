@@ -22,3 +22,16 @@ Re: examples
 No idea how hyperlinks work here but notice that JVS split some links into 
 two strings (O_0)
 
+
+## 2015-03-23T20:26:19Z — Ilmen (comment 1783, in reply to 1782)
+
+Re: examples
+
+gleki wrote:
+> No idea how hyperlinks work here but notice that JVS split some links 
+into 
+> two strings (O_0)
+
+There's a limit of 75 characters per line. Your second link is 76 
+characters long, it's why the final "g" ended up on the next line.
+
