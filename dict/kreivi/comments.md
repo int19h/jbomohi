@@ -45,3 +45,20 @@ sits.jpg}
 
 test
 
+
+## 2015-03-24T07:16:50Z — gleki (comment 1785, in reply to 1784)
+
+Re: examples
+
+gleki wrote:
+> 
+{http://www.aplacetolovedogs.com/wp-content/uploads/2015/01/the-way-my-dog-
+> sits.jpg}
+> 
+>  
+href="http://www.aplacetolovedogs.com/wp-content/uploads/2015/01/the-way-my
+> -dog-sits.jpg">test
+
+
+How do I add hyperlinks here?
+
