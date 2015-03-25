@@ -1,0 +1,60 @@
+# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2015-03-25T09:35:53Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | mail/bpfk/cur/1427276153.ff951652c6070b5e.jbomohi:2,S
+The following problems were addressed while analyzing ilmentufa parser
+based on camxes.js by Masato Hagiwara based on the original camxes:
+
+1. {ca ma} parses as "fragment"
+2. {mi zo'u ca ma} doesn't parse.
+3. {mi djica lo nu lo plise} doesn't parse.
+4. {mi ije ma} doesn't parse
+5. {mi poi ca ma vau mo} doesn't parse.
+
+So I made 2. parse as a "fragment" and made {lo plise} in 3. parse as a
+"fragment".
+Besides I added in fragment elidible GOhA_elidible which returns a node
+labelled "COhE":
+4. and 5. are now sentences falling back to fragments with COhE
+autorestored.
+
+([mi zo'u] [ca ma] COhE VAU)
+
+(mi [CU {djica <lo (¹nu [{lo plise KU} COhE VAU] KEI¹) KU> VAU}])
+
+([CU {mo VAU}] [i je {ma COhE VAU}]
+
+([mi COhE VAU] [i je {ma COhE VAU}])
+
+Notice that this grammar is somewhat experimental, e.g. it treats {cu} as
+bridi tail starter.
+
+Justification:
+2. why not being able to parse it? Why force people to use {co'e} as the
+selbri while we are allowed to omit {zo'e}?
+3. {tu'a} in most cases can be replaced with {lonu} now without adding more
+syllables but without learning tricky additional words like {tu'a}.
+
+You can test raw output here:
+http://vrici.lojban.org/~gleki/mediawiki-1.19.2/extensions/ilmentufa/camxes-exp.html
+
+The exact changes implementing this are here:
+https://github.com/Ilmen-vodhr/ilmentufa/compare/05a7193368eaeb9198f77533ae6f4ab3391fa4ad...8d5d4c3fea2201eba868eb9aa678b46a3dbfaae5
+
+(ignore javascript litter in strings, it's unavoidable)
+
+As you can see "fragment" now restores COhE in certain cases, "sentence"
+falls back to this renewed "fragment".
+
+Objections?
+
+E.g. I suppose COhE_elidible should be inserted to more constructs. but I
+haven't looked at where it can be done. What else apart from what has been
+done can be autocorrected to bridi status?
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
