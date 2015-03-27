@@ -1,4 +1,4 @@
-# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 5 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-03-25T09:35:53Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | mail/bpfk/cur/1427276153.ff951652c6070b5e.jbomohi:2,S
 The following problems were addressed while analyzing ilmentufa parser
@@ -189,6 +189,98 @@ At some point there was talk of making the selbri of a sumti-tail elidable
 as well, so that "lo ku" would be a valid sumti.
 
 mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 5 | 2015-03-27T08:00:04Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+gwqsz-eb38rgsxkgwau+flq+deyogwvkxxw5bv4evshw@mail.gmail.com | mail/bpfk/cur/1427443204.ab5058f2366ba609.jbomohi:2,S
+2015-03-27 3:02 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
+
+>
+>
+> On Thu, Mar 26, 2015 at 4:30 AM, Gleki Arxokuna <
+> gleki.is.my.name@gmail.com> wrote:
+>>
+>> 2015-03-26 1:04 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
+>>>
+>>> On Wed, Mar 25, 2015 at 6:35 AM, Gleki Arxokuna <
+>>> gleki.is.my.name@gmail.com> wrote:
+>>>>
+>>>>
+>>>> E.g. I suppose COhE_elidible should be inserted to more constructs. but
+>>>> I haven't looked at where it can be done. What else apart from what has
+>>>> been done can be autocorrected to bridi status?
+>>>>
+>>>
+>>> Every fragment can. For example instead of fragment "ek" you could have
+>>> "KOhA_elidable ek KOhA_elidable COhE.elidable", where KOhA_elidable could
+>>> return "ZOhE".
+>>>
+>>
+>> Not sure I would use that. How would this work for joik? {joi} fragment
+>> could be understood both as {zo'e joi zo'e co'e} and as {co'e joi co'e}
+>>
+>
+> "joi" can't be a fragment though. The reason is that it would clash with
+> the sentence connective ".i joi". Fragment is a weird rule, I would happily
+> remove relative clauses, links and linkargs from it. I don't think fragment
+> "na" is used much either.
+>
+
+What methods do you use or want to make the development process happen
+faster?
+A web tool that would allow to insert a complete PEG file, compile it and
+test it online?
+
+
+
+>
+
+>
+>> Okay, then I'll add
+>> fragment = COhE_fragment / ek free* / gihek free* / quantifier /
+>> (NA_clause !JA_clause free*)+ / relative_clauses / links / linkargs
+>>
+>> COhE_fragment = prenex (terms GOhA_elidible VAU_elidible free*)* / terms
+>> GOhA_elidible VAU_elidible free*
+>>
+>> sentence = terms? bridi_tail_t1 (joik_jek bridi_tail / joik_jek stag?
+>> KE_clause free* bridi_tail KEhE_elidible free*)* / COhE_fragment
+>>
+>> Thus only COhE_fragment can be a sentence, and the structure of
+>> COhE_fragment is limited only to {mi zo'u ca ma}, {mi ije ma} and {mi djica
+>> lo nu lo plise}.
+>>
+>
+> I wonder whether it wouldn't be more elegant to eliminate COhE_fragment
+> and make the "selbri" of a bridi-tail elidable instead. Something like:
+>
+>  bridi-tail-3 <- selbri? tail-terms / gek-sentence
+>
+
+Hard for me to determine what is the cause but this breaks {mi zo'u mi mo}.
+
+
+
+> At some point there was talk of making the selbri of a sumti-tail elidable
+> as well, so that "lo ku" would be a valid sumti.
+>
+> mu'o mi'e xorxes
+>
+>  --
+> You received this message because you are subscribed to the Google Groups
+> "BPFK" group.
+> To unsubscribe from this group and stop receiving emails from it, send an
+> email to bpfk-list+unsubscribe@googlegroups.com.
+> To post to this group, send email to bpfk-list@googlegroups.com.
+> Visit this group at http://groups.google.com/group/bpfk-list.
+> For more options, visit https://groups.google.com/d/optout.
+>
 
 -- 
 You received this message because you are subscribed to the Google Groups "BPFK" group.
