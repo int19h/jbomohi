@@ -1,4 +1,4 @@
-# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 6 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 7 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-03-25T09:35:53Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | mail/bpfk/cur/1427276153.ff951652c6070b5e.jbomohi:2,S
 The following problems were addressed while analyzing ilmentufa parser
@@ -290,7 +290,180 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 6 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
+=== 6 | 2015-03-27T13:34:35Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+gpzu7qcy6bskqm_hxgeqqsbsjytdarmend8mfh3d4tjq@mail.gmail.com | mail/bpfk/cur/1427463275.26722d97c215236d.jbomohi:2,S
+2015-03-27 11:00 GMT+03:00 Gleki Arxokuna <gleki.is.my.name@gmail.com>:
+
+>
+>
+> 2015-03-27 3:02 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
+>
+>>
+>>
+>> On Thu, Mar 26, 2015 at 4:30 AM, Gleki Arxokuna <
+>> gleki.is.my.name@gmail.com> wrote:
+>>>
+>>> 2015-03-26 1:04 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
+>>>>
+>>>> On Wed, Mar 25, 2015 at 6:35 AM, Gleki Arxokuna <
+>>>> gleki.is.my.name@gmail.com> wrote:
+>>>>>
+>>>>>
+>>>>> E.g. I suppose COhE_elidible should be inserted to more constructs.
+>>>>> but I haven't looked at where it can be done. What else apart from what has
+>>>>> been done can be autocorrected to bridi status?
+>>>>>
+>>>>
+>>>> Every fragment can. For example instead of fragment "ek" you could have
+>>>> "KOhA_elidable ek KOhA_elidable COhE.elidable", where KOhA_elidable could
+>>>> return "ZOhE".
+>>>>
+>>>
+>>> Not sure I would use that. How would this work for joik? {joi} fragment
+>>> could be understood both as {zo'e joi zo'e co'e} and as {co'e joi co'e}
+>>>
+>>
+>> "joi" can't be a fragment though. The reason is that it would clash with
+>> the sentence connective ".i joi". Fragment is a weird rule, I would happily
+>> remove relative clauses, links and linkargs from it. I don't think fragment
+>> "na" is used much either.
+>>
+>
+> What methods do you use or want to make the development process happen
+> faster?
+> A web tool that would allow to insert a complete PEG file, compile it and
+> test it online?
+>
+>
+>
+>>
+>
+>>
+>>> Okay, then I'll add
+>>> fragment = COhE_fragment / ek free* / gihek free* / quantifier /
+>>> (NA_clause !JA_clause free*)+ / relative_clauses / links / linkargs
+>>>
+>>> COhE_fragment = prenex (terms GOhA_elidible VAU_elidible free*)* / terms
+>>> GOhA_elidible VAU_elidible free*
+>>>
+>>> sentence = terms? bridi_tail_t1 (joik_jek bridi_tail / joik_jek stag?
+>>> KE_clause free* bridi_tail KEhE_elidible free*)* / COhE_fragment
+>>>
+>>> Thus only COhE_fragment can be a sentence, and the structure of
+>>> COhE_fragment is limited only to {mi zo'u ca ma}, {mi ije ma} and {mi djica
+>>> lo nu lo plise}.
+>>>
+>>
+>> I wonder whether it wouldn't be more elegant to eliminate COhE_fragment
+>> and make the "selbri" of a bridi-tail elidable instead. Something like:
+>>
+>>  bridi-tail-3 <- selbri? tail-terms / gek-sentence
+>>
+>
+> Hard for me to determine what is the cause but this breaks {mi zo'u mi mo}.
+>
+
+Probably because it thinks that prenex is a selbri.
+
+1. Anyway, I made all those test sentences work by using this:
+
+sentence = expr:(terms? bridi_tail_t1 (joik_jek bridi_tail / joik_jek stag?
+KE_clause free* bridi_tail KEhE_elidible free*)** / terms GOhA_elidible
+!ZOhU_clause*) {return _node("sentence", expr);}
+
+This tries restoring {co'e} if zo'u doesn't follow however a sentence mus
+have either a tail or a term to be restored otherwise it is never restored
+
+What are the minimal requirements to restore a bridi if not from terms or
+from bridi_tail ? Probably it can be restored from isolated {i} or {ni'o}
+but since this already works, then other types of restoration should be
+discussed separately since they don't touch anything here.
+
+
+2. We could also add this if "fragment" is removed from the grammar:
+
+tanru_unit_1 = tanru_unit_2 linkargs? / linkargs? tanru_unit_2 */
+GOhA_elidible linkargs*
+
+This makes {i be mi} parse as (i [CU {COhE <be mi BEhO>} VAU])
+
+However, selpa'i's examples don't work here.
+
+Should {noi mo} a). be restored into {noi mo cu co'e} implying {fa xi xo'e
+zo'e noi mo cu co'e} or b). should it instead be considered a continuation
+of the previous clause said by another speaker like with selpa'i's example
+with {be ma}?
+
+Both solutions seem reasonable. Maybe take option b). and treat a discourse
+split between several people as one sentence with special FUhE .. FUhO
+markers?
+
+mi viska lo pendo FUhE [B asks] be ma [FUhO]
+mi viska lo pendo FUhE [B asks] noi mo [FUhO]
+
+A: - I see a friend.
+B: - Of whom?
+
+A: - I see a friend.
+B: - Who does what?
+
+This would reformulate fragments as parts of discourse so that we can
+remove them from the grammar. Of course, this would require somehow
+preparing existing texts by marking them with those FUhE ... FUhO so that
+we can parse them.
+
+I also allowed relative clauses in sumti without their heads. If fragments
+are removed from the grammar then similar things can be useful:
+
+sumti_4 = expr:(sumti_5 / *relative_clauses / *gek sumti gik sumti_4)
+{return _node("sumti_4", expr);}
+
+This results in {fa noi pendo mi cu melbi} (in fact it may even make {be}
+useless except when used stylistically).
+
+
+
+
+>
+>> At some point there was talk of making the selbri of a sumti-tail
+>> elidable as well, so that "lo ku" would be a valid sumti.
+>>
+>
+I almost never use {ku} in this sense (LE-terminator). Besides, some people
+think that {cu} should mark the beginning of a bridi tail. In this case I
+don't understand how to treat {lo cu broda}. Should it be {lo COhE KU cu
+broda} or {lo cu broda KU CU COhE} ?
+
+
+P.S. This discussion becomes bulky since parts of the grammar are
+interconnected with a huge domino effect. Idk, maybe this is great goal (a
+system with tightly interconnected parts).
+PP.SS. This bulkiness can clearly show why Elephant will never work - no
+individual issues, there is only one huge issue, called "PEG Lojban".
+
+
+>> mu'o mi'e xorxes
+>>
+>>  --
+>> You received this message because you are subscribed to the Google Groups
+>> "BPFK" group.
+>> To unsubscribe from this group and stop receiving emails from it, send an
+>> email to bpfk-list+unsubscribe@googlegroups.com.
+>> To post to this group, send email to bpfk-list@googlegroups.com.
+>> Visit this group at http://groups.google.com/group/bpfk-list.
+>> For more options, visit https://groups.google.com/d/optout.
+>>
+>
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 7 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
 la .xorxes. cu cusku di'e
 > "joi" can't be a fragment though. The reason is that it would clash with
 > the sentence connective ".i joi". Fragment is a weird rule, I would
