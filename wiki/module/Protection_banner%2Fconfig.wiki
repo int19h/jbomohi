@@ -599,16 +599,18 @@ imageLinks = {
 },
 
 --------------------------------------------------------------------------------
--- Padlock positions
+-- Padlock indicator names
 --------------------------------------------------------------------------------
 
--- This table provides the data for the "right" CSS property for small padlock
--- icons, which determines where the icon appears on the top bar among the other
--- top icons. The data is stored by protection action. If no value is found for
--- the action, the default field is used.
-padlockPositions = {
-	autoreview = '85px',
-	default = '55px'
+-- This table provides the "name" attribute for the <indicator> extension tag
+-- with which small padlock icons are generated. All indicator tags on a page
+-- are displayed in alphabetical order based on this attribute, and with
+-- indicator tags with duplicate names, the last tag on the page wins.
+-- The attribute is chosen based on the protection action; table keys must be a
+-- protection action name or the string "default".
+padlockIndicatorNames = {
+	autoreview = 'pp-autoreview',
+	default = 'pp-default'
 },
 
 --------------------------------------------------------------------------------
@@ -815,8 +817,7 @@ hierarchy = {
 	reviewer = {'sysop'},
 	filemover = {'sysop'},
 	templateeditor = {'sysop'},
-	accountcreator = {'templateeditor'},
-	autoconfirmed = {'reviewer', 'filemover', 'accountcreator'},
+	autoconfirmed = {'reviewer', 'filemover', 'templateeditor'},
 	user = {'autoconfirmed'},
 	['*'] = {'user'}
 },
