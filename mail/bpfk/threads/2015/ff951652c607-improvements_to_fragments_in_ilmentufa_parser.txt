@@ -1,4 +1,4 @@
-# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 7 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 8 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-03-25T09:35:53Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | mail/bpfk/cur/1427276153.ff951652c6070b5e.jbomohi:2,S
 The following problems were addressed while analyzing ilmentufa parser
@@ -463,7 +463,152 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 7 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
+=== 7 | 2015-03-27T22:21:17Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2ej8km4bmngm4fbdwz7t9sjshdfzhto4d_nwkiebiyyza@mail.gmail.com | mail/bpfk/cur/1427494877.3409f794028ecb52.jbomohi:2,S
+On Fri, Mar 27, 2015 at 10:34 AM, Gleki Arxokuna <gleki.is.my.name@gmail.com
+> wrote:
+>
+> 2015-03-27 11:00 GMT+03:00 Gleki Arxokuna <gleki.is.my.name@gmail.com>:
+>
+
+
+> What methods do you use or want to make the development process happen
+>> faster?
+>> A web tool that would allow to insert a complete PEG file, compile it and
+>> test it online?
+>>
+>
+I used this one when debugging the morphology recently:
+http://pegjs.org/online
+
+A presentation of the grammar without the javascript would make it much
+more readable for me.
+
+Also, a grammar without SA is much more readable than one with SA. I find
+the SA-rules extremely annoying.
+
+ bridi-tail-3 <- selbri? tail-terms / gek-sentence
+>>>
+>>
+>> Hard for me to determine what is the cause but this breaks {mi zo'u mi
+>> mo}.
+>>
+>
+> Probably because it thinks that prenex is a selbri.
+>
+
+Adding !ZOhU-clause at the end of tail-terms might fix that:
+
+ tail-terms <- terms? VAU-clause? free* !ZOhU-clause
+
+What are the minimal requirements to restore a bridi if not from terms or
+> from bridi_tail ? Probably it can be restored from isolated {i} or {ni'o}
+> but since this already works, then other types of restoration should be
+> discussed separately since they don't touch anything here.
+>
+
+Other than fragments, I think everything else in a text is either a
+sentence, a sentence connective, or the initial indicators, free modifiers,
+and the strange initial bare cmevla. I think only fragments require
+"restoration".
+
+
+> 2. We could also add this if "fragment" is removed from the grammar:
+>
+> tanru_unit_1 = tanru_unit_2 linkargs? / linkargs? tanru_unit_2 */
+> GOhA_elidible linkargs*
+>
+> This makes {i be mi} parse as (i [CU {COhE <be mi BEhO>} VAU])
+>
+
+If you're going to do that, why put it in tanru-unit-1 and not in
+tanru-unit-2?
+
+If you allow  (i [CU {COhE <be mi BEhO>} VAU]), why not (i [CU {na'e
+<COhE>} VAU]), or (i [CU {jai <COhE>} VAU]) for example?
+
+However, selpa'i's examples don't work here.
+>
+> Should {noi mo} a). be restored into {noi mo cu co'e}
+>
+
+I missed the part where "noi mo cu co'e" became grammatical.
+
+
+> implying {fa xi xo'e zo'e noi mo cu co'e} or b). should it instead be
+> considered a continuation of the previous clause said by another speaker
+> like with selpa'i's example with {be ma}?
+>
+
+I would have said to "zo'e noi mo cu co'e"
+
+Both solutions seem reasonable. Maybe take option b). and treat a discourse
+> split between several people as one sentence with special FUhE .. FUhO
+> markers?
+>
+> mi viska lo pendo FUhE [B asks] be ma [FUhO]
+> mi viska lo pendo FUhE [B asks] noi mo [FUhO]
+>
+> A: - I see a friend.
+> B: - Of whom?
+>
+> A: - I see a friend.
+> B: - Who does what?
+>
+> This would reformulate fragments as parts of discourse so that we can
+> remove them from the grammar. Of course, this would require somehow
+> preparing existing texts by marking them with those FUhE ... FUhO so that
+> we can parse them.
+>
+
+It depends on how you define "text". Is a dialogue one text, or a
+succession of texts? The usual take is that it's a succession of texts,
+since otherwise a lot of lojban dialogues that seem to parse would not
+parse. For example the irc logs
+
+I also allowed relative clauses in sumti without their heads. If fragments
+> are removed from the grammar then similar things can be useful:
+>
+> sumti_4 = expr:(sumti_5 / *relative_clauses / *gek sumti gik sumti_4)
+> {return _node("sumti_4", expr);}
+>
+
+This could be dangerous, as it makes "ta prenu poi do sisku" grammatical,
+but not with the expected meaning. Also things lika {da poi prenu ku'o noi
+melbi".
+
+
+> This results in {fa noi pendo mi cu melbi} (in fact it may even make {be}
+> useless except when used stylistically).
+>
+
+I think it's safer to require a "lo" for bare relative clauses: "lo noi
+pendo cu melbi" (this was also discussed as a good alternative to "poi'i"
+in many cases).
+
+
+> At some point there was talk of making the selbri of a sumti-tail elidable
+>>> as well, so that "lo ku" would be a valid sumti.
+>>>
+>>
+> I almost never use {ku} in this sense (LE-terminator). Besides, some
+> people think that {cu} should mark the beginning of a bridi tail. In this
+> case I don't understand how to treat {lo cu broda}. Should it be {lo COhE
+> KU cu broda} or {lo cu broda KU CU COhE} ?
+>
+
+Since a bridi-tail is not part of a sumti-tail, it can only be the first.
+
+mu'o mi'e xorxes
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 8 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
 la .xorxes. cu cusku di'e
 > "joi" can't be a fragment though. The reason is that it would clash with
 > the sentence connective ".i joi". Fragment is a weird rule, I would
