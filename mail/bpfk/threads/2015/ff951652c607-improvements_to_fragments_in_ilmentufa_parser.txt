@@ -1,4 +1,4 @@
-# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 10 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 11 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-03-25T09:35:53Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | mail/bpfk/cur/1427276153.ff951652c6070b5e.jbomohi:2,S
 The following problems were addressed while analyzing ilmentufa parser
@@ -722,7 +722,128 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 9 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
+=== 9 | 2015-03-28T16:10:58Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+jh56dwj+ydmj0-ycna2f5jaj1bhavqxdoxpxgfw3oaca@mail.gmail.com | mail/bpfk/cur/1427559058.524b7b676baf0ca6.jbomohi:2,S
+2015-03-28 1:21 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
+
+>
+> On Fri, Mar 27, 2015 at 10:34 AM, Gleki Arxokuna <
+> gleki.is.my.name@gmail.com> wrote:
+>>
+>> 2015-03-27 11:00 GMT+03:00 Gleki Arxokuna <gleki.is.my.name@gmail.com>:
+>>
+>
+>
+>> What methods do you use or want to make the development process happen
+>>> faster?
+>>> A web tool that would allow to insert a complete PEG file, compile it
+>>> and test it online?
+>>>
+>>
+> I used this one when debugging the morphology recently:
+> http://pegjs.org/online
+>
+
+If you are satisfied with it then okay. If not please let us know what
+would you like to have so that we accelerate the development.
+
+
+>
+> A presentation of the grammar without the javascript would make it much
+> more readable for me.
+>
+
+You mean you don't like those "expr:(" ? For me it's a very minor issue. A
+larger one might be if you don't have an opportunity to input a peg and
+test sentences and get output anytime you want. E.g. if you can't install
+something you may ask Robin to give you access to la vrici server and then
+using tty.js get web access to ssh and then node.js and camxes.js. Let me
+know of any difficulties.
+
+Well, really you need to tell me javascript litter really stops you from
+working on PEG. Tastes differ, if it stops you I'll think what can be done.
+
+
+> Also, a grammar without SA is much more readable than one with SA. I find
+> the SA-rules extremely annoying.
+>
+>  bridi-tail-3 <- selbri? tail-terms / gek-sentence
+>>>>
+>>>
+>>> Hard for me to determine what is the cause but this breaks {mi zo'u mi
+>>> mo}.
+>>>
+>>
+>> Probably because it thinks that prenex is a selbri.
+>>
+>
+> Adding !ZOhU-clause at the end of tail-terms might fix that:
+>
+>  tail-terms <- terms? VAU-clause? free* !ZOhU-clause
+>
+
+Looks like it worked out. Although, I don't like using "selbri?" I used "(
+selbri / GOhA_elidible)" which gives prettier results.
+
+>
+> What are the minimal requirements to restore a bridi if not from terms or
+>> from bridi_tail ? Probably it can be restored from isolated {i} or {ni'o}
+>> but since this already works, then other types of restoration should be
+>> discussed separately since they don't touch anything here.
+>>
+>
+> Other than fragments, I think everything else in a text is either a
+> sentence, a sentence connective
+>
+
+Connectives as replies to {ji} questions are interesting. I suppose current
+camxes.js could be cured  to support that. Do you have an algorithm in mind
+on how to restore such sentences? Obviously {zo'e je zo'e cu co'e} is not a
+good restoration. I'd like copying sentences with {ji} and replacing {ji}
+with connectives. This also requires working with {go'i}.
+
+- do ji mi nelci
+- e = > do e mi nelci
+
+- xu do nelci
+- go'i => mi nelci
+
+A: - mi nelci
+B: - go'i ra'o => {mi nelci} or {by nelci} or {by cusku lo se du'u by.
+nelci}
+
+Any other test sentences?
+
+, or the initial indicators, free modifiers, and the strange initial bare
+> cmevla. I think only fragments require "restoration".
+>
+>
+>> 2. We could also add this if "fragment" is removed from the grammar:
+>>
+>> tanru_unit_1 = tanru_unit_2 linkargs? / linkargs? tanru_unit_2 */
+>> GOhA_elidible linkargs*
+>>
+>> This makes {i be mi} parse as (i [CU {COhE <be mi BEhO>} VAU])
+>>
+>
+> If you're going to do that, why put it in tanru-unit-1 and not in
+> tanru-unit-2?
+>
+> If you allow  (i [CU {COhE <be mi BEhO>} VAU]), why not (i [CU {na'e
+> <COhE>} VAU]), or (i [CU {jai <COhE>} VAU]) for example?
+>
+
+Probably yes, but only if we assume interpretation a) i.e. not how selpa'i
+used them.
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 10 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
 la .xorxes. cu cusku di'e
 > "joi" can't be a fragment though. The reason is that it would clash with
 > the sentence connective ".i joi". Fragment is a weird rule, I would
@@ -757,7 +878,7 @@ For more options, visit https://groups.google.com/d/optout.
 
 
 
-=== 10 | 2015-03-27T22:34:44Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dgf40j8cvo7kpeawrpsjxjpxd6ywqkbdq2nsg=atu1ha@mail.gmail.com | mail/bpfk/cur/1427495684.d977d8e0e133b547.jbomohi:2,S
+=== 11 | 2015-03-27T22:34:44Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dgf40j8cvo7kpeawrpsjxjpxd6ywqkbdq2nsg=atu1ha@mail.gmail.com | mail/bpfk/cur/1427495684.d977d8e0e133b547.jbomohi:2,S
 On Fri, Mar 27, 2015 at 6:43 AM, selpa'i <seladwa@gmx.de> wrote:
 
 >
