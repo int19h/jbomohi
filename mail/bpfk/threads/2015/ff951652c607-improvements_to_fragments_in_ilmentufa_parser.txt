@@ -1,4 +1,4 @@
-# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 9 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 10 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-03-25T09:35:53Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | mail/bpfk/cur/1427276153.ff951652c6070b5e.jbomohi:2,S
 The following problems were addressed while analyzing ilmentufa parser
@@ -608,7 +608,121 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 8 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
+=== 8 | 2015-03-28T07:05:49Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+hmaaeqfqyrdzatys20hct==felxn-lcufw21mm=m9jvq@mail.gmail.com | mail/bpfk/cur/1427526349.cb8b4233475bfd89.jbomohi:2,S
+2015-03-28 1:21 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
+
+>
+>> However, selpa'i's examples don't work here.
+>>
+>> Should {noi mo} a). be restored into {noi mo cu co'e}
+>>
+>
+> I missed the part where "noi mo cu co'e" became grammatical.
+>
+
+It has two possible explanations:
+a). It means {zo'e noi mo cu co'e}
+b). It is continues by one speaker a sumti said by another speaker
+
+
+>
+>> implying {fa xi xo'e zo'e noi mo cu co'e} or b). should it instead be
+>> considered a continuation of the previous clause said by another speaker
+>> like with selpa'i's example with {be ma}?
+>>
+>
+> I would have said to "zo'e noi mo cu co'e"
+>
+> Both solutions seem reasonable. Maybe take option b). and treat a
+>> discourse split between several people as one sentence with special FUhE ..
+>> FUhO markers?
+>>
+>> mi viska lo pendo FUhE [B asks] be ma [FUhO]
+>> mi viska lo pendo FUhE [B asks] noi mo [FUhO]
+>>
+>> A: - I see a friend.
+>> B: - Of whom?
+>>
+>> A: - I see a friend.
+>> B: - Who does what?
+>>
+>> This would reformulate fragments as parts of discourse so that we can
+>> remove them from the grammar. Of course, this would require somehow
+>> preparing existing texts by marking them with those FUhE ... FUhO so that
+>> we can parse them.
+>>
+>
+> It depends on how you define "text". Is a dialogue one text, or a
+> succession of texts? The usual take is that it's a succession of texts,
+> since otherwise a lot of lojban dialogues that seem to parse would not
+> parse. For example the irc logs
+>
+> I also allowed relative clauses in sumti without their heads. If fragments
+>> are removed from the grammar then similar things can be useful:
+>>
+>> sumti_4 = expr:(sumti_5 / *relative_clauses / *gek sumti gik sumti_4)
+>> {return _node("sumti_4", expr);}
+>>
+>
+> This could be dangerous, as it makes "ta prenu poi do sisku" grammatical,
+> but not with the expected meaning.
+>
+
+I don't know what is the expected meaning here. It can be restored to {ta
+prenu zo'e poi do sisku ke'a} or instead to something like {fasnu fa lo nu
+ta prenu poi do sisku ke'a} or instead as {lo ta prenu poi do sisku ke'a cu
+co'e}.
+
+
+> Also things lika {da poi prenu ku'o noi melbi".
+>
+
+How is this supposed to parse according to you? I can see it again either
+as restoring {zo'e} or {fasnu fa lo nu} or as {lo da poi prenu ku'o noi
+ke'a melbi cu co'e}.
+
+
+>
+>> This results in {fa noi pendo mi cu melbi} (in fact it may even make {be}
+>> useless except when used stylistically).
+>>
+>
+> I think it's safer to require a "lo" for bare relative clauses: "lo noi
+> pendo cu melbi" (this was also discussed as a good alternative to "poi'i"
+> in many cases).
+>
+This is related to split sumti like {fa lo gerku fa noi pendo mi cu bajra}
+where instead of {fa lo gerku} you have {fa zo'e}.
+
+As for you suggestion it's a continuation of the official {lo noi pendo
+ja'a melbi cu co'e} so it requires separate commits (do you have ideas
+where to patch the peg, btw?)
+
+The main problem for me now is that COhE that I showed earlier is not a
+true bridi_tail_t1. If you make bridi_tail_t1 elidible then it won't show
+up in the output. However, in camxes.js COhE does return a "COhE", not a
+node:
+GOhA_elidible = expr:(GOhA_clause?) {return (expr == "") ? ["COhE"]   :
+_node("COhE", expr);}
+
+I could copy the whole bridi_tail_t1 with all (!) dependent strings
+like bridi_tail_t2 etc. only in order to inject a COhE_elidible instead of
+"selbri" in bridi_tail_3. However, we should be fighting copy pasting,
+shouldn't we?
+
+I'd also like to show ZOhE in x1 of {i broda mi} since we assume that if a
+selbri has x2 it must have x1. Again the same question applies: how to
+restore it without copying the whole "terms" part of the grammar?
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 9 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
 la .xorxes. cu cusku di'e
 > "joi" can't be a fragment though. The reason is that it would clash with
 > the sentence connective ".i joi". Fragment is a weird rule, I would
@@ -643,7 +757,7 @@ For more options, visit https://groups.google.com/d/optout.
 
 
 
-=== 9 | 2015-03-27T22:34:44Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dgf40j8cvo7kpeawrpsjxjpxd6ywqkbdq2nsg=atu1ha@mail.gmail.com | mail/bpfk/cur/1427495684.d977d8e0e133b547.jbomohi:2,S
+=== 10 | 2015-03-27T22:34:44Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dgf40j8cvo7kpeawrpsjxjpxd6ywqkbdq2nsg=atu1ha@mail.gmail.com | mail/bpfk/cur/1427495684.d977d8e0e133b547.jbomohi:2,S
 On Fri, Mar 27, 2015 at 6:43 AM, selpa'i <seladwa@gmx.de> wrote:
 
 >
