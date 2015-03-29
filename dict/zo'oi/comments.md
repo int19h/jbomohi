@@ -30,3 +30,14 @@ I think this small benefit does not outweigh the far bigger drawbacks.
 
 I not only not use this cmavo, but I also recommend others to not use this.
 
+
+## 2015-03-29T15:52:39Z — Wuzzy (comment 1790, on definition 16346, in reply to 1789)
+
+Re: This cmavo needs to die
+
+Gosh, the encoding of the previous post got completely messed up.
+
+You can view the IPA notation of the German word "vereinen" here:
+
+https://de.wiktionary.org/wiki/Vereinen
+
