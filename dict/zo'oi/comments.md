@@ -53,3 +53,19 @@ https://groups.google.com/d/topic/lojban/FY2m4kqJ_tg/discussion .net.
 i to'u lo denpabu naku ka'e ku naku te sepli i ie ei stika lo smuvelcki be 
 zo'oi be'o pe la jbovlaste
 
+
+## 2015-03-29T17:20:43Z — gleki (comment 1792, on definition 16346, in reply to 1791)
+
+Re: This cmavo needs to die
+
+u'u mi srera ciska 
+
+ni'o le'aise'i
+
+i la guskant pu filseljmi ciksi lo krinu be lo nu zo zo'oi ka'e nabmi i ko 
+tcidu la'e zoi .net. 
+https://groups.google.com/d/topic/lojban/FY2m4kqJ_tg/discussion .net.
+
+i to'u lo denpabu naku ka'e ku naku te sepli i ie ei stika lo smuvelcki be 
+zo zo'oi be'o pe la jbovlaste
+
