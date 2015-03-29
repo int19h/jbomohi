@@ -41,3 +41,15 @@ You can view the IPA notation of the German word "vereinen" here:
 
 https://de.wiktionary.org/wiki/Vereinen
 
+
+## 2015-03-29T17:19:57Z — gleki (comment 1791, on definition 16346, in reply to 1789)
+
+Re: This cmavo needs to die
+
+la guskant pu filseljmi ciksi lo krinu be lo nu zo zo'oi ka'e nabmi  i ko 
+tcidu la'e zoi .net. 
+https://groups.google.com/d/topic/lojban/FY2m4kqJ_tg/discussion .net.
+
+i to'u lo denpabu naku ka'e ku naku te sepli i ie ei stika lo smuvelcki be 
+zo'oi be'o pe la jbovlaste
+
