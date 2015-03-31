@@ -1,4 +1,4 @@
-# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 13 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread ff951652c607-improvements_to_fragments_in_ilmentufa_parser | root cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | 14 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-03-25T09:35:53Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+je-d2vphm-7azaqgmgb2k91_ye2v4odpev4omgmuzaxq@mail.gmail.com | mail/bpfk/cur/1427276153.ff951652c6070b5e.jbomohi:2,S
 The following problems were addressed while analyzing ilmentufa parser
@@ -848,7 +848,174 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 10 | 2015-03-28T16:10:58Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+jh56dwj+ydmj0-ycna2f5jaj1bhavqxdoxpxgfw3oaca@mail.gmail.com | mail/bpfk/cur/1427559058.524b7b676baf0ca6.jbomohi:2,S
+=== 10 | 2015-03-31T09:54:17Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+h+w=a=uno9psmltprrr-r4g9pzfcocoy0q42b98fnz4w@mail.gmail.com | mail/bpfk/cur/1427795657.591dbafdc00d6c23.jbomohi:2,S
+2015-03-28 20:43 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
+
+>
+> On Sat, Mar 28, 2015 at 4:05 AM, Gleki Arxokuna <
+> gleki.is.my.name@gmail.com> wrote:
+>>
+>> 2015-03-28 1:21 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
+>>>
+>>>
+>>> I missed the part where "noi mo cu co'e" became grammatical.
+>>>
+>>
+>> It has two possible explanations:
+>> a). It means {zo'e noi mo cu co'e}
+>> b). It is continues by one speaker a sumti said by another speaker
+>>
+>
+> OK, but (b) seems to be part of a pre-parser interpretation strategy, that
+> has to decide whether a given string is to be fed as is to the parser or
+> needs to be first concatenated with some other string before being fed to
+> the parser. I don't see how PEG can handle that pre-parsing stage. (b)
+> seems to be about what to feed the parser as input rather than about what
+> the parser should output given some input.
+>
+
+And that's what I'd like to have. That's why I'm against fragments in PEG
+itself. {mi penmi lo pendo - be ma} - this {be ma} fragment isn't able to
+restore the full tree.
+
+
+>
+>
+>> sumti_4 = expr:(sumti_5 / *relative_clauses / *gek sumti gik sumti_4)
+>>>> {return _node("sumti_4", expr);}
+>>>>
+>>>
+>>> This could be dangerous, as it makes "ta prenu poi do sisku"
+>>> grammatical, but not with the expected meaning.
+>>>
+>>
+>> I don't know what is the expected meaning here.
+>>
+>
+> Something like "ta me lo prenu poi do sisku", a relatively frequent error,
+> I think.
+>
+> It can be restored to {ta prenu zo'e poi do sisku ke'a} or instead to
+>> something like {fasnu fa lo nu ta prenu poi do sisku ke'a} or instead as
+>> {lo ta prenu poi do sisku ke'a cu co'e}.
+>>
+>
+> Did you mean "fasnu fa lo nu ta prenu _kei_ poi do sisku ke'a"?
+>
+It doesn't matter. This phrase (without {kei}) officially (in yacc) parses
+as
+(fasnu {<fa [lo ({nu <ta [prenu VAU]> KEI} {poi <do [sisku VAU]> KU'O}) KU
+]> VAU})
+
+Maybe you meant it should be restored to "fasnu fa lo nu ta prenu _ku_ poi
+do sisku ke'a"? This is another option indeed.
+
+
+
+> Otherwise you just have the same original "pa prenu poi do sisku" inside a
+> "nu".
+>
+> But I'm confused how you would get either of those two from "ta prenu poi
+> do sisku" where "poi do sisku" occupies an argument slot of "prenu". Is the
+> stand-alone relative clause to be taken as an ordinary sumti or not? If
+> yes, isn't it just filling the (potential) second slot of "prenu"? Wouldn't
+> "mi citka poi plise" mean that I eat an apple?
+>
+
+I don't provide answers here. I ask myself how we should deal with it and
+should we deal with it at all.
+
+My personal preference is that it's {fasnu fa lonu ta prenu poi do sisku
+ke'a} whatever that means. Although, I'm bad at distinguishing inner and
+outer relative clauses so maybe I'd prefer {fasnu fa lonu ta prenu ku poi
+do sisku ke'a}.
+
+I started this discussion not to issue any decrees but because few people
+seem to be working on PEG when it's obvious that it can and should be
+improved.
+
+
+>
+>> Also things lika {da poi prenu ku'o noi melbi".
+>>>
+>>
+>> How is this supposed to parse according to you? I can see it again either
+>> as restoring {zo'e} or {fasnu fa lo nu} or as {lo da poi prenu ku'o noi
+>> ke'a melbi cu co'e}.
+>>
+>
+> With your proposed sumti rule, I would understand it as two sumti. I'm
+> saying that's confusing, because it looks like a single sumti with two
+> relative clauses.
+>
+
+I don't insist on restoring {noi melbi} into {zo'e noi melbi}, but I would
+never guess that it is {zi'e} that is omitted here.
+If no one including me (oh well, only two people here) like {broda noi
+melbi} as {broda zo'e noi mo} then let's think this option is rejected.
+
+However, I would like it to be restored to {lo broda noi melbi}. If people
+make mistakes it's because how they learnt or assumed something incorrectly
+from existing books.
+
+An English phrase "Does which is beautiful" is {[fasnu fa lo nu] zukte noi
+melbi} or {[fasnu fa lo nu] zukte ku noi melbi}.
+
+If relying on English (and some other European languages) doesn't matter
+here at all then I can see only one possible explanation of this common
+mistake: people have been learning gismu from their glosswords incorrectly
+assuming that gismu may mean nouns whereas they never mean nouns but
+predicates or (very roughly) verbs. {i mlatu} never means "a cat" but "It
+is a cat".
+
+
+>
+> I think it's safer to require a "lo" for bare relative clauses: "lo noi
+>>> pendo cu melbi" (this was also discussed as a good alternative to "poi'i"
+>>> in many cases).
+>>>
+>> This is related to split sumti like {fa lo gerku fa noi pendo mi cu
+>> bajra} where instead of {fa lo gerku} you have {fa zo'e}.
+>>
+>
+> I guess what I'm saying is that relative-clauses feel more like selbri
+> than like sumti to me, so that using them bare as sumti feels weird.
+>
+
+ca'e di'u assumed as an axiom until someone else raises their head.
+
+I would expect  "fa lo gerku fa lo noi pendo mi cu bajra", not "fa lo gerku
+> fa noi pendo mi cu bajra".
+>
+> As for you suggestion it's a continuation of the official {lo noi pendo
+>> ja'a melbi cu co'e} so it requires separate commits (do you have ideas
+>> where to patch the peg, btw?)
+>>
+>
+> Maybe something like:
+>
+>   sumti-tail-1 <- quantifier sumti / quantifier? selbri? relative-clauses?
+>
+>
+Are you able to test this suggestion? I tried, it didn't work for me.
+
+
+> I haven't thought out all the ramifications, but this should allow things like "ro poi broda gi'e brode cu brodi" and "lo ci cu broda".
+>
+>
+la xalbo suggested having a list of test sentences so that we can quickly
+test whether some change affects any reference test sentences (it shouldn't
+affect to preserve or even increase backward compatibility).
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 11 | 2015-03-28T16:10:58Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+jh56dwj+ydmj0-ycna2f5jaj1bhavqxdoxpxgfw3oaca@mail.gmail.com | mail/bpfk/cur/1427559058.524b7b676baf0ca6.jbomohi:2,S
 2015-03-28 1:21 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
 
 >
@@ -969,7 +1136,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 11 | 2015-03-28T18:12:35Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2ek0nkynxhcvmomoak4j_2_gr=7ojw1aalfjdceakreuw@mail.gmail.com | mail/bpfk/cur/1427566355.720c4b1c3e554e4e.jbomohi:2,S
+=== 12 | 2015-03-28T18:12:35Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2ek0nkynxhcvmomoak4j_2_gr=7ojw1aalfjdceakreuw@mail.gmail.com | mail/bpfk/cur/1427566355.720c4b1c3e554e4e.jbomohi:2,S
 On Sat, Mar 28, 2015 at 1:10 PM, Gleki Arxokuna <gleki.is.my.name@gmail.com>
 wrote:
 >
@@ -1043,7 +1210,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 12 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
+=== 13 | 2015-03-27T09:43:39Z | selpa'i <seladwa@gmx.de> | 5515264b.1030009@gmx.de | mail/bpfk/cur/1427449419.a29a30fa8d9073e0.jbomohi:2,S
 la .xorxes. cu cusku di'e
 > "joi" can't be a fragment though. The reason is that it would clash with
 > the sentence connective ".i joi". Fragment is a weird rule, I would
@@ -1078,7 +1245,7 @@ For more options, visit https://groups.google.com/d/optout.
 
 
 
-=== 13 | 2015-03-27T22:34:44Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dgf40j8cvo7kpeawrpsjxjpxd6ywqkbdq2nsg=atu1ha@mail.gmail.com | mail/bpfk/cur/1427495684.d977d8e0e133b547.jbomohi:2,S
+=== 14 | 2015-03-27T22:34:44Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dgf40j8cvo7kpeawrpsjxjpxd6ywqkbdq2nsg=atu1ha@mail.gmail.com | mail/bpfk/cur/1427495684.d977d8e0e133b547.jbomohi:2,S
 On Fri, Mar 27, 2015 at 6:43 AM, selpa'i <seladwa@gmx.de> wrote:
 
 >
