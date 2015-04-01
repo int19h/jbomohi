@@ -1,4 +1,4 @@
-# mail/bpfk thread 0ecaeeca1a1a-selma'o_zehei_and_peg | root cao7tk2dbjkdicdv9qwvn2wn1gnisnbqzqg01pbqcdur0n_d+dq@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread 0ecaeeca1a1a-selma'o_zehei_and_peg | root cao7tk2dbjkdicdv9qwvn2wn1gnisnbqzqg01pbqcdur0n_d+dq@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-03-31T23:45:04Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dbjkdicdv9qwvn2wn1gnisnbqzqg01pbqcdur0n_d+dq@mail.gmail.com | mail/bpfk/cur/1427845504.0ecaeeca1a1ace75.jbomohi:2,S
 gleki asked about incorporating selma'o ZEhEI to PEG and I said it would
@@ -195,6 +195,78 @@ Let's modify it as follows:
 zo'e bu ze'ei pa
 
 and change the selma'o for {ze'ei} to MAI. 
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 4 | 2015-04-01T19:27:45Z | Alex Burka <durka42@gmail.com> | 1542a73d520e49bdb44789ab54497fdc@gmail.com | mail/bpfk/cur/1427916465.ee1e583813df48b7.jbomohi:2,S
+Hmm, I don't know about this. I definitely see the motivation to avoid modifying a bunch of parser rules (though what xorxes wrote really isn't that many), but I'm not sure that MAI matches. A ((number / lerfu-string) MAI-clause) is just an indicator, which binds to the previous word. So if you write {zo'e bu ze'ei pa} with ze'ei in MAI, then it parses as {((zo'e bu) ze'ei) pa}, with the zo'ebuze'ei attached to whatever precedes, rather than the {pa}. Then to match the semantics to the grammar you'd want to swap the order of {ze'ei} and make it {pa zo'e bu ze'ei}. Thoughts?  
+
+- mu'o mi'e durkavore  
+
+
+On Wednesday, April 1, 2015 at 4:59 AM, guskant wrote:
+
+>  
+>  
+> Le mercredi 1 avril 2015 15:24:08 UTC+9, la gleki a écrit :
+> > That still adds a lot of strings to the grammar.
+> > Can you think of a better way with a different grammar that will allow us to glue semantics from one word and grammar from another word?
+> >  
+> >  
+> > 2015-04-01 2:45 GMT+03:00 Jorge Llambías <jjlla...@gmail.com (javascript:)>:
+> > >  
+> > > gleki asked about incorporating selma'o ZEhEI to PEG and I said it would require modifying lots and lots of rules, basically all the selma'o rules. But maybe not.
+> > >  
+> > > I was thinking of ZEhEI as being similar to ZEI, but that's probably not the best way to think about it. ZEhEI is actually much more like BU. The only difference is that instead of creating something like BY, it creates something like BAhE. So we only need to do for ZEhEI wrt to BAhE what we do for BU wrt to BY.
+> > >  
+> > > This is still not trivial, because BU interacts with ZEI in weird ways, and now we'd be adding a third ingredient into the mix, which makes it all even more messy. But the required modifications would probably look something like this:
+> > >  
+> > > zehei-clause <- pre-clause zehei-clause-no-pre zehei-clause-no-pre <- pre-zei-bu (zehei-tail? zei-tail / zehei-tail? bu-tail)* zehei-tail post-clause
+> > > zei-clause-no-pre <- pre-zei-bu (zei-tail? bu-tail / zei-tail? zehei-tail)* zei-tail post-clause bu-clause-no-pre <- pre-zei-bu (bu-tail? zei-tail / bu-tail? zehei-tail)* bu-tail post-clause
+> > >  
+> > >  
+> > > zehei-tail <- ZEhEI-clause+
+> > > pre-zei-bu <- (!ZEhEI-clause !BU-clause !ZEI-clause !SI-clause !SA-clause !SU-clause !FAhO-clause any-word-SA-handling) si-clause?  
+> > > ; turns any word into a BAhE modifier  
+> > > ZEhEI-clause <- ZEhEI-pre ZEhEI-post ZEhEI-pre <- pre-clause ZEhEI spaces? ZEhEI-post <- spaces?
+> > > ; next word intensifier BAhE-clause <- (BAhE-pre BAhE-post)+ / zehei-clause+ BAhE-pre <- BAhE spaces? BAhE-post <- si-clause? !ZEI-clause !BU-clause !ZEhEI-clause
+> > >  
+> > >  
+> > > I haven't tested any of this, and it may require further tweaking, but that's the general idea. It may also be necessary to add !ZEhEI-clause wherever there's a !ZEI-clause !BU-clause, but I suspect many of those are actually redundant.
+> > > mu'o mi'e xorxes
+> > >  
+> > >  
+> > >  
+> >  
+> >  
+> >  
+>  
+> I prefer abandoning the selma'o ZEhEI and adopting a cmavo compound of BU+MAI instead. It would be simple to let {ze'ei} be of selma'o MAI.
+>  
+> For example, the definition of {xo'e}  
+> http://jbovlaste.lojban.org/dict/xo'e
+> is currently  
+>  
+> zo'e ze'ei pa
+>  
+> Let's modify it as follows:
+>  
+> zo'e bu ze'ei pa
+>  
+> and change the selma'o for {ze'ei} to MAI.   
+>  
+> --  
+> You received this message because you are subscribed to the Google Groups "BPFK" group.
+> To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com (mailto:bpfk-list+unsubscribe@googlegroups.com).
+> To post to this group, send email to bpfk-list@googlegroups.com (mailto:bpfk-list@googlegroups.com).
+> Visit this group at http://groups.google.com/group/bpfk-list.
+> For more options, visit https://groups.google.com/d/optout.
 
 -- 
 You received this message because you are subscribed to the Google Groups "BPFK" group.
