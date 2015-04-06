@@ -35,3 +35,11 @@ zo
 
 je'e .i mi pu srera .i mi ba jmina lo se tamgau be fi lo lojbo
 
+
+## 2015-04-06T22:47:06Z — gusnikantu (comment 1799, in reply to 1796)
+
+Re: lo minji na carna
+
+i pu jmina lo lojbo te tamgau .i ku'i ji'a jmina $x_2$ noi te cabra vau 
+.e'apei
+
