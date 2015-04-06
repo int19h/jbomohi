@@ -1,0 +1,62 @@
+# mail/bpfk thread c27d933f1b61-proposal%3A_sumti_must_always_be_tagged_with_%2 | root cao7bv+gssgpnqug=p08ypspqqprmbzrxh6jxvafiabjdqfhceg@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2015-04-06T10:45:27Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+gssgpnqug=p08ypspqqprmbzrxh6jxvafiabjdqfhceg@mail.gmail.com | mail/bpfk/cur/1428317127.c27d933f1b61e740.jbomohi:2,S
+Here is what the experimental grammar had (the official grammar is very
+similar):
+
+abs_term_1 = expr:(abs_tag_term / sumti / termset) {return
+_node("abs_term_1", expr);}
+
+abs_tag_term = expr:((!gek tag free* !selbri !gek_sentence (sumti / joik_ek
+sumti_3 / KU_elidible free*) / !gek (sumti free*) CO_clause tag free* /
+NA_clause free* KU_clause free* / !selbri !gek_sentence !ek !joik_jek
+!gihek NA_clause free* KU_elidible free* / SOI_clause free* subsentence
+SEhU_elidible free*) (joik_jek abs_tag_term)*) {return
+_node("abs_tag_term", expr);}
+
+
+Clearly, you can see that "sumti" occurs two times and what is unfortunate
+is that it appears on another level of the tree if a bare non-tagged sumti
+is used (the first, "abs_term_1  = " line above). More precisely, when FA
+is not used sumti is the direct child of abs_term_1 node whereas with FA it
+becomes a direct child of abs_tag_term which is a direct child
+of abs_term_1.
+
+So {i fa mi prami} and {i mi prami} produce syntactic trees with a
+different hierarchy!
+
+I think that no matter whether sumti is tagged with FA or not it should
+appear on the same level.
+Existing tricks with PEG make the notion of sumti obscure.
+Every sumti should take a certain position.
+Not only we need a unambiguous grammar, we need a cleancut hierarchy.
+
+So this is what I propose:
+
+abs_term_1 = expr:(abs_tag_term / termset) {return _node("abs_term_1",
+expr);}
+
+abs_tag_term = expr:((!gek tag free* !selbri !gek_sentence (sumti / joik_ek
+sumti_3 / KU_elidible free*) / !gek (tag / FA_elidible) free* !selbri
+!gek_sentence (sumti)  / !gek (sumti free*) CO_clause tag free* / NA_clause
+free* KU_clause free* / !selbri !gek_sentence !ek !joik_jek !gihek
+NA_clause free* KU_elidible free* / SOI_clause free* subsentence
+
+FA_elidible = expr:(FA_clause?) {return (expr == "") ? ["FA"] : _node("FA",
+expr);}
+
+
+As you can see, "sumti" disappeared. I added "FA_elidible" which can fire
+only if a sumti is present (but not KU_elidible otherwise the grammar will
+crash).
+
+Probably, " joik_ek sumti_3 " should also be copied to this FA_elidible
+part, right? I'm not an expert in all these things.
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
