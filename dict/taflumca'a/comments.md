@@ -18,3 +18,20 @@ go'i
 jetnu .i ku'i lo valsi velski na nibli lo du'u carna .i ra'oi ca'a rafsi zo
 cabra
 
+
+## 2015-04-06T22:18:47Z — gusnikantu (comment 1798, in reply to 1796)
+
+Re: lo minji na carna
+
+Ilmen wrote:
+> gusnikantu wrote:
+> > lo minji be lo ka lumci su'o taxfu cu na carna .i ku'i lo pagbu be lo 
+> go'i 
+> > cu ja'a go'i
+> 
+> jetnu .i ku'i lo valsi velski na nibli lo du'u carna .i ra'oi ca'a rafsi 
+zo
+> cabra
+
+je'e .i mi pu srera .i mi ba jmina lo se tamgau be fi lo lojbo
+
