@@ -1,0 +1,54 @@
+# mail/bpfk thread a663d5eac53c-one_cannot_refer_to_inner_nodes_in_lojban_peg | root cao7bv+jjdyc7fcn5no-h_zl_zffmhgb5nwp-ec5txqzs3p3fvg@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2015-04-07T08:28:12Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+jjdyc7fcn5no-h_zl_zffmhgb5nwp-ec5txqzs3p3fvg@mail.gmail.com | mail/bpfk/cur/1428395292.a663d5eac53c5749.jbomohi:2,S
+Consider the following:
+string_1 = string_2 / string_6 string_3
+string_3 = string_7 / string_8
+string_4 = !string_1 string_5
+
+Now we need !string_1 to work only if string_8 matches, not when string_7
+matches.
+Why we might need that? E.g. for terms that can have either FA or BAI
+inside. Depending on whether we have FA or BAI inside a term our actions
+may differ.
+
+How can we implement that?
+We can just create duplicates of two strings like this:
+
+string_1 = string_2 / string_6 string_3
+string_1_2 = string_2 / string_6 string_3_2
+string_3 = string_7 / string_8
+string_3_2 = string_8
+string_4 = !string_1_2 string_5
+
+Now string_1_2 is the same as string_1 but it is matched only if string_8
+matches (unlike string_1, otherwise they are the same).
+
+Now the question is how do we avoid such duplication?
+
+The answer from peg.js developers:
+<quote>
+Sorry, but there is currently no clean way to avoid the duplication.
+
+In the future I'm thinking about adding support for rule
+templates/parametrizable rules, which would help here:
+
+string_1<T> = string_2 / string_6 T
+string_3 = string_7 / string_8
+string_3_2 = string_8
+string_4 = !string_1<string_3_2> string_5
+
+And I think it'd be nice
+</quote>
+
+So for now our only chance is to copy paster parts of Lojban PEG if we want
+such things. I.e. one would need to split terms into "terms_for_BAI",
+"terms_for_FA" etc. with all their inner variables copied.
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
