@@ -1,4 +1,4 @@
-# mail/bpfk thread 7e0d0959bec1-te_sumti_detection_using_peg | root cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread 7e0d0959bec1-te_sumti_detection_using_peg | root cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-04-08T12:50:08Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | mail/bpfk/cur/1428497408.7e0d0959bec1d925.jbomohi:2,S
 Terminology:
@@ -137,7 +137,120 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 3 | 2015-04-08T15:24:45Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+ju-ew2vjnosw9z_r9pxjx=8jamdlkz-ozy=k9v8xgfta@mail.gmail.com | mail/bpfk/cur/1428506685.162478bcaa218c98.jbomohi:2,S
+=== 3 | 2015-04-08T15:27:11Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+hwv479mvwvlwjkxbtxozutmko5g=yhmrwbsq3odb6n3q@mail.gmail.com | mail/bpfk/cur/1428506831.9e10475052455115.jbomohi:2,S
+mi pu cpedu lo nu sidju mi lo ka favgau lo djavaskripti tutci be tu'a lo te
+sumti i ku'i no da pu co'e i ja'ebo mi pu jai se bapli fai lo ka zukte
+si'unai
+
+i fau ro da mi tadni sa'u PEG i lo nu go'i ka'e xamgu za'u da
+
+2015-04-08 18:15 GMT+03:00 Alex Burka <durka42@gmail.com>:
+
+> I'm impressed that you got it this far, but as I've said before I really
+> don't see the PEG as the place for this. First of all, it's mixing two
+> separate steps in the interpretation of a sentence (namely parsing and
+> sumti place resolution). And as you said, this basic functionality requires
+> 60 new rules ... and it has severe limitations as a te sumti detector,
+> since it gives up after the first explicit FA, doesn't interact with
+> SE/GIhE/BE/JAI, etc. Like I said, good proof of concept, but I'd be
+> surprised if this is the route to a general te sumti detector.
+>
+> mu'o mi'e durkavore
+>
+> On Wednesday, April 8, 2015 at 8:50 AM, Gleki Arxokuna wrote:
+>
+> Terminology:
+> *FAM - a term taking a FA-position with FA explicitely filled with
+> {faxiveimo'eko'a} where mo'eko'a is a precise number (e.g. not {xo'e}
+> * ZAM - a bare term taking a FA-position with FA omitted. Positioning
+> rules can restore exact value of ko'a in {faxiveimo'eko'a}
+> * BAM - all other terms, e.g. prefixed with BAI or PU etc.
+>
+> So the issue of te sumti detection is to turn all ZAMs into FAMs in the
+> syntax tree.
+> Can we do that using PEG? I'm not that sure because
+> *some brivla have infinite number of places* like e.g. {jutsi}. {du} is a
+> special case since every te sumti of it can just take {faxixo'e} position.
+>
+> Currently I'm unaware of any possibilities for remembering values of
+> variables (te sumti numbers) in PEG.js thus we cant increment to any given
+> number of te sumti without first hardcoding all of them in PEG itself.
+>
+> However, if we limit ourselves to just 5 places and basic cases of
+> omitting FA then we can do that using PEG.
+> The current version of my fork of camxes.js produces these outputs:
+>
+> 1. ([FAXIPA mi] [CU {prami <FAXIRE do> VAU}])
+> 2. ([FAXIPA mi] [CU {djuno <fi do> VAU}])
+> 3. ([FAXIPA mi] [CU {djica <FAXIRE (¹lo [nu {<FAXIPA (²lo plise KU²)> <cu
+> (²farlu [FAXIRE mi] [FAXICI {lo tricu KU}] VAU²)>} KEI] KU¹)> VAU}])
+>
+> FAXIPA, FAXIRE, FAXICI are restored FA.
+>
+>
+> This is how sentence looks now in my PEG:
+> sentence = expr:(
+> &(terms_1ZAM CU_elidible selbri terms_1ZAM terms_1ZAM !terms_1ZAM)
+> (termsfa bridi_tail_t1fefi) / /* mi klama do ti*/
+> &(terms_1ZAM CU_elidible selbri terms_1ZAM) (termsfa bridi_tail_t1fe) / /*
+> mi klama do*/
+> &(terms_1ZAM terms_1ZAM CU_elidible selbri !terms_1ZAM) (termsfa termsfe
+> bridi_tail_t1) / /* mi do klama*/
+> &(terms_1ZAM terms_1ZAM CU_elidible selbri terms_1ZAM !terms_1ZAM)
+> (termsfa termsfe bridi_tail_t1fi) / /* mi do klama ti*/
+> &(terms_1ZAM terms_1ZAM terms_1ZAM CU_elidible selbri !terms_1ZAM)
+> (termsfa termsfe termsfi bridi_tail_t1) / /* mi do ti klama*/
+> &(terms_1ZAM CU_elidible selbri) (termsfa bridi_tail_t1) / /* mi klama*/
+> terms? bridi_tail_t1 (joik_jek bridi_tail / joik_jek stag? KE_clause free*
+> bridi_tail KEhE_elidible free*)*) {return _node("sentence", expr);}
+>
+> Examples for each case is shown in comments.
+> This addition to PEG required hardcoding terms for fa,fe,fi separately and
+> every case of bridi tail like "selbri x2 x3", "selbri x2", "selbri x3". To
+> hardcode them one needs to also hardcode all inner rules until you meet
+> selbri at bridi_tail_3 level and till tense_modal for sumti (a modification
+> of tense_modal where {fa} or {fe} or {fi} are hardcoded correspondingly).
+>
+> This required adding 60 new lines to PEG.
+> Even for supporting these basic cases the work isn't done yet,
+> optimizations of those copy-pasted strings might be possible.
+>
+> Anyway this is just a proof of concept.
+>
+> To test the current state of alta parser say "alta: mi prami do" on La
+> Naxle page
+> <http://vrici.lojban.org/~gleki/mediawiki-1.19.2/extensions/ilmentufa/ircbot/naxle.html>
+> .
+>
+> --
+> You received this message because you are subscribed to the Google Groups
+> "BPFK" group.
+> To unsubscribe from this group and stop receiving emails from it, send an
+> email to bpfk-list+unsubscribe@googlegroups.com.
+> To post to this group, send email to bpfk-list@googlegroups.com.
+> Visit this group at http://groups.google.com/group/bpfk-list.
+> For more options, visit https://groups.google.com/d/optout.
+>
+>
+>  --
+> You received this message because you are subscribed to the Google Groups
+> "BPFK" group.
+> To unsubscribe from this group and stop receiving emails from it, send an
+> email to bpfk-list+unsubscribe@googlegroups.com.
+> To post to this group, send email to bpfk-list@googlegroups.com.
+> Visit this group at http://groups.google.com/group/bpfk-list.
+> For more options, visit https://groups.google.com/d/optout.
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 4 | 2015-04-08T15:24:45Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+ju-ew2vjnosw9z_r9pxjx=8jamdlkz-ozy=k9v8xgfta@mail.gmail.com | mail/bpfk/cur/1428506685.162478bcaa218c98.jbomohi:2,S
 2015-04-08 15:50 GMT+03:00 Gleki Arxokuna <gleki.is.my.name@gmail.com>:
 
 > However, if we limit ourselves to just 5 places and basic cases of
