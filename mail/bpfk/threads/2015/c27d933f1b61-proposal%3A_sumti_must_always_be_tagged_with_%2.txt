@@ -1,4 +1,4 @@
-# mail/bpfk thread c27d933f1b61-proposal%3A_sumti_must_always_be_tagged_with_%2 | root cao7bv+gssgpnqug=p08ypspqqprmbzrxh6jxvafiabjdqfhceg@mail.gmail.com | 11 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread c27d933f1b61-proposal%3A_sumti_must_always_be_tagged_with_%2 | root cao7bv+gssgpnqug=p08ypspqqprmbzrxh6jxvafiabjdqfhceg@mail.gmail.com | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-04-06T10:45:27Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+gssgpnqug=p08ypspqqprmbzrxh6jxvafiabjdqfhceg@mail.gmail.com | mail/bpfk/cur/1428317127.c27d933f1b61e740.jbomohi:2,S
 Here is what the experimental grammar had (the official grammar is very
@@ -442,7 +442,91 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 9 | 2015-04-07T23:30:12Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2d0dmrd09ph8rpb77rot_mgabhscygyqvevpv9a7qf3qq@mail.gmail.com | mail/bpfk/cur/1428449412.72c01e89a27f32b2.jbomohi:2,S
+=== 9 | 2015-04-08T20:27:47Z | Ilmen <ilmen.pokebip@gmail.com> | 55258f43.5060402@gmail.com | mail/bpfk/cur/1428524867.e2d551f088b7748d.jbomohi:2,S
+
+On 08/04/2015 01:16, Jorge Llambías wrote:
+>
+> On Tue, Apr 7, 2015 at 10:46 AM, Ilmen <ilmen.pokebip@gmail.com 
+> <mailto:ilmen.pokebip@gmail.com>> wrote:
+>
+>     abs_term = "absorbable term", "term that becomes a selbritcita
+>     when followed by a selbri".
+>
+>     I implemented this absorbable/non-absorbable term grammar split in
+>     order to implement the standard behavior of selbritcita as per
+>     Jbofihe; that is, {lo nu brodo ba brode} parses as {lo nu brodo ba
+>     CU brode} in the standard version of Camxes; however, {mi ba brode
+>     gi'e pu brodo} parses as {mi CU ba brode gi'e pu brodo}, so the
+>     behavior of "ba" varies depending on its environment: if "ba" is
+>     within a bridi-tail, it is non-absorbable (it cannot become a
+>     selbritcita), but if it is in a bridi-head, it is absorbable as a
+>     selbritcita.
+>
+>
+> Does "mi ba brode gi'e pu brodo" parse as "mi CU ba brode gi'e pu 
+> brodo" and not as "mi ba (ku) CU brode gi'e pu brodo" in standard 
+> camxes?  I think it's the latter. "tag selbri" _should_ have priority 
+> over "tag (ku) selbri", but I don't think it does in current camxes.
+Standard Camxes.js: ([mi CU] [{ba brode} VAU] [gi'e {<pu brodo> VAU} VAU])
+>
+> Does Jbofihe use camxes? I thought it didn't, but this page doesn't 
+> say: http://mw.lojban.org/papri/jbofi%27e
+No, Jbofihe is a C program, it is not based on a PEG grammar, if I 
+recall correctly.
+
+>     I know this tag grammar split is rather ugly, but at this time I
+>     hadn't been able to find a better solution. Any alternative
+>     implementation is welcomed.
+>
+>
+> Which sentence currently uses "term" but couldn't use "abs_term" 
+> instead? Hmm, I just looked, and it seems that gek_termset, LAhE term, 
+> and BE term could have a (slight) problem, in the sense that KU would 
+> not be elidible in "ge ca (ku) gi ba (ku) broda", "la'e ba (ku) 
+> broda", "broda be ba (ku) brode".
+
+Standard Camxes.js:
+ge ca ku gi ba ku broda  --> ([{ge <ca ku> gi <ba ku>} CU] [broda VAU])
+ge ca gi ba broda  -->  SyntaxError: Expected [,] but "b" found.
+la'e ba ku broda  -->  SyntaxError: Expected [,] but "b" found.
+la'e ba broda  -->  SyntaxError: Expected [,] but "b" found.
+broda be ba ku brode  -->  ([{broda <be (¹ba ku¹) BEhO>} brode] VAU)
+broda be ba brode  -->  ([{broda <be (¹ba KU¹) BEhO>} brode] VAU)
+
+Experimental Camxes.js:
+ge ca ku gi ba ku broda  --> ([ge {ca ku} gi {ba ku}] [CU {broda VAU}])
+ge ca gi ba broda  -->  SyntaxError: Expected [,] but "b" found.
+la'e ba ku broda  -->  ([FA {la'e <ba ku> LUhU}] [CU {broda VAU}])
+la'e ba broda  -->  ([FA {la'e <ba KU> LUhU}] [CU {broda VAU}])
+broda be ba ku brode  -->  (CU [{broda <be (¹ba ku¹) BEhO>} brode] VAU)
+broda be ba brode  -->  (CU [{broda <be (¹ba KU¹) BEhO>} brode] VAU)
+
+So yeah, {ge ca gi ba broda} is broken for both parsers.
+{la'e ba (ku) broda} is an experimental grammar if I recall correctly, 
+so it's normal that the standard Camxes rejects it.
+
+>
+> (BTW, "ge ca (ku) gi ba (ku) klama" seems to be failing if we elide 
+> the first "ku".)
+>
+> Maybe it's better to just make the KU of "tag KU" not elidible in 
+> those three special contexts (are there more?).
+>
+Yeah, I've noticed this flaw a few days ago. I'm not sure whether this 
+can be fixed.
+
+mi'e la .ilmen. mu'o
+
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 10 | 2015-04-07T23:30:12Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2d0dmrd09ph8rpb77rot_mgabhscygyqvevpv9a7qf3qq@mail.gmail.com | mail/bpfk/cur/1428449412.72c01e89a27f32b2.jbomohi:2,S
 On Tue, Apr 7, 2015 at 3:21 AM, Gleki Arxokuna <gleki.is.my.name@gmail.com>
 wrote:
 >
@@ -493,7 +577,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 10 | 2015-04-08T06:08:57Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+i=-om+mwdffucqdb1jcleptf=mgvns4gubcuw=jcbskg@mail.gmail.com | mail/bpfk/cur/1428473337.e3e53c0e7463b699.jbomohi:2,S
+=== 11 | 2015-04-08T06:08:57Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+i=-om+mwdffucqdb1jcleptf=mgvns4gubcuw=jcbskg@mail.gmail.com | mail/bpfk/cur/1428473337.e3e53c0e7463b699.jbomohi:2,S
 2015-04-08 2:30 GMT+03:00 Jorge Llambías <jjllambias@gmail.com>:
 
 >
@@ -562,7 +646,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 11 | 2015-04-07T11:27:11Z | Ilmen <ilmen.pokebip@gmail.com> | 5523bf0f.5000502@gmail.com | mail/bpfk/cur/1428406031.365a3259fdfc27f9.jbomohi:2,S
+=== 12 | 2015-04-07T11:27:11Z | Ilmen <ilmen.pokebip@gmail.com> | 5523bf0f.5000502@gmail.com | mail/bpfk/cur/1428406031.365a3259fdfc27f9.jbomohi:2,S
 On 07/04/2015 00:52, Jorge Llambías wrote:
 > I don't really have any useful comments at this point because I'm 
 > still not up to speed with all the changes in this grammar.
