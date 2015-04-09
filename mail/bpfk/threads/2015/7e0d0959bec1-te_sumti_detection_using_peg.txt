@@ -1,4 +1,4 @@
-# mail/bpfk thread 7e0d0959bec1-te_sumti_detection_using_peg | root cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | 12 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread 7e0d0959bec1-te_sumti_detection_using_peg | root cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | 13 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-04-08T12:50:08Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | mail/bpfk/cur/1428497408.7e0d0959bec1d925.jbomohi:2,S
 Terminology:
@@ -538,4 +538,54 @@ To post to this group, send email to bpfk-list@googlegroups.com.
 Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
+
+
+=== 13 | 2015-04-09T10:32:19Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+hozefhmfbrzv5cxfubu4ma=rgno1awunu-qhrddermqg@mail.gmail.com | mail/bpfk/cur/1428575539.98271e171fa61147.jbomohi:2,S
+2015-04-08 15:50 GMT+03:00 Gleki Arxokuna <gleki.is.my.name@gmail.com>:
+
+> This is how sentence looks now in my PEG:
+>
+
+Obviously, that's was the first draft. Currently, "sentence" looks like
+this (the last string is what it was originally):
+
+sentence = expr:(
+(termsfa bridi_tail_t1fefi) / /* mi klama do ti*/
+(termsfa bridi_tail_t1fe) / /* mi klama do*/
+(termsfafe bridi_tail_t1fi) / /* mi do klama ti*/
+(termsfafefi bridi_tail_t1) / /* mi do ti klama*/
+(termsfafe bridi_tail_t1) / /* mi do klama*/
+(termsfa bridi_tail_t1) / /* mi klama*/
+(termsBAM? bridi_tail_t1fe) / /* klama do*/
+terms? bridi_tail_t1 (joik_jek bridi_tail / joik_jek stag? KE_clause free*
+bridi_tail KEhE_elidible free*)*) {return _node("sentence", expr);}
+
+I think the names of rules tell it all.
+E.g. "bridi_tail_t1fefi" is a bridi tail like {broda fe ko'a fi ko'a}.
+
+https://github.com/Ilmen-vodhr/ilmentufa/blob/master/mahantufa/altatufa.js.peg
+
+Also since my fork autorestores omitted selbri
+bridi_tail_t1fefi, bridi_tail_t1fe, bridi_tail_t1fi forbid selbri to be
+elided.
+
+So we get:
+{mi djica lonu lo plise mi lo tricu} =>
+
+([FAXIPA mi] [CU {djica <FAXIRE (¹lo [nu {<(²FAXIPA [lo plise KU]²)
+(²FAXIRE mi²) (²FAXICI [lo tricu KU]²)> <CU (²COhE VAU²)>} KEI] KU¹)>
+VAU}])
+
+since it was an ordinary bridi_tail_t1 where selbri is allowed to be
+restored.
+We restore selbri only at the end of bridi since we cannot know whether
+{lo plise mi lo tricu} is {lo plise mi lo tricu cu co'e} or {lo plise cu
+co'e mi lo tricu}  or {lo plise mi co'e lo tricu} etc.
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
 
