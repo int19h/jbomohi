@@ -1,4 +1,4 @@
-# mail/bpfk thread d0040ff68897-several_nested_giheks_in_bridi_tail_in_peg | root cao7bv+i4n5wl-q8cvkmyara63tf3m5tj6k89x6v9jzcydyo5ag@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread d0040ff68897-several_nested_giheks_in_bridi_tail_in_peg | root cao7bv+i4n5wl-q8cvkmyara63tf3m5tj6k89x6v9jzcydyo5ag@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-04-11T09:03:28Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+i4n5wl-q8cvkmyara63tf3m5tj6k89x6v9jzcydyo5ag@mail.gmail.com | mail/bpfk/cur/1428743008.d0040ff688970737.jbomohi:2,S
 The "official" PEG has this:
@@ -30,4 +30,62 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To post to this group, send email to bpfk-list@googlegroups.com.
 Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
+
+
+=== 2 | 2015-04-11T10:10:59Z | Bob LeChevalier <lojbab@lojban.org> | 5528f333.4060602@lojban.org | mail/bpfk/cur/1428747059.376d403e07810300.jbomohi:2,S
+On 4/11/2015 5:03 AM, Gleki Arxokuna wrote:
+> The "official" PEG has this:
+>
+> bridi-tail <- bridi-tail-1 (gihek stag? KE-clause free* bridi-tail
+> KEhE-clause? free* tail-terms)?
+> SPACE bridi-tail-sa <- bridi-tail-start (term / !bridi-tail-start
+> (sa-word / SA-clause !bridi-tail-start ) )* SA-clause &bridi-tail
+>
+> bridi-tail-start <- ME-clause / NUhA-clause / NU-clause / NA-clause
+> !KU-clause / NAhE-clause !BO-clause / selbri / tag bridi-tail-start /
+> KE-clause bridi-tail-start / bridi-tail
+>
+> bridi-tail-1 <- bridi-tail-2 (gihek !(stag? BO-clause) !(stag?
+> KE-clause) free* bridi-tail-2 tail-terms)*
+>
+> bridi-tail-2 <- bridi-tail-3 (gihek stag? BO-clause free* bridi-tail-2
+> tail-terms)?
+>
+>
+> Could you please provide examples where gihek in bridi-tail,
+> bridi-tail-1 and bridi-tail-2 rules matches? I just thought that only
+> one type of gihek in bridi tails was possible but PEG tells me otherwise
+> so I want to distinguish them when I face them in a real text.
+
+
+I can't answer any question about the whys and wherefores of the PEG 
+grammar since I don't understand PEG, but I probably could do so for the 
+corresponding YACC grammar, if you cannot get answers.
+
+I'm guessing from the above that you are wondering why the multiple 
+bridi-tail rules exist.  In the YACC equivalent, the nested rules ensure 
+that GEK (forethought connectives) group more tightly than any 
+afterthought connectives, that GIhEK_BO groups next, then plain GIhEKs, 
+and then GIhEK_KE, if more than one form occurs in a complex sentence.
+
+It is probably rather unlikely that people would mix grouping types, but 
+the YACC grammar was designed to handle a lot of weird things that might 
+cause ambiguity, even if we thought they weren't likely.
+
+broda le xekri gi'ake brode le blanu gi'o brodi le blabi gi'ubo ganai 
+brodo le xunre gi brodu le pelxu
+
+seems to pass the official parser and uses all of the constructs.
+
+Hope this is relevant.
+
+lojbab
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
 
