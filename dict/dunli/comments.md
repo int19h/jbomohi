@@ -36,3 +36,14 @@ sidbo ciksi prosa cu mulno ku mi do jungau
 
 mu'o mi'e la .ilmen. no'u la menli
 
+
+## 2015-04-14T13:34:23Z — Ilmen (comment 1807, on definition 65818, in reply to 1806)
+
+Re: lo te ckini
+
+la .ilmen. di'e ciska:
+> .i da'i lo si'o frica cu ka fabu febu fibu ce'ai lo se ckini be fabu bei 
+fibu cu drata lo se ckini be febu bei fibu
+
+.oi skudji fa mi lu ka fabu boi febu boi fibu ce'ai li'o... li'u .u'u
+
