@@ -1,419 +1,186 @@
-
-la samtrosku xi no pi'e pa pe fi'e la [[rab.spir|rab.spir]]
-
 '''samtrosku''' is a procedural computer language expressed in Lojban.
 
-[[samtrosku examples|samtrosku examples]]
+'''la samtrosku xi no pi'e pa pe fi'e la [[rab.spir|rab.spir]]'''
 
-A samtrosku program must parse. Certainly some parts of the language could be
+{{See also|samtrosku examples}}
 
-simplified for computers - for example, names wouldn't necessarily have to be
-
-pronounceable - but samtrosku's unique advantage is that it could be spoken aloud.
-
-The commands and functions in samtrosku are brivla, and are defined by their
-
-place structure.
+A samtrosku program must parse. Certainly some parts of the language could be simplified for computers - for example, names wouldn't necessarily have to be pronounceable - but samtrosku's unique advantage is that it could be spoken aloud. The commands and functions in samtrosku are brivla, and are defined by their place structure.
 
 === Statements and blocks ===
-
-A statement is a bridi.
-
-A statement can be a simple bridi such as {li abu mleca li ci}. This simply
-
-returns a truth value of "true" or "false", which can be used if the next
-
-statement is connected with a logical connective, or if the statement is part
-
-of a function.
-
-A statement can also be a bridi involving {ko}. This is a command for the
-
-computer to do something, such as {ko cusku lu coi munje li'u}. It returns
-
-"true" if the command can be performed, and "false" otherwise.
-
-Because of the way truth values work, {ko} is always equivalent to {do}.
-
-If a statement is connected to another statement with a logical connective, the
-
-first statement is performed, and then the second statement is either performed
-
-or skipped in order to make the connective true. If the connective would be
-
-true (or false) either way, the second statement is skipped - call this the
-
-"laziness rule". The text scope containing both statements is assigned a truth
-
-value - if the connective cannot be made true, the truth value of the connected
-
-statements is false; otherwise it is true.
-
-If the end of a text scope is reached (there are no more connectives, and the
-
-commands are not inside a block) and the last truth value is "false", the
-
-program stops with an error. So a command which cannot be executed will stop
-
-the program. Also, this means a simple statement, not connected to anything,
-
-can be used as an assertion - if it is true, nothing happens, and if it is
-
-false, the program stops.
+*A statement is a bridi.
+*A statement can be a simple bridi such as {{vlapoi|li|abu|mleca|li|ci}}. This simply returns a truth value of "true" or "false", which can be used if the next statement is connected with a logical connective, or if the statement is part of a function.
+*A statement can also be a bridi involving {{jvs|ko}}. This is a command for the computer to do something, such as {{vlapoi|ko|cusku|lu|coi|munje|li'u}}. It returns "true" if the command can be performed, and "false" otherwise. Because of the way truth values work, {jvs|ko}} is always equivalent to {{jvs|do}}.
+*If a statement is connected to another statement with a logical connective, the first statement is performed, and then the second statement is either performed or skipped in order to make the connective true. If the connective would be true (or false) either way, the second statement is skipped - call this the "laziness rule". The text scope containing both statements is assigned a truth value - if the connective cannot be made true, the truth value of the connected statements is false; otherwise it is true.
+*If the end of a text scope is reached (there are no more connectives, and the commands are not inside a block) and the last truth value is "false", the program stops with an error. So a command which cannot be executed will stop the program. Also, this means a simple statement, not connected to anything, can be used as an assertion - if it is true, nothing happens, and if it is false, the program stops.
 
 ==== Blocks ====
-
-A block is a set of statements grouped with {tu'e ... tu'u}. It creates a
-
-separate text scope, which is true if all the statements within are true, and
-
-false otherwise (at which point no more statements in the block are executed).
-
-Unlike a logical connective scope, a block does not overwrite {go'u} and {go'a}
-
-(see below).
-
-The cmavo {di'e} would refer to whatever is in the following text scope (but must be used as {la'edi'e} to actually run the code). So {di'e} would most commonly be used to introduce a block.
-
-Blocks are useful for defining loops and brivla.
+*A block is a set of statements grouped with {{vlapoi|tu'e|...|tu'u}}. It creates a separate text scope, which is true if all the statements within are true, and false otherwise (at which point no more statements in the block are executed). Unlike a logical connective scope, a block does not overwrite {{jvs|go'u}} and {{jvs|go'a}} (see below).
+*The cmavo {{jvs|di'e}} would refer to whatever is in the following text scope (but must be used as {{vlapoi|la'e|di'e}} to actually run the code). So {{jvs|di'e}} would most commonly be used to introduce a block.
+*Blocks are useful for defining loops and brivla.
 
 ==== Recent truth values ====
-
-If you want to do something with logical values that connectives cannot handle
-
-(such as an if-then-else statement), you can use the go'V series of cmavo.
-
-* go'i contains the most recent truth value.
-* go'e contains the second most recent truth value.
-
-* go'u contains the truth value of the first part of the most recent logical connective.
-* go'a contains the truth value of the second part of the most recent logical connective.
-
-So if you want the program to execute {ko brode} if {broda} is true, and {ko
-
-brodi} if not, you could do this:
-
-broda
+If you want to do something with logical values that connectives cannot handle (such as an if-then-else statement), you can use the go'V series of cmavo.
+* {{jvs|go'i}} contains the most recent truth value.
+* {{jvs|go'e}} contains the second most recent truth value.
+* {{jvs|go'u}} contains the truth value of the first part of the most recent logical connective.
+* {{jvs|go'a}} contains the truth value of the second part of the most recent logical connective.
+So if you want the program to execute {{vlapoi|ko|brode}} if {{jvs|broda}} is true, and {{vlapoi|ko|brodi}} if not, you could do this:
+{{mu|broda
 
 .ijo ko brode
 
-.i go'u ijonai ko brodi
+.i go'u ijonai ko brodi}}
 
-(By using the 'experimental cmavo' feature described later, you could reduce
-
-{.i go'u ijonai} to {.ijo'ai} for convenience.)
+By using the 'experimental cmavo' feature described later, you could reduce {{vlapoi|i|go'u|i|jonai}} to {{vlapoi|i|jo'ai}} for convenience.
 
 === Variables ===
+The ko'a-series, {{jvs|la}}} followed by a name, or any sequence of lerfu can refer to a value.
 
-The ko'a-series, {la} followed by a name, or any sequence of lerfu can refer
-
-to a value.
-
-Variables defined outside of a function are global. Variables can also be
-
-explicitly made global with the brivla {vitno} (as in {ko'a vitno}). To access
-
-a global variable inside a function, follow it with {bi'unai} when it first
-
-appears. {bi'u} can also be used to explicitly state that a variable is local.
+Variables defined outside of a function are global. Variables can also be explicitly made global with the brivla {{jvs|vitno}} (as in {{vlapoi|ko'a|vitno}}). To access a global variable inside a function, follow it with {{vlapoi|bi'u|nai}} when it first appears. {{jvs|bi'u}} can also be used to explicitly state that a variable is local.
 
 ==== Assignment ====
+Assignment of variables can be done with {{jvs|goi}}, {{jvs|dubgau}}, or {{jvs|dungau}}, which have different effects.
 
-Assignment of variables can be done with {goi}, {dubgau}, or {dungau}, which
+{{jvs|goi}} performs the action called "unification": if the variable on one side is assigned and the variable on the other side is not, it makes the unassigned variable equal to the assigned one. If both variables are already assigned, then the statement containing {{jvs|goi}} fails. If one variable is cleared with {{jvs|da'o}}, the other continues to exist.
 
-have different effects.
+Both variables are then given the same referent - this happens even if both variables were equal, or both variables were unassigned. So after unification, the variables are linked so that one changes when the other does. This can be used to give more useful names to items of a sequence, or to give a variable a lerfu-based name so it can be used in a mekso expression.
 
-{goi} performs the action called "unification": if the variable on one side is
+{{jvs|dungau}} takes three arguments:
+{{gl|dungau|x1 (ko) sets the value of x2 (variable) equal to that of x3 (variable)}}
 
-assigned and the variable on the other side is not, it makes the unassigned
+The referent of the variable in x2 is not changed, so one can be assigned again later without affecting the other. This is the standard form of assignment in most programming languages.
 
-variable equal to the assigned one. If both variables are already assigned,
-
-then the statement containing {goi} fails. If one variable is cleared with
-
-{da'o}, the other continues to exist.
-
-Both variables are then given the same referent - this happens even if both
-
-variables were equal, or both variables were unassigned. So after unification,
-
-the variables are linked so that one changes when the other does. This can be
-
-used to give more useful names to items of a sequence, or to give a variable a
-
-lerfu-based name so it can be used in a mekso expression.
-
-{dungau} takes three arguments:
-
-'''dungau''': x1 (ko) sets the value of x2 (variable) equal to that of x3
-
-(variable)
-
-The referent of the variable in x2 is not changed, so one can be assigned again
-
-later without affecting the other. This is the standard form of assignment in
-
-most programming languages.
-
-{dubgau} takes any number of arguments after the first which is {ko}. Every
-
-argument starting at x2 is given the same referent as the rightmost argument.
+{{jvs|dubgau}} takes any number of arguments after the first which is {{jvs|ko}}. Every argument starting at x2 is given the same referent as the rightmost argument.
 
 === Defining brivla ===
-
-Brivla are defined using logically linked statements, with {ca'e} at the
-
-beginning of the bridi that is being defined. The connective should usually be
-
-'o' or 'onai', but 'a' would work like 'onai' because of the laziness rule. So
-
-a brivla could be defined using these general structures:
-
-go ca'e <bridi being defined> gi <statement>
-
-go ca'e <bridi being defined> gi ko zukte la'edi'e .i <block>
-
-ko ca'e <bridi-tail being defined> gi'o <bridi-tail> (defines simple commands)
-
-ca'e <bridi being defined> ijo <statement or block>
-
-This last form is the one which is most likely to be useful for complex
-
-definitions.
+Brivla are defined using logically linked statements, with {{jvs|ca'e}} at the beginning of the bridi that is being defined. The connective should usually be {{jvs|o}} or {{jvs|onai}}, but {{jvs|a}} would work like {{jvs|onai}} because of the laziness rule. So a brivla could be defined using these general structures:
+*<nowiki>go ca'e <bridi being defined> gi <statement></nowiki>
+*<nowiki>go ca'e <bridi being defined> gi ko zukte la'edi'e .i <block></nowiki>
+*<nowiki>ko ca'e <bridi-tail being defined> gi'o <bridi-tail> (defines simple commands)</nowiki>
+*<nowiki>ca'e <bridi being defined> ijo <statement or block></nowiki>
+This last form is the one which is most likely to be useful for complex definitions.
 
 ==== Truth tests ====
+If all the places are known and none are {{jvs|ko}}, the brivla is a truth test, which is true if the defining statement or block is true, and false otherwise.
 
-If all the places are known and none are {ko}, the brivla is a truth test,
-
-which is true if the defining statement or block is true, and false otherwise.
-
-Example: This brivla tests whether x1 is between the items in the two-item
-
-sequence x2.
-
-ca'e ko'a jbini ko'e ijo                | (defining "x1 is between x2"):
-
-tu'e                                    |
-
-by goi le pamoi be ko'e               | (b = ko'e[[1|1]])
-
-.i cy goi le remoi be ko'e            | (c = ko'e[[2|2]])
-
-.i ge ko'a zmadu by gi ko'a mleca cy  | (is it true that b < ko'a < c?)
-
-tu'u
-
+=====Example=====
+This brivla tests whether x1 is between the items in the two-item sequence x2.
+<tab class=wikitable>
+ca'e ko'a jbini ko'e ijo	(defining "x1 is between x2"):
+tu'e	
+by goi le pamoi be ko'e	(b = ko'e1)
+.i cy goi le remoi be ko'e	(c = ko'e2)
+.i ge ko'a zmadu by gi ko'a mleca cy	(is it true that b < ko'a < c?)
+tu'u	&nbsp;
+</tab>
 With this brivla defined:
-
-.i li 3 jbini li 2 ce'o 4               | (returns true)
-
-.ijo ko cusku lu go'i li'u              | (prints "go'i")
-
-.i go'i ijonai ko cusku lu na go'i li'u | (otherwise print "na go'i")
-
+<tab class=wikitable>
+.i li 3 jbini li 2 ce'o 4	(returns true)
+.ijo ko cusku lu go'i li'u	(prints "go'i")
+.i go'i ijonai ko cusku lu na go'i li'u	(otherwise print "na go'i")
+</tab>
 ==== Functions ====
+A function is like a truth test, but one of its places (usually the x1) is unknown. The result is returned as that place, using the predicate {{jvs|jagdu'o}}.
+{{gl|jagdu'o|x1, as a result, is equal to x2}}
+If x1 is unknown, {{jvs|jagdu'o}} sets x1 equal to x2. If x1 is known, {{jvs|jagdu'o}} does nothing, but has a truth value of whether x1 equals x2. This means that a function can be used as a truth test.
 
-A function is like a truth test, but one of its places (usually the x1) is
+The result of a function is retrieved with {{jvs|le}}.
 
-unknown. The result is returned as that place, using the predicate {jagdu'o}.
-
-'''jagdu'o''': x1, as a result, is equal to x2
-
-If x1 is unknown, {jagdu'o} sets x1 equal to x2. If x1 is known, {jagdu'o}
-
-does nothing, but has a truth value of whether x1 equals x2. This means that a
-
-function can be used as a truth test.
-
-The result of a function is retrieved with {le}.
-
-Example: This brivla can either return the square of x2 in x1, or test whether
-
-x1 equals x2 squared.
-
-ca'e ko'a kurpi'i by ijo
-
-ko'a jagdu'o li by pi'i by
-
+=====Example=====
+This brivla can either return the square of x2 in x1, or test whether x1 equals x2 squared.
+<tab class=wikitable>
+ca'e ko'a kurpi'i by ijo	&nbsp;
+ko'a jagdu'o li by pi'i by	&nbsp;
+</tab>
 With this brivla defined:
-
-ko cusku le kurpi'i be li 3               | (prints "9")
-
-.i li 16 kurpi'i li 4                     | (returns true)
-
-.ijo ko cusku lu go'i li'u                | (prints "go'i")
-
+<tab class=wikitable>
+ko cusku le kurpi'i be li 3	(prints "9")
+.i li 16 kurpi'i li 4	(returns true)
+.ijo ko cusku lu go'i li'u	(prints "go'i")
+</tab>
 ==== Commands ====
-
-A command is a truth test or a function which performs an action. This could be
-
-accomplished simply with {ko} statements in the block, but it is good form to
-
-fix {ko} as the x1 by putting it in the x1 of the {ca'e} phrase. Hence, the
-
-definition of a command {ganzu} which takes one argument {ko'a} would look like
-
-this:
-
+A command is a truth test or a function which performs an action. This could be accomplished simply with {{jvs|ko}} statements in the block, but it is good form to fix {{jvs|ko}} as the x1 by putting it in the x1 of the {{jvs|ca'e}} phrase. Hence, the definition of a command {{jvs|ganzu}} which takes one argument {{jvs|ko'a}} would look like this:
+<tab class=wikitable>
 ca'e ko ganzu ko'a ijo
-
 tu'e
-
 ...
-
 tu'u
-
-Then this command would be called with {ko ganzu ...}, and if the {ko} were not
-
-there (for example, if something tried to refer to {le ganzu}, which makes
-
-little sense), the command would fail.
+</tab>
+Then this command would be called with {{{vlapoi|ko|ganzu}} ..., and if the {{jvs|ko}} were not there (for example, if something tried to refer to {{vlapoi|le|ganzu}}, which makes little sense), the command would fail.
 
 ==== Loops ====
-
 A "while" loop would be done in this form:
-
-.i ca le du'u <statement1> kei <statement2>
-
-...which says to repeatedly perform <statement2> while <statement1> is true. Of course, this could always be rephrased as
-
-.i <statement2> ca le du'u <statement1>
-
-Also, <statement2> would very frequently be a block.
-
+*<nowiki>.i ca le du'u <statement1> kei <statement2></nowiki>
+<nowiki>...which says to repeatedly perform <statement2> while <statement1> is true. Of course, this could always be rephrased as</nowiki>
+*<nowiki>.i <statement2> ca le du'u <statement1></nowiki>
+Also, <nowiki><statement2></nowiki> would very frequently be a block.
 ==== Case statements ====
-
 Case statements would be begun by asking the computer a question; it would then return a Lojban string containing the answer to that question. I'm not certain yet how the choices would be given from there.
-
 === Strings ===
-
 ==== Literal strings and filenames ====
+Pure strings are quoted with {{jvs|zoi}}; filenames are quoted with {{jvs|la'o}}. The ordinary delimiters should be usable in most cases, though I suggest that the angle bracket convention (using <nowiki>< and ></nowiki> to delimit the quoted text) should be usable as well. The quoted string would be whatever is between the delimiters, not counting the whitespace on each end. These strings would be the only part of samtrosku that is not speakable.
 
-Pure strings are quoted with {zoi}; filenames are quoted with {la'o}.
+If the string is a particularly pathological one, you may use a mekso of lerfu (example: "hi^Z ", where ^Z is character code 1A and the string ends with a space, could be {{vlapoi|lu'e|me'o|y'ybu|ibu|se'e|pa|dau|na'a|denpa bu}}.
 
-The ordinary delimiters should be usable in most cases, though I suggest that
+Character codes should be hexadecimal. In C they are octal, but this is because the letters A-F would create ambiguity if they appeared in a character code embedded in a string. In samtrosku there is no such problem.
 
-the angle bracket convention (using < and > to delimit the quoted text) should be
-
-usable as well. The quoted string would be whatever is between the delimiters, not
-
-counting the whitespace on each end. These strings would be the only part of
-
-samtrosku that is not speakable.
-
-If the string is a particularly pathological one, you may use a mekso of
-
-lerfu (example: "hi^Z ", where ^Z is character code 1A and the string ends
-
-with a space, could be {lu'e me'o y'ybu ibu se'e pa dau na'a denpa bu}.
-
-Character codes should be hexadecimal. In C they are octal, but this is because
-
-the letters A-F would create ambiguity if they appeared in a character code
-
-embedded in a string. In samtrosku there is no such problem.
-
-[Obligatory troll-protective disclaimer: This does not mean that I endorse
-
-using hexadecimal "by default" in the rest of the language, either lojban or
-
-samtrosku.|Obligatory troll-protective disclaimer: This does not mean that I endorse
-
-using hexadecimal "by default" in the rest of the language, either lojban or
-
-samtrosku.]
+<u>Obligatory troll-protective disclaimer</u>: This does not mean that we endorse using hexadecimal "by default" in the rest of the language, either Lojban or samtrosku.
 
 ==== Lojban strings ====
+Text enclosed in {{vlapoi|lo'u|...|le'u}} is a string composed of Lojban words. The literal text is not used; the text is stored as the Lojban words it represents.
 
-Text enclosed in {lo'u...le'u} is a string composed of Lojban words. The
-
-literal text is not used; the text is stored as the Lojban words it represents.
-
-So {ko cusku lo'u icale nubroda le'u} could display ".i ca le nu broda".
+So {{vlapoi|ko|cusku|lo'u|i|ca|le|nu|broda|le'u}} could display '''.i ca le nu broda'''.
 
 === Input and output ===
 
-Besides the fact that {cusku} would write to standard output, I haven't yet decided anything here.
+Besides the fact that {{jvs|cusku}} would write to standard output, I haven't yet decided anything here.
 
 === Loading brivla definitions ===
-
 The definition of a brivla can be loaded from another file.
 
-A brivla is defined using {cilre}.
+A brivla is defined using {{jvs|cilre}}.
 
-'''cilre''': x1 (ko) learns the instructions corresponding to x3 (gismu/lujvo/fu'ivla) from
+{{gl|cilre|x1 (ko) learns the instructions corresponding to x3 (gismu/lujvo/fu'ivla) from x4 (file)}}
 
-x4 (file)
-
-x2 and x5 are ignored, though they might mean something in a later revision of
-
-samtrosku. If x3 is {zo'e} it learns every brivla in that file; if x4 is {zo'e}
-
-an implementation may search a standard path to find the appropriate brivla.
+x2 and x5 are ignored, though they might mean something in a later revision of samtrosku. If x3 is {{jvs|zo'e}} it learns every brivla in that file; if x4 is {{jvs|zo'e}} an implementation may search a standard path to find the appropriate brivla.
 
 Examples:
-
-ko cilre fi zo cunyna'u
-
-ko cilre fi zo pandi la'o < /usr/share/samtrosku/brivla/vrici.sam >
-
-ko cilre fo la'o < /usr/share/samtrosku/brivla/kanji.sam >
+*<nowiki>ko cilre fi zo cunyna'u</nowiki>
+*<nowiki>ko cilre fi zo pandi la'o < /usr/share/samtrosku/brivla/vrici.sam ></nowiki>
+*<nowiki>ko cilre fo la'o < /usr/share/samtrosku/brivla/kanji.sam ></nowiki>
 
 === Defining experimental cmavo ===
-
-A cmavo is defined in experimental cmavo space by setting it equal to
-
-a fragment of text, using the predicate {cmavygau}.
-
-'''cmavygau''': x1 (ko) defines x2 (cmavo) to represent x4 (text fragment)
-
+A cmavo is defined in experimental cmavo space by setting it equal to a fragment of text, using the predicate {{jvs|cmavygau}}.
+{gl|cmavygau|x1 (ko) defines x2 (cmavo) to represent x4 (text fragment)}}
 x3 (the selma'o) and x5 (samtrosku) are ignored.
 
 For example:
-
-.i ko cmavygau zo lai'e fi    | makes "la'edi'e" shorter
-
-lo'u la'e di'e le'u
-
-.i ko cmavygau zo jo'ai fi    | makes a pseudo-connective for "if-then-else"
-
-lo'u go'u ijonai le'u
+<tab class=wikitable>
+.i ko cmavygau zo lai'e fi	makes "la'edi'e" shorter
+lo'u la'e di'e le'u	
+.i ko cmavygau zo jo'ai fi	makes a pseudo-connective for "if-then-else"
+lo'u go'u ijonai le'u	 </tab>
 
 === sumti types ===
 
-Samtrosku is weakly typed, and inherently to the semantics of Lojban, there are
+Samtrosku is weakly typed, and inherently to the semantics of Lojban, there are lots of types. Only certain types work in certain situations. Here is a list of types and examples of how each might be referred to (these references could then be assigned to a variable such as {{jvs|ko'a}} using {{jvs|goi}}.)
+* personal: {{jvs|ko}}, {{jvs|do}}
+* number: {{vlapoi|li}} '''3'''
+** floating-point number: {{jvs|li}} '''3''' {{jvs|pi}} '''2''', {{jvs|li}} '''4''' {{jvs|pi}}, {{vlapoi|li|pai}}
+** mixed-base number: {{vlapoi|le|tcika}}
+** Boolean value: {{vlapoi|le|jei|go'i}}
+** complex number: {{vlapoi|li|ci|ka'o|re}}
+* ratio: {{jvs|li}} '''4''' {{jvs|pa'i}} '''2'''
+* interval: {{vlapoi|li|no|bi'o|pa|no}}, {{vlapoi|li|su'o}} '''2'''
+* vector: {{vlapoi|li|jo'i}} '''1''' {{vlapoi|boi}} '''2''' {{vlapoi|te'u}}
+* matrix: {{vlapoi|li|jo'i}} '''1''' {{vlapoi|boi}} '''0''' {{vlapoi|te'u|pi'a|jo'i}} '''0''' {{vlapoi|boi}} '''1''' {{vlapoi|te'u}}
+* set: {{vlapoi|li}} '''2''' {{vlapoi|ce|li}} '''4''', {{vlapoi|lu'i|ko'i}}
+* sequence: {{vlapoi|li}} '''2''' {{vlapoi|ce'o|li}} '''4''', {{vlapoi|vu'i|ko'i}}
+* unevaluated expression: {{vlapoi|me'o|by|pi'i|by}}
+* character: {{vlapoi|lu'e|me'o|by}}, {{vlapoi|lu'e|me'o|se'e}} '''62''', {{vlapoi|jvs|zoi}} <nowiki><b></nowiki>
+* string: {{vlapoi|zoi}} <nowiki><xyzzy></nowiki>
+** parseable string, unevaluated code: {{vlapoi|lu|na|go'i|li'u}}, {{vlapoi|jvs|di'e}}
+** evaluated code: {{vlapoi|la'e|di'e}}
+** words: {{vlapoi|lo'u|go'u|i|jonai|le'u}}, {{vlapoi|zo|lai'e}}
 
-lots of types. Only certain types work in certain situations. Here is a list of
-
-types and examples of how each might be referred to (these references could
-
-then be assigned to a variable such as {ko'a} using {goi}.)
-
-* personal: {ko}, {do}
-* number: {li 3}
-
-** floating-point number: {li 3pi2}, {li 4pi}, {li pai}
-** mixed-base number: {le tcika}
-
-** Boolean value: {le jei go'i}
-** complex number: {li ci ka'o re}
-
-* ratio: {li 4 pa'i 2}
-* interval: {li no bi'o pano}, {li su'o 2}
-
-* vector: {li jo'i 1 boi 2 te'u}
-* matrix: {li jo'i 1 boi 0 te'u pi'a jo'i 0 boi 1 te'u}
-
-* set: {li 2 ce li 4}, {lu'i ko'i}
-* sequence: {li 2 ce'o li 4}, {vu'i ko'i}
-
-* unevaluated expression: {me'o by pi'i by}
-* character: {lu'e me'o by}, {lu'e me'o se'e 62}, {zoi <b>}
-
-* string: {zoi <xyzzy>}
-** parseable string, unevaluated code: {lu na go'i li'u}, {di'e}
-
-** evaluated code: {la'edi'e}
-** words: {lo'u go'u ijonai le'u}, {zo lai'e}
-
-''For a better list of types, look through the gismu list. Some places are specified for ka, others for du'u, some for sets and others for numbers. These are some Lojban datatypes.''
+For a better list of types, look through the gismu list. Some places are specified for {{jvs|ka}}, others for {{jvs|du'u}}, some for sets and others for numbers. These are some Lojban datatypes.
