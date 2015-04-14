@@ -1,4 +1,4 @@
-# mail/bpfk thread 7e0d0959bec1-te_sumti_detection_using_peg | root cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | 17 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread 7e0d0959bec1-te_sumti_detection_using_peg | root cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | 18 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-04-08T12:50:08Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+g3dr6p-1foejwnhmmonp+myb5xvqwpfwgqjheejfbo-q@mail.gmail.com | mail/bpfk/cur/1428497408.7e0d0959bec1d925.jbomohi:2,S
 Terminology:
@@ -449,7 +449,195 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 11 | 2015-04-08T15:24:45Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+ju-ew2vjnosw9z_r9pxjx=8jamdlkz-ozy=k9v8xgfta@mail.gmail.com | mail/bpfk/cur/1428506685.162478bcaa218c98.jbomohi:2,S
+=== 11 | 2015-04-14T08:09:17Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+hykm+pvqo-rt3+ttttx6hl0ftds_2xgk-z5kxd5w8s8q@mail.gmail.com | mail/bpfk/cur/1428998957.8fd83e7e34629dcd.jbomohi:2,S
+2015-04-08 18:15 GMT+03:00 Alex Burka <durka42@gmail.com>:
+
+> I'm impressed that you got it this far, but as I've said before I really
+> don't see the PEG as the place for this. First of all, it's mixing two
+> separate steps in the interpretation of a sentence (namely parsing and
+> sumti place resolution).
+>
+
+I think this is the same step separated only in our minds. If it shouldn't
+be called "parsing" then okay.
+
+What concerns me is that one can create any arbitrary system of te sumti
+resolution especially when you put ZAMs after FAMs.
+Programmers would then say {i'asai} to such BPFK decision and implement
+this system on top of PEG no matter how unnatural it would be for human
+brain.
+
+I used only PEG to study the core of the language itself to see what system
+would require as few conceptually new rules as possible (copy-pasting
+existing rules doesn't count).
+I already explained my vision of some results of this analysis in
+FA-autorestoration
+thread <https://groups.google.com/d/topic/bpfk-list/EV1avCV8_PY/discussion>.
+
+And as you said, this basic functionality requires 60 new rules ... and it
+> has severe limitations as a te sumti detector, since it gives up after the
+> first explicit FA, doesn't interact with SE/GIhE/BE/JAI, etc.
+>
+
+No longer 60 rules due to optimizations and on the opposite due to
+supporting new features.
+Currently, everything excluding putting ZAMs after FAMs is supported from
+x1 to x5.
+Here are some more examples:
+mi do ti bai do ta gau mi fe do gau ti klama gau tu mi =>
+([{FA mi} {FE do} {FI ti} {bai do} {FO ta} {gau mi} {fe do} {gau ti}] [CU
+{klama SF} {<gau tu> <FIhA mi>} VAU])
+
+cusku zo coi fi mi =>
+([FA ZOhE] [CU {cusku SF} {FE <zo coi>} {fi mi} VAU])
+
+mo mi ti do tu gi'e co'e ta tu =>
+([FA ZOhE] [CU {mo SF} {FE mi} {FI ti} {FO do} {FU tu} VAU] [gi'e {CU <co'e
+SF> <FE ta> <FI tu> VAU} VAU])
+
+Also since CLL asserts that bridi head can never be empty this is
+implemented:
+i carvi =>
+(i [FA ZOhE] [CU {carvi SF} VAU])
+This ensures x1 exists.
+In English this carvi1 is "It" (it rains). In other languages it is
+zero-marked.
+
+
+
+> Like I said, good proof of concept, but I'd be surprised if this is the
+> route to a general te sumti detector.
+>
+
+PEG.js can indeed be the route to it since here PEG is coupled with
+javascript, however, I didn't use any javascript except output of strings
+and nodes as in the original camxes.js.
+
+This is the proof of concept that having a variable memory is not necessary
+for the language to work up to some point.
+For detecting more places higher than x5 it'd be desirable to get memory by
+storing what's needed in javascript arrays however I doubt very much the
+language needs more than 5 arguments in functions. If they are needed in
+e.g. emulation of programming languages I suggest that FAMs are used
+instead of ZAMs.
+
+There've been different requests to allow empty {lo ... ku} sumti. This all
+results in some funny long outputs from very short inputs:
+
+lo =>
+([FA {lo <COhE SF> KU}] [CU {COhE SF} VAU])
+lo lo =>
+([FA {lo <(¹lo [COhE SF] KU¹) (¹COhE SF¹)> KU}] [CU {COhE SF} VAU])
+
+lonunoi =>
+([FA {lo <(¹[nu {<FA ZOhE> <CU (²COhE SF²) VAU>} KEI] SF¹) (¹noi [{FA ZOhE}
+{CU <COhE SF> VAU}] KUhO¹)> KU}] [CU {COhE SF} VAU])
+
+I have no idea whether we need it. In some cases {fa zo'e} and selbri
+autorestoration required changing the choice order of subrules to test.
+I also removed one rule treating {sa} in linkargs. If the community thinks
+{sa} is important I will work on it.
+
+At this point my ToDo list of altatufa "parser" is empty so my work is done
+unless new features are requested, unnoticed bugs discovered or
+optimizations or prettifications of the code are envisioned.
+
+
+>
+>  On Wednesday, April 8, 2015 at 8:50 AM, Gleki Arxokuna wrote:
+>
+> Terminology:
+> *FAM - a term taking a FA-position with FA explicitely filled with
+> {faxiveimo'eko'a} where mo'eko'a is a precise number (e.g. not {xo'e}
+> * ZAM - a bare term taking a FA-position with FA omitted. Positioning
+> rules can restore exact value of ko'a in {faxiveimo'eko'a}
+> * BAM - all other terms, e.g. prefixed with BAI or PU etc.
+>
+> So the issue of te sumti detection is to turn all ZAMs into FAMs in the
+> syntax tree.
+> Can we do that using PEG? I'm not that sure because
+> *some brivla have infinite number of places* like e.g. {jutsi}. {du} is a
+> special case since every te sumti of it can just take {faxixo'e} position.
+>
+> Currently I'm unaware of any possibilities for remembering values of
+> variables (te sumti numbers) in PEG.js thus we cant increment to any given
+> number of te sumti without first hardcoding all of them in PEG itself.
+>
+> However, if we limit ourselves to just 5 places and basic cases of
+> omitting FA then we can do that using PEG.
+> The current version of my fork of camxes.js produces these outputs:
+>
+> 1. ([FAXIPA mi] [CU {prami <FAXIRE do> VAU}])
+> 2. ([FAXIPA mi] [CU {djuno <fi do> VAU}])
+> 3. ([FAXIPA mi] [CU {djica <FAXIRE (¹lo [nu {<FAXIPA (²lo plise KU²)> <cu
+> (²farlu [FAXIRE mi] [FAXICI {lo tricu KU}] VAU²)>} KEI] KU¹)> VAU}])
+>
+> FAXIPA, FAXIRE, FAXICI are restored FA.
+>
+>
+> This is how sentence looks now in my PEG:
+> sentence = expr:(
+> &(terms_1ZAM CU_elidible selbri terms_1ZAM terms_1ZAM !terms_1ZAM)
+> (termsfa bridi_tail_t1fefi) / /* mi klama do ti*/
+> &(terms_1ZAM CU_elidible selbri terms_1ZAM) (termsfa bridi_tail_t1fe) / /*
+> mi klama do*/
+> &(terms_1ZAM terms_1ZAM CU_elidible selbri !terms_1ZAM) (termsfa termsfe
+> bridi_tail_t1) / /* mi do klama*/
+> &(terms_1ZAM terms_1ZAM CU_elidible selbri terms_1ZAM !terms_1ZAM)
+> (termsfa termsfe bridi_tail_t1fi) / /* mi do klama ti*/
+> &(terms_1ZAM terms_1ZAM terms_1ZAM CU_elidible selbri !terms_1ZAM)
+> (termsfa termsfe termsfi bridi_tail_t1) / /* mi do ti klama*/
+> &(terms_1ZAM CU_elidible selbri) (termsfa bridi_tail_t1) / /* mi klama*/
+> terms? bridi_tail_t1 (joik_jek bridi_tail / joik_jek stag? KE_clause free*
+> bridi_tail KEhE_elidible free*)*) {return _node("sentence", expr);}
+>
+> Examples for each case is shown in comments.
+> This addition to PEG required hardcoding terms for fa,fe,fi separately and
+> every case of bridi tail like "selbri x2 x3", "selbri x2", "selbri x3". To
+> hardcode them one needs to also hardcode all inner rules until you meet
+> selbri at bridi_tail_3 level and till tense_modal for sumti (a modification
+> of tense_modal where {fa} or {fe} or {fi} are hardcoded correspondingly).
+>
+> This required adding 60 new lines to PEG.
+> Even for supporting these basic cases the work isn't done yet,
+> optimizations of those copy-pasted strings might be possible.
+>
+> Anyway this is just a proof of concept.
+>
+> To test the current state of alta parser say "alta: mi prami do" on La
+> Naxle page
+> <http://vrici.lojban.org/~gleki/mediawiki-1.19.2/extensions/ilmentufa/ircbot/naxle.html>
+> .
+>
+> --
+> You received this message because you are subscribed to the Google Groups
+> "BPFK" group.
+> To unsubscribe from this group and stop receiving emails from it, send an
+> email to bpfk-list+unsubscribe@googlegroups.com.
+> To post to this group, send email to bpfk-list@googlegroups.com.
+> Visit this group at http://groups.google.com/group/bpfk-list.
+> For more options, visit https://groups.google.com/d/optout.
+>
+>
+>  --
+> You received this message because you are subscribed to the Google Groups
+> "BPFK" group.
+> To unsubscribe from this group and stop receiving emails from it, send an
+> email to bpfk-list+unsubscribe@googlegroups.com.
+> To post to this group, send email to bpfk-list@googlegroups.com.
+> Visit this group at http://groups.google.com/group/bpfk-list.
+> For more options, visit https://groups.google.com/d/optout.
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 12 | 2015-04-08T15:24:45Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+ju-ew2vjnosw9z_r9pxjx=8jamdlkz-ozy=k9v8xgfta@mail.gmail.com | mail/bpfk/cur/1428506685.162478bcaa218c98.jbomohi:2,S
 2015-04-08 15:50 GMT+03:00 Gleki Arxokuna <gleki.is.my.name@gmail.com>:
 
 > However, if we limit ourselves to just 5 places and basic cases of
@@ -472,7 +660,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 12 | 2015-04-08T15:29:44Z | Alex Burka <aburka@seas.upenn.edu> | 957ee20153214a1bbc5ba1c4a0dd63fc@gmail.com | mail/bpfk/cur/1428506984.4a0da2f936488a3e.jbomohi:2,S
+=== 13 | 2015-04-08T15:29:44Z | Alex Burka <aburka@seas.upenn.edu> | 957ee20153214a1bbc5ba1c4a0dd63fc@gmail.com | mail/bpfk/cur/1428506984.4a0da2f936488a3e.jbomohi:2,S
 On the contrary... what's confusing is when nintadni ask such a deceptively simple question and we don't have an answer! 
 
 
@@ -500,7 +688,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 13 | 2015-04-08T15:35:33Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+itlqf9yen0hezhab83ywxrw20bkzqmdyg8tzz=djlujg@mail.gmail.com | mail/bpfk/cur/1428507333.73baa97246abccae.jbomohi:2,S
+=== 14 | 2015-04-08T15:35:33Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+itlqf9yen0hezhab83ywxrw20bkzqmdyg8tzz=djlujg@mail.gmail.com | mail/bpfk/cur/1428507333.73baa97246abccae.jbomohi:2,S
 2015-04-08 18:29 GMT+03:00 Alex Burka <aburka@seas.upenn.edu>:
 
 >  On the contrary... what's confusing is when nintadni ask such a
@@ -558,7 +746,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 14 | 2015-04-08T16:07:59Z | And Rosta <and.rosta@gmail.com> | cacf3dp=fq=jg7yshfqe45t9clk+cc2b=4fkk0vytssq641w8cw@mail.gmail.com | mail/bpfk/cur/1428509279.e95f33441707ef2b.jbomohi:2,S
+=== 15 | 2015-04-08T16:07:59Z | And Rosta <and.rosta@gmail.com> | cacf3dp=fq=jg7yshfqe45t9clk+cc2b=4fkk0vytssq641w8cw@mail.gmail.com | mail/bpfk/cur/1428509279.e95f33441707ef2b.jbomohi:2,S
 On Wed, Apr 8, 2015 at 4:35 PM, Gleki Arxokuna <gleki.is.my.name@gmail.com>
 wrote:
 
@@ -580,7 +768,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 15 | 2015-04-08T16:35:04Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+idwqjpsvyals5vd2dudcha1uf_65hy0er-uj+nrfwwcw@mail.gmail.com | mail/bpfk/cur/1428510904.b32d24a764173ebc.jbomohi:2,S
+=== 16 | 2015-04-08T16:35:04Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+idwqjpsvyals5vd2dudcha1uf_65hy0er-uj+nrfwwcw@mail.gmail.com | mail/bpfk/cur/1428510904.b32d24a764173ebc.jbomohi:2,S
 2015-04-08 19:07 GMT+03:00 And Rosta <and.rosta@gmail.com>:
 
 >
@@ -644,7 +832,7 @@ Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
 
 
-=== 16 | 2015-04-08T18:10:17Z | selpa'i <seladwa@gmx.de> | 55256f09.6000703@gmx.de | mail/bpfk/cur/1428516617.3de73d1204b1f5b3.jbomohi:2,S
+=== 17 | 2015-04-08T18:10:17Z | selpa'i <seladwa@gmx.de> | 55256f09.6000703@gmx.de | mail/bpfk/cur/1428516617.3de73d1204b1f5b3.jbomohi:2,S
 la .and. cu cusku di'e
 > On Wed, Apr 8, 2015 at 4:35 PM, Gleki Arxokuna
 > <gleki.is.my.name@gmail.com <mailto:gleki.is.my.name@gmail.com>> wrote:
@@ -675,7 +863,7 @@ For more options, visit https://groups.google.com/d/optout.
 
 
 
-=== 17 | 2015-04-09T10:32:19Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+hozefhmfbrzv5cxfubu4ma=rgno1awunu-qhrddermqg@mail.gmail.com | mail/bpfk/cur/1428575539.98271e171fa61147.jbomohi:2,S
+=== 18 | 2015-04-09T10:32:19Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+hozefhmfbrzv5cxfubu4ma=rgno1awunu-qhrddermqg@mail.gmail.com | mail/bpfk/cur/1428575539.98271e171fa61147.jbomohi:2,S
 2015-04-08 15:50 GMT+03:00 Gleki Arxokuna <gleki.is.my.name@gmail.com>:
 
 > This is how sentence looks now in my PEG:
