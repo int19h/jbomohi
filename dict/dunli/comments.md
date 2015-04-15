@@ -47,3 +47,21 @@ fibu cu drata lo se ckini be febu bei fibu
 
 .oi skudji fa mi lu ka fabu boi febu boi fibu ce'ai li'o... li'u .u'u
 
+
+## 2015-04-15T03:14:10Z — junpen (comment 1808, on definition 65818, in reply to 1806)
+
+Re: lo te ckini
+
+ la. ilmen. di'e ciska:
+
+> .i sa'u mi jinvi lo du'u lo te dunli cu te ckini 
+
+ki'e la .ilmen.
+
+.i mi viska zoi zoi definitionro da zo'u x1 .o x2 da ckini x2
+zoi 
+
+.i .ei pei zoi zoi x2 zoi poi re moi cu se basti zoi zoi x3 zoi
+
+mi'e la .junpen. mu'o
+
