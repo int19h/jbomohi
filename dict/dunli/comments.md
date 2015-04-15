@@ -65,3 +65,18 @@ zoi
 
 mi'e la .junpen. mu'o
 
+
+## 2015-04-15T10:02:46Z — Ilmen (comment 1809, on definition 65818, in reply to 1808)
+
+Re: lo te ckini
+
+la .junpen. di'e ciska:
+> .i mi viska zoi zoi definitionro da zo'u x1 .o x2 da ckini x2
+> zoi 
+> 
+> .i .ei pei zoi zoi x2 zoi poi re moi cu se basti zoi zoi x3 zoi
+
+??e drani ki'e jungau .i mi srera tu'a ti .i mi mo'u cikre
+
+mi'e la .ilmen. mu'o
+
