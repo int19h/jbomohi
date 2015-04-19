@@ -30,3 +30,29 @@ default is the list: (y1_0, y1_1, y1_1, ..., y1_((y4) + 1)) ).
 This definition better matches the frequency with which higher math makes
 uses of the various terbri.  Does anyone have any comments?
 
+
+## 2015-04-19T19:14:41Z — krtisfranks (comment 1811, on definition 44334, in reply to 905)
+
+Re: Commentary
+
+krtisfranks wrote:
+> We now have a way to specify formal polynomials (as opposed to polynomial
+> functions). I propose that {tefsujme'o} be used strictly for the latter
+> situation and ve redefined accordingly.
+> I was thinking that we should generalize both definitions to be at least
+> usable for Laurent polynomials/series (resp.); perhaps for Taylor
+> expansions too.
+> 
+> We now have a word for coefficient of a polynomial, which was not
+> immediately clear before.
+
+I think that it may be better for the coefficients to be presentes in an 
+ordered list with the first coefficient presented being the leading 
+coefficient and then each subsequent coefficient being associated with the 
+power of the variable decreased by one per entry in the list such that any 
+nonspecified coefficients are assumed to be 0. In this way, the list would 
+work more like {ki'o}; additionally, the leading coefficient is the most 
+important one and should be easiest to reference and specify. (Note: the 
+first coefficient specified would typically be forced to be nonzero under 
+this proposal)
+
