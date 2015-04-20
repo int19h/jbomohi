@@ -56,3 +56,10 @@ important one and should be easiest to reference and specify. (Note: the
 first coefficient specified would typically be forced to be nonzero under 
 this proposal)
 
+
+## 2015-04-20T16:57:06Z — gleki (comment 1812)
+
+c- ?
+
+what is c- in "c-polinomi'o" for?
+
