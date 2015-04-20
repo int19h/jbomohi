@@ -63,3 +63,13 @@ c- ?
 
 what is c- in "c-polinomi'o" for?
 
+
+## 2015-04-20T20:44:22Z — krtisfranks (comment 1813, in reply to 1812)
+
+Re: c- ?
+
+gleki wrote:
+> what is c- in "c-polinomi'o" for?
+
+I do not recall. I had a reason. :/
+
