@@ -1,4 +1,4 @@
-# mail/bpfk thread 0ecaeeca1a1a-selma'o_zehei_and_peg | root cao7tk2dbjkdicdv9qwvn2wn1gnisnbqzqg01pbqcdur0n_d+dq@mail.gmail.com | 34 messages | rendered by jbomohi mail-v1
+# mail/bpfk thread 0ecaeeca1a1a-selma'o_zehei_and_peg | root cao7tk2dbjkdicdv9qwvn2wn1gnisnbqzqg01pbqcdur0n_d+dq@mail.gmail.com | 35 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-03-31T23:45:04Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2dbjkdicdv9qwvn2wn1gnisnbqzqg01pbqcdur0n_d+dq@mail.gmail.com | mail/bpfk/cur/1427845504.0ecaeeca1a1ace75.jbomohi:2,S
 gleki asked about incorporating selma'o ZEhEI to PEG and I said it would
@@ -1656,6 +1656,43 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To post to this group, send email to bpfk-list@googlegroups.com.
 Visit this group at http://groups.google.com/group/bpfk-list.
 For more options, visit https://groups.google.com/d/optout.
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 35 | 2015-04-25T18:51:48Z | Jorge Llambías <jjllambias@gmail.com> | cao7tk2eonuxjm0afa7pebcg0j==wpgbjj+wm_gyn_ksy+furua@mail.gmail.com | mail/bpfk/cur/1429987908.ac7751eadc227417.jbomohi:2,S
+On Sat, Apr 25, 2015 at 1:37 PM, Alex Burka <durka42@gmail.com> wrote:
+
+> I tried to do this (delete ZEI, add {zei} and {ze'ei} to SI, and move SI
+> from post_clause to pre_clause) but I was unable to complete the last step
+> without introducing left recursion into the pre_clause rule. So it seems
+> easier said than done. I am not an expert in these dark corners of the PEG,
+> though.
+>
+
+Yes, the magic words section is quite tricky. I think what you need is to
+also replace pre_zei_bu with something like:
+
+pre_zei_bu: (BRIVLA / !BU !ZEI !SI !SA !SU !FAhO CMAVO) spaces?
+
+(or a list of all si-erasable selmaho, if you want to be able to identify
+the selmaho of the erased/modifier words).
+
+The left recursion occurs because the current pre_zei_bu is calling
+pre_clause, which now calls pre_zei_bu, which calls pre_clause, which calls
+pre_zei_bu, which calls pre_clause, and so on...
+
+You also need to remove SA_clause from si_clause for the same reason. I
+heven't bothered to think what it should be replaced with, since I'd like
+SA out of the grammar altogether, but it probably should be some sort of
+sa_clause_no_pre added to erasable_clause.
+
+mu'o mi'e xorxes
 
 -- 
 You received this message because you are subscribed to the Google Groups "BPFK" group.
