@@ -1,0 +1,264 @@
+This is an attempt at describing the PEG morphology in a less formal way, condensed into a single page. It also includes some experimental rules, marked as such, that open up previously forbidden word shapes.
+
+=== Phonemes ===
+
+At the most basic level, an utterance is made of phonemes. Here are the main classes of phonemes (there are subclasses as seen later):
+
+* consonants ({{jvs|zunsna}}):
+** '''bdgjvz''' (voiced), '''cfkpstx''' (unvoiced), '''lmnr''' (syllabic)
+* glides ({{jvs|karmlisna}}): '''i u'''
+* h ('''me'o .y'y'''): ''' ' '''
+* word break (glottal stop) ({{jvs|depybu'i}}): '''.'''
+* vowels ({{jvs|karsna}}): '''a e i o u'''
+* diphthongs: '''au ai ei oi'''
+* y ('''me'o .ybu'''): '''y'''
+
+The comma (me'o slaka bu) isn't a phoneme, but is used to separate syllables for clarity. Removing it has no effect.
+
+'''i''' and '''u''' are vowels, unless a vowel or diphthong follows, in which case they are glides. '''iau''' is a glide and a diphthong; '''iaua''' is two glide-vowel pairs.
+
+At this level, strings of consonants follow these rules:
+* consonants can be next to consonants, word breaks, vowels, diphthongs, and '''y'''
+* no consonant can be followed by itself
+* voiced consonants can't be next to voiceless ones, and vice versa
+* sibilants (cjsz) can't be next to each other
+* '''x''' can't be next to '''c''' or '''k'''
+* the substrings '''mz''', '''nts''', '''ntc''', '''ndz''', '''ndj''' are not allowed
+
+Glides must follow a word break, vowel, diphthong, or '''y''', and be followed by a vowel, diphthong, or '''y'''. '''i''' as a glide can't follow a diphthong ending in '''i''', and '''u''' as a glide can't follow the diphthong '''au'''.
+
+'''h''' must both follow and be followed by a vowel, diphthong, or '''y'''.
+
+Vowels, diphthongs, and '''y''' can be next to consonants, glides, '''h''', and word breaks.
+
+=== Syllables ===
+
+These are the shapes syllables ({{jvs|slaka}}) can have:
+
+* Vowel syllable
+** a word break, a glide, or up to three consonants
+** then a vowel or a diphthong
+** then optionally a consonant
+{{mu|.a, spa, pan, blaif, stra}}
+
+* h-syllable
+** the letter '''''''
+** then a vowel or diphthong
+** then optionally a consonant
+{{mu|'u, 'ei, 'am}}
+
+* y-syllable
+** a word break, a glide, or up to three consonants
+** then the letter y
+{{mu|by, .y, gry, zbly}}
+
+* hy-syllable
+** the string ''''y'''
+
+* consonantal syllable ({{jvs|zunsnaslaka}})
+** a consonant
+** then a syllabic consonant
+{{mu|fl, sm, rn}}
+
+{{Ombox
+| image = none
+| text = <div id="ysyll"><strong>[[#exp|Experimental]]</strong></div><div>
+* y-consonant syllable: a consonant, '''y''', then another consonant. These behave exactly like consonantal syllables, and when the second consonant is a syllabic one, the syllable with a '''y''' is equivalent to the one without when distinguishing between words.
+</div>
+}}
+
+When a syllable starts with more than one consonant, the rules for these clusters ({{jvs|zunsnagri}}) are more restrictive than the general ones above. These are the permissible initial doubles, stolen with love from CLL:
+
+    pl pr                       fl fr
+    bl br                       vl vr
+    
+    cp cf      ct ck cm cn      cl cr
+    jb jv      jd jg jm
+    sp sf      st sk sm sn      sl sr
+    zb zv      zd zg zm
+    
+    tc tr      ts               kl kr
+    dj dr      dz               gl gr
+    
+    ml mr                       xl xr
+
+And the permissible initial triples:
+
+    cfr cfl sfr sfl   jvr jvl zvr zvl
+    cpr cpl spr spl   jbr jbl zbr zbl
+    ckr ckl skr skl   jgr jgl zgr zgl
+    ctr     str       jdr     zdr
+    cmr cml smr sml   jmr jml zmr zml
+
+When segmenting text into syllables, when a consonant could possibly either start a syllable or end one, it's always taken to start one. In other words, onsets are greedy, codas are lazy.
+
+=== Words ===
+
+Words can be {{jvs|cmavo}}, {{jvs|cmevla}}, or {{jvs|brivla}}. cmavo and brivla are made of syllables, while cmevla are free strings of phonemes.
+
+cmavo are composed of:
+
+* one vowel- or '''y'''-syllable, with at most one initial consonant and no final consonant
+* optionally followed by any number of '''h'''- or '''hy'''-syllables without any final consonants
+
+{{mu|.a, ba, bai, ba'i, ba'ai, by, by'i, ia, iai, iy, ua'ai'y}}
+
+There are two exceptions: '''ybu''', also spelled '''y.bu''', is a single cmavo despite the medial consonant and word break, and '''y''' surrounded by word breaks and not followed by '''bu''' is a word break itself, not a cmavo.
+
+cmavo can be stressed on any syllable.
+
+cmevla are arbitrary strings of phonemes, following phoneme but not syllable restrictions, starting with a word break, containing no word breaks, and ending with a consonant followed by a word break. They can be stressed anywhere.
+
+A brivla is composed of any number of initial {{jvs|rafsi}} followed by a final rafsi. It must begin with a vowel syllable, end with a vowel- or '''h'''-syllable, and have at least two syllables. It may not be a [[#slinkuhi|slinkuhi]], and may not start with a sequence of cmavo that yields a valid word when removed. Stress (marked here with a grave accent) is on the second-last vowel- or '''h'''-syllable.
+
+A final rafsi is:
+
+(1) a zihevla:
+* a vowel syllable
+* followed by any number of vowel, h-, or consonantal syllables
+* followed by a vowel- or h-syllable with no final consonant
+* is not a gismu or sequence of more than one rafsi
+* can stand alone as a brivla (meets the other requirements above)
+{{mu|cpi,kù,ku  àl,ga  fì,pr,koi  glàu,ka  sprà,'e}}
+
+(2) or a gismu:
+* a CV vowel syllable followed by a CCV one
+* or a CVC one then a CV one
+* or a CCV one then a CV one
+{{mu|pà,stu  vèd,li  tsà,ni}}
+
+(3) or a short final rafsi:
+* a CVV or CCV vowel syllable, e.g. '''xau''', '''cpa'''
+* or a CV vowel syllable followed by a 'V h-syllable, e.g. '''fà'i'''
+
+{{Ombox
+| image = none
+| text = <div id="rafsi3a"><strong>[[#exp|Experimental]</strong></div><div>
+(3a) or a CV syllable. These must be at least one rafsi ending in "y" in the part of the word preceding a CV rafsi, and a CV rafsi may not directly follow a rafsi of [[#rafsi8|type 8]].
+{{mu|dat,ky,nèi,bi  cmà,vyr,fy,ja -> well-formed lujvo:|datky-nei-bi    cmavyrfy-ja}}
+{{mu|bla,ny,kàir,ze -> coarser-grained lujvo:|blany-kairze       (type 3a can't follow type 8)}}
+{{mu|xag,màu,ri -> single zihevla:|xagmauri           (no y-rafsi preceding "ri")}}
+</div>}}
+
+An initial rafsi is any one of these:
+
+(4) a gismu followed by the syllable ''''y''', e.g. '''fasnu'y'''
+
+(5) a gismu with its final vowel replaced with '''y''', e.g. '''fasny'''
+
+(6) a zihevla followed by the syllable ''''y''', e.g. '''sorpeka'y'''
+
+(7) a CV vowel syllable followed by a Cy '''y'''-syllable, e.g. '''fa,ky'''
+
+<span id="rafsi8">(8)</span> a vowel syllable of the form CVC, CCV, or CVVr
+* or a CV syllable followed by a 'V or 'Vr syllable
+* may not be followed by a rafsi derived from a zihevla
+{{mu|'''gas'''  '''jbu'''  '''gaur'''  '''li,'ar'''}}
+
+(9) a vowel syllable of the form CVV
+* or a CV syllable followed by a 'V syllable
+* may not be followed by a rafsi derived from a zihevla
+{{mu|'''gau'''  '''li,'a'''}}
+
+{{Ombox
+| image = none
+| text = <div id="rafsi9a"><strong>[[#exp|Experimental]]</strong></div><div>
+(9a) a CV syllable, with the restrictions of [[#rafsi3a|(3a)]], and that no competing interpretation where the CV is the beginning of a [[#rafsi8|type 8]] rafsi parses.
+* e.g. '''tat,py,ri,nun,lì,'u''' ->    '''tatpy-ri-nun-li'u''';       '''sla,by,si,ri,ju'''     ->    '''slaby-si-ri-ju''';       '''va,ny,nu,plì,ste'''    -> '''!! vany-nup-liste'''
+
+(9b) a CV and then a 'y syllable, with the restrictions of [[#rafsi3a|(3a)]] only.
+* e.g. '''va,ny,nu,'y,plì,ste''' ->    '''vany-nu'y-pli-ste'''
+</div>}}
+
+(10) a type 8 or 9 rafsi followed by a type 3 rafsi followed by ''''y'''
+{{mu|'''cau,cni,'y'''  '''ri,'ar,ju,'o,'y'''  '''mul,fau,'y''',  '''jbo,jbe,'y'''}}
+
+(11) a zihevla that ends in a vowel syllable, ending in a vowel and not a diphthong, with the final vowel replaced with y, unless the result breaks up into any other valid string of rafsi
+{{mu|'''ka,'or,ty'''  '''a,sny'''}}
+
+<span id="rafsirecog">Note</span> that while all rafsi are valid syllables by themselves, strings of them are recognized as strings of phonemes, not syllables. For example '''gastro''', even though its syllable structure is '''gà,stro''', is a lujvo made of two rafsi '''gas''' '''tro'''.
+
+If a CVVr or CV'Vr rafsi is followed by a rafsi beginning with '''r''', and only then, the final '''r''' of the first rafsi is replaced with an '''n'''.
+If a rafsi ending in '''y''' is followed by a rafsi beginning with a vowel, and only then, an ''''''' is prepended to the second rafsi. In other situations where sticking two rafsi together violates phoneme or syllable rules, the left rafsi needs to be replaced with one ending with '''y'''.
+
+A brivla consisting of just a zihevla is called a zihevla, one consisting of just a gismu is a gismu, and all others are called lujvo.
+
+A <span id="slinkuhi">slinkuhi</span> ({{jvs|valslinku'i}}) is a [''consonant followed by a string of rafsi that up to its first y-syllable, or if no y-syllables, in its entirety, is composed of non-zihevla rafsi''] that itself can't be broken up into a string of rafsi.
+{{mu|''p''rà,'i  ''s''pòr,te  ''z''bla,zdà,vro  ''c''nar,jy,fra,gà,ri  ''z''gà,stro ''(see note on [[#rafsirecog|rafsi recognition]] above)}}
+
+Other non-words also behave like slinkuhi, in that prepending a cmavo makes them a word, but these arise from rules other than the one named slinkuhi.
+{{mu|cpa  cpau  cpra  cprau  (''brivla must have 2+ syllables'')}}
+{{mu|cl,pàr,nu  (''brivla must start with a vowel syllable'')}}
+
+A <span id="tosmabru">tosmabru</span> ({{jvs|valrtosmabru}}) is a string intended to be a brivla but which decomposes into multiple words. tosmabru can be coerced into being brivla by adding a consonant at the end of the last syllable of the first cmavo.
+* gau,tcì,ni -> gau tcini; cmavo + gismu
+* gaur,tcì,ni -> gaurtcini; a single lujvo
+* .a,'u,nain,mo -> .a'u nainmo; cmavo + zi'evla
+* .a,'ur,nain,mo -> .a'urnainmo; a single zihevla
+* boi,kèi,foi -> boi kèi foi; three cmavo
+* boir,kèi,foi -> boirkeifoi; a single lujvo
+
+=== Word breaks, glottal stops ===
+
+All word breaks may be pronounced as glottal stops, and some word breaks have to. Glottal stops are required before and after all cmevla, as well as before all words starting with a vowel or "y". They are also required after certain cmavo:
+
+* When pronouncing two words together would break a phonotactic rule, they need to be separated with a glottal stop.
+{{mu|"au" "uàn,mo" -> {.au .uanmo} }}
+
+* Each pair of cmavo of the form CV Cy followed by either a brivla or a cmavo of the form CVV or CV'V needs a glottal stop at one of the word breaks. (This is the only case where cmavo-shaped syllables are absorbed by brivla by default but can be detached.)
+{{mu|"ca" "vy" "càr,vi" -> {ca vy. carvi} /ʃa.vəʔ.ˈʃar.vi/ |(/ʃa.və.ˈʃar.vi/ would be {cavycarvi}, a lujvo)}}
+
+{{Ombox
+| image = none
+| text = <div id="cikybi"><strong>[[#exp|Experimental]]</strong></div><div>
+This also applies to CV Cy CV sequences: /ˈʃi.kə.bi/ is {cikybi}, /ˈʃiʔ.kə.bi/ is {ci. ky bi}
+</div>}}
+
+* Every stressed cmavo followed by a brivla starting with a consonant cluster needs a glottal stop after the cmavo.
+{{mu|"bà" "sna,jù,'i" -> {bà. snaju'i} /ˈbaʔ.sna.ˈʒu.hi/|(/ˈba.sna.ˈʒu.hi/ would be {basna jù'i}, a gismu and a cmavo)}}
+
+=== Splitting a stream of speech into words ===
+
+This is a simplified procedure to split speech into words, not taking arbitrary quotes (ZOI, ZOhOI, MEhOI, GOhOI) into account. The input is a (magically) perfectly recognized string of phonemes, with the vowels marked for stress.
+
+Each split described below is to be treated as a boundary of the speech stream for subsequent steps. These chunks will get increasingly smaller until they all coincide with single words.
+
+(1) Split the stream at each glottal stop or pause.
+
+(2) If the stream ends with a consonant, stop processing it.
+
+(3) Detect the syllables in the stream. For each stressed syllable:
+* If the syllable after it is also stressed, split between the two syllables.
+* If not, find the next vowel or h-syllable after it, and split the stream after that syllable, unless the syllable after that begins with ''' ' ''' - don't split in that case.
+
+(4) Try to read a cmavo, then after that cmavo try to read a cmavo, or if that fails, a brivla. 
+* If the stream ends after the first cmavo read, stop processing it. 
+* If two cmavo are read, split the stream after the first one, and stop processing the first part. 
+* If a cmavo and brivla are read, split the stream after the cmavo and stop processing both parts. 
+* If only a cmavo is read, but this cmavo is shorter than the stream, try to read a brivla from the start of the stream. If that succeeds, stop processing the stream. If not, declare the stream malformed and abandon ship.
+
+Repeat the above step for each piece where processing was not stopped, until no such pieces remain.
+
+An example:
+      còiju'idoi.rktk.si'audàusòncicubaziba'acazgùnta
+  (1) còiju'idoi  rktk  si'audàusòncicubaziba'acazgùnta
+  (2) còiju'idoi  [rktk]  si'audàusòncicubaziba'acazgùnta
+  (3) còi,ju,'i,doi  [rktk]  si,'au,dàu,rà,tcu,cu,ba,zi,ba,'a,ca,zgùn,ta
+      còi,ju,'i,doi  [rktk]  si,'au,dàu  rà,tcu  cu,ba,zi,ba,'a,ca,zgùn,ta
+  (4) (còi),(ju,'i),doi
+      [coi]  (ju,'i),(doi)
+      [coi]  [ju'i]  [doi]
+  (4) (si,'au),(dàu)
+      [si'au]  [dau]
+  (4) (rà),(tcu)!
+      (rà,tcu)
+      [ratcu]
+  (4) (cu),(ba),zi,ba,'a,ca,zgùn,ta
+      [cu]  (ba),(zi),ba,'a,ca,zgùn,ta
+      [cu]  [ba]  (zi),(ba,'a),ca,zgùn,ta
+      [cu]  [ba]  [zi]  (ba,'a),(ca),zgùn,ta
+      [cu]  [ba]  [zi]  [ba'a]  (ca),(zgùn,ta)!
+      [cu]  [ba]  [zi]  [ba'a]  (ca,zgùn,ta)
+      [cu]  [ba]  [zi]  [ba'a]  [cazgunta]
+
+Result: coi ju'i doi rktk si'au dau ratcu cu ba zi ba'a cazgunta
