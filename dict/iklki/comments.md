@@ -54,3 +54,10 @@ please, don't add such comments
 they go to pdf version of the dictionary and it's not always nice to read 
 them. They are technical.
 
+
+## 2015-05-11T10:16:30Z — gleki (comment 1827)
+
+alternative
+
+{kli'iki} is an alternative that may be easier to pronounce.
+
