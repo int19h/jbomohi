@@ -46,3 +46,11 @@ spheniscine wrote:
 
 do cuxna
 
+
+## 2015-05-11T10:15:50Z — gleki (comment 1826)
+
+please, don't add such comments
+
+they go to pdf version of the dictionary and it's not always nice to read 
+them. They are technical.
+
