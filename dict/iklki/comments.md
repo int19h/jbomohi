@@ -29,3 +29,20 @@ gleki wrote:
 
 da'i pilno zo kli'iki vau iepei
 
+
+## 2015-05-11T08:16:42Z — gleki (comment 1825, in reply to 1824)
+
+Re: nandu co bacru vau uinai
+
+spheniscine wrote:
+> gleki wrote:
+> > spheniscine wrote:
+> > > nandu co bacru vau uinai
+> > 
+> > 
+> > e'a do cuxna lo drata tarmi valsi
+> 
+> da'i pilno zo kli'iki vau iepei
+
+do cuxna
+
