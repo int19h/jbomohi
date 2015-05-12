@@ -13,3 +13,10 @@ Re: Consider subselmaho
 Seems like that would be UI1. Doesn't quite seem to fit the simplicity of 
 the original UI1-cmavo, but then again, neither does {bu'a'a}
 
+
+## 2015-05-12T18:56:18Z — spheniscine (comment 1831)
+
+ta'o
+
+I do quite like the sound of it [i'au ui]
+
