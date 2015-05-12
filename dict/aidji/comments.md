@@ -22,3 +22,16 @@ coi
 
 .i .ai mi jmina lo vlakra lo velski
 
+
+## 2015-05-12T04:30:13Z — spheniscine (comment 1828)
+
+Definition rewrite
+
+Changed definition from:
+$x_1$ intends to do/be $x_2$
+
+to:
+$x_1=d_1$ intends $x_2=d_2$ (event/state) to happen for purpose $x_3=d_3$
+
+to better parallel {djica} and to clarify the $x_2$ position.
+
