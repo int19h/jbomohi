@@ -57,3 +57,12 @@ intention brivla with a ka-x2. This word is used frequently.
 
 Please undo your changes.
 
+
+## 2015-05-12T19:43:31Z — selpahi (comment 1833, in reply to 1828)
+
+Re: Definition rewrite
+
+Also, you can always just add a new definition if you really think your 
+definition is better (and not compatible with the existing one(s)), instead
+of overwriting.
+
