@@ -35,3 +35,25 @@ $x_1=d_1$ intends $x_2=d_2$ (event/state) to happen for purpose $x_3=d_3$
 
 to better parallel {djica} and to clarify the $x_2$ position.
 
+
+## 2015-05-12T19:42:04Z — selpahi (comment 1832, in reply to 1828)
+
+Re: Definition rewrite
+
+spheniscine wrote:
+> Changed definition from:
+> $x_1$ intends to do/be $x_2$
+> 
+> to:
+> $x_1=d_1$ intends $x_2=d_2$ (event/state) to happen for purpose $x_3=d_3$
+> 
+> to better parallel {djica} and to clarify the $x_2$ position.
+
+Please don't just go around changing definitions like that. Ask the authors
+first, and then let *them* change them if they agree with you. 
+
+In the case of {aidji}, the whole point of this word is to have an 
+intention brivla with a ka-x2. This word is used frequently.
+
+Please undo your changes.
+
