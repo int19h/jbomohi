@@ -56,3 +56,13 @@ Re: Superfluous?
 Sorry, the co'e in the last example is meant to be in brackets, to show 
 that it is implied.
 
+
+## 2015-05-13T05:04:18Z — spheniscine (comment 1838, on definition 66004, in reply to 1836)
+
+Re: Superfluous?
+
+I've made some corrections to my example Lojban texts and their 
+interpretations here: 
+http://mw.lojban.org/papri/zipcpi:_zo_i%27au_ki%27a%3F_FAQ_about_the_new_cm
+avo,_i%27au
+
