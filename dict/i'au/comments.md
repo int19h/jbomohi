@@ -82,3 +82,32 @@ Re: Reconsidering sub-selma'o
 Provisionally moved it to UI6. i'au really defies classification, but what 
 is currently in UI6 seems to as well, so perhaps it has a home there.
 
+
+## 2015-05-13T12:21:50Z — spheniscine (comment 1841, on definition 66004, in reply to 1839)
+
+Re: Reconsidering sub-selma'o
+
+Maybe it could share a sub-selma'o with two more UI-cmavo for attitudinal 
+scope modification; essentially specialized quotation marks, to explicitly 
+arbitrarily define the scope of the UI-cmavo. I've not decided what words 
+to allocate to it yet; they shall henceforth be provisionally represented 
+by BAS (begin attitudinal scope) and EAS (end attitudinal scope).
+
+(A plain reading of {bu'o}'s definition may appear to serve this purpose, 
+hence my initial categorization of i'au in UI7, but its use in the CLL 
+doesn't corroborate this; rather it means "This is how I'm starting to feel
+/ continuing to feel / not feeling anymore".)
+
+Unlike i'au, I don't expect BAS/EAS to be used very often, as it is often 
+unnatural to specify one's emotions so explicitly and with forethought. 
+However it could be useful for invocations, manifestos, lectures, and 
+monologues, where one may craft a long speech of the form "I hope for all 
+these things: (BAS [a'o]) XXX, YYY, ZZZ. (EAS)".
+
+Additionally, since UI-cmavo aren't only used for emotions, it could also 
+potentially be used for things like asking a complex question of the type 
+"is all the following true?" using (BAS [xu] XXX YYY ZZZ EAS).
+
+To conserve cmavo space though, perhaps like bu'o, EAS can simply be BAS + 
+nai.
+
