@@ -66,3 +66,10 @@ Also, you can always just add a new definition if you really think your
 definition is better (and not compatible with the existing one(s)), instead
 of overwriting.
 
+
+## 2015-05-13T00:59:46Z — spheniscine (comment 1835, in reply to 1833)
+
+Re: Definition rewrite
+
+fau'u do'u Sorry, didn't know about the protocols.
+
