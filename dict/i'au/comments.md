@@ -111,3 +111,10 @@ potentially be used for things like asking a complex question of the type
 To conserve cmavo space though, perhaps like bu'o, EAS can simply be BAS + 
 nai.
 
+
+## 2015-05-13T12:38:34Z — spheniscine (comment 1842, on definition 66004, in reply to 1841)
+
+Re: Reconsidering sub-selma'o
+
+OK I've allocated {bau'o} to BAS, and defined {bau'onai} as EAS.
+
