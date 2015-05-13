@@ -74,3 +74,11 @@ Reconsidering sub-selma'o
 I just looked up how to use {bu'o} and it doesn't work like {i'au} at all. 
 I don't know if {i'au} would require a new one.
 
+
+## 2015-05-13T11:13:08Z — spheniscine (comment 1840, on definition 66004, in reply to 1839)
+
+Re: Reconsidering sub-selma'o
+
+Provisionally moved it to UI6. i'au really defies classification, but what 
+is currently in UI6 seems to as well, so perhaps it has a home there.
+
