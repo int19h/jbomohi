@@ -48,3 +48,11 @@ sentence a statement rather a question, leaves the true/false question up
 to context, and if you want to add another sentence after that another .i 
 must be used.
 
+
+## 2015-05-13T02:00:40Z — spheniscine (comment 1837, on definition 66004, in reply to 1836)
+
+Re: Superfluous?
+
+Sorry, the co'e in the last example is meant to be in brackets, to show 
+that it is implied.
+
