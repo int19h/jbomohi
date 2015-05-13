@@ -66,3 +66,11 @@ interpretations here:
 http://mw.lojban.org/papri/zipcpi:_zo_i%27au_ki%27a%3F_FAQ_about_the_new_cm
 avo,_i%27au
 
+
+## 2015-05-13T07:55:35Z — spheniscine (comment 1839, on definition 66004)
+
+Reconsidering sub-selma'o
+
+I just looked up how to use {bu'o} and it doesn't work like {i'au} at all. 
+I don't know if {i'au} would require a new one.
+
