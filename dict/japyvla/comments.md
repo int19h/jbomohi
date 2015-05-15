@@ -33,3 +33,19 @@ Re: Calque
 
 For what it's worth, I use ckikyvla for password.
 
+
+## 2015-05-15T17:35:01Z — Wuzzy (comment 1851, on definition 18831, in reply to 1849)
+
+Re: Calque
+
+> What about when a "password" is actually a picture, or a geometric 
+pattern 
+> (like on an Android phone), or a biometric?
+
+Invent a new word for it. :P
+It makes sense to make a distinction between password (in the sense of 
+???character sequence???) and ???something you do in order to get access to
+a system???.
+But if you want to really generic (like you suggested), you might probably 
+just use {jaspu}.
+
