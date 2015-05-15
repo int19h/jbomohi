@@ -26,3 +26,10 @@ rarely
 What about when a "password" is actually a picture, or a geometric pattern 
 (like on an Android phone), or a biometric?
 
+
+## 2015-05-15T16:59:21Z — selpahi (comment 1850, on definition 18831, in reply to 1848)
+
+Re: Calque
+
+For what it's worth, I use ckikyvla for password.
+
