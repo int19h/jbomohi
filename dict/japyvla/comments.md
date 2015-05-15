@@ -127,3 +127,37 @@ more ???types of??? jaspu instead of ???types of picture??? (for example).
 Second, I disagree with japyvla for the reasons I have already stated 
 (valsi was the problem, not jaspu).
 
+
+## 2015-05-15T19:09:42Z — gleki (comment 1856, on definition 18831, in reply to 1852)
+
+Re: Calque
+
+durka42 wrote:
+> Wuzzy wrote:
+> > > What about when a "password" is actually a picture, or a geometric 
+> > pattern 
+> > > (like on an Android phone), or a biometric?
+> > 
+> > Invent a new word for it. :P
+> 
+> Yeah. I am thinking there could be a (short) word for "thing you do to 
+get 
+> access to a system", to which I could append -vla, -xra, -tai, -mivdatni,
+
+> or whatever. sei ca ca'o pensi
+> 
+> > It makes sense to make a distinction between password (in the sense of 
+> > ???character sequence???) and ???something you do in order to get 
+access 
+> to
+> > a system???.
+> > But if you want to really generic (like you suggested), you might 
+> probably 
+> > just use {jaspu}.
+
+For Tatoeba and Vivaldi I always used {cmene}/{ckiku} for 
+"login"/"password".
+
+I dont see any metaphorics here. Just ckiku needs to be defined broader in 
+English without limiting to things that one can touch.
+
