@@ -91,3 +91,26 @@ One of the glosses of {jaspu}:
 
 permit ; artifact or document rendering something allowed or legal
 
+
+## 2015-05-15T17:59:25Z — durka42 (comment 1854, on definition 18831, in reply to 1853)
+
+Re: Calque
+
+Wuzzy wrote:
+> 
+> > Yeah. I am thinking there could be a (short) word for "thing you do to 
+> get 
+> > access to a system", to which I could append -vla, -xra, -tai, 
+-mivdatni,
+> 
+> > or whatever. sei ca ca'o pensi
+> 
+> {jaspu} sounds like a good candidate for this.
+> 
+> One of the glosses of {jaspu}:
+> 
+> permit ; artifact or document rendering something allowed or legal
+
+Now we have gone in a circle :) mu'a {japyvla}, {japxra}, {japmo'a}, 
+{japmivdatni} .i'epei
+
