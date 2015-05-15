@@ -114,3 +114,16 @@ Wuzzy wrote:
 Now we have gone in a circle :) mu'a {japyvla}, {japxra}, {japmo'a}, 
 {japmivdatni} .i'epei
 
+
+## 2015-05-15T18:17:12Z — Wuzzy (comment 1855, on definition 18831, in reply to 1854)
+
+Re: Calque
+
+> Now we have gone in a circle :) mu'a {japyvla}, {japxra}, {japmo'a}, 
+> {japmivdatni} .i'epei
+
+First, I think jaspu should be at the end, because all these things are 
+more ???types of??? jaspu instead of ???types of picture??? (for example). 
+Second, I disagree with japyvla for the reasons I have already stated 
+(valsi was the problem, not jaspu).
+
