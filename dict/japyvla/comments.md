@@ -73,3 +73,21 @@ to
 probably 
 > just use {jaspu}.
 
+
+## 2015-05-15T17:40:43Z — Wuzzy (comment 1853, on definition 18831, in reply to 1852)
+
+Re: Calque
+
+
+> Yeah. I am thinking there could be a (short) word for "thing you do to 
+get 
+> access to a system", to which I could append -vla, -xra, -tai, -mivdatni,
+
+> or whatever. sei ca ca'o pensi
+
+{jaspu} sounds like a good candidate for this.
+
+One of the glosses of {jaspu}:
+
+permit ; artifact or document rendering something allowed or legal
+
