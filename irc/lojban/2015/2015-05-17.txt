@@ -1,0 +1,1578 @@
+# irc #lojban 2015-05-17 tz=unknown source=lojban/2015_05/lojban-special.2015.05.log format=irssi
+00:01:00 <gleki> hi
+00:03:00 -- Irssi: #lojban: Total of 132 nicks [2 ops, 0 halfops, 0 voices, 130 normal]
+01:40:00 <zipcpi> be'e
+01:44:00 <b_jonas> coi
+01:44:00 <zipcpi> coi
+01:47:00 <gleki> coi
+01:48:00 <zipcpi> coi
+01:49:00 <zipcpi> Oh I just noticed the whole "Extended Lojban Grammar" from your La Bangu project, and I'm kinda wondering how much we will be duplicating work
+01:49:00 <b_jonas> i ca lo pu cabnicte mi fi'o te krefu li pa senva lo mupli be lo jbobau be'o fasnu
+01:52:00 <gleki> zipcpi: ELG is currently not being developed
+01:52:00 <zipcpi> "Yesterday I dreamt for the first time about Lojban"? (not sure how to naturally fit mupli or fasnu in there)
+01:53:00 <b_jonas> zipcpi: no, not about lojban, just a dream where lojban had occurred
+01:53:00 <zipcpi> Oh OK
+01:53:00 <zipcpi> There is a cmavo for saying "nth time", re'u
+01:54:00 <zipcpi> So fi'o te krefu li pa = pa re'u
+01:54:00 <b_jonas> yes. I don't use that particle, but understand it.
+01:54:00 * zipcpi nods
+01:56:00 <zipcpi> I still wonder if I could revive some sort of Lojban retranslation party
+01:56:00 <zipcpi> I think we had that game long ago
+01:56:00 <zipcpi> But I forgot how they hid the translations until the game was over
+01:58:00 <zipcpi> lo fanva refkusi kelci'e
+01:59:00 <zipcpi> Was it ROT13? Hm there really needs to be an encoding system similar to ROT13 but hides the shape of words
+02:00:00 <zipcpi> Since that's kind of a thing in Lojban
+02:00:00 <b_jonas> i fi'o senva ku mi troci lo nu ciska so'u jbobau jufra na'e pi'o lo vlaste .i rapli li pi so'a lo nu fliba gi'e rapli li pi so'a lo nu snada i
+02:00:00 <b_jonas> zipcpi: do you mean a telephone game?
+02:00:00 <zipcpi> Yes
+02:00:00 <gleki> rot13: coi munje
+02:00:00 <mensi> pbv zhawr
+02:00:00 <b_jonas> zipcpi: just use email, and don't send the translations except to the next player (and maybe the moderator) till the end fo the game
+02:00:00 <b_jonas> you don't need complicated schemes like rot13
+02:01:00 <zipcpi> Maybe make la mensi moderate :p
+02:01:00 <b_jonas> (if you weren't someone who's returned to lojban after several years, I'd think you're a young one thinking that way only because you think all messages have to go through facebook chat walls)
+02:01:00 <b_jonas> (I mean, come on)
+02:02:00 <zipcpi> :p
+02:02:00 <b_jonas> (doesn't even facebook has some sort of private messages?)
+02:03:00 <zipcpi> No, I know about private messages... but I wasn't sure how to coordinate it
+02:03:00 <b_jonas> zipcpi: well, first you ask for people who want to participate, and what languages they're willing to translate to and from, and which one of them are willing to choose initial quotes
+02:03:00 <zipcpi> rot13: bu'a'a'a'a'a
+02:03:00 <mensi> oh'n'n'n'n'n
+02:04:00 <b_jonas> Then you agree about the topology of who will start each translation path and who sends to whom next, and publish it.
+02:05:00 <b_jonas> You optionally agree on a moderator who doesn't play but gets a copy of everything, just in case.
+02:05:00 <zipcpi> Or the moderator is the one who provides the initial quote; that way e is not locked out completely
+02:05:00 <b_jonas> Then everyone invites the starting quote and sends to the next person in email. Next person translates it, and sends only the translation to the next person. Etc.
+02:05:00 <b_jonas> zipcpi: Yes, that can work too.
+02:08:00 <zipcpi> http://gyazo.com/a2f26ae9a14245d8f0017955732e0e13
+02:09:00 <b_jonas> zipcpi: hmm, yuo're trying to translate M:tG cards too? some other person here tried as well
+02:09:00 <b_jonas> lemee look
+02:09:00 <gleki> jmifa?
+02:09:00 <zipcpi> Nah that's the only card I translated
+02:09:00 <zipcpi> Reef
+02:09:00 <zipcpi> Or shoal... but the original name is Reef Worm
+02:09:00 <gleki> selpa'is connectives...
+02:10:00 <gleki> b_jonas: have you come up with a new connective system?
+02:10:00 <zipcpi> I can't remember what the old connective for poi is OK :p
+02:10:00 <b_jonas> oh, it's from Commander 2014. no wonder I didn't recognize it, despite that I like sea monsters
+02:10:00 <gleki> because in CC i just ended up with the normal connectives since JOI can't be in tanru by their semantics.
+02:11:00 <b_jonas> gleki: right now I'm first trying to think about how the lojban grammar works. I've been thinking a bit more about it recently (during the day), and maybe I'm seeing my problems a bit clearer, but still not clear enough.
+02:11:00 <zipcpi> Heck I learned the old connectives. Then promptly forgot them
+02:11:00 <zipcpi> Especially those mabla ke question connectives
+02:12:00 <b_jonas> gleki: I have some ideas about connectives, but I'm trying to figure out how the existing grammar works before deciding what new grammar I want to create.
+02:12:00 <zipcpi> Can never remember those, because they broke pattern, and aren't used very often
+02:12:00 <b_jonas> gleki: It's still the free text inserts that bother me.
+02:13:00 <b_jonas> zipcpi: wait, {ti}? that seems strange
+02:13:00 <zipcpi> The very reason we have so many connectives is because they didn't want the parser to have to backtrack. But this is the kind of thing that makes people think that Lojban is made for computers and not for humans
+02:14:00 <b_jonas> zipcpi: but actually, the connectives aren't the only problem with the grammar, they're just one of them
+02:14:00 <b_jonas> I particularly hate {moi} because it seems to have been so avoidable originally, but hard to fix now
+02:14:00 <b_jonas> the connectives at least have some reason to be designed this way, mostly.
+02:15:00 <zipcpi> b_jonas: Yes, {ti} as a way to refer to "this card" or "this creature". One problem I find with the language on MTG cards is that it referred to the card itself by name, but when the ability is copied to other cards it means "this card"
+02:15:00 <zipcpi> I would prefer using "this" as a pronoun, but in some situations it causes semantic ambiguity; I guess that's why they haven't adopted it
+02:16:00 <zipcpi> Lojban doesn't have this problem
+02:16:00 <b_jonas> zipcpi: well I'd use {dei poi karda} or something like that for “this card”, but I'm probably the only one who uses {dei} that way
+02:16:00 <b_jonas> I think some people use {nau} instead, like {lo nau karda}
+02:16:00 <gleki> {la'e dei}
+02:16:00 <b_jonas> I don't think {ti} is approperiate
+02:17:00 <b_jonas> gleki: I don't think so, no
+02:17:00 <gleki> {dei} is sentence, not a card
+02:18:00 <gleki> utterance, not sentence
+02:18:00 <zipcpi> Well I actually think {mi} is more accurate, but that might just seem weird to some people
+02:18:00 <gleki> {mi} may work too since it's {le cusku be dei}
+02:18:00 <gleki> not {le cusku be dei be'o noi prenu}
+02:18:00 <b_jonas> gleki: I think {dei} is anything related to the current discussion, but heck, if it's a utterance, that's enough for this case, because a printed card is a utterance
+02:19:00 <zipcpi> Yeah makes sense... that was what I was thinking too
+02:19:00 <zipcpi> But properly dei refers to the text itself
+02:19:00 <gleki> b_jonas: like with di'u, do'i they are all utterances.
+02:19:00 <gleki> i dont know why we need to change that
+02:20:00 <gleki> yes, {dei} is text
+02:20:00 <zipcpi> OK changing it to {mi}
+02:21:00 <b_jonas> gleki: hah! no, I don't think {mi} is a good idea for the card, but I'll refer to this opinion of yours next time people attack me when I try to refer to anything but a person as {se bangu} or {xusra} or {tavla} or similar!
+02:21:00 <gleki> jbo:mi
+02:21:00 <mensi> mi = [KOhA3] le cusku be dei
+02:21:00 <gleki> ^ officially approved by xorxes
+02:22:00 <b_jonas> (and I still think restricting {bangu} to languages with an army and navy is riddiculous)
+02:22:00 <gleki> you mean that example with Aeneid?
+02:22:00 <zipcpi> Yeah sorry about that b_jonas. Just blame malglixlu
+02:23:00 <b_jonas> gleki: yes, but I think that's not the first time I did that
+02:23:00 <gleki> I have no complaint there
+02:23:00 <zipcpi> If there is a Lojban comic book maybe La Malglixlu can be a villain
+02:23:00 <gleki> jb:bangu
+02:23:00 <mensi> bangu = bangu — x1(entity)  is a language used by  x2(entity)  to express  x3(proposition)
+02:23:00 <mensi> :lo bangu — language. lo se bangu — user of a language.
+02:23:00 <mensi> :xu do se bangu la Lojban — Do you speak Lojban?
+02:23:00 <mensi> :le nanmu pu pilno lo bangu be fi lo mabla — The man used dirty language.
+02:23:00 <mensi> :Related words: tance, cusku, ve tavla, valsi, gerna, jufra, natmi, slaka
+02:23:00 <gleki> oops
+02:23:00 <gleki> jbo:bangu
+02:24:00 <mensi> bangu = x1 gunma lo valsi jo'u lo ciste be ri bei lo ka x2 pilno ri ma'i ce'u lo ka cusku lo se smuni be
+02:24:00 <mensi> x3
+02:24:00 <zipcpi> Wait... really? The "dirty language" part was what I protested
+02:24:00 <gleki> you have another translation for "dirty language"?
+02:25:00 <zipcpi> Actually that was my stronger nitpick. That "bangu" was used as "choice of words/phrasing" rather than "se bangu" not being a person
+02:25:00 <b_jonas> mensi: yes sure, but it's not a single sentence but a whole complete book, one that can have clear characteristics of its language use alone.
+02:25:00 <mensi> la'e di'u sinxa ma do
+02:25:00 <b_jonas> um
+02:25:00 <gleki> u'i
+02:25:00 <zipcpi> Actually I would just say le nanmu cu cusku lo malvla
+02:25:00 <gleki> I can't say {malvla} since here entities are multiplied.
+02:26:00 <gleki> La Bangu lacks lujvo or otherwise add them to the core dictionary
+02:26:00 <zipcpi> mabla valsi
+02:26:00 <gleki> I think {le nanmu pu pilno lo valsi poi mabla} can work
+02:26:00 <gleki> ie
+02:27:00 <gleki> But then what can be bangu3 for instance?
+02:28:00 <b_jonas> gleki: the story where eg. Aeneas descends to the underworld to hear the scary and politically influenced predictions of his father, or the gods weild entire armies like toys.
+02:28:00 <zipcpi> " semantic ambiguity" sorry, "syntactic ambiguity"
+02:32:00 <zipcpi> The main problem I find is that there are so many experimental cmavo... probably a large number of them either represent failed experiments or aren't meant for general use (like those long PA ones to represent complicated mathematical concepts)
+02:32:00 <zipcpi> Yet enough of them are used generally that any modern description of the language can't ignore them
+02:32:00 <gleki> and given that JVS isnt being developed I made this La Bangu dictionary.
+02:33:00 <gleki> which removed everything which isnt used
+02:33:00 <gleki> or not immediately needed
+02:33:00 <zipcpi> ie
+02:34:00 <gleki> of course {mi'ai} isnt needed unless you start to translate texts from English and other SAE languages
+02:35:00 <zipcpi> But mostly my problem is that JVS doesn't have a good way to include examples *and* their translation / notes on usage
+02:35:00 <gleki> Hm, interesting. In modern English "to start to ..." is replaced with "to start ...-ing". According to Wierzbicka "to" and "-ing" can mean different things.
+02:35:00 <zipcpi> (If I remember right the examples only accepted Lojban text?)
+02:36:00 <gleki> zipcpi: yes, use tatoeba.org for that.
+02:36:00 <gleki> Hence La Muplis project.
+02:36:00 <zipcpi> Thus I have a problem understanding what some of the original cmavo even do, let alone the experimental ones
+02:37:00 <zipcpi> Like I'm still not sure I fully understand {xoi} :p... though I think it is something like selpa'i's proposal for "new soi"?
+02:37:00 <gleki> If no one has added examples with {xoi} to Tatoeba and you can't find anything in the wiki then I'm afraid i cant help you either.
+02:37:00 <gleki> Try contacting the authors.
+02:38:00 <gleki> I think {xoi} is like {soi} semantically but with a different grammar
+02:38:00 <gleki> en:xoi
+02:38:00 <mensi> xoi = [XOI] Right-scoping adverbial clause: encloses a bridi and turns it into an adverbial term; the antecedent (ke'a)
+02:38:00 <mensi> of the enclosed bridi stands for the outer bridi lo su'u no'a ku (the bridi in which this xoi term appears), including
+02:38:00 <mensi> all the other adverbial terms (tags...) within this bridi located on the right of this xoi term (rightward scope).
+02:39:00 <gleki> idk. In my vision {i broda noi mo} is enough for this. Better parsers will autorestore this to {i fasnu fa lo nu broda noi mo} although the latter loses focus.
+02:41:00 <gleki> hopefully {ju'a} can restore this focus.
+02:42:00 <zipcpi> By the way ilmentufa seems to choke on {la'au}
+02:43:00 <gleki> it's not in the parser
+02:44:00 <Ilmen> I've only implemented the most common experimental cmavo
+02:44:00 <Ilmen> except a few things such as lo'ai-sa'ai-le'ai, that have been added later by somebody else if I recall correctly
+02:45:00 <gleki> So back to "start to/...ing" it's interesting that Lojban doesnt have this distinction
+02:45:00 <gleki> Ilmen: by durka
+02:48:00 <Ilmen> Which distinction?
+02:50:00 <zipcpi> I've seen la'au before, to quote book or song titles. Can't vouch for exactly how common it is though
+02:51:00 <zipcpi> A bit more specific than the standard la'e lu
+02:51:00 <Ilmen> I've used it from times to times
+02:52:00 <Ilmen> en: lai'e
+02:52:00 <mensi> lai'e = [LAhE] Named reference. It converts a sumti into another sumti. The converted sumti points to the referent the
+02:52:00 <mensi> name of which is the referent of the unconverted sumti. |>>> ''lai'e ko'a''=''zo'e noi se cmene ko'a''. lai'e is a cmavo
+02:52:00 <mensi> of LAhE, and followed by any sumti including ''lo se du'u BRIDI'', ''zo...'', ''lu...li'u'', ''lo'u...le'u'' or ''zoi...
+02:52:00 <mensi> '', used with an elidable terminater lu'u. For example, ''lai'e lo se du'u ti brife doi la betis'' refers to something
+02:52:00 <mensi> the name of which is a text in a language that means ''ti brife doi la betis'', while ''la'e lo se du'u ti brife doi la
+02:52:00 <mensi> betis'' refers to the same as ''lo du'u ti brife doi la betis''. The syntax of sumti following lai'e is analy...
+02:52:00 <mensi> [mo'u se katna] http://jbovlaste.lojban.org/dict/lai'e
+02:52:00 <zipcpi> Hm
+02:53:00 <zipcpi> So la'au = lai'e lu
+02:53:00 <Ilmen> yeah
+02:53:00 <Ilmen> "lo se cmene be lu..."
+02:54:00 <zipcpi> lo'ai-sa'ai-le'ai is essential though :p
+02:54:00 <zipcpi> The si-sa-su grammar is just not sufficient for online chat systems
+02:55:00 <Ilmen> There's also the UI «je'au»
+02:55:00 <Ilmen> en:je'au
+02:55:00 <mensi> je'au = [UI3] discursive: correcting/corrective/correction - inattentive/uncaring/neutral toward the presence of
+02:55:00 <mensi> possible errors - permitting (known/likely/plausible) error/incompleteness/approximation
+02:55:00 <zipcpi> But UI isn't a sufficient selma'o pe'i
+02:55:00 <Ilmen> and also "se.u" / "segi'u" can be handy sometimes
+02:56:00 <Ilmen> "mi cpacu lo ganra .yy se.u lo grana"
+02:56:00 <zipcpi> Though I'm not quite clear how strict the grammar of lo'ai-sa'ai-le'ai is
+02:58:00 <zipcpi> Well pe'i lo'ai-sa'ai-le'ai should be like lo'u-le'u and not enforce grammar at all, unless you're building a parse system that will actually perform the "find and replace" that lo'ai-sa'ai-le'ai is meant for
+02:59:00 <zipcpi> This allows replacing any arbitrary lojban text with any arbitrary lojban text, especially when correcting grammar
+03:00:00 <zipcpi> That's why UI isn't sufficient
+03:00:00 <zipcpi> I think je'au is more accurately used for if you just said something false because you were mistaken, and I am correcting you
+03:02:00 <gleki> jbo:la'au
+03:02:00 <zipcpi> Something like ("He went out the back door." "Actually, the cameras say he went out the front."
+03:02:00 <mensi> lai'e = [LAhE] sumgadri le se li'erla'i sumti le du'u sinxa le se cmene be ri
+03:05:00 <gleki> i need a convertor for {lo se cmima be ko'a}
+03:05:00 <zipcpi> And je'aunai would probably be like "I'm probably completely wrong, but..."
+03:05:00 <gleki> hwere {ko'a} isnt necessarily the full set
+03:05:00 <gleki> Eric translated the front page to Swedish
+03:07:00 <zipcpi> Tatoeba search xoi: one result: lo ni mi baucre cu banzuni ge lo so'i tcini gi nai ku'i lo nu cusku lo mi selcni noi xoi cafne cu jai nafse'i
+03:07:00 <zipcpi> German and Esperanto translations. No English
+03:08:00 <Ilmen> zipcpi: "xoi" is a bridi relative clause particle
+03:08:00 <Ilmen> it's like poi/noi, but it doesn't attach to a sumti
+03:08:00 <Ilmen> "You're singing, which is beautiful"
+03:08:00 <Ilmen> "do sanga xoi melbi"
+03:08:00 <Ilmen> ua pei
+03:09:00 <zipcpi> ua
+03:09:00 <gleki> you'd better add examples to tatoeba to prevent such questions
+03:10:00 <Ilmen> je'e ie
+03:10:00 <Ilmen> this sentence is a pretty good example IMI
+03:10:00 <Ilmen> si IMO
+03:10:00 <zipcpi> Except it doesn't have an English translation... maybe I'll attempt it
+03:11:00 <Ilmen> "You're singing, which is beautiful" is a good example, I mean
+03:11:00 <zipcpi> Oh
+03:11:00 <Ilmen> it's not overly complicated
+03:11:00 <zipcpi> ie
+03:13:00 <zipcpi> Yeah I tried searching the IRC corpus but I think it came up nothing
+03:13:00 <zipcpi> Which means I'm probably not the only one who was totally confused :p
+03:13:00 <Ilmen> zipcpi: A xoi-clause is treated as an adverbial, it behaves like "naku" from the syntax point of view
+03:14:00 <Ilmen> so one can says things like "lo broda pe xoi brode", just like one can say "lo broda pe naku"
+03:14:00 <Ilmen> *say
+03:15:00 <zipcpi> I forgot how naku works
+03:15:00 <Ilmen> zipcpi: basically xoi is semantically similar to fi'o, but with a pretty different syntax
+03:15:00 * zipcpi nods
+03:15:00 <zipcpi> Does it have a famyma'o?
+03:15:00 <Ilmen> mi citka lo finpe sepi'o lo forca ----> mi citka lo finpe xoi mi pilno lo forca ke'a
+03:16:00 <zipcpi> ua
+03:17:00 <Ilmen> There's also the "new-soi" which is the word "soi" reassigned with a meaning very close to that of xoi
+03:17:00 <zipcpi> Yeah
+03:17:00 <Ilmen> selpahi wanted {se'u} to be the terminator for soi/xoi
+03:17:00 <gleki> Ilmen: how are they different,pls remind me
+03:17:00 <Ilmen> but I'm afraid that can be confusing, because sei has no bridi tail
+03:17:00 <Ilmen> maybe ku'o would be a better terminator
+03:18:00 <b_jonas> i lo mamta cu nalgunka vitke klama la'o gi. London .gi ca lo ba critu .i pu zi te vecnu lo vinji pikta
+03:18:00 <Ilmen> gleki: the difference is just with scope; xoi has a regular rightward scope (just like naku, ki'uku...), while soi has topmost scope
+03:19:00 <gleki> je'e
+03:19:00 <Ilmen> so {naku do sanga xoi melbi} = it is not the case that [ you sing which is beautiful ]
+03:19:00 <Ilmen> whereas
+03:19:00 <Ilmen> {naku do sanga soi melbi} = [ you don't sing ] which is beautiful
+03:19:00 <Ilmen> (it is beautiful that [ it is not the case that you sing ]
+03:19:00 <Ilmen> )
+03:20:00 <gleki> so {soi} is more like {i je lo nu go'i}
+03:20:00 <gleki> so {soi} is more like {i je ta'o lo nu go'i}
+03:20:00 <Ilmen> yeah
+03:22:00 <Ilmen> So in simple sentences where there's no other scope word, soi and xoi are identical; they behave differently only when they are on the right of a scope-generating word
+03:22:00 <Ilmen> (naku, da, sumtcita...)
+03:23:00 <gleki> in my dialect those are similar to {noi} and {vau noi}
+03:25:00 <zipcpi> ta'o I really like the Lojban definition of ifle
+03:25:00 <zipcpi> jbo:ifle
+03:25:00 <mensi> ifle = ganai me'au x1 gi me'au x2 .ije ga me'au x1 gi me'au x3
+03:26:00 <zipcpi> It's so... catchy :p
+03:26:00 <zipcpi> Almost poetic
+03:26:00 <Ilmen> .u'i
+03:27:00 <b_jonas> i mi morji lo du'u go'o .i .u'i de'i li 2012 cu zbasu lo fonxa crada tcana be bu'u lo pe la .londyn. tcacnitytrene nitdargu .i zu pu lo nu go'i ku go'i bu'u la .budapect.
+03:30:00 <zipcpi> How would you say "On the 25th"? "de'i li xo'e pi'e xo'e pi'e remu"?
+03:30:00 <zipcpi> ... too long
+03:31:00 <gleki> ganai me'au fabu
+03:31:00 <gleki> gi me'au febu
+03:31:00 <gleki> ije ga me'au fabu
+03:31:00 <gleki> gi me'au fibu
+03:31:00 <gleki> sounds like a haiku
+03:31:00 <b_jonas> zipcpi: I rarely say such a thing. I use full dates, because anything less often ends up being confusing.
+03:32:00 <zipcpi> I remember there was a proposal for a zi'evla... maybe {dreika} or something, from {detytcika}
+03:32:00 <zipcpi> Where each place value is a number... first being year, second being month, etc
+03:32:00 <gleki> yes, but since one needs to invent a new word for every time unit i prefer ti'u and de'i
+03:32:00 <b_jonas> But I'd say it as {de'i li pi'e pi'e pi'e 25} if I had to. more likely {de'i li pi'e pi'e 05 pi'e 25} with an explicit month, which I write as {de'i li --05-25}
+03:33:00 <gleki> Also L4B says that if there is only one number then it denotes the date
+03:33:00 <zipcpi> Erm, I think you have one too many pi'es
+03:33:00 <gleki> And La Bangu follows L4B here:
+03:33:00 <gleki> jb:de'i
+03:33:00 <mensi> de'i = de'i [preposition from detri] — on date ... (date stamp follows)
+03:33:00 <mensi> :de'i li pa mu pi'e ci mi pu zvati la Nipon — On March 15 I was in Japan.
+03:33:00 <mensi> :Comment: only one number denotes calendar day, two numbers separated with pi'e denote calendar day and month, three
+03:33:00 <mensi> numbers denote calendar day, month and year number, four numbers denote calendar day, week number, month and year number
+03:33:00 <mensi> correspondingly.
+03:33:00 <b_jonas> zipcpi: no, I don't. first one separates century from year. ISO date thingy. let me search.
+03:34:00 <b_jonas> zipcpi: {de'i li -15} means year '15 -- I definitely never say that
+03:34:00 <zipcpi> ... see it's this kind of think that needs to be fixed
+03:34:00 <b_jonas> but even then it still needs the extra pi'e
+03:34:00 <zipcpi> We can't agree which date system to use
+03:37:00 <zipcpi> Anyway I think the usual way of saying "the year 2015" is ca lo nanca pe li renopamu
+03:38:00 <b_jonas> zipcpi: that works too, but {detri be fa li 2015} means "in the year 2015" too
+03:39:00 <zipcpi> Well it's the date system that is in dispute. Some want to follow the ISO system, some want dd-mm-yyyy as it's often more convenient to elide the month/year
+03:39:00 <b_jonas> see http://www.probabilityof.com/iso/8601v2000.pdf page labelled 12 about truncated formats
+03:41:00 <b_jonas> zipcpi: no, I _definitely_ never use dd/mm/yyyy or mm/dd/yyyy or dd/mm/yy or mm/dd/yy or -yy-mm-dd or mm/yy or yy/mm or dd/mm or mm/dd. that just leads to the ambiguities I see daily on printed food expiry dates and even bank statements, where you have to guess the format from the context.
+03:41:00 <b_jonas> stick to yyyy-mm-dd please
+03:41:00 <zipcpi> L4B disagrees
+03:42:00 <b_jonas> and in this, I don't even care what the original gismu list says
+03:42:00 <zipcpi> Actually I do favor the ISO system... except for the whole elision thing I mentioned
+03:42:00 <b_jonas> for elision, you can use --mm-dd
+03:42:00 <b_jonas> or even ---dd but I rarely do that
+03:42:00 <b_jonas> it always leads to ambiguities
+03:42:00 <zipcpi> But we can't even agree about how many pi'es to use
+03:43:00 <gleki> L4B uses a different system that deals with conciseness
+03:43:00 <b_jonas> but it's in that freaking standard I just linked to!
+03:43:00 <b_jonas> I mean, come on
+03:43:00 <zipcpi> But you don't say li reno pi'e pa mu for century/year
+03:43:00 <b_jonas> zipcpi: no, the hyphens are optional in ISO8601, and that particular hyphen is forbidden. you can just say yyyymmdd without hyphens, or yyyy-mm-dd
+03:44:00 <zipcpi> Yet if you want to skip to dd you need an extra hyphen?
+03:44:00 <zipcpi> This system doesn't make sense
+03:44:00 <b_jonas> it does make sense. the hyphens were invented for convenience of stupid humans who at that time couldn't be forced to stop saying truncated year names like '96
+03:44:00 <b_jonas> so if they couldn't stop that practice, they at least made an unambiguuos way to represent such truncated years
+03:44:00 <zipcpi> x.x
+03:46:00 <b_jonas> no seriously! I can sort of understand why the people who print food labels don't care, and why the people who create those translated stickers that say “see expiry date (month/day) on the bottom of can” (when it's actually day/month and at the side of the can) in Hungarian don't care
+03:46:00 <b_jonas> but why do banks still print recipes with mm-dd-yy or dd-mm-yy (I don't recall which) dates on them?
+03:47:00 <b_jonas> o'onai
+03:48:00 <zipcpi> Yeah it's a right mess alright
+03:48:00 <b_jonas> and it's not the separators that I care about. if they insist on yyyy.mm.dd. with periods, ok, go ahead
+03:49:00 <b_jonas> but stop the dd/mm and mm/dd madness already
+03:50:00 <b_jonas> also, I'd finally like calendars that identify months as both names and numbers, because it's not my job to learn by heart which month has what ordinal, that's the freaking calendar's job, and even people better in this than me occasionally make mistakes about that
+03:50:00 <b_jonas> but all the calendars I see show only one or the other
+03:51:00 <zipcpi> If I remember the old proposal it was something like "x1 is the date with year number x2, month number x3, day number x4, hour x5, minute x6, second x7
+03:51:00 <gleki> i have no objections for L4B system. it works
+03:51:00 <b_jonas> zipcpi: yes, I've seen that proposal (the gismu list says something simlar I think), but I don't like it
+03:51:00 <gleki> zipcpi: you forgot week xo'ozo'o
+03:51:00 <zipcpi> Though it does extend past x5 which is somewhat inconvenient
+03:52:00 <b_jonas> the date should be a single datum, not separated to three numbers
+03:52:00 <b_jonas> separating it to three datums is what causes half of this trouble
+03:52:00 <gleki> i think L4B suggestion can be extended to not to use pi'e
+03:52:00 <b_jonas> the date, or the date-timestamp, should be given together as a single value
+03:52:00 <gleki> but it's strange since timestamps really contains several parts
+03:53:00 <b_jonas> gleki: nah, they're just a single number given in a crazy mixed base representation
+03:54:00 <zipcpi> Yeah would be that if we all switched to Unix time. Unfortunately we can't change the length of the day or year
+03:54:00 <gleki> b_jonas: okay, how in your system you express "day 1, month 13 of year 12 by Jewish calendar"?
+03:54:00 <b_jonas> I just use iso dates like {de'i li 2015-05-17T12:53:20,933} which I read out as the quite long {de'i li re no pa mu pi'e no mu pi'e pa ze pi'e xi ty. boi pa re pi'e mu ci pi'e re no pi so ci ci}
+03:55:00 <gleki> how would you say "on day 17"? with two pi'e?
+03:55:00 <b_jonas> and optionally elide terminators from that
+03:56:00 <zipcpi> gleki: No, with three. Did you miss that huge argument? xo'ozo'o
+03:56:00 <b_jonas> gleki: with three pi'e if I must, but usually with two pi'e and an explicit month, or just "on Tuesday" as in {ca lo reldei}
+03:56:00 <gleki> So your ISO system doesnt work with Jewish and Muslim calendars i suppose?
+03:56:00 <b_jonas> gleki: I don't know, I only use one calendar, and don't know much about other calendars (I only know that the FAQ url is http://www.tondering.dk/claus/calendar.html ),
+03:57:00 <b_jonas> someone else who uses those calendars will have to figure out how to write dates in them.
+03:57:00 <gleki> i think you should just create a new cmavo.
+03:57:00 <gleki> Because it all starts to sound like a new addition to cekitaujau
+03:58:00 <Ilmen> x1 [date symbol] represents time point x2 in calendar x3
+03:58:00 <Ilmen> or such
+03:58:00 <zipcpi> de'i li ny. renopamu my. mu dy. paze
+03:59:00 <zipcpi> (I think I broke the grammar)
+03:59:00 <zipcpi> exp: de'i li ny. renopamu my. mu dy. paze
+03:59:00 <mensi> ([de'i {li <(¹ny [re no pa mu my mu dy pa ze]¹) BOI> LOhO}] VAU)
+03:59:00 <zipcpi> Nope it works
+04:00:00 <gleki> you just broke jbofi'e probably
+04:00:00 <gleki> but not ilmentufa
+04:00:00 <gleki> gerna:de'i li ny. renopamu my. mu dy. paze
+04:00:00 <mensi> O_0
+04:00:00 <gleki> gerna:de'i li ny. renopamu my. mu dy. paze boi
+04:00:00 <mensi> (0[{de'i <li (1[{<(2[{<(3[ny re] no)3 pa> mu} my] mu)2 dy> pa} ze] boi)1 LO'O>} VAU])0
+04:00:00 <gleki> LO'O !
+04:00:00 <gleki> not LOhO
+04:01:00 <Ilmen> xoi calendar_predicate fa me'o renopamu pi'e mu pi'e paxa (fe ke'a) fi la .dje'ordji'an.
+04:01:00 <zipcpi> Hm but month = masti and minute = mentu
+04:01:00 <zipcpi> Though English also has this problem
+04:01:00 <gleki> maybe indeed map units with letters like zipcpi suggests?
+04:02:00 <gleki> n m j d c m s
+04:02:00 <Ilmen> If you have a calendar that allow such input, why not
+04:02:00 <gleki> most known calendars are similar to this "n m j d c m s" system
+04:02:00 <zipcpi> Yeah that solves the whole week vs month problem too
+04:03:00 <gleki> in English they usually use M vs. m
+04:03:00 <Ilmen> I'd see a predicate that take a date *symbol* (such as a letter or digit string), and relates it to a time point and a calendar argument
+04:04:00 <zipcpi> But yeah this way would be much freer. de'i li dy. paze is quite clear
+04:04:00 <zipcpi> No need to count how many pi'es to use
+04:04:00 <gleki> ye but that would require an additional step in hyperPEG i.e. semantic parsing
+04:04:00 <Ilmen> so the calendar would extract a concrete time point from this abstract date symbol, that could have any shape accepted by the calendar
+04:05:00 <gleki> just tell me how to distinguish month and minute
+04:05:00 <Ilmen> The calendar would be kinda function that parses the date symbol and returns a timestamp
+04:05:00 <gleki> and i guess letters are prefixes to numbers, right?
+04:05:00 <Ilmen> so the encoding of the date wholly depends on the selected calendar
+04:06:00 <gleki> encoding is in detri3
+04:06:00 <Ilmen> en: detri
+04:06:00 <mensi> detri = x1 is the date [day,week,month,year] of event/state x2, at location x3, by calendar x4. |>>> (time units in x1
+04:06:00 <mensi> are specified as numbers separated by pi'e or are unit values massified with joi); See also cmavo list de'i, djedi,
+04:06:00 <mensi> jeftu, masti, nanca, tcika. |>>> officialdata
+04:06:00 <gleki> jbo:detri
+04:06:00 <mensi> detri = x1 noi nanca jo'u masti jo'u djedi sinxa cu judri x2 noi fasnu kei x3
+04:06:00 <gleki> cu'u la xorxes
+04:06:00 <Ilmen> Xorxes completetely hijacked {detri}, as far as I remember
+04:06:00 <gleki> he paralleled it judri
+04:06:00 <Ilmen> there's no calendar anymore
+04:07:00 <gleki> en:judri
+04:07:00 <mensi> judri = x1 is an address of/are coordinates of x2 in system x3.
+04:07:00 <Ilmen> hm
+04:07:00 <gleki> as for La Bangu i probably should follow xorxes. but i cant do that always
+04:08:00 <Ilmen> so the time and place are merged into the x2?
+04:08:00 <zipcpi> PnYnMnDTnHnMnS
+04:08:00 <gleki> just use bu'u
+04:08:00 <zipcpi> That's from the ISO description of duration stamps
+04:08:00 <gleki> P ?
+04:08:00 <zipcpi> P for period
+04:08:00 <gleki> like ...?
+04:09:00 <Ilmen> well, then if detri1 is a symbol, then it should be given a me'o argument and not a li
+04:09:00 <zipcpi> P1M = 1 moth.
+04:09:00 <zipcpi> PT1M = 1 minute
+04:09:00 <zipcpi>  "P3Y6M4DT12H30M5S" represents a duration of "three years, six months, four days, twelve hours, thirty minutes, and five seconds".
+04:09:00 <gleki> why cant number be an address?
+04:09:00 <zipcpi> This is for durations and not for dates though
+04:10:00 <gleki> oh!
+04:10:00 <gleki> interesting
+04:10:00 <gleki> you just solved one huge mystery zipcpi
+04:10:00 <zipcpi> uanairu'e
+04:11:00 <gleki> but how does this system distinguish periods from dates?
+04:11:00 <zipcpi> This format is used for periods. Unfortunately the date system is a mess and that is why we had that huge argument
+04:12:00 <gleki> Maybe the lack of P signals that it's a date?
+04:12:00 <zipcpi> It has separate ways for YYYY-MM-DD, YYYY-Www-D, YYYY-DDD (ordinal date, meaning like the 135th day of the year)
+04:13:00 <zipcpi> Doesn't use any letters, except for T to separate the date from the time of day
+04:13:00 <zipcpi> And a letter in the end to signify timezone
+04:13:00 <gleki> 32nd day of month 1 = 1st day of month 2
+04:13:00 <gleki> so this DDD is not a problem for me
+04:13:00 <b_jonas> icedp: no, {lo detri} is a _value_, even if it's not just a number written in the usual way. {me'o} is for when you're quoting the expression or consider its symbols.
+04:14:00 <b_jonas> um
+04:14:00 <b_jonas> Ilmen: ^
+04:14:00 <b_jonas> so no, definitely not {me'o}
+04:14:00 <zipcpi> That is what is under discussion
+04:14:00 <demize> gleki: It would probably be somewhat of an issue for most people to use ;)
+04:14:00 <gleki> probably me'o cant be calculated.
+04:15:00 <gleki> demize: people probably wont use. although some people do celebrate 256th day every year
+04:15:00 <gleki> Short resume: I take this P system with letters for describing it later and probably using it somewhere.
+04:15:00 <zipcpi> http://en.wikipedia.org/wiki/Programmers%27_Day ua
+04:24:00 <b_jonas> ni'o la .david mador. presku fi lo bangu tadni .i prexu'a lo du'u tadni lo za'u bangu ku poi simsa simxu ca lo xu kau mintu .i ko tcidu fi la'o papri. http://www.madore.org/~david/weblog/d.2015-05-16.2297.html#d.2015-05-16.2297 .papri
+04:24:00 <b_jonas> .i na srana lo jbobau
+04:25:00 <Ilmen> .oi I was talking to mensi instead of #lojban
+04:25:00 <Ilmen> gleki: "2012-05-16" is not a number, it's a symbol that needs to be parsed in order to extract the exact number of days since year #0
+04:26:00 <Ilmen> and that not as easy as it may seems, because the bissextil years aren't as predictable, they aren't necessarily every 4 years
+04:26:00 <Ilmen> If detri1 was given a plain number (the number of days since year 0), then li would be appropriate, indeed
+04:26:00 <Ilmen> I think on the mriste Xorxes said that li was more powerful than I thought, and was able to parse expressions in complex encodings such as calendar dates, and return the appropriate number (the number of days since year #0?); but then, it would be impossible to specify what calendar is used, because li has no place for specifying an encoding
+04:26:00 <PrincessBecca> hm. in the lojban wave lessons, when it's going over attitudinals and talking about laadan, it says "In Lojban, there is no such agenda", which almost might make me think that lojbanists are sexists who dismissively refer to equality as "an agenda", which is probably not what you want?
+04:26:00 <Ilmen> So I'm not very enthusiastic at the idea of leaving the job of parsing date symbols to {li}
+04:26:00 <Ilmen> I'd prefer giving directly the date symbol (using {me'o}) to a predicate that would parse it itself, with the calendar given to it as another argument
+04:26:00 <Ilmen> so that one can explicitly indicate which calendar is being used, if needed
+04:26:00 <Ilmen> Y2015M5D17 is-the-symbol-for-timepoint Today in-calendar YMD-Georgian
+04:26:00 <b_jonas> Ilmen: it might not be a number, but a numeric value. you can put a vector or other non-numeric expression after {li} if you use it for its meaning/value, or after {me'o} if you want to talk about the expressions
+04:26:00 <Ilmen> mu'o
+04:26:00 <zipcpi> Laadan isn't about equality
+04:26:00 <PrincessBecca> "agenda" is a pretty loaded word
+04:27:00 <PrincessBecca> in english.
+04:27:00 <b_jonas> Ilmen: it is irrelvant how complicated it is to compute with the particular expression you give.
+04:27:00 <Ilmen> b_jonas: okay, but you can't specify explicitly what code it's in
+04:28:00 <PrincessBecca> it has a very negative connotation. people talk about "the gay agenda", "the feminist agenda", etc. and people who do so are generally conservative talk radio hosts.
+04:28:00 <b_jonas> Ilmen: I don't think that's a problem. That's normal.
+04:28:00 <gleki> Ilmen: pi'e is like pi. although whereas in decimal system every digit differs always in 10 in Gregorian calendar it varies
+04:28:00 <gleki> PrincessBecca: not an English person wrote that. so feel free to make corrections
+04:29:00 <PrincessBecca> when you use a word like "agenda" to refer to feminism, you're alienating a large number of potential speakers
+04:29:00 <Ilmen> je'e
+04:29:00 <Ilmen> .ei co'o
+04:29:00 <b_jonas> Ilmen: if you want to use {me'o}, go on, I will understand it, but I think {li} is right for that. Maybe that's because I have some strange ideas about lojban mekso that I haven't really explained anywhere.
+04:29:00 <b_jonas> co'o Ilmen
+04:29:00 <PrincessBecca> ok
+04:29:00 <zipcpi> It didn't just eliminate the things it didn't like. It tried to reverse things. If English is really so sexist for marking things one way how is marking it the other way any better
+04:29:00 <gleki> if u want i can correct now for you
+04:29:00 <gleki> PrincessBecca: what word should be used?
+04:30:00 <zipcpi> The word feminism is loaded. I prefer to call myself an egalitarian
+04:30:00 <PrincessBecca> i would rewrite the clause completely.
+04:30:00 <PrincessBecca> err, the sentence.
+04:31:00 <gleki> okay, re'i. what would you write?
+04:31:00 <PrincessBecca> zipcpi, i'm really not getting into a debate on this subject in here.... suffice to say i prefer to use the normal word that normal people have used for decades, rather than having an agenda to discredit feminism.
+04:31:00 <PrincessBecca> gleki, let me think about it.
+04:31:00 <zipcpi> Yes, normal people like the people who tweet #killallmen
+04:32:00 <zipcpi> Or the Dworkinites that say that all PIV is rape
+04:33:00 <PrincessBecca> do you want me to talk about the ridiculous things MRAs and "egalitarians" say online?
+04:33:00 <gleki> In fact it's plain wrong that Lojban brrowed that idea of attitudinals from Laadan. It's from Loglan.
+04:34:00 <PrincessBecca> were evidentials in Loglan?
+04:34:00 <gleki> Individual words could be borrowed but that happens everywhere else in Lojban.
+04:34:00 <zipcpi> Where did I mention MRAs?
+04:35:00 <zipcpi> I'm not talking about the fringe here. Dworkin is still a "big name" in feminism
+04:35:00 <PrincessBecca> zipcpi, sorry, i consider all non-feminists to be the same, much in the same way you believe feminists are all the same.
+04:36:00 <zipcpi> Then perhaps you should remove the log from your own eye then
+04:36:00 <PrincessBecca> sorry, i didn't realize i was talking to Jesus.
+04:36:00 <PrincessBecca> bbl
+04:37:00 <zipcpi> If you're so worried that if people say they believe in equality but not feminism, then you should be more worried about the people who say they believe in feminism but don't believe in equality
+04:37:00 <gleki> PrincessBecca: hard to say. There are certainly discursives in the current Loglan.
+04:37:00 <gleki> en:evidential
+04:37:00 <PrincessBecca> it's literally a contradiction to believe in feminism but not equality
+04:38:00 <mensi> 16 da se tolcri: ba'a, ba'acu'i, ba'anai, ca'e, ja'o, ju'a, ju'aku'i, ka'u, pe'i, ru'a, se'o, si'au, su'a, su'anai, ti'e,
+04:38:00 <mensi> za'a
+04:38:00 <gleki> loglan:tau
+04:38:00 <mensi> tau = even, surprisingly,unexpectedly (UI), a discursive
+04:38:00 <gleki> loglan:io
+04:38:00 <mensi> io = I expect/in all likelyhood..., exp. of moderate belief.
+04:38:00 <gleki> en:ba'a
+04:38:00 <mensi> ba'a = [UI2] evidential: I expect - I experience - I remember.
+04:38:00 <PrincessBecca> feminism = belief in equality, period
+04:38:00 <PrincessBecca> if you believe in equality, you are a feminist.
+04:38:00 <PrincessBecca> www.areyouafeminist.com
+04:40:00 <zipcpi> Then I guess Dworkin doesn't exist then?
+04:40:00 <gleki> if {za'a} is an evidential then Loglan has it too: http://www.loglan.org/Loglan1/chap5.html#table5.3
+04:40:00 <PrincessBecca> i have no comment on dworkin, i have been a feminist for about 30 years without ever having read her.
+04:41:00 <PrincessBecca> gleki, cool. it's better not to put such a polemic topic in there at all than to comment on it and say it has "an agenda" whereas lojban does not.
+04:42:00 <zipcpi> How about Sarkeesian then? Heard of her?
+04:42:00 <PrincessBecca> less alienating.
+04:42:00 <zipcpi> http://archive.is/mNEUu
+04:42:00 <gleki> PrincessBecca: even if most evidentials didnt exist in Loglan it's wrong to apply that to all attitudinals. {ui} is an ancient word originated in Loglan.
+04:43:00 <PrincessBecca> zipcpi, i agree with that statement.
+04:43:00 <b_jonas> gleki: what's its lojban equivalent?
+04:43:00 <zipcpi> How is that equality?
+04:43:00 <gleki> loglan:ui
+04:43:00 <mensi> ui = fine!/good!/oh!..., an exp./exclamation of pleasure.
+04:44:00 <b_jonas> oh argh, is that still the database that gives only the first line of the definition? let me check the full defn
+04:44:00 <PrincessBecca> zipcpi, it's simple if you think about it. if the current state of affairs is not equal, then any attempt by someone with less power to make things equal will unjustly appear to the person with power as an attack.
+04:44:00 <zipcpi> It's not a zero-sum game.
+04:44:00 <PrincessBecca> it happens all the time.
+04:44:00 <b_jonas> gleki: could you perhaps make it give all lines?
+04:44:00 <gleki> b_jonas: za'a, you can't immediately decide what <ui> means in Loglan.
+04:44:00 <gleki> loglan: ui
+04:44:00 <mensi> ui = fine!/good!/oh!..., an exp./exclamation of pleasure.
+04:45:00 <PrincessBecca> that's why american christians believe they're being persecuted.
+04:45:00 <gleki> that's all
+04:45:00 <gleki> no more lines
+04:45:00 <b_jonas> gleki: yeah, but does it give all lines for other words?
+04:45:00 <gleki> should
+04:45:00 <b_jonas> it used to give only one line
+04:45:00 <b_jonas> maybe you fixed it
+04:45:00 <gleki> loglan: kamla
+04:45:00 <mensi> kamla = K come/go from S to D via V.
+04:45:00 <b_jonas> let me try
+04:45:00 <gleki> hm
+04:45:00 <gleki> strange
+04:46:00 <zipcpi> You don't right injustice by lumping people into classes and then artificially balance the scales. That just means more innocent people will suffer
+04:46:00 <b_jonas> the defn for {ui} actually has two lines too
+04:48:00 <PrincessBecca> zipcpi, i really don't understand what you're saying. without ever having experienced the way women are treated differently than men by default in society, i'm not sure saying "not all men" is helpful to bringing about equality. first you have to understand your position and why it is fundamentally different from that of a woman's.
+04:48:00 <gleki> b_jonas: there are actually two definitions of it.
+04:49:00 <zipcpi> That is what the Marxists tried to do, except it was landowners vs the working class
+04:49:00 <PrincessBecca> zipcpi, i am a marxist
+04:49:00 <zipcpi> Can't say I'm surprised
+04:49:00 <b_jonas> loglan: dilko
+04:49:00 <mensi> dilko = B is delicate/subtle/pleasing to D in quality N.
+04:50:00 <PrincessBecca> marxists don't "try to do" anything, marxism is a broad set of philosophical, political and economic theories.
+04:50:00 <zipcpi> What about the USSR?
+04:50:00 <PrincessBecca> most people are marxists and don't even know it.
+04:50:00 <PrincessBecca> zipcpi, that was marxism-leninism.
+04:50:00 <PrincessBecca> i.e., it already had someone's ideas besides marx's in it.
+04:50:00 <PrincessBecca> by definition.
+04:50:00 <b_jonas> should give all eight definition lines, some of which are for negation, place swap, or abtracted versions
+04:51:00 <gleki> http://mw.lojban.org/papri/File:roroi_bredi.svg
+04:51:00 <zipcpi> Yeah they said that all you needed to do was hand the government all the keys to the economy for a while... and then when everyone is equal, it will suddenly let go of that power
+04:51:00 <gleki> b_jonas: it's just that jvs exports dont allow for that so here is some incompatibility
+04:51:00 <PrincessBecca> then there was trotskyism and stalinism, further complicating the matter
+04:52:00 <gleki> en:stalingu
+04:52:00 <gleki> en:stalingau
+04:52:00 <mensi> [< stali lingu ≈ Remain lingu*] lo nu mulno sisku zo'u: y no da se tolcri
+04:52:00 <mensi> stalingu[7917], stalylingu[10047]
+04:52:00 <mensi> [< stali linsi gasnu ≈ Remain chain do] lo nu mulno sisku zo'u: y no da se tolcri
+04:52:00 <mensi> stalingau[8796], stalingasnu[10866], stalylingau[10926], stalinsygau[10926], stalylingasnu[12996], ...
+04:52:00 <PrincessBecca> and meanwhile europe has been marxist in a completely different sense for decades
+04:52:00 <gleki> en:marxista
+04:52:00 <mensi> [< manri xista ≈ Reference xista*] lo nu mulno sisku zo'u: y no da se tolcri
+04:52:00 <mensi> marxista[7937], manryxista[10067]
+04:52:00 <PrincessBecca> and has been prosperous, way more prosperous than the united states.
+04:52:00 <b_jonas> gleki: sure, but it's a *good* dictionary, it would be nice to have a good interface for it
+04:53:00 <gleki> b_jonas: actually other places parallel JVS's keywords
+04:53:00 <PrincessBecca> people claim marxism killed the u.s. auto industry, but actually german and japanese cars killed the u.s. auto industry.... and both germany and japan still have unions, high minimum wages, a social safety net, etc.
+04:54:00 <PrincessBecca> these are essentially marxist ideas.
+05:00:00 <PrincessBecca> (side note: simply owning land does not make you a member of the ruling class; you have to significantly control the means of production.)
+05:03:00 <zipcpi> Wait there is a loglan dictionary?
+05:03:00 <zipcpi> I don't know it though
+05:04:00 <b_jonas> zipcpi: http://math.boisestate.edu/~holmes/loglan.org/holmes_stuff/Peter%20Hill%20dictionary%20project/L-to-E-RH1.html
+05:05:00 <b_jonas> zipcpi: it's quite nice because its compiler took great care to add English keywords redundantly so it can be turned to an English to Loglan dict too (and there's such a version),
+05:05:00 <zipcpi> aa? abrrikote? Really?
+05:05:00 <b_jonas> which is what's missing from most current lojban dictionaries
+05:05:00 <zipcpi> How do you even pronounce that?
+05:06:00 <b_jonas> zipcpi: "aa" in loglan is prounced like "a'a" in lojban
+05:06:00 <gleki> at least for this word there is a lojban equivalent
+05:06:00 <gleki> en:apricot
+05:06:00 <zipcpi> What about doubled consonants?
+05:06:00 <mensi> 5 da se tolcri: birkoku, pelsmela, rutrprunu, ricrprunu, smela
+05:07:00 <gleki> I think they have recently discussed to remove these double consonants
+05:07:00 <b_jonas> zipcpi: I don't know, I don't speak loglan, but I presume they're just geminated consonants
+05:08:00 <b_jonas> zipcpi: the funnier part is that "x" is a loglan letter but it occurs very rarely, in only about five words in that dictionary
+05:09:00 <b_jonas> (sort of like some vowel glides in lojban)
+05:09:00 <zipcpi> Yeah kinda like the status of words like crenzuue and tsekuuoia :p
+05:09:00 <zipcpi> Acutally tsekuuoia is probably not in the dictionary yet
+05:10:00 <zipcpi> Kinda tempted to add it, but I'm kinda suspicious as to my motivations
+05:10:00 <zipcpi> Am I adding it because it might be useful, or am I adding it just to have an example of somewhat pathologic semivowel resolution...
+05:14:00 <zipcpi> No comments?
+05:15:00 <b_jonas> no comments. feel free.
+05:16:00 <zipcpi> Are words ever deleted?
+05:16:00 <Vanlamigu> No.
+05:16:00 <Vanlamigu> Ma smuni zo tsekuŭoĭa ?
+05:17:00 <zipcpi> Can't decide if it should refer to the subfamily Sequoioideae or the genus Sequoia
+05:17:00 <phma> coi
+05:17:00 <zipcpi> coi
+05:18:00 <zipcpi> Think it should refer to the subfamily though... most people can't tell them apart to such specificity
+05:18:00 <Vanlamigu> en:tciuaua
+05:18:00 <mensi> tciuaua = x1 is a Chihuahua of breed/variety x2.
+05:19:00 <gleki> phma: xu ba'e do finti la vlatai
+05:19:00 <zipcpi> Heh nice
+05:20:00 <zipcpi> Yeah it's one of those things that you probably won't encounter very often but when you do it's like... uanaisai
+05:20:00 <phma> Make it the subfamily. The genus has only one extant species, making x2 superfluous.
+05:21:00 <phma> mi na.e la .ritcryd.kyrnos. finti
+05:23:00 <zipcpi> done http://jbovlaste.lojban.org/dict/tsekuuoia
+05:23:00 <b_jonas> phma: doesn't the CLL specifically say that {cinfo} has a {fe} place despite that there's only one species of lion?
+05:23:00 <b_jonas> for consistency or something
+05:24:00 <phma> it does
+05:25:00 <phma> there is an extinct species of lion
+05:25:00 <Vanlamigu> Yeah, consistency has always been the main focus in creating the gismu definitions.
+05:25:00 <b_jonas> (mind you, {remna} is listed in the gimste without a {fe} place.)
+05:25:00 <b_jonas> (maybe for some political reason or something.)
+05:26:00 <b_jonas> iirc some people (gleki?) opine that {remna} shouldn't be a word and lions should be called {tirxu} instead
+05:28:00 <phma> why should {remna} not be a word? I think it should have x2 like the rest
+05:28:00 <b_jonas> I mean, that it shouldn't have been a gismu
+05:30:00 <zipcpi> Are there any potentially any word boundary problems with pronouncing syllabic sonorants as if they had a /y/
+05:30:00 <zipcpi> Like "ikylki" or "bakyrto"
+05:30:00 <zipcpi> I don't think so...
+05:31:00 <b_jonas> zipcpi: yes, I believe there are
+05:31:00 <zipcpi> exp: ikylki
+05:31:00 <mensi> SyntaxError: Expected [.\t\n\r?! ] but "i" found.
+05:31:00 <Vanlamigu> No, and I already do that in type-3 fu'ivla, e.g. {tcityrxactage}
+05:31:00 <Vanlamigu> cidjyrspageti
+05:31:00 <gleki> b_jonas: how can {remna} be not a word?
+05:31:00 <Vanlamigu> Syllabic consonants can be eliminated that way.
+05:31:00 <b_jonas> oh, sorry
+05:31:00 <zipcpi> b_jonas: Well both assertions require proof
+05:31:00 <gleki> As for {tirxu} it's a strange collection of several species
+05:31:00 <b_jonas> I meant {cinfo}, not {remna}
+05:32:00 <Vanlamigu> remfo
+05:32:00 <zipcpi> I don't know enough about Lojban parsing to prove my own assertion though. But you only need to provide one example of a word falling apart
+05:32:00 <Vanlamigu> x1 is a lion or human
+05:32:00 <gleki> I proposed {bramlatu}. I dont see why {tirxu} should cover those bramlatu2 that it covers
+05:32:00 <gleki> en: bramlatu
+05:32:00 <mensi> bramlatu [< barda mlatu ≈ Large cat] = x1 is a big cat of Family Felidae of species x2 |>>> Genus pantera - 'Panthera
+05:32:00 <mensi> (roaring or great cats)': tigra - 'Tiger, Panthera tigris Asia', cinfo - 'Lion, Panthera leo (Africa, Gir Forest in
+05:32:00 <mensi> India)', djaguara - 'Jaguar, Panthera onca (the Americas)', pardu - 'Leopard, Panthera pardus (Asia and Africa)'. Genus
+05:32:00 <mensi> Acinonyx: tcitama - 'Cheetah, Acinonyx jubatus (Africa and Iran)'. Genus Puma: parpuma - 'Cougar, Puma concolor (North
+05:32:00 <mensi> and South America)'. Genus unkia - 'Uncia': irbisa - 'Snow Leopard, Uncia uncia (mountains of central and south Asia)'.
+05:32:00 <mensi> Genus Neofelis: iunbau - 'Clouded Leopard, Neofelis nebulosa (southeast and south Asia)', diardi - 'Sunda Clouded
+05:32:00 <mensi> Leopard, Neofelis diardi (Borneo...
+05:32:00 <mensi> [mo'u se katna] http://jbovlaste.lojban.org/dict/bramlatu
+05:33:00 <b_jonas> zipcpi: wait, do you mean only "r" and "l"?
+05:33:00 <b_jonas> gleki: ah
+05:33:00 <b_jonas> I see
+05:33:00 <zipcpi> Oh right I can see how m might cause problems
+05:33:00 <gleki> Half of those proposed fu'ivla re no longer valid
+05:33:00 <zipcpi> Since mr and ml are valid initial consonant pairs
+05:34:00 <Vanlamigu> I hate those pairs.
+05:34:00 <b_jonas> zipcpi: yep
+05:34:00 <Vanlamigu> {mrV} is not a consonantal syllable
+05:35:00 <zipcpi> Still though, supposing it is *bakymrogau
+05:35:00 <zipcpi> Oh wait that's a lujvo now
+05:35:00 <PrincessBecca> how do you talk about neanderthals and homo erectus without an fe place of remna?
+05:35:00 <gleki> i mo i xu zo mlatu co'u i ei zukte ma i xu lo nu ralte lo murmura seba'i
+05:35:00 <Vanlamigu> You'd use danlu
+05:36:00 <phma> I've seen a fe place of remna used
+05:36:00 <Vanlamigu> I've seen a fe place of prenu used
+05:36:00 <gleki> I think remna2 exists
+05:36:00 <gleki> or should
+05:36:00 <zipcpi> It's not defined
+05:36:00 <Vanlamigu> ro ba'u da jinvi
+05:37:00 <gleki> ma'a remna la lojban
+05:37:00 <zipcpi> murmura?
+05:37:00 <PrincessBecca> why not just use danlu for every animal, including humans :P
+05:37:00 <Vanlamigu> Verbosity killed the cat.
+05:38:00 <gleki> en: murmura
+05:38:00 <mensi> murmura = x1 is a pussycat, kitty, kittycat, a purring home animal treated affectionately, belongs to species x2 |>>>
+05:38:00 <mensi> gleki
+05:38:00 <gleki> en: xafxafa
+05:38:00 <mensi> xafxafa = x1 is a bow-wow, doggie, a home kept barking animal of species x2 |>>> See also gerku |>>>
+05:38:00 <mensi> gleki
+05:38:00 <phma> gavgava
+05:38:00 <gleki> ie
+05:38:00 <gleki> cumki
+05:38:00 <zipcpi> Interesting...
+05:38:00 <phma> What meows and has an abscess?
+05:38:00 <PrincessBecca> if not having an fe place of remna is for political reasons that's silly... a language should be able to express anything and everything, no matter how reprehensible.
+05:39:00 <gleki> there wasnt any reason.
+05:39:00 <gleki> there was just a lack of time
+05:39:00 <Vanlamigu> Don't question the gismu inventors.
+05:39:00 <PrincessBecca> u'i
+05:39:00 <gleki> The only reason behind the invention of Lojban was to clone Loglan as fast as possible.
+05:40:00 <gleki> This goal was fully reached.
+05:40:00 <phma> xu lo do karce cu xrududu
+05:41:00 <b_jonas> u'i zo xrududu
+05:41:00 <gleki> uanai
+05:41:00 <zipcpi> u'i
+05:41:00 <gleki> en:xrududu
+05:41:00 <mensi> lo nu mulno sisku zo'u: y no da se tolcri
+05:41:00 <zipcpi> It's a Watership Down reference
+05:41:00 <PrincessBecca> it's onomatopoeic
+05:42:00 <PrincessBecca> xru...du...du... sounds like a car
+05:42:00 <Vanlamigu> mi tirna lo rinrine be lo mi fonxa
+05:42:00 * gleki omnomatopoeic...
+05:42:00 <PrincessBecca> haha
+05:42:00 <b_jonas> i je zo zracucu nu'o srana lo ka trene
+05:42:00 <phma> El teléfono del carpintero solo hace rin
+05:42:00 <Vanlamigu> tcutcutrene
+05:42:00 <gleki> bu'u lo porto lo murmura cu ronrona
+05:43:00 <PrincessBecca> ¿porqué?
+05:43:00 <b_jonas> Vanlamigu: no, that's a lujvoi
+05:43:00 <Vanlamigu> No shit.
+05:43:00 <PrincessBecca> s/porqué/por qué
+05:43:00 <phma> parce que c'est un patapon
+05:43:00 <zipcpi> It's also a reference to Watership down. Hrududu was what the rabbits called cars, trains, and other dangerous vehicles
+05:43:00 <Vanlamigu> jbo:onmatopo'eia
+05:43:00 <mensi> onmatopo'eia = x1 valsi x2 gi'e simsa lo se sinxa be x1 lo ka ma kau sance ce'u
+05:44:00 <gleki> en: omno
+05:44:00 <mensi> omnomo = x1 experiences good taste x2
+05:44:00 <zipcpi> o.o
+05:44:00 <Vanlamigu> mi .omni lo ka .omno
+05:44:00 <Vanlamigu> si .omnomo
+05:44:00 <zipcpi> u'i
+05:44:00 <zipcpi> mutce u'ivla
+05:45:00 <b_jonas> i .oi nai mi citka lo vensa patlu fi'o te krefu ku
+05:45:00 <PrincessBecca> au mi omnomo .i co'o
+05:45:00 <b_jonas> omnomnom
+05:45:00 <zipcpi> Hey wait a minute... Doge becomes completely grammatical when translated to Lojban o.o
+05:46:00 <b_jonas> what's Doge?
+05:46:00 <zipcpi> cu kibro sidmeme
+05:47:00 <Zyxl> There's a word for meme!? .ua
+05:47:00 <Vanlamigu> I just switch mutce with so'i, it's grammatical (sometimes), but not smudra, so it's fine (e.g. https://8ch.net/jbo/res/207.html#234 )
+05:48:00 <Vanlamigu> (it should be so'i jufra .i mutce nibji'i )
+05:49:00 <zipcpi> tcutcutrene -> nitcu nitcu trene
+05:49:00 <zipcpi> ma smuni
+05:49:00 <zipcpi> zo'o
+05:49:00 <Vanlamigu> tcutcu--------
+05:49:00 <Vanlamigu> sei lo trene cu krixa
+05:50:00 <zipcpi> There is actually a cmavo for onomatopoeia. sa'ei
+05:50:00 <Vanlamigu> Yup
+05:51:00 <zipcpi> I quite like the COI2 cmavo. It gives you a space to say things relatively free from the strict constraints of Lojban grammar :p
+05:52:00 <zipcpi> Like COI1 it takes a sumti or selbri but unlike COI1 it doesn't address anyone
+05:54:00 <zipcpi> So it could be cmevla, a lu quote, a lo'u quote, or even a zoi quote. Or ki'ai [selbri] to turn any Lojban word into an attitudinal/interjection
+06:02:00 * nuzba @loewenheim: Now I'm watching Lojban videos on YouTube. Jesus I'm a nerd :/ [http://bit.ly/1B5mS1q]
+06:03:00 <zipcpi> doi gleki Do you think I should write up something about lerfu-tagged detri?
+06:04:00 <zipcpi> It's not quite ISO but it's probably the cleanest way to clean up all the loose threads associated with it
+06:05:00 <zipcpi> Basically it's the "n m j d (t) c m s" system
+06:06:00 <zipcpi> t stands for tcika and would be used to separate the date from the time
+06:06:00 <zipcpi> This also allows unambiguous referral to the hour via "de'i me'o ty my pare"
+06:07:00 <zipcpi> Wait minute I mean
+06:08:00 <zipcpi> And the whole ordinal date system, even though it probably won't be used very often, can be "ny dy"
+06:08:00 <zipcpi> So me'o ny 2015 nydy 256 would be Programmer's Day this year
+06:10:00 <zipcpi> Also quite extensible to other calendar systems if need be... though I'm not sure what you would say to "switch codes"
+06:10:00 <zipcpi> And yeah I'm going with me'o. The idea is that the calendar acts like a computer program that accepts a string and returns a point in time
+06:12:00 <zipcpi> Of course for tcika there's also ti'u
+06:12:00 <zipcpi> Also pi'e is a bit less of a problem there
+06:13:00 <gleki> zipcpi: you may write of letter-deti, yes. that would be very useful. also you may propose something to differentiate between Periods and dates
+06:14:00 <gleki> zipcpi: also i would just replace {masti} with something different starting from another letter.
+06:14:00 <zipcpi> ly for lunre? A bit metaphorical but...
+06:15:00 <gleki> heh
+06:15:00 <zipcpi> lunra I mean
+06:15:00 <gleki> in most major languages it starts either with "m" or it's "yue" in Chinese
+06:15:00 <gleki> in Mandarin
+06:16:00 <zipcpi> Is there a preposition that means "of duration"?
+06:17:00 <gleki> {ze'a lo masti} - during a month
+06:17:00 <gleki> {ze'a lo masti} - during a period of 1 month
+06:17:00 <zipcpi> OK... but there is no gismu that acts like "detri"
+06:17:00 <zipcpi> That converts a number into a period of time
+06:17:00 <b_jonas> zipcpi: fi'o temci ?
+06:18:00 <zipcpi> Are we going to put a mekso into lo temci?
+06:18:00 <gleki> i can imagien that {de'i me'o py ...} talks about a period starting not in year 0 of Gregorian calendar but at a relative point in time
+06:19:00 <zipcpi> en: cabyku'e
+06:19:00 <mensi> cabyku'e [< cabna kuspe ≈ Concurrent range] = k1=c1 ranges through time/has duration k2=c2. |>>> x2 is the complete
+06:19:00 <mensi> duration as the amount of time or an interval specification and is non-aorist. Cf. temci. |>>>
+06:19:00 <mensi> rlpowell
+06:19:00 <zipcpi> ky for kuspe?
+06:19:00 <gleki> so by decree by us {de'i me'o py} can denote a relative interval, i.e. period
+06:19:00 <gleki> well, it's {ditcu}
+06:19:00 <gleki> en;ditcu
+06:20:00 <gleki> en:ditcu
+06:20:00 <mensi> ditcu = x1 is the time-duration/interval/period/[elapsed time] of event x2.
+06:20:00 <zipcpi> ua
+06:20:00 <gleki> needless to say we cant take it
+06:20:00 <zipcpi> ie
+06:20:00 <gleki> Well, in Turkic languages month is [aj] but {abu} would be lengthy
+06:21:00 <gleki> in Japanese it's {tsuki}. {ty} is taken, right?
+06:21:00 <Ilmen> why can't you use M?
+06:21:00 <zipcpi> Not if we scrap the tcika separator idea
+06:21:00 <zipcpi> Cause there is no way to distinguish M from m
+06:21:00 <zipcpi> {masti} vs {mentu}
+06:22:00 <gleki> en: ga'e
+06:22:00 <mensi> ga'e = [BY1] upper-case letteral shift. |>>> officialdata
+06:22:00 <gleki> mi na stidi
+06:22:00 <zipcpi> ua
+06:22:00 <gleki> i clani da'i
+06:22:00 <zipcpi> ie
+06:22:00 <gleki> so {lunra}
+06:22:00 <Vanlamigu> masti bu
+06:22:00 <Vanlamigu> mentu bu
+06:22:00 <Vanlamigu> mi na stidi .i ku'i cumki
+06:23:00 <gleki> ei ly du masti bu
+06:23:00 <zipcpi> lol I like ga'e. I might even use it in combination with the NATO alphabet for spelling out strings with mixed-case letters
+06:23:00 <gleki> ije lo pilno cu cuxna
+06:23:00 <zipcpi> Though I'd have to explain it first
+06:23:00 <gleki> {de'i li masti bu pa} isn't that lengthy
+06:23:00 <Ilmen> There's also {tau} but it's been repurposed as a shorthand for {tu'a} in cekitau dialect
+06:24:00 <gleki> en: tau
+06:24:00 <mensi> tau = [LAU] 2-word letteral/shift: change case for next letteral only. |>>> officialdata
+06:24:00 <Ilmen> And, is there any sense in talking about upper case in Lojban?
+06:24:00 <zipcpi> Oh right ga'e is caps-lock
+06:24:00 <zipcpi> Yeah I know T.T
+06:25:00 <Ilmen> maybe you can take "E" for "mentu"
+06:25:00 <zipcpi> .ebu
+06:25:00 <Ilmen> month are more common in dates than minutes
+06:25:00 <gleki> {tau my} still wont save use. i think remembering which one is M wil ltake time unless you already know this ISO
+06:25:00 <Ilmen> It's a code, and a code must be already known to be used properly
+06:26:00 <gleki> I'm used to YMDhms
+06:27:00 <gleki> de'i li masti bu pa ti'u li cacra bu pa mentu bu pare
+06:27:00 <zipcpi> li and me'o are both of the same selma'o
+06:28:00 <Ilmen> go'i
+06:28:00 <gleki> in January at 12 minutes past one
+06:28:00 <gleki> de'i li ly pa cy pa my pare
+06:28:00 <gleki> impossible . .. Lojban is shorter than English O_0
+06:29:00 <zipcpi> u'i
+06:29:00 <Ilmen> Maybe the basic calendar predicate would be for duration/interval, and the usual absolute date predicate would be a derivative which takes a selected year-0 reference point
+06:29:00 <gleki> it's much better then these L4B rules
+06:29:00 <gleki> *than
+06:30:00 <Ilmen> Date symbol S is the inteval between X and Y under calendar C
+06:30:00 <gleki> Ilmen: just detri3 needs to be prefilled like what it's done for masti2
+06:30:00 <Ilmen> Date symbol S is the inteval between year-0 and X under calendar C
+06:32:00 <Ilmen> sa'u sidbo
+06:32:00 <gleki> anyway for your reference this problem is called time splicing in Lojban. And here are the test sentences that need to be precisely translated to Lojban
+06:32:00 <gleki> at 2 o'clock = ti'u li re pi'e xo'e
+06:32:00 <gleki> at 2:00 = ti'u li re
+06:32:00 <gleki> during the first two hours = ca lo pamoi be lo cacra be li re
+06:32:00 <gleki> ???next hour = ca lo remoi be lo cacra
+06:32:00 <gleki> de'i li pa - on [January] 1
+06:32:00 <gleki> ba de'i li pa ki cabu = tomorrow
+06:32:00 <gleki> de'i li pa poi se masti ki cabu = next month
+06:32:00 <gleki> ti'u li pa = at 1 o'clock
+06:32:00 <gleki> ba ti'u li pa ki cabu = next hour
+06:32:00 <gleki> ti'u li pa poi se snidu ki cabu = next second
+06:33:00 <gleki> You may ignore my attempts at translating
+06:33:00 <gleki> pay attention to the english part
+06:33:00 <Ilmen> ba za lo snidu be li pa
+06:34:00 <gleki> li'a i ku'i mi pu na djica lo ka pilno ge zo de'i gi zo snidu joi zo masti joi zo nanca li'o
+06:34:00 <gleki> {ba za de'i li sy pa} ... something like that would do
+06:35:00 <gleki> first you specify the borders of the period and then count from its border
+06:35:00 <gleki> whereas in Gregorian you count from the year when Jesus was born
+06:36:00 <Vanlamigu> la djedzu
+06:37:00 <gleki> u'isai
+06:37:00 <gleki> djedze
+06:37:00 <gleki> terdjedze
+06:38:00 <gleki> doi terdje mi patfu do
+06:40:00 * nuzba @loewenheim: "Enough" is a number in lojban. Awesome :) [http://bit.ly/1cIgwPI]
+06:50:00 <zipcpi> Yes I was quite in love with that. THough I can't recall it right now
+06:51:00 <gleki> yeah i think such things attract learners to a certain degree.
+06:52:00 <gleki> but at that time i didnt have a habit of documenting every step in my life in Twitter which is common now ( again not for me)
+06:52:00 <zipcpi> Me neither
+07:02:00 <zipcpi> Er crap... I need b_jonas' link to the ISO 8601 and the page reference to the part about truncated dates
+07:02:00 <zipcpi> I'm now using XChat; figured out how to connect with it, so I could log dive if needed
+07:04:00 <Ilmen> I don't seem to have this link in my log (probably because I haven't been continuously connected)
+07:04:00 <gleki> i cant see any iso links
+07:04:00 <zipcpi> Crap logging wasn't turned on
+07:05:00 <gleki> b_jonas: ju'i
+07:06:00 <Vanlamigu> He linked to http://www.tondering.dk/claus/calendar.html
+07:06:00 <zipcpi> Nevermind found it
+07:06:00 <Ilmen> coi vanlami
+07:06:00 <Vanlamigu> And http://www.probabilityof.com/iso/8601v2000.pdf
+07:07:00 <zipcpi> I'm using http://metric1.org/8601.pdf
+07:07:00 <Vanlamigu> coi co'o .i mi lumci lo jupku'a
+07:07:00 <Ilmen> je'e di'ai
+07:07:00 <b_jonas> zipcpi: that's an older version, probably doesn't matter
+07:07:00 <b_jonas> an yes, Vanlamigu gave what I linked to
+07:08:00 <b_jonas> http://www.probabilityof.com/iso/8601v2000.pdf
+07:08:00 <gleki> if no one uses WikiForum then it should probably be turned off
+07:09:00 <Ilmen> WikiForum is back?
+07:09:00 <gleki> it was always on
+07:09:00 <Ilmen> Uh, it seemed to me it disappeared
+07:10:00 <gleki> well, now i know wy no one uses it :)
+07:10:00 <gleki> mw.lojban.org/papri/Special:Wikiforum
+07:10:00 <zipcpi> ki'e do'oi b_jonas
+07:10:00 <gleki> it disappered from the left sidebar because i couldnt fit it into any design
+07:11:00 <Ilmen> je'e
+07:11:00 <Ilmen> ki'e jungau
+07:11:00 <Ilmen> co'o mi'e barkla
+07:12:00 <Ilmen> si
+07:12:00 <Ilmen> rafsi: bartu
+07:12:00 <mensi> zo'oi bar .e zo'oi bart rafsi zo bartu
+07:12:00 <Ilmen> .o'u
+07:13:00 <b_jonas> I'd like a good word for "x1 occurrs in x2" or something. I keep trying to use various constructions with {cmene} or {mupli} or other words, but nothing really works, and it seems to come up often.
+07:13:00 <gleki> example?
+07:14:00 <b_jonas> gleki: one from earlier today was, let me find it
+07:14:00 <gleki> I still think this needs to be replaced: "Lojban (pronounced [ˈloʒban]) is an experiment in human language – a constructed language defined using predicate logic"
+07:14:00 <gleki> i mean "predicate logic" part
+07:14:00 <gleki> it's not attractive and not elucidating.
+07:14:00 <b_jonas> {i ca lo pu cabnicte mi fi'o te krefu li pa senva lo mupli be lo jbobau be'o fasnu}
+07:15:00 <gleki> how many people think "i wish i could speak predicate logic" ?
+07:15:00 <gleki> no one probably
+07:15:00 <gleki> b_jonas: so what's you problem?
+07:15:00 <b_jonas> then there's from yesterday when I tried to say both that a text has many occurances of some word or construct, or that a construct is made of two words
+07:16:00 <gleki> please paste full English examples to translate
+07:16:00 <b_jonas> gleki: I like {mupli} but I don't think it's a good fit there (case in point, zipcpi didn't understand my sentence)
+07:16:00 <b_jonas> gleki: I'll try to make one (I didn't make these from complete English sentences)
+07:17:00 <zipcpi> Yeah, it was and is still an important design goal of Lojban, but is probably too "jargony" for marketing purposes
+07:17:00 <b_jonas> Btw I'd also like a generic word for "text", any quantity from a sentence to a lot, and any form, spoken or written.
+07:18:00 <zipcpi> Well... actually I did almost say that. But I'm weird :p
+07:18:00 <gleki> zipcpi: if you can find better words, maybe on the same page i'd e very glad to discuss your proposals with others http://mw.lojban.org/papri/Welcome!0/en
+07:18:00 <b_jonas> gleki: full English example for that would be "Tonight for the first time I had a dream in which lojban has occurred." maybe? Hmm
+07:18:00 <b_jonas> I don't think that's idiomatic English
+07:19:00 <zipcpi> But I'm suppose we're all a little mad here :p
+07:19:00 <gleki> sei mi stace, I don't know what makes Lojban attractive to me. The main thing is that its fully parsed, metonymy and raising are being dealt with. We don't say "the book is interesting" but instead "the content of the book is interesting". These are the most important features of Lojban to me. Now how to say that in one sentence?
+07:20:00 <b_jonas> Maybe that one from a few days ago would be better, "There are very few articles [gadri] in this text, and a lot of adverbial clauses [which I translated as {me la .adverb. me zo fi'o jufra}], both single-word and multi-word ones.
+07:20:00 <b_jonas> gleki: funny, that's not what makes lojban attractive for me, and it's often not how I'm using lojban either.
+07:20:00 <gleki> b_jonas: ca lo lamji nicte mi pare'u ku senva lo nu la lojban [cu co'e]
+07:20:00 <gleki> or use tu'a
+07:21:00 <gleki> b_jonas: so'u gadri cu pagbu do'i 
+07:21:00 <b_jonas> gleki: {lo nu la lojban co'e}? hmm
+07:22:00 <gleki> So i guess you need a verb " was a participant" but this isnt relevant in your second example.
+07:22:00 <b_jonas> gleki: I don't like {tu'a la .lojban} because I don't want to say "I dreamt about lojban", but just "I dreamt about something, I'm not telling the theme, and lojban has incidentally occurred in the dream."
+07:22:00 <gleki> aha
+07:22:00 <gleki> a problem
+07:22:00 <b_jonas> gleki: was a participant is {zvati} except that's sometimes ambiguous with its newere meaning "co-located"
+07:23:00 <b_jonas> but "participant" is the original meaning IMO
+07:23:00 <zipcpi> There is zo'e pe or the experimental shortening, zo'ei
+07:23:00 <gleki> yes, if zvati is not only about location then bu'u shouldn't be either. welcome again, Mr. {tu'i}. long time no see.
+07:24:00 <gleki> en: participe
+07:24:00 <mensi> participe = x1 participates in x2 (event) |>>> See also zukte, se cuntu |>>> gleki
+07:24:00 <gleki> hm
+07:24:00 <gleki> even worse
+07:24:00 <b_jonas> I also tried to use {te se te su'o mei} (without the place flips of course) but it doesn't work too well
+07:24:00 <gleki> should {lo participe bi'ai zukte}? no one knows
+07:25:00 <gleki> Lojban was an element of that world, situation. But how can objects be parts of situations? and Lojban isnt even an object.
+07:27:00 <zipcpi> n l j d c m s
+07:28:00 <zipcpi> Did I get that?
+07:35:00 <gleki> si'au
+07:36:00 <gleki> b_jonas: probably i would indeed atke some new word. i dont remember any similar verb from La Bangu formalisations. and official gimste doesnt deal with such problems. maybe, we can use {participe}
+07:36:00 <gleki> *indeed take
+07:38:00 <b_jonas> gleki: a new word for what exactly?
+07:38:00 <b_jonas> with what meaning
+07:38:00 <gleki> Oh, well. In Wikipedia Lojban stnds betwee knowledge representation languages like CycL and speakable languages like Esperanto. May be start from there? Lojban is a language for knowing how we know, learning how we learn.
+07:38:00 <gleki> b_jonas: an element is a participant of a situation
+07:39:00 <gleki> an actor, not necessarily conscious
+07:39:00 <gleki> I would use {gasnu} but {lo gasnu} is one of the central elements
+07:41:00 <b_jonas> can't we use {zvati} for that and have a new word for co-located?
+07:42:00 <gleki> actually i know one verb that you probably need. it's {fanbu/fau} from Gleki's subjunctives. You need something like {mi senva lo fanbu be tu'a la lojban}. As you can see both fanbu1 and fanbu2 are events
+07:42:00 <gleki> b_jonas: i think {zvati} is fine. im just worried over {bu'u}.
+07:43:00 <b_jonas> ({stuzva} or something)
+07:43:00 <gleki> jbo: diklo
+07:43:00 <mensi> diklo = x1 se stuzi x2 noi pagbu x3 gi'e se steci lo ka stuzi x1 kei lo pagbu be x3 |>>> stuzi; pagbu; steci |>>>
+07:43:00 <mensi> xorxes
+07:43:00 <gleki> en: dilo
+07:43:00 <mensi> 2 da se tolcri: krokodilo, xejrespa
+07:43:00 <gleki> en: diklo
+07:43:00 <mensi> diklo = x1 is local to x2; x1 is confined to locus x2 within range x3; x1 is regional |>>> Indicates a specific location/
+07:43:00 <mensi> value within a range; e.g. a hits b.  What is the locality on b that a hits?  Thus x1 is associated with a specific
+07:43:00 <mensi> narrow region/interval x2 of wider space/range x3.  See also cmavo list di'o, jibni, zvati, cpana, nenri, lamji, stuzi,
+07:43:00 <mensi> tcila. |>>> officialdata
+07:44:00 <gleki> di'o, tu'i ...
+07:44:00 <b_jonas> {bu'u} means co-located with, https://lojban.github.io/cll/10/28/ is clear enough
+07:44:00 <gleki> jbo: bu'u
+07:44:00 <mensi> bu'u = [FAhA3] fi'o se zvati |>>> zvati |>>> xorxes
+07:45:00 <b_jonas> the CLL's and the cmavo list's definition is older than that
+07:45:00 <b_jonas> heck, the cmavo list's is even clearer:
+07:46:00 <b_jonas> "bu'u = coincident with; location tense relation/direction; coincident with/at the same place as; space equivalent of ca"
+07:46:00 <gleki> so {se stuzi = diklo fi zi'o}
+07:46:00 <b_jonas> you can't be much clearer than that
+07:46:00 <gleki> bu'u/ca reflect space/time distinction
+07:47:00 <b_jonas> sure. {ca} is for same time, {bu'u} is for same space.
+07:47:00 <zipcpi> I still kinda like {kuspe} for period
+07:48:00 <zipcpi> At least for the date system... if redefining de'i to also accept periods is not too crazy a change
+07:51:00 <Vanlamigu> If I had to use {de'i} to express a period, I'd use {bi'i}: de'i li 2009 bi'i li 2015
+07:52:00 <zipcpi> Sorry, I don't mean a defined period, I mean a length in time
+07:52:00 <zipcpi> Like "three years and four days"
+07:53:00 <Vanlamigu> Then I'd use {su'i}: {ze'a lo nanca be li ci be'o su'i lo djedi be li vo}
+07:54:00 <zipcpi> Does ISO week date start at Sunday or Monday?
+07:54:00 <zipcpi> *day-of-the-week
+07:54:00 <zipcpi> Monday
+07:54:00 <zipcpi> OK
+07:59:00 <b_jonas> gleki: how about when I want to say the other phrse, that such and such occurs many times or few times in a text?
+08:00:00 <gleki> b_jonas: just PA SUMTI ?
+08:01:00 <b_jonas> gleki: but how exactly? let me repeat the English translation I tried to give above
+08:01:00 <b_jonas> Maybe that one from a few days ago would be better, "There are very few articles [gadri] in this text, and a lot of adverbial clauses [which I translated as {me la .adverb. me zo fi'o jufra}], both single-word and multi-word ones."
+08:01:00 <b_jonas> I used {cmene} for that but I don't think that works well.
+08:02:00 <gleki> so'u gadri cu pagbu do'i
+08:03:00 <gleki> en:adverb
+08:03:00 <mensi> 10 da se tolcri: adverbi, adverbivla, adverbu, fi'oi, xoi, ja'aku, mulno, naku, ralju,
+08:03:00 <mensi> zifre
+08:03:00 <b_jonas> yeah, someone mentioned {adverbi}, but meh
+08:03:00 <b_jonas> fine, it can be {.adverbi} if you prefer
+08:04:00 <b_jonas> so {.adverbi bridi} if you wish
+08:05:00 <b_jonas> hmm, actually I think I said {me la .adverb. me zo fi'o terbri}
+08:05:00 <gleki> en:adverbi
+08:05:00 <mensi> adverbi = x1 is an adverbial adjunct (adverb or adverbial clause) meaning x2 in language
+08:05:00 <mensi> x3
+08:05:00 <b_jonas> ({jufra} doesn't make sense there)
+08:05:00 <gleki> so'i adverbi poi gunma re jonai pa valsi  cu pagbu do'i
+08:06:00 <gleki> y
+08:06:00 <gleki> so'i adverbi poi se pagbu re jonai pa valsi cu pagbu do'i
+08:06:00 <gleki> although guna specifies the full set so it's better
+08:06:00 <gleki> *gunma
+08:07:00 <gleki> i ta'o mi ca tavla la mukti i my na djica lo ka muvgau lo LLG notci lo dizlo
+08:07:00 <gleki> i ua coi la mukti
+08:07:00 <_mukti_> coi la gleki
+08:08:00 <b_jonas> gleki: {pagbu}? ok, and how do you say the "both single-word and multi-word ones"?
+08:08:00 <gleki> xu do mo'u catlu lo papri poi mi stika
+08:10:00 <_mukti_> ma papri
+08:10:00 <gleki> http://mw.lojban.org/index.php?title=Welcome!0/en
+08:11:00 <gleki> so'i adverbi poi me lo gunma be lo re valsi be'o joi lo gunmabe lo pa valsi cu pagbu do'i
+08:11:00 <gleki> b_jonas: but im not sure how JA inside inner relative clauses work.
+08:12:00 <zipcpi> .uo http://mw.lojban.org/papri/Proposal:_loi_lerfu_tcita_detri;_the_final_word_on_the_problem_of_dates_and_times%3F
+08:13:00 <gleki> zipcpi: mi ba za je zinai tcidu
+08:13:00 <b_jonas> je'e (I'd say {za'u} instead of {re} because it isn't always exactly two words, but sure)
+08:13:00 <gleki> zipcpi: i ki'e
+08:14:00 <b_jonas> so {pagbu} and {gunma}
+08:14:00 <gleki> b_jonas: i still think {so'i adverbi poi gunma re je pa valsi  cu pagbu do'i} works. someone with better inderstanding of scope of JA should comment.
+08:14:00 <gleki> oops
+08:15:00 <gleki> {jonai}
+08:15:00 <gleki> so'i adverbi poi gunma re jonai pa valsi  cu pagbu do'i
+08:15:00 <b_jonas> so I did have all the words I needed, I just had to figure out which one to use when how
+08:16:00 <gleki> Many adverbial phrases that are masses of 2 or 3 words are parts of do'i
+08:19:00 <b_jonas> ki'e la gleki
+08:19:00 <_mukti_> gleki: I see the page, and I think it is undesirable to bury the mention of LLG at the bottom of the page, but I've got better things to do than argue this to death
+08:19:00 <b_jonas> hehe, now you're confusing it more
+08:19:00 <b_jonas> "re jonai pa valsi" and "of 2 or 3 words"
+08:19:00 <b_jonas> how does that even work?
+08:20:00 <gleki> _mukti_: okay how about now? http://mw.lojban.org/papri/Welcome!0/en
+08:21:00 <gleki> b_jonas: ehm, a mass that has X elements. X is either 2 or 1
+08:22:00 <gleki> compare {so'i valsi} - it's an imprecise number. The same for {re jonai pa}
+08:22:00 <_mukti_> Let's do the previous version. Seriously: You and I both have better things to do than debate this placement. Aesthetically, I actually prefer the previous version. But I maintain that it is important to continue to improve the visibility and transparency of LLG. I will look for other ways to do so.
+08:22:00 <gleki> _mukti_: do you like the last version or not? If yes let's stop at that and wait for better times.
+08:23:00 <_mukti_> I accept the previous version, with the notice about LLG in the footer.
+08:23:00 <b_jonas> From how we can't agree what the important features of lojban are, I'm reminded to http://www.xkcd.com/566/ “Unfortunately, no one can explain what Lojban is. You have to see it for yourself.”
+08:23:00 <gleki> _mukti_: then take any version. And I will publish a calm message to the mriste nevertheless. I'm insterested in guskant's opinion since she understands something in this field imo.
+08:24:00 <_mukti_> mi ji'a sinma la .guskant.
+08:25:00 <gleki> _mukti_: any progress with putting links to the sidebar? maybe i should try? i will do on a copy
+08:25:00 <gleki> language links
+08:26:00 <_mukti_> I haven't tried that yet, but I think the current version is acceptable, since you can still immediately see the news and the twitter notifications.
+08:26:00 <_mukti_> BTW, the twitter RSS feed is much better in LMW than in tiki, since LMW understands RSS2.
+08:26:00 <_mukti_> (The tiki omitted the tweet bodies.)
+08:26:00 <gleki> _mukti_: note that the left sidebar can sometimes be tall due to "whats links here" lists.
+08:27:00 <gleki> Twitter is awesome here.
+08:27:00 <_mukti_> I think we could replace the expanded "what links here" with the link to the special page.
+08:27:00 <_mukti_> After all, many such lists are truncated with ellipsis
+08:27:00 <_mukti_> Yes, I'm very happy about the twitter feed.
+08:29:00 <gleki> _mukti_: ellipsis because i didnt want he scrollbar to appear. But I wanted backlinks to be visible without any clicks.
+08:29:00 <gleki> *the scrollbar
+08:30:00 <_mukti_> It's good that there's an indication that the list is truncated. But I think we ought to consider either truncating more aggressively, or not expanding that list.
+08:30:00 <gleki> So the most important question left is ... the actual content of the front page like what is lojban.
+08:30:00 <_mukti_> .i xu la .ilmen. cu jundi
+08:30:00 <gleki> _mukti_: i can trunctae to just 5 links? or 3 links
+08:31:00 <Zyxl> Learning Lojban section should be combined into http://mw.lojban.org/papri/Learning_materials._Secondary_links (and the page renamed).
+08:31:00 <gleki> that page is super-lengthy
+08:32:00 <Zyxl> Otherwise the links are inconsistent; some are anchors to futher down the front page and some are to other pages.
+08:32:00 <Zyxl> Community should also link to another page.
+08:33:00 <gleki> Maybe just remove that part with links? i didnt originally conceived it.
+08:33:00 <gleki> I wanted the page without any table of contents
+08:33:00 <gleki> I wanted the front page without any table of contents
+08:34:00 <gleki> xorlo message will disappear relatively soon
+08:35:00 <Zyxl> How else does the user know where to go next? There are hardly any links on the front page other than those on the left pane.
+08:35:00 <gleki> More basic information ...
+08:35:00 <gleki> Other learning materials ...
+08:35:00 <gleki> Lojban around the world - other ways of communication ...
+08:35:00 <gleki> More info ...
+08:36:00 <Zyxl> The front page should be readable and not lots of text; its for finding something more specific on the website.
+08:36:00 <gleki> So I imagine having only basic links for each section with links like above to more complete pages.
+08:36:00 <gleki> I imagined it!
+08:36:00 <gleki> But currently it's again huge
+08:37:00 <gleki> _mukti_: truncated to 5, although bugs may exist
+08:44:00 <gleki> Zyxl: i agree and will continue shrinking this test front page
+08:44:00 <b_jonas> off topic: http://www.smbc-comics.com/index.php?id=3561
+08:48:00 <Zyxl> I don't think you should get rid of those links though, they just need slight alteration and perhaps moving somewhere else.
+08:56:00 * nuzba @leanatas: @zatmaker L'esperanto était un début. Le Lojban est mieux construit.    http://fr.wikipedia.org/wiki/Lojban [http://bit.ly/1GhpfnM]
+09:04:00 <zipcpi> What does that mean
+09:04:00 <zipcpi> ju'i gugl. fanva
+09:05:00 <zipcpi> "Esperanto was a start. Lojban is better built."
+09:05:00 <Vanlamigu> Esperanto was a start. Lojban is more well-constructed.
+09:05:00 <zipcpi> Yeah seems that way. I know a bit about Latin roots.
+09:06:00 <gleki> mieux => me'a
+09:07:00 <Vanlamigu> mieux -> xagmau
+09:08:00 <Vanlamigu> I do prefer the new front page
+09:09:00 <Vanlamigu> (That is, I prefer http://mw.lojban.org/papri/Welcome!0/en over http://mw.lojban.org/papri/Lojban )
+09:09:00 <gleki> vablo LLG notci cu mo ma'i do i ei dizlo xu
+09:09:00 <gleki> oops
+09:09:00 <Vanlamigu> vablo doi pablo
+09:09:00 <gleki> Vanlamigu: lo LLG notci cu mo ma'i do i ei dizlo xu
+09:10:00 <gleki> dizlo ji galtu
+09:10:00 <Vanlamigu> xu zoi gy. and also serves as the official web site of the Logical Language Group (LLG) .gy
+09:10:00 <gleki> pu dizlo http://mw.lojban.org/index.php?title=Welcome!0/en&direction=prev&oldid=113806
+09:10:00 <gleki> Vanlamigu: go'i
+09:11:00 <Vanlamigu> je'e .i ku'i pe'i zoi gy. This web site is dedicated to documenting Lojban and the activities of the Lojban-using community .gy gapru .ei
+09:11:00 <gleki> i'a
+09:11:00 <gleki> i mi muvgau
+09:13:00 <gleki> i mo'u
+09:15:00 <Zyxl> Who writes website as two words?
+09:25:00 <gleki> fixed
+09:29:00 <Zyxl> What about the first paragraph?
+09:31:00 <Vanlamigu> ki'u ma muvgau lo lanci
+09:31:00 <Vanlamigu> .i mi pu nelci lo nu pu zvati ma kau
+09:33:00 <gleki> mi lanli
+09:41:00 <gleki> i mo'u cikre
+09:43:00 <gocti> cipr: nu'i ti ge mi pu ku gi tu ta da nu'u ti klama
+09:43:00 <gocti> y
+09:43:00 <gocti> su
+09:46:00 <zipcpi> co'o
+09:46:00 <gleki> Lojban is unambiguous in syntax. Natural languages often have ambiguous sentences — does "He's left" mean that he's still here or that he's gone? Lojban systematically eliminates this.
+09:46:00 <gleki> this example is wrong
+09:46:00 <gleki> have a better one?
+09:47:00 <Zyxl> I didn't get it either.
+09:47:00 <Zyxl> Your/my left/right?
+09:49:00 <Vanlamigu> It's not wrong
+09:49:00 <gleki> unambiguous in syntax
+09:49:00 <gleki> ""He's left" mean that he's still here or that he's gone?" - this is just vague
+09:50:00 <Vanlamigu> .ambigu .i su'o re da smuni zoi gy. left .gy
+09:50:00 <gleki> Vanlamigu: je'e i ja'o na srana lo gerna
+09:50:00 <gleki> i srana lo smuske
+09:51:00 <Vanlamigu> ja'a srana lo gerna .i zoi gy. he has left .gy gerna frica zoi gy. he is left .gy
+09:51:00 <gleki> xm
+09:52:00 <gleki> i ja'o srana ge lo gerna gi lo smuske
+09:52:00 <gleki> i iepei
+09:52:00 <mensi> mi tugni i ie mi tugni
+09:52:00 <Vanlamigu> la mensi cu tugni .i ja'o jetnu
+09:52:00 <gleki> Vanlamigu: i ku'i mi ge'enmo i au srana lo gerna enai lo smuske
+09:52:00 <gleki> pei
+09:53:00 <Vanlamigu> ge'e sai .i ga'a do lo tsurixi vinji jufra cu srana lo gerna ji lo smuske
+09:53:00 <durka42> coi
+09:53:00 <Vanlamigu> .i lo darvistci jufra cu .ambigu
+09:53:00 <durka42> coi kibjasyselkei vlajaspu zo'o
+09:53:00 <Vanlamigu> .i gernambigu
+09:53:00 <gleki> Vanlamigu: i nandu preti lo prenu cu frica zu'ai lo ka jinvi lo du'u lo gerna cu mokau
+09:54:00 <Vanlamigu> coi mi'e lo  ckikyvla
+09:54:00 <gleki> i je'u ga'a da gerna ambigu i ku'i ka'e te simlu lo ka na gerna ambigu
+09:55:00 <gleki> i mi jinvi lo du'u srana lo si'o me'oi zero pe lo bauske ja banske i ku'i lo drata cu frica jinvi
+09:55:00 <Vanlamigu> go'i
+09:55:00 <Vanlamigu> .u'i
+09:56:00 <Vanlamigu> .i ro ma'a zgana lo nu pu casnu
+09:56:00 <gleki> i ku'i do na pu piksku
+09:56:00 <gleki> i ku'i na'e mi pu finti lo si'o me'oi zero i ei mi sruma ma i ei sruma lo nu lo banske cu se ganzu
+09:56:00 <Vanlamigu> pu no'e cinri .i la .and. pu cusku lo ralju
+09:57:00 <gleki> la and pu cusku lo se du'u lo mi se jinvi cu frica lo se jinvi be lo ralju banskepre
+09:57:00 <gleki> i ta'o la'a la and ba lojbo jatna vau la'a i je mi u'i ba zanru la'a
+09:57:00 <Vanlamigu> .u'u cu'i mi jdika je jdika lo ka se cinri lo ca se casnu
+09:58:00 <Vanlamigu> .i ua cizra
+09:58:00 <gleki> "Lojban is machine parsable, which allows potential new explorations in the fields of artificial intelligence and machine translation." => "... is parsable by computers" to prevent tautology.
+09:58:00 <gleki> no'i ei mi zanru lo nu ma jatna
+09:58:00 <Vanlamigu> .i cizra .i la .and. cu sanji ji'i no fasnu pe lo cabna jbogu'e .i ku'i la .and. cu .y ba curmi so'i da
+09:59:00 <gleki> curmi ma sa'e
+09:59:00 <gleki> i no drata cu kakne
+09:59:00 <Vanlamigu> lo kalsa sai ui sai zo'o
+09:59:00 <gleki> uanai
+09:59:00 <Vanlamigu> .u'i
+09:59:00 <gleki> i xu srana lo bangu
+09:59:00 <Vanlamigu> kakna ma fa no drata
+09:59:00 <gleki> i LLG na dunli BPFK
+09:59:00 <Vanlamigu> .i lo jatna ma zukte .i zasti po'o
+09:59:00 <Vanlamigu> .i jo'a na dunli
+10:00:00 <gleki> ie zasti po'o i seki'u bo mi na djuno lo du'u abu ba zurmi makau
+10:00:00 <gleki> *curmi
+10:00:00 <gleki> peo "Lojban is machine parsable, which allows potential new explorations in the fields of artificial intelligence and machine translation." => "... is parsable by computers" to prevent tautology.
+10:00:00 <gleki> pei "Lojban is machine parsable, which allows potential new explorations in the fields of artificial intelligence and machine translation." => "... is parsable by computers" to prevent tautology.
+10:00:00 <Vanlamigu> ie .i ku'i sa'u ko zgana lo jbopre .i so'i ri cu se vajni sai lo nu lo LLG jatna cu jinvi ma kau .i tinbe sa'e nai ru'e
+10:01:00 <Vanlamigu> .i lo .irci jbopre na go'e .i ku'i so'i lo mriste jbopre
+10:01:00 <gleki> au lo drata jbore poi akti co'a cmima lo LLG ralju kamni
+10:01:00 <gleki> i ji'a au lo drata jbopre poi akti co'a cmima LLG
+10:01:00 <gleki> i mu'a la danr
+10:02:00 <gleki> e la cirko
+10:02:00 <Vanlamigu> xu zasti fa su'o cinryme'a be lo ka cmima lo ralju kamni
+10:02:00 <gleki> i ku'i mi nu'o kucli lo nu xukau la re jbopre cu djica
+10:04:00 <Vanlamigu> la mukti cu troci lo ka gau ce'u LLG co'a vajni
+10:08:00 <gleki> no'e cinri mi i cinri mi falonu le bangu co'a jai frili fai lo ka se tadni
+10:10:00 <gocti> lu jai frili fai li'o zo'u ma judri lo me BPFK .eiste .i ju'e .ei jmina
+10:11:00 <Vanlamigu> xu zasti .i .e'e gau zasti
+10:12:00 <Vanlamigu> .i so'o uitki papri cu srana
+10:12:00 <gleki> lo ralju papri co'a tatpygau mi
+10:12:00 <gocti> xu slabu fa su'o drata be ju'oi http://mw.lojban.org/papri/ToDo
+10:13:00 <gleki> u'i li'a na srana
+10:13:00 <gleki> si mapti
+10:13:00 <gocti> http://mw.lojban.org/papri/BPFK_To-Do sei laldo
+10:14:00 <Vanlamigu> ie laldo .i ku'i ka'e ningau
+10:20:00 <PrincessBecca> http://typedrummer.com/46miq9
+10:26:00 <gocti> http://typedrummer.com/btt00m bu'a'a
+10:27:00 <PrincessBecca> u'i
+10:27:00 <gocti> lo nu te sumti sanji zo'u cinmo lo du'u jibni .i ku'i mi co'a se fanza da
+10:28:00 <gocti> cipr: nu'i ti ge mi pu ku gi tu ta nu'u ti klama
+10:28:00 <cipr> ([{nu'i <(¹FA ti¹) (¹ge [{FE mi} {pu ku}] gi [{FE tu} {FI ta}]¹)> nu'u} {FI'A ti}] [CU {klama VAU}])
+10:28:00 <gocti> cipr: ti ge mi pu ku gi tu ta ti klama
+10:28:00 <cipr> ([{FA ti} {ge <(¹FE mi¹) (¹pu ku¹)> gi <(¹FE tu¹) (¹FI ta¹)>} {FI ti}] [CU {klama VAU}])
+10:28:00 <gocti> cipr: nu'i ti ge mi pu ku gi tu ta tu nu'u ti klama
+10:28:00 <cipr> ([{nu'i <(¹FA ti¹) (¹ge [{FE mi} {pu ku}] gi [{FE tu} {FI ta}]¹) (¹FI tu¹)> nu'u} {FI'A ti}] [CU {klama VAU}])
+10:28:00 <durka42> ue la .cipr. mo
+10:28:00 <durka42> si cu mo
+10:28:00 <gocti> .ilmentufa versiio
+10:28:00 <durka42> je'e
+10:28:00 <gocti> .i kakne su'o pu na se kakne
+10:29:00 <durka42> xu mintu la .alta
+10:29:00 <gocti> cipr: lo klama be ti bei fi je fo tu'a lo panka bei lo relxima
+10:29:00 <cipr> ([FA {lo <klama (¹[be {FE ti}] [bei {<fi je fo> <tu'a (²lo panka KU²) LU'U>}] [bei {FU <lo relxima KU>}] BE'O¹)> KU}] VAU)
+10:29:00 <gocti> na ku
+10:30:00 <gleki> frica fi ma
+10:30:00 <gleki> i za'a
+10:30:00 <gocti> lo te pruce ku ra'u
+10:30:00 <gleki> i io
+10:30:00 <gleki> i xu prane
+10:30:00 <gleki> y
+10:30:00 <gocti> na go'i .i mu'a kakne no da pe lo brirebla
+10:31:00 <gleki> i xu do mo'u favgau
+10:31:00 <gleki> cipr: lo mo be gau do bei fi do bei do
+10:31:00 <cipr> ([FA {lo <mo (¹[be {gau do}] [bei {fi do}] [bei {FO do}] BE'O¹)> KU}] VAU)
+10:32:00 <gleki> cipr: lo mo be do bei gau do bei fi do bei do
+10:32:00 <cipr> ([FA {lo <mo (¹[be {FE do}] [bei {gau do}] [bei {fi do}] [bei {FO do}] BE'O¹)> KU}] VAU)
+10:32:00 <gleki> cipr: lo mo be fu do bei gau do bei fi do bei do
+10:32:00 <cipr> ([FA {lo <mo (¹[be {fu do}] [bei {gau do}] [bei {fi do}] [bei {FO do}] BE'O¹)> KU}] VAU)
+10:32:00 <gleki> xu pilno lo drata be PEG
+10:32:00 <gocti> pilno PEG
+10:32:00 <gleki> ua io
+10:33:00 <gleki> i a'o do ba gubgau lo krasi
+10:33:00 <gocti> va'o lo nu da djica co tolcinkygau zo'u pe'u do
+10:33:00 <gocti> .i gubni https://github.com/mezohe/ilmentufa/commits/morfologi
+10:33:00 <gleki> cipr: lo klama be do ce'e do
+10:34:00 <cipr> ([???] VAU)
+10:34:00 <gocti> .oi
+10:34:00 <gleki> exp: lo klama be do ce'e do
+10:34:00 <mensi> ([{lo <klama (¹be do BEhO¹)> KU} {ce'e do}] VAU)
+10:34:00 <gocti> cipr: lo klama be do ce'e do bei do
+10:34:00 <cipr> SyntaxError: Expected [rR] but "b" found.
+10:34:00 <gleki> off: lo klama be do ce'e do
+10:34:00 <mensi> ([{lo <klama (¹be do BEhO¹)> KU} {ce'e do}] VAU)
+10:34:00 <gleki> cinri
+10:34:00 <gleki> gerna: lo klama be do ce'e do
+10:34:00 <mensi> (0[{<lo (1klama [be do BE'O])1 KU> ce'e do} VAU])0
+10:35:00 <gocti> ku'i .ei na spaji
+10:38:00 <gocti> cipr: mi ce'e do pe'e ti ce'e ta
+10:38:00 <cipr> SyntaxError: Expected [nN] or [rR] but "p" found.
+10:38:00 <gocti> cipr: mi ce'e do pe'e je ti ce'e ta
+10:38:00 <cipr> ([{<FA mi> ce'e <FE do>} je {<FA ti> ce'e <FE ta>}] VAU)
+10:38:00 <gleki> i ua mutce djavaskripti
+10:38:00 <Ilmen> mi .i'enmo lo nu do jmina lu jai frili fai ma li'u lo fuzykamni .aiste doi la gocti
+10:39:00 <gocti> go'i .i lo sintasa pe PEGJS cu mabla milxe
+10:39:00 <Ilmen> ki'e xagzenzau
+10:39:00 <gleki> cipr: mi do mo
+10:39:00 <cipr> ([{FA mi} {FE do}] [CU {mo VAU}])
+10:40:00 <gleki> cipr: mi be do mo
+10:40:00 <cipr> ([FA mi] [CU {<(¹[be {FE do}] BE'O¹) mo> VAU}])
+10:40:00 <gleki> cipr: mi mo be do ko'a
+10:40:00 <cipr> ([FA mi] [CU {<mo (¹[be {FE do}] BE'O¹)> <(¹FI'A ko'a¹) VAU>}])
+10:40:00 <gleki> yyy
+10:40:00 <gleki> cipr: mi be do ko'a  mo
+10:40:00 <cipr> SyntaxError: Expected [nN] or [rR] but "b" found.
+10:40:00 <gleki> li'a
+10:40:00 <gocti> ke'u djuno no da pe lo rebla
+10:41:00 <gleki> dukti gaspo vau zo'o
+10:41:00 <gocti> .iep.
+10:41:00 <gleki> i lo gaspo cu djuno no da pe lo tolrebla
+10:41:00 <Vanlamigu> djuno no da pe lo rebla fa lo na'e .saiadjin.
+10:41:00 <gleki> cipr: mi mi mi mi mi mi mi mi mo
+10:41:00 <cipr> ([{FA mi} {FE mi} {FI mi} {FO mi} {FU mi} {FUNDEFINED mi} {FUNDEFINED mi} {FUNDEFINED mi}] [CU {mo VAU}])
+10:42:00 <gleki> na sarcu
+10:42:00 <Vanlamigu> FUN FUN FUN
+10:42:00 <demize> fun defined!
+10:42:00 <gocti> le
+10:42:00 <Vanlamigu> le zei le
+10:42:00 <gleki> cipr: fu mi mi mi fe mi mi mo
+10:42:00 <cipr> ([{fu mi} {FUNDEFINED mi} {FUNDEFINED mi} {fe mi} {FI mi}] [CU {mo VAU}])
+10:42:00 <gleki> cipr: fi mi mi mi fe mi mi mo
+10:42:00 <cipr> ([{fi mi} {FO mi} {FU mi} {fe mi} {FUNDEFINED mi}] [CU {mo VAU}])
+10:43:00 <gleki> cipr: fi mi mi fe mi mi mo
+10:43:00 <cipr> ([{fi mi} {FO mi} {fe mi} {FU mi}] [CU {mo VAU}])
+10:43:00 <gleki> xm
+10:43:00 <Vanlamigu> .u'e
+10:43:00 <gleki> na djuno
+10:43:00 <gleki> cipr: fi mi fi mi mi mo
+10:43:00 <cipr> ([{fi mi} {fi mi} {FO mi}] [CU {mo VAU}])
+10:44:00 <gleki> cipr: mi
+10:44:00 <cipr> ([FA mi] VAU)
+10:44:00 <durka42> cipr: mi jai co'e fai do
+10:44:00 <cipr> ([FA mi] [CU {<jai co'e> <(¹fai do¹) VAU>}])
+10:45:00 <gleki> cipr: lo klama be fa mi bei do
+10:45:00 <cipr> ([FA {lo <klama (¹[be {fa mi}] [bei {FE do}] BE'O¹)> KU}] VAU)
+10:45:00 <durka42> cipr: broda gi'e brode vau ma'a
+10:45:00 <cipr> ([CU {broda VAU}] [gi'e {CU <brode vau>} {<FI'A ma'a> VAU}])
+10:45:00 <gleki> rebla
+10:45:00 <Vanlamigu> dat spam
+10:45:00 <durka42> .u'u mi na tcidu lo purci
+10:46:00 <Vanlamigu> tu'a lo purci cu frili .i ku'i ba'e mi kakne lo ka tcidu lo balvi !
+10:47:00 <gleki> Vanlamigu: ju'o do tcidu lo nu la and cu zasti i na cinri
+10:48:00 <gleki> Vanlamigu: i xu la morsi ba morsi
+10:48:00 <gleki> i li'a ca da ba morsi
+10:48:00 <gleki> i ku'i ca ma
+10:48:00 <gleki> i ji'a cama la gleki ba mulgau CC
+10:51:00 <durka42> ca lo nu la xadba jmive xi ci co'a zasti
+10:51:00 <gleki> http://mw.lojban.org/papri/The_Dot_Side
+10:51:00 <gleki> xu do junri i xu ciksi la datsaid
+10:51:00 <durka42> mi puzi te mrilu .i mo
+10:52:00 <durka42> si'au zo .datsaid. pu sinxa lo stidi .ije nau sinxa lo se stidi
+10:53:00 <gleki> au lo ve ciksi cu zasti
+10:53:00 <durka42> li'a la .datsaid. cu jinga .i lo citri cu se finti lo jinga
+10:53:00 <gleki> na cinri mi i au lo ve ciksi
+10:53:00 <gleki> i lo prenu ca kucli i mi na kakne lo ka dunda pe'a lo judri
+10:53:00 <durka42> lo nenri be le tanxe na ve ciksi xu
+10:54:00 <gleki> la'a
+10:54:00 <gleki> i CLL ca mo
+10:56:00 <durka42> laldo
+10:56:00 <durka42> ca'o se ningau soi masno
+11:38:00 * nuzba @cmcbot: Using UML to understand Lojban [http://bit.ly/1QUrkJq]
+11:57:00 <Vanlamigu> Why can't ji'a and po'o be forethought Q_Q
+11:59:00 <Vanlamigu> It's not only annoying for experienced speakers that you have to close off sumti to attach ji'a or po'o, but it's also annoying if you're a teacher.
+11:59:00 <Vanlamigu> They know {lo prenu cu klama}, but then to say "The dogs goes, too" you have to add a mysterious {ku} {lo prenu ku ji'a [cu] klama}
+12:00:00 <durka42> we could make BAhE analogs for them
+12:00:00 <Vanlamigu> dog*
+12:00:00 <phma> lo ji'a gerku cu klama
+12:00:00 <Vanlamigu> Yes, but that placement is very unnatural.
+12:02:00 * nuzba @464161niftg: http://mw.lojban.org/papri/Lojban お、新しくされた表紙的なページには「中立性」に関する文言が最早存在しない。.i'ero'e [http://bit.ly/1e9gMbl]
+12:22:00 <durka42> Vanlamigu: re: teaching, I see how it's annoying yes, but could it be spun as a positive in that it's a hook for teaching terminators, which ya gotta learn eventually anyway?
+12:22:00 <Vanlamigu> The thing is that {ko'a ji'a} is different from {lo broda KU ji'a}, because we never say {lo broda ku} ever, unless we attach UI
+12:22:00 <Vanlamigu> That's what makes it weird
+12:23:00 <durka42> yeah {ku} doesn't get a lot of use
+12:23:00 <durka42> except occasionally when it elides other terminators, like {bai lo nu broda ku}
+12:29:00 * nuzba @464161niftg: "This file contains extracts from Ju'i Lobypli on the relationship between    Esperanto and Lojban." ... http://www.lojban.org/files/why-lojban/lojb_esp.txt [http://bit.ly/1QUxCJ1]
+12:33:00 * nuzba @464161niftg: http://mw.lojban.org/papri/Presenting_Lojban からリンクされてゐたやつだけど、エスペラントの「16条文法」と比較しながらの説明がやはり既になされてゐたんか…tijlanさんのあれとの関連性は如何に。 [http://bit.ly/1QUxUQe]
+12:41:00 <phma> ka'e crepu xu lo cteki?
+12:42:00 <durka42> mo
+12:44:00 <phma> I'm translating and it starts "tax-collectors and sinners".
+12:48:00 <durka42> ua
+12:48:00 <durka42> pe'i zo crepu ja'a mapti
+12:49:00 <Vanlamigu> cpacu ja lebna
+12:50:00 <durka42> zerle'a zo'o
+12:54:00 * nuzba @464161niftg: http://mw.lojban.org/papri/Vagueness_and_ambiguity ここで示されてゐる用語の使ひ分けに倣ふと、「『意味的漠然性』を残しつつ『構文的多義性』を出来る限り除去する」みたいに説明できる？ [http://bit.ly/1Ps6fZM]
+12:58:00 * nuzba @464161niftg: http://mw.lojban.org/papri/Ambiguous_sentences_in_English {se xi vei mo'e zo'e no'a} [http://bit.ly/1QUBo58]
+13:59:00 <Ilmen> .oi mi na ralte su'o mrijudri pe la .xelan. i mi na birti lo du'u ma kau notci benji tadji mapti
+14:00:00 <durka42> X mo
+14:01:00 <Ilmen> pu cpedu fi mi fe lo ka tavla lo fuzykamni cmima lo srana be lo jbovla smuvelski staile
+14:01:00 <Ilmen> .i ku'i lo staile mupli poi la xelan cu dunda pu zvati lo zasni gi'e ja'e bo zi canci ja'e lo nu mi ca nau na ka'e pilno
+14:02:00 <durka42> .oi dai
+14:03:00 <Ilmen> ĭe
+14:04:00 <Ilmen> cumki fa lo nu mi kakne lo ka notci benji do'e la .gugl.grup.
+14:04:00 <durka42> lo ca lojbo velcki staile cu vricytce
+14:04:00 <durka42> ie la .gugl. ralte lo citri be ro da .u'i
+14:04:00 <durka42> cu*
+14:05:00 <Ilmen> pu staile mupli jarco sepi'o lo zasni simsa be la pesxu bakfu
+14:05:00 <Ilmen> si
+14:05:00 <Ilmen> baktu
+14:06:00 <durka42> je'e
+14:06:00 <Vanlamigu> yahaours-jbovlaste@yahoo.com zasti .i ku'i na nibli lo du'u tcidu
+14:06:00 <Ilmen> mu sofybakri cu zvati lo purci
+14:06:00 <Ilmen> ua je'e .i cizra judri
+14:09:00 <durka42> za'a pilno lo steci judri tezu'e lo nu rivbi lo spamysampre
+14:10:00 <Ilmen> mi se zanfu'a .i faumlu fa lo nu no spamboto cu facki tau lo me mi moi
+15:20:00 <Ilmen> co'o ro do
+15:20:00 <durka42> co'o
+15:26:00 <ldlework> someone should follow this guide and make a 2x3 6 region terrain for jbogu'e, http://opensimulator.org/wiki/Detailed_cross-region_terrain_making
+15:27:00 <ldlework> alternatively, feel free to just pencil something out and take a picture
+15:27:00 <ldlework> post it out here and we can talk through different ideas
+15:28:00 <ldlework> oh this isn't the guide I was thinking about
+15:29:00 <ldlework> this is the one, http://opensimulator.org/wiki/Cross-region_terrain_making_with_L3DT
+15:29:00 <ldlework> but I guess we should follow the advice of the first page, and draw out our ideas first
+15:31:00 * ldlework tickles the channel
+15:32:00 <ldlework> My girlfriend and I have been downloading high-quality assets from various places and importing them into the sim, renaming them to standard naming convention and organizing them
+15:32:00 <ldlework> We have quite a collection of high quality stuff that could be really useful for having fun with lojban
+15:33:00 <durka42> sweet
+15:33:00 <ldlework> dozens of fruits and vegitables and meats, and kitchenware, and pickled jars of various things and firepits with stoves and market stands full of fruit and so on
+15:33:00 <ldlework> We could build a jbozarci
+15:34:00 <ldlework> like a market street or something
+15:34:00 <ldlework> also a bunch of farming stuff
+15:34:00 <ldlework> like various crops and farming equipment
+15:34:00 <ldlework> We've tried to find good stuff for making avatars, but is a lot harder to find
+15:35:00 <durka42> jbozai .ai
+15:35:00 <ldlework> We've found a handful of nice avatars, mostly furries or impossibly beautiful humans
+15:35:00 <ldlework> But maybe building your own avatar should be something you do yourself, overtime
+15:36:00 <ldlework> over time8
+15:36:00 <durka42> ue xu do na jinvi lo du'u lo'e jbopre cu nalcu'i mletce
+15:36:00 <ldlework> u'i
+15:38:00 <ldlework> no jbopre cu ckaji lo ka mletce ku poi nalcu'i
+15:38:00 <ldlework> ro lo ka nalcu'i cu na cumki
+15:38:00 <durka42> ja'a li'a
+15:38:00 <ldlework> hehe
+15:40:00 <ldlework> I need to find an awesome tree pack
+15:40:00 <ldlework> and just plants in general
+15:41:00 <ldlework> also, I need help designing the terrain
+15:41:00 <ldlework> Maybe some realtime shared drawing thing could help get that going
+15:57:00 <Zyxl> I suggest looking at Blender for modelling (because it's free and open source - also there's a plug-in for generating terrains).
+17:12:00 <rutytar_> xu su'o do sanji
+17:16:00 <durka42> mi cikna
+17:16:00 <rutytar_> coi
+17:16:00 <durka42> coi mo
+17:17:00 <rutytar_> mi na djuno la lojban
+17:17:00 <durka42> .u'i je'unai za'a
+17:26:00 <durka42> .oi ta'i ma ba'urtadji zoi dy. r .dy. noi dotco
+17:37:00 <durka42> rutytar_: have you been learning?
+17:38:00 <rutytar_> durka42: i have
+17:39:00 <rutytar_> i'm up to chapter 7 of http://lojban.github.io/cll/
+17:41:00 <durka42> nice!
+17:43:00 <durka42> you should know that the CLL was published a while ago and a few small things are different in modern usage
+17:43:00 <rutytar_> such as?
+17:44:00 <durka42> for instance we use {lo} almost all the time instead of {le}, and you put pauses on both sides of names {la .rutytar.} instead of forbidding them to contain la/lai/doi
+17:44:00 <durka42> those are the main ones
+17:45:00 <durka42> of course people have all sorts of crazy ideas for grammar tweaks, but I wouldn't worry about that yet :)
+17:46:00 <rutytar_> that's a common problem with things which haven't gotten big yet
+17:46:00 <rutytar_> i'm glad english is allowed here though, i was a bit apprihensive
+17:47:00 <rutytar_> ^ proper english
+17:47:00 <durka42> if you get stuck going through the CLL, a lot of people recommend the wave lessons http://mw.lojban.org/index.php?title=Lojban_Wave_Lessons or the crash course http://mw.lojban.org/papri/The_Crash_Course_(a_draft)
+17:47:00 <durka42> (but learn from what works for you!)
+17:47:00 <durka42> yes, english is allowed here
+17:47:00 <durka42> and in #ckule, where there are no dumb questions
+17:48:00 <rutytar_> awesome
+17:48:00 <durka42> only in #jbosnu (which is pretty low traffic) natural languages are forbidden
+17:48:00 <rutytar_> but esperanto is allowed?
+17:48:00 <rutytar_> :p
+17:48:00 <durka42> I dunno, I've only ever seen lojban in there :)
+17:50:00 <rutytar_> how often do new people usually show up?
+17:51:00 <durka42> interesting question, I'm not sure if I have an answer
+17:52:00 <rutytar_> well... i kept putting off learning lojban because it seemed like such a useless skill
+17:52:00 <durka42> :D it's fun though!
+17:53:00 <rutytar_> it is
+17:53:00 <rutytar_> it's beautiful too. i can't really help wanting to learn it
+17:54:00 <rutytar_> but i figure being limited to talking to the type of person who also feels that way isn't such a bad deal
+17:55:00 <rutytar_> durka42: how long have you been speaking/typing lojban?
+17:55:00 <durka42> 3-4 years I guess
+17:55:00 <rutytar_> do you feel fluent?
+17:59:00 <durka42> well, not exactly
+17:59:00 <durka42> I feel competent but not fluent
+18:00:00 <durka42> we have been playing an online game of diplomacy in lojban these past few weeks and it has been really good language practice
+18:00:00 <rutytar_> http://en.wikipedia.org/wiki/Diplomacy_%28game%29?
+18:00:00 <durka42> that
+18:02:00 <rutytar_> what's the community like, in your experience? mainly programmers, i'm guessing
+18:15:00 <durka42> there are a lot of programmers
+18:15:00 <durka42> but not all
+18:15:00 <durka42> a few logicians
+18:16:00 <rutytar_> cool
+18:16:00 <rutytar_> durka42: one last question: my name was supposed to make sense in lojban... does it?
+18:21:00 <durka42> fruit star?
+18:21:00 <rutytar_> yeah
+18:21:00 <rutytar_> fruit type of star
+18:22:00 <durka42> .i'e
+18:23:00 <rutytar_> ro tarci du dandu grute
+18:24:00 <rutytar_> su'a
+18:25:00 <rutytar_> thanks for answering my questions. i'll come back with more knowledge, hopefully
+18:48:00 <Regex> I've just discovered Lojban, but it sounds more like gibberish than any other language I've encountered. Anyone else get the same feeling?
+18:54:00 <durka42> well, not anymore :p
+18:57:00 <durka42> I just started learning German in Duolingo and it sounds more like gibberish than lojban :p
+18:57:00 <durka42> Regex: what do you mean though? the phonology?
+18:58:00 <Regex> durka42: Honestly everything. I haven't found the patterns in it yet.
+18:59:00 <Regex> Like, if I listen to Japanese there are lots of familar sounds and symbols. In french I can guess at about half the words
+18:59:00 <Regex> Perhaps it is just lack of familiarity then
+18:59:00 <durka42> well, if you speak romance languages most of the words won't be familiar, yeah
+18:59:00 <durka42> Chinese had a big influence on the sounds of the gismu
+19:00:00 <durka42> my favorite cognate is {bredi} though :)
+19:00:00 <durka42> vlaste: bredi
+19:00:00 <vlaste> bredi = x1 is ready/prepared for x2 (event).
+19:18:00 <durka42> coi xrukla
+19:19:00 <rutytar> i'o
+19:32:00 <rutytar> durka42: xa do pu fanva su'o se ciska
+19:33:00 <rutytar> xa do pu ciska su'e se fanva
+19:35:00 <rutytar> *su'o
+19:35:00 <durka42> mi fanva so'o me XKCD
+19:35:00 <durka42> alexburka.com/lojban
+19:36:00 <rutytar> i'e
+19:39:00 <rutytar> lu zo'o ta jitfa .i .e'o xu do pendo mi http://xkcd.com/191/
+19:46:00 <Regex> does 'la' mean 'learn'?
+19:47:00 <rutytar> i'osai ti http://vlasisku.alexburka.com/gismu
+19:49:00 <Regex> Ah then learn must be "crebi'o"
+19:50:00 <rutytar> Regex: learn is cilre
+19:50:00 <Regex> http://imgs.xkcd.com/comics/lojban_translated.png
+19:51:00 <Regex> language is hard
+19:51:00 <durka42> crebi'o means "to become an expert"
+19:53:00 <Regex> ...the translation is a perfect example of how ambiguous our language use is. That's beautiful
+19:58:00 <Regex> rutytar: The search feature on that is actually incredibly helpful. Thanks!
+20:07:00 <rutytar> durka42: http://i.imgur.com/96iK6Mh.png xu ti xamgu
+20:10:00 <rutytar> :( pu nabmi
+20:12:00 <durka42> ua xu do te pixra
+20:12:00 <durka42> banli
+20:12:00 <durka42> ma nabmi?
+20:14:00 <rutytar> http://i.imgur.com/81eukPG.png
+20:14:00 <rutytar> pu fukpi nabmi
+20:17:00 <rutytar> na te ciska pixra .i te ganzu pixre
+20:20:00 <durka42> banli te ganzu .i .e'apei mi lebna
+20:23:00 <rutytar> ti kampu
+20:25:00 <rutytar> ca tolsti be mi tcidu ti
+20:27:00 <durka42> didn't understand that last one
+20:28:00 <rutytar> now time to read it :p
+20:29:00 <rutytar> i think 'be' is the one i'm misusing
+20:30:00 <rutytar> ca tolsti cu mi tcidu ti
+20:30:00 <rutytar> xu zenba
+20:34:00 <durka42> rutytar: {tcika} probably better for that meaning
+20:35:00 <durka42> can I take that image? :)
+20:35:00 <durka42> I keep meaning to get around to image-ifying them
+20:35:00 <rutytar> you definitely can
+20:35:00 <rutytar> http://xkcd.com/1350/xkcd-Regular.otf
+20:47:00 <rutytar> durka42: xu ma traji cu lo do nelci ku fo la xkcd
+20:47:00 <rutytar> (i'm pretty sure that was incorrect somehow)
+20:50:00 <durka42> ma traji fo lo se nelci be do bei fo XKCD
+20:53:00 <rutytar> traji nelci
+20:53:00 <durka42> umm
+20:53:00 <durka42> https://xkcd.com/413/
+20:53:00 <durka42> mi nu'o fanva
+20:53:00 <durka42> (to .u'i mi sampre tadni toi)
+20:56:00 <rutytar> i'e
+20:57:00 <durka42> wait, my fix for your translation was wrong
+20:57:00 <durka42> sorry
+20:57:00 <durka42> ma traji lo ka do nelci kei fo XKCD
+20:57:00 <durka42> ^ better
+20:58:00 <rutytar> ie
+20:58:00 <durka42> also, a bunch of crazy revolutionaries (like me) think the third place of {traji} is lame and unnecessary
+20:58:00 <durka42> so I'd say {ma traji lo ka do nelci kei XKCD} :)
+20:59:00 <rutytar> that sounds accurate to me
+21:01:00 <rutytar> xu do tadni lo rutni besna
+21:02:00 <durka42> milxe
+21:02:00 <durka42> mi ta'e tadni lo rutni te zgana
+21:05:00 <rutytar> te is x3 of rutni?
+21:06:00 <rutytar> oh wait, nevermind
+21:07:00 <rutytar> xu do slabu la'o bayes-net?
+21:08:00 <durka42> go'i
+21:10:00 <rutytar> ma su'o valsi la'o bayes la lojban
+21:10:00 <rutytar> xu zasti
+21:11:00 <durka42> hmm
+21:11:00 <durka42> la'a nai .u'i
+21:11:00 <durka42> (with {la'o} you need delimiters: la'o gy. bayes .gy.)
+21:11:00 <rutytar> ah
+21:19:00 <rutytar> la la'apupala'ayuntri
+21:19:00 <rutytar> e'enai
+21:19:00 <durka42> eh?
+21:20:00 <rutytar> la la'a pu pa la'a untri
+21:20:00 <rutytar> o'o xu drani
+21:21:00 <durka42> na drani .u'i
+21:21:00 <rutytar> *o'i xu drani
+21:21:00 <durka42> mi jimpe troci
+21:21:00 <durka42> you're trying to translate "prior probability theory"?
+21:22:00 <rutytar> "theory of (probability regarding prior probability)
+21:22:00 <rutytar> "
+21:24:00 <durka42> so, {la'a} is just an attitudinal, so we can't use it to make a tanru
+21:24:00 <rutytar> i thought it was a rafsi
+21:24:00 <durka42> it's a rafsi for {lasna} (had to look that up) but you'd only ever see it that way inside a lujvo
+21:25:00 <durka42> as a word on its own it's an attitudinal
+21:25:00 <rutytar> ua lakne
+21:25:00 <durka42> yeah
+21:25:00 <durka42> {nilyla'e} I guess would be probability
+21:26:00 <rutytar> ui
+21:27:00 <durka42> purci nilyla'e - prior probability
+21:27:00 <rutytar> la nilyla'e pe pu nilyla'e cu drani
+21:29:00 <durka42> {pe} connects two sumti
+21:30:00 <durka42> the thing about tanru is you just string them together and you get the "type-of" relation by default!
+21:31:00 <rutytar> purci nilyla'e nilyla'e?
+21:32:00 <durka42> prior-probability probability
+21:32:00 <durka42> I guess so
+21:32:00 <rutytar> purci nilyla'e nilyla'e untri
+21:32:00 <rutytar> o'i
+21:34:00 <durka42> probably the last two {nilyla'e untri} should be grouped together, right?
+21:35:00 <durka42> we want ((purci nilyla'e) (nilyla'e untri)), not (((purci nilyla'e) nilyla'e) untri)
+21:35:00 <durka42> so it should be {purci nilyla'e ke nilyla'e untri} or {purci nilyla'e nilyla'e bo untri}
+21:38:00 <rutytar> zo'o lakne
+21:40:00 <rutytar> '"You confuse a high conditional likelihood from your hypothesis to the evidence with a high posterior probability of the hypothesis given the evidence," she said, as if that were all one short phrase in her own language.'
+21:41:00 <rutytar> au mi fanva
+21:44:00 <durka42> .i'e
+21:48:00 <durka42> it's probably not going to be "all one short phrase" in lojban though, unless we define some new brivla :)
+21:48:00 <rutytar> i know, but i can dream
+21:49:00 <durka42> laknrbeizi: prior x1 multiplied with likelihood x2 gives posterior x3 for situation x4
+21:49:00 <durka42> zo'o ru'e :p
+21:51:00 <rutytar> nilyla'e and purnilyla'e are cool enough for now
+21:55:00 <rutytar> "to'e natfe" doesn't seem like a good word for evidence because it kind of ignores burden of proof
+21:56:00 <durka42> vlaste: jinvi
+21:56:00 <vlaste> jinvi = x1 thinks/opines x2 [opinion] (du'u) is true about subject/issue x3 on grounds x4.
+22:00:00 <rutytar> jinvi zgana, maybe
+22:02:00 <rutytar> i like {cpacu zgana}
+22:14:00 <selrun> coi ro do
+22:15:00 <rutytar> coi
+22:15:00 <durka42> coi
+22:20:00 <selrun> ma fasnu va'o lo se irci
+22:20:00 <durka42> ninjbopre
+22:23:00 <rutytar> ba'a mi ninjbopre
+22:29:00 <durka42> go'i
+22:30:00 <selrun> xu do ctuca le ninjbopre .i xu le ninjbopre klama vi ca nicte to nicte fi vi toi
+22:32:00 <selrun> xu  di'u drani pilno tobu (parenthesis?)
+22:32:00 <durka42> parenthese were fine, but {vi} isn't a sumti
+22:33:00 <durka42> mi ze'i ctuca .i la'a mi na'e .u'u zabna ctuca
+22:35:00 <rutytar> e'u zenba
+22:36:00 <rutytar> lu zenba
+22:37:00 <rutytar> ro tavla du ctuca
+22:38:00 <selrun> mi birti lo nu do kakne lo ctuca
+22:43:00 <selrun> can you guys please explain the difference between [na'e] and [na], and when to use each?
+22:43:00 <durka42> {na} negates everything to the right, while {na'e} only changes the meaning of the next selbri
+22:46:00 <selrun> so what would be the difference between [mi na klama lo zarci] and [mi na'e klama lo zarci]?
+22:57:00 <gleki> so some want ba'e to be moved to UI, other want ji'a to be moved to BAhE
+22:58:00 <rutytar> co'o ro do
+22:58:00 <selrun> co'o
+22:58:00 <selrun> gleki: so instead of ji'a being a discursive, it would be an attitudinal?
+22:59:00 <gleki> no, it would be like {ba'e} to the left. and it'd be another word of course
+22:59:00 <gleki> en:ji'ai
+22:59:00 <selrun> durka42: so what would be the difference between [mi na klama lo zarci] and [mi na'e klama lo zarci]?
+22:59:00 <mensi> lo nu mulno sisku zo'u: y no da se tolcri
+23:00:00 <gleki> ji'ai lo broda=lo broda ku ji'a
+23:00:00 <gleki> ba'e lo broda = lo broda ku bi'a
+23:00:00 <durka42> selrun: probably not a whole lot of difference in that example
+23:01:00 <durka42> .ei sipna
+23:01:00 <selrun> durka42. Alright, where would differences arise?
+23:01:00 <durka42> definitely they would arise when the {na} scopes over other stuff
+23:01:00 <durka42> like {mi na'e lacri do ki'u lo nu do bebna} - "I don't trust you because you're an idiot"
+23:02:00 <durka42> if you use {na} then the meaning changes
+23:02:00 <selrun> what would the meaning be if you used [na] in that example?
+23:02:00 <durka42> gleki: good, now what about {po'o}? {po'oi} is taken by some other crazy proposal :)
+23:02:00 <selrun> Sorry, if you want to go to bed, feel free.
+23:03:00 <durka42> well if you replace na'e with na straight up, you get "You being an idiot doesn't make me trust you"
+23:04:00 <selrun> alright, I think I'll need to go through more examples, and learn more about lojban scope.
+23:04:00 <gleki> nice https://drive.google.com/folderview?id=0Bzm3qToNzIVaOGlOandYRmJwN0U&usp=drive_web
+23:04:00 <durka42> there's also a little bit of semantic difference
+23:04:00 <durka42> {na} just means "this isn't true" whereas {na'e} has this thing about an implied scale
+23:05:00 <durka42> mi na'e lacri do — I don't trust you, but I presumably do something-other-than trust you
+23:05:00 <durka42> mi na lacri do — simply, it isn't true that I trust you
+23:06:00 <selrun> So na'e implies that something else must happen, if the current expression is false. Whereas na doesn't say anything beyond its basic negation?
+23:10:00 <selrun> okay, so if someone asking my if my colour was green, and I replied, [mi na'e crino], this would be equivalent to, "No, I'm another colour". If I said [mi na crino], I'd simply be saying, "No, I'm not"
+23:11:00 <gleki> durka42: no idea. i dont care. im not even sure po'o should be in BAhE/UI
+23:12:00 <durka42> selrun: yeah
+23:13:00 <selrun> cool!
+23:25:00 <gleki> if po'o deals with scope it should probably be a tag
+23:26:00 <gleki> it's not about any attitude
