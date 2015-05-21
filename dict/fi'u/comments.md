@@ -36,3 +36,26 @@ symbol for the golden ratio (phi); it is a minor point, but a potential
 stumbling block. I do not see the golden ratio as being all that 
 fundamental for fractions, despite its being "golden".
 
+
+## 2015-05-21T02:43:22Z — durka42 (comment 1868, in reply to 1867)
+
+Re: Dangerous overloading?
+
+krtisfranks wrote:
+> spheniscine wrote:
+> > I don't think (fi'u) alone should mean the golden ratio; seems like 
+> > dangerous overloading to me. Should probably be split to a different 
+> cmavo.
+> 
+> 
+> I have been meaning to comment on this and say the same thing. At the 
+very 
+> least, a separate cmavo should be optional/available. It also makes the 
+> division symbol (of which there are several, really) conflated with the 
+> symbol for the golden ratio (phi); it is a minor point, but a potential 
+> stumbling block. I do not see the golden ratio as being all that 
+> fundamental for fractions, despite its being "golden".
+
+{fe'i} is the division operator, though. But I can't say I understand why 
+we need both {fe'i} and {fi'u}.
+
