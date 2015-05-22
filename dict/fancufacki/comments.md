@@ -36,3 +36,13 @@ Lujvo form?
 Seems like this can be just {fancyfa'i}. Use Jvozba ( 
 http://jwodder.freeshell.org/lojban/jvozba.cgi ) to help create lujvo.
 
+
+## 2015-05-22T11:16:34Z — spheniscine (comment 1886, in reply to 1885)
+
+Re: Lujvo form?
+
+Oh, didn't notice the existing discussion. But yeah, though it is 
+encouraged for the place structures of lujvo to mirror its components 
+(especially the last one), some variance due to the expected use and 
+definition of the word is acceptable.
+
