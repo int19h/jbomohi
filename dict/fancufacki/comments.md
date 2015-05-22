@@ -28,3 +28,11 @@ durka42 wrote:
 mi ka'e selxanri lesi'o zo fancyfa'i plixau gi'eku'i selsmu lo drata be le
 vi co'e
 
+
+## 2015-05-22T11:13:05Z — spheniscine (comment 1885)
+
+Lujvo form?
+
+Seems like this can be just {fancyfa'i}. Use Jvozba ( 
+http://jwodder.freeshell.org/lojban/jvozba.cgi ) to help create lujvo.
+
