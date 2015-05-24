@@ -55,3 +55,15 @@ since it's rather a bug of JVS than a feature please don't change place
 structures of existing definitions but add new definitions that can be 
 voted for or against.
 
+
+## 2015-05-24T10:56:47Z — spheniscine (comment 1890, in reply to 1889)
+
+Re: please dont change place structure of existing definitions!
+
+gleki wrote:
+> since it's rather a bug of JVS than a feature please don't change place 
+> structures of existing definitions but add new definitions that can be 
+> voted for or against.
+Sorry, I merely changed my mind, since the cmavo2 place isn't very useful 
+for the concept.
+
