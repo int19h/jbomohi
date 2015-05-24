@@ -68,3 +68,12 @@ mu'a
 
 ??, ??
 
+
+## 2015-05-24T17:27:19Z — mukti (comment 1892, on definition 64119, in reply to 1883)
+
+à l'épreuve
+
+? l'?preuve
+
+(pardon the intrusion -- just testing)
+
