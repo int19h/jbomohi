@@ -67,3 +67,20 @@ gleki wrote:
 Sorry, I merely changed my mind, since the cmavo2 place isn't very useful 
 for the concept.
 
+
+## 2015-05-24T11:26:38Z — gleki (comment 1891, in reply to 1890)
+
+Re: please dont change place structure of existing definitions!
+
+spheniscine wrote:
+> gleki wrote:
+> > since it's rather a bug of JVS than a feature please don't change place
+
+> > structures of existing definitions but add new definitions that can be 
+> > voted for or against.
+> Sorry, I merely changed my mind, since the cmavo2 place isn't very useful
+
+> for the concept.
+
+Oh, you edited your own definition? That's fine then, .u'u
+
