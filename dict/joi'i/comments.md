@@ -77,3 +77,14 @@ mu'a
 
 (pardon the intrusion -- just testing)
 
+
+## 2015-05-24T17:47:18Z — mukti (comment 1893, on definition 64119, in reply to 1892)
+
+Re: à l'épreuve
+
+ ? l'?preuve, la deuxi?me fois
+mukti wrote:
+> ? l'?preuve
+> 
+> (pardon the intrusion -- just testing)
+
