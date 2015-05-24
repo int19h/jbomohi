@@ -46,3 +46,12 @@ i zo le tolfamyma'o lo sumti
 We assume here that {fanmo} refers to the last part of the process, not its
 endpoint since sumti indeed contains both {lo} and {ku}.
 
+
+## 2015-05-24T08:24:01Z — gleki (comment 1889)
+
+please dont change place structure of existing definitions!
+
+since it's rather a bug of JVS than a feature please don't change place 
+structures of existing definitions but add new definitions that can be 
+voted for or against.
+
