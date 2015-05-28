@@ -23,3 +23,13 @@ Re: Reconsidering lujvo...
 
 Somewhat related is how to make a word for "werecreature"
 
+
+## 2015-05-28T23:38:26Z — durka42 (comment 1911, on definition 66147, in reply to 1910)
+
+Re: Reconsidering lujvo...
+
+spheniscine wrote:
+> Somewhat related is how to make a word for "werecreature"
+
+lo di'i labnybi'o
+
