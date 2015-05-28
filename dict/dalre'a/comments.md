@@ -16,3 +16,10 @@ Though {remda'u} may be too useful for any philosophical discussion about
 the more-animalistic aspects of human beings. If there are objections I 
 might use a zi'evla instead.
 
+
+## 2015-05-28T02:36:46Z — spheniscine (comment 1910, on definition 66147, in reply to 1908)
+
+Re: Reconsidering lujvo...
+
+Somewhat related is how to make a word for "werecreature"
+
