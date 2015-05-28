@@ -41,3 +41,12 @@ it
 
 But there are no other sumti-places, if {mei'e} is the main selbri.
 
+
+## 2015-05-28T01:34:05Z — spheniscine (comment 1907, in reply to 1906)
+
+Re: Needs a famyma'o
+
+I'm more thinking of (lo mei'e ko'a ko'e fo'a fo'e (mei'o) fo'o broda), to 
+make mei'e cover the first four sumti but not fo'o; sure, a (ku) would have
+sufficed in this example, but won't if (fo'e) was a sumti with a gadri. 
+
