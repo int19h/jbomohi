@@ -47,3 +47,14 @@ please avoid non Latex formatting
 1. the current notes will be printed while they shouldnt be
 2. * ... * is not latex
 
+
+## 2015-05-29T17:20:36Z — spheniscine (comment 1918, in reply to 1917)
+
+Re: please avoid non Latex formatting
+
+Oh... how else should I do ellipses?
+
+And I should probably move that crap to the discussion page huh? I thought 
+that since there's no way these definitions are going to be the "preferred"
+one, they won't be printed.
+
