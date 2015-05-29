@@ -26,3 +26,10 @@ I'm not sure which definition you meant to comment on. But really, all the
 BPFK cmavo definitions should be moved in here (once they are finalized, 
 which we should do ASAP).
 
+
+## 2015-05-29T18:27:46Z — spheniscine (comment 1922, in reply to 1921)
+
+Re: This definition
+
+Oops I accidentally posted this to the word itself and not the definition
+
