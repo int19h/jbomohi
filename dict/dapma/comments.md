@@ -39,3 +39,11 @@ But I agree. This definition is inherently negative in the English
 interpretation and we need more words while specifying this usage more 
 clearly.
 
+
+## 2015-05-29T17:05:26Z — gleki (comment 1917)
+
+please avoid non Latex formatting
+
+1. the current notes will be printed while they shouldnt be
+2. * ... * is not latex
+
