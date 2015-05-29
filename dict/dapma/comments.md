@@ -58,3 +58,14 @@ And I should probably move that crap to the discussion page huh? I thought
 that since there's no way these definitions are going to be the "preferred"
 one, they won't be printed.
 
+
+## 2015-05-29T17:24:20Z — spheniscine (comment 1920)
+
+Since this stuff looks bad in the notes...
+
+There is a belief that {dapma} actually does not carry the negative 
+connotations that English "curse/condemn" does; any positive or negative 
+connotations should be applied with {zabna} or {mabla}. This *would* be the
+correct English definition if this belief is to be officially accepted, but
+unfortunately there is no known easy gloss word.
+
