@@ -12,3 +12,13 @@ Re: xy xi re
 
 u'u mi na certu lo bi'unai bangu
 
+
+## 2015-06-02T13:07:29Z — gusnikantu (comment 1965, in reply to 1964)
+
+Re: xy xi re
+
+spheniscine wrote:
+> u'u mi na certu lo bi'unai bangu
+
+je'e mo'u co'e
+
