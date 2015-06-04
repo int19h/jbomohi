@@ -150,3 +150,14 @@ f??ncu
 > 
 > ??, ??
 
+
+## 2015-06-04T02:21:10Z — krtisfranks (comment 1966, on definition 64119, in reply to 1588)
+
+Re: ma mupli
+
+selckiku wrote:
+> .i do simsa pluja ciksi gi'e cusku no ku'i mupli xu .i .oi do kusru .i
+> je'u mi na'e jimpe .i ma smuni sa'e
+
+li pareci joi'i vo du li parecivo
+
