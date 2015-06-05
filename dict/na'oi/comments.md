@@ -13,3 +13,17 @@ durka42 wrote:
 
 CAI
 
+
+## 2015-06-05T17:00:21Z — durka42 (comment 1979, on definition 66359, in reply to 1978)
+
+Re: difference from {ja'ai}?
+
+gleki wrote:
+> durka42 wrote:
+> > 
+> 
+> CAI
+
+
+ma smuni frica
+
