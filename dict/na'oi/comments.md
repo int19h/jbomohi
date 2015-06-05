@@ -27,3 +27,20 @@ gleki wrote:
 
 ma smuni frica
 
+
+## 2015-06-05T17:13:03Z — gleki (comment 1980, on definition 66359, in reply to 1979)
+
+Re: difference from {ja'ai}?
+
+durka42 wrote:
+> gleki wrote:
+> > durka42 wrote:
+> > > 
+> > 
+> > CAI
+> 
+> 
+> ma smuni frica
+
+lo nu sela'u makau carmi cu vajni ju'ocu'i gi'e mukti
+
