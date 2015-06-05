@@ -8,3 +8,15 @@ wrong to me. I would prefer having a separate word that acts in such a way,
 although I honestly cannot think of how it would be defined in most 
 contexts. 
 
+
+## 2015-06-05T07:33:27Z — spheniscine (comment 1972, on definition 66350, in reply to 1971)
+
+Re: 
+
+Hm I can see your point, but what rafsi could be used for any "reciprocal" 
+thing we create?
+
+There is {pi'ai}, but it might be too cumbersome for use in general 
+conversation. There's also "te'ai ni'u pa" to be used with {pi'ai} but 
+that's waaaaaay too long.
+
