@@ -8,3 +8,12 @@ Another example is when you need to count the total number of man hours of
 workers. It's "lo sumla be lo ditcu be lo nu lo prenu cu gunka". {sumji} 
 doesnt allow for that.
 
+
+## 2015-06-05T20:46:42Z — xorxes (comment 1981, on definition 66357)
+
+janli zo sunla
+
+xu vajni ma'a fa lo nu zo sumla cu janli zo sunla
+
+.i ji'a ko catlu zo {simsumji}
+
