@@ -31,3 +31,10 @@ apprehension... after all, "to'e prenu" doesn't mean "reciprocal of the
 number of people", and may be a potential source of malglixlu if people 
 think {to'e} means "per".
 
+
+## 2015-06-05T07:53:23Z — spheniscine (comment 1975, on definition 66350, in reply to 1971)
+
+Re: 
+
+That said I have provisionally defined {fei'u} for this purpose.
+
