@@ -17,3 +17,16 @@ xu vajni ma'a fa lo nu zo sumla cu janli zo sunla
 
 .i ji'a ko catlu zo {simsumji}
 
+
+## 2015-06-06T04:23:24Z — gleki (comment 1983, on definition 66357, in reply to 1981)
+
+Re: janli zo sunla
+
+xorxes wrote:
+> xu vajni ma'a fa lo nu zo sumla cu janli zo sunla
+> 
+> .i ji'a ko catlu zo {simsumji}
+
+
+vajni i ei tolzanru
+
