@@ -12,3 +12,13 @@ zo tivni
 
 pe'i zo tivni jetnu valsi lo strimgau
 
+
+## 2015-06-07T16:53:29Z — selpahi (comment 1985, in reply to 1984)
+
+Re: zo tivni
+
+gleki wrote:
+> pe'i zo tivni jetnu valsi lo strimgau
+
+.i .ei mi tugni
+
