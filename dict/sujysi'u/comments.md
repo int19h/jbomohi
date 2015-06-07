@@ -68,3 +68,24 @@ xorxes wrote:
 ja'o uinairu'e xu lo ka ce'u sumji ce'u ce'u cu ka ce'u du li mo'ece'u su'i
 mo'ece'u su'i xo'e
 
+
+## 2015-06-07T23:50:35Z — xorxes (comment 1989, on definition 14085, in reply to 1988)
+
+Re: simlu lo ka spofu
+
+durka42 wrote:
+> xorxes wrote:
+> > 
+> > mi pu sanji la'e di'u .i ku'i pe'i lo smuni be zo simxu cu na tai satci
+
+> .i 
+> > lo nalsatci smuni cu zmadu lo satci lo ka plixau
+> 
+> ja'o uinairu'e xu lo ka ce'u sumji ce'u ce'u cu ka ce'u du li mo'ece'u 
+su'i
+> mo'ece'u su'i xo'e
+
+pe'i na go'i .i lo smuni be zo simxu .e nai zo sumji cu tolsatci .i pe'i lo
+nu ko'a sujysi'u ko'e zo'u ko'e sumji ro me ko'a lo sumji be lo drata me 
+ko'a bei lo sumji be lo drata me ko'a bei lo sumji be lo drata me ko'a li'o
+
