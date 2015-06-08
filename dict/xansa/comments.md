@@ -25,3 +25,19 @@ well-defined chirality in a given frame of reference), which would include
 stars and quantum particles. Certain polyominoes are chiral, as well as 
 dice.
 
+
+## 2015-06-08T19:32:38Z — krtisfranks (comment 1991, in reply to 1930)
+
+Re: mupli e'o
+
+gleki wrote:
+> This also should have an example.
+> By real life we can assume something from chemistry like sugars, DNA. 
+Then 
+> human body (is it chiral?)
+> Anything from nuclear physics, from astronomy?
+
+Oh, toilet paper rolls confined to travel linearly in only one dimension 
+(such as along a wire or spindle) are chiral. As are some knots and rotary 
+combination (really: permutation) locks in three dimensions.
+
