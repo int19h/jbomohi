@@ -89,3 +89,10 @@ pe'i na go'i .i lo smuni be zo simxu .e nai zo sumji cu tolsatci .i pe'i lo
 nu ko'a sujysi'u ko'e zo'u ko'e sumji ro me ko'a lo sumji be lo drata me 
 ko'a bei lo sumji be lo drata me ko'a bei lo sumji be lo drata me ko'a li'o
 
+
+## 2015-06-08T04:16:17Z — durka42 (comment 1990, on definition 14085, in reply to 1989)
+
+Re: simlu lo ka spofu
+
+mi na nelci lo nu zo simxu na satci .iku'i .ei mi pensi lo danfu
+
