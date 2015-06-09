@@ -63,3 +63,33 @@ rotary
 by examples i mean filling all the places with some other than  {zo'e} or 
 "{la} ..."
 
+
+## 2015-06-09T19:55:01Z — krtisfranks (comment 1998, in reply to 1993)
+
+Re: mupli e'o
+
+gleki wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > This also should have an example.
+> > > By real life we can assume something from chemistry like sugars, DNA.
+
+> > Then 
+> > > human body (is it chiral?)
+> > > Anything from nuclear physics, from astronomy?
+> > 
+> > Oh, toilet paper rolls confined to travel linearly in only one 
+dimension 
+> > (such as along a wire or spindle) are chiral. As are some knots and 
+> rotary 
+> > combination (really: permutation) locks in three dimensions.
+> 
+> 
+> by examples i mean filling all the places with some other than  {zo'e} or
+
+> "{la} ..."
+
+lo {natsi} {ci'ai} {sinxrmanji} cu xansa le farna be lo dutso la'e zoi 
+glico. right-hand rule .glico la'e zoi glico. two-dimensional Euclidean 
+space .glico
+
