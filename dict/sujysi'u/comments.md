@@ -96,3 +96,13 @@ Re: simlu lo ka spofu
 
 mi na nelci lo nu zo simxu na satci .iku'i .ei mi pensi lo danfu
 
+
+## 2015-06-09T11:01:48Z — Ilmen (comment 1994, on definition 14085, in reply to 1990)
+
+Re: simlu lo ka spofu
+
+durka42 wrote:
+> mi na nelci lo nu zo simxu na satci .iku'i .ei mi pensi lo danfu
+
+ta'o mi pu za finti zo porsumji noi smuni simsa
+
