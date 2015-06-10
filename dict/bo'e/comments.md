@@ -19,3 +19,16 @@ five
 
 Good point!
 
+
+## 2015-06-10T22:46:16Z — krtisfranks (comment 2003, on definition 66408, in reply to 2001)
+
+Re: Erm
+
+spheniscine wrote:
+> You might want to find another cmavo form. (bo'V) are the last set of 
+five 
+> unassigned triliteral cmavo; would be a shame to break up this space for 
+> something that didn't need a set.
+
+See {bu'o'e}. Downvote this one.
+
