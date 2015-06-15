@@ -113,3 +113,36 @@ they are sense-shifting it from a broad, laic term, to a more specialized,
 technical one. Thus, marking it is desirable, so that it can be defined 
 within that particular technical field.
 
+
+## 2015-06-15T19:27:06Z — spheniscine (comment 2024, on definition 66441, in reply to 2022)
+
+Re: {pe'ai}
+
+Addintionally, basing it on {pe'a} brings up another confounding factor. 
+Sometimes, the technical sense of a word *is* also metaphorical. It'd be 
+confusing for something to be both {pe'a} and {pe'ainai}
+
+Take this hypothetical situation; we are Lojbanist scientists back in the 
+1960's, working on this newfangled machine called a "computer", and we just
+invented the "computer mouse".
+
+We could call it (smacu pe'a); but the problem is that (pe'a) is inherently
+fuzzy; we can't assign any one meaning to it, even within the very narrow 
+context of being inventors of a bleeding-edge technology that we have no 
+idea of its future potential.
+
+However, we can assign a meaning to (zai'e smacu) within this particular 
+narrow context of computer science. We don't even need the (pe'a), because 
+by assigning it the jargon meaning, we have divorced it from its original 
+meaning. We also don't care if anyone else assigns a meaning to (zai'e 
+smacu) while working on something completely different; all we care about 
+is that within this particular field, we have assigned one meaning to it.
+
+Then fast forward a few decades. Computers become a very big thing, and 
+have gained mainstream acceptance. We've even added the gismu {skami} to 
+the dictionary. Thus, laypeople have a need to talk about computer mice. 
+Thus, they can take (zai'e smacu), turn it to (zamsmacu), then add the 
+rafsi for {skami}, making (samyzamsmacu). Then after some amount of 
+high-frequency usage, they may just drop the -zam- rafsi altogether, making
+(samsmacu).
+
