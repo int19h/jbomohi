@@ -29,3 +29,18 @@ Re: What kind of word is this?
 
 Also, quite obviously, accepted and recognized by JVS.
 
+
+## 2015-06-15T15:28:27Z — Wuzzy (comment 2019, in reply to 2017)
+
+Re: What kind of word is this?
+
+spheniscine wrote:
+> It is valid under a proposal by la xorxes for zi'evla lujvo-formation, 
+and 
+> is accepted under both versions of camxes parser.
+
+
+Can you please, for the future, mention this non-standard word formation in
+the notes or etymology? I don't like to see non-standard words mixed up 
+with standard words, as jbovlaste does not make any sort of difference atm.
+
