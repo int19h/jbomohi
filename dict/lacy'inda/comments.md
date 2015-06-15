@@ -14,3 +14,11 @@ a character in a rafsi?
 This word can't be a fu'ivla for sure, because "y" is disallowed in 
 fu'ivla.
 
+
+## 2015-06-15T14:50:29Z — spheniscine (comment 2017, in reply to 2013)
+
+Re: What kind of word is this?
+
+It is valid under a proposal by la xorxes for zi'evla lujvo-formation, and 
+is accepted under both versions of camxes parser.
+
