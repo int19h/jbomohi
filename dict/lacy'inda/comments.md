@@ -44,3 +44,26 @@ Can you please, for the future, mention this non-standard word formation in
 the notes or etymology? I don't like to see non-standard words mixed up 
 with standard words, as jbovlaste does not make any sort of difference atm.
 
+
+## 2015-06-15T16:11:26Z — gleki (comment 2020, in reply to 2019)
+
+Re: What kind of word is this?
+
+Wuzzy wrote:
+> spheniscine wrote:
+> > It is valid under a proposal by la xorxes for zi'evla lujvo-formation, 
+> and 
+> > is accepted under both versions of camxes parser.
+> 
+> 
+> Can you please, for the future, mention this non-standard word formation 
+in
+> the notes or etymology? I don't like to see non-standard words mixed up 
+> with standard words, as jbovlaste does not make any sort of difference 
+atm.
+
+http://lojban.github.io/cll/4/16/
+
+Also notes isn't the best place for that. A change in the db model of JVS 
+is needed, at least tagging capabilities for each definition.
+
