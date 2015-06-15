@@ -27,3 +27,12 @@ krtisfranks wrote:
 The listed selma'o is LOhU, so apparently the answer to question 1 is
 {le'u}, and question 2 is "no". Not sure about question 3.
 
+
+## 2015-06-15T14:38:31Z — spheniscine (comment 2014, on definition 66452)
+
+Justification
+
+This is to replace use of {me'o} for arbitrary character strings that mix 
+letters and numbers, past a proposal that would separate them grammatically
+in all other places, including within LI...LOhO.
+
