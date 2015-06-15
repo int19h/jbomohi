@@ -70,3 +70,34 @@ I really do not care overly much which word is used for this purpose. I
 just want a word to exist for it. But st present, the conflicting 
 definitions for this word make it less than desirable to me.
 
+
+## 2015-06-15T17:33:58Z — krtisfranks (comment 2022, on definition 66441, in reply to 2009)
+
+Re: {pe'ai}
+
+spheniscine wrote:
+> Yes, I have seen {pe'ai}, but I think {zai'e} / {zi'ai} has several 
+> advantages over it:
+> 
+> 1. Most gismu are meant to have la?c meanings by default. Using simple 
+> terms like "block", "set", or "group" (or even say, "flying" in Magic the
+
+> Gathering) for a technical, specialized purpose is the realm of jargon, 
+and
+> as such, should receive the unnegated form.
+> 
+> 2. The proposed rafsi is meant as a way to disambiguate if a jargon word 
+> should "trickle down" to the mainstream, or if several fields that use 
+the 
+> same jargon word intersect within a context, causing potential 
+> polysemy/ambiguity. For example, let's say (zai'e girzu) "group" has 
+gained
+> a very specialized meaning within the context of computers. Then, the 
+lujvo
+> (samzamgri) would then refer unambiguously to this meaning.
+
+1. I guess that abother issue with me is that I very commonly use words in 
+a technical sense in English, so it is more useful to me to explicitly mark
+when I mean them to be not-technical than when they are. Anyone working in 
+a field would probably develop such a habit as well.
+
