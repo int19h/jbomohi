@@ -101,3 +101,15 @@ a technical sense in English, so it is more useful to me to explicitly mark
 when I mean them to be not-technical than when they are. Anyone working in 
 a field would probably develop such a habit as well.
 
+
+## 2015-06-15T18:17:27Z — spheniscine (comment 2023, on definition 66441, in reply to 2022)
+
+Re: {pe'ai}
+
+Sufficiently specialized lujvo or zi'evla with very specific definitions 
+will not need to be marked. I'm only proposing marking use of common words,
+typically gismu, in a technical manner. Technically, when one does that, 
+they are sense-shifting it from a broad, laic term, to a more specialized, 
+technical one. Thus, marking it is desirable, so that it can be defined 
+within that particular technical field.
+
