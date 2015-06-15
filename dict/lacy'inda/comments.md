@@ -22,3 +22,10 @@ Re: What kind of word is this?
 It is valid under a proposal by la xorxes for zi'evla lujvo-formation, and 
 is accepted under both versions of camxes parser.
 
+
+## 2015-06-15T14:54:41Z — spheniscine (comment 2018, in reply to 2013)
+
+Re: What kind of word is this?
+
+Also, quite obviously, accepted and recognized by JVS.
+
