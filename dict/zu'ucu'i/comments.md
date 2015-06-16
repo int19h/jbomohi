@@ -18,3 +18,10 @@ spheniscine wrote:
 
 "in the third hand" might be better expressed ma'i lo cimoi
 
+
+## 2015-06-16T09:04:22Z — spheniscine (comment 2031, on definition 66463, in reply to 2030)
+
+Re: Alternate gloss
+
+Nah, at that point I'd just use {mai} :p
+
