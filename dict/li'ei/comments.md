@@ -36,3 +36,15 @@ This is to replace use of {me'o} for arbitrary character strings that mix
 letters and numbers, past a proposal that would separate them grammatically
 in all other places, including within LI...LOhO.
 
+
+## 2015-06-16T10:38:18Z — spheniscine (comment 2034)
+
+VUhU
+
+I'm really debating whether VUhU should be in here... on one hand, it's 
+convenient especially if {pi'e} is moved to VUhU, so that you can represent
+weird ISO character strings like ---25T23:50.
+
+On the other hand, {joi'i} is in VUhU. And also there's that VUhU-JOI merge
+proposal, which I don't know the status of...
+
