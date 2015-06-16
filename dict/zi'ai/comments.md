@@ -156,3 +156,12 @@ I'm also open to the idea of having both {zai'e}/{zi'ai} *and* {pe'ai}.
 terms", or to mark a term as specifically laic in contexts where many words
 have already been narrowed to be specific technical terms, as you note.
 
+
+## 2015-06-16T06:24:23Z — spheniscine (comment 2026, on definition 66441, in reply to 2022)
+
+Re: {pe'ai}
+
+Though I suppose that could be just (zi'ainai), as I don't expect that 
+sense to be used repeatedly like {zai'e}/{zi'ai}; just to mark either 
+entire sentences/statements, or single words.
+
