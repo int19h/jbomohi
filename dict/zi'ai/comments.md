@@ -165,3 +165,12 @@ Though I suppose that could be just (zi'ainai), as I don't expect that
 sense to be used repeatedly like {zai'e}/{zi'ai}; just to mark either 
 entire sentences/statements, or single words.
 
+
+## 2015-06-16T06:29:29Z — spheniscine (comment 2027, on definition 66441, in reply to 2022)
+
+Re: {pe'ai}
+
+I can also see {zai'e}/{zi'ai} being used even for things like unassigned 
+reljvo, as it might be undesirable to actually "book" the reljvo on JVS for
+something that only has meaning within one particular game, e.g.
+
