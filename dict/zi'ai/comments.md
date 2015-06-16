@@ -146,3 +146,13 @@ rafsi for {skami}, making (samyzamsmacu). Then after some amount of
 high-frequency usage, they may just drop the -zam- rafsi altogether, making
 (samsmacu).
 
+
+## 2015-06-16T06:08:25Z — spheniscine (comment 2025, on definition 66441, in reply to 2022)
+
+Re: {pe'ai}
+
+I'm also open to the idea of having both {zai'e}/{zi'ai} *and* {pe'ai}. 
+{pe'ai} may still be useful as a sentence discursive meaning "In layman's 
+terms", or to mark a term as specifically laic in contexts where many words
+have already been narrowed to be specific technical terms, as you note.
+
