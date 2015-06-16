@@ -25,3 +25,11 @@ Re: Alternate gloss
 
 Nah, at that point I'd just use {mai} :p
 
+
+## 2015-06-16T09:06:29Z — spheniscine (comment 2032, on definition 66463, in reply to 2030)
+
+Re: Alternate gloss
+
+Or for a really crazy idea, if we really need even more "hands" we could 
+use (zu'u {mau'i}) :p
+
