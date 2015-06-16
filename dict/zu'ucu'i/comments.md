@@ -33,3 +33,17 @@ Re: Alternate gloss
 Or for a really crazy idea, if we really need even more "hands" we could 
 use (zu'u {mau'i}) :p
 
+
+## 2015-06-16T09:34:38Z — gleki (comment 2033, on definition 66463, in reply to 2031)
+
+Re: Alternate gloss
+
+spheniscine wrote:
+> Nah, at that point I'd just use {mai} :p
+
+
+"hands" are about viewpoints IMO.
+{zu'u} scale is a very special case of it where there are two competing 
+views, {zu'u} vs. {zu'u}{nai} with {zu'u}{cu'i} breaking this duad and 
+{zu'u}{na'i} (or {zu'u}{ge'e} acc.to CLL) disabling this scale.
+
