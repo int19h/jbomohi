@@ -29,3 +29,11 @@ mi galfi lo se jinvi poi du'u go'i ku lo se jinvi poi du'u .i'e se smuni lo
 du'u bi'u nai la'e le se cusku cu krefu .i .e'u pilno zo roi fau lo nu .au 
 cusku lo se krefu
 
+
+## 2015-06-17T09:14:15Z — junpen (comment 2042, on definition 41204, in reply to 1816)
+
+Re: 例文の「 rore'u ti se klama ba'o 」について
+
+.u'u lo pu se ciska ka'e nai se tcidu .i mi ca jinvi lo du'u lu rore'u ti 
+se klama li'u noi jufra mupli cu zabna
+
