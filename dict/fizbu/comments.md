@@ -20,3 +20,11 @@ Re: Etymology?
 
 And then they disappeared without a trace.
 
+
+## 2015-06-17T23:09:56Z — spheniscine (comment 2048, on definition 66503, in reply to 2045)
+
+Re: Etymology?
+
+I just added this one because it seemed especially useful, especially in 
+light of the discussion involved in the addition of {ue'i}
+
