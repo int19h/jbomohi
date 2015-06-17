@@ -47,3 +47,15 @@ spheniscine wrote:
 views, {zu'u} vs. {zu'u}{nai} with {zu'u}{cu'i} breaking this duad and 
 {zu'u}{na'i} (or {zu'u}{ge'e} acc.to CLL) disabling this scale.
 
+
+## 2015-06-17T06:11:07Z — gleki (comment 2038, on definition 66463, in reply to 2032)
+
+Re: Alternate gloss
+
+spheniscine wrote:
+> Or for a really crazy idea, if we really need even more "hands" we could 
+> use (zu'u {mau'i}) :p
+
+
+Of course not since the scale has only two ends.
+
