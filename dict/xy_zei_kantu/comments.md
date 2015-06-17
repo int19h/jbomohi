@@ -29,3 +29,11 @@ interpretation.
 
 I accept however the alternative {xy zei gusni}.
 
+
+## 2015-06-17T16:47:28Z — spheniscine (comment 2044, in reply to 2043)
+
+Re: .y.
+
+Yeah, you're right about that. Still, that is "ray" as in "ray of light". 
+Still not quite the correct sense for talking about X-rays in general.
+
