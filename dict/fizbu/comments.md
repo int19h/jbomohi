@@ -41,3 +41,11 @@ spheniscine wrote:
 I think that it is very useful. In particular, I have seen {jicla} used for
 such a purpose and I hate it.
 
+
+## 2015-06-18T06:36:01Z — spheniscine (comment 2050, on definition 66503, in reply to 2049)
+
+Re: Etymology?
+
+{jicla} {pe'a} = "stirring"? Yeah, I don't think this metaphor is shared by
+many other languages, if any.
+
