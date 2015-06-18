@@ -70,3 +70,17 @@ lo
 
 .ie
 
+
+## 2015-06-18T17:18:28Z — junpen (comment 2055, on definition 41204, in reply to 2051)
+
+Re: reibun no 
+
+gusnikantu wrote:
+> .i ba'anai mi pu djica lo nu smuni fa la'e lu
+> pu cadzu .i cadzu gi'e cadzu .i rore'ubo ti se klama ba'o
+> li'u
+> .i .ei mi galfi lo mupli .i pei
+
+se smuni lo nu lo nu ti se klama ba'o cu krefu fi li ro ze'a lo nu cadzu 
+gi'e cadzu .i .i'e
+
