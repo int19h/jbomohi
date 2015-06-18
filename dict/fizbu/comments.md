@@ -28,3 +28,16 @@ Re: Etymology?
 I just added this one because it seemed especially useful, especially in 
 light of the discussion involved in the addition of {ue'i}
 
+
+## 2015-06-18T01:20:03Z — krtisfranks (comment 2049, on definition 66503, in reply to 2048)
+
+Re: Etymology?
+
+spheniscine wrote:
+> I just added this one because it seemed especially useful, especially in 
+> light of the discussion involved in the addition of {ue'i}
+
+
+I think that it is very useful. In particular, I have seen {jicla} used for
+such a purpose and I hate it.
+
