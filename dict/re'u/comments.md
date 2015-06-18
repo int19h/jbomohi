@@ -37,3 +37,19 @@ Re: 例文の「 rore'u ti se klama ba'o 」について
 .u'u lo pu se ciska ka'e nai se tcidu .i mi ca jinvi lo du'u lu rore'u ti 
 se klama li'u noi jufra mupli cu zabna
 
+
+## 2015-06-18T06:59:10Z — gusnikantu (comment 2051, on definition 41204, in reply to 2042)
+
+Re: reibun no " rore'u ti se klama ba'o " ni tsuite
+
+junpen wrote:
+> .u'u lo pu se ciska ka'e nai se tcidu .i mi ca jinvi lo du'u lu rore'u ti
+
+> se klama li'u noi jufra mupli cu zabna
+
+.i ku'i ra noi mupli cu na'e minra lo mukti be fi lo fanva no'u lo pu me mi
+.i ba'anai mi pu djica lo nu smuni fa la'e lu
+pu cadzu .i cadzu gi'e cadzu .i rore'ubo ti se klama ba'o
+li'u
+.i .ei mi galfi lo mupli .i pei
+
