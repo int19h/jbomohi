@@ -53,3 +53,20 @@ pu cadzu .i cadzu gi'e cadzu .i rore'ubo ti se klama ba'o
 li'u
 .i .ei mi galfi lo mupli .i pei
 
+
+## 2015-06-18T07:01:55Z — gusnikantu (comment 2052, on definition 7821, in reply to 2041)
+
+Re: lu la'e le se cusku cu krefu li'u
+
+junpen wrote:
+> junpen wrote:
+> > .i pe'i la'e le se cusku cu se krefu gi'e nai krefu
+> 
+> mi galfi lo se jinvi poi du'u go'i ku lo se jinvi poi du'u .i'e se smuni 
+lo
+> du'u bi'u nai la'e le se cusku cu krefu .i .e'u pilno zo roi fau lo nu 
+.au 
+> cusku lo se krefu
+
+.ie
+
