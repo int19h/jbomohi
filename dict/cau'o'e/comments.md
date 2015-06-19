@@ -12,3 +12,14 @@ Re: Date
 
 I did just add a cmavo compound that may be relevant though. {ju'acu'i}.
 
+
+## 2015-06-19T23:52:09Z — krtisfranks (comment 2063, on definition 66537, in reply to 2062)
+
+Re: Date
+
+spheniscine wrote:
+> I did just add a cmavo compound that may be relevant though. {ju'acu'i}.
+
+
+It is relevant! (But not identical)
+
