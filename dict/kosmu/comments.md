@@ -11,3 +11,11 @@ Re:
 
 Though mnemonically, I suppose one can think of it as "cosmic {smuni}" :p
 
+
+## 2015-06-19T07:33:48Z — krtisfranks (comment 2056)
+
+What sort of purpose?
+
+Is it like the justification and goal their existence? Like a "what is the 
+purpose if life"/"why are we here" sort of purpose?
+
