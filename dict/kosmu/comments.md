@@ -31,3 +31,12 @@ the
 
 I guess that there actually may not be any other type, huh?
 
+
+## 2015-06-19T08:26:27Z — spheniscine (comment 2058, in reply to 2056)
+
+Re: What sort of purpose?
+
+It can mean that, yes. Essentially, this word is teleological; all it does 
+is associte a "purpose" to an "object/event". It doesn't imply usage 
+({terpli}), agentive action ({terzu'e}), or created-purpose ({terfi'i})
+
