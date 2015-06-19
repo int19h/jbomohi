@@ -23,3 +23,14 @@ spheniscine wrote:
 
 It is relevant! (But not identical)
 
+
+## 2015-06-19T23:52:13Z — krtisfranks (comment 2064, on definition 66537, in reply to 2062)
+
+Re: Date
+
+spheniscine wrote:
+> I did just add a cmavo compound that may be relevant though. {ju'acu'i}.
+
+
+It is relevant! (But not identical)
+
