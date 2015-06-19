@@ -19,3 +19,15 @@ What sort of purpose?
 Is it like the justification and goal their existence? Like a "what is the 
 purpose if life"/"why are we here" sort of purpose?
 
+
+## 2015-06-19T07:35:22Z — krtisfranks (comment 2057, in reply to 2056)
+
+Re: What sort of purpose?
+
+krtisfranks wrote:
+> Is it like the justification and goal their existence? Like a "what is 
+the 
+> purpose if life"/"why are we here" sort of purpose?
+
+I guess that there actually may not be any other type, huh?
+
