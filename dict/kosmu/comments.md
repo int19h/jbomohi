@@ -40,3 +40,13 @@ It can mean that, yes. Essentially, this word is teleological; all it does
 is associte a "purpose" to an "object/event". It doesn't imply usage 
 ({terpli}), agentive action ({terzu'e}), or created-purpose ({terfi'i})
 
+
+## 2015-06-21T06:21:07Z — spheniscine (comment 2067)
+
+te kosmu
+
+Did you remove it, ctefaho? I put it there because there were some 
+complaints about a purpose/telos existing without an attributor. Feel free 
+to ignore it/replace it with {ma'i} for your subdialect if you like, but I 
+really want to promote {kosmu} in standard Lojban as well.
+
