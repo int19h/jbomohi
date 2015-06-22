@@ -50,3 +50,18 @@ complaints about a purpose/telos existing without an attributor. Feel free
 to ignore it/replace it with {ma'i} for your subdialect if you like, but I 
 really want to promote {kosmu} in standard Lojban as well.
 
+
+## 2015-06-22T03:10:06Z — durka42 (comment 2076, in reply to 2067)
+
+Re: te kosmu
+
+spheniscine wrote:
+> Did you remove it, ctefaho? I put it there because there were some 
+> complaints about a purpose/telos existing without an attributor. Feel 
+free 
+> to ignore it/replace it with {ma'i} for your subdialect if you like, but 
+I 
+> really want to promote {kosmu} in standard Lojban as well.
+
+Oh boy, an edit war! I haven't seen one of those on JVS yet...
+
