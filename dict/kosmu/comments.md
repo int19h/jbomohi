@@ -93,3 +93,11 @@ Feel free to widen my perspective.
 
 Just my two cents.
 
+
+## 2015-06-22T09:42:09Z — spheniscine (comment 2078, in reply to 2077)
+
+Re: te kosmu
+
+I only understood about half of that; but I am starting to have my doubts 
+about {ma'i} as well. Perhaps a BAI for {fi'o jinvi} might be useful.
+
