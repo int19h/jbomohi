@@ -65,3 +65,31 @@ I
 
 Oh boy, an edit war! I haven't seen one of those on JVS yet...
 
+
+## 2015-06-22T04:50:53Z — krtisfranks (comment 2077, in reply to 2067)
+
+Re: te kosmu
+
+spheniscine wrote:
+> Did you remove it, ctefaho? I put it there because there were some 
+> complaints about a purpose/telos existing without an attributor. Feel 
+free 
+> to ignore it/replace it with {ma'i} for your subdialect if you like, but 
+I 
+> really want to promote {kosmu} in standard Lojban as well.
+
+I think that the attributor is good. I was actually thinking the same thing
+but did not want to edit it. With the attribution terbri as kosmu3, the 
+3-terbri version subsumed the 2-terbri version, providing functionality 
+without back-compatibility issues or anything of the sort. If you do not 
+want it there, delete it (using "{zi'o}" and/or zmico). But I do think that
+it should be part of the definition- I would even argue that it is 
+generically necessary, not just useful (although that too).
+
+I do not think that "{ma'i}" can be used for that purpose. A different 
+modal for "according to/attributed by" would work, but that one is not it 
+(I opine). Of course, I might have to much of a physicist's mindset here. 
+Feel free to widen my perspective.
+
+Just my two cents.
+
