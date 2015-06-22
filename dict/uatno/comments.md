@@ -16,3 +16,10 @@ Wuzzy wrote:
 > how I could fill in the x1 place. :-(
 It's supposed to work like the rest of the unit brivla, like {mitre}.
 
+
+## 2015-06-22T15:21:54Z — Wuzzy (comment 2082, on definition 66583, in reply to 2081)
+
+Re: How to fill in x1?
+
+OK. Thanks.
+
