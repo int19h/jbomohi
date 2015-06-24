@@ -15,3 +15,18 @@ presume, means that it has no explicit terminator) rather than just quoting
 an extremely long text? In Probability Theoretic language, there is no 
 apparent stopping time.
 
+
+## 2015-06-24T07:26:40Z — krtisfranks (comment 2088, in reply to 2087)
+
+Re: {le'ai} on its own
+
+krtisfranks wrote:
+> How do we know that {le'ai} is actually occurring on its own (which, I 
+> presume, means that it has no explicit terminator) rather than just 
+quoting
+> an extremely long text? In Probability Theoretic language, there is no 
+> apparent stopping time.
+
+Oops, I misunderstood. I thought {lo'ai} at every point even though I read 
+or typed {le'ai}. Ignore me.
+
