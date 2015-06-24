@@ -1,0 +1,22 @@
++++
+id = 66620
+word = "ra'oi"
+lang = "en-simple"
+author = "gusnikantu"
+updated = "2015-06-24T15:11:34Z"
+version = 0
+score = 1
+score_as_of = "2026-09-13"
+status = "current"
+jargon = ""
+selmaho = "RAhOI"
+keywords = [{ word = "rafsi", sense = "", place = 0 }]
++++
+
+tag of rafsi; it makes one following rafsi a sumti.
+
+## Notes
+
+Note that sometimes a space or a pause is necessary before and/or after the rafsi. The parser zantufa-0.14 and later will parse ra'oi as in selma'o RAhOI ( http://guskant.github.io/gerna_cipra/zantufa-0.14.html ). Examples: ra'oi.cra .i ra'oi.cac .i ra'oicai .i ra'oicacy .i ra'oi.gismy .i ra'oigismu .
+
+## Examples
