@@ -5,3 +5,13 @@ formal grammar
 I worked on formalizing these words for the camxes PEG. The result is
 here: https://github.com/Ilmen-vodhr/ilmentufa/pull/86
 
+
+## 2015-06-24T07:25:07Z — krtisfranks (comment 2087)
+
+{le'ai} on its own
+
+How do we know that {le'ai} is actually occurring on its own (which, I 
+presume, means that it has no explicit terminator) rather than just quoting
+an extremely long text? In Probability Theoretic language, there is no 
+apparent stopping time.
+
