@@ -1,0 +1,22 @@
++++
+id = 66622
+word = "ra'oi"
+lang = "fr-facile"
+author = "gusnikantu"
+updated = "2015-06-24T15:14:12Z"
+version = 0
+score = 1
+score_as_of = "2026-09-13"
+status = "current"
+jargon = ""
+selmaho = "RAhOI"
+keywords = [{ word = "rafsi", sense = "", place = 0 }]
++++
+
+marqueur de rafsi ; il convertit un rafsi en sumti.
+
+## Notes
+
+Notez qu'une espace ou une pause est parfois nécessaire avant et/ou après le rafsi. L'analyseur syntaxique zantufa-0.14 et supérieur analyseront ra'oi comme en selma'o RAhOI ( http://guskant.github.io/gerna_cipra/zantufa-0.14.html ). Exemples: ra'oi.cra .i ra'oi.cac .i ra'oicai .i ra'oicacy .i ra'oi.gismy .i ra'oigismu .
+
+## Examples
