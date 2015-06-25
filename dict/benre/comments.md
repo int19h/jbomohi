@@ -39,3 +39,21 @@ On the other hand, the sense of {xau}/{seva'u} that {be'ei} doesn't cover,
 e.g. "It rained, which is good for me", seems rare enough that {seva'u} 
 probably isn't too long. *shrugs*
 
+
+## 2015-06-25T17:22:37Z — durka42 (comment 2095, on definition 66628, in reply to 2094)
+
+Re: Thoughts
+
+spheniscine wrote:
+> Yep... to be sure there are important differences; but I think the 
+> differences only make {be'ei} seem more useful, capturing a specific, 
+> commonly used sense of the English word "for".
+> 
+> On the other hand, the sense of {xau}/{seva'u} that {be'ei} doesn't 
+cover, 
+> e.g. "It rained, which is good for me", seems rare enough that {seva'u} 
+> probably isn't too long. *shrugs*
+
+Well, I don't really see any difference between {xau} and {seva'u}, 
+honestly. But {be'ei} can mean either {seva'u} or {fi'o se xlali}.
+
