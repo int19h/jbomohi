@@ -57,3 +57,12 @@ cover,
 Well, I don't really see any difference between {xau} and {seva'u}, 
 honestly. But {be'ei} can mean either {seva'u} or {fi'o se xlali}.
 
+
+## 2015-06-25T18:18:16Z — spheniscine (comment 2096, on definition 66628, in reply to 2095)
+
+Re: Thoughts
+
+Mostly I think {be'ei} implies intention; essentially {be'ei} {ko'a} = 
+{tezu'e} {tu'a} {ko'a}, while {seva'u} is incidental, and does not 
+necessarily imply intention.
+
