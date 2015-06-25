@@ -26,3 +26,16 @@ accomplish
 
 Agreed that {be'ei} sounds a lot like that {xau}.
 
+
+## 2015-06-25T17:20:42Z — spheniscine (comment 2094, on definition 66628, in reply to 2093)
+
+Re: Thoughts
+
+Yep... to be sure there are important differences; but I think the 
+differences only make {be'ei} seem more useful, capturing a specific, 
+commonly used sense of the English word "for".
+
+On the other hand, the sense of {xau}/{seva'u} that {be'ei} doesn't cover, 
+e.g. "It rained, which is good for me", seems rare enough that {seva'u} 
+probably isn't too long. *shrugs*
+
