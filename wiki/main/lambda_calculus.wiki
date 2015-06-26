@@ -1,9 +1,9 @@
 
-A [http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=lambda+calculus efinition] of lambda calculus.
+A [http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=lambda+calculus definition] of lambda calculus.
 
-What looks to be a [http://www.csse.monash.edu.au/~lloyd/tildeFP/Lambda/Ch/ ecent intro to lambda calculus].
+What looks to be a [http://www.csse.monash.edu.au/~lloyd/tildeFP/Lambda/Ch/ decent intro to lambda calculus].
 
-[[John Cowan|John Cowan]] [http://balance.wiw.org/~jkominek/lojban/9411/msg00114.html nce explained lambda calculus], briefly, on the Lojban list.
+[[John Cowan|John Cowan]] [http://balance.wiw.org/~jkominek/lojban/9411/msg00114.html once explained lambda calculus], briefly, on the Lojban list.
 
 [http://users.info.unicaen.fr/~tlebarbe/Linguistics_Lexicon/ll_l.html#lambda-operator] is a very brief discussion of lambda calculus as pertains to linguistics.
 
@@ -72,3 +72,21 @@ online do tend to assume geekdom.
 Then again, Lojban tends to, too. :-)
 
 Er, hope this has helped.
+
+----
+
+[[User:mudri|mudri]] doesn't understand Nick's syntax at all (factorial is rather advanced in pure lambda calculus) and dislikes his terminology, so will give another explanation.
+
+Lambda calculus is based on the idea that functions are values. Loosely, <math>\lambda x.E</math> is a function such that if <math>f\,x\overset{\mathrm{def}}{=}E</math>, then <math>f=\lambda x.E</math>. So, it's a compact way of writing anonymous functions. (I use the notation <math>f\,x</math> for “the result when <math>f</math> is applied to <math>x</math>” because it's good notation). Alternatively, <math>(\lambda x.E)\,z</math> is <math>E</math>, but with occurrences of <math>x</math> replaced by <math>z</math>.
+
+So, instead of saying “Let <math>f\,x=x^2</math>. Then <math>f'\,x=2\cdot x</math>.”, we can say “<math>(\lambda x.x^2)'=(\lambda x.2\cdot x)</math>.”. The power of the lambda calculus is that it allows us to talk about functions directly. As an aside, it's often asked why mathematicians haven't taken to lambda notation. They do have <math>x\mapsto E</math> (which avoids the commonly used character ‘λ’), but even that only seems to get used in definitions, making them only slightly shorter.
+
+There are many more interesting things about the lambda calculus, but most are totally irrelevant to everyday Lojban. We don't expect you to encode natural numbers as {ka} phrases, so I won't go into them here. Still, I'd like to take a slight detour to make the connection between lambda expressions and {ka} expressions a bit clearer.
+
+Variable names are messy things. Imagine evaluating the expression <math>(\lambda y.\lambda x.x\,y)\,(\lambda x.x)\,(\lambda x.\lambda y.x)</math>. One will first get <math>(\lambda x.x\,(\lambda x.x))\,(\lambda x.\lambda y.x)</math>, then try <math>(\lambda x.\lambda y.x)\,(\lambda x.(\lambda x.\lambda y.x))</math>. However, the last expression would be wrong. The fourth ‘<math>x</math>’ is bound to the lambda just to the left of it – not the first one – so it shouldn't have been replaced. To avoid this issue and simplify some other things, we can instead use de Bruijn indices.
+
+De Bruijn lambda expressions are equivalent to conventional lambda expressions, but replace named variables with numbers signifying how many ‘<math>\lambda</math>’s have to be passed until we get to the ‘<math>\lambda</math>’ that variable is bound to. For example, the expression <math>\lambda x.x\,(\lambda y.x\,y)</math> is written as <math>\lambda.0\,(\lambda.1\,0)</math>. To get to the ‘<math>\lambda</math>’ the ‘<math>1</math>’ is bound to, we first have to look past the inner ‘<math>\lambda</math>’.
+
+Why did I mention that? Well, {ka} and {ce'u} work quite like <math>\lambda</math> and <math>0</math>, respectively. What about other numbered variables? Nested {ka}s don't come up too often in Lojban, so there isn't, as far as I'm aware, a standard solution. {ce'u xi X} would work, .ia.
+
+In Lojban, all of our built-in functions (selbri) yield truth values (not necessarily boolean; that's a topic for another day). So too do {ka} expressions, given that they are built around a bridi. This gives us a limited form of the lambda calculus to work with. How do we use it? The simplest selbri that works with {ka} sumti is {ckaji}. {ckaji} essentially applies its x1 argument to its x2 argument. We essentially have la'e {py. ckaji lo ka ce'u broda} iff la'e {py. broda}. {ce'u} gets replaced, and we remove the {lo ka}. Other selbri acting on {ka} sumti, like {kakne} and {simxu} do more complex things, which aren't generally expressible simply by reärrangement of terms. However, they all require some property (the {ka} phrase) that could be realized by a given sumti, and conceptually test sumti against this property.
