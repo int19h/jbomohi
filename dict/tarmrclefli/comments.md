@@ -27,3 +27,15 @@ So, what are your opinions on:
 
 Note: {} represents a line segment.
 
+
+## 2015-06-26T06:17:09Z — krtisfranks (comment 2107, on definition 66729, in reply to 2105)
+
+Re: Support
+
+Oops: Mark-up mutilated the description. Let Schlafli symbols be denoted 
+with round parenthesis "(" and ")" rather than curly braces. What looks 
+like just "x" above (except in the description of "x" being the Cartesian 
+product) is actually the Cartesian product of two empty Schlafli symbols: 
+()x(). What looks like "{4}" above is actually the Schlafli symbol for a 
+square: (4).
+
