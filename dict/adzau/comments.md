@@ -21,3 +21,10 @@ I am not sure that I like this concept completely, but I do wish that JVS,
 for example, allowed it as an option for a given entry after one has (say, 
 accidentally) made an up-vote or down-vote. :P
 
+
+## 2015-06-26T12:31:52Z — spheniscine (comment 2111, on definition 66728, in reply to 2097)
+
+Re: ja vs jonai
+
+lol Yeah you're probably right
+
