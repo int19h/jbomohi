@@ -293,3 +293,11 @@ cipra
 {this is a test} {test} [no more wiki] [http://www.google.com!external 
 link] [https://godofall.files.wordpress.com/2014/06/mind-blown.gif]
 
+
+## 2015-06-26T06:10:52Z — krtisfranks (comment 2106, on definition 65554)
+
+darn curly braces
+
+\{\}
+\{4\}
+
