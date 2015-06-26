@@ -66,3 +66,11 @@ Mostly I think {be'ei} implies intention; essentially {be'ei} {ko'a} =
 {tezu'e} {tu'a} {ko'a}, while {seva'u} is incidental, and does not 
 necessarily imply intention.
 
+
+## 2015-06-26T04:34:26Z — krtisfranks (comment 2099)
+
+Etymology
+
+How was this word derived? (I have some ideas, of course, but I like having
+an official history if possible)
+
