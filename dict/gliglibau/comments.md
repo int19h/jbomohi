@@ -25,3 +25,17 @@ OTOH, I don't think {gliglibau} for British English is wrong per se, since
 English English does seem to be the "default" or core sense of British
 English.
 
+
+## 2015-06-26T17:17:33Z — Wuzzy (comment 2114, on definition 16405, in reply to 324)
+
+Re: British vs. English
+
+totus wrote:
+> Why not {rityglibau}? I interpret {gliglibau} to mean English as spoken 
+in
+> England, but not in Scotland, Wales or the Isle of Man.  All these
+> together are British.
+
+I have created a similar word.
+See {ritybau} (reflects {merbau}).
+
