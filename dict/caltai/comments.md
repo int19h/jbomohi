@@ -34,3 +34,12 @@ I can see someone wanting a word for "geometric figure". In that case,
 hypervolumes of dimension at least 3. But whatever word is chosen for this 
 purpose should be described as "geometric figure" not only "shape".
 
+
+## 2015-06-26T12:30:27Z — spheniscine (comment 2110, on definition 66715, in reply to 2103)
+
+Re: How does this word differ from {tarmi}?
+
+1. {tarmi} can refer to any sort of "ideal form" or modelistic likeness, 
+not just the physical / geometric form.
+2. I only based this lujvo on the existing lujvo {caltaicmaci}.
+
