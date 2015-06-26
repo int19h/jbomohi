@@ -19,3 +19,10 @@ between the speaker and that usage."
 
 To me, these ideas seem the same as yours. Do you agree?
 
+
+## 2015-06-26T12:27:24Z — spheniscine (comment 2109, on definition 66518, in reply to 2104)
+
+Re: Was I about to submit a synonym?
+
+Yeah, I think that is how {ju'acu'i} is meant to be used.
+
