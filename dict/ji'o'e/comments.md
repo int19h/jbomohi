@@ -76,3 +76,30 @@ references any allowed member of super-selma'o CONNECTIVE) because the
 grammatical context of its usage (including nearby terminators) dictate 
 from which selma'o permitted referents can be drawn.)
 
+
+## 2015-06-27T07:34:37Z — gleki (comment 2123, on definition 63971, in reply to 2121)
+
+Re: .i ji'o'e
+
+krtisfranks wrote:
+> gleki wrote:
+> > how is {.i}{ji'o'e} different from {.i}?
+> 
+> I figure that just .{i} separates bridi without making any claim about 
+> their relation to one another. They could be utterly unrelated. They must
+
+> be explicitly connected together in order to guarantee some mutual 
+> relationship, such as both being true together, one being derived 
+logically
+> from the other, being mutually exclusive, etc. Of course, .{iju} implies 
+> that one claim is independent of the other (and it does not imply 
+anything 
+> about the reverse), but even independence is a relationship of sorts. 
+Thus 
+> .{iji'o'e} does explicitly guarantee a connection between the statements,
+
+> even if it does not say what it is.
+
+I suppose variables declared using {da} or {goi} are preserved across 
+{i}{ji'o'e} sentences?
+
