@@ -1,4 +1,4 @@
-# mail/lojban-list thread 92a0fe18ed5c-the_prototype_of_a_lojban_speech_recognition_to | root cc8533d8-082e-41e4-90b7-2987d1cdbe85@googlegroups.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 92a0fe18ed5c-the_prototype_of_a_lojban_speech_recognition_to | root cc8533d8-082e-41e4-90b7-2987d1cdbe85@googlegroups.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-06-27T03:29:20Z | sorpa'as plat <sorpaas@gmail.com> | cc8533d8-082e-41e4-90b7-2987d1cdbe85@googlegroups.com | mail/lojban-list/cur/1435375760.92a0fe18ed5c2cdb.jbomohi:2,S
 Hi all,
@@ -109,6 +109,109 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To post to this group, send email to lojban@googlegroups.com<mailto:lojban@googlegroups.com>.
 Visit this group at http://groups.google.com/group/lojban.
 For more options, visit https://groups.google.com/d/optout.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 3 | 2015-06-27T16:24:20Z | sorpa'as plat <sorpaas@gmail.com> | b8e6bb03-604b-48be-8924-29411d8f28fb@googlegroups.com | mail/lojban-list/cur/1435422260.9a0c1df1a4b6e3e5.jbomohi:2,S
+Hi Timothy,
+
+Thanks for the advice, but I think we may just stick on Sphinx for now. 
+Sphinx uses hidden Markov acoustic models (HMMs) while Kaldi uses deep 
+neural networks (DNNs). It's harder to train DNNs than to make use of HMMs, 
+and we simply lack that manpower to do that :)
+
+Wei
+mu'o mi'e la sorpa'as
+
+On Saturday, June 27, 2015 at 2:21:03 AM UTC-4, Timothy Lawrence wrote:
+>
+>  I really like this initiative :)
+>  
+>
+>  A friend of mine is working on speech recognition (for other purposes) 
+> and tried Sphinx but ended up changing to 
+> http://kaldi.sourceforge.net/about.html, I believe because he found it to 
+> be better at recognising speech and/or it was faster. I thought I'd mention 
+> it in case you're not fully set on Sphinx.
+>  
+>  ------------------------------
+> *From:* loj...@googlegroups.com <javascript:> <loj...@googlegroups.com 
+> <javascript:>> on behalf of sorpa'as plat <sor...@gmail.com <javascript:>>
+> *Sent:* Saturday, 27 June 2015 1:29 PM
+> *To:* loj...@googlegroups.com <javascript:>
+> *Subject:* [lojban] The Prototype of a Lojban Speech Recognition Tool 
+>  
+>  Hi all,
+>
+> I'm trying to build a Lojban speech recognition called tersku. Instead of 
+> building an acoustic model by hand (which may need many manpower and takes 
+> a long time), the attempt is to take the English acoustic model (which is 
+> pretty mature) and adapt it for Lojban sounds.
+>
+> A running prototype can be found at https://git.null.tl/tersku.git (use *git://git.null.tl/tersku.git 
+> <http://git.null.tl/tersku.git>* to clone). The prototype uses a 
+> unmodified version of CMU's generic English acoustic model, with only 
+> necessary dictionary and grammars to parse the text "le tanxe be le birka 
+> cu cpana le tanxe be le botpi". To use it, recording a version of the text 
+> "le tanxe be le birka cu cpana le tanxe be le botpi", convert the recording 
+> to wav format, and replace the /resources/org/lojban/tersku/recording.wav 
+> file with it. The program will output the best "hypothesis" for the text.
+>
+> The program does not work really well. That means there's lots of work and 
+> I would appreciate your help. Below are some details of things to be done.
+>
+> *About the Program*
+> tersku uses CMU's Sphinx speech recognition engine. You can find Sphinx's 
+> tutorials and documentations at http://cmusphinx.sourceforge.net.
+>
+> *Adapt the Acoustic Model*
+> The adaptation requires some 16KHZ single-channel wav recordings. Help are 
+> appreciated if someone can create a Lojban phrase recording collection. 
+> Note that a phrase recording collection will benefit the whole Lojban 
+> community but not just the speech recognition program :)
+>
+> *Finish the Dictionary*
+> The dictionary in the prototype locates at 
+> resources/org/lojban/tersku/jbo-1.dict. Because we are trying to adapt the 
+> English acoustic model, all the phones are represented in Arpabet (*https://en.wikipedia.org/wiki/Arpabet 
+> <https://en.wikipedia.org/wiki/Arpabet>*). We will need to a) confirm 
+> which arpabet symbol represents which Lojban sound, and b) write a program 
+> that generates all the words in "[lojban word] [arpabet symbols]". This is 
+> probably dependent of the adaptation of the acoustic model.
+>
+> *Finish the Grammar*
+> The grammar needs to be written in JSGF format (
+> http://cmusphinx.sourceforge.net/wiki/tutoriallm). This haven't been 
+> started yet (which needs help!).
+>
+> *Correct Me!*
+> There must be mistakes and errors both in the codes and in the recognition 
+> details (I'm new to speech recognition!).
+>
+> Feel free to reach me at this email address or by opening an task at 
+> https://phabricator.null.tl. I'm really looking forward to a Lojban 
+> speech recognition tool, because it should be one of the features of Lojban 
+> :)
+>
+> Wei
+> mu'o mi'e la sorpa'as
+>  
+> -- 
+> You received this message because you are subscribed to the Google Groups 
+> "lojban" group.
+> To unsubscribe from this group and stop receiving emails from it, send an 
+> email to lojban+un...@googlegroups.com <javascript:>.
+> To post to this group, send email to loj...@googlegroups.com <javascript:>
+> .
+> Visit this group at http://groups.google.com/group/lojban.
+> For more options, visit https://groups.google.com/d/optout.
+>   
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
