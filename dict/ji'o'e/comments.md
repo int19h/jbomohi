@@ -138,3 +138,52 @@ If they are preserved over .{ije}, then yes. This word is meant to function
 exactly as (at least) {je} does, but without the semantics of {je} (being 
 elliptical/referencing any connective instead of merely "and").
 
+
+## 2015-06-27T07:47:04Z — gleki (comment 2126, on definition 63971, in reply to 2124)
+
+Re: .i ji'o'e
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > gleki wrote:
+> > > > how is {.i}{ji'o'e} different from {.i}?
+> > > 
+> > > I figure that just .{i} separates bridi without making any claim 
+about 
+> > > their relation to one another. They could be utterly unrelated. They 
+> must
+> > 
+> > > be explicitly connected together in order to guarantee some mutual 
+> > > relationship, such as both being true together, one being derived 
+> > logically
+> > > from the other, being mutually exclusive, etc. Of course, .{iju} 
+> implies 
+> > > that one claim is independent of the other (and it does not imply 
+> > anything 
+> > > about the reverse), but even independence is a relationship of sorts.
+
+> > Thus 
+> > > .{iji'o'e} does explicitly guarantee a connection between the 
+> statements,
+> > 
+> > > even if it does not say what it is.
+> > 
+> > I suppose variables declared using {da} or {goi} are preserved across 
+> > {i}{ji'o'e} sentences?
+> 
+> If they are preserved over .{ije}, then yes. This word is meant to 
+function
+> exactly as (at least) {je} does, but without the semantics of {je} (being
+
+> elliptical/referencing any connective instead of merely "and").
+
+
+Another option could be to extend the grammar of STAG BO_CLAUSE so that "mi
+do'e bo klama" becomes gendra.
+
+Alta grammar now supports it instead of yours "mi ji'o'e do'e bo klama" 
+since joik_ek can now be elided.
+
+The expansion is just {mi klama i do'e bo do klama}
+
