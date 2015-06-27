@@ -13,3 +13,10 @@ gleki wrote:
 
 mi na birti djuno .i ma'oi je ku ja ma'oi joi vau xu
 
+
+## 2015-06-27T05:46:29Z — gleki (comment 2119, on definition 63971)
+
+.i ji'o'e
+
+how is {.i}{ji'o'e} different from {.i}?
+
