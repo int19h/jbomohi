@@ -60,3 +60,16 @@ unit
 
 See: {xe'au} and {na'au}.
 
+
+## 2015-06-27T07:50:25Z — gleki (comment 2127, on definition 57075)
+
+SEI
+
+if {sei} clauses were allowed inside numbers (which they should but they 
+dont) then they would parse like current UI parse:
+
+([{ BOI} mi] VAU)
+
+Also if {sei} is undesirable then a parallel to it but creating adverbials 
+might be necessary. i.e. like {xoi} but with the grammar of {sei}.
+
