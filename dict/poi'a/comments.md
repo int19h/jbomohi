@@ -1,0 +1,22 @@
+## 2015-06-27T06:02:15Z — krtisfranks (comment 2120, on definition 57075)
+
+Expanded functionality
+
+It might be useful for this word to actually attach to exactly the last 
+mentioned term/word in a mekso phrase (including PA, VUhU, etc.; I guess 
+that there could be issues of it attaching to another {poi'a}, but that too
+may be desired by the speaker and is not really that big of a problem (it 
+should not be forbidden)).
+
+Another important issue is grouping. Currently, the word attaches to 
+exactly the most recent PA. With the aforementioned expansion, it would 
+attach to the most recent word in a mekso expression. But what happens if 
+the speaker wants to attach it to the most recent occurrence of a unit of 
+mekso expression that is longer than one word? For example, what if one 
+wants to attach it to the number twenty-three rather than simply the number
+three (in decimal)? I propose another word which begins a bracket for these
+units; then, {poi'a} would attach to everything mentioned between it and 
+the last unmatched occurrence of this bracket-initializing word, treating 
+the intervening mekso subexpression as a single whole and indivisible unit 
+for the purposes of the clause and referent of {ke'a}.
+
