@@ -20,3 +20,43 @@ the last unmatched occurrence of this bracket-initializing word, treating
 the intervening mekso subexpression as a single whole and indivisible unit 
 for the purposes of the clause and referent of {ke'a}.
 
+
+## 2015-06-27T07:39:43Z — krtisfranks (comment 2125, on definition 57075, in reply to 2120)
+
+Re: Expanded functionality
+
+krtisfranks wrote:
+> It might be useful for this word to actually attach to exactly the last 
+> mentioned term/word in a mekso phrase (including PA, VUhU, etc.; I guess 
+> that there could be issues of it attaching to another {poi'a}, but that 
+too
+> may be desired by the speaker and is not really that big of a problem (it
+
+> should not be forbidden)).
+
+I have mentioned this possibility in the notes. I personally advocate such 
+expanded functionality at the present time, but I do not want to redefine 
+the word in case doing so breaks it somehow.
+
+
+> 
+> Another important issue is grouping. Currently, the word attaches to 
+> exactly the most recent PA. With the aforementioned expansion, it would 
+> attach to the most recent word in a mekso expression. But what happens if
+
+> the speaker wants to attach it to the most recent occurrence of a unit of
+
+> mekso expression that is longer than one word? For example, what if one 
+> wants to attach it to the number twenty-three rather than simply the 
+number
+> three (in decimal)? I propose another word which begins a bracket for 
+these
+> units; then, {poi'a} would attach to everything mentioned between it and 
+> the last unmatched occurrence of this bracket-initializing word, treating
+
+> the intervening mekso subexpression as a single whole and indivisible 
+unit 
+> for the purposes of the clause and referent of {ke'a}.
+
+See: {xe'au} and {na'au}.
+
