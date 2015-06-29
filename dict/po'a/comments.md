@@ -47,3 +47,12 @@ ma'i lo si'o zo kei ka'e jai bai jinvi tu'a lo selbrisle
 lo du'u zo ku gau .ei basti zo ku'au kei ma'i lo sampu gerna kei la zantufa
 ba .au genturfa'i fi ma'oi KUhAU
 
+
+## 2015-06-29T23:24:17Z — spheniscine (comment 2151, on definition 66806, in reply to 2148)
+
+Re: LOhOI
+
+zo xu'u oiru'e .i mi za'o su'oroi pilno zo po .iku'i i'a la'a ri na 
+{pavyslakycmavy'inda} .iku'i mi nelci lo nu zo po'a simbasti zo po kei 
+semau tu'a zo xu'u
+
