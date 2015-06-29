@@ -6,3 +6,10 @@ doi la .guskant. cu'u do le famyma'o cu du zo ku .ije cu'u CyKyTyJy le
 famyma'o cu du zo po'e .iku'i mi jinvi lo du'u xagmau fa lo nu le famyma'o 
 cu du zo kei kei ki'u lo du'u zo po'a cu po'o basti lu lo su'u li'u
 
+
+## 2015-06-29T17:27:26Z — durka42 (comment 2145, on definition 66806)
+
+LOhOI
+
+si'au selma'o dunli zo lo'oi mu'a
+
