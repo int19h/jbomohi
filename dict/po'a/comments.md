@@ -13,3 +13,13 @@ LOhOI
 
 si'au selma'o dunli zo lo'oi mu'a
 
+
+## 2015-06-29T21:18:40Z — Ilmen (comment 2148, on definition 66806, in reply to 2145)
+
+Re: LOhOI
+
+durka42 wrote:
+> si'au selma'o dunli zo lo'oi mu'a
+
+ji'a simlu lo ka smuni simsa ju dunli zo xu'u noi se cmavo ma'oi lo'oi
+
