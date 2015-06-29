@@ -4,3 +4,9 @@ Etymology?
 
 Interesting word...
 
+
+## 2015-06-29T06:41:06Z — gleki (comment 2142)
+
+e'u jmina zo anci fi lo pinka
+
+
