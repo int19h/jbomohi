@@ -623,3 +623,11 @@ Thus somewhere in subsubselmaho.
 
 And of course in {su'ai} {jo} the word {su'ai} modifies {jo}.
 
+
+## 2015-06-29T23:01:32Z — krtisfranks (comment 2150)
+
+Dispreferred
+
+Gleki told me that he no longer prefers this word; use {zu'ai} instead.
+I am going to propose an alternative and unrelated meaning.
+
