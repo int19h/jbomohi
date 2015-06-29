@@ -3,3 +3,11 @@
 Etymology?
 
 
+
+## 2015-06-29T00:06:14Z — spheniscine (comment 2136, on definition 66711, in reply to 2101)
+
+Re: Etymology?
+
+My guess: -ke- from Chinese ???? (k?b?n y?nxi?ng), -sri- from English 
+"stereotype"
+
