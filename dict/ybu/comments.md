@@ -16,3 +16,12 @@ invisible anywhere else. Since {ybu} always begins with a glottal stop, I
 don't believe the existence of this "unconventional cmavo" would break 
 self-segregation.
 
+
+## 2015-06-30T10:49:26Z — spheniscine (comment 2158, in reply to 2154)
+
+Re: Not grammatical official entry :-(
+
+Oh and please don't downvote all the translations just because of an issue 
+like this. A vote-score of 0 or less would prevent propagation to collators
+like vlasisku or sutysisku; this is not desirable for an official entry.
+
