@@ -35,3 +35,10 @@ What I actually came up with was to redefine .{y'y} to be the letteral 'y'
 and invent a longer name (like {denpa bu} or {slaka bu}) for the letteral 
 ''' (apostrophe).
 
+
+## 2015-06-30T20:52:53Z — spheniscine (comment 2165, on definition 66824, in reply to 2163)
+
+Re: Possible problem
+
+The semivowels are already defined as {iy} and {uy}
+
