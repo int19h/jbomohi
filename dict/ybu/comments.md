@@ -25,3 +25,21 @@ Oh and please don't downvote all the translations just because of an issue
 like this. A vote-score of 0 or less would prevent propagation to collators
 like vlasisku or sutysisku; this is not desirable for an official entry.
 
+
+## 2015-06-30T14:46:46Z — durka42 (comment 2159, in reply to 2154)
+
+Re: Not grammatical official entry :-(
+
+Wuzzy wrote:
+> ?ybu? is not a valid string in Lojban, saying ?ybu? in Lojban would be 
+not 
+> grammatical. There must be a glottal stop after ?y?.
+> Valid would be {y bu} or {y.bu}.
+
+la .camxes. is the parser used by jbovlaste and it has no problem with 
+{ybu}. It is special-cased in the 
+[http://mw.lojban.org/papri/informal_description_of_the_PEG_morphology_algo
+rithm/condensed#Words!informal morphology description] and in the 
+[https://github.com/teleological/camxes-py/blob/master/parsers/camxes_ilmen
+.peg#L1735!parser itself].
+
