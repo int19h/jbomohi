@@ -56,3 +56,19 @@ zo xu'u oiru'e .i mi za'o su'oroi pilno zo po .iku'i i'a la'a ri na
 {pavyslakycmavy'inda} .iku'i mi nelci lo nu zo po'a simbasti zo po kei 
 semau tu'a zo xu'u
 
+
+## 2015-06-30T06:03:33Z — gusnikantu (comment 2152, on definition 66806, in reply to 2151)
+
+Re: LOhOI
+
+spheniscine wrote:
+> zo xu'u oiru'e .i mi za'o su'oroi pilno zo po .iku'i i'a la'a ri na 
+> {pavyslakycmavy'inda} .iku'i mi nelci lo nu zo po'a simbasti zo po kei 
+> semau tu'a zo xu'u
+
+lo lerpoi be lo valsi cu no'e vajni .iseju lo'e tcekitau cu bastygau zo po 
+zo xu'u
+
+.i vajni mi fa lo nu lo se basti cu se tarmi lo pa cmavo kei tezu'e lo nu 
+gau mi lo'e tcekitau cu ba klesi la zantufa
+
