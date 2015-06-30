@@ -43,3 +43,18 @@ rithm/condensed#Words!informal morphology description] and in the
 [https://github.com/teleological/camxes-py/blob/master/parsers/camxes_ilmen
 .peg#L1735!parser itself].
 
+
+## 2015-06-30T14:50:44Z — durka42 (comment 2161, in reply to 2159)
+
+Re: Not grammatical official entry :-(
+
+WTF, jbovlaste murdered my links.
+
+Informal morphology: 
+http://mw.lojban.org/papri/informal_description_of_the_PEG_morphology_algor
+ithm/condensed#Words
+
+Parser rule: 
+https://github.com/teleological/camxes-py/blob/master/parsers/camxes_ilmen.
+peg#L1735
+
