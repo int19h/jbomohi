@@ -1,0 +1,119 @@
+# mail/bpfk thread 272219bb63b4-lo_so'u_cfila_be_lo_gerna | root 55939139.5010302@gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2015-07-01T07:05:29Z | mezohe <wow.jvs@gmail.com> | 55939139.5010302@gmail.com | mail/bpfk/cur/1435734329.272219bb63b4d0e1.jbomohi:2,S
+pu za ku dohe lo se irci coha sanji tuha lo sohu cfila be lo .Camxes. 
+gerna beho noi ai mi ca skicu (to menre lo facki fa muha la Ctefaho je 
+la Zipcpi toi)
+
+niho lohu «niho niho pa mai niho broda» lehu tohe muhi nai lo nu ri 
+pagbu lahau Le Cmalu Noltru lihu cu gendra mahi no zaha fadni gentufa. i 
+mi stidi lo duhu coha gendra soi mi kanpe lo duhu keha rinka no nabmi. i 
+lahe dihe jai tahi be jahe stika (to xaho stika la Ilmentufa toi)
+
+.. i zoi gerna ..
+- paragraphs = paragraph (NIhO_clause+ free* su_clause* paragraphs)?
++ paragraphs = paragraph? (NIhO_clause+ free* su_clause* paragraphs)?
+.. gerna ..
+
+
+niho la .Camxes. cu se nandu lo ka ganse tuha lo porfaho be lo zo «zoi» 
+jufpau. i muha lo jityvla poi lidne meho niho bu na jai rinka lo nu cohu 
+jmina fi lo jufpau. i siha lo jityvla poi se pagbu suho gahe zei lerfu 
+cu gohi. i ia lo nu cikre na se jalge da pe lo se catni velcki be lo 
+gerna. i kuhi lahe dihe pagbu lo dei selmri te zuhe lo nu lo drata poi 
+kurji lo gentufa cu sanji.
+
+.. i zoi gerna ..
+- return (word.replace(/,/gm,"") === _g_zoi_delim);
++ return (word.toLowerCase().replace(/,/gm,"").replace(/h/g, "'")
++         === _g_zoi_delim);
+
+- zoi_close = w:lojban_word &{ return (_zoi_check_delim(w)); }
++ zoi_close = w:any_word &{ return (_zoi_check_delim(w)); }
+.. gerna ..
+
+
+niho la .Camxes. cu curmi tuha lo lujvo poi na te gerna fi lo se catni 
+voksnageha .i muha zoi fa. «gimyinda» .fa. cu se zanru soi nu srera. i 
+lo jai tahi cikre (to xaho pagbu la Ilmentufa toi) zohu:
+
+.. zoi gerna ..
+- y = comma* [yY]
++ y = comma* [yY] !nucleus
+.. gerna ..
+
+
+niho siha Cy ge zanru lo lujvo poi na te gerna fi lo menli (to be mi 
+toi) vlaturgeha gi na zanru lo lujvo poi jaha te gerna fi ru. i muha 
+zanru zoi fa.
+   baibaihybla babahybla
+fa. i je tolzau zoi fa.
+   brodybaihybla brodyblahybla
+fa. i jetmlu mi fa lo duhu ge ca da coha cazgau tuha lo bihu nai xanri 
+gerna gi kuhi ca da cohu zukte fi ku. i mi stidi lo duhu
+tuhe
+- la Brivla Rafsi johu la Se Basna ke Brivla Rafsi cohu zasti
+- i lo rafsi be lo zihevla beho poi pu se javni suho lo gohi coha se
+   javni la Fuhivla Rafsi ku noi jahe se stika (to cohu se sarcu lo duhu
+   lo ro moi be lo slaka cu se portolfaho meho yhy toi)
+- i lo rafsi be lo gismu beho poi se porfaho meho «yhy ybu» coha se
+   javni la Meho «Yhy Ybu» Rafsi johu la Se Basna ke meho «Yhy Ybu»
+   rafsi vuho noi xaho ku zasti gihe se pilno fi lo drata
+- i lo nu zoi fa. «slihykru» .fa. na coha lujvo cu se rinka pa cnino
+   javni noi lo portolfaho be lo brivla na kahe se javni keha
+- i sei nohe vajni suho javni cu se stika fi tuha lo cmene be ri
+tuhu.
+i lo ro javni poi se stika zohu:
+(to ca na pagbu suho gubni gentufa toi)
+
+.. zoi gerna ..
+- brivla = !cmavo initial_rafsi* brivla_core
++ brivla = !cmavo !slihykru initial_rafsi* brivla_core
+
+- initial_rafsi = extended_rafsi / y_rafsi /
+-                 !any_extended_rafsi y_less_rafsi !any_extended_rafsi
++ initial_rafsi = extended_rafsi / y_rafsi /
++                 !any_fuhivla_rafsi y_less_rafsi !any_fuhivla_rafsi
+
+- any_extended_rafsi = fuhivla / extended_rafsi /
+                        stressed_extended_rafsi
++ any_fuhivla_rafsi = fuhivla / fuhivla_rafsi / stressed_fuhivla_rafsi
+
+- stressed_extended_rafsi = stressed_brivla_rafsi /
+-                           stressed_fuhivla_rafsi
++ stressed_extended_rafsi = stressed_hy_rafsi / stressed_fuhivla_rafsi
+
+- extended_rafsi = brivla_rafsi / fuhivla_rafsi
++ extended_rafsi = hy_rafsi / fuhivla_rafsi
+
+- stressed_brivla_rafsi = &unstressed_syllable brivla_head
+-                         stressed_syllable h y
+
+- brivla_rafsi = &(syllable consonantal_syllable* syllable)
+-                brivla_head h y h?
+
+- stressed_fuhivla_rafsi = fuhivla_head stressed_syllable
+-                          consonantal_syllable* !h onset y
++ stressed_fuhivla_rafsi = fuhivla_head stressed_syllable
++                          consonantal_syllable* onset y
+
+- fuhivla_rafsi = &unstressed_syllable fuhivla_head !h onset y h?
++ fuhivla_rafsi = &unstressed_syllable fuhivla_head onset y h?
+
++ slihykru = (CCV_rafsi / stressed_CCV_rafsi) h y onset
+
+- hy_rafsi = (long_rafsi vowel / CCV_rafsi / CVV_rafsi) h y h?
++ hy_rafsi = (long_rafsi unstressed_vowel / CCV_rafsi / CVV_rafsi) h y
+.. gerna ..
+
+i lo bihu nai ro moi be lo se stidi cu voi mi na birti lo duhu ma kau ni 
+keha xagrai lo ro jai cumki. i ehe casnu lo srana muho
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
+
