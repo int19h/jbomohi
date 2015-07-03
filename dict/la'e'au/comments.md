@@ -89,3 +89,19 @@ Sorry but I don't understand what this word is for at all. If {broda} is
 defined to mean, say, "x1 is the mathbb font used for writing x2", then 
 that's what {lo broda} means. How does {la'e'au lo broda} differ?
 
+
+## 2015-07-03T23:44:24Z — durka42 (comment 2183, in reply to 2182)
+
+Re: Unclear definition
+
+durka42 wrote:
+> Sorry but I don't understand what this word is for at all. If {broda} is 
+> defined to mean, say, "x1 is the mathbb font used for writing x2", then 
+> that's what {lo broda} means. How does {la'e'au lo broda} differ?
+
+Now that I posted this comment I see your explanation in another comment 
+above... please include some of that explanation in the definition, if you 
+are serious about this word, because I was totally confused by the 
+definition as is. I *think* you are trying to say that this is a LAhE that 
+means "the Lojban grammar system referred to by this sumti". Is that right?
+
