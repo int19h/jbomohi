@@ -72,3 +72,10 @@ zo xu'u
 .i vajni mi fa lo nu lo se basti cu se tarmi lo pa cmavo kei tezu'e lo nu 
 gau mi lo'e tcekitau cu ba klesi la zantufa
 
+
+## 2015-07-03T19:31:19Z — spheniscine (comment 2169)
+
+ki'e doi .guskant.
+
+ckire fi lo nu do ciska le mupli jufra
+
