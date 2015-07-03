@@ -10,3 +10,19 @@ debatable, because it is the selbri of the implicit bridi that identifies
 {nu mi broda do kei}, and {me'oi spaghetti}, since they may in fact be part
 of a tanru rather than being full selbri.
 
+
+## 2015-07-03T19:25:38Z — Wuzzy (comment 2168, on definition 66883, in reply to 2167)
+
+Re: Hm...
+
+In general, I think definitions on Jbovlaste should not include any sort of
+truth claim. It should not be our task (on Jbovlaste) to explain the world.
+For the same reason, Jbovlaste makes no assertion whether (for instance) 
+"lo pelxu cu skari" is true.
+Just write down the pure definition; the notes may be used for 
+clarification, truth claims (and debates about them) should be made outside
+of Jbovlaste.
+
+Apart from that, I think the English definition is a bit vague / poorly 
+worded.
+
