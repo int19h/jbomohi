@@ -58,3 +58,10 @@ someone made a mistake" and would have the definition "x1 believes that x2
 mistakenly did x2 (ka) ...". This is the same as the {skudji} vs {djisku} 
 problem.
 
+
+## 2015-07-03T21:10:12Z — spheniscine (comment 2179, in reply to 2177)
+
+Re: tanru flipping
+
+oise'i mi ja'a zbusufukai lo ka na certu lo jvojva
+
