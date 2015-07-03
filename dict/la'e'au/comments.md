@@ -55,3 +55,28 @@ notation pattern, ( https://en.wikipedia.org/wiki/Juggling_notation ),
 could have their own brivla, something like "x1 (charstring) is the 
 juggling pattern notation of pattern x2 in system x3"
 
+
+## 2015-07-03T20:14:59Z — krtisfranks (comment 2175, on definition 66893, in reply to 2173)
+
+Re: Hmm...
+
+spheniscine wrote:
+> I have thought of brivla that could convert any sort of {me'o}/{li'ei} 
+> arbitrary character string into an expression that whose grammar is 
+defined
+> outside of main Lojban grammar (as long as the string is a valid 
+character 
+> string). It would be similar to how {detri} works for my proposed date 
+> system:
+> 
+> 
+http://mw.lojban.org/papri/Proposal:_loi_lerfu_tcita_detri;_the_final_word_
+> on_the_problem_of_dates_and_times%3F
+> 
+> Thus, someone who wishes to Lojbanize, say, the "siteswap" juggling 
+> notation pattern, ( https://en.wikipedia.org/wiki/Juggling_notation ), 
+> could have their own brivla, something like "x1 (charstring) is the 
+> juggling pattern notation of pattern x2 in system x3"
+
+The options are not contradictory!
+
