@@ -80,3 +80,12 @@ http://mw.lojban.org/papri/Proposal:_loi_lerfu_tcita_detri;_the_final_word_
 
 The options are not contradictory!
 
+
+## 2015-07-03T23:40:54Z — durka42 (comment 2182)
+
+Unclear definition
+
+Sorry but I don't understand what this word is for at all. If {broda} is 
+defined to mean, say, "x1 is the mathbb font used for writing x2", then 
+that's what {lo broda} means. How does {la'e'au lo broda} differ?
+
