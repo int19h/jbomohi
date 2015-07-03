@@ -33,3 +33,13 @@ or
 In addition I can recommend always adding an examples showing possible
 usage for every te sumti.
 
+
+## 2015-07-03T22:02:57Z — krtisfranks (comment 2180, in reply to 1464)
+
+Re: dare
+
+durka42 wrote:
+> Produce an example of this word... I double-dare you.
+
+Done. I can supply more if desired.
+
