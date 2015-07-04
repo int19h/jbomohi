@@ -105,3 +105,49 @@ are serious about this word, because I was totally confused by the
 definition as is. I *think* you are trying to say that this is a LAhE that 
 means "the Lojban grammar system referred to by this sumti". Is that right?
 
+
+## 2015-07-04T01:02:31Z — krtisfranks (comment 2185, in reply to 2183)
+
+Re: Unclear definition
+
+durka42 wrote:
+> durka42 wrote:
+> > Sorry but I don't understand what this word is for at all. If {broda} 
+is 
+> > defined to mean, say, "x1 is the mathbb font used for writing x2", then
+
+> > that's what {lo broda} means. How does {la'e'au lo broda} differ?
+> 
+> Now that I posted this comment I see your explanation in another comment 
+> above... please include some of that explanation in the definition, if 
+you 
+> are serious about this word, because I was totally confused by the 
+> definition as is. I *think* you are trying to say that this is a LAhE 
+that 
+> means "the Lojban grammar system referred to by this sumti". Is that 
+right?
+
+
+At least subsystem, but yes. I suppose that it need not even be a grammar 
+system. For example, if the CLL happened to define "{bergu}" as being a 
+composition of a very specific set and arrangement of molecules, then 
+"{loi} {bergu}" could refer to anything that the speaker desired, but 
+"{la'e'au} {loi} {bergu}" would have no more semantic ambiguity than what 
+the grammar allows (the ambiguity would exist only within the descriptions 
+of "{loi}" and "{bergu}" presented officially by the CLL). I envision a new
+chapter in the official book of Lojban grammar that takes special 
+names/tokens and describes exactly what they mean (to any desired level of 
+precision). It might be helpful to really specify what "{tarmi}" or what 
+certain Lojban jargon means, for example. Well, if it is included in that 
+chapter of the official grammar, then usage of the special name/tag/token 
+with this word attached to it(s beginning) will definitely refer to only 
+the thing described and defined in that grammar. Any other usages are free 
+to be interpreted as one wills, but this word indicates a very specific 
+restriction in the scope/extent/realm/set of semantic referents. When 
+coupled with other words which indicate the syntax of a sentence (such as 
+order of operation specifiers in mekso, or grammar specifiers (is this 
+utterance in xorlo or it is a different system?) in normal conversation), 
+the rules that would be associated with the special name/tag/token 
+mentioned would be utterly clear- there would be (nearly) no room for 
+interpretation or question.
+
