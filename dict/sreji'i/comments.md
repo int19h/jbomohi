@@ -65,3 +65,12 @@ Re: tanru flipping
 
 oise'i mi ja'a zbusufukai lo ka na certu lo jvojva
 
+
+## 2015-07-04T00:35:12Z — spheniscine (comment 2184, in reply to 2177)
+
+Re: tanru flipping
+
+This is a good point but I don't know exactly how useful that concept is. 
+Maybe it's at least enough to downvote myself and unlink this word at 
+least, encouraging use of the {ji'isre} variant.
+
