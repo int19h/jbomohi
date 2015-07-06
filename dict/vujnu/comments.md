@@ -50,3 +50,20 @@ krtisfranks wrote:
 I personally favor "-vu'u" because it means that there will be one less 
 cmavo to memorize.
 
+
+## 2015-07-06T20:28:25Z — durka42 (comment 2191, on definition 66912, in reply to 2189)
+
+Re: Rafsi?
+
+ 
+> I personally favor "-vu'u" because it means that there will be one less 
+> cmavo to memorize.
+
+I agree with this reasoning, but CVV cmavo space is more limited than CVC. 
+{vujnu} is two syllables, so is -vu'u, so {brodyvujnu} => {brodyvu'u} is 
+shorter in text but not in speech, while {vujnybroda} => 
+{vunbroda}/{vujbroda}.
+
+On the other hand, maybe we should wait to see what lujvo arise using this 
+word before we decide whether it needs initial, final, or rafsi at all.
+
