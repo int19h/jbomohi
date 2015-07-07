@@ -4,3 +4,11 @@ opposite
 
 See also {dubji'isre}.
 
+
+## 2015-07-07T20:56:42Z — spheniscine (comment 2195, on definition 66916, in reply to 2194)
+
+Re: opposite
+
+Hmm... do you think that {dubji'i} should be the opposite? And perhaps 
+{ficyji'i} as a synonym...
+
