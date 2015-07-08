@@ -33,3 +33,30 @@ zo dunda .iseni'ibo po'o zo farda ku je zo fardu cu xamgu mi lo valsi citri
 
 ni'o ku'i mi je'a gafygau zo fardu va'o lonu la gleki cu djica
 
+
+## 2015-07-08T16:22:12Z — gleki (comment 2202, in reply to 2200)
+
+Re: gimkamsmikezypro
+
+krtisfranks wrote:
+> gleki wrote:
+> > durka42 wrote:
+> > > {gimkamsmikezypro} zo {pardu} noi ji'a cipygi'u
+> > 
+> > 
+> > e'u zo fardi a zo farde a lo simsa
+> 
+> .i .ua .uinai .i .e'o ko gafygau zo pardu zo parde .i zo {fardu} se krasi
+
+> zo dunda .iseni'ibo po'o zo farda ku je zo fardu cu xamgu mi lo valsi 
+citri
+> .iku'i zo farda gimkamsmikezypro zo {barda}
+> 
+> ni'o ku'i mi je'a gafygau zo fardu va'o lonu la gleki cu djica
+
+xm i zo pardu se krasi zoi ly.Pardus.ly. noi latmo valsi gi'e se pagbu 
+zo'oi u i mi nelci lo valsi poi jai frili fai lo ka jai se morji su'o da i 
+se ki'u bo mi ge'enmo i li'a genai zo pardu ginai zo fardu pu'i rau roi se 
+pilno i lo krinu cu se jimpe i du ri fa lo nu le cecmu so'u roi casnu lo 
+bramlatu gi'e no li'a roi casnu lo si'o farnadu noi pu'i ze'i sidbo
+
