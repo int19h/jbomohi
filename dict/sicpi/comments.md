@@ -38,3 +38,9 @@ arj wrote:
 
 .ei zo lunsa basti
 
+
+## 2015-07-09T09:09:49Z — gleki (comment 2207, on definition 15066)
+
+ma krasi le valsi
+
+
