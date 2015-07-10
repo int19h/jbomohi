@@ -63,3 +63,10 @@ information and zi'evla can be formed as above ({bitnlre} (resp.
 {baitnlre})), or it can have a new terbri for specifying the base (which I 
 suggest in any case).
 
+
+## 2015-07-10T15:04:18Z — spheniscine (comment 2224, on definition 66992, in reply to 2223)
+
+Re: What type of unit of information?
+
+OK terbri added.
+
