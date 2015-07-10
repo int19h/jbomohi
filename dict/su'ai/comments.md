@@ -631,3 +631,10 @@ Dispreferred
 Gleki told me that he no longer prefers this word; use {zu'ai} instead.
 I am going to propose an alternative and unrelated meaning.
 
+
+## 2015-07-10T11:08:13Z — spheniscine (comment 2212, on definition 66822)
+
+significant zeros
+
+How to distinguish between significant zeros and non-significant zeros?
+
