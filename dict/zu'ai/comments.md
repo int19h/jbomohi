@@ -90,3 +90,11 @@ zo'u
 
 sa'u vimcu zo re .i do cinba ro nei .i do cinba zu'ai
 
+
+## 2015-07-10T11:37:18Z — gleki (comment 2213)
+
+su'ai changed to su'a'ai
+
+since Curtis took for {su'ai} for something else im moving this meaning to 
+{su'a'ai} so this meaning can be discussed separately.
+
