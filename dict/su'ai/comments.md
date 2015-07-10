@@ -638,3 +638,14 @@ significant zeros
 
 How to distinguish between significant zeros and non-significant zeros?
 
+
+## 2015-07-10T11:41:05Z — spheniscine (comment 2214, on definition 66822, in reply to 2212)
+
+Re: significant zeros
+
+Hmm... I suggest: default is trailing zeros before the decimal point aren't
+significant, unless marked with {su'ai} *within* the number. Thus:
+
+{su'ai renonono} has one sigfig
+{su'ai renosu'ainono} has two sigfigs (first {su'ai} possibly elidable?)
+
