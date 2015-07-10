@@ -649,3 +649,24 @@ significant, unless marked with {su'ai} *within* the number. Thus:
 {su'ai renonono} has one sigfig
 {su'ai renosu'ainono} has two sigfigs (first {su'ai} possibly elidable?)
 
+
+## 2015-07-10T14:34:33Z — krtisfranks (comment 2217, on definition 66822, in reply to 2214)
+
+Re: significant zeros
+
+spheniscine wrote:
+> Hmm... I suggest: default is trailing zeros before the decimal point 
+aren't
+> significant, unless marked with {su'ai} *within* the number. Thus:
+> 
+> {su'ai renonono} has one sigfig
+> {su'ai renosu'ainono} has two sigfigs (first {su'ai} possibly elidable?)
+
+
+I was going to leave it up to context/mekso rules. This word is sort of 
+general purpose/non-committed to a specific interpretation; it just has a 
+general meaning and the context/rules of interpretation specify how that 
+meaning is applied.
+
+Your suggestion can be fine.
+
