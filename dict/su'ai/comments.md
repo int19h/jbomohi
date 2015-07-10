@@ -670,3 +670,23 @@ meaning is applied.
 
 Your suggestion can be fine.
 
+
+## 2015-07-10T14:43:51Z — krtisfranks (comment 2218, on definition 66822, in reply to 2214)
+
+Re: significant zeros
+
+spheniscine wrote:
+> Hmm... I suggest: default is trailing zeros before the decimal point 
+aren't
+> significant, unless marked with {su'ai} *within* the number. Thus:
+> 
+> {su'ai renonono} has one sigfig
+> {su'ai renosu'ainono} has two sigfigs (first {su'ai} possibly elidable?)
+
+
+I think that your suggestion is a good one though, for a rule of 
+interpretation.
+I think that the first {su'ai} probably is elidable in the second example. 
+I am not sure in which context there would be mixed precision- either a 
+number is the result of experimentation or it is not.
+
