@@ -70,3 +70,14 @@ Re: What type of unit of information?
 
 OK terbri added.
 
+
+## 2015-07-11T05:56:54Z — gleki (comment 2228, on definition 66992, in reply to 2224)
+
+Re: What type of unit of information?
+
+spheniscine wrote:
+> OK terbri added.
+
+
+Not to baitni yet. Strange that we have bi- prefix for nats.
+
