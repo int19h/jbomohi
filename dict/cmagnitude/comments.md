@@ -118,3 +118,17 @@ krtisfranks wrote:
 
 {rikteritre} if -tre is obligatory.
 
+
+## 2015-07-11T07:50:53Z — gleki (comment 2235, in reply to 2232)
+
+Re: carmi?
+
+krtisfranks wrote:
+> The etymological mnemonic is not really integral to the definition (in 
+the same way that it would be for a lujvo), it is just a potentially 
+helpful way to remember. 
+
+The problem is exactly with the lack of mnemonic since one cannot easily 
+understand which meaning of "magnitude" is used here. Is c- for cmaci? 
+carmi? cnano (norm, vector magnitude)?
+
