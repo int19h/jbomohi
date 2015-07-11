@@ -147,3 +147,22 @@ gleki wrote:
 The "tre" is from the name, not a rafsi, if that is what you are thinking. 
 It is obligatory only in the sense of preserving the etymology/word.
 
+
+## 2015-07-11T19:24:00Z — gleki (comment 2240, in reply to 2239)
+
+Re: carmi?
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > the Richter scale probably does deserve its own word like "ri'iktre"
+> > 
+> > {rikteritre} if -tre is obligatory.
+> 
+> 
+> The "tre" is from the name, not a rafsi, if that is what you are 
+thinking. 
+> It is obligatory only in the sense of preserving the etymology/word.
+
+then just {rikteri} with even better mnemonic.
+
