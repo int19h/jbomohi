@@ -132,3 +132,18 @@ The problem is exactly with the lack of mnemonic since one cannot easily
 understand which meaning of "magnitude" is used here. Is c- for cmaci? 
 carmi? cnano (norm, vector magnitude)?
 
+
+## 2015-07-11T18:40:04Z — krtisfranks (comment 2239, in reply to 2234)
+
+Re: carmi?
+
+gleki wrote:
+> krtisfranks wrote:
+> > the Richter scale probably does deserve its own word like "ri'iktre"
+> 
+> {rikteritre} if -tre is obligatory.
+
+
+The "tre" is from the name, not a rafsi, if that is what you are thinking. 
+It is obligatory only in the sense of preserving the etymology/word.
+
