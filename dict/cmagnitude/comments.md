@@ -108,3 +108,13 @@ does deserve its own word like "ri'iktre", and then we can give brightness
 to something like this word. None of them has any apparent connection with 
 any other.
 
+
+## 2015-07-11T07:45:32Z — gleki (comment 2234, in reply to 2232)
+
+Re: carmi?
+
+krtisfranks wrote:
+> the Richter scale probably does deserve its own word like "ri'iktre"
+
+{rikteritre} if -tre is obligatory.
+
