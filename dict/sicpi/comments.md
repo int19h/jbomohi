@@ -52,3 +52,15 @@ Re: ma krasi le valsi
 mi na djuno .i la'acu'i zoi .xy. ????? .xy. e zoi .ty. pioggia .ty. i na 
 ciksi zoi zoi. s .zoi .i zo sicpi cu selvi'u gismu
 
+
+## 2015-07-12T16:02:31Z — gleki (comment 2259, on definition 15066, in reply to 2258)
+
+Re: ma krasi le valsi
+
+phma wrote:
+> mi na djuno .i la'acu'i zoi .xy. ????? .xy. e zoi .ty. pioggia .ty. i na 
+> ciksi zoi zoi. s .zoi .i zo sicpi cu selvi'u gismu
+
+
+uanai i xu na'e bo do finti
+
