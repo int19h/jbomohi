@@ -166,3 +166,49 @@ thinking.
 
 then just {rikteri} with even better mnemonic.
 
+
+## 2015-07-12T06:16:35Z — krtisfranks (comment 2247, in reply to 2227)
+
+OT: Order of magnitude <- Re: carmi?
+
+gleki wrote:
+> carmi isn't necessarily about brightness. When you work hard it's also 
+> {carmi}. {carmi} is too vague.
+> 
+> I guess most important meanings of "magnitude" are:
+> 1. size/degree (cisni? gradu?), grandeco
+> 2. vector magnitude (do we have a prefix for vector? or just for math?)
+> 3. brightness
+> 4. Richter scale magnitude, ni nejni?
+> 5. order of magnitude, grandoordo
+> 
+> I think all of them can be nailed down to {gradu} which of course isn't a
+
+> solution.
+> 
+> Maybe, {magni-} should become a new pseudo-prefix, e.g.
+> 1. gradu
+> 2. magninorma
+> 3. magnigusni
+> 4. magninejni
+> 5. magnitenfo
+> 
+> Sorry, those roots aren't my final proposals, just a thought.
+
+This is a little off-topic, but what do you think about this definition for
+the word for "order of magnitude":
+
+Definition: $x_1$ (pure number) has order of magnitude $x_2$ for base $x_3$
+(contextless default: 2, e, or ten) on scale/in system $x_4$ (si'o; 
+contextless default: logarithmic scale, of base $x_3$ with half of an order
+of magnitude representing $(x_3)^(1/2)$).
+
+Notes: If x1 is for a measured value with dimension, express it by the 
+(typically) second terbri of the unit and fill the first terbri thereof 
+using {be}; for example, x1 can be "le se mitre be lo nilcla be zo'e"; a 
+measured thing (such as the referent of "le mitre") cannot have order of 
+magnitude, but its measurement (le se mitre) can. Specify use of sigfigs 
+for x2 if necessary; typically, only an integer will be supplied (and it is
+very commonly meant to be interpreted using sigfigs), but any real number 
+may be supplied to x2.
+
