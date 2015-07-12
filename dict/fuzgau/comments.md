@@ -28,3 +28,10 @@ to mabla/zabna; using -kem- is even longer.
 
 Maybe {jinvi} is better?
 
+
+## 2015-07-12T22:57:39Z — spheniscine (comment 2262, on definition 67022, in reply to 2261)
+
+Re: Surprising definition
+
+Or perhaps {pajni}
+
