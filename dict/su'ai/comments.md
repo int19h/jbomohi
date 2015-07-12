@@ -716,3 +716,14 @@ of
 
 Oops: I posted in the wrong definition.
 
+
+## 2015-07-12T07:24:35Z — krtisfranks (comment 2253)
+
+Interaction with {pi'e}. (take #2)
+
+Say that one wants to approximate the time 3:06 as 3:00, where the colon 
+(":") is represented by {pi'e}. How would it work?
+Should {pi'e} work essentially as {pi} does? Or should the domain/scope of 
+application of the approximation be restricted only to within the 
+macrodigit (number between "{pi'e}"'s) in which it appears?
+
