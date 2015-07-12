@@ -44,3 +44,11 @@ arj wrote:
 ma krasi le valsi
 
 
+
+## 2015-07-12T15:13:17Z — phma (comment 2258, on definition 15066, in reply to 2207)
+
+Re: ma krasi le valsi
+
+mi na djuno .i la'acu'i zoi .xy. ????? .xy. e zoi .ty. pioggia .ty. i na 
+ciksi zoi zoi. s .zoi .i zo sicpi cu selvi'u gismu
+
