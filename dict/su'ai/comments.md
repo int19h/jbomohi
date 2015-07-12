@@ -690,3 +690,14 @@ I think that the first {su'ai} probably is elidable in the second example.
 I am not sure in which context there would be mixed precision- either a 
 number is the result of experimentation or it is not.
 
+
+## 2015-07-12T07:21:07Z — krtisfranks (comment 2251)
+
+Interaction with {pi'e}
+
+Say that one wants to approximate the time 3:06 as 3:00, where the colon 
+(":") is represented by {pi'e}. How would it work?
+Should {pi'e} work essentially as {pi} does? Or should the domain/scope of 
+application of the approximation be restricted only to within the 
+macrodigit (number between "{pi'e}"'s) in which it appears?
+
