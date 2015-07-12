@@ -254,3 +254,67 @@ in
 
 lu  li'u mu'a
 
+
+## 2015-07-12T05:35:47Z — spheniscine (comment 2246, on definition 66992, in reply to 2245)
+
+Re: What type of unit of information?
+
+spheniscine wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > krtisfranks wrote:
+> > > > gleki wrote:
+> > > > > spheniscine wrote:
+> > > > > > OK terbri added.
+> > > > > 
+> > > > > 
+> > > > > Not to baitni yet. Strange that we have bi- prefix for nats.
+> > > > 
+> > > > Well, Lojban can just ignore it. "rel" would be the way to go for a
+
+> > fully
+> > > 
+> > > > Lojbanic rendering; there is no particular reason for a Lojban 
+> speaker 
+> > to
+> > > 
+> > > > associate this "bai"/"bi" with anything in particular. So, for 
+them, 
+> it
+> > 
+> > > is 
+> > > > just a relic of the borrowing, and the one word "bit"/"byte" stands
+
+> in 
+> > > for 
+> > > > all units of information.
+> > > > 
+> > > > The binary metric prefixes (IEC prefixes) would not apply to nats.
+> > > > 
+> > > > Now that I think about it, I am not sure that it is natural (or 
+even 
+> > > > common) to define a collection of nats in a way that is analogous 
+to 
+> > the 
+> > > > relationship between a byte and a bit. I seriously doubt that it is
+
+> > eight
+> > > 
+> > > > nats that comprise this unit.
+> > > 
+> > > 
+> > > Okay, what about trytes?
+> > 
+> > That is more problematic and should be addressed. I think that the 
+common
+> 
+> > grouping is six trits to the tryte (which still seems a bit weird to me
+
+> > from a mathematical perspective). We should be able to say that.
+> 
+> 
+> lu  li'u mu'a
+.y. oise'i
+
+.i je'au lu  li'u
+
