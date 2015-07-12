@@ -5,3 +5,16 @@ What is n?
 How can it be the $n$th root of anything when $n$ is not defined? Should it
 not be the $b$th root?
 
+
+## 2015-07-12T07:02:01Z — gleki (comment 2250, on definition 1527, in reply to 2244)
+
+Re: What is n?
+
+krtisfranks wrote:
+> How can it be the $n$th root of anything when $n$ is not defined? Should 
+it
+> not be the $b$th root?
+
+
+look at the second efinition by mbays. it's exactly that.
+
