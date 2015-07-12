@@ -195,3 +195,10 @@ information wrt computers. {bitnymei} can be used to define additional
 units if desired, and has terbri both for number of bits and logarithmic 
 base.
 
+
+## 2015-07-12T04:19:44Z — spheniscine (comment 2243, on definition 66992, in reply to 2241)
+
+Re: What type of unit of information?
+
+IOW, {baitni} is to {bitnymei} what {zmaile} is to {minli}.
+
