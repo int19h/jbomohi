@@ -11,3 +11,11 @@ Re: malgli
 
 xy'y mi zmanei zo .datpren.
 
+
+## 2015-07-12T23:46:15Z — spheniscine (comment 2264, in reply to 2263)
+
+Re: malgli
+
+ka'eku lu  li'u ji'a .iku'i oike'u lo brivla cmene nu'oka'e se 
+jmina fi la jbovlaste
+
