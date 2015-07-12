@@ -19,3 +19,10 @@ Re: malgli
 ka'eku lu  li'u ji'a .iku'i oike'u lo brivla cmene nu'oka'e se 
 jmina fi la jbovlaste
 
+
+## 2015-07-12T23:58:19Z — spheniscine (comment 2265, in reply to 2264)
+
+Re: malgli
+
+ei la dzapre cu crugau lo nu jmina lo brivlacme la jbovlaste
+
