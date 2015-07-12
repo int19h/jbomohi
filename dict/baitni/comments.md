@@ -184,3 +184,14 @@ That is more problematic and should be addressed. I think that the common
 grouping is six trits to the tryte (which still seems a bit weird to me 
 from a mathematical perspective). We should be able to say that.
 
+
+## 2015-07-12T00:56:50Z — spheniscine (comment 2241, on definition 66992, in reply to 2228)
+
+Re: What type of unit of information?
+
+I did not add it to {baitni} because {baitni} is a zi'evla defined very 
+specifically as 8 bits, to reflect the common use of "byte" as a unit of 
+information wrt computers. {bitnymei} can be used to define additional 
+units if desired, and has terbri both for number of bits and logarithmic 
+base.
+
