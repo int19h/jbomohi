@@ -37,3 +37,17 @@ spheniscine wrote:
 
 ie zo dzapre zmadu
 
+
+## 2015-07-13T21:12:35Z — selpahi (comment 2273, in reply to 2267)
+
+Re: malgli
+
+gleki wrote:
+> spheniscine wrote:
+> > ei la dzapre cu crugau lo nu jmina lo brivlacme la jbovlaste
+> 
+> 
+> ie zo dzapre zmadu
+
+xu no lo re do cu pilno lu la su'o da li'u .i mi ta'e go'i
+
