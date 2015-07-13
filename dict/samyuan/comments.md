@@ -26,3 +26,14 @@ Re: malgli
 
 ei la dzapre cu crugau lo nu jmina lo brivlacme la jbovlaste
 
+
+## 2015-07-13T05:59:40Z — gleki (comment 2267, in reply to 2265)
+
+Re: malgli
+
+spheniscine wrote:
+> ei la dzapre cu crugau lo nu jmina lo brivlacme la jbovlaste
+
+
+ie zo dzapre zmadu
+
