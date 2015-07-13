@@ -58,3 +58,15 @@ Re: malgli
 
 xu gendra
 
+
+## 2015-07-13T22:44:35Z — selpahi (comment 2275, in reply to 2274)
+
+Re: malgli
+
+spheniscine wrote:
+> xu gendra
+
+go'i .i lu lo pa ko'a li'u gendra su'a 
+
+https://lojban.github.io/cll/6/9/
+
