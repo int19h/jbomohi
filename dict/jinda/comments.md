@@ -166,3 +166,14 @@ as described before.
 
 I think that that works.
 
+
+## 2015-07-13T22:50:06Z — spheniscine (comment 2276, on definition 67042, in reply to 2272)
+
+Re: Generalizing and Etymology
+
+It all comes back to that {canlu} problem doesn't it? We need to first find
+a way to deal with dimensionality, then we can deal with distinguishing 
+shapes by dimensionality.
+
+Perhaps lujvo can be built out of this for star polytopes.
+
