@@ -51,3 +51,10 @@ gleki wrote:
 
 xu no lo re do cu pilno lu la su'o da li'u .i mi ta'e go'i
 
+
+## 2015-07-13T22:36:36Z — spheniscine (comment 2274, in reply to 2273)
+
+Re: malgli
+
+xu gendra
+
