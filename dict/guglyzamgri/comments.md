@@ -8,3 +8,27 @@ there needs to be a way to distinguish one Google Group from another.
 {snustu} might be more semantically correct, but loses the association with
 the name.
 
+
+## 2015-07-14T07:41:29Z — Wuzzy (comment 2283, on definition 67061, in reply to 2278)
+
+Re: I know I know
+
+spheniscine wrote:
+> This is an ugly lujvo, using two experimental rafsi and there might even 
+be
+> a third hidden one, perhaps it should "really" be {guglynomyzamgri}. But 
+> there needs to be a way to distinguish one Google Group from another. 
+> {snustu} might be more semantically correct, but loses the association 
+with
+> the name.
+
+
+{girngugle}
+
+- or -
+
+{gugyl zei snustu}
+
+
+PS: {pe'a} has rafsi "pev", it could also be
+
