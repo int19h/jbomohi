@@ -727,3 +727,11 @@ Should {pi'e} work essentially as {pi} does? Or should the domain/scope of
 application of the approximation be restricted only to within the 
 macrodigit (number between "{pi'e}"'s) in which it appears?
 
+
+## 2015-07-14T01:08:30Z — spheniscine (comment 2280, in reply to 2253)
+
+Re: Interaction with {pi'e}. (take #2)
+
+I dunno how sigfigs are handled with the mixed bases of common timestamps 
+:p
+
