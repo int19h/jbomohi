@@ -32,3 +32,18 @@ with
 
 PS: {pe'a} has rafsi "pev", it could also be
 
+
+## 2015-07-14T09:27:15Z — spheniscine (comment 2285, on definition 67061, in reply to 2283)
+
+Re: I know I know
+
+Part of the problem is that I've already "defined" {la guglygri} (cf 
+http://mw.lojban.org/papri/brivycme ) to refer to Google Groups, so the 
+related word should retain some sort of similarity.
+
+And yeah I know about -pev-. I kinda like -zam- for specificity though. My 
+thinking is that all lujvo that *begins* with -zam- can be free assignments
+for jargon words, either using {cei} or via contextual explanation, while 
+lujvo that *contains* -zam- indicate usage of that jargon word in the 
+mainstream.
+
