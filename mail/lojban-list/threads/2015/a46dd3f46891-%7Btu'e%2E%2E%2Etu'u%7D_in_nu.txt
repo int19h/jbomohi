@@ -1,4 +1,4 @@
-# mail/lojban-list thread a46dd3f46891-%7Btu'e%2E%2E%2Etu'u%7D_in_nu | root a9475bfd-ac16-40ce-bb60-7b2a057a681d@googlegroups.com | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread a46dd3f46891-%7Btu'e%2E%2E%2Etu'u%7D_in_nu | root a9475bfd-ac16-40ce-bb60-7b2a057a681d@googlegroups.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-07-15T04:26:50Z | "Spheniscine (la zipcpi)" <spheniscine@gmail.com> | a9475bfd-ac16-40ce-bb60-7b2a057a681d@googlegroups.com | mail/lojban-list/cur/1436934410.a46dd3f468919270.jbomohi:2,S
 One problem that crops up now and then concerns how to include more than 
@@ -72,6 +72,153 @@ Related to the "bonus problem" is goi'e
 <http://jbovlaste.lojban.org/dict/goi'e>; it really "wants" to be a 
 sumtcita, as COI is awkward and undesirably also accepts selbri, but then 
 it won't work with {tu'e...tu'u}.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 4 | 2015-07-15T07:29:14Z | guskant <gusni.kantu@gmail.com> | d73e2a72-cb9e-495d-9dc5-3e22878a41c2@googlegroups.com | mail/lojban-list/cur/1436945354.7ab0fcd98afcbac9.jbomohi:2,S
+
+
+Le mercredi 15 juillet 2015 04:26:50 UTC, Spheniscine (la zipcpi) a écrit :
+>
+> One problem that crops up now and then concerns how to include more than 
+> one bridi within a NU clause. An example is my translation of Deuteronomy 
+> 8:12~14, which I have rendered:
+>
+> .i tezu'ebo rivbi va'o lo nu do mo'u citka jebo cu tolxagji je cu zbasu lo 
+>> zabna zdani je cu xabju ri
+>> ju'ei loi cagda'u be do ferti se panzi ju'ei loi rijno joi loi solji vu'o 
+>> po do zei'a sormei ju'ei loi ro se ponse be do zei'asai sormei kei
+>> lo nu lo menli be do co'a se'ijgi ju'ei do tolmo'i tu'a la .iauex. ku noi 
+>> cevni do je noi vimcu do la .misr. ku no'u le tutra pe lo ka bapse'u
+>
+>
+> (note, uses simplified connectives, the experimental tag {zei'a} which is 
+> basically {fi'o te zenba}: {zei'a sormei} means "increasingly many" / "to 
+> increase in number", and {ju'ei}, which shall be discussed. Yes, I'm pretty 
+> terrible with abusing experimental constructs.)
+>
+> There are several solutions:
+> official-Lojban solution #1: use {ju'e ... gi ...}. Requires forethought, 
+> and only takes two bridi. Chaining them to allow more is impractical.
+>
+> official-Lojban solution #2: close each NU clause then join it to a new 
+> abstractor sumti. e.g. {lo nu broda kei jo'u lo nu brode}. Pretty wordy.
+>
+>
+
+If you need a structure similar to your translation above, official-Lojban 
+solution #2 must be rather {lo nu broda kei ju'e nu brode}.
+
+ 
+
+> experimental-grammar solution #1: {ju'ei}; essentially acts like a 
+> tight-scope {.i} that doesn't close sub-clauses. {lo nu broda ju'ei brode}. 
+> Has the advantage of not requiring forethought, but has the disadvantage of 
+> not automatically closing any bridi tails; if one of your abstraction-bridi 
+> happens to contain a lot of nested NU or POI, they must be closed manually.
+>
+> experimental-grammar solution #2: Allow {tu'e...tu'u} to act as a single 
+> bridi in NU clauses: {lo nu tu'e broda .i brode tu'u}. Does require 
+> forethought, but gives a new "level zero" for {.i} to automatically reset 
+> to until closed by {tu'u}.
+>
+>
+
+La zantufa-0.2 ( http://guskant.github.io/gerna_cipra/zantufa-0.2.html ) 
+allows a full statement in noi-clause or nu-clause. It means the following 
+texts are parsed by la zantufa-0.2 as follows:
+
+1. sentences connected with {i JOI} or {i (tag) bo}:
+
+{nu broda i ju'e brode}
+(CU [nu {<CU (¹broda VAU¹)> <i ju'e (¹CU [brode VAU]¹)>} KEI] VAU) 
+{nu broda i bo brode}
+(CU [nu {<CU (¹broda VAU¹)> <i bo (¹CU [brode VAU]¹)>} KEI] VAU) 
+{nu broda i ba bo brode}
+(CU [nu {<CU (¹broda VAU¹)> <i ba bo (¹CU [brode VAU]¹)>} KEI] VAU) 
+
+Use KEI or KUhO to cut the statement:
+
+{nu broda kei i ju'e brode}
+([CU {nu <CU (¹broda VAU¹)> kei} VAU] [i ju'e {CU <brode VAU>}]) 
+{brodi ra noi broda ku'o i ju'e brode}
+([CU {brodi <ra (¹noi [CU {broda VAU}] ku'o¹)> VAU}] [i ju'e {CU <brode 
+VAU>}]) 
+
+({brodi da} is required here because this {ju'e} connects two sentences, 
+not a fragment and a sentence. It might be allowed in the future version of 
+zantufa, though not yet decided.)
+
+
+2. sentences between {tu'e ... tu'u}:
+
+{nu tu'e broda i brode tu'u}
+(CU [nu {tu'e <(¹CU [broda VAU]¹) (¹i [CU {brode VAU}]¹)> tu'u} KEI] VAU) 
+
+
+3. sentences connected with forethought connective:
+
+{nu ju'e gi broda gi brode gi brodi gi brodo gi brodu}
+(CU [nu {CU <(¹ju'e gi¹) broda (¹[gi brode] [gi brodi] [gi brodo] [gi 
+brodu]¹) GIhI> VAU} KEI] VAU) 
+
+(Forethought connectives of la zantufa-0.2 can connect more than three 
+"statements (not only sentences)", and {gi'i} is used as the elidible 
+terminator GIhI, not as GIhA. See 
+http://mw.lojban.org/papri/zantufa_jonma%27o#lo_li.27erla.27i_jonma.27o
+for more info.)
+
+As 1 is allowed, your solution #1 is unnecessary, and ma'oi JUhEI in that 
+usage will never implemented to la zantufa. 
+
+ 
+
+> And bonus official-Lojban solution #3, with an experimental shorthand that 
+> doesn't require new grammar: {tu'a la'e lu broda .i brode li'u}, with 
+> {tu'ai} (selma'o LU) being shorthand for {tu'a la'e lu}. Useful, but may be 
+> semantically vague, given lack of LO NU qualification, and {tu'a} possibly 
+> implying missing information.
+>
+> Bonus problem: A related problem is how to make several sentences share a 
+> sumtcita-term. e.g: *{ca lo nu mi stuvi'e le sralygu'e kei tu'e lo zabna cu 
+> fasnu .i lo mabla cu fasnu tu'u}. {ju'e...gi} also works here, but retains 
+> the chaining problem, while I don't know if any of the other listed 
+> solutions work.
+>
+
+
+
+Use {zo'u}:
+
+{ca lo nu mi stuvi'e le sralygu'e zo'u tu'e lo zabna cu fasnu .i lo mabla 
+cu fasnu tu'u}
+
+It is parsed even by the official parser:
+
+([{ca <lo (¹nu [mi {CU <stuvi'e (²le sralygu'e KU²) VAU>}] KEI¹) KU>} zo'u] 
+[tu'e {<(¹lo zabna KU¹) (¹cu [fasnu VAU]¹)> <i (¹lo mabla KU¹) (¹cu [fasnu 
+VAU]¹)>} tu'u]) 
+
+zo'u-clause spans over a statement, that is to say, sentences connected 
+with {i JA/JOI}, {i (tag) bo}, {JOI/tag gi ... gi ...} or {GA ... gi ...}. 
+These connectives can be used instead of {tu'e ... tu'u} in many cases. For 
+example,
+
+{ca lo nu mi stuvi'e le sralygu'e zo'u lo zabna cu fasnu .ibo lo mabla cu 
+fasnu}
+
+is parsed by the official parser as follows:
+
+([{ca <lo (¹nu [{mi CU} {stuvi'e <le sralygu'e KU> VAU}] KEI¹) KU>} zo'u] 
+[{<lo zabna KU> cu} {fasnu VAU}] [i bo {lo mabla KU} cu] [fasnu VAU]) 
+
+ 
 
 -- 
 You received this message because you are subscribed to the Google Groups "lojban" group.
