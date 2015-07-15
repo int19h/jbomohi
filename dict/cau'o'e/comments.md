@@ -48,3 +48,24 @@ that's maljbo.
 
 If this set is deemed useful, perhaps this can be reassigned to {cau'e}.
 
+
+## 2015-07-15T17:33:23Z — krtisfranks (comment 2300, in reply to 2298)
+
+Re: Take a look
+
+spheniscine wrote:
+> Take a look at {cau'i} and {cau'a}. 
+> 
+> {ju'ocu'i} is used a lot in contexts where we'd just end a statement in a
+
+> question mark in English; however it's a bit long, and often doesn't 
+quite 
+> fit. I've even sometimes resorted to simply using a question mark, but 
+> that's maljbo.
+> 
+> If this set is deemed useful, perhaps this can be reassigned to {cau'e}.
+
+I like both your new words and your suggestion to reassign this word's 
+current meaning to {cau'e} because it keeps the series going and it fits in
+nicely with NAhE.
+
