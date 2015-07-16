@@ -21,3 +21,11 @@ the ambiguity!
 It was previously rendered as {mi jo'u do jo'u ka'ebo lo drata be mi e do},
 but I'm not sure {ka'e} means what we want it to mean here.
 
+
+## 2015-07-16T02:19:12Z — spheniscine (comment 2305, in reply to 2304)
+
+Re: Example use-case
+
+Specifically, because {ka'e} means potential possibility, {cumki}; not "yes
+or no".
+
