@@ -139,3 +139,38 @@ One interesting result is that {mi broda do i'au i'au i'au i'au zo'o} is
 grammatical. {i'au} works even when there isn't actually any famyma'o for 
 it to add.
 
+
+## 2015-07-16T21:01:29Z — krtisfranks (comment 2314, on definition 66786, in reply to 2313)
+
+Re: Current (and hopefully final) understanding of the grammar of i'au
+
+spheniscine wrote:
+> {i'au} is not a true famyma'o at all. All it does, is two things:
+> 
+> 1. Automatically insert all famyma'o required to return to the top level 
+of
+> the sentence. In other words, everything {.i} will add except the last 
+> {vau}. (It's not meant to be more powerful than {.i}; in other words, it 
+> will not close lu...li'u, to...toi, tu'e...tu'u, or fu'e...fu'o, and 
+> perhaps others I'm not aware of)
+> 
+> 2. Any attitudinal-groups (UI/NAI/CAI) that attach to it scope over the 
+> entire sentence. Thus, it does behave much like that last {vau} with 
+> respect to them, even though it doesn't actually add it.
+> 
+> One interesting result is that {mi broda do i'au i'au i'au i'au zo'o} is 
+> grammatical. {i'au} works even when there isn't actually any famyma'o for
+
+> it to add.
+
+I agree with (1) and the later observation but I kind of disagree with how 
+(2) should work. If .{i'au} really just takes the bridi level back to that 
+of the original bridi, then it just closes all of the most recent nesting. 
+Any UI immediately following it should apply to the last full structure in 
+the original bridi (at level 0), which is what would happen if all of the 
+necessary famyma'o had been inserted. The only way to apply the scope to 
+the whole bridi is via {vau} or putting UI immediately after .{i}.
+
+For example, "lo broda be lo brode be lo brodi .i'au .ui" has ".ui" apply 
+to all of the "lo broda" construct (rather than just lo brodi).
+
