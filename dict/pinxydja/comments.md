@@ -31,3 +31,17 @@ learn fewer rafsi? No, you just downvote. Now pinxydja won't appear on
 vlasisku, great. Beginners won't find it there after seeing it used 
 elsewhere. 
 
+
+## 2015-07-16T22:01:36Z — krtisfranks (comment 2315, in reply to 2311)
+
+Re: Not shortest form.
+
+selpahi wrote:
+> Wuzzy wrote:
+> > This word is not in the shortest form, see {pixydja}.
+> 
+> I know that. It was a conscious decision. 
+
+
+Out of curiosity, could you explain the motivation for this choice?
+
