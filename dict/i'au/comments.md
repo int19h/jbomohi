@@ -118,3 +118,24 @@ Re: Reconsidering sub-selma'o
 
 OK I've allocated {bau'o} to BAS, and defined {bau'onai} as EAS.
 
+
+## 2015-07-16T13:27:11Z — spheniscine (comment 2313, on definition 66786)
+
+Current (and hopefully final) understanding of the grammar of i'au
+
+{i'au} is not a true famyma'o at all. All it does, is two things:
+
+1. Automatically insert all famyma'o required to return to the top level of
+the sentence. In other words, everything {.i} will add except the last 
+{vau}. (It's not meant to be more powerful than {.i}; in other words, it 
+will not close lu...li'u, to...toi, tu'e...tu'u, or fu'e...fu'o, and 
+perhaps others I'm not aware of)
+
+2. Any attitudinal-groups (UI/NAI/CAI) that attach to it scope over the 
+entire sentence. Thus, it does behave much like that last {vau} with 
+respect to them, even though it doesn't actually add it.
+
+One interesting result is that {mi broda do i'au i'au i'au i'au zo'o} is 
+grammatical. {i'au} works even when there isn't actually any famyma'o for 
+it to add.
+
