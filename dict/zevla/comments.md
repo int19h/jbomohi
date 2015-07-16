@@ -7,3 +7,10 @@ when used to make some lujvo involving it, like *{zi'evlajvo} (-> {zi'e
 vlajvo}). This gismu thus completes the set {gismu}, {cmavo}, {lujvo}, 
 {zevlo}, {brivo}, {cmevo}.
 
+
+## 2015-07-16T10:28:59Z — spheniscine (comment 2310, on definition 67128, in reply to 2309)
+
+Re: Justification
+
+Oops, {zevla}, not {zevlo}
+
