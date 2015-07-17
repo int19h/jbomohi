@@ -174,3 +174,18 @@ the whole bridi is via {vau} or putting UI immediately after .{i}.
 For example, "lo broda be lo brode be lo brodi .i'au .ui" has ".ui" apply 
 to all of the "lo broda" construct (rather than just lo brodi).
 
+
+## 2015-07-17T05:57:11Z — spheniscine (comment 2316, on definition 66786, in reply to 2314)
+
+Re: Current (and hopefully final) understanding of the grammar of i'au
+
+Well, part of the problem with that is that the original purpose of {i'au} 
+was indeed meant to also represent that final {vau} (It could even have 
+been a true famyma'o, closing the "sentence" construct), for the purposes 
+of attaching an attitudinal to the entire sentence as an afterthought. That
+is still its most common usage, and I wish to preserve that meaning in the 
+use-case represented by {do sidju mi lo nu mi zenba lo ni ricfu i'au ui}.
+
+Perhaps though, it could just have the attitudinals scope over everything 
+*previous* to it in the sentence.
+
