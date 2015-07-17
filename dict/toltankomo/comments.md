@@ -28,3 +28,11 @@ solve the problem of something like saying
 
 {la .tom. cu tankomo lo ka (ce'u) sutra bajra kei lo ka (ce'u ce'u) kakne}
 
+
+## 2015-07-17T11:12:40Z — Wuzzy (comment 2324, on definition 67140, in reply to 2323)
+
+Re: I don't understand this. :-(
+
+Hmmm, I see. I am still not 100% sure. Maybe this definition is just poorly
+worded. A reprase and labelled sumti would be nice.
+
