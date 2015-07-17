@@ -16,3 +16,15 @@ Re: I don't understand this. :-(
 {me'au} turns a {ka}-abstraction sumti back into a predicate, with x-places
 defined by the {ce'u} variables.
 
+
+## 2015-07-17T10:44:14Z — spheniscine (comment 2323, on definition 67140, in reply to 2321)
+
+Re: I don't understand this. :-(
+
+Well, maybe some examples might help... these two words are invented to 
+solve the problem of something like saying
+
+"Tom runs as fast as he can"
+
+{la .tom. cu tankomo lo ka (ce'u) sutra bajra kei lo ka (ce'u ce'u) kakne}
+
