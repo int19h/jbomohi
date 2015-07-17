@@ -45,3 +45,16 @@ selpahi wrote:
 
 Out of curiosity, could you explain the motivation for this choice?
 
+
+## 2015-07-17T07:57:28Z — spheniscine (comment 2319, in reply to 2315)
+
+Re: Not shortest form.
+
+As selpa'i said below (not directed to you, but explains the motivation):
+
+"Did you ever consider that someone might prefer the
+sound or form of a non-lowest scoring lujvo? Are you aware of the fact that
+a lot of people have started to use longer forms in conjunction with 
+regular suffixes, because it requires both the speaker and the listener to 
+learn fewer rafsi?"
+
