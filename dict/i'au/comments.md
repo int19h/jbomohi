@@ -189,3 +189,11 @@ use-case represented by {do sidju mi lo nu mi zenba lo ni ricfu i'au ui}.
 Perhaps though, it could just have the attitudinals scope over everything 
 *previous* to it in the sentence.
 
+
+## 2015-07-17T06:20:27Z — spheniscine (comment 2317, on definition 66786, in reply to 2314)
+
+Re: Current (and hopefully final) understanding of the grammar of i'au
+
+Well, in other words, {i'au} is *not* {cu'au} {xi da'a}. It grammatically 
+acts *like* {cu'au xi da'a}, but treats attitudinal scope differently.
+
