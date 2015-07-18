@@ -20,3 +20,12 @@ describes words, {me'ei}-predicates, or si'o-concepts.
 {eutceu} = {me'au lo autca}. i.e. it has whatever place structure and 
 meaning that the speaker desires.
 
+
+## 2015-07-18T07:24:57Z — spheniscine (comment 2331, on definition 67154, in reply to 2329)
+
+Re: 
+
+Well, {me'au lo autca be mi}, to be precise.
+
+http://mw.lojban.org/papri/Eulojban
+
