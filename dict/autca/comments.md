@@ -29,3 +29,19 @@ Well, {me'au lo autca be mi}, to be precise.
 
 http://mw.lojban.org/papri/Eulojban
 
+
+## 2015-07-18T11:23:01Z — selpahi (comment 2332, on definition 67154, in reply to 2329)
+
+Re: 
+
+Wuzzy wrote:
+> This is a quite interesting concept.
+> 
+> Could "lo autce" be translated in (colloquial) English as (besides 
+others) 
+> "thingamajing", "what-you-may-call-it", "whatsit", "widget", "whatnot", 
+??
+
+
+See {comco'e}
+
