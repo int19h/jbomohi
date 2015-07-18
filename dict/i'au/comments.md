@@ -197,3 +197,49 @@ Re: Current (and hopefully final) understanding of the grammar of i'au
 Well, in other words, {i'au} is *not* {cu'au} {xi da'a}. It grammatically 
 acts *like* {cu'au xi da'a}, but treats attitudinal scope differently.
 
+
+## 2015-07-18T06:07:44Z — krtisfranks (comment 2328, on definition 66786, in reply to 2316)
+
+Re: Current (and hopefully final) understanding of the grammar of i'au
+
+spheniscine wrote:
+> Well, part of the problem with that is that the original purpose of 
+{i'au} 
+> was indeed meant to also represent that final {vau} (It could even have 
+> been a true famyma'o, closing the "sentence" construct), for the purposes
+
+> of attaching an attitudinal to the entire sentence as an afterthought. 
+That
+> is still its most common usage, and I wish to preserve that meaning in 
+the 
+> use-case represented by {do sidju mi lo nu mi zenba lo ni ricfu i'au ui}.
+> 
+> Perhaps though, it could just have the attitudinals scope over everything
+
+> *previous* to it in the sentence.
+
+
+Sure, it can function howsoever we (as a community) desire (with you, as 
+the creator wielding considerable power in the process, at least 
+initially). But, morally, I feel like (1) and (2) are in conflict, which is
+why I said "should" instead of "could".  I just do not see how, if I were 
+to have a whole bunch of nested bridi levels and if I then closed them all 
+and followed that closure with .{ui}, that that .{ui} would apply to 
+anything other than the last whole structure uttered- that is how UI 
+normally works- all that happened is that we jumped back to the a main 
+bridi level. But I guess that this word could also start a metalinguistic 
+comment for UI which says "hey, if any UI immediately follow this word, 
+apply them to the whole bridi; otherwise, get on with your life".
+
+
+Concerning your last point: The other day, while showering, I realized the 
+desirability of having a universal UI terminator that would wrap up the 
+scope of any open UI's. Basically, UI would apply to the last whole 
+construct mentioned as usual and, if that construct were still open, then 
+their scope would continue until the terminator, thus not applying to the 
+remainder of the construct (and the terminator would kill all UI, not just 
+the most recently mentioned one). I think that your idea is a specific case
+of this one, wherein the construct is the whole bridi itself (so the word 
+preceding the UI would be either .{i} or {vau}). I could not quite word 
+it/make it work technically, but I still think that it could be useful.
+
