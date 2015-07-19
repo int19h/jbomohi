@@ -266,3 +266,27 @@ Re: Current (and hopefully final) understanding of the grammar of i'au
 
 s/ should it work / should it work differently
 
+
+## 2015-07-19T14:34:28Z — spheniscine (comment 2339, on definition 66786, in reply to 2328)
+
+Re: Current (and hopefully final) understanding of the grammar of i'au
+
+This brings us to the problem of attaching a UI to a sumti (especially 
+important with {po'o} and {ji'a}, as the meaning of a sentence can change a
+lot depending on what they're attached to)
+
+"fa po'o lo broda cu brode" is commonly used to mean "lo broda ku po'o 
+brode", but may be somewhat problematic... the "correct" meaning is 
+probably "{fa}, and no other places". This meaning may be awkward ({fi'a} 
+is hardly used), but replace {fa} with a sumtcita and the problem becomes 
+clear: "ca po'o lo broda cu brode"... "only when broda did brode happen". 
+However, the {ku} version is often inconvenient, especially if the sumti 
+has several nestings.
+
+There is actually a solution we found. "ke po'o lo broda cu brode" fronts 
+the UI without needing to attach to the sumti place. This is an extension 
+of {ke} useful to do complex things with connectives like "ke ko'a ce ko'e 
+ke'e ce ko'i". Unfortunately, the camxes parser has a bug, and doesn't 
+parse it correctly. (The more-experimental zantufa and alta parsers do 
+parse them, however.)
+
