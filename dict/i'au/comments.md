@@ -243,3 +243,19 @@ of this one, wherein the construct is the whole bridi itself (so the word
 preceding the UI would be either .{i} or {vau}). I could not quite word 
 it/make it work technically, but I still think that it could be useful.
 
+
+## 2015-07-19T12:22:46Z — spheniscine (comment 2335, on definition 66786, in reply to 2328)
+
+Re: Current (and hopefully final) understanding of the grammar of i'au
+
+Actually I'm beginning to think you may have a point. Consider
+
+lo nu ko'a broda ko'e lo nu ko'i ko'o brode i'au po'o broda brode
+
+{po'o} would be more naturally interpreted to attach to that last 
+construct, so why should it work if that nested-NU occurs at the end?
+
+This does complicate things somewhat. Both these usages want something 
+short (hence my booking of the precious, and atypical, monosyllabic cmavo 
+{iau} for this), but cmavo space is an issue.
+
