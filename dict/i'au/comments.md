@@ -290,3 +290,23 @@ ke'e ce ko'i". Unfortunately, the camxes parser has a bug, and doesn't
 parse it correctly. (The more-experimental zantufa and alta parsers do 
 parse them, however.)
 
+
+## 2015-07-19T17:54:32Z — krtisfranks (comment 2340, on definition 66786, in reply to 2335)
+
+Re: Current (and hopefully final) understanding of the grammar of i'au
+
+spheniscine wrote:
+> Actually I'm beginning to think you may have a point. Consider
+> 
+> lo nu ko'a broda ko'e lo nu ko'i ko'o brode i'au po'o broda brode
+> 
+> {po'o} would be more naturally interpreter to attach to that last 
+> construct, so why should it work if that nested-NU occurs at the end?
+> 
+> This does complicate things somewhat. Both these usages want something 
+> short (hence my booking of the precious, and atypical, monosyllabic cmavo
+
+> {iau} for this)
+
+.{i'au} and .{iau} can be different but closely related.
+
