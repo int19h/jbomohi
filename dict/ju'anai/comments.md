@@ -32,3 +32,12 @@ bridi.
 "allegedly" is {iacu'i}, "supposedly" is {la'acu'i},{da'i} or even just 
 {ju'ocu'i} depending on what you mean, "without asserting" is {ca'enai}.
 
+
+## 2015-07-19T18:56:11Z — spheniscine (comment 2343, in reply to 2342)
+
+Re: Note
+
+I don't think {ca'e} is good here. You also suggested it for {kai'a}; but 
+{ca'e} is more like "it is true because I say so". It's related to 
+{jetrinsku}, and I also defined {ca'engau} based on that doctrine.
+
