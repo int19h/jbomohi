@@ -19,3 +19,12 @@ Obvious typo. Fixed.
 tolkufyselja'e too
 
 
+
+## 2015-07-19T14:10:45Z — spheniscine (comment 2338, on definition 57197)
+
+Don't really like this -gau lujvo definition
+
+The definition doesn't seem agentive (lo gasnu) enough to me; sounds more 
+like "se to'e kufra". Compare the natural definition of {kufygau} - "to 
+comfort someone"
+
