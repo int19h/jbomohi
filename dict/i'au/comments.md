@@ -259,3 +259,10 @@ This does complicate things somewhat. Both these usages want something
 short (hence my booking of the precious, and atypical, monosyllabic cmavo 
 {iau} for this), but cmavo space is an issue.
 
+
+## 2015-07-19T12:25:06Z — spheniscine (comment 2336, on definition 66786, in reply to 2328)
+
+Re: Current (and hopefully final) understanding of the grammar of i'au
+
+s/ should it work / should it work differently
+
