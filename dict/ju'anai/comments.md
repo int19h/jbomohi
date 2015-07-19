@@ -60,3 +60,13 @@ Re: Note
 Unfortunately I don't know Ithkuil, so you're going to have to explain that
 to me... or perhaps make another cmavo to reflect that meaning.
 
+
+## 2015-07-19T19:12:04Z — spheniscine (comment 2346, in reply to 2342)
+
+Re: Note
+
+I also do have a Lojban definition for {ju'acu'i}:
+
+sinxa lo du'u le cusku cu skicu gi'eku'i na xusra lo du'u le ve skicu cu 
+drani ja mapti
+
