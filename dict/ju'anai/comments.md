@@ -41,3 +41,14 @@ I don't think {ca'e} is good here. You also suggested it for {kai'a}; but
 {ca'e} is more like "it is true because I say so". It's related to 
 {jetrinsku}, and I also defined {ca'engau} based on that doctrine.
 
+
+## 2015-07-19T19:02:42Z — spheniscine (comment 2344, in reply to 2342)
+
+Re: Note
+
+{iacu'i} is quite close but not a complete replacement. Basically my 
+intention for {ju'acu'i} / {ju'anai} is reflected in the "scare quotes" in 
+"That "man" is really a woman" - essentially, this is an explicit marker 
+for "non-veridicality", in a post-xorlo world where {lo}/{le} no longer is 
+distinguished that way.
+
