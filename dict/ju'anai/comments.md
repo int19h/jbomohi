@@ -52,3 +52,11 @@ intention for {ju'acu'i} / {ju'anai} is reflected in the "scare quotes" in
 for "non-veridicality", in a post-xorlo world where {lo}/{le} no longer is 
 distinguished that way.
 
+
+## 2015-07-19T19:09:00Z — spheniscine (comment 2345, in reply to 2342)
+
+Re: Note
+
+Unfortunately I don't know Ithkuil, so you're going to have to explain that
+to me... or perhaps make another cmavo to reflect that meaning.
+
