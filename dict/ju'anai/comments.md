@@ -102,3 +102,10 @@ spheniscine wrote:
 {ju'a} is not about xusra-ing anything. It's about wrapping clauses into 
 sumti.
 
+
+## 2015-07-20T07:47:41Z — spheniscine (comment 2355, in reply to 2354)
+
+Re: Note
+
+That seems like a complete redefinition of {ju'a} to me...
+
