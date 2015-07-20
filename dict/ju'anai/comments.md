@@ -91,3 +91,14 @@ Re: Note
 
 So you want {ju'anai} for {mi na xusra} or {mi to'e xusra} ?
 
+
+## 2015-07-20T07:25:52Z — gleki (comment 2354, in reply to 2353)
+
+Re: Note
+
+spheniscine wrote:
+> So you want {ju'anai} for {mi na xusra} or {mi to'e xusra} ?
+
+{ju'a} is not about xusra-ing anything. It's about wrapping clauses into 
+sumti.
+
