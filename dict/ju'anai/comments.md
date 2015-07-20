@@ -84,3 +84,10 @@ that
 Just compare {mi xusra lo du'u do citka} and {mi xusra lo du'u go'o i do 
 citka} 
 
+
+## 2015-07-20T06:16:57Z — spheniscine (comment 2353, in reply to 2352)
+
+Re: Note
+
+So you want {ju'anai} for {mi na xusra} or {mi to'e xusra} ?
+
