@@ -39,3 +39,12 @@ used
 to use more elucidating concepts like va'o = fi'o tcini or fau = fi'o fanbu
 so that worlds under which voting happens can be specified.
 
+
+## 2015-07-20T14:44:04Z — spheniscine (comment 2361, on definition 67192, in reply to 2360)
+
+Re: Hm
+
+Hm... still not convinced. "Possible worlds" doesn't seem to fit this 
+concept... maybe "context/universe-of-discourse" does though... gah this is
+hard >.<
+
