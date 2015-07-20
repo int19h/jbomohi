@@ -25,3 +25,11 @@ with {bu}", but there is one problem. Currently "undefined cmavo+{bu}" is
 accepted by parsers, but it's possible that we might want to define new 
 "magic cmavo", like {ze'oi}.
 
+
+## 2015-07-20T04:19:37Z — spheniscine (comment 2350, on definition 66157, in reply to 2348)
+
+Re: xy~'y
+
+The other alternative is just go all the way and use {lo'u}...{le'u}, for 
+anything more complicated than the lerfu tcita detri system.
+
