@@ -70,3 +70,17 @@ I also do have a Lojban definition for {ju'acu'i}:
 sinxa lo du'u le cusku cu skicu gi'eku'i na xusra lo du'u le ve skicu cu 
 drani ja mapti
 
+
+## 2015-07-20T06:00:27Z — gleki (comment 2352, in reply to 2345)
+
+Re: Note
+
+spheniscine wrote:
+> Unfortunately I don't know Ithkuil, so you're going to have to explain 
+that
+> to me... or perhaps make another cmavo to reflect that meaning.
+
+
+Just compare {mi xusra lo du'u do citka} and {mi xusra lo du'u go'o i do 
+citka} 
+
