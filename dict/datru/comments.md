@@ -34,3 +34,13 @@ Ilmen wrote:
 
 I finally created {datro}.
 
+
+## 2015-07-20T08:24:41Z — durka42 (comment 2358, on definition 19602, in reply to 1640)
+
+Re: gismu collision
+
+Ilmen wrote:
+> This gismu collides with {tatru}, if I'm not mistaken.
+
+I finally created {datro}.
+
