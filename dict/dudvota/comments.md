@@ -48,3 +48,17 @@ Hm... still not convinced. "Possible worlds" doesn't seem to fit this
 concept... maybe "context/universe-of-discourse" does though... gah this is
 hard >.<
 
+
+## 2015-07-20T14:45:31Z — gleki (comment 2362, on definition 67192, in reply to 2361)
+
+Re: Hm
+
+spheniscine wrote:
+> Hm... still not convinced. "Possible worlds" doesn't seem to fit this 
+> concept... maybe "context/universe-of-discourse" does though... gah this 
+is
+> hard >.<
+
+Not possible worlds, but worlds. Also "situations, circumstances, parts of 
+events or systems".
+
