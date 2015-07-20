@@ -109,3 +109,13 @@ Re: Note
 
 That seems like a complete redefinition of {ju'a} to me...
 
+
+## 2015-07-20T07:52:31Z — gleki (comment 2356, in reply to 2355)
+
+Re: Note
+
+spheniscine wrote:
+> That seems like a complete redefinition of {ju'a} to me...
+
+Main level clause must have something like {ju'a} implied.
+
