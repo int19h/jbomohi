@@ -15,3 +15,13 @@ Unfortunately {xy'y} puts a rock in that plan (heh I only have myself to
 blame for it); though I don't know any better cmavo form for this purpose. 
 *Maybe* {xa'e} ("xa~~~'e"), but...
 
+
+## 2015-07-20T04:10:06Z — spheniscine (comment 2349, on definition 66157, in reply to 2348)
+
+Re: xy~'y
+
+We could also just make a list of "magic cmavo" and say "don't use these 
+with {bu}", but there is one problem. Currently "undefined cmavo+{bu}" is 
+accepted by parsers, but it's possible that we might want to define new 
+"magic cmavo", like {ze'oi}.
+
