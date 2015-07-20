@@ -1,0 +1,88 @@
+# mail/bpfk thread 7ed98e8b2a84-internal_grammar_of_ui,_nai_and_cai | root cao7bv+i4_hbrchsdv543-uudsvoqmusvq3axvvxaqrtqc8y25w@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2015-07-20T16:18:36Z | Gleki Arxokuna <gleki.is.my.name@gmail.com> | cao7bv+i4_hbrchsdv543-uudsvoqmusvq3axvvxaqrtqc8y25w@mail.gmail.com | mail/bpfk/cur/1437409116.7ed98e8b2a840079.jbomohi:2,S
+Proposal.
+
+In simple words the structure of attitudinal is proposed as
+
+((UI1 ROhA*) DAI*)+
+
+It means that {ro'a} series modify UI1 particles but not modify each other
+(like if they were connected using {je}). After that {dai} follow (again as
+if connected using {je} between themselves).
+The problem is that a string of DAI should be parsed from right to left:
+([UI1 DAI] DAI)
+- here the second DAI wraps UI1 DAI, the first DAI wraps (i.e applies
+itself to) UI1.
+
+PEG parses from left to right hence I had to make the following rule:
+loi_DAI_rule = (DAI loi_DAI_rule?)
+i.e. recursion is made to the right which isn't very correct but probably
+unavoidable given the current formal grammar. We could hardcode only up to
+two DAI but what if we need more?
+
+
+Also each of UI1, ROhA, DAI can be modified with NAI/CAI that in their turn
+can modify each other ({nai sai} is not the same as {sai nai}).
+
+In other words, UI/NAI/CAI are split into 4 groups:
+1. interjections like UI1.
+2. interjection categorizers like {ro'a}
+3. interjection rotators like {dai}
+4. right scalers like NAI and CAI
+
+Other attitudinals can go into one of these new series. This scheme doesn't
+show all of them for simplicity. E.g. probably all {sei}-clauses should go
+to the 1. group.
+
+NAI/CAI (right scalers) don't belong to interjections, they don't have
+illocutionary force, nor are they comments to text. Like NAhE (left
+scalers) they operate with scales although modify constructs marked to the
+left of them. Unlike left scalers they also modify interjections,
+categorizers and rotators but that's because they are so powerful. Outside
+1.,2.,3. right scalers modify sumtcita.
+
+Note also that PEG previously allowed indicators (i.e. UI) in post-clause
+of almost all constructs. This can make sense but not for UI themselves
+since we don't want recursive embedding here. When constructs from 1,2,3,4
+need to modify each other we handle this specially.
+
+Also according to this proposal NAI has an homophonic selmaho (where all
+its members are also homophones) which is used as right connective negator,
+e.g. {je nai}. This second NAI is to be treated separately in the grammar,
+is to create different nodes in the parse tree, obviously it can't be
+specified in post-clause of any construct. Instead, it is to be limited to
+the rules specifying connectives. The same is for NA which has an
+homophonic selmaho used as left connective negator.
+E.g. there should be a clear difference between parsing
+{ge nai ui} and {ge ui nai}.
+In the first case it's {(ge nai) ui}, in the second it's {ge (ui nai)}.
+In the first case {nai} is a part of the connective that has no relation to
+attitudinals.
+In the second case the connective is {ge} which is then modified by {ui
+nai} attutidinal.
+It would make little sense in parsing the first as {ge (nai ui)} since we
+probably don't want to mark only {nai} part (and if we did how could we
+mark {ge} in {ge nai} using {uinai}? hint: {fu'e ... fu'o} won't help
+unless further fixed). It's better to apply attitudinals to {ge nai} as a
+whole.
+
+Another proposal is to allow right scalers for sumti and tanru units
+(selbrisle) too, where they will work as
+sai ~=> barda lo ka
+ru'e ~=> cmalu lo ka
+or more correctly increase/decrease the average value measured.
+So {pusaiku} will be something like {puzuku}.
+So {coi nai ui lo mo ku nai ui} would parse as [{<coi nai> ui} {<(¹lo mo
+ku¹) nai> ui} DOhU]
+
+The current implementation of these two proposals can be tested at
+http://mw.lojban.org/extensions/ilmentufa/altatufa-stodi.html
+
+-- 
+You received this message because you are subscribed to the Google Groups "BPFK" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to bpfk-list+unsubscribe@googlegroups.com.
+To post to this group, send email to bpfk-list@googlegroups.com.
+Visit this group at http://groups.google.com/group/bpfk-list.
+For more options, visit https://groups.google.com/d/optout.
+
