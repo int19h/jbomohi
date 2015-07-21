@@ -119,3 +119,12 @@ spheniscine wrote:
 
 Main level clause must have something like {ju'a} implied.
 
+
+## 2015-07-21T04:44:21Z — spheniscine (comment 2363, in reply to 2356)
+
+Re: Note
+
+I'm still not sure what you're talking about. If {ju'a} isn't defined in 
+terms of {xusra}, what is it defined as? This even conflicts with xorxes' 
+definition for {ju'a}.
+
