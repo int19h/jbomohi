@@ -1,0 +1,213 @@
+{{jbocre/en}}
+''Initially proposed by [[User:Krtisfranks|krtisfranks]]. Author: krtisfranks.''
+
+
+A subtle but pervasive problem in Lojban at the moment is its utter disregard for the differences between digit strings and numbers. Simply put, strings and numbers work differently- at the very least, they have different operators. But Lojban blurs them together, making no attempt to address what it is doing.
+
+== The Problems; part 1 ==
+
+Other complications arise with the introduction of "xo'e", which is a cmavo of selma'o PA and means an unspecified number. Or is it "digit"? No matter. It will be okay, right?
+
+Well, consider using it in a string of other PA cmavo. For example, "li pa re ci xo'e", which means 123X (either the number or the string), where X is an unknown ''thing'' (I hesitate to call it a number, but calling it a digit would, presently, be disingenuous). Typically, "xo'e" is used in order to reference one of literally every "number" imaginable, depending on the context. As a result, one can get things like "de'i li ny xo'epavo" (see: [[Proposal: loi lerfu tcita detri; the final word on the problem of dates and times?|this page, toward the bottom]]), meaning "in the year '14". What comes before "14"? Presumably, "20" or "19", maybe "18". But this is problematic.
+
+Perhaps another example. I want to say the mantissa of the speed of light as expressed in meters per second. Unfortunately, I forget one of the middle digits. Is it 299'''6'''92458 or 299'''7'''92458. I will just call it "X": li re so so xo'e so re vo mu bi. But if X can refer to two-digit numbers as well, how does the audience know that I do not mean 299'''60'''92458? Or 299'''692898490280'''92458?
+
+Sure, maybe we can guess that it is a single-digit number in this context, but what about when discussing significant figures? The mantissa of Avogadro's number is 6.02214129(27)*10^23, where the parenthesized digits represent uncertain guesses. In experimental science, these digits are extremely important. The non-parenthesized numbers are known to be accurate to some very large certainty of measurement, but the parenthesized ones are not. Other conventions specify that the last digit in any measurement is considered to be uncertain, so if we just truncate this number before the parenthesis, then we might run into a problem wherein someone thinks that we do not know that last "9". It is helpful to have "xo'e" here so as to fill in the parenthesis. But we do not want it to be more than double-digited or less than single-digited because we can kind of scratch the surface of an additional two-digits (but no more) of accuracy. Even if the number has another fifteen digits to go, "xo'e" should not represent a fifteen-digit number because we do not know this number to that degree of accuracy.
+
+So maybe we want to have "xo'e" mean a single-digit number. But there are cases when we do not want to explicitly specify multiple digits in a row. For example, sometimes, identifying or personal information is "blurred out"; it happens with credit cards and telephone numbers. My phone number is ###-5309. More correctly, it is XYZ-5309 (where X, Y, Z need not all be distinct). This would be expressed by "la/me'o li xo'e xo'e xo'e mu ci no so". What if there are so many omitted digits that it is impractical to say all of the "xo'e"'s? It already happens with full-length telephone numbers. Credit cards or passwords could be worse. Avogadro's number (considered as a mathematical entity rather than an experimental one- meaning that all fifteen unknown digits would be supplied) would be way worse. And what if there is a number that is approximately size of Graham's number of which we can calculate the last few digits (which is the case of Graham's number) but we cannot calculate any of the digits that represent higher orders of the number's magnitude? (Or what if we know/specify the first few digits too, but cannot fill in the middle?) We need a way to do this, and easily. Luckily, there is the concatenation operator "joi'i" and the series operator converter "se'au". But, while this would work, there are two problems. The first is simple: it is clunky. We get around this by defining an unary (or 0-ary) operator "xo'ei" which, for argument n, strings together/concatenates n "xo'e"'s for us. The second issue is worse: how do we insert the output into a digit string.  We can say that the output is a string of digits. In Lojban PA at the moment, a PA string will automatically stitch itself together. So we got around that problem, right? Well, what about that argument? It is weird to take a PA string (a string of digits, that is), interrupt it, say "I am going to say a number now. I want you to add that many digits of unknowns to that string that I just said", say that number, and then resume your string, concatenating all three strings together. (It is bad with "xo'ei"; just imagine what it would be like with "se'au mau'au joi'i zai'ai"!) Here is an example: "li pa re ci xo'ei vo boi bi so"; we start off with "123" which is all plain, normal, and proper; then we break the string, do not evaluate it, use an operator, fill in its terbri, using forethought notation, with an '''evaluated''' number, end that number and separate from the next number, and then resume the digit string, thereby producing "123XYZW89".  It is funky, too much so. Moreover, "boi" usually separated numbers, which are evaluated. How do we know that the string is not really just "123XYZW" followed by the number eighty-nine? We do not, unless we wish to insert an empty string following the input of "xo'ei", close that and the preceding expression with "boi" or something else, and then start a new number.
+
+Well, maybe we can just make any number following the argument of "xo'ei" its own evaluated number, thus the string before "xo'ei" gets evaluated as its own number. This would give us "123XYZW 89", where the space shows that we have two separate numbers (maybe they are multiplied, or separate arguments of some function to their left). That will not work either, because we then lose the ability churn out "123XYZW89" as a single number.
+
+Moreover, if "xo'ei" belongs to VUhU especially, digit strings typically are evaluated (at present) as numbers before operators. That means that "123" is converted into one hundred twenty-three, and then we have to go back and say "no, no- we want to add a few more digits first! Forget that, wait a moment, and ''then'' reevaluate!". Moreover, in that case, if 123 really is a number preceding "xo'ei", then (regardless of what we do with stuff afterward) we cannot just concatenate on a new number to it. The string has already be evaluated into a number. Numbers do not concatenate- only strings do. We are left with "123 XYZW89" or "123 XYZW 89".
+
+(I am going to start recognizing the very important distinction between digits and numbers now. A digit is a letter/symbol in some alphabet; (alpha)numeric strings are composed of them; each digit represents a coefficient which interacts with its position in the string in some way. The evaluation of all of these interactions produces a number, a single mathematical entity which has no "string-internal" structure. This can be seen in the fact that "10" and "A" can represent the same number, ten; ten is a thing, the strings are just ways to specify/name it; single-digit strings represent the atomicity of numbers better than multi-digit strings do: "A" looks a lot more atomic than "10" does. But it is still important to recognize that "A" is a digit (it forms part of a string, which happens in this case to be a single digit long) and ten is a number. I will be quoting numeric strings and digits. Numbers will be unquoted. Thus "3" and 3 are different. In some contexts, it might make sense to find all occurrences of "3" and replace them with "4"; but it would not make sense to replace them with 4; moreover, it is much rarer for a context to arise when one wants to find all 3's and replace them with 4's (which actually would be impossible to do the field of real numbers, but could make some amount of sense in the field of rational numbers!); again, one would never replace 3 with "4". Sometimes, I will quote outputs or words- care should be taken to mentally distinguish this usage of quotation from the one for digits.)
+
+
+We are left with three options: 1) We could let numbers (not just digits!) concatenate onto one another. 2) We could take the "123 XYZW 89" option- we have three different numbers next to eachother. 3) We can change "xo'ei" so that it takes as input two strings and one number, putting that number of "xo'e"'s between the strings.
+
+The first option is bad. Most importantly, it would be introducing a blatant type error into Lojban. Additionally, it might be desired to not allow this to happen. Also, would that concatenate any two adjacent numbers, or would we normally have to introduce "joi'i" between them? Which has precedence "boi" or "joi'i"? How do we override this setting? What is the default when at most one of them is mentioned? How do VUhU know where numbers end? Typically, VUhU operates on numbers; when does a string become a number to be operated upon? I cannot add the string "12" to the string "34", that just does not make sense- I can concatenate them, I can evaluate them and then add them, but I cannot work both with strings and with addition.
+
+The third option is decent, and in fact we can (after this proposal) adopt such a word/function. But there presently as some issues. How do we distinguish between a number and a string for the inputs? Is the output a number? How do we separate the inputs yet keep them typing correctly? How do we make the output fit in with its neighbors- and, in fact, how do we distinguish its neighbors?
+
+The second option requires the least amount of fixing for "xo'ei" itself. We just make it output a number XYZW (given input of the number 4). But then we have 123 XYZW 89. How do we convert these back into digit strings, string them back together/concatenate them, and then convert back?
+
+
+Here is another problem: what if we do not want to specify how many "xo'e"'s are produced? The operator can take in an empty input (or an explicit xo'e). In the former case, how does one make sure that the following number is not the argument?
+
+
+== The Problems; part 2 ==
+
+Sometimes, it is nice to say, in base n, the digit "n-1". In decimal (n = 10), this would produce the digit "9". But as of yet, we can only say n-1. There is no way to make this a digit; it must be a number. But sometimes, we want it to occur as a digit, or in a place where it must be a digit: for example, the number 1234..."n-1" (basically, the floor of the product of Champernowne's constant in base n with n^(n-1))- in decimal, this number is 123456789, one hundred twenty-three million four hundred fifty-six thousand seven hundred eighty-nine.
+
+Or, what if we want to say "In decimal, if the digits of a number n represent numbers that sum to a multiple of 3, then n is a multiple 3"? For a start, we have no way to generically express the digits of a number except by "xo'e"'s. If I want the number n = n<sub>m</sub>n<sub>m-1</sub>...n<sub>1</sub>n<sub>0</sub>.n<sub>-1</sub>..., then I am either out of luck, or I have to be doing some rather questionable things with variables. (Does ab mean a*b, or the digits "a" followed by "b", or is it the name of a function ''ab'' (perhaps it is an absolute-value function), or is it something else?)
+
+We cannot convert an evaluated expression from a number into a digit, and we cannot explicitly (re)convert a digit/numeric string into a number.
+
+Moreover, at the end of mekso evaluation, it is questionable that one can get strings at all unless one uses "me'o", which leaves the expression utterly unevaluated. But there are times when an evaluated expression has (or should have) the output of a string. Letting "@" represent concatenation, "123" @ "4" evaluates to "1234"; it is possible that this is desired of a mekso expression. However, it most likely would end up as 1234. Putting "me'o" before it leaves us with "123" @ "4", exactly what we started with.
+
+== Proposals ==
+
+=== Preliminaries ===
+
+Lojban should draw a very sharp, explicit distinction between numbers and digits. PA should be the selma'o of digits. This distinction should be carefully made everywhere in the grammar.
+
+Digits ''refer'' to or ''represent'' numbers/values. Such language should be adopted. (Digits are not numbers; the phrase ""pa" is 1" should never be used; ""pa" means "one"" is a little better, although it really should be ""pa" means the digit "one""; ""pa" means 1" is bad in text.)
+
+Explicitly say that numerals are interpreted from left-to-right or from early-to-late when calculating a number. In decimal, this means that "23" means twenty-three, not thirty-two.
+
+Use the terminology of macrodigits and microdigits (explained elsewhere).
+
+Define a "base of fixed magnitude scale" and use the term in the grammars. Let n be the base of fixed magnitude. Then a number with macrodigit string "xyz" will be interpreted as follows: (x*(n^2)) + (y*(n^1)) + (z*(n^0)), where each of those operators is defined in the structure for n. Decimal is a base of fixed magnitude scale with the base n = 10 = A. "ju'u" presently specifies such bases. Others are possible; for example, a prime base would interpret the previous expression as perhaps: (2^x)*(3^y)*(5^z).  This is a variable base. Another example of a variable base would be that of standard representation of time (sixty seconds to the minute, sixty minutes to the hour, twenty-four hours to the day); however, in "time base", each macrodigit is interpreted in a base of fixed magnitude scale. The macrodigits of any base reference a number which is to act as the argument of an operation in interpreting the base, their position in the string matters for how that operation applies to them. In the prime base example: x, y, and z are all arguments of a function that takes them in turn as the exponents of subsequent primes, which is then evaluated in a product. In decimal, arguments are merely the multiplicative coefficients of their corresponding powers of ten, which is then evaluated in a sum. Notice that in the prime base, the terms of the sequence of variable bases start small on the left (with 2) and increase toward the right (to 5) but with decimal the leftmost numeral is the argument of the greatest power of ten; in either case, these numbers are read/interpreted from left-to-right/early-to-late, but what that means must be specified by the grammar.
+
+The word "li" should introduce mekso (along with some other possible words). It should not mean "the number". It should mean "the evaluated result of the whole mekso expression".
+
+Strings should be allowed in mekso. This means that we can have things like "li lu gerku li'u joi'i lu zdani li'u du li lu gerku zdani li'u". I do not mean things that just use mekso words, such as "lu fi'o broda fe'u co'ei brode li'u du lu fi'o brode broda fe'u li'u"; this is false anyway: the strings are not equivalent; what is meant is that either one string means the same thing as the other ("smuni" should be used rather than "du") or the referents are equivalent ("la'e" should be appended before each string). The evaluation of a whole mekso expression involving strings should be appropriate; in particular, "123" @ "4" should result in "1234", which is a string.
+
+Concatenation works on strings only, definitely not numbers. Addition works on numbers only, definitely not strings. (And likewise for other operators.)
+In fact, we should redefine VUhU to be only the selma'o of number operators and establish at least one new selma'o of string operators. If it is not clear enough yet, the difference between the two will be exhibited momentarily. I propose that at least the selma'o JOIhI be formed; JOIhI operates on strings/text, digits, letterals, etc..
+
+In fact, there should be a "super-selma'o" of words that all behave the same way in certain contexts. For example, maybe PA and BY (and perhaps some others) form super-selma'o SYM. Strings, texts, words, and quotes can form their own super-selma'o STR. The super-selma'o that includes SYM and STR can be super-selma'o XPR ("expressions", not to be confused with mekso expressions). Then JOIhI can be an operator on XPR. This is more of an organizational simplification, and is not key for the main proposal. The class of all operators (VUhU, JOIhI, JUhU, and perhaps others (see below)) should form super-selma'o OPS.
+
+Define and explicitly use the terms "number evaluation" and/or "number conversion" in the official grammar (future versions of the CLL) and in conversations. The terms are synonymous and could even be abbreviated to, for example "num-eval".  They refer to the process of interpretation wherein a digit/numeric string is no longer considered a string and is transformed by some means of calculation into a number.
+
+Digits first string together as microdigits, forming macrodigits. Macrodigits are num-evalled into numbers. Again, PA is the class of single-digits.
+
+Explicitly define "me'o" to leave a mekso expression utterly unevaluated, as above.
+
+Define "xo'e" to represent a single digit of unknown/vague/elliptical/unspecified value (representing an unknown number). Each occurrence of "xo'e" might have a different meaning.  The base to which it belongs is determined by context. On its own, the default base is overridden and it can literally be any number base. Thus, "xo'e" can refer to absolutely any number allowed at all. It could be an integer, a rational number, an algebraic number, a real number, a complex number, even a tensor. Sometimes, it could refer to sets, functions, strings, etc. The context determines what constitutes a number. But whatsoever a number can be, "xo'e" can refer to it. However, like all PA, this number is represented as/by a single digit. "xo'e"'s inherit the base of the string to which they belong. If there are multiple "xo'e"'s strung together with no other non-vague PA included or digit with a specific in-context well-defined known value (call such strings "x-strings") then the base is still vague and each digit (named by "xo'e") can refer to the referenced value acting as the appropriate argument for any basel for example "xo'e xo'e" ("XY") has X as the second argument of the base and Y as the first argument of the base (again, in decimal, we would have (X*10) + Y, although decimal is not assumed- I am just demonstrating with a base of fixed order of magnitude scale). Thus, "XY" can represent, again, any number at all, but it has two digits (which might mean that it corresponds to a larger number, or which might have implications about the base being used). In strings wherein at least one digit is "xo'e" and at least one digit refers to a well-defined specific known non-vague number (such as "pa" itself; call such strings "mixed-strings"), then the digit "xo'e" inherits the base of the string (explicitly specified or otherwise). Thus, if we are using decimal, then "li pa xo'e re" represents the string "1X2" and if that string is num-evalled, some number between one hundred two and one hundred ninety-two is meant, with the digit "X" representing the coefficient of 10^1 (ten). Thus, cultural default bases only apply to "xo'e" when it occurs in mixed-strings; otherwise, it has an exemption (although it could be a digit in that base, of course).
+
+"ju'u", "ju'au", its friends, and possibly "ju'u'i" should get at least one of their own selma'o. I propose that it be called JUhU. With a possible tweaking of the grammar, "ju'au" could be a member thereof. In any case, these words should belong to a super-selma'o BAS of base-specifiers. The reason for this is as follows: "ju'u" will hereby have its first argument be a numeric string (XPR) and its second argument be a number. "ju'au" has, instead, its second argument as a sumti. In either case, neither VUhU (which is a only-numbers-as-arguments selma'o now) nor JOIhI (which is an only-XPR-as-arguments selma'o) can operate appropriately. Moreover, BAS comes into the interpretation of a mekso expression somewhere between XPR-operations (JOIhI, possibly others) and num-evalling. Analogy: if the XPR's are the words and the sentence/bridi/meaning thereof is the num-eval result, then BAS is the part of the interpretation that identifies which constructs are the sumti, the selbri, etc. Numbers are numbers and mean what they mean- the base does not matter to them (our ''expression''/writing down of that number depends on the base, but the meaning of that number does not); XPR's are just texts and have no meaning beyond maintaining the same referent whensoever exactly the same string is presented; BAS takes one to the other, but does not actually perform the num-eval, it is somewhere inbetween; in fact, BAS is not even defined on all strings in mekso (yet; for example, what is the interpretation of letteral string "abc" in decimal base?).
+
+By the way, numbers (as far as I can tell) do not need their own selma'o. However, for the sake of simplicity, I propose the following dummy (and empty) super-selma'o for the class of numbers: NUM. Then VUhU is a NUM-only-operating selma'o.
+
+For the sake of simplicity and robustness, I propose that BAhE, UI, and other free modifiers attach to the their appropriate constructs (which defaults to a single word. which is to say symbol in this context) without interrupting the interpretation of a string. For example, "pa .ui re" produces the single digit string "12" (which then may be evaluated as twelve or what have you) and the first digit being a one is an item of happiness for the speaker; it does not produce two digits strings "1" and then "2", with the speaker being happy about the former.
+
+Notice that num-evalling does not always produce "numbers" as such. A quoted string of at least some non-digit symbols, for example, passes right on through a num-eval but remains a string (it is not converted to a number). However, digit strings do get converted to numbers via num-eval.
+
+=== The important part ===
+
+We then should establish an order or interpretation or an order of precedence. I propose that it should go something like this (within every mekso subexpression):
+# XPR
+# BOI
+# JOIhI
+# JUhU
+# num-eval
+# VUhU
+# whole mekso expression evaluation
+# "du"
+
+The ordered list immediately aforementioned presents each process in the interpretation in the order in which it naturally (should) occur(s), I propose. In other words, if VUhU arises, then we automatically understand that all of the previous processes have occurred (and that we need to interpret the expression, which now contains a number, as such); in other words, VUhU is something like "cu" for mekso. I am a little iffy on the placement of "du" in that ordered list.
+
+Notice three things: First, if there are no JOIhI or JUhU mentioned, BOI does not just separate one XPR from another- it essentially indicates that at least the immediately previous XPR should be num-evalled now (or A.S.A.P.). Each part (that is: each XPR) gets evaluated on its own insomuch as that is possible first, and then gets grouped with other creatures which then in whole get evaluated, and so on. Second, little changes with the theoretical use or (to my knowledge) practical application of mekso up as used by the community up until this point. Most mekso expressions still mean what they were intended to mean- this proposal is pretty back-compatible. Since most of mekso has actually been about numbers rather than digits, the digit strings just pass through each of the phases of interpretation (possibly being touched by BOI or JUhU) without any issue. It is only once digits and strings are treated as subjects themselves that problems arise; these are now fixed. The automatic ordering of precedence means that we do not need a lot of cluttering terminators and the like for each step- they happen on their own. Third, the reading and interpretation of a mekso expression is as linear as mekso allows under this proposal. In other words, there is not much back-tracking and re-interpretation introduced by this precedence list. As long as the arguments of an operator are clearly understood, the sailing is smooth. What one thought was a number does not turn out instead to be a digit; once it becomes a number, it stays that way until acted upon by something which turns it into something else.
+
+Each operator takes in certain typed inputs and outputs a result of a certain type; this single result then filters through this interpretation process starting from its type (proper position) and hitting any operators that present themselves along the way.
+
+SYM that are not separated by BOI automatically concatenate, even without explicit mention of "joi'i". This concatenation can be emphasized or or enacted by "joi'i" of course when desired/necessary, but SYM do it all on their own naturally. This feature is overcome by BOI.
+
+=== Clean-Up ===
+
+Speaking of which, we should probably have words that halt the process of interpretation at certain points or which can revert a result to a prior state/level of interpretation. I give you, "boi'ai" and "boi'au" for these purposes.
+
+"boi'ai" is meant to immediately convert a number back into a single digit (NUM-to-SYM). For example, in base n (for integer n greater than 2), the number n-1 multiplied a single-digit (in base n) number x results in the number (x-1, n-x). (So, in decimal, n = 10l thus n-1 = 9; and if x = 3, then (n-1)*x = 9*3 = 27 = (2, 7) = (3-1, 10-3) = (x-1, n-x).) But how do we express "(x-1, n-x)" if it has complicated digits like these (namely, "x-1" and "n-x"), and is a number to boot? Well, x-1 and n-x are both numbers (each is a single number because the operator "vuhu"/"-" produces such a thing), so we can act on them each with the unary operator "boi'ai". It takes these numbers and turns them into a single digit SYM each, with their appropriate and respective meanings. Now that we have digits, they do what digits do, automatically concatenating into the digit string "r s", where "r" is the single digit that means the number x-1 and "s" is the single digit that means the number n-x. In time, this string "r s" will filter through the order of precedence in interpretation to become the number (x-1, n-x).
+It might also be the case that we wish to endow this word with an additional property: that it halts the interpretation immediately after JUhU, meaning that the XPR gains some meaning internally but never gets evaluated as a number. I personally prefer that this property be included and will assume that it is throughout the rest of this article. (This means that "r s" will not naturally filter down to the number (r, s); it gets stuck at what the meaning of the positions of each "r" and "s" mean. It must be forced down using other operators. So, the last paragraph maybe should be reread with this thought in the forefront of your mind.) I did think that it was necessary to explicitly recognize and adopt this property though. The community deserves to know what it is getting.
+
+"boi'au" forces the conversion of a single XPR to a number (immediately through all of the steps of the order of interpretation). This can be helpful for when the output of an operation is strictly a string and it might otherwise pass through the order of interpretation without being evaluated. It is also useful for emphasis or to quickly convert a string, by-passing the typical order of precedence. If we consider the example of the rule for multiplying x by 10 (in any base) to be to concatenate a zero onto the string which represents x in that base, then the expression of this rule might accidentally produce general strings instead of specifically digit strings, meaning that "x0" would pass through the order of precedence without being num-evalled. Then, whensoever one wants to use a VUhU on it (or even to assert an equality between x*10 and "x0"), doing so would be impossible due to typing. But with the help of our unary XPR-to-NUM converter, we are good to go. If the aforementioned additional property of "boi'ai" is adopted, then this word becomes even more useful, for it will force XPR produced by "boi'ai" beyond the JUhU phase of interpretation.
+In this sense, a string may be converted by this word into a function. This word treats functions as numbers.
+
+Notice that these words are not perfect inverses. One takes an expression (even long ones) to a single number, whereas the other take a number to a single symbol (not a long expression). But they are spiritual inverses and in the correct context or with the correct restrictions do behave so even rigorously.
+
+We need a terminator for this pair of words. I propose that at least "k'oi'u" be assigned this job. While we note that "boi'ai" is a unary VUhU operator of sorts (should this be the case?) and "boi'au" is a unary JOIhI operator of sorts (same thing?), I think that it is okay to define a single terminator that handles both of them.
+
+
+______
+
+Additional tidying follows:
+
+# "se'au" should be expanded to handle string operators, and in fact all OPS, too. This is easy and natural enough. In fact, this was the intention originally; I just did not, at the time, identify the differing natures of the operators.
+# I think that "boi" should be necessary in order to separate consecutive XPR's before any other operators come into play. It should not be assumed that consecutive and thusly separated XPR's, at any stage of their interpretation, "multiply" in any sense. They can just be two separate, consecutive strings, or numbers, etc. This makes them more naturally function as separate arguments for OPS, for example. A numeric digit within a letteral string does not break it up and the results do not multiply in any sense (especially as numbers). The numeric digit is just treated as another symbol in the string.  This is a lot like how Mathematica handles "Plot3D", which is just a single name of a single function- the "3" is part of it. Unlike Mathematica, though, neither "3DPlot" nor "3 DPlot" necessarily means 3*DPlot (whatever "DPlot" refers to); they can of course, but it is not necessary and must be defined explicitly in the context.
+
+There are a few costs to the latter, but these probably can be overcome (except for the more necessary use of "boi" in order to mean what one wants in some contexts). The upshot is that we now have an easy way to say "Plot3D", whereas if letters and numerals are treated as different and naturally separated by an implicit "boi", this would not be (easily) possible; we would have to resort to converting each of "Plot", "3", and "D" back to strings (possibly risking these being defined as numbers and thus have something like "D" = "9"; see below), concatenate them explicitly (because, remember, we are assuming that they do not naturally implicitly concatenate now), and the convert the string back into a number (which might be the Mathematica function Plot3D).
+
+
+== Need to figure out ==
+
+=== Repeat Digit String ===
+
+Interaction of all of the above with "repeat digit string after this point": What if I want say (the string) "123abc3c3c3c3c..." with "3c" repeated finitely or ad infinitum? (In some contexts this, or something like it, might make sense)? This is a lot like "xo'ei", but with SYM other than merely "xo'e" being repeated multiple times (and the symbols may not redefine their meanings with each new occurrences).
+
+=== Avoiding the ""D" Equals "9"" hole ===
+
+It may be desirable to create cmavo which treats words formally as they appear. In the above example, if D = 9, then "boi'ai" will convert D into "D" = "9" (the digit). This can be problematic if one actually just wants the letter "D". One could just define "boi'ai" to do this anyway, but then functionality is lost. It is equally bad to not be able to say "9" when one wants it. However, I am not sure that there is any nice way to define such a word, except by hand-waving. However, so as to nip this problem in the bud, I propose that "boi'oi" be used for this purpose. Basically, it keeps the following expression (until it is terminated) exactly as it appears/is said, with no interpretation thereof taking place. Take it with a grain of salt.
+
+=== selma'o for "boi'VG" === 
+
+Should they belong to the same selma'o? (I think probably not.)
+Especially if not, should these words be grouped into a super-selma'o? (I think so; they are spiritual kin) If so, what is its name? (Idk)
+In any case, should they all share a common terminator? (I think so; it can just be the terminator for the super-selma'o.)
+
+=== Where do Bool expressions fit in? === 
+
+I hope to some day expand mekso to mathematically handle Boolean expressions. In particular, propositions (which are different from XPR and maybe from NUM) can be evaluated for their truth value under some rules (standard, philosophy, etc.); additionally, the connectives (CON) behave rather strangely in Lojban and, in non-Lojban mathematics, are treated exactly as operators (for things other than, for example, real numbers). These issues should be cleared up. But I need to think on how I would like to fit them into what I have established herein.
+
+(By the way, as an operator, JE could be n-ary with the arguments being separated by... BOI? (BOI is for XPR, not for propositions and/or numbers, but...))
+
+=== Words and spaces in strings being operated upon ===
+
+Distinguishing between "gerku zdani" and "gerkuzdani" for "gerku" @ "zdani".
+Presumably, a string of a single word can be uttered, followed by another such, and then they can be (for example) concatenated. How are we to treat the result? Lojban has no explicit space in most cases; the stress on the word handles it. But, if we rely on stress, then we make it mandatory (and mandatory to note in transcription), at least in cases such as this. It also is not clear that Lojban can have a string "gerku" (ignoring the presence or lack of stress for now) and not treat the word "gerku" within as if it is '''not''' a single word on its own, meaning that "gerku" @ "zdani" would produce "gerku zdani". But it is nice to be able to produce "gerkuzdani" too.  What to do?
+
+=== The realm of reference of "xo'e" ===
+
+Can xo'e refer to letterals? Letterals form strings and sometimes might even occur in "numbers" or function names. What if we want the option of swapping a dummy symbol out for either a letteral or a number (maybe "sin" and "si8" are both defined, maybe they are functions)? It could be useful to refer to any SYM, but it might also be annoying. (I have, I believe proposed a tentative fix to this problem by restricting "xo'e" to PA and inventing two new cmavo: one refers to BY and the other refers to any SYM)
+
+== "ma'o" and strings for names ==
+In "ma'o si8 boi xy", does "8" work as a digit? (I think so)
+How do we distinguish it from the actual input (which may be an XPR or a NUM)? (I think that "boi" should be fine. But both of my responses are contingent on assuming many standards established within this article)
+
+=== BY, PA, and BOI ===
+
+Some people want BY and PA to be so separate that "boi" is not needed between them: "by so" refers to b 9 and not b9. I personally oppose this idea- I would rather explicitly say "boi" whensoever I need it and have the easier option of stringing together letterals and numerals as desired; moreover, letterals and numerals are mutually close enough in nature that they really should not be so distinguished, especially if "boi" works the same way on each of them separately as a break. I do think that BY and PA should be separate (they do work differently in the grammar), with BOI as being a word that works on the super-selma'o SYM, but I do not think that they should not be so separate that they do not automatically concatenate (and that they do not belong to a common super-selma'o such as SYM), especially since BY can work as numbers/variables in mekso-  they are cousins. However, under either system, I think that the spirit of this proposal survives well. A few modifications probably must be made, but nothing too major. If BY and PA are so separate, I just want a way to force them together.
+
+=== Distinguishing variables from letterals of the same symbol representative ===
+
+If "ny" refers to a number, in a string it should still be treated as a letteral "n" until converted to a numeral by "boi'ai", at which point then it acts as a numeral representing the number n, yes?
+
+=== "xo'e" and labels === 
+
+Should we be able to label "xo'e"'s with subscripts so that "x<sub>1</sub>" always means the same thing, even if that thing is vague? (I think so.) If it is working as a digit, this can get messy very fast. (How do we overcome this problem?)
+
+How can we restrict the domain of possible referents? Maybe I want x<sub>1</sub> (notice that I did not quote it; it is a number here, for strings do not have the same properties as what are about to be mentioned) to only be even single-digited numbers (in some base). Do I need to do this ahead of time? If so how? If in the present moment/as an afterthought, how do I handle it?
+
+
+== Another Problem? ==
+
+Are "xo'e" and "xo'ei" handled/fixed?
+
+So, "xo'e" produces a single digit. It can mean any number but is represented as a single digit (it ignores the default base). Its meaning gets redefined with each new utterrance. That is good. But what if it occurs in a digit string with a defined base?
+
+I propose the following: On its own, "xo'e" can refer to any number at all, represented by a single digit. It ignores default base and picks a suitable one. If multiple "xo'e"'s are strung together with nothing else, then each is a single digit in the string and that digit may represent any number, but the number evaluated from that string as a whole has as many digits as "xo'e"'s appeared. If "xo'e" appears in a string with other numeric digits, then it inherits the base of that string (which may be default/implicit). Furthermore, if JUhU is ever used on a micro- or macro-digit, or string, which contains "xo'e", then each "xo'e" inherits the base specified thereby. When "xo'e" inherits a base, it can only represent a number that is single-digited in that base. Thus, if it understood that I am using decimal, "pa xo'e" can only represent the numbers ten through nineteen. "pi" and "pi'e" probably act as numeric digits in this case at least (and maybe they always do!).
+
+"xo'ei" is an operator that produces a string of "xo'e"'s, the length of which is designated by the input. The input lives within its own little "island mekso expression", uninfluenced by anything that is going on outside of "xo'ei". The string of "xo'e"'s will be num-evalled as soon as possible if the string of "xo'e"'s is not acted upon quickly enough and with high enough precedence. In particular, since "xo'ei" belongs to VUhU, any previous or subsequent numeric strings are terminated/initiated by it, meaning that they filter through the order of interpretation. Thus, generically, they become numbers. (Note that the input of the "xo'ei" must be separated from the following XPR via BOI or "ku'e". Also, the reading is linear; no garden-pathing/back-tracking it necessary. This is cleaner) Thus, the string of "xo'e"'s gets evaluated as a number. Suddenly, there are three numbers where, perhaps, one desired a single string. In order to solve this problem, use "boi'ai" and concatenate; make sure to re-evaluate the string produced (perhaps explicitly using "boi'au").
+
+If no argument is supplied to "xo'ei", it treats the argument by default as "xo'e" itself. Since the argument within is its own evaluated mekso subexpression island with a numeric result, an arbitrary (but vague) number of "xo'e"'s are strung together as a result.
+
+== Notes ==
+
+Things other than "li" introduce mekso expressions. In fact, as quantifiers, no introduction is necessary in simple cases. We should probably distinguish these explicitly too (as a super-selma'o moreover). It might be nice to also have a terminator for mekso expressions, at which time they are are evaluated in full. (Note: this does not mean that they result produces a number; "cat" @ "dog" evaluates to "catdog" and that would be the end of the mekso expression and its result: a string.)
+
+"li", "vei", "me'o", "ma'o" introduce mekso expressions. Others might do so too, I just cannot think of any off the top of my head because it is almost 4:00 as I type this.
+
+______
+
+I think that the arguments of any OPS should be treated as island mekso subexpressions that are evaluated whole first (but generic strings, remember, remain strings as this happens- they do not get num-evalled).
+
+== Summary of New cmavo ==
+
+Most of the work of this proposal is done via procedure. However, some cmavo have been either created or analyzed and then had their definitions tightened. This is a list of some of the more important instances of this:
+
+* "xo'e": a vague single-digit PA
+* "xo'ei": an unary VUhU(?) operator that produces a string of "xo'e"'s.
+* "boi'au": SYM-to-NUM converter
+* "boi'ai": NUM-to-SYM converter
+* "boi'oi": forces "formal" reading of symbols only, with no substitutions. (Vaguely defined at best)
+* "ku'oi'u": terminator for at least one BOI'VG.
