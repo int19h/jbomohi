@@ -15,3 +15,17 @@ Maybe it should actually be the {ka} associated with the *action* one would
 normally undertake to receive that sensation; e.g. {lo ganseti be lo ka 
 (ce'u) viska lo xunre}. It is a tad long though...
 
+
+## 2015-07-26T19:02:51Z — durka42 (comment 2375, on definition 67277, in reply to 2374)
+
+Re: Possible question
+
+spheniscine wrote:
+> Maybe it should actually be the {ka} associated with the *action* one 
+would
+> normally undertake to receive that sensation; e.g. {lo ganseti be lo ka 
+> (ce'u) viska lo xunre}. It is a tad long though...
+
+{lo ka viska} could be added as x3... after all the sense associated with 
+{lo ka xunre} is pretty obvious, unless you have synesthesia.
+
