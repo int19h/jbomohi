@@ -29,3 +29,10 @@ would
 {lo ka viska} could be added as x3... after all the sense associated with 
 {lo ka xunre} is pretty obvious, unless you have synesthesia.
 
+
+## 2015-07-27T07:33:32Z — spheniscine (comment 2379, on definition 67277, in reply to 2375)
+
+Re: Possible question
+
+I suppose so :p
+
