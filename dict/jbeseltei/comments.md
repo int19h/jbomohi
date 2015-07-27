@@ -12,3 +12,10 @@ la .djan. cu jbeseltei lo nanca be li rexa
 (This would mean "John is EXACTLY 26 years old.", which is probably not 
 what you've meant.)
 
+
+## 2015-07-27T07:33:04Z — spheniscine (comment 2378, on definition 67190, in reply to 2376)
+
+Re: Better example
+
+je'e
+
