@@ -19,3 +19,11 @@ Re: Better example
 
 je'e
 
+
+## 2015-07-27T07:56:57Z — spheniscine (comment 2380, on definition 67190, in reply to 2376)
+
+Re: Better example
+
+"rexa pisu'o" may be more accurate as to how people usually define the 
+"age" of a person though :p
+
