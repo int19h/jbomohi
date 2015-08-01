@@ -30,3 +30,10 @@ xorxes wrote:
 
 vajni i ei tolzanru
 
+
+## 2015-08-01T15:49:24Z — spheniscine (comment 2387, on definition 66357, in reply to 1981)
+
+Re: janli zo sunla
+
+pei zo {grisumji} jo'u zo {gripi'i}
+
