@@ -20,3 +20,10 @@ doi .guskant.
 pe'i zo xaicku jai mapti semau fai lo ka smuni lo si'o cukta gi'e xrani kei
 ne pa'a {li'ai} 1984
 
+
+## 2015-08-03T04:36:27Z — spheniscine (comment 2394, in reply to 2393)
+
+Re: doi .guskant.
+
+lo'ai /smuni/ sa'ai /se smuni/ le'ai
+
