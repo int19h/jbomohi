@@ -27,3 +27,19 @@ Re: doi .guskant.
 
 lo'ai /smuni/ sa'ai /se smuni/ le'ai
 
+
+## 2015-08-03T05:13:31Z — gusnikantu (comment 2395, in reply to 2393)
+
+Re: doi .guskant.
+
+spheniscine wrote:
+> pe'i zo xaicku jai mapti semau fai lo ka smuni lo si'o cukta gi'e xrani 
+kei
+> ne pa'a {li'ai} 1984
+
+lo cukta noi srana lo nu xrani cu ji'a ka'e mapti 
+i ku'i lo se du'u cukta gi'e se xrani cu pamei lo ckuzdaske valsi ije lo se
+du'u cukta gi'e xrani cu punai saske valsi
+i xu do jinvi lo du'u zo xaicku na mapti lo smuni no'u lo cukta noi se 
+xrani
+
