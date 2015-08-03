@@ -29,3 +29,10 @@ this
 
 it should be {zerzu'e} here.
 
+
+## 2015-08-03T18:57:21Z — spheniscine (comment 2401, on definition 17085, in reply to 2400)
+
+Re: Downvoted?
+
+I suppose that could work...
+
