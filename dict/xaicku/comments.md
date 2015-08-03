@@ -51,3 +51,18 @@ Re: doi .guskant.
 ji'a ka'e mapti .i lo rafsi be lo me ma'oi SE ta'e gau se claxu so'i lujvo 
 .i ku'i no da rafsi lo si'o claxu lo me ma'oi SE .i mi ge'enmo
 
+
+## 2015-08-03T12:00:11Z — gusnikantu (comment 2397, in reply to 2396)
+
+Re: doi .guskant.
+
+spheniscine wrote:
+> ji'a ka'e mapti .i lo rafsi be lo me ma'oi SE ta'e gau se claxu so'i 
+lujvo 
+> .i ku'i no da rafsi lo si'o claxu lo me ma'oi SE .i mi ge'enmo
+
+mi jimpe lo du'u ge'enmo i la'a ganai da'i lo du'u cukta gi'e xrani cu 
+mapti lo ka lujvo gi lo du'u cukta gi'e se xrani cu .ei se sinxa zo 
+selxaicku i ganai da'i do jinvi lo du'u go'i gi ko bastygau lo cnino lo te 
+tamgau
+
