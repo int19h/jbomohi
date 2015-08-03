@@ -43,3 +43,11 @@ du'u cukta gi'e xrani cu punai saske valsi
 i xu do jinvi lo du'u zo xaicku na mapti lo smuni no'u lo cukta noi se 
 xrani
 
+
+## 2015-08-03T05:33:12Z — spheniscine (comment 2396, in reply to 2395)
+
+Re: doi .guskant.
+
+ji'a ka'e mapti .i lo rafsi be lo me ma'oi SE ta'e gau se claxu so'i lujvo 
+.i ku'i no da rafsi lo si'o claxu lo me ma'oi SE .i mi ge'enmo
+
