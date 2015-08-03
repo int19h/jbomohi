@@ -12,3 +12,11 @@ Re: lo vlakle
 
 e'u zo {xaitku}
 
+
+## 2015-08-03T04:34:41Z — spheniscine (comment 2393)
+
+doi .guskant.
+
+pe'i zo xaicku jai mapti semau fai lo ka smuni lo si'o cukta gi'e xrani kei
+ne pa'a {li'ai} 1984
+
