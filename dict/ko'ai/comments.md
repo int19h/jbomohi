@@ -13,3 +13,13 @@ replacement.
 However, I now realize that {ko'ai abu za'u re'u cusku} suffers from the 
 same problem, thus I am downvoting myself for the time being.
 
+
+## 2015-08-04T19:01:14Z — spheniscine (comment 2403)
+
+Crazy idea for this
+
+selma'o ZO. Bam, infinite variables, no {boi} needed.
+
+Being disyllabic is a downside though, if we want this to replace 
+letteral-pronouns completely.
+
