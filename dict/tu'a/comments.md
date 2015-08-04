@@ -9,3 +9,14 @@ su'u ko'a (se'o'e) co'e kei (se'o'e) co'e (kei)". Thus, I think that it
 could be good to have a word for extracting from n (quite probably {xo'e}) 
 down.
 
+
+## 2015-08-04T20:06:57Z — spheniscine (comment 2406, on definition 2281, in reply to 2405)
+
+Re: From how many layers down does {tu'a} extract?
+
+I don't think there is a need for that. {co'e} could mean any predicate, 
+including those that would put the referent into additional abstractions. 
+I'm not sure how it's practical to count the number of layers of 
+abstractions needed, or how that would be any more useful beyond just 
+expanding the abstraction itself.
+
