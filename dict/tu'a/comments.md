@@ -20,3 +20,14 @@ I'm not sure how it's practical to count the number of layers of
 abstractions needed, or how that would be any more useful beyond just 
 expanding the abstraction itself.
 
+
+## 2015-08-05T11:45:20Z — Wuzzy (comment 2407, on definition 2281, in reply to 2405)
+
+As many as needed
+
+After reading the examples in CLL chapter 11 section 10, it becomes clear 
+to me that "tu'a" can "extract" from as many "layers" of abstraction as 
+needed, not just the first one.
+
+https://lojban.github.io/cll/11/10/
+
