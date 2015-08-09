@@ -4,3 +4,11 @@ frica zo co'a
 
 ma mupli lo du'u ta'i makau zo xo'u zo co'a frica
 
+
+## 2015-08-09T05:30:10Z — gleki (comment 2415)
+
+pe'i na jai sarcu
+
+ju'oi http://mw.lojban.org/papri/Stub:_Grammatical_aspects i ko tcidu lo ci
+moi gredile
+
