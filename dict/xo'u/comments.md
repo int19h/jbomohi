@@ -57,3 +57,27 @@ http://mw.lojban.org/papri/Stub:_Grammatical_aspects
 
 {mo'u} is the opposite of {co'a}.
 
+
+## 2015-08-10T07:30:38Z — cogas (comment 2419, in reply to 2418)
+
+Re: Aspect scheme
+
+gleki wrote:
+> cogas wrote:
+> > See: 
+> > 
+> 
+http://1.bp.blogspot.com/-9PSNpsZoVHY/VcRLXSRZemI/AAAAAAAAAsQ/J0injdTtMBs/s
+> > 1600/romai.png
+> > 
+> > {xa'o} indicates the point "natural beginning point".
+> 
+> 
+> Look at the last table: 
+> http://mw.lojban.org/papri/Stub:_Grammatical_aspects
+> 
+> {mo'u} is the opposite of {co'a}.
+
+Is the view official? If so, I will accept and I also think that {xo'u} is 
+not needed.
+
