@@ -12,3 +12,14 @@ pe'i na jai sarcu
 ju'oi http://mw.lojban.org/papri/Stub:_Grammatical_aspects i ko tcidu lo ci
 moi gredile
 
+
+## 2015-08-10T06:14:31Z — cogas (comment 2416)
+
+Aspect scheme
+
+See: 
+http://1.bp.blogspot.com/-9PSNpsZoVHY/VcRLXSRZemI/AAAAAAAAAsQ/J0injdTtMBs/s
+1600/romai.png
+
+{xa'o} indicates the point "natural beginning point".
+
