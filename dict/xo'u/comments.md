@@ -192,3 +192,47 @@ that
 
 u'u sa'ai {co'a}
 
+
+## 2015-08-10T07:39:43Z — gleki (comment 2423, in reply to 2421)
+
+Re: Aspect scheme
+
+cogas wrote:
+> gleki wrote:
+> > cogas wrote:
+> > > gleki wrote:
+> > > > cogas wrote:
+> > > > > See: 
+> > > > > 
+> > > > 
+> > > 
+> > 
+> 
+http://1.bp.blogspot.com/-9PSNpsZoVHY/VcRLXSRZemI/AAAAAAAAAsQ/J0injdTtMBs/s
+> > > > > 1600/romai.png
+> > > > > 
+> > > > > {xa'o} indicates the point "natural beginning point".
+> > > > 
+> > > > 
+> > > > Look at the last table: 
+> > > > http://mw.lojban.org/papri/Stub:_Grammatical_aspects
+> > > > 
+> > > > {mo'u} is the opposite of {co'a}.
+> > > 
+> > > Is the view official? If so, I will accept and I also think that 
+{xo'u}
+> 
+> > is 
+> > > not needed.
+> > 
+> > I have no clue who can give you official view. You may either ask 
+lojbab 
+> or
+> > BPFK (https://groups.google.com/forum/#!forum/bpfk-list)
+> 
+> OK. well, I'll change a question. Does many lojbanists accept the view 
+that
+> {mo'u} is the opposite of {co'a}? Or, is the article a mere proposal?
+
+a letter to BPFK needed.
+
