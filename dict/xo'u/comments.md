@@ -38,3 +38,22 @@ http://1.bp.blogspot.com/-9PSNpsZoVHY/VcRLXSRZemI/AAAAAAAAAsQ/J0injdTtMBs/s
 
 lo'ai {xa'o} sa'ai {xo'u} le'ai
 
+
+## 2015-08-10T07:06:43Z — gleki (comment 2418, in reply to 2416)
+
+Re: Aspect scheme
+
+cogas wrote:
+> See: 
+> 
+http://1.bp.blogspot.com/-9PSNpsZoVHY/VcRLXSRZemI/AAAAAAAAAsQ/J0injdTtMBs/s
+> 1600/romai.png
+> 
+> {xa'o} indicates the point "natural beginning point".
+
+
+Look at the last table: 
+http://mw.lojban.org/papri/Stub:_Grammatical_aspects
+
+{mo'u} is the opposite of {co'a}.
+
