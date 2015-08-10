@@ -23,3 +23,18 @@ http://1.bp.blogspot.com/-9PSNpsZoVHY/VcRLXSRZemI/AAAAAAAAAsQ/J0injdTtMBs/s
 
 {xa'o} indicates the point "natural beginning point".
 
+
+## 2015-08-10T06:15:02Z — cogas (comment 2417, in reply to 2416)
+
+Re: Aspect scheme
+
+cogas wrote:
+> See: 
+> 
+http://1.bp.blogspot.com/-9PSNpsZoVHY/VcRLXSRZemI/AAAAAAAAAsQ/J0injdTtMBs/s
+> 1600/romai.png
+> 
+> {xa'o} indicates the point "natural beginning point".
+
+lo'ai {xa'o} sa'ai {xo'u} le'ai
+
