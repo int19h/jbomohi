@@ -17,3 +17,19 @@ Re: Possibly productive affix
 
 {lacte'e}, I mean
 
+
+## 2015-08-11T09:00:08Z — krtisfranks (comment 2427, on definition 52737, in reply to 2425)
+
+Re: Possibly productive affix
+
+spheniscine wrote:
+> If {te'e} is the rafsi of {tende}:
+> 
+> {lacte'e} [fixed] = "trusting", as in "he is a very trusting person";
+> {traide'yte'e} / {traidyte'e} = "treacherous"
+> {bebykrite'e} = "gullible"
+> 
+> and so on...
+
+I support it.
+
