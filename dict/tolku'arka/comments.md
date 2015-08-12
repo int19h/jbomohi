@@ -4,3 +4,10 @@
 
 "Anti" in this context.., should it be translated as "-tol-"?
 
+
+## 2015-08-12T22:27:15Z — spheniscine (comment 2431, on definition 67530, in reply to 2429)
+
+Re: *cringing*
+
+Well, it's not even a lujvo; {tolku'arka} is technically a zi'evla :p
+
