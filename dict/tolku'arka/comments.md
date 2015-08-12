@@ -11,3 +11,10 @@ Re: *cringing*
 
 Well, it's not even a lujvo; {tolku'arka} is technically a zi'evla :p
 
+
+## 2015-08-12T22:31:23Z — spheniscine (comment 2433, on definition 67530, in reply to 2431)
+
+Re: *cringing*
+
+Maybe -dut- from {dukti} is better?
+
