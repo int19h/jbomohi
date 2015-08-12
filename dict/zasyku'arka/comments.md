@@ -10,3 +10,13 @@ almost everything is impermanent. If w have short enough timescales, off
 mass shell particles are actually enduring (they last throughout te 
 timescales being considered), in a sense.
 
+
+## 2015-08-12T22:29:51Z — spheniscine (comment 2432, on definition 67531, in reply to 2430)
+
+Re: Better
+
+I copied these off the obsolete zi'evla {ka'urkuarka}; they recommended 
+{zastce}, but my opinion is that the {mutce} part does not need to be 
+specified in a lujvo, since {zasybroda} could mean something other than 
+just {zasni je broda}
+
