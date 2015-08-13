@@ -32,3 +32,21 @@ I like that more. :)
 And, yes, I know that they are zi'evla, but the "-tol-" means something. 
 Ultimately, though, it is just my preference. I am not going downvote.
 
+
+## 2015-08-13T12:09:10Z — gleki (comment 2436, on definition 67530, in reply to 2434)
+
+Re: *cringing*
+
+krtisfranks wrote:
+> spheniscine wrote:
+> > Maybe -dut- from {dukti} is better?
+> 
+> 
+> I like that more. :)
+> 
+> And, yes, I know that they are zi'evla, but the "-tol-" means something. 
+> Ultimately, though, it is just my preference. I am not going downvote.
+
+
+I think {to'e} is fine. In future one may describe what is the scale here.
+
