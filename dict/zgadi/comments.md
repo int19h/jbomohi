@@ -20,3 +20,12 @@ Overall, I think that I like {zgadi} more, but the result is so closely
 tied to the etymologies and transcriptions used that I do not see it as a 
 clear victory solely by these reasons. I guess that usage will decide.
 
+
+## 2015-08-13T12:13:30Z — gleki (comment 2438)
+
+ta'o
+
+at some point {cudbi} were used in my subjunctive system to complete for 
+{cumki} and {lakne} but they were dropped in favor of counting possible 
+worlds using numbers.
+
