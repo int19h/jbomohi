@@ -37,3 +37,30 @@ one's expectations given any set of premises (such as how the world is, how
 one thinks the world works, or moral codes and how the world "should" be). 
 But yes.
 
+
+## 2015-08-13T22:15:41Z — krtisfranks (comment 2443, on definition 67526, in reply to 2442)
+
+Re: bi'ai / fau ro da
+
+krtisfranks wrote:
+> spheniscine wrote:
+> > Not really. {bi'ai} is about possibility. {cadga} / {zgadi} is about 
+> > speaker's belief of what morally or justly "should" happen. It's 
+related 
+> to
+> > {ei} or {iancu}.
+> 
+> It is not strictly limited to only morality or justness. It also includes
+
+> one's expectations given any set of premises (such as how the world is, 
+how
+> one thinks the world works, or moral codes and how the world "should" 
+be). 
+> But yes.
+
+
+If you think that these definitions (basically, physical/logical reasoning 
+and moral/emotional reasoning) should not be conflated, then maybe we can 
+restrict the definition of {cadga} or {zgadi} to only one of these options 
+and assign the other restricted meaning to the other word.
+
