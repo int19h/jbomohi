@@ -18,3 +18,17 @@ Re: *cringing*
 
 Maybe -dut- from {dukti} is better?
 
+
+## 2015-08-13T06:12:55Z — krtisfranks (comment 2434, on definition 67530, in reply to 2433)
+
+Re: *cringing*
+
+spheniscine wrote:
+> Maybe -dut- from {dukti} is better?
+
+
+I like that more. :)
+
+And, yes, I know that they are zi'evla, but the "-tol-" means something. 
+Ultimately, though, it is just my preference. I am not going downvote.
+
