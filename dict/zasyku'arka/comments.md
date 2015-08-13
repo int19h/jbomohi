@@ -20,3 +20,21 @@ I copied these off the obsolete zi'evla {ka'urkuarka}; they recommended
 specified in a lujvo, since {zasybroda} could mean something other than 
 just {zasni je broda}
 
+
+## 2015-08-13T06:19:26Z — krtisfranks (comment 2435, on definition 67531, in reply to 2432)
+
+Re: Better
+
+spheniscine wrote:
+> I copied these off the obsolete zi'evla {ka'urkuarka}; they recommended 
+> {zastce}, but my opinion is that the {mutce} part does not need to be 
+> specified in a lujvo, since {zasybroda} could mean something other than 
+> just {zasni je broda}
+
+I could support it. They /do/ tend to be temporary. It is just that there 
+is more going on there; maybe "intermediate" or something. "Calculation 
+tool" probably would not make for the most elegant zevlyjvo, vau zo'o.
+Still, it is not a bad option at all.
+
+I agree with the stuff about the lack of need for {mutce}.
+
