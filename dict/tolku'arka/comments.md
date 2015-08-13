@@ -50,3 +50,13 @@ krtisfranks wrote:
 
 I think {to'e} is fine. In future one may describe what is the scale here.
 
+
+## 2015-08-13T21:24:28Z — spheniscine (comment 2441, on definition 67530, in reply to 2436)
+
+Re: *cringing*
+
+Huh... I was gonna say something about {dukti} being more convenient for 
+building a general lujvo for "antimatter", but apparently {to'e} does have 
+a final rafsi, allowing one to build {kazryto'e} or something for specific 
+ideas of opposites.
+
