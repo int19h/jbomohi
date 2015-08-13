@@ -14,3 +14,10 @@ Not really. {bi'ai} is about possibility. {cadga} / {zgadi} is about
 speaker's belief of what morally or justly "should" happen. It's related to
 {ei} or {iancu}.
 
+
+## 2015-08-13T21:19:49Z — spheniscine (comment 2440, on definition 67526, in reply to 2439)
+
+Re: bi'ai / fau ro da
+
+Well, someone's ($x_3$'s) belief, at any rate.
+
