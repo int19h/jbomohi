@@ -286,3 +286,35 @@ word connotes a sense of satisfaction with the result/world if it were to
 happen/be true. Also, this word is not restricted to events but covers all 
 abstractions and includes a predicate for the necessary conditions.
 
+
+## 2015-08-15T06:21:55Z — gleki (comment 2448, on definition 67526, in reply to 2446)
+
+Re: bi'ai / fau ro da
+
+krtisfranks wrote:
+> gleki wrote:
+> > Then {kanpe lo nu ganai brode gi brode} with {kanpe} further expanded 
+> into 
+> > counting possible worlds.
+> 
+> Technically, in that case, {kanpe} is probably more general because it 
+can 
+> range from utter hoping against all odds to subjective guarantee. But 
+that 
+> does not carry the sense that the result is proper or as it should be. 
+This
+> word connotes a sense of satisfaction with the result/world if it were to
+
+> happen/be true. Also, this word is not restricted to events but covers 
+all 
+> abstractions and includes a predicate for the necessary conditions.
+
+I don't think that kanpe2 must be restricted to events. It's just su'u 
+there.
+
+the word "moral" confuses me in the def of {cadga}.
+
+Is it then
+
+ja'i lo marde be x3 va'o x2 x1 bi'ai fasnu ?
+
