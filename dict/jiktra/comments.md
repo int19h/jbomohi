@@ -27,3 +27,10 @@ Re: Why is this word not well-liked?
 ru'a pu srana lo nu lo tersu'i tcita cu na'e drani .i mi mo'u me'au lo voi 
 mi pacna lo du ki ka dragau 
 
+
+## 2015-08-18T07:15:19Z — spheniscine (comment 2456, on definition 63950, in reply to 2455)
+
+Re: Why is this word not well-liked?
+
+xu la kurti cu selsau la tcekitau
+
