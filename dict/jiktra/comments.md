@@ -34,3 +34,14 @@ Re: Why is this word not well-liked?
 
 xu la kurti cu selsau la tcekitau
 
+
+## 2015-08-18T11:44:12Z — zozeizeizeizeifaho (comment 2457, on definition 63950, in reply to 2456)
+
+Re: Why is this word not well-liked?
+
+spheniscine wrote:
+> xu la kurti cu selsau la tcekitau
+
+cumki fa tu'a na .i sei fanva lu .i mi mo'u me'au lo poi'i
+mi pacna lo du'u ke'a ka dragau li'u
+
