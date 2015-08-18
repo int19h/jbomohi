@@ -19,3 +19,11 @@ the concept (e.g. core to {kakne} and {cumki})
 
 I see nothing wrong with this word though, and have upvoted it.
 
+
+## 2015-08-18T06:51:20Z — zozeizeizeizeifaho (comment 2455, on definition 63950, in reply to 2453)
+
+Re: Why is this word not well-liked?
+
+ru'a pu srana lo nu lo tersu'i tcita cu na'e drani .i mi mo'u me'au lo voi 
+mi pacna lo du ki ka dragau 
+
