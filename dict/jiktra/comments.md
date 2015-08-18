@@ -45,3 +45,13 @@ spheniscine wrote:
 cumki fa tu'a na .i sei fanva lu .i mi mo'u me'au lo poi'i
 mi pacna lo du'u ke'a ka dragau li'u
 
+
+## 2015-08-18T18:14:34Z — krtisfranks (comment 2459, on definition 63950, in reply to 2456)
+
+Re: Why is this word not well-liked?
+
+spheniscine wrote:
+> xu la kurti cu selsau la tcekitau
+
+mi selsau .i ku'i ki'e
+
