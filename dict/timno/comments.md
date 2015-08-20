@@ -32,3 +32,13 @@ Re: vlakra jo'u nu simsa dukse su'o drata je cipra gismu
 
 xu dunli zo {mencre}
 
+
+## 2015-08-20T23:51:01Z — spheniscine (comment 2477, on definition 67682, in reply to 2470)
+
+Re: vlakra jo'u nu simsa dukse su'o drata je cipra gismu
+
+jaginai do djica gi mi ni'udzau zo timno vauje jmina zo katci
+
+zo'au zoi zoi. gimyzba.py -s ccvcv,cvccv kai kamotejit on aktivado vluceni 
+tecril .zoi
+
