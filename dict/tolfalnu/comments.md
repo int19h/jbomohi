@@ -19,3 +19,12 @@ ja'o
 je'u lo bifmlo cu falnu i ko tcidu lo glico je catni ve ciksi be zo falnu i
 zo'oi Waterwheel cu se pilno gi'e smuni ke mutce simsa zo bifmlo
 
+
+## 2015-08-20T10:50:11Z — spheniscine (comment 2468, on definition 57068, in reply to 2449)
+
+Re: toltolfalnu
+
+ua .i lo ka falnu cu se kairpau lo ka se kosmu pa zo'e kei jenai lo ka se 
+caltai pa zo'e .i lo tolfalnu ku ji'a ka'e se caltai zo'ei lo me'oi 
+ceiling-fan ja lo me'oi hand-fan
+
