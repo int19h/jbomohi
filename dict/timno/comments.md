@@ -25,3 +25,10 @@ Re: vlakra jo'u nu simsa dukse su'o drata je cipra gismu
 mi na djuno .i na'e mi finti .i se krasi lo irci sampre .i ma smuni zo 
 timne
 
+
+## 2015-08-20T23:20:52Z — spheniscine (comment 2475, on definition 67682, in reply to 2474)
+
+Re: vlakra jo'u nu simsa dukse su'o drata je cipra gismu
+
+xu dunli zo {mencre}
+
