@@ -49,3 +49,11 @@ Re: vlakra jo'u nu simsa dukse su'o drata je cipra gismu
 
 zo katri vamji simsa
 
+
+## 2015-08-21T00:34:31Z — spheniscine (comment 2479, on definition 67682, in reply to 2477)
+
+Re: vlakra jo'u nu simsa dukse su'o drata je cipra gismu
+
+zo kakti ji'a jai cumki .i zabna lo ka tamsmi lo jungo joi lo fu'ivla poi 
+xa'o zasti
+
