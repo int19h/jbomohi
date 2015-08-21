@@ -27,3 +27,10 @@ zi'evla that way. It means that if e.g. '''akta''' happens to be defined
 differently, then which word the -gau- lujvo is meant to be derived from 
 becomes less transparent.
 
+
+## 2015-08-21T14:48:54Z — Wuzzy (comment 2484, in reply to 2481)
+
+Re: Downvoted?
+
+?Disaster #4?: {narca'acando}
+
