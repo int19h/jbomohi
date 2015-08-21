@@ -34,3 +34,12 @@ Re: Downvoted?
 
 ?Disaster #4?: {narca'acando}
 
+
+## 2015-08-21T15:03:12Z — spheniscine (comment 2485, in reply to 2484)
+
+Re: Downvoted?
+
+Well, yes, no offense intended, but those lujvo are kinda long for a 
+concept as fundamental to modern life as "turned on"; not to mention 
+needing a negator for the positive case.
+
