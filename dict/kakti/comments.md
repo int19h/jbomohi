@@ -43,3 +43,12 @@ Well, yes, no offense intended, but those lujvo are kinda long for a
 concept as fundamental to modern life as "turned on"; not to mention 
 needing a negator for the positive case.
 
+
+## 2015-08-21T22:11:35Z — spheniscine (comment 2488)
+
+Wow
+
+... I just realised that this word is probably too similar to "cactus"
+
+... erm... {katci} it is then...
+
