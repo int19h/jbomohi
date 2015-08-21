@@ -16,3 +16,14 @@ Re: Downvoted?
 
 {naly'akti'ygau}, I mean.
 
+
+## 2015-08-21T12:13:46Z — spheniscine (comment 2483, in reply to 2481)
+
+Re: Downvoted?
+
+ta'o Yes, I know '''aktygau''' is considered a valid zevlyjvo, but I'm a 
+bit worried about using a regular derivational affix like -gau- with VCCV 
+zi'evla that way. It means that if e.g. '''akta''' happens to be defined 
+differently, then which word the -gau- lujvo is meant to be derived from 
+becomes less transparent.
+
