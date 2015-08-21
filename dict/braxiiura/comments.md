@@ -15,3 +15,10 @@ to Hemiptera. I doubt the average Joe would be able to look at hermit
 crabs, king crabs, and porcelain crabs, and be able to tell right away that
 they are not "true crabs".
 
+
+## 2015-08-21T15:29:06Z — spheniscine (comment 2487, on definition 67706, in reply to 2486)
+
+Re: Brachyura
+
+Btw, I suggest {karkino} as an alternative fu'ivla.
+
