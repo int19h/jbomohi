@@ -52,3 +52,18 @@ Wow
 
 ... erm... {katci} it is then...
 
+
+## 2015-08-22T13:43:02Z — gleki (comment 2490, in reply to 2488)
+
+Re: Wow
+
+spheniscine wrote:
+> ... I just realised that this word is probably too similar to "cactus"
+> 
+> ... erm... {katci} it is then...
+
+
+old proposal of mine: just postulate that let's say letter z- can replace .
+in all .VCCV fu'ivla which would save one syllable when attaching prefixes 
+like nar-, nal- ... getting narzaktygau for "to turn off"
+
