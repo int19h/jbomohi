@@ -67,3 +67,11 @@ old proposal of mine: just postulate that let's say letter z- can replace .
 in all .VCCV fu'ivla which would save one syllable when attaching prefixes 
 like nar-, nal- ... getting narzaktygau for "to turn off"
 
+
+## 2015-08-22T15:22:25Z — spheniscine (comment 2491, in reply to 2490)
+
+Re: Wow
+
+Unfortunately that would require us to avoid possible collisions like 
+{aste}/{asta}/{zasti}...
+
