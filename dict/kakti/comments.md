@@ -75,3 +75,19 @@ Re: Wow
 Unfortunately that would require us to avoid possible collisions like 
 {aste}/{asta}/{zasti}...
 
+
+## 2015-08-22T21:20:50Z — krtisfranks (comment 2492, in reply to 2483)
+
+Re: Downvoted?
+
+spheniscine wrote:
+> ta'o Yes, I know '''aktygau''' is considered a valid zevlyjvo, but I'm a 
+> bit worried about using a regular derivational affix like -gau- with VCCV
+
+> zi'evla that way. It means that if e.g. '''akta''' happens to be defined 
+> differently, then which word the -gau- lujvo is meant to be derived from 
+> becomes less transparent.
+
+
+I have been laughed at for trying to avoid this problem.
+
