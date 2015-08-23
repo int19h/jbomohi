@@ -6,3 +6,10 @@ ki'a
 smuvelski be zo rinju be'o no'u la'e lu xy. xi re gasnu lo nu xy. xi pa na 
 zifre xy. xi ci li'u
 
+
+## 2015-08-23T11:16:11Z — spheniscine (comment 2494, on definition 65427, in reply to 2489)
+
+Re: ki'a
+
+u'i {cimny'efku}
+
