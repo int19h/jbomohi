@@ -80,3 +80,23 @@ la .junpen. di'e ciska:
 
 mi'e la .ilmen. mu'o
 
+
+## 2015-08-23T09:21:57Z — junpen (comment 2493)
+
+lo'u ro le'u .e lo'u .o le'u se srana
+
+.i pe'i ru'e lo pagbu po'u lu ro da zo'u xy. xi pa .o xy. xi re da ckini 
+li'u cu me lu'e lo ve skicu be zo mintu
+
+.i pe'i ru'e lu su'o da zo'u xy. xi pa .e xy. xi re da ckini xy. xi ci li'u
+me lu'e lo ve skicu be zo dunli
+
+.i tu'e pe'i lu mi do dunli lo ka ce'u nelci ma kau li'u mu'a se smuni lo 
+nu po'o lo se nelci cu se ckini kei .e nai lo nu da'i ro da se ckini 
+
+.i ji'a lo go'i na se smuni lo nu mu'a da'i ca lo nu la'e zo do nelci la'e 
+lu ma kau li'u na ku cu nelci fa la'e ji'a zo mi la'e bi'u nai lu ma kau 
+li'u na ku tu'u pei
+
+mi'e la .junpen. mu'o
+
