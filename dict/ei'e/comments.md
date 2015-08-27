@@ -21,3 +21,12 @@ Another way to think of it is that each e'V cmavo has a magic -nde brivla
 
 {e'ande}, {e'ende}, {e'inde}, {e'onde}, {e'unde}
 
+
+## 2015-08-27T05:43:20Z — spheniscine (comment 2501, on definition 67724, in reply to 2499)
+
+Re: New meanings?
+
+See this for more info:
+https://mw.lojban.org/papri/BPFK_Section:_Irrealis_Attitudinals#cmavo:_.ei_
+.28UI1.29
+
