@@ -13,3 +13,17 @@ ienai
 
 https://en.wikipedia.org/wiki/Oblique_type
 
+
+## 2015-08-27T12:40:42Z — gleki (comment 2508)
+
+ciste
+
+one proposal:
+cursive = kursive
+roman = enromane
+typeface = ce'a zei morna?
+bold = ?
+serif = tcenseni?
+sanserif font/letter = sanserife
+serif-enabled font/letter = enserife
+
