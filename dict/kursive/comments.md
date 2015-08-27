@@ -27,3 +27,20 @@ serif = tcenseni?
 sanserif font/letter = sanserife
 serif-enabled font/letter = enserife
 
+
+## 2015-08-27T12:41:10Z — gleki (comment 2509, in reply to 2508)
+
+Re: ciste
+
+gleki wrote:
+> one proposal:
+> cursive = kursive
+> roman = enromane
+> typeface = ce'a zei morna?
+> bold = ?
+> serif = tcenseni?
+> sanserif font/letter = sanserife
+> serif-enabled font/letter = enserife
+
+this {tcenseni} is etymologically out of place ofc.
+
