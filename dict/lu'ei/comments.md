@@ -17,3 +17,12 @@ spheniscine wrote:
 
 Yes, and I also assume that.
 
+
+## 2015-08-27T17:11:13Z — durka42 (comment 2510)
+
+selma'o
+
+gajanai lo se sitsku pe zo lu'ei cu gendra vlapoi gi zo lu'ei simlu fi mi 
+fe lo ka ka'e cmavo ma'oi LU .i va'oku naku lujyze'a fa lo gerna jacu sarcu
+fa zo li'au
+
