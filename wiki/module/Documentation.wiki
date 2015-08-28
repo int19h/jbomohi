@@ -810,10 +810,10 @@ function p.makeExperimentBlurb(args, env)
 	-- 'sandbox-create-link-display' --> 'create'
 	-- 'mirror-edit-summary' --> 'Create sandbox version of $1'
 	-- 'mirror-link-display' --> 'mirror'
+	-- 'mirror-link-preload' --> 'Template:Documentation/mirror'
 	-- 'sandbox-link-display' --> 'sandbox'
 	-- 'testcases-link-display' --> 'testcases'
 	-- 'testcases-edit-link-display'--> 'edit'
-	-- 'module-testcases-preload' --> 'Template:Documentation/preload-module-testcases'
 	-- 'template-sandbox-preload' --> 'Template:Documentation/preload-sandbox'
 	-- 'testcases-create-link-display' --> 'create'
 	-- 'testcases-link-display' --> 'testcases'
@@ -858,7 +858,8 @@ function p.makeExperimentBlurb(args, env)
 		local sandboxCreateDisplay = message('sandbox-create-link-display')
 		local sandboxCreateLink = makeUrlLink(sandboxCreateUrl, sandboxCreateDisplay)
 		local mirrorSummary = message('mirror-edit-summary', {makeWikilink(templatePage)})
-		local mirrorUrl = sandboxTitle:fullUrl{action = 'edit', preload = templatePage, summary = mirrorSummary}
+		local mirrorPreload = message('mirror-link-preload')
+		local mirrorUrl = sandboxTitle:fullUrl{action = 'edit', preload = mirrorPreload, summary = mirrorSummary}
 		local mirrorDisplay = message('mirror-link-display')
 		local mirrorLink = makeUrlLink(mirrorUrl, mirrorDisplay)
 		sandboxLinks = message('sandbox-link-display') .. ' ' .. makeToolbar(sandboxCreateLink, mirrorLink)
