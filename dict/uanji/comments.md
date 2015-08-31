@@ -22,3 +22,10 @@ Re: e'u zo keldai
 
 ua
 
+
+## 2015-08-31T15:33:39Z — spheniscine (comment 2520, on definition 67740, in reply to 2517)
+
+Re: e'u zo keldai
+
+ua
+
