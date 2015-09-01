@@ -31,3 +31,28 @@ lo
 janli zo arko noi smuni simsa zo arbaleta gi'e se da'i zei valsi zo'oi arco
 fi lo spano e lo itlo
 
+
+## 2015-09-01T15:37:27Z — selpahi (comment 2528, on definition 67105, in reply to 2527)
+
+Re: ma krasi
+
+gleki wrote:
+> selpahi wrote:
+> > me'o .a'y ce'o me'o ry se krasi lo glico je lo dotco je ru'e lo sfe'ero
+
+> (to
+> > zoi zoi. scAR / nARbe / ?Rr .zoi toi) .i je me'o ky se krasi lo fraso 
+je 
+> lo
+> > spano (to zoi zoi. ciCatrice .zoi toi) .i li'o .i sa'u no da pu jbovla 
+lo
+> 
+> > ka .arku
+> 
+> 
+> janli zo arko noi smuni simsa zo arbaleta gi'e se da'i zei valsi zo'oi 
+arco
+> fi lo spano e lo itlo
+
+.e'a do finti lo drata versiio be zo .arku 
+
