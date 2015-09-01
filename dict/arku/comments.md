@@ -56,3 +56,10 @@ arco
 
 .e'a do finti lo drata versiio be zo .arku 
 
+
+## 2015-09-01T19:00:52Z — spheniscine (comment 2529, on definition 67105, in reply to 2528)
+
+Re: ma krasi
+
+mi stidi tau zo {cagnyba'a} (to {cagna} zei {barna})
+
