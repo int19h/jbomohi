@@ -6,3 +6,11 @@ Might be an interesting alternative to describe punctuation marks by shape
 rather than function to be less dependent on unique Lojbanic orthography. 
 So period = mokca bu, comma = rebla bu?
 
+
+## 2015-09-04T15:07:05Z — spheniscine (comment 2537, on definition 67763, in reply to 2536)
+
+Re: Interesting
+
+Another addendum: Chinese has a unique "ce'o bu" for lists of items; it's 
+distinct from the comma.
+
