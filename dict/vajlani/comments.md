@@ -48,3 +48,19 @@ for improving the English or Lojban definition would be more than welcome.
 (Also, it is very possible that one or more further sumti slots are 
 needed.)
 
+
+## 2015-09-04T14:18:41Z — spheniscine (comment 2535, on definition 67754, in reply to 2534)
+
+Re: What do you mean 
+
+Part of the problem is what is "normal" is subjective and may depend on the
+situation/context. "Small" stars are still "big" compared to many things, 
+for example. Additionally, statistically, the median is often more 
+reflective of "typical" amounts than the mean; many real-world values 
+follow a log-normal distribution or Pareto distribution, such that the 
+arithmetic mean is significantly higher than the median, and doesn't 
+reflect what a "typical" example looks like.
+
+All these makes me wonder whether Loglan had it right embedding 
+comparatives (x1 is taller than x2) into its primitives / gismu :p
+
