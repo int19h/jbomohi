@@ -1,0 +1,67 @@
+Intuitionism<ref>https://en.wikipedia.org/wiki/Intuitionism</ref> is a movement started by L. E. J. Brouwer<ref>http://plato.stanford.edu/entries/brouwer/</ref> in the early twentieth century. Its guiding principle is that mathematics is a human mental activity, rather than a study of reality. However, more recently, intuitionistic (or constructive) practices have found applications in computer science, due to a deep connection between logic and computation<ref>https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence</ref>. Here, I will treat “intuitionistic” and “constructive” as roughly synonymous, and will mix type-theoretic and proof-theoretic language (the two areas being in mutual correspondence). Particularly, I use “<math>\mathrm{Type}</math>” as the type of propositions<ref>http://williamdemeo.github.io/2014/02/27/learn-you-an-agda/#how-does-it-all-relate-to-agda</ref> and rely on the new definition of {ctaipe}<ref>http://jbovlaste.lojban.org/dict/ctaipe</ref>. This article gives an introduction to constructive logic interspersed with introductions of the words necessary to accommodate it in Lojban.
+
+== Conjunction ==
+In constructive logic, proofs are important. We judge truthfulness of propositions by whether they have (finite) proofs. Proofs carry computational content, so can be non-trivial (unlike in classical logic<ref>https://en.wikipedia.org/wiki/Classical_logic</ref>, where all proofs are formally trivial). It is beneficial to see a proof as a value, with the proposition it proves being its type. This is exactly what type theory does to express logic (or maybe intuitionistic logic expresses type theory). To take advantage of this, I will write <math>x : X</math> to sigify proof <math>x</math>, which proves proposition <math>X</math>. In Lojban, this would be written {xy. noi ctaipe tau xy.}.
+
+This relates nicely to conjunction (AND). A proof of <math>A \wedge B</math> is a proof of <math>A</math> *paired* with a proof of <math>B</math>. Lojban gives us {li .abu ce'o by. ctaipe lo kanxe be tau .abu bei tau by.} (though I may prefer a distinct pairing word to {ce'o}). If we are given a proof of <math>A \wedge B</math>, we can inspect it to produce a proof of <math>A</math> and a proof of <math>B</math>. The connective for conjunction is {je}.
+
+==Disjunction==
+Intuitionistic conjunction is basically the same as classical conjunction, and shouldn't be too surprising. With disjunction, we begin to depart slightly. A proof of <math>A \vee B</math> is a tag telling us whether we're proving <math>A</math> or <math>B</math>, and a proof of the proposition we decided to prove. “decide” is a key word here, as we'll see later. Hence, we can't prove <math>P \vee \neg P</math> (the law of the excluded middle) for arbitrary proposition <math>P</math>, since that would require an oracle to tell us which of <math>P</math> and <math>\neg P</math> were true. There are, though, many propositions <math>P</math> for which <math>P \vee \neg P</math> does hold (specifically, decidable propositions). Given a proof of a disjunction, inspecting it tells us which side we have a proof of, and gives us that proof (so a proof of <math>(P : \mathrm{Type}) \to P \vee \neg P</math> would act as an oracle).
+
+In Lojban, we can have either {li zu'ei .abu ctaipe lo vlina be tau .abu bei tau by.} or {li pi'au by. ctaipe lo vlina be tau .abu bei tau by.}, where {zu'ei} and {pi'au} are coined to resemble {zunle} and {pritu}, respectively. These may break cultural neutrality, but associations of “left” and “right” with these ideas is very common<ref>http://hackage.haskell.org/package/base-4.8.1.0/docs/Prelude.html#t:Either</ref><ref>https://coq.inria.fr/library/Coq.Init.Datatypes.html#sum</ref>. The connective for disjunction is {ja}.
+
+==Implication==
+A constructive proof of <math>A \to B</math> is a function<ref>https://en.wikipedia.org/wiki/Brouwer%E2%80%93Heyting%E2%80%93Kolmogorov_interpretation#What_is_a_function.3F</ref> that can take any proof of <math>A</math> and give a proof of <math>B</math>. Note that this proof is a very different kind of object to a proof of <math>\neg A \vee B</math>, despite what classical logic (and hence standard Lojban) would tell us. The difference comes about because of *proof relevance*. If <math>A</math> and <math>B</math> each have multiple proofs, a proof of <math>A \to B</math> can have more information than a proof of <math>\neg A \vee B</math> (which, by the assumption that <math>A</math> has multiple proofs, reduces to <math>B</math>, since <math>\neg A</math> is false). Given <math>x : A</math> and <math>f : A \to B</math>, <math>f\,x</math> (that is, <math>f</math> applied to <math>x</math>) is a proof of <math>B</math>.
+
+For this beefed-up notion of implication, we require a new logical connective. I'm torn between the suggestive {nai'a} and the consistent {ja'au} or {ju'ai}. I'll use {ju'ai} for now. A proof of an implication in Lojban looks like a function, and we can now say {lo funtiio be .abu bei by. cu ctaipe lo nibju'ai be tau .abu bei tau by.}, where I tentatively suggest {nibju'ai} as a parallel to {kanxe} and {vlina}.
+
+==False and negation==
+The proposition <math>\bot</math> (“bottom”) has no proofs. It also currently has no Lojban brivla. Conversations on IRC lead me to {tolzilo}, a supposèd antonym to the existing {zilzilo}. Incidentally, {zilzilo} is usually known as <math>\top</math> (“top”), and has a single proof, often written as “<math>()</math>” and pronounced “unit”. It's good for some things, but <math>\bot</math> will be far more useful to us. The principle of explosion (<math>\forall A : \mathrm{Type}. \bot \to A</math>) has vacuous proof. For any proof of <math>\bot</math>, we can produce a proof of some other type.
+
+<math>\bot</math> is used to define negation. For any proposition <math>A</math>, <math>\neg A</math> is defined to be <math>A \to \bot</math>. Intuitively, this says that if we have a proof of <math>A</math>, we can prove anything. Lojban obviously already has {na}, but we now know that {naku bu'a} desugars to {bu'a ju'ai tolzilo}.
+
+A thing to note about intuitionistic negation is that double negation elimination (<math>\forall A : \mathrm{Type}. \neg(\neg P) \to P</math>) doesn't hold in general. Specifically, it holds for and only for propositions for which the law of the excluded middle holds. An explanation again is given by proof relevance: there can only be zero or one proofs of <math>A \to \bot</math>, so those proofs carry no information. However, a general <math>A</math> can have many proofs.
+
+==Quantification==
+Conjunction and implication (which those of you familiar with set theory's pairs and functions will know are analogous to multiplication and exponentiation, respectively), can be generalized to become the quantifiers <math>\Sigma</math> and <math>\Pi</math>, respectively. Given <math>A : Type</math> and <math>B : A \to Type</math>, <math>\Sigma a : A. B\,a</math> is proven by a proof of <math>A</math> paired with a proof of the result of applying <math>B</math> to that proof. Similarly, <math>\Pi a : A. B\,a</math> is proven by a function that maps any proof <math>a : A</math> to a proof of <math>B\,a</math>. These constructs are often known as “dependent pairs” and “dependent functions”, respectively, for their reliance on values (proofs) occurring in type (proposition) expressions. Lojban largely has a similar distinction between proof terms (which barely exist, unless we count common sumti) and proposition terms (bridi) as that found in every statically typed programming language you've ever heard of. So, it seems difficult to translate these. Surely, some day, I'll make a conlang which is basically a spoken form of cubicaltt<ref>https://github.com/mortberg/cubicaltt</ref>.
+
+==Summary of terminology==
+{| class="wikitable"
+|+ primitives
+! mathematical symbol !! bridi-level !! du'u-leve
+|-
+| <math>\vee</math> || ja || vlina
+|-
+| <math>\wedge</math> || je || kanxe
+|-
+| <math>\to</math> || *ju'ai* || *nibju'ai*
+|-
+| <math>\bot</math> || *tolzilo* || jitfa
+|}
+
+{| class="wikitable"
+|+ related terms
+! English !! Lojban
+|-
+| Intuitionistic logic || zbalogji
+|-
+| Classical logic || ?
+|-
+| Law of the excluded middle<ref>https://en.wikipedia.org/wiki/Law_of_excluded_middle</ref> || jifyjavje'u zilkri
+|-
+| LEM || jyjyjy.
+|-
+| Double negation elimination rule || nalnalju'ai zilkri
+|-
+| Law of non-contradiction<ref>https://en.wikipedia.org/wiki/Law_of_noncontradiction</ref> || nalkemjifyjevje'u zilkri
+|-
+| LNC || nyjyjyjy.
+|-
+| Principle of explosion || *tolzilyju'ai*
+|-
+| Decision procedure || jezyje'u .algoritma
+|-
+| Decidable proposition <ref>https://en.wikipedia.org/wiki/Decidability_(logic)</ref> || se ke jezyje'u .algoritma / se jezyje'u / jifyjavje'u
+|}
+
+==References==
