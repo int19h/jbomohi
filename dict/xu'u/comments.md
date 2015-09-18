@@ -85,3 +85,34 @@ li'u gerna dunli lu ko'a li'u .i lo'u lo ko'a le'u na gendra
 .i lo nu finti lo cnino selma'o poi na simsa ma'oi XUhU cu cumki .i ku'i lo
 jalge javni cu fegli fi lo ka na'e sampu
 
+
+## 2015-09-18T14:37:01Z — gleki (comment 2549, on definition 60528, in reply to 2548)
+
+Re: {lo du'u} instead
+
+selpahi wrote:
+> gleki wrote:
+> > selpahi wrote:
+> > > lo nu da'i zo du'u cmavo lo jai se stidi cu se jalge lo nu da'i lu lo
+
+> > du'u 
+> > > broda li'u co'u gendra
+> > 
+> > uanai i ge lu lo du'u broda li'u gi lu lo vore du'u broda li'u cu da'i 
+ge
+> 
+> > gendra gi simxu lo ka dunli fi lo ka se smuni
+> 
+> sa'e ga nai zo du'u basti zo xu'u gi'e cmavo ma'oi XUhU gi lu du'u broda 
+> li'u gerna dunli lu ko'a li'u .i lo'u lo ko'a le'u na gendra
+
+mi na djica lo simsa
+> 
+> .i lo nu finti lo cnino selma'o poi na simsa ma'oi XUhU cu cumki .i ku'i 
+lo
+> jalge javni cu fegli fi lo ka na'e sampu
+
+
+ie mi stidi i ku'i pe'i ro nu finti lo cnino se cmavo cu fegli i na frica 
+lo nu finti zo xu'u poi se cmavo
+
