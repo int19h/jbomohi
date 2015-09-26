@@ -1,4 +1,4 @@
-# mail/lojban-list thread 08ee75823c18-trying_to_build_the_cll_web_pages | root f1b4f5e7-3443-4b20-97e8-8776c325d08a@googlegroups.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 08ee75823c18-trying_to_build_the_cll_web_pages | root f1b4f5e7-3443-4b20-97e8-8776c325d08a@googlegroups.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2015-09-25T22:30:37Z | Andrew <summerfallsaway@gmail.com> | f1b4f5e7-3443-4b20-97e8-8776c325d08a@googlegroups.com | mail/lojban-list/cur/1443220237.08ee75823c18510d.jbomohi:2,S
 The CLL repository on GitHub lists dependencies in a couple subcategories 
@@ -56,4 +56,89 @@ To post to this group, send email to lojban@googlegroups.com.
 Visit this group at http://groups.google.com/group/lojban.
 For more options, visit https://groups.google.com/d/optout.
 
+
+
+=== 3 | 2015-09-26T22:26:41Z | Andrew <summerfallsaway@gmail.com> | bb95b14f-9452-4066-8604-eb5e6a74935e@googlegroups.com | mail/lojban-list/cur/1443306401.0b3c25f70367e84d.jbomohi:2,S
+Thanks, Robin. 
+
+I installed the packages you mention, along with the General dependencies 
+from the README, and made sure I had the very latest version of the git 
+repo, but I still can't build. I'm getting some weird permission errors...
+
+For one thing, I can't run the cll_build script directly. I verified that 
+my user account is the owner, and I have the execution permission set, but 
+running ./cll_build returns "permission denied." I have to invoke it with 
+bash at the beginning of the commandline for it to run at all.
+
+> bash cll_build -T xhtml_chapters
+
+chapters: chapters/01.xml chapters/02.xml chapters/03.xml chapters/04.xml 
+chapters/05.xml chapters/06.xml chapters/07.xml chapters/08.xml 
+chapters/09.xml chapters/10.xml chapters/11.xml chapters/12.xml 
+chapters/13.xml chapters/14.xml chapters/15.xml chapters/16.xml 
+chapters/17.xml chapters/18.xml chapters/19.xml chapters/20.xml 
+chapters/21.xml
+optlist:
+target: xhtml_chapters
+mkdir: cannot create directory ‘build’: File exists
+mkdir -p /PATH/TO/cll-repository/build
+rm -f /PATH/TO/cll-repository/build/xml /PATH/TO/cll-repository/build/dtd
+ln -sf /PATH/TO/cll-repository/xml /PATH/TO/cll-repository/build/xml
+ln -sf /PATH/TO/cll-repository/dtd /PATH/TO/cll-repository/build/dtd
+scripts/merge.sh -b "/PATH/TO/cll-repository/build"  chapters/01.xml 
+chapters/02.xml chapters/03.xml chapters/04.xml chapters/05.xml 
+chapters/06.xml chapters/07.xml chapters/08.xml chapters/09.xml 
+chapters/10.xml chapters/11.xml chapters/12.xml chapters/13.xml 
+chapters/14.xml chapters/15.xml chapters/16.xml chapters/17.xml 
+chapters/18.xml chapters/19.xml chapters/20.xml chapters/21.xml
+/bin/sh: scripts/merge.sh: Permission denied
+scripts/Makefile:24: recipe for target 
+'/PATH/TO/cll-repository/build/cll.xml' failed
+make: *** [/PATH/TO/cll-repository/build/cll.xml] Error 126
+
+I'm also owner have the execution bit set on scripts/merge.sh, but that 
+also returns "permission denied." I don't get it.
+
+I'm running this on Fedora 22 x64.
+
+~Andrew
+
+
+On Friday, September 25, 2015 at 10:13:24 PM UTC-7, Robin Powell wrote:
+>
+> On Fri, Sep 25, 2015 at 03:30:37PM -0700, Andrew wrote: 
+> > The CLL repository on GitHub lists dependencies in a couple 
+> > subcategories -- General, PDF Generation, and MOBI/EPUB. 
+> > 
+> > Since the github.io site is a little out of date, I'd like to 
+> > build just the web pages so I can read the latest version. Does 
+> > that mean I could skip the PDF Generation dependencies? I'd like 
+> > to skip installing all those packages if possible. 
+>
+> Assuming you want the CLLv1.1 version (i.e. the stuff in the 
+> docbook-prince branch), you can just have me generate it for you (do 
+> you want chunking by chapter, section, or no chunking?).  But 
+> regardless, the html version requires: 
+>
+> - the standard docbook install (i.e. on yum this is the 
+> docbook5-style-xsl package) 
+> - xmlto 
+> - ruby, including the following gems: 
+>   - trollop 
+>   - nokogiri 
+>   - htmlentities 
+> - normal linux tools like wget 
+>
+> I think that should just about cover it. 
+>
+> Also, you're welcome to an account on vrici (the VM where I do my 
+> CLLv1.1 work). 
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
 
