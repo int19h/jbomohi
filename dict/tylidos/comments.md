@@ -16,3 +16,10 @@ gleki wrote:
 Well, that is how I would do it, but I am not a local and I do not want to 
 make claims about their pronunciations.
 
+
+## 2015-10-04T07:35:42Z — gleki (comment 2560, on definition 67894)
+
+"Toledo, Spain" is probably {toledos}.
+
+"Toledo, Spain" is probably {toledos}.
+
