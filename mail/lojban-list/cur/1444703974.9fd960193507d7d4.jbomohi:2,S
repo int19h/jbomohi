@@ -1,0 +1,97 @@
+Received: from mail-vk0-f64.google.com ([209.85.213.64]:33541)
+	by stodi.digitalkingdom.org with esmtps (TLSv1.2:AES128-GCM-SHA256:128)
+	(Exim 4.85)
+	(envelope-from <lojban+bncBCW7JPVOKYIONXPRWACRUBABQ3OZA@googlegroups.com>)
+	id 1ZlpV7-0005bO-3s
+	for lojban-list-archive@lojban.org; Mon, 12 Oct 2015 19:40:19 -0700
+Received: by vkaw128 with SMTP id w128sf601094vka.0
+        for <lojban-list-archive@lojban.org>; Mon, 12 Oct 2015 19:39:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:user-agent:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-spam-checked-in-group:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe;
+        bh=87dTwLebN8IY1ppU7coGLsveDxdVnA947fK8+V5WLvI=;
+        b=XPIK+JpVaPhNE1ZiJhQw9/fWwcN+bgjK2t3DGM48yN7515/7C4Cgo7cmxyohka8OQB
+         YDFN+Y7ch0FoKZVRsKZ9y0A4tjuiziGPmSKvCpRq6gQbyWq4Edov6Jfp1qAlGb/weho5
+         hu2iXnoreQYCvwh8XM95LEZxruR6diyr44vNaNVfsI/XnJ2n633l41Ft49jtdl4XtoXY
+         nctXzG3PMP4P/JSMhpQmvRztMl1LsGyDgqOHHTe/QqMqgOxO03MidA+hqjR1g65640mh
+         NnQgSIrX6hduqGg3hgzhB99RG0+bR+ZHGd4+HNn6PES/xJ8vDBbVMXgLaixZWufViile
+         G5sQ==
+X-Received: by 10.50.142.9 with SMTP id rs9mr170934igb.16.1444703975148;
+        Mon, 12 Oct 2015 19:39:35 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 10.50.4.39 with SMTP id h7ls1221239igh.14.gmail; Mon, 12 Oct 2015
+ 19:39:34 -0700 (PDT)
+X-Received: by 10.66.90.132 with SMTP id bw4mr26957557pab.7.1444703974794;
+        Mon, 12 Oct 2015 19:39:34 -0700 (PDT)
+Received: from stodi.digitalkingdom.org (mail.digitalkingdom.org. [173.13.139.236])
+        by gmr-mx.google.com with ESMTPS id zg1si52650pbb.2.2015.10.12.19.39.34
+        for <lojban@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Oct 2015 19:39:34 -0700 (PDT)
+Received-SPF: pass (google.com: best guess record for domain of rlpowell@digitalkingdom.org designates 173.13.139.236 as permitted sender) client-ip=173.13.139.236;
+Received: from rlpowell by stodi.digitalkingdom.org with local (Exim 4.85)
+	(envelope-from <rlpowell@digitalkingdom.org>)
+	id 1ZlpV0-0005bH-3r
+	for lojban@googlegroups.com; Mon, 12 Oct 2015 19:39:34 -0700
+Date: Mon, 12 Oct 2015 19:39:34 -0700
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+To: lojban@googlegroups.com
+Subject: [lojban] CLLv1.1 Deferral: Please Review!
+Message-ID: <20151013023934.GI13991@stodi.digitalkingdom.org>
+Mail-Followup-To: lojban@googlegroups.com
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Original-Sender: rlpowell@digitalkingdom.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: best guess record for domain of rlpowell@digitalkingdom.org
+ designates 173.13.139.236 as permitted sender) smtp.mailfrom=rlpowell@digitalkingdom.org
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+X-Spam-Checked-In-Group: lojban@googlegroups.com
+X-Google-Group-Id: 1004133512417
+List-Post: <http://groups.google.com/group/lojban/post>, <mailto:lojban@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/lojban
+Sender: lojban@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/lojban/subscribe>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+1004133512417+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/lojban/subscribe>
+X-Spam-Score: -1.9 (-)
+X-Spam_score: -1.9
+X-Spam_score_int: -18
+X-Spam_bar: -
+Content-Length: 996
+
+
+Gleki found a nasty bug where the processing was stripping a bunch
+of HTML entities.  In certain cases we were losing quotes, and we
+probably didn't have *any* ellipses.
+
+The fix included teaching the Ruby processing step to use strict
+mode, which turned out to require a bunch of other changes to that
+step, so there's a non-zero chance that it broke something I didn't
+catch.
+
+So reviews would be really nice.
+
+If no-one says anything, though, since it looks OK, I'll probably
+push it out on Friday.
+
+The new version is at
+http://vrici.lojban.org/~rlpowell/media/public/cll_prince_2015-10-12.pdf
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at http://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
