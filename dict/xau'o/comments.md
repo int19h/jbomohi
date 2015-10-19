@@ -23,3 +23,10 @@ spheniscine wrote:
 
 Oh, good call! I will change the definition/description.
 
+
+## 2015-10-19T08:58:06Z — spheniscine (comment 2579, in reply to 2576)
+
+Re: Delimiters
+
+There is no need for {xau'oi} terminator with arbitrary word delimiters.
+
