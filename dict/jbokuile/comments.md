@@ -46,3 +46,20 @@ durka42 wrote:
 do co'i ku tolylazni lo ka piksku di'u vau gi'e lazni lo ka jmina lo drani 
 valsi
 
+
+## 2015-10-19T15:12:19Z — durka42 (comment 2580, in reply to 2578)
+
+Re: morphology
+
+gleki wrote:
+> durka42 wrote:
+> > needs to be moved to {jboku'ile}
+> 
+> 
+> do co'i ku tolylazni lo ka piksku di'u vau gi'e lazni lo ka jmina lo 
+drani 
+> valsi
+
+je'u ru'e .i lo piksku cu filmau .ije pu lerci tcika .ije mi bebyselxanri 
+lo nu lo vlafi'i cu cikre .ijeku'i mi ca mulgau lo se cfagau be do ki'e
+
