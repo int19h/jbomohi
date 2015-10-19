@@ -34,3 +34,15 @@ morphology
 
 needs to be moved to {jboku'ile}
 
+
+## 2015-10-19T08:50:07Z — gleki (comment 2578, in reply to 2577)
+
+Re: morphology
+
+durka42 wrote:
+> needs to be moved to {jboku'ile}
+
+
+do co'i ku tolylazni lo ka piksku di'u vau gi'e lazni lo ka jmina lo drani 
+valsi
+
