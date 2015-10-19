@@ -42,3 +42,15 @@ spheniscine wrote:
 Right again!
 In that case, I might move the definition of {xau'ei}.
 
+
+## 2015-10-19T23:06:54Z — krtisfranks (comment 2582, in reply to 2579)
+
+Re: Delimiters
+
+spheniscine wrote:
+> There is no need for {xau'oi} terminator with arbitrary word delimiters.
+
+
+Right again!
+In that case, I might move the definition of {xau'ei}.
+
