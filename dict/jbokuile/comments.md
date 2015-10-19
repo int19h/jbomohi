@@ -27,3 +27,10 @@ krtisfranks wrote:
 
 .i .u'i xu do troci co jai se jalge lo sevzi gasnu bavyxusra bangu
 
+
+## 2015-10-19T02:06:23Z — durka42 (comment 2577)
+
+morphology
+
+needs to be moved to {jboku'ile}
+
