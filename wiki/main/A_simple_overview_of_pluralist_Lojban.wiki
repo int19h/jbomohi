@@ -1,0 +1,120 @@
+This page provides a simple overview of what Lojban would be like if all quantifiers were plural. ''None'' of the sentences below work under singular quantification; they would have to be (sometimes heavily) rephrased in standard Lojban, and/or have to use '''su'oi''' instead of '''su'o''' and '''ro'oi''' instead of '''ro'''. Keep this in mind when reading the examples.
+
+=The two basic quantifiers ∃ and ∀=
+
+There are two basic quantifiers that form the basis of the logic: the existential quantifier ∃ (expressed by '''su'o''') and the universal quantifier ∀ (expressed by '''ro'''). These quantifiers are plural, meaning that the quantified statement can be satisfied by more than one thing at a time. Plural quantifiers can achieve things that singular quantifiers can't. Consider, for instance, the verb ''"to gather"'':
+
+{{lm|||"Some Lojbanists are gathering at jbonunsla."}}
+
+This statement would not work with a singular existential quantifier, as no single Lojbanist is gathering at jbonunsla. With a plural quantifier, however, there is no problem.
+
+While a singular existential quantifier reads something like ''"There is some <math>x</math> such that [it] ..."'', a plural existential quantifier reads like ''"There are some <math>x</math> such that [they]..."''. I choose to write plural variables as doubled letters, like <math>xx</math>, <math>yy</math>, <math>zz</math> to distinguish them more clearly from singular variables.
+
+{{lm|(1) su'o jbopre cu jmaji la jbonunsla|<math>[\exists xx : jbopre(xx)] \: jmaji(xx)</math>|"Some Lojbanists are gathering at jbonunsla."}}
+
+The universal quantifier <math>\forall</math> is the dual of the existential <math>\exists</math>, meaning that <math>\forall</math> is equivalent to <math>\lnot \exists \lnot</math>. Sentence (1) is equivalent to sentence (2) below:
+
+{{lm|(2) na ku ro jbopre na jmaji la jbonunsla|<math>\lnot [\forall xx : jbopre(xx)] \: \lnot jmaji(xx)</math>|"It's not the case that all Lojbanists are not gathering at jbonunsla."}}
+
+Similarly, (3) and (4) are equivalent:
+
+{{lm|(3) ro jbopre poi ke'a tavlysi'u cu co'a pendysi'u|<math>[\forall xx : jbopre(xx) \land tavlysihu(xx)] \: pendysihu(xx)</math>|"All Lojbanists that talk to each other become friends."}}
+
+{{lm|(4) na ku su'o jbopre poi ke'a tavlysi'u na co'a pendysi'u|<math>\lnot [\exists xx : jbopre(xx) \land tavlysihu(xx)] \: \lnot pendysihu(xx)</math>|"It's not the case that some Lojbanists that talk to each other do not become friends."}}
+
+=Numerical Statements=
+
+{{lm|||"3 hungry Lojbanists surrounded the building and wore hats."}}
+
+A numerical statement is one that contains a bare numerical quantifier, like ''"3 Lojbanists"'', or ''"5 cows"''. Using singular logic the above sentence would be ill-formed, as it would claim of each of the three hungry Lojbanists that they surrounded the building on their own. However, we are using plural quantifiers, and the sentence
+
+{{lm|(5) ci xagji jbopre cu sruri lo dinju gi'e dasni lo mapku|<math>[3xx : jbopre(xx)] \: sruri(xx) \land dasni(xx)</math>|"3 hungry Lojbanists surrounded the building and wore hats."}}
+
+can be handled thus:
+
+{{lm|(6) su'o da poi ke'a ci mei gi'e jbopre cu sruri lo dinju gi'e dasni lo mapku|<math>[\exists xx : 3mei(xx) \land jbopre(xx)] \: sruri(xx) \land dasni(xx)</math>|"There are some Lojbanists that are three in number that surrounded the building and wore hats."}}
+
+(5) and (6) are logically equivalent, (5) being a useful shortcut for (6).
+
+=Distributivity and expressing it explicitly=
+
+What is distributivity? When is a predicate (or an argument place of a predicate) distributive?
+
+A predicate is distributive if, whenever some things satisfy the predicate, then each one of them satisfies the predicate. For example, whenever some things are cats, then each one of them is a cat. Therefore, "to be a cat" is a distributive predicate, or distributive in its first argument place.
+
+Otherwise a predicate is called non-distributive. Some examples of non-distributive predicates are '''mei''', '''jmaji''', and the first place of '''me/menre'''.
+
+In sentences (5) and (6) from the previous section, we can observe how a single plural term satisfies different predicates in the same sentence either distributively or non-distributively (or collectively). '''cimei''' is satisfied collectively, '''jbopre''' is satisfied distributively, '''sruri''' is again satisfied collectively, and finally '''dasni''' is satisfied distributively. Again, how an argument place is to be satisfied is part of the meaning (i.e. definition) of a predicate.
+
+That being said, distributivity can also be shown explicitly, or ''forced''.
+
+When is this needed? It is needed when
+* a predicate is non-distributive but a distributive reading is desired
+* wanting to emphasize individual satisfaction (e.g. in contrastive contexts)
+
+A sentence like
+
+{{lm|||"Some Lojbanists have never read CLL."}}
+
+is equivalent to
+
+{{lm|||"Some lojbanists are such that each among them has never read CLL."}}
+
+(In such cases, marking distributivity is not necessary), but
+
+{{lm|||"The rocks weighed 20kg."}}
+
+is ''not'' equivalent to
+
+{{lm|||"Each individual rock weighed 20kg."}}
+
+Here it is important to be able to express the latter, i.e. the distributive reading. How do we do this?
+
+In general, the solution involves a predicate that expresses individualness, or onesome-ness. One such predicate is '''pavmei'''. There are two cases, syntactically speaking, where the individualness restriction can be inserted into a sentence, depending on which part is supposed to be marked as distributive:
+
+* In the prenex, as part of a restrictive relative clause: ''"Some <math>xx</math>, each of which ..., broda"''
+* As part of the main claim, often with '''poi'i''': ''"Some <math>xx</math> are such that each one among them brodas"''
+
+For example:
+
+{{lm|(7) lo rokci cu poi'i ro pavmei je me ke'a cu ki'ogra li 20|<math>rokci(c); [\forall xx : pavmei(xx) \land xx =< c] \: kihogra(xx, 20)</math>|"The rocks are such that each one among them weighs 20kg."}}
+
+{{lm|(8) ci jbopre poi ro pavmei je me ke'a cu xagji cu casnu zo lo|<math>[3xx : jbopre(xx) \land [\forall yy : pavmei(yy) \land yy =< xx] \: xagji(yy)] \: casnu(xx, "lo")</math>|"Three Lojbanists each one of which is hungry discuss the word '''lo'''.}}
+
+'''ro pavmei je me ke'a''' is short for '''ro da poi ke'a pavmei gi'e menre ke'a xi re'''.
+
+Note that the same pattern used in (7) can be used to perform singularization from within a plural, to express sentences like this one:
+
+{{lm|(9) su'o ratni va poi'i lo gunma be ke'a cu mlatu|<math>[\exists xx : ratni(xx)] \: gunma(c, xx) \land mlatu(c)</math>|"Some atoms over there are such that the mass composed of them is a cat." <br>"There are some atoms that make up a cat together over there."}}
+
+=Any vs All=
+
+English often uses "any" and "all" interchangeably, or alternates between them in a seemingly random pattern, thereby obscuring the fact that they needn't be synonymous. Actually, we need two different kinds of universal quantifiers, one of which we have already met above in the form of ∀ ('''ro'''). This quantifier works for sentence like
+
+{{lm|(10) ro jbopre cu poi'i ga nai do retsku fi ke'a gi ke'a cusku mo'e lo se zilkancu be ke'a be'o su'i pa danfu||"Any number of Lojbanists is such that if you ask them a question, you'll get that many answers plus 1."}}
+
+What about the following?
+
+{{lm|(11a) ro jbopre cu toltu'isi'u lo du'u ma kau smuni zo le|<math>[\forall xx : jbopre(xx)] \: toltuhisihu(xx)</math>|"Any number of Lojbanists differ on what '''le''' means."}}
+
+This almost works, but not quite, because the claim includes individual Lojbanists, and no single thing can satisfy '''simxu'''. A small addition can fix a sentence like this:
+
+{{lm|(11b) ro jbopre je re mei cu toltu'isi'u lo du'u ma kau smuni zo le|<math>[\forall xx : jbopre(xx) \land 2mei(xx)] \: toltuhisihu(xx)</math>|"Any two Lojbanists differ on what '''le''' means."}}
+
+There are, however, sentences that require a different quantifier altogether, despite using the word ''"all"'':
+
+{{lm|||"All the people who can speak Lojban taken together are five in number."}}
+
+So, another quantifier is needed. If '''ro''' is "any", then '''ru'o''' could be ''"all"''. Or vice-versa. I'm not sure which way it should go. Traditionally, '''ro''' has been the '''"any"''', but ''"all"'' really makes more sense than '''"any"''' in things like '''li ro''', as it is the highest number, not any number. We can use the symbol <math>A</math> to represent this quantifier.
+
+{{lm|(12) ru'o prenu poi kakne lo ka jbota'a cu mu mei|<math>[Axx : prenu(xx) \land kakne(xx, c)] \: 5mei(xx)</math>|"All the people who can speak Lojban taken together are five in number."}}
+
+And a final example:
+
+{{lm|(13) ru'o lo bakni cu sruri lo purdi|<math>[Axx : xx =< c_{bakni}] \: sruri(xx, c_{purdi})</math>|"All the cows are surrounding the garden."}}
+
+The other universal wouldn't have worked, as it would also claim any number of the cows to surround the garden, which is not accurate.
+
+----
+
+This concludes this little overview. Please post your comments, questions or corrections on the talk page or hit me up on IRC. [[User:Selpahi|Selpahi]] ([[User talk:Selpahi|talk]]) 12:08, 26 October 2015 (PDT)
