@@ -1,0 +1,8 @@
+## 2015-10-27T03:08:54Z — spheniscine (comment 2584)
+
+I'm somewhat confused about the utility...
+
+ko'a jai broda tu'a ko'e = tu'a ko'a broda tu'a ko'e. Is tu'a-ing the first
+two places, and only the first two places, such a common construction? I 
+would think "ko'a jai (BAI) broda fai ko'e" is more common.
+
