@@ -31,3 +31,10 @@ i lo si'o ka se bangu cu nabmi i mi na djuno lo satci smuni
 
 i pei zo uenzi smuske freime panra zo jufra i lo cimoi te sumti zo'u bangu
 
+
+## 2015-11-05T06:52:31Z — gleki (comment 2600, on definition 66356)
+
+ma se bangu
+
+lo nu cusku ji lo cusku cu se bangu
+
