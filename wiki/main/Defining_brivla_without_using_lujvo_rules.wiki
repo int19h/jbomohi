@@ -1,0 +1,97 @@
+[http://alexburka.com/lojban/cll/lojban.html#c04s03 Most descriptions] [https://mw.lojban.org/papri/Lojban_Wave_Lessons#Lojban_Lessons_.E2.80.93_Lesson_thirteen_.28morphology_and_word_classes.29 of brivla] [[Morphology How-to|morphology]] rely on lujvo construction to show behaviour common to all brivla and leave the effect on non-lujvo unexplained. Of course, the morphology was planned around the existence of lujvo, so this is natural, but it also seems to lead to speakers producing badly formed brivla. This page describes brivla (or a superset<!--xu do se fanza doi cletyxei--> of them, anyway) in a way that introduces lujvo concepts at the last possible moment. Whether this has better results is to be seen.
+
+== Background knowledge ==
+
+To parse brivla one needs to be able to parse syllables and cmavo.
+
+A syllable consists of an onset, a nucleus, and optionally a coda. The onset is a single consonant, a glide ('''ĭ''' or '''ŭ'''), or an [[Morphology How-to#Syllables|initial consonant cluster]]. A syllable at the beginning of a word can also have an empty onset, and a syllable inside a word can also have an ''h'' ('''<nowiki>'</nowiki>''') as its onset. The nucleus is one of the ten vowels and diphthongs. A syllable can have a coda of one consonant, and only when this consonant plus the onset of the next syllable do not together form a valid onset.
+
+{{mu|.a spa pan blaif stra ŭo 'u 'ei 'am by .y gry zbly|syllables}}
+{{mu|*girt *zra *t'u *fĭe *stsa|not syllables}}
+
+Note the dot before the syllables beginning with vowels. Such syllables must be separated from ones before them with a glottal stop or a longer pause.
+
+A cmavo consists of a syllable beginning with a single consonant, glide, or vowel, and without a coda, followed optionally by any number of syllables beginning with an ''h'' and without a coda.
+
+{{mu|.a ba bai ba'i ba'ai by by'i ĭa ĭai ĭy ŭa'ai'y|cmavo}}
+{{mu|*fas *zdi *'ai *sfu'a|not cmavo}}
+
+When the parser can't extend the cmavo currently being parsed, it starts parsing the next one. Sequences of cmavo spoken or written together are split unambiguously before each consonant.
+
+{{mu|.iŭa fa'emu bysai|sequences of cmavo}}
+
+== Simple brivla ==
+
+Let a brivla be a sequence of syllables that
+* begins with anything other than ''h'',
+* contains no ''y'',
+* ends with a vowel, and
+* has stress (marked here with a gràve àccent) on its second-last syllable, and nowhere else.
+
+At the start of a text, the parser tries to detect a cmavo or a brivla, in that order. If, at a position, a cmavo is detected, no brivla will be detected there, and therefore no brivla is present there. This isn't a quirk of the parser, it is part of the definition of the language.
+
+Here is an example of brivla (red) interspersed with cmavo (blue).
+
+{{mu|[[Image:brivla-cmavo-path.svg|320px]]}}
+
+Notice how a brivla is opened at the beginning of every syllable not permitted in a cmavo, and closed at the end of the syllable after the first stressed syllable inside, making way for the next word to be parsed. What goes between these two important syllables (if they aren't one and the same) may well look like a cmavo; as long it carries no stress, it has no effect on the extent of the brivla.
+
+What about strings like '''fàcki''', which are, so we hear, words? '''fà''' is a cmavo, and *'''cki''' is a non-word, so shouldn't '''fàcki''' have no right to exist?
+
+To allow words like '''fàcki''', '''càudri''', and '''.ìglu''', the parser, after it finishes reading a cmavo, checks whether the string after that begins with a valid word.<ref>In principle this would mean that each attempt to parse a word would require a trip to the end of the text, but in practice these searches are shorter, ending at the next pause (in writing, the next space) or sequence of two syllables where the first one contains no ''y'' and where the second of them can start a brivla, whichever comes first.</ref> If the check fails, there is by definition no cmavo at that point in the text, and the string beginning with that would-be cmavo potentially begins with a brivla. Words like '''fàcki''' do satisfy the brivla rule, and that together with the invalidity of '''fà''' as a cmavo before *'''cki''' means that '''fàcki''' is a brivla.
+
+== Medial-only syllables in brivla ==
+
+Note the "contains no ''y''" line in the definition above, which excludes words like '''fàtnygau'''. Syllables with ''y'' are in fact allowed in brivla, but with a more restricted distribution: they may not be at the beginning or end of a brivla. Also, they are always unstressed, and the penultimate stress rule ignores them when looking for the end of the brivla after encountering its stressed syllable.
+
+{{mu|durkyrvòre<ref>Also spelled '''durkrvòre''' – the way to syllabify that won't be explained here.</ref> sàpyvla murgentàli fàckytoi kricystàli|brivla}}
+{{mu|tilìste ŭasàpyvla bybrìvla|cmavo followed by brivla}}
+{{mu|krìcystali fàckytoixu|brivla followed by cmavo}}
+{{mu|*brivlàby *byrbrìvla *ticỳsku|non-words}}
+
+== Forbidden brivla ==
+
+The grammar was built around the existence of lujvo, brivla made from components of certain shapes. Brivla space is warped in favour of lujvo: some shapes are declared non-words, in the style of *'''cki''' above, so that some strings that would usually fall apart into a cmavo plus a brivla parse as single brivla instead. For example, *'''zmà'i''' is forbidden by this rule so that '''sozmà'i''' can be a single word. Such forbidden words are called ''slinku'i''.
+
+The main slinku'i rule checks would-be brivla up to the first ''y'', or to the end of the word if no ''y'' is present. If this string consists of a consonant followed by a rafsi string, and the whole string with the added consonant is not a rafsi string itself, there is no brivla present at this position. A rafsi string is any number of the patterns below, arranged in any order. 
+
+*C is any consonant
+*V is any of ''a e i o u''
+*VV is any of ''ai ei oi au''
+*R is ''r'', unless it is followed by ''r'', in which case it is ''n''
+*? marks an optional letter
+*a grave accent means mandatory stress
+
+{| class="wikitable"
+|+ rafsi-string components
+| CVCy?h? || CCVh?y?h? || CVVh?y?h? || CVVR || CVhVh?y?h || CVhVR
+|-
+| CVCCyh? || CVCCVhyh? || CV̀CCV || CCVCyh? || CCVCVhyh? || CCV̀CV
+|}
+
+{{mu|skùdji kùdji mà'i barda'y|rafsi strings}}
+{{mu|zmà'i jbardà'y|slinku'i}}
+{{mu|skùdji|brivla despite slinku'i rule}}
+{{mu|pajbardà'ybla|brivla thanks to slinku'i rule}}
+
+There is also a secondary slinku'i rule: a syllable starting with a consonant cluster followed by the syllable '''<nowiki>'y</nowiki>''' may not start a brivla.
+
+{{mu|sprài'yvau|slinku'i}}
+{{mu|pasprài'yvau|brivla thanks to slinku'i rule}}
+{{mu|sprài'yrvau|brivla; not affected since second syllable is '''<nowiki>'yr</nowiki>'''}}
+
+== CVCy rule ==
+
+There is one last rule made to accommodate lujvo in brivla space. A CV syllable followed by a Cy syllable followed by a brivla or rafsi string may not start a cmavo.
+
+{{mu|fèsyvau rodyĭòlpe|brivla thanks to CVCy rule}}
+
+Since pauses always separate words, adding them between these syllables stops this rule from applying.
+
+{{mu|fè.syvau fèsy.vau|two ways to pronounce this string of three cmavo}}
+
+== More rules? ==
+
+The rules on this page should be enough to segment any text into cmavo and brivla, but the official brivla space is a subset<!--do pilno ro roi ku le'i mabla cletu--> of the one described here. More on this can be found on the pages linked on top.
+
+== Notes ==
