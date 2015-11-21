@@ -12,3 +12,12 @@ interpretation procedures. In fact, this concept should be extended beyond
 mathematics so that one can specify which version of Lojban grammar they 
 are using at any given time.
 
+
+## 2015-11-21T01:28:36Z — spheniscine (comment 2613, on definition 68088, in reply to 2612)
+
+Re: Good start
+
+For Lojban grammar versioning/dialects we have {jo'au}; I'm guessing this 
+is just to easily set a "default" base for those who wish to experiment 
+with using dozen-base systems etc.
+
