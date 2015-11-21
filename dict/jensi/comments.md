@@ -15,3 +15,14 @@ gleki wrote:
 
 Because that emphasizes the cutting. I really just want the scissor action.
 
+
+## 2015-11-21T17:22:13Z — krtisfranks (comment 2616, on definition 68094, in reply to 2614)
+
+Re: why not  {jinci}?
+
+gleki wrote:
+> any alignment to other brivla or what?
+
+
+If anything {jinci} is really  {katna} ({zei}) {jensi}.
+
