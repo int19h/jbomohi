@@ -19,3 +19,10 @@ do trajynei zo ma'alca ji zo ma'ulca ji zo mu'alca .i mi pu'i su'o roi
 pilno zo ma'alca .i ku'i zo mu'alca ji'a melbi mi .i da'i lo nu me'o .u'y 
 pagbu cu vajni ja xamgu 
 
+
+## 2015-11-23T15:49:52Z — spheniscine (comment 2618, on definition 66653, in reply to 2617)
+
+Re: lo smudu'i pe nai me'o my ce'o ly
+
+mi nelci me'o myly je me'o myry .i xu mi cizra
+
