@@ -26,3 +26,15 @@ Re: lo smudu'i pe nai me'o my ce'o ly
 
 mi nelci me'o myly je me'o myry .i xu mi cizra
 
+
+## 2015-11-23T20:38:58Z — selpahi (comment 2619, on definition 66653, in reply to 2618)
+
+Re: lo smudu'i pe nai me'o my ce'o ly
+
+spheniscine wrote:
+> mi nelci me'o myly je me'o myry .i xu mi cizra
+
+mi na ba'e *to'e* nelci .i ku'i milcizra si cizrymli mi fa lo nu pagbu ba'e
+lo jbobau .i na cafne kansance zei girzu .i zu'u nai lo jbobau cu se pagbu 
+so'i drata poi ka'e cizra
+
