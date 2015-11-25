@@ -6,3 +6,13 @@ What advantage does this have over {fanva}? It just seems like you're
 conflating fanva2 with fanva3 and fanva4 with fanva5, making the whole 
 thing more confusing.
 
+
+## 2015-11-25T16:53:52Z — selpahi (comment 2621, on definition 56534)
+
+ropnyfu'ivla
+
+zo traduki ropnyfu'ivla .i'e nai ru'e .i ku'i mi ca'o na zifre lo ka jmina 
+zo fanga'i mu'a (to sa'e lo nu da'i mi jmina zo fanga'i cu se bavla'i lo nu
+mi se gunta toi) .i mi .aidji lo ka denpa lo nu ga lo zi'ejvo co'u jai se 
+pante gi mi sanji su'o melbi poi ka'e basti zo traduki 
+
