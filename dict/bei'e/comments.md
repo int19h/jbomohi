@@ -19,3 +19,13 @@ rid of the semi-mandatory explicit terminator in certain contexts.
 As an irrelevant side note: I should have said that the open terbri being 
 considered must follow the last FA tag. But it does not matter now.
 
+
+## 2015-12-03T18:49:27Z — gleki (comment 2638, in reply to 2632)
+
+Re: 
+
+spheniscine wrote:
+> This feature is not supported in the grammar, and breaks extensibility.
+
+indeed given that one day a brivla can get more terbricmi
+
