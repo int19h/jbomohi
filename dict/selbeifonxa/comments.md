@@ -27,3 +27,19 @@ spheniscine wrote:
 I was really wanting to get away from the terminology of 'phone', since it 
 is anachronistic nowadays, so let me mull it over.
 
+
+## 2015-12-03T18:46:47Z — gleki (comment 2637, on definition 17167, in reply to 2635)
+
+Re: Smart 'phones'
+
+krtisfranks wrote:
+> spheniscine wrote:
+> > I did define {samfonxa} the other day.
+> 
+> 
+> I was really wanting to get away from the terminology of 'phone', since 
+it 
+> is anachronistic nowadays, so let me mull it over.
+
+selbeiskami then if skami is not the same as kanji.
+
