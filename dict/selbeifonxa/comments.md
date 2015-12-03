@@ -15,3 +15,15 @@ Re: Smart 'phones'
 
 I did define {samfonxa} the other day.
 
+
+## 2015-12-03T09:29:46Z — krtisfranks (comment 2635, on definition 17167, in reply to 2633)
+
+Re: Smart 'phones'
+
+spheniscine wrote:
+> I did define {samfonxa} the other day.
+
+
+I was really wanting to get away from the terminology of 'phone', since it 
+is anachronistic nowadays, so let me mull it over.
+
