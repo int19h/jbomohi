@@ -5,3 +5,16 @@ mupli
 i do finti lo xamgu mupli vau e'o gi'e e'uru'e setca fi la'e zoi 
 tatoeba.org zoi
 
+
+## 2015-12-09T17:39:13Z — krtisfranks (comment 2645)
+
+How does this work?
+
+How is the predicate specified in a non-looping manner?
+
+I think that reordering the terbri may also be beneficial.  I guess that it
+really depends on what the intention is.
+
+with gadri involved, I am a little confused about what this word would 
+mean.
+
