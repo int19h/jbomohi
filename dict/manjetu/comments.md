@@ -201,3 +201,10 @@ specify that with sumti (as options)?
 
 Can the question be about which abstractor is to be used for x_2?
 
+
+## 2015-12-10T23:10:03Z — durka42 (comment 2653, in reply to 2651)
+
+Re: How does this work?
+
+I'm fairly sure that an arbitrary number of sumti places was the intention.
+
