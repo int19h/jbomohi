@@ -18,3 +18,16 @@ really depends on what the intention is.
 with gadri involved, I am a little confused about what this word would 
 mean.
 
+
+## 2015-12-10T01:34:20Z — spheniscine (comment 2646, in reply to 2645)
+
+Re: How does this work?
+
+I think it's meant to work something like:
+
+li re manjetu lo ka raltca lo mergu'e kei la .paris. la .uacintyn. la 
+.cikagos. la .sanfranSISkos.
+
+{x_1} points to the number of the "correct answer" sumti among the sumti 
+after {x_2}. i.e. {x_{{x_1}+2}} ckaji {x_2}
+
