@@ -191,3 +191,13 @@ case where {zi'o} fills the third terbri of this word and no other option
 is explicitly stated after it; then this word has just the first two 
 terbri.
 
+
+## 2015-12-10T04:01:31Z — krtisfranks (comment 2652, in reply to 2651)
+
+Re: How does this work?
+
+What if the question in x_2 is asking about the predicate itself? How does 
+specify that with sumti (as options)?
+
+Can the question be about which abstractor is to be used for x_2?
+
