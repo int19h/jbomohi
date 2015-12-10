@@ -31,3 +31,13 @@ li re manjetu lo ka raltca lo mergu'e kei la .paris. la .uacintyn. la
 {x_1} points to the number of the "correct answer" sumti among the sumti 
 after {x_2}. i.e. {x_{{x_1}+2}} ckaji {x_2}
 
+
+## 2015-12-10T01:35:28Z — spheniscine (comment 2647, in reply to 2646)
+
+Re: How does this work?
+
+$x_1$ points to the number of the "correct answer" sumti among the sumti 
+after $x_2$. i.e. $x_{{x_1}+2}$ ckaji $x_2$
+
+Fix latex
+
