@@ -208,3 +208,15 @@ Re: How does this work?
 
 I'm fairly sure that an arbitrary number of sumti places was the intention.
 
+
+## 2015-12-11T01:37:18Z — krtisfranks (comment 2654, in reply to 2653)
+
+Re: How does this work?
+
+durka42 wrote:
+> I'm fairly sure that an arbitrary number of sumti places was the 
+intention.
+
+
+I agree. But it should be said that way.
+
