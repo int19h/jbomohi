@@ -23,3 +23,15 @@ durka42 wrote:
 Agreed. "x1 is overconfident?" is how I would intuitively read 
 {sezlacydu'e} if I didn't see it defined in a dictionary.
 
+
+## 2015-12-18T11:05:51Z — Ilmen (comment 2659, on definition 68173, in reply to 2658)
+
+Re: ka or no ka
+
+Ilmen wrote:
+> Agreed. "x1 is overconfident?" is how I would intuitively read 
+> {sezlacydu'e} if I didn't see it defined in a dictionary.
+
+(This "?" was to be a triple dot ellipsis, but it seems Jbovlaste is still 
+allergic to non-ANSI characters.)
+
