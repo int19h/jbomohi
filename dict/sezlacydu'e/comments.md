@@ -35,3 +35,17 @@ Ilmen wrote:
 (This "?" was to be a triple dot ellipsis, but it seems Jbovlaste is still 
 allergic to non-ANSI characters.)
 
+
+## 2015-12-18T13:14:06Z — gleki (comment 2660, on definition 68173, in reply to 2657)
+
+Re: ka or no ka
+
+durka42 wrote:
+> Just to record the results of the inconclusive discussion on IRC:
+> 
+> Either this should mean "x1 is overconfident" (and then {ka sezlacydu'e} 
+> would cover "x1 is overconfidence"), or this word means "x1 is 
+> overconfidence". durka42 prefers the former.
+
+why not dukse ke sevzi lacri
+
