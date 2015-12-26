@@ -123,3 +123,16 @@ specific safety-word for this meaning. If you squint hard enough, this
 choice even makes a lot of sense; on the other hand, it can be problematic 
 if one actually wants an empty function.
 
+
+## 2015-12-26T04:14:15Z — krtisfranks (comment 2662)
+
+Counting Days
+
+Pretend that it is Wednesday evening. You make arrangements with your 
+friend to meet "in two days", but by context you both know that you do not 
+mean exactly forty-eight hours from now  (which would be in the evening) 
+but sometime reasonable on the upcoming Friday. A correct way to express 
+this notion is to use "{sei'au}" with the function being the ceiling 
+function and then filling the altered terbri with the sumti meaning 'li re'
+(which specifies the number of days).
+
