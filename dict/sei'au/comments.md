@@ -136,3 +136,22 @@ this notion is to use "{sei'au}" with the function being the ceiling
 function and then filling the altered terbri with the sumti meaning 'li re'
 (which specifies the number of days).
 
+
+## 2015-12-26T08:37:56Z — gleki (comment 2663, in reply to 2662)
+
+Re: Counting Days
+
+krtisfranks wrote:
+> Pretend that it is Wednesday evening. You make arrangements with your 
+> friend to meet "in two days", but by context you both know that you do 
+not 
+> mean exactly forty-eight hours from now  (which would be in the evening) 
+> but sometime reasonable on the upcoming Friday. A correct way to express 
+> this notion is to use "{sei'au}" with the function being the ceiling 
+> function and then filling the altered terbri with the sumti meaning 'li 
+re'
+> (which specifies the number of days).
+
+
+could you please add an example?
+
