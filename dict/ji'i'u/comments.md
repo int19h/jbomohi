@@ -17,3 +17,18 @@ gleki wrote:
 
 The exponents still look broken in the notes
 
+
+## 2015-12-30T08:29:29Z — gleki (comment 2666, on definition 68150, in reply to 2665)
+
+Re: latex problem
+
+durka42 wrote:
+> gleki wrote:
+> > i fixed latex in the notes. Broken latex breaks pdf generation. so in 
+> > future please dont forget to add it in  similar way.
+> 
+> 
+> The exponents still look broken in the notes
+
+e'a do cnegau
+
