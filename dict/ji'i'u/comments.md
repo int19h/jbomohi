@@ -32,3 +32,10 @@ durka42 wrote:
 
 e'a do cnegau
 
+
+## 2016-01-02T23:28:18Z — durka42 (comment 2667, on definition 68150, in reply to 2666)
+
+Re: latex problem
+
+.a'i nai .i si'au nalvajni je lujdu'e valsi
+
