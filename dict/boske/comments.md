@@ -21,3 +21,11 @@ gleki wrote:
 
 I have changed it so as to comply.
 
+
+## 2016-01-04T18:26:46Z — krtisfranks (comment 2670)
+
+Etymology
+
+gleki, can you throw in the etymology and all of the other details that you
+desire?
+
