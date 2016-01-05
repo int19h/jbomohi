@@ -79,3 +79,15 @@ zo si si zo pavyseljirna
 
 .i za'a zei'a pluja
 
+
+## 2016-01-05T19:17:08Z — selpahi (comment 2677, in reply to 2676)
+
+Re: y...?
+
+spheniscine wrote:
+> zo si si zo pavyseljirna
+> 
+> .i za'a zei'a pluja
+
+zo .y si zo pavyseljirna
+
