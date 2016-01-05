@@ -52,3 +52,14 @@ Re: y...?
 
 uaru'e simsa zo'oi estas pe lo spanybau
 
+
+## 2016-01-05T18:40:44Z — spheniscine (comment 2674, in reply to 2672)
+
+Re: y...?
+
+lo selma'o be zo'oi y zo'u: moi'i lo nu gerna nalselviska'e pe'a cu se 
+krinu tu'a lu zo .y. pavyseljirna li'u mu'a no'u lo nu nitcu lo ka depypei 
+va'o lo nu cusku zo zo 
+
+.iku'i da'i ka'e pilno lu zo .y. si pavyseljirna li'u
+
