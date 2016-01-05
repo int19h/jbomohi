@@ -45,3 +45,10 @@ pagbu lo jbobau gi'e ku'i voi zo zoi po'o ka'e se pilno fi lo nu sitna ke'a
 .i na'o ku zo zoi se pilno fi lo nu sitna lo ba'e *na'e* lojbo .i ku'i zoi 
 zoi. .y .zoi ja'a pagbu lo jbobau
 
+
+## 2016-01-05T18:32:02Z — spheniscine (comment 2673, in reply to 2672)
+
+Re: y...?
+
+uaru'e simsa zo'oi estas pe lo spanybau
+
