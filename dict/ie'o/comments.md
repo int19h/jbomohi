@@ -63,3 +63,10 @@ va'o lo nu cusku zo zo
 
 .iku'i da'i ka'e pilno lu zo .y. si pavyseljirna li'u
 
+
+## 2016-01-05T18:41:43Z — spheniscine (comment 2675, in reply to 2674)
+
+Re: y...?
+
+oi lo'u si si le'u
+
