@@ -70,3 +70,12 @@ Re: y...?
 
 oi lo'u si si le'u
 
+
+## 2016-01-05T18:42:35Z — spheniscine (comment 2676, in reply to 2674)
+
+Re: y...?
+
+zo si si zo pavyseljirna
+
+.i za'a zei'a pluja
+
