@@ -91,3 +91,10 @@ spheniscine wrote:
 
 zo .y si zo pavyseljirna
 
+
+## 2016-01-06T19:07:03Z — durka42 (comment 2678, in reply to 2677)
+
+Re: y...?
+
+xo'o mi stidi lo nu zo pavyseljirna co'a cmavo ma'oi Y jecu basti zo ie'o
+
