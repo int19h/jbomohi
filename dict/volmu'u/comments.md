@@ -14,3 +14,17 @@ Re: voikla
 
 si si mo pei
 
+
+## 2016-01-08T12:43:31Z — selpahi (comment 2681, on definition 68221, in reply to 2679)
+
+Re: voikla
+
+durka42 wrote:
+> frica zo voikla ma .i uaru'e la'a frica zo voikla lo te frica be zo klama
+
+> bei zo muvdu .i ri ma pei
+
+ie li'a .i zo voikla zo volmu'u frica lo voi zo klama zo muvdu ki frica
+
+.i (to drata je vajnyme'a te frica fa lo nu zo volmu'u melmau toi)
+
