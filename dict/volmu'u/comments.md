@@ -28,3 +28,12 @@ ie li'a .i zo voikla zo volmu'u frica lo voi zo klama zo muvdu ki frica
 
 .i (to drata je vajnyme'a te frica fa lo nu zo volmu'u melmau toi)
 
+
+## 2016-01-08T17:58:23Z — durka42 (comment 2683, on definition 68221, in reply to 2681)
+
+Re: voikla
+
+> ie li'a .i zo voikla zo volmu'u frica lo voi zo klama zo muvdu ki frica
+
+ie .i mi juxre troci co retsku lo du makau voi zo klama zo muvdu ki frica
+
