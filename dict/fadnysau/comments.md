@@ -17,3 +17,13 @@ gleki wrote:
 pe'i ja'a vajni fa lo nu lo tcidu cu sanji .i mu'a zo genturfa'i ze'u se 
 pilno fau lo nu no da sanji kei tai nai tu'a lo velski be ri
 
+
+## 2016-01-14T18:47:46Z — zozeizeizeizeifaho (comment 2688, on definition 68243, in reply to 2687)
+
+Re: ge'e
+
+> pe'i ja'a vajni fa lo nu lo tcidu cu sanji .i mu'a zo genturfa'i ze'u se 
+> pilno fau lo nu no da sanji kei tai nai tu'a lo velski be ri
+
+lo'ai ri sa'ai vo'a le'ai
+
