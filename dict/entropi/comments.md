@@ -219,3 +219,11 @@ Since I do not know what the Boltzman(n) entropy is or how it is defined,
 I will leave the task of actually defining this lujvo in Lojban for those
 who know better. :)
 
+
+## 2016-01-16T21:53:42Z — krtisfranks (comment 2692, on definition 64051)
+
+Conditions terbri
+
+The terbri that specify the conditions being imposed upon the system can 
+probably also incorporate a sense of "while in macrostate".
+
