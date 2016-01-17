@@ -20,3 +20,20 @@ which
 
 examples with all terbricmi filled?
 
+
+## 2016-01-17T09:51:14Z — krtisfranks (comment 2696, on definition 68259, in reply to 2695)
+
+Re: e-th-lives
+
+gleki wrote:
+> krtisfranks wrote:
+> > This word can be used as a veljvo for the notion of a 'half'-life in 
+> which 
+> > a population changes by a factor of e (rather than by a factor of 2 or 
+> > 1/2).
+> 
+> 
+> examples with all terbricmi filled?
+
+{gritezdybi'otei}
+
