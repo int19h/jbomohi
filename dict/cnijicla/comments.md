@@ -15,3 +15,17 @@ krtisfranks wrote:
 
 zo cnijicla cimjvo
 
+
+## 2016-01-18T18:03:53Z — krtisfranks (comment 2700, on definition 18047, in reply to 2699)
+
+Re: Misapplication
+
+gleki wrote:
+> krtisfranks wrote:
+> > I do not think that emotions can really be stirred.
+> 
+> 
+> zo cnijicla cimjvo
+
+.i mi djuno .i mi xebni loi cimjvo
+
