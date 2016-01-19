@@ -12,3 +12,12 @@ reordered places)]; (x3 is a set completely specified); (cf. sumti, fancu)
 
 BPFK hasn't voted on changing this def. yet.
 
+
+## 2016-01-19T16:35:10Z — selpahi (comment 2704, on definition 72, in reply to 2702)
+
+Re: who changed this and why?
+
+mi pu sruma lo du'u do pu cnegau
+
+.i va'o ro da lo nu BPFK ba jdice cu xamgu .i .ai gau casnu
+
