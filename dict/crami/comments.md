@@ -213,3 +213,83 @@ Spanish: criatura de la mitolog?a
 Arabic: almakhluq al'usturi (?)
 Russian: mificheskoye sushchestvo (?)
 
+
+## 2016-01-24T15:17:01Z — gleki (comment 2713, on definition 68295, in reply to 2712)
+
+Re: so not humans in legends?
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > gleki wrote:
+> > > > Do Hercules, King Arthur count?
+> > > > Does Sherlock Holmes count?
+> > > > In fiction novellas does Napoleon count?
+> > > > Does he count in historical novellas?
+> > > 
+> > > 
+> > > Fictional but fairly realistic humans probably do not count.
+> > > 
+> > > Magical humans are arguable but probably do not either in our modern 
+> > > conceptions. Harry Potter is not someone whom I would classify as a 
+> crima
+> > 
+> > > nor even as a crima remna. In-world, even less so (despite his 
+> > "legendary" 
+> > > (different, more colloquial, sense) status). I would probably 
+classify 
+> > > house elves, vampires, and hags (as portrayed in the /Harry Potter/ 
+> > > universe, and elsewhere (using a specific sense of "hag")) as crima, 
+> > > especially out-of-universe. In-universe, it is likely, but more 
+> arguable.
+> > 
+> > > Same for Hobbits, dragons, dwarves, and elves in /The Lord of the 
+> Rings/ 
+> > > and unicorns, satyrs, etc. in /The Chronicles of Narnia/.
+> > > However, medieval people might consider witches and wizards to be 
+crima
+> 
+> > > (remna).
+> > > 
+> > > Gods are typically not included in the category of those things of 
+> which 
+> > > most people think when they hear "mythological creature". They are 
+> > somewhat
+> > > more powerful and divine and somewhat more separate (in the 
+mythology, 
+> > they
+> > > typically inhabit a different world from humans and other 
+mythological 
+> > > creatures). However, their off-spring might be included, especially 
+if 
+> > they
+> > > are not demi-gods but rather are beasts (gorgons, titans, cyclopses, 
+> > > giants, the Hydra, Kerberos, etc.). Demi-gods are arguable.
+> > > However, under a strict interpretation, though, gods are mythological
+
+> and
+> > 
+> > > animate, so they might count in this sense.
+> > 
+> > 
+> > This sounds more like a new purely Lojbanic semantic range and makes 
+> > translations from existing cultures somewhat harder.
+> > 
+> > If there was a semantic hole then I wish it was explained which 
+> > words/idiomatic expressions in at least those 6 major languages are 
+> covered
+> > by {crami}.
+> 
+> Chinese: chu?nshuo shengw? (?)
+> Hindi: pauraanik praanee (?)
+> English: mythological creature
+> Spanish: criatura de la mitolog?a
+> Arabic: almakhluq al'usturi (?)
+> Russian: mificheskoye sushchestvo (?)
+
+Well, I mean not the gloss. I mean the range of examples of {crami} is 
+uncertain in which case the question is what is even the purpose of having 
+a separate word. How is it going to be used? For translations of existing 
+texts or for generalizing patterns of myths in Lojbanology? In both cases 
+examples of such usage are needed.
+
