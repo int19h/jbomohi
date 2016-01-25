@@ -449,3 +449,18 @@ I can understand why someone would say that.
 So, as always, semantics is not absolute. Semantics is in the mind of the 
 attendant parties, as always.
 
+
+## 2016-01-25T09:14:57Z — gleki (comment 2716, on definition 68295, in reply to 2715)
+
+Re: so not humans in legends?
+
+krtisfranks wrote:
+> > ...
+
+you are mentioning {crida} all the way. So is it just proliferating 
+features of existing that is "wide range" gismu without justifying their 
+existence?
+
+{crida} is bound to "mythical humanoids". So is {crami} basically "x1 noi 
+na remna cu participe x2 noi se ranmi"?
+
