@@ -404,3 +404,48 @@ animals, or even organisms. If they did exist, they would be organisms or
 maybe the spirits thereof, but they actually are just fantasies. This is 
 the claim that this word makes).
 
+
+## 2016-01-25T08:18:52Z — krtisfranks (comment 2715, on definition 68295, in reply to 2713)
+
+Re: so not humans in legends?
+
+> Well, I mean not the gloss. I mean the range of examples of {crami} is 
+> uncertain in which case the question is what is even the purpose of 
+having 
+> a separate word. How is it going to be used? For translations of existing
+
+> texts or for generalizing patterns of myths in Lojbanology? In both cases
+
+> examples of such usage are needed.
+
+From the standpoint of justification of existence of the word, this word 
+introduces no new issues to the interpretation of the language. It actually
+reduces some. There are all sorts of questions on where to draw the line 
+for {crida}. This word envelops that one; it has analogous fuzziness, but 
+where their relative complement shares border with {crida}, one can always 
+choose this word in order to be less controversial.
+
+For example: There are all sorts of mythological creatures (such as 
+centaurs, minotaurs, satyrs, sphinxes, manticores, merpeople, etc.) which 
+are only partially humanoid and which, therefore, are only partially 
+deserving of the title of {crida}. In order to be less contentious, one can
+give them this title instead.
+
+I would not name Napoleon a crami. But my semantics are not law, even for 
+this word, one of my own creation. (I will say, though, that it is directly
+modelled on {crida}, so my creative powers were under self-imposed 
+restrictions which dilutes my authority even further.)
+If you name Napoleon a mythological humanoid (crida) then I will strongly 
+debate against that designation. However, under the condition of accepting 
+it, one must also accept that he is, in the same judgment, a crami. You are
+free to name him so if you choose. I just would not agree.
+Likewise, you may name Zeus a crida. This is less contentious to me. But I 
+might initially rebuff the idea. I would probably, though, weigh the issue,
+shrug my shoulders, and eventually play along. I probably would not 
+describe him so unless I was being purposefully pedantic, inclusive, 
+blasphemous, or the like, but it is a fairly acceptable appellation to me. 
+I can understand why someone would say that.
+
+So, as always, semantics is not absolute. Semantics is in the mind of the 
+attendant parties, as always.
+
