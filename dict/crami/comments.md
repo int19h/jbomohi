@@ -464,3 +464,37 @@ existence?
 {crida} is bound to "mythical humanoids". So is {crami} basically "x1 noi 
 na remna cu participe x2 noi se ranmi"?
 
+
+## 2016-01-25T22:55:07Z — krtisfranks (comment 2717, on definition 68295, in reply to 2716)
+
+Re: so not humans in legends?
+
+gleki wrote:
+> krtisfranks wrote:
+> > > ...
+> 
+> you are mentioning {crida} all the way. So is it just proliferating 
+> features of existing that is "wide range" gismu without justifying their 
+> existence?
+> 
+> {crida} is bound to "mythical humanoids". So is {crami} basically "x1 noi
+
+> na remna cu participe x2 noi se ranmi"?
+
+{crami} is bound to "mythical beings".
+So, sure, a good understanding of {crami} is "x1 poi ke'a tolza'i ku'o 
+participe x2 noi ke'a re'au'e ja te ranmi". But I would caution that x2 
+need not be a specific story in the conceptualization of the speaker (hence
+the option of "te ranmi"), that participation must be active in the sense 
+of x1 being involved with the story and being animate but it does not imply
+being so active as to be interacting with the main characters or the plot 
+directly and in-world physically. And it is not tied to a story, but rather
+an overarching culture conception of what fantasy beings can be included in
+stories and which characteristics they possess. It is a collective cultural
+and awareness (essentially, a mythos) that includes crami. In theory, the 
+whole species or class should be fantastic,  not just individual examples 
+thereof. (So, Harry might be one since all wizards are fantastic, but 
+Napol?on would not be, since (in fact, he and) all other Muggle humans are 
+not fantastic (in a certain sense: not "all" as in "all conceivable" and 
+not "Muggle" in the sense that relies on the existence of wizards).)
+
