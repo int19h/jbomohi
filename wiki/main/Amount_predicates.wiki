@@ -1,0 +1,28 @@
+== Numeric amount predicates ==
+In the current state of Lojban's lexicon, numeric amount predicates are few, most amount predicates are of the form "x1 has a large/small amount in this or that dimension, by standard x2" or such. Examples are {tsali}, {darno}, {clani}, {ganra}, {ditybra}, {sutra}, {tilju}… "x1 is strong / far away / long (length) / broad / long (duration) / quick / heavy…"
+Their objective/numeric counterparts would be something like "x1 is the stength / distance / length / breadth / duration / speed / weight ... of x2", thus relating an objective amount to something, without claiming this amount is large, small or medium.
+
+There are several possible argument structure paradigms that could be suitable for implementing those numeric amount predicates; for consistency's sake, we should probably decide which of them will be the conventional paradigm, and model the argument structures of the future numeric amount predicates after it.
+
+== Possible paradigms ==
+
+<pre>FIRST OPTION: There is one amount predicate for each measure scale
+EXAMPLE: "The box is 2 kg" = {li re mass_in_kg_of lo tanxe}
+BENEFITS: Compact.
+DRAWBACKS: You are compelled to chose an unit of measure even when it's irrelevant.
+
+SECOND OPTION: Each amount predicate has an argument slot for the unit of measure
+EXAMPLE: "The box is 2 kg" = {li re mass_of lo tanxe la .kilogram.}
+BENEFITS: The amount is expressed in a specific unit of measure, which can be specified explicitly by filling the unit argument slot, or left to the context when appropriate.
+DRAWBACKS: Leaving the unit slot up to the context might lead to ambiguities, and always having to fill it explicitly may be bothering.
+
+THIRD OPTION: Amount predicates are unitless and return an opaque quantity; if need be, in order to measure an amount on a specific scale, the opaque amount has to be converted to the desired unit with another predicate, or multiplicated by an appropriate conversion value.
+EXAMPLE:
+"The box is 2 kg" = {li re pi'i mo'e la .kilogram. cu mass_of lo tanxe}
+or {lo pilji be li re bei la .kilogram. cu mass_of lo tanxe}
+or {li re mass_to_kg lo mass_of be lo tanxe}
+or {li re pi'i ky gy cu mass_of lo tanxe}, with "ky gy" being a kilogram to opaque mass conversion value.
+BENEFITS: You can talk about size, length, weight etc without being compelled to mention any unit, as when comparing the size of two objects, etc.
+DRAWBACKS: A multiplication or unit conversion is needed for extracting a number on a specific scale of measure, resulting in more verbosity.
+
+FOURTH OPTION: The Toaq Dzu Way.</pre>
