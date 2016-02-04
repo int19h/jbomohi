@@ -34,3 +34,28 @@ have no way to access it. You just are not talking about n and you cannot
 do so with this word and our current grammar. You are talking about the 
 resultant mass itself. It is as simples as that.
 
+
+## 2016-02-04T12:24:33Z — Ilmen (comment 2727, on definition 63709, in reply to 2723)
+
+Re: n-somes versus cardinalities
+
+krtisfranks wrote:
+> I suggest that you use the term "terbrimei" or something of the like for 
+the expression of the idea of arity.
+
+Well I like "terbrimei", so I'll probably make it a synonym of 
+"tersu'imei", so that people can choose the one they prefer.
+I'm unclear on what a {tersu'i} is actually; according to some it's just a 
+number (the number of the argument place). That's the kind of situation 
+where having official usage examples along with the official gismu 
+definition would have been very helpful.
+When I created the word {tersu'imei}, I was needing a Lojban word for this 
+meaning and had a hard time finding an appropriate letter string, so I've 
+ended up with {tersu'imei}.
+
+As for {mei}, the x1 is now considered to be a plural, and not a mass/gunma
+(see the BPFK section for cmavo), so you can say "lo gerku cu ci mei" ("the
+dogs are threesome").
+
+mi'e la .ilmen. mu'o
+
