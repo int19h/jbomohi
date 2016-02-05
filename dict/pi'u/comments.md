@@ -77,3 +77,19 @@ be
 
 .i ki'e mi ba zukti'i se gidva do
 
+
+## 2016-02-05T19:44:50Z — Ilmen (comment 2731, in reply to 2730)
+
+Re: Terminology
+
+krtisfranks wrote:
+> gleki wrote:
+> > e'u do jungau lo cmima be BPFK lo du'u sarcu falo nu cnegau lo 
+smuvelcki 
+> be
+> > zo pi'u iku'i lo nu tavla fo lo jbobau cu sarcu
+> 
+> .i ki'e mi ba zukti'i se gidva do
+
+https://groups.google.com/forum/#!topic/bpfk-list/rsdGy-qvnjw
+
