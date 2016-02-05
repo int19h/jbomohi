@@ -59,3 +59,43 @@ dogs are threesome").
 
 mi'e la .ilmen. mu'o
 
+
+## 2016-02-05T03:57:44Z — krtisfranks (comment 2729, on definition 63709, in reply to 2727)
+
+Re: n-somes versus cardinalities
+
+Ilmen wrote:
+> krtisfranks wrote:
+> > I suggest that you use the term "terbrimei" or something of the like 
+for 
+> the expression of the idea of arity.
+> 
+> Well I like "terbrimei", so I'll probably make it a synonym of 
+> "tersu'imei", so that people can choose the one they prefer.
+> I'm unclear on what a {tersu'i} is actually; according to some it's just 
+a 
+> number (the number of the argument place). That's the kind of situation 
+> where having official usage examples along with the official gismu 
+> definition would have been very helpful.
+> When I created the word {tersu'imei}, I was needing a Lojban word for 
+this 
+> meaning and had a hard time finding an appropriate letter string, so I've
+
+> ended up with {tersu'imei}.
+> 
+> As for {mei}, the x1 is now considered to be a plural, and not a 
+mass/gunma
+> (see the BPFK section for cmavo), so you can say "lo gerku cu ci mei" 
+("the
+> dogs are threesome").
+> 
+> mi'e la .ilmen. mu'o
+
+
+Oh, yeah, I forgot about that. But the point remains. In my interpretation,
+it does not reference a cardinality but some sort of collection of some 
+number of elements.
+
+I do agree that we needed a word for the idea. I had been sort of thinking 
+on it for a while but never came up with a decent solution.
+
