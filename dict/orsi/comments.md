@@ -54,3 +54,36 @@ It is correct, and it's just useful to have a word to constrain what tuple
 it is, like {rely'orsi} or {orsi} {be} {li} {re}. That's why I've added 
 this word.
 
+
+## 2016-02-07T18:00:28Z — gleki (comment 2736, on definition 68353, in reply to 2734)
+
+Re: Sequence or Tuple
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > Your example of {rely'orsi} makes me think that you want {orsi} to 
+mean
+> 
+> > > "tuple" in English. Is this interpretation correct?
+> > 
+> > 
+> > And I wonder how {porsi}1 or {porsi2} is not "tuple".
+> 
+> 
+> porsi1 might be and porsi2 along with porsi3 might be enough to specify 
+> which one it is, but it would probably be nice to be able to know/specify
+
+> the terms ("components") explicitly, especially by feeding them in either
+
+> individually or as an ordered list (which makes it get kind of meta, but 
+I 
+> think that that is okay).
+> And it might be the case the {porsi} does not work at all. I have been 
+> thinking about this problem for a long time and I oscillate.
+
+
+So it'd a tuple with explicit probably immutable number of places and with 
+some default unspecified rules of how the order is formed (unimportant, not
+relevant to physical implementation)?
+
