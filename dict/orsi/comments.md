@@ -40,3 +40,17 @@ think that that is okay).
 And it might be the case the {porsi} does not work at all. I have been 
 thinking about this problem for a long time and I oscillate.
 
+
+## 2016-02-07T16:48:33Z — ractu (comment 2735, on definition 68353, in reply to 2732)
+
+Re: Sequence or Tuple
+
+krtisfranks wrote:
+> Your example of {rely'orsi} makes me think that you want {orsi} to mean 
+> "tuple" in English. Is this interpretation correct?
+
+
+It is correct, and it's just useful to have a word to constrain what tuple 
+it is, like {rely'orsi} or {orsi} {be} {li} {re}. That's why I've added 
+this word.
+
