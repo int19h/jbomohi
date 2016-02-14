@@ -9,3 +9,10 @@ which forms the input of the first argument slot and which is of the radius
 defined by the magnitude/absolute value of the input of the second argument
 slot, according to a norm established by context.
 
+
+## 2016-02-14T05:19:10Z — krtisfranks (comment 2744)
+
+Gloss word
+
+We should add the English gloss word "centered interval" for this word.
+
