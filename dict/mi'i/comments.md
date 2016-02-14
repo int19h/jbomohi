@@ -16,3 +16,14 @@ Gloss word
 
 We should add the English gloss word "centered interval" for this word.
 
+
+## 2016-02-14T08:42:42Z — gleki (comment 2746, in reply to 2744)
+
+Re: Gloss word
+
+krtisfranks wrote:
+> We should add the English gloss word "centered interval" for this word.
+
+
+again to bpfk-list please for changing official definitions.
+
