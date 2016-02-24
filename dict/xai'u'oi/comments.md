@@ -19,3 +19,20 @@ gleki wrote:
 
 Examples [16.5, 16.8] at https://lojban.github.io/cll/14/16/
 
+
+## 2016-02-24T06:51:23Z — gleki (comment 2833, on definition 68438, in reply to 2832)
+
+Re: ga'o/ke'i
+
+krtisfranks wrote:
+> gleki wrote:
+> > strange that we have either (0;1) or [0;1] but never (0;1]
+> > 
+> > the system might need reworking
+> 
+> 
+> Examples [16.5, 16.8] at https://lojban.github.io/cll/14/16/
+
+
+What about more than multidimensional intervals?
+
