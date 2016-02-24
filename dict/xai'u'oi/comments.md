@@ -64,3 +64,37 @@ or so.
 
 I do not know what you mean by "more than" these.
 
+
+## 2016-02-24T14:56:44Z — gleki (comment 2835, on definition 68438, in reply to 2834)
+
+Re: ga'o/ke'i
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > gleki wrote:
+> > > > strange that we have either (0;1) or [0;1] but never (0;1]
+> > > > 
+> > > > the system might need reworking
+> > > 
+> > > 
+> > > Examples [16.5, 16.8] at https://lojban.github.io/cll/14/16/
+> > 
+> > 
+> > What about more than multidimensional intervals?
+> 
+> 
+> I have a way to handle the simple cases of multidimensional intervals. 
+> Harder versions would require set operations. I have a way to outline 
+anot 
+> orthotope so that its sides are fully dashed (open/exclusive) or solid 
+> (closed/included). The words that I included yesterday are part of this 
+> scheme. I just have to write up how they work, which I hope to do 
+tomorrow 
+> or so.
+> 
+> I do not know what you mean by "more than" these.
+
+
+u'u ignore that "more than".
+
