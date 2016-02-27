@@ -1,0 +1,60 @@
+Presently, the cmavo "mi'i", "bi'i", "bi'o" (which currently constitute all elements of selma'o BIhI) all represent/create one-dimensional intervals.  However, in mathematics and even in daily life, there are many instances when higher-dimensional intervals are desired.  This functionality should be supported.
+
+Rather than creating new cmavo for this task, the current cmavo (aforementioned) can simply be extended.  The proposal described here will have the objective of supporting functionality for description of higher-dimensional intervals via extension only; only mathematical points are being discussed.  The result should be back-compatible.
+
+== Current Functionality ==
+
+The cmavo of BIhI are nonlogical interval connectives.  In mathematics (other options are available), one inputs a real number or possibly a generic endpoint, follows it by a cmavo of BIhI, and then mentions another real number or endpoint.  The result is a description of a set of all points belonging to the interval so described.  More explicitly:
+
+Let x and y be real numbers or points in geometric space, let r be a nonnegative real number.
+
+x mi'i r: generates the interval centered on x which has range r on either side of x; in other words, this is the set of all points that have a distance to x that is less than (or possibly equal to) r.
+
+x bi'i y: generates the interval or line segment with endpoints x and y; in other words, this is the set of all points between x and y (possibly including either, both, or neither of the endpoints).  "y bi'i x" is completely equivalent to "x bi'i y"; there is no inherent order to the inputs nor direction to the line segment.
+
+x bi'o y: generates the interval or directed line segment with endpoints x and y in that order (starting from x and going to y); otherwise, it is equivalent to "bi'i".  Thus "y bi'o x" is backward relative to "x bi'o y".
+
+== Proposed Functionality ==
+
+Fix a space X which is endowed with a metric d and defined over an ordered field F which is also endowed with a compatible metric <math>d_F</math>; fix a basis B thereof. Let r be a nonnegative real number.  Let x and y live in the same space  X.  Define the dimensionality of X to be dim(X) = n, where n is any nonnegative integer or (for simplicity: countable) infinity.  Define B = {<math>e_1, e_2, ..., e_n</math>}.  Then there exists <math> x_1, x_2, ..., x_n, y_1, y_2, ..., y_n \in F: x = x_1 e_1 +...+ x_n e_n = (x_1, ..., x_n), y = y_1 e_1 +...+ y_n e_n = (y_1, ..., y_n)</math>. Let "''R''" denote an 'ordering' relation on F or the ordered field of real numbers (as appropriate) which may be either the "less than" relation (denoted "<") or, as appropriate (determined by GAhO; generically, elliptical), the "less than or equal to" relation (denoted "<math>\leq</math>").
+
+
+We let the dimensionality of our space (which is and can be inferred from the dimensionality of x and/or y, which should match) determine the nature of our intervals.
+
+"mi'i" is the easiest to redefine.  In fact, the previous description needs no reworking, so long as we understand the space to be potentially larger than a line and loosen our notion of "interval".  I propose that "x mi'i r" is defined to be/describe the n-dimensional hyperball (or, possibly, the closure thereof) which is centered on/at x and which has radius r. Notationally, it is <math>\{ z \in X: d(x,z)</math> ''R'' <math>r \}</math>.
+
+I propose that we adopt additional keywords/glosses/terminology for "mi'i".  "mi'i" should be given the keyword/gloss "centered interval"; it might also deserve the keyword/gloss "n-ball". The second argument (here denoted by "r") should be called the "radius" (in addition to "range"). The first argument (here denoted by "x") can remain with the sole label of "center".
+
+"bi'i" requires a little more work. I propose that "x bi'i y" generates/describes the n-cell/n-orthotope which has opposite vertices at points x and y. This is <math>\{ \alpha = \alpha_1 e_1 +...+ \alpha_n e_n = (\alpha_1, ..., \alpha_n) \in X: ((\forall i \in \mathbb{N} \cap [1, n]), (x_i</math> ''R'' <math> \alpha_i </math> ''R'' <math> y_i)) \}</math>.
+
+Terminology can again be updated (id est: added to). The interval should be additionally described as a "n-cell" and "n-orthotope interval"; "rectilinear interval" may additionally be considered.  Both arguments (here denoted by "x" and "y" respectively) should be labelled as "endpoints".  Symmetry between them should be noted in dictionary definitions.
+
+"bi'o" has, to me, no obvious extension since (for example) <math>\mathbb{R}^2</math> cannot be ordered.
+
+When <math>F = \mathbb{R}</math>, 1-tuples/1-dimensional endpoints will be isomorphically mapped automatically to the corresponding real numbers. This allows for ease of use and back-compatibility.
+
+Notice that, now, "mi'i" and "bi'i" do not have the same "shape" except when the dimensionality involved is 0 or 1. The former is round whereas the latter is rectilinear.
+
+These distinct definitions are good (utile) and natural in theoretical mathematics.
+
+=== Further Extension ===
+
+"mi'i" can be extended further.  keep the previous definitions and conditions; undefine r.  Let <math>r_1, r_2, ..., r_n \geq 0</math>.
+
+Then we can express a new formal tuple <math>r = (r_1, ..., r_n)</math> where the order of the entries correspond to similarly labelled coordinates of points in X with respect to the basis established.  Note that r does not live in X; it is just an n-tuple which has entries ordered in a corresponding manner.
+
+Then we can define "x mi'i r" as <math>\{ \alpha = \alpha_1 e_1 +...+ \alpha_n e_n = (\alpha_1, ..., \alpha_n) \in X: ((\forall i \in \mathbb{N} \cap [1, n]), (d_F (x_i, \alpha_i)</math> ''R'' <math>r_i)) \}</math>. Notice that d is now the metric on the field F; each coordinate of a point <math>\alpha</math> is being compared to the corresponding point of x; if they are within the specified distance of one another, then that coordinate works out; if all of the coordinates of the point work out, then the point belongs to the interval.
+
+This essentially returns us to the old situation wherein the interval is no longer an n-ball but an n-cell (matching "bi'i"). The side lengths vary (being <math>2 r_i</math> for side i) and the lines passing through their corresponding/respective midpoints will intersect at a single point, videlicet the first argument (the 'center') which is the point from which the boundaries are 'measured'.
+
+This definition is good for computer science, graphing, and experimental science.  It is almost never used in theoretical mathematics. (Literally never in the experience of lai krtisfranks, at any rate.)
+
+Additionally, we could establish the convention-by-definition that: <math>((\exists \rho \geq 0: ((\forall i \in \mathbb{N} \cap [1, n]), (r_i = \rho))) \implies </math> "x mi'i r" = "x mi'i <math>\rho</math>" <math>)</math>; but we would need a way to ensure that the audience recognizes <math>\rho</math> as an n-tuple and not just a scalar. Otherwise, utilization of this convention would be indistinguishable from the previously-mentioned case/proposal wherein the second argument as a single number constitutes the radius of an n-ball.
+
+== Endpoint Stati (Inclusion/Exclusion) ==
+
+(To be addressed shortly)
+
+== Miscellany ==
+
+"mi'i" is really good for error bars in the sciences.  In English, scientists often say stuff like "g is 9.85 plus-or-minus .05 meters per second per second".  This is abusive.  The only options for the value of g in such a case would be 9.80 m/s<sup>2</sup> or 9.90 m/s<sup>2</sup>.  What they mean is that the value of g is between these two values (possibly including either of them). Following the format of the example quote, we have "mi'i" being the intention, with 9.85 functioning as the center and .05 as the radius. In describing a data set, one should make sure to say that the variable (usually dependent) ''belongs'' to this set, rather than it ''being'' this set.  This variable will be the one with error bars in the graph. If a single variable is described in such a manner, the error bars graphically are parallel to only one axis: the actual value (as measured, within standard deviation/error) can shift in this direction (so long as it remains within the bars) but cannot shift in any other.  If the error bars are applied to the ''point'', rather than the ''variable'' (which acts as a coordinate of the former), though, then the error bar will (under this proposal) envelop the point in a ball of the given radius; the actual value (as measured, within standard deviation/error) could thus shift in any direction within n-space so long as it remains within the provided radius of the given (measured, central) value.  Adopting the further extension, each coordinate can be individually and independently assigned/associated with an error; the error bars will graphically be parallel to each axis (or will be 0); the actual value (as measured, within standard deviation/error for each measurement/variable/coordinate) can shift relative to the data point along each axis so long as it stays within the axis-appropriate radius of the data point.
