@@ -59,3 +59,26 @@ gismu-generation-algorithm-generated gismu derived from English "cu" (for
 Russian "ton" (from the same), and whatsoever it is in Chinese, Hindi, and 
 Arabic.
 
+
+## 2016-03-06T23:47:19Z — krtisfranks (comment 2857, in reply to 2843)
+
+Re: Question about color system
+
+gleki wrote:
+> colored - skari (generalization)
+> 
+> {tinto} - to have hue
+> ? - to have colorfulness
+> ? - to have chroma
+> ? - to have saturation
+> ? - to have lightness
+> ? - to have brightness
+> 
+> If someone has already proposed something relevant to this system please 
+> speak up!
+
+
+I added "{xroma}" for "chroma". I am sorry if you wanted to do that.
+
+We should also have "luma".
+
