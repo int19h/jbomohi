@@ -157,3 +157,31 @@ So it maybe better not to borrow words precisely but to change to some
 apriori mode to avoid sfumatura/tint confusions of speakers of the source 
 languages.
 
+
+## 2016-03-07T06:30:13Z — gleki (comment 2860, in reply to 2859)
+
+Re: 
+
+gleki wrote:
+> I started from https://en.wiktionary.org/wiki/tinctus => tinto in 
+> Portuguese.
+> 
+> Such words seem to be dying in polysemy ACROSS languages. Take 
+{sfumatura},
+> which has different meanings, and I chose only one.
+> 
+> So it maybe better not to borrow words precisely but to change to some 
+> apriori mode to avoid sfumatura/tint confusions of speakers of the source
+
+> languages.
+
+Maybe some pseudo-suffix for all of them.
+Not sfumatura but sfumatVCV.
+
+tintari, sfumatari, xromari? (from skARI since they are specifications of 
+{skari})
+
+This will retain mnemonic power but will avoid confusion.
+
+Or "ton-" for hue, yes.
+
