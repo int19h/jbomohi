@@ -82,3 +82,35 @@ I added "{xroma}" for "chroma". I am sorry if you wanted to do that.
 
 We should also have "luma".
 
+
+## 2016-03-07T06:09:28Z — gleki (comment 2858, in reply to 2857)
+
+Re: Question about color system
+
+krtisfranks wrote:
+> gleki wrote:
+> > colored - skari (generalization)
+> > 
+> > {tinto} - to have hue
+> > ? - to have colorfulness
+> > ? - to have chroma
+> > ? - to have saturation
+> > ? - to have lightness
+> > ? - to have brightness
+> > 
+> > If someone has already proposed something relevant to this system 
+please 
+> > speak up!
+> 
+> 
+> I added "{xroma}" for "chroma". I am sorry if you wanted to do that.
+> 
+> We should also have "luma".
+
+
+I'm not sure. I used "tinto" because it resembles "tinctus" and its 
+derivatives in other languages. That is it's a participle, "hued", not 
+"hued".
+Not sure how to correctly say "having chroma" in major languages in one 
+word.
+
