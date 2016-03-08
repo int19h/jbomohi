@@ -13,3 +13,10 @@ if it's like UI but eats one sumti then it's DOI/COI selmaho.
 
 pei
 
+
+## 2016-03-08T17:38:28Z — zozeizeizeizeifaho (comment 2866, on definition 68312)
+
+lo du'u ma kau selma'o
+
+xu ma'oi sau'e'u dunli ma'oi coi lo ka ma kau gerna fi tu'a ce'u
+
