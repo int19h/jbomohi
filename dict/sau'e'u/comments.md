@@ -20,3 +20,14 @@ lo du'u ma kau selma'o
 
 xu ma'oi sau'e'u dunli ma'oi coi lo ka ma kau gerna fi tu'a ce'u
 
+
+## 2016-03-09T16:55:05Z — krtisfranks (comment 2867, on definition 68312, in reply to 2866)
+
+Re: lo du'u ma kau selma'o
+
+zozeizeizeizeifaho wrote:
+> xu ma'oi sau'e'u dunli ma'oi coi lo ka ma kau gerna fi tu'a ce'u
+
+
+.i .ua mi te sidbo ki'e
+
