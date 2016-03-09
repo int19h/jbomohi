@@ -43,3 +43,16 @@ gleki wrote:
 Yeah, that was all a bunch of autocorrect disliking Lojban. I think that I 
 fixed much of it.
 
+
+## 2016-03-09T17:13:27Z — krtisfranks (comment 2870, in reply to 2865)
+
+Re: COI
+
+gleki wrote:
+> if it's like UI but eats one sumti then it's DOI/COI selmaho.
+> 
+> pei
+
+
+Yup. I had a brainfart.
+
