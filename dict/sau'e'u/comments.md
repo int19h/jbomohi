@@ -31,3 +31,15 @@ zozeizeizeizeifaho wrote:
 
 .i .ua mi te sidbo ki'e
 
+
+## 2016-03-09T17:10:09Z — krtisfranks (comment 2869, on definition 68312, in reply to 2864)
+
+Re: error?
+
+gleki wrote:
+> lo zarci, not location zarci, right?
+
+
+Yeah, that was all a bunch of autocorrect disliking Lojban. I think that I 
+fixed much of it.
+
