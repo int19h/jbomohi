@@ -49,3 +49,11 @@ way
 
 How to say "I made a gesture".
 
+
+## 2016-03-18T17:06:08Z — gleki (comment 2875, on definition 56846)
+
+when several  members in x3?
+
+how would you specify motion of two fingers using x3 and x4? maybe delete 
+x3 instead?
+
