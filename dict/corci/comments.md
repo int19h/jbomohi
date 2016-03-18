@@ -27,3 +27,25 @@ is much more experimental and probably off-topic.
 For the time being, abstractions (si'o, nu, maybe ka) are probably the way 
 to go.
 
+
+## 2016-03-18T14:36:13Z — gleki (comment 2874, on definition 56846, in reply to 2738)
+
+Re: corci1?
+
+krtisfranks wrote:
+> gleki wrote:
+> > what can go into corci1? is it an event like 'lo moklu cu se polje'?
+> 
+> 
+> Probably. Lojban presently lacks a way for isolating and treating 'a 
+> smile', for example, as an abstract noun/entity in and of itself. I 
+suppose
+> that "si'o zi'o cisma" could be considered to represent this idea, but 
+that
+> is much more experimental and probably off-topic.
+> For the time being, abstractions (si'o, nu, maybe ka) are probably the 
+way 
+> to go.
+
+How to say "I made a gesture".
+
