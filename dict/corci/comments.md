@@ -82,3 +82,18 @@ gleki wrote:
 
 "mi (pu) cocygau", if you like the proposed cmarafsi.
 
+
+## 2016-03-19T16:15:08Z — krtisfranks (comment 2879, in reply to 1190)
+
+Re: asna/morna?
+
+gleki wrote:
+> {asna}, {morna}
+
+
+Quite like ".{asna}", especially in intent, but it has slightly different 
+semantics (due to me independently defining it) and it has different 
+morphological properties.
+
+I would say that it is only barely similar to "{morna}".
+
