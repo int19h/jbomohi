@@ -97,3 +97,15 @@ morphological properties.
 
 I would say that it is only barely similar to "{morna}".
 
+
+## 2016-03-19T16:15:11Z — gleki (comment 2880, on definition 56846, in reply to 2878)
+
+Re: corci1?
+
+krtisfranks wrote:
+> > How to say "I made a gesture".
+> "mi (pu) cocygau", if you like the proposed cmarafsi.
+
+
+ok, it'd probably be {cocyzu'e}.
+
