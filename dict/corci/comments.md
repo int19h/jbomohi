@@ -109,3 +109,46 @@ krtisfranks wrote:
 
 ok, it'd probably be {cocyzu'e}.
 
+
+## 2016-03-19T16:31:13Z — krtisfranks (comment 2881, on definition 56846, in reply to 2875)
+
+Re: when several  members in x3?
+
+gleki wrote:
+> how would you specify motion of two fingers using x3 and x4? maybe delete
+
+> x3 instead?
+
+
+I thought about it when originally defining the word, and there is a case 
+to be made for merging the current x3 and x4. They are certainly closely 
+related: the thing being utilized in 'motion' x4 is definitely x3.
+
+I presently would probably use a "{nu}" or "{si'o}" abstraction for x4. I 
+do not want to assert that as precedent; it merely a cludgey fix until a 
+better solution is invented. But we may eventually decide that it is good.
+
+In that case, I would have x3 be the two fingers (or even parts thereof; 
+for example: the distal and medial joints of the index and middle/long 
+fingers) and then have x4 be the event of their flexion and extension 
+(which are words that I have thought about adding); the thing that is being
+flexed or extended is definitely x3. So, in that regard, x3 seems sort of 
+redundant. One cannot mouth-smile with one's arm: x3 must be included as an
+argument in the "nu" clause bridi. But there are some reasons for the body 
+part terbri though. First, it is not that big of a moral loss to include it
+and it may be referenced via "{ri}" (in the case of a single submitted 
+sumti) in the "nu" clause. Second, it is useful to have both terbri (and to
+have themy remain separate) for the sake of asking questions, forming 
+lujvo, and for abbreviation (sometimes, one just wants to say "gesture with
+the fingers" rather than "gesture with the fingers doing motion X"; of 
+course, this can also be accomplished via "{tu'a}", although the exact 
+relation must be inferred in such a case). And this all supposes that x4 is
+a "nu" clause or maybe a "{be}"-linked sumti. But it may conceivably be 
+something different. In particular (and third), it could be the case that a
+'macro' of sorts is submitted to x4. Maybe it is "grimace". All sorts of 
+body parts are involved in grimacing, and they may be used in the way that 
+they would during the course of a grimace independent of the others. So, 
+one may "grimace with their eyes", even as they keep the rest of their face
+and body still/blank. In this sense, x3 restricts the domain of 
+consideration for what is being x4'ed.
+
