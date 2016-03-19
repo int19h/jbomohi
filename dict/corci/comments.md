@@ -152,3 +152,18 @@ one may "grimace with their eyes", even as they keep the rest of their face
 and body still/blank. In this sense, x3 restricts the domain of 
 consideration for what is being x4'ed.
 
+
+## 2016-03-19T16:32:13Z — krtisfranks (comment 2882, on definition 56846, in reply to 2880)
+
+Re: corci1?
+
+gleki wrote:
+> krtisfranks wrote:
+> > > How to say "I made a gesture".
+> > "mi (pu) cocygau", if you like the proposed cmarafsi.
+> 
+> 
+> ok, it'd probably be {cocyzu'e}.
+
+That works at least as well.
+
