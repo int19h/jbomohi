@@ -57,3 +57,28 @@ when several  members in x3?
 how would you specify motion of two fingers using x3 and x4? maybe delete 
 x3 instead?
 
+
+## 2016-03-19T16:13:08Z — krtisfranks (comment 2878, on definition 56846, in reply to 2874)
+
+Re: corci1?
+
+gleki wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > what can go into corci1? is it an event like 'lo moklu cu se polje'?
+> > 
+> > 
+> > Probably. Lojban presently lacks a way for isolating and treating 'a 
+> > smile', for example, as an abstract noun/entity in and of itself. I 
+> suppose
+> > that "si'o zi'o cisma" could be considered to represent this idea, but 
+> that
+> > is much more experimental and probably off-topic.
+> > For the time being, abstractions (si'o, nu, maybe ka) are probably the 
+> way 
+> > to go.
+> 
+> How to say "I made a gesture".
+
+"mi (pu) cocygau", if you like the proposed cmarafsi.
+
