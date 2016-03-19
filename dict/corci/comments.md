@@ -167,3 +167,20 @@ gleki wrote:
 
 That works at least as well.
 
+
+## 2016-03-19T17:34:21Z — gleki (comment 2884, on definition 56846, in reply to 2881)
+
+Re: when several  members in x3?
+
+krtisfranks wrote:
+> gleki wrote:
+> > how would you specify motion of two fingers using x3 and x4? maybe 
+delete
+> 
+> > x3 instead?
+
+How would you specify what each finger is doing in x4? Using {ri} and "ri 
+xi re"?
+
+Anyway, it seems to me x4 is just {ta'i}
+
