@@ -80,3 +80,15 @@ mistype
 
 what is "wthe " in the def.?
 
+
+## 2016-03-19T15:48:12Z — krtisfranks (comment 2877, on definition 57075, in reply to 2876)
+
+Re: mistype
+
+gleki wrote:
+> what is "wthe " in the def.?
+
+
+Indeed it was a typo; I expect that it was an artifact of using a 
+smartphone. I fixed it to be "the". Thank you.
+
