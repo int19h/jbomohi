@@ -184,3 +184,39 @@ xi re"?
 
 Anyway, it seems to me x4 is just {ta'i}
 
+
+## 2016-03-22T02:52:19Z — krtisfranks (comment 2885, on definition 56846, in reply to 2884)
+
+Re: when several  members in x3?
+
+gleki wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > how would you specify motion of two fingers using x3 and x4? maybe 
+> delete
+> > 
+> > > x3 instead?
+> 
+> How would you specify what each finger is doing in x4? Using {ri} and "ri
+
+> xi re"?
+> 
+Well, I typically would describe the motion 'as a whole', such as: as a 
+group action (much like masses can have seemingly contradictory 
+properties), distributively (each x3 performs the action described by x4 on
+its own (possibly in a sequence with the others)), or I would describe the 
+action as being 'atomic' in some sense (the body parts x3 are involved, but
+it is not really that any one of them is performing an individual role in 
+the action x4; rather, it is the emergent sense that they together create 
+something more that is doing x4 - an example would be that the face or its 
+parts (x3) smile (x4): the entire system organizes in a consorted manner 
+that produces a smile and no individual part really does so (a smile 
+requires the eyes as much as the mouth)).  Or, I would use "{fa'u}".  Or, 
+your option might work.  Or, I would just mention the action of each body 
+part in the abstraction(s) (if they are used) in x4; like I said, it is a 
+bit redundant and this can (I think: must) happen.
+
+> Anyway, it seems to me x4 is just {ta'i}
+
+At least approximately, it seems so.
+
