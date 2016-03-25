@@ -158,3 +158,43 @@ is actually "Selachimorpha", without the first "r".
 
 I agree.
 
+
+## 2016-03-25T10:56:32Z — gleki (comment 2898, on definition 67292, in reply to 2897)
+
+Re: Connotations
+
+krtisfranks wrote:
+> gleki wrote:
+
+> > I'm opposed to making any nomenclature basic.
+> 
+> You will have to explain what you mean by that.
+
+ue oise'i.
+
+I'm opposed to making any decisions regarding more appropriate or less 
+appropriate nomenclatures. They all have their reasoning.
+
+> > For Lojbanizing Linnaean names a precise mechanism should be devised 
+> > preferably making conversion back from Lojban into Latin unambiguous 
+like
+> 
+> > ROT13. I'm not sure whether that is possible unless we use pseudo-rafsi
+
+> > prefixes.
+> 
+> I would like to work on such a project. I think that we can make 
+guidelines
+> that work often, and then there might be exceptional cases that cannot be
+
+> mapped blindly. "{serlaximorfa}" is actually such a word: the taxon's 
+name 
+> is actually "Selachimorpha", without the first "r".
+
+it could be {tselaximorfa} under la snura ideology.
+
+https://mw.lojban.org/papri/Rule:_respect_the_form_of_words
+
+But again it won't restore Selachimorpha back. Even these {x} and {f}. How 
+do you know they were "ch" and "ph", why not "kh"/"h" and "f"?
+
