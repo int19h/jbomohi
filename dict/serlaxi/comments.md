@@ -20,3 +20,19 @@ gismu (and some other zi'evla). If my philosophy is generally adopted,
 especially with the third terbri, the actual denotations of the words could
 differ, although they would remain obviously closely related.
 
+
+## 2016-03-25T03:53:05Z — krtisfranks (comment 2890, on definition 67292, in reply to 2889)
+
+Re: Connotations
+
+Notes/edits:
+
+> definition/classification), "{serlaximorfa} should take this role (where 
+
+I forgot to close my quote. Treat the quote symbol as the word "{zo}" here 
+(but not necessarily elsewhere).
+
+> the relevant taxon is Selachimorpha) where?s this word should be more 
+
+This should read (with) "whereas".
+
