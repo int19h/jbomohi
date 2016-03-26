@@ -198,3 +198,12 @@ https://mw.lojban.org/papri/Rule:_respect_the_form_of_words
 But again it won't restore Selachimorpha back. Even these {x} and {f}. How 
 do you know they were "ch" and "ph", why not "kh"/"h" and "f"?
 
+
+## 2016-03-26T01:30:32Z — spheniscine (comment 2900, on definition 67292, in reply to 2889)
+
+Re: Connotations
+
+Interesting observation. It's similar to the problem I raised with 
+{braxiiura} and how common use of "crab" includes species not within the 
+infraorder Brachyura, thus my coinage of {karkino}.
+
