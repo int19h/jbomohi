@@ -41,3 +41,18 @@ uvula", using this word. (But this is equivalent to saying "My palatine
 uvula is inflamed", so maybe it is purely English which is 
 interfering/causing bad habits here.)
 
+
+## 2016-03-27T06:57:05Z — gleki (comment 2904, on definition 41376, in reply to 2901)
+
+Re: Order of terbri
+
+krtisfranks wrote:
+> I would personally expect the body-part (current-x3) to be the second 
+> terbri, with the characteristics (presumably covering things like 
+swelling,
+> pain, redness, etc.; current-x2) being the third terbri.
+
+
+Indeed. And the third terbricmisni can be expressed via 
+"ti noi inflamati mi cu xunre gi'e barda"
+
