@@ -18,3 +18,19 @@ the
 
 It's a reference.
 
+
+## 2016-03-31T21:21:14Z — krtisfranks (comment 2908, on definition 68554, in reply to 2907)
+
+Re: Why?
+
+gleki wrote:
+> krtisfranks wrote:
+> > I am genuinely curious: Why does "{ko'a}" fail to answer "cusku ma" in 
+> the 
+> > proper way?
+> 
+> 
+> It's a reference.
+
+What if I say "lu broda li'u goi ko'a" and then use it that way?
+
