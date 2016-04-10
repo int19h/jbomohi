@@ -170,3 +170,18 @@ I merely said that any state of mind can be altered, humans can't persist
 in one state of mind for a long time. So maybe add "abnormal" or "medically
 abnormal" or "partially unconscious" to the definition itself.
 
+
+## 2016-04-10T07:28:24Z — krtisfranks (comment 2922, on definition 68504, in reply to 2921)
+
+Re: in what way?
+
+gleki wrote:
+> 
+> I merely said that any state of mind can be altered, humans can't persist
+
+> in one state of mind for a long time. So maybe add "abnormal" or 
+"medically
+> abnormal" or "partially unconscious" to the definition itself.
+
+I agree. It has been done.
+
