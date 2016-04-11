@@ -36,3 +36,13 @@ Re: Possible question
 
 I suppose so :p
 
+
+## 2016-04-11T06:39:21Z — gleki (comment 2925, on definition 67277)
+
+proposed NU?
+
+I suggest removing that phrase that looks strange in the pdf output and 
+just adding {ga'ei} directly.
+
+{ganseti} is also a proposed word but it's already in the dictionary.
+
