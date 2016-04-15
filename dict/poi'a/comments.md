@@ -100,3 +100,11 @@ selma'o
 You (Selpahi) probably desire to make an alternative definition for 
 {noi'a}, else your selbri does not make much sense.
 
+
+## 2016-04-15T16:24:38Z — krtisfranks (comment 2927, on definition 68606)
+
+Alternative word choice
+
+Should I move my PA definition to NOIhAU or would you (Selpahi) like to 
+move yours to NOIhE or something similar?
+
