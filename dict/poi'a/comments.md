@@ -92,3 +92,11 @@ gleki wrote:
 Indeed it was a typo; I expect that it was an artifact of using a 
 smartphone. I fixed it to be "the". Thank you.
 
+
+## 2016-04-15T16:21:03Z — krtisfranks (comment 2926, on definition 68606)
+
+selma'o
+
+You (Selpahi) probably desire to make an alternative definition for 
+{noi'a}, else your selbri does not make much sense.
+
