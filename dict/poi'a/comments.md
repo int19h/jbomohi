@@ -192,3 +192,21 @@ Well, I think it would be fine. Incidentally, you should add one or two
 examples to your two cmavo proposals. I'm having trouble understanding 
 their purpose; examples would probably help. :)
 
+
+## 2016-04-16T18:35:14Z — krtisfranks (comment 2933, on definition 68606, in reply to 2932)
+
+Re: Alternative word choice
+
+Ilmen wrote:
+> krtisfranks wrote:
+> > Okay, then I shall move my proposals. NOIhAU works just as well for me.
+
+> Do 
+> > you agree?
+> 
+> Well, I think it would be fine. Incidentally, you should add one or two 
+> examples to your two cmavo proposals. I'm having trouble understanding 
+> their purpose; examples would probably help. :)
+
+Okey-dokey!
+
