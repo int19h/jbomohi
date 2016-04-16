@@ -178,3 +178,17 @@ in
 Okay, then I shall move my proposals. NOIhAU works just as well for me. Do 
 you agree?
 
+
+## 2016-04-16T17:04:37Z — Ilmen (comment 2932, on definition 68606, in reply to 2930)
+
+Re: Alternative word choice
+
+krtisfranks wrote:
+> Okay, then I shall move my proposals. NOIhAU works just as well for me. 
+Do 
+> you agree?
+
+Well, I think it would be fine. Incidentally, you should add one or two 
+examples to your two cmavo proposals. I'm having trouble understanding 
+their purpose; examples would probably help. :)
+
