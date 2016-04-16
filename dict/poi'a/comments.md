@@ -145,3 +145,36 @@ This page ( http://piratepad.net/SvMcskATrA ) is also related to the
 subject (in this page, poi'a/noi'a/soi'a were temporarily called 
 Pxoi/Nxoi/Sxoi).
 
+
+## 2016-04-16T16:52:58Z — krtisfranks (comment 2930, on definition 68606, in reply to 2929)
+
+Re: Alternative word choice
+
+Ilmen wrote:
+> krtisfranks wrote:
+> > Should I move my PA definition to NOIhAU or would you (Selpahi) like to
+
+> > move yours to NOIhE or something similar?
+> 
+> The word {poi'a} has been used since some time with the meaning Selpahi 
+> entered; but until now nobody added it to JVS. This usage of {poi'a} has 
+> been described there: 
+> http://selpahi.weebly.com/lojban/zo-xoi-joi-lo-se-srana-be-ri
+> (It's written in the cekitau dialect; if you have difficulty reading that
+
+> page, you can go directly to the bottom where there is a table of formal 
+> definitions for the proposed cmavo.)
+> 
+> poi'a/noi'a/soi'a are intented to be a series of cmavo for implementing 
+> adverbial constructors in Lojban (so something similar to the -ly ending 
+in
+> English, as in "quietly").
+> 
+> This page ( http://piratepad.net/SvMcskATrA ) is also related to the 
+> subject (in this page, poi'a/noi'a/soi'a were temporarily called 
+> Pxoi/Nxoi/Sxoi).
+
+
+Okay, then I shall move my proposals. NOIhAU works just as well for me. Do 
+you agree?
+
