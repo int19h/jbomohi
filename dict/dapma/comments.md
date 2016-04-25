@@ -69,3 +69,17 @@ connotations should be applied with {zabna} or {mabla}. This *would* be the
 correct English definition if this belief is to be officially accepted, but
 unfortunately there is no known easy gloss word.
 
+
+## 2016-04-25T23:45:13Z — vpbroman (comment 2941, on definition 66163)
+
+neutral sense needed
+
+Even if we could create a gismu for bless, to replace the clumsy to'edapma 
+(ugh), it still would not help express cases where the fate imposed is 
+mixed instead of all good or all bad. I think xagdapma or zandapma versus 
+xladapma or maldapma are good for bless and curse. The general case could 
+be like:
+x1 imposes or calls on a greater power to impose on x2 fate/destiny x3. 
+Note: since cursing is much common than blessing, that is the default when 
+unspecified by x3 or a compound.
+
