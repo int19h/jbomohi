@@ -83,3 +83,25 @@ x1 imposes or calls on a greater power to impose on x2 fate/destiny x3.
 Note: since cursing is much common than blessing, that is the default when 
 unspecified by x3 or a compound.
 
+
+## 2016-04-26T08:44:08Z — gleki (comment 2942, on definition 66163, in reply to 2941)
+
+Re: neutral sense needed
+
+vpbroman wrote:
+> Even if we could create a gismu for bless, to replace the clumsy 
+to'edapma 
+> (ugh), it still would not help express cases where the fate imposed is 
+> mixed instead of all good or all bad. I think xagdapma or zandapma versus
+
+> xladapma or maldapma are good for bless and curse. The general case could
+
+> be like:
+> x1 imposes or calls on a greater power to impose on x2 fate/destiny x3. 
+
+Definition #66163 is something like that.
+
+> Note: since cursing is much common than blessing, that is the default 
+when 
+> unspecified by x3 or a compound.
+
