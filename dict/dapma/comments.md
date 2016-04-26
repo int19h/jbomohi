@@ -105,3 +105,10 @@ Definition #66163 is something like that.
 when 
 > unspecified by x3 or a compound.
 
+
+## 2016-04-26T17:32:17Z — spheniscine (comment 2943, on definition 66163, in reply to 2941)
+
+Re: neutral sense needed
+
+I have made an {ismu} for that: {apma}
+
