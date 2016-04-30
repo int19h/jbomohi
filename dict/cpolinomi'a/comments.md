@@ -73,3 +73,16 @@ gleki wrote:
 
 I do not recall. I had a reason. :/
 
+
+## 2016-04-30T18:04:26Z — krtisfranks (comment 2948, on definition 44334)
+
+Some more issues
+
+The indeterminate could be understood to belong to another structure 
+(particularly, the domain, when understood as a function). But in algebra, 
+this really is not necessary. I am not sure whether or not to support it.
+
+I think that I am going to reverse the order of the coefficients, since we 
+want the order to match the default of {po'i'oi} and the highest-degree 
+coefficient is the most important one.
+
