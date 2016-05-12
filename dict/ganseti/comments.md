@@ -46,3 +46,10 @@ just adding {ga'ei} directly.
 
 {ganseti} is also a proposed word but it's already in the dictionary.
 
+
+## 2016-05-12T07:37:35Z — gleki (comment 2952)
+
+se casnu
+
+https://groups.google.com/d/topic/lojban/KM0X_XrgWsk/discussion
+
