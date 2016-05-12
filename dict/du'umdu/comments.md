@@ -15,3 +15,18 @@ hard about applicability of the place structure beyond a need to have a
 brivla to mean "statement/proposition", and merely made it to match 
 {nundumu}.
 
+
+## 2016-05-12T19:48:17Z — krtisfranks (comment 2955, on definition 66760, in reply to 2954)
+
+Re: What about {sedu'u}?
+
+spheniscine wrote:
+> Interesting question. I could either make that te-du'umdu, or if no one 
+> objects I may redefine se-du'umdu to match sedu'u; I wasn't thinking too 
+> hard about applicability of the place structure beyond a need to have a 
+> brivla to mean "statement/proposition", and merely made it to match 
+> {nundumu}.
+
+I was expecting it to be du'umdu3, but I did not think about it too much, 
+so do what you think is best.
+
