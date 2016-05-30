@@ -33,3 +33,10 @@ https://theconversation.com/why-do-only-some-people-get-skin-orgasms-from-l
 https://www.reddit.com/r/gifs/comments/4l0u1g/pow_spells_out_torture_in_mor
 se_code_by_blinking/
 
+
+## 2016-05-30T08:32:07Z — gleki (comment 2968)
+
+girzu
+
+https://www.reddit.com/r/Frisson
+
