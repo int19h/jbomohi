@@ -30,3 +30,19 @@ multiple-digit-long string in the assumed base? We seem to be running into
 the same problems that {xo'e} had and which {xo'ei} is trying to fix, 
 methinks.
 
+
+## 2016-06-09T18:30:14Z — krtisfranks (comment 2980, on definition 2381, in reply to 2979)
+
+Re: Meaning
+
+krtisfranks wrote:
+> Does this ask for a single digit or lerfu (which is itself somewhat 
+> conflatory) or for a number? If the former, can the response be a 
+> multiple-digit-long string in the assumed base? We seem to be running 
+into 
+> the same problems that {xo'e} had and which {xo'ei} is trying to fix, 
+> methinks.
+
+I should note that I think that the digit interpretation is more versatile,
+given the processing procedure that I have proposed.
+
