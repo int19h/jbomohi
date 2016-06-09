@@ -23,3 +23,13 @@ left to context, or can be specified with {ma'i} if we ever decide on a way
 to express standards. I'm not familiar with the police jargon use, so can't
 comment on it.
 
+
+## 2016-06-09T13:11:19Z — zozeizeizeizeifaho (comment 2978, on definition 68701, in reply to 2977)
+
+Re: On one's person
+
+zozeizeizeizeifaho wrote:
+> {re'olte} is intended?to fill a gap between {ralte} (physical possession 
+
+s/?/ /. Hooray for not handling Unicode properly in 2016!
+
