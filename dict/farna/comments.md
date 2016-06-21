@@ -18,3 +18,24 @@ present x4). Some of the issues mentioned in my commentary about {fargau}
 (see its definition) would technically be resolvable (if not ideal in 
 practice) if we make this correction.
 
+
+## 2016-06-21T22:41:02Z — krtisfranks (comment 2995, on definition 332, in reply to 2994)
+
+Re: Split x3
+
+krtisfranks wrote:
+> The origin terbri should be separate from the frame of reference terbri 
+> (for this word and all other direction words). The destination terbri 
+(x2) 
+> and the origin terbri (present x4 in one sense) create a directed line 
+> segment such that the direction is x1, but what one calls it is entirely 
+> determined by the basis chosen (the frame of reference, a separate sense 
+of
+> present x4). Some of the issues mentioned in my commentary about {fargau}
+
+> (see its definition) would technically be resolvable (if not ideal in 
+> practice) if we make this correction.
+
+Oops. Every mention of "x4" should be replaced with "x3". I was thinking 
+"we need an x4" and therefore confused myself.
+
