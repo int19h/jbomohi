@@ -1,0 +1,51 @@
+# mail/lojban-list thread 2bc86fc2e835-cll_question%3A_customizable_elements%3F | root 20160626034223.gf28155@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2016-06-26T03:42:23Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20160626034223.gf28155@stodi.digitalkingdom.org | mail/lojban-list/cur/1466912543.2bc86fc2e835c630.jbomohi:2,S
+So the topic is if people want to make visual representation changes
+to the CLL.  If you're not likely to want to do that (i.e. you're
+not comfortable with HTML + CSS), you can stop here.
+
+If the "role=" in docbook is passed to the "class=" attribute in the
+final HTML, then visual customization is trivial: you just change
+the CSS to do whatever you want to the classes you want, as I showed
+you examples of.
+
+The problem is that, by default, "role=" only turns into "class=" on
+a few docbook elements: emphasis, entry, para, and phrase
+
+This can be worked around in various ways; for example, you could
+add a blank paragraph with the role you want just before the thing
+you want to manipulate, and then use CSS to match, say, "<p
+class="blue"> followed by <div class="example">", but that's kind of
+eww.
+
+The other option is to modify the XML generation such that if you do
+<example role="blue">, then the resulting HTML becomes <div
+class="example blue"> instead of <div class="example">
+
+This is a very easy modification for me to make.  The result would
+be that for every element I so modify, *anybody* could easily change
+their visual representation by adding a role= and making a simple
+change to the CSS; the whole point is that I wouldn't have to be
+involved after that.
+
+An obvious target here is <example>, so I'm going to do that, but I
+would like to make such changes exactly once (so that I have to run
+diff_official as few times as possible (that's the thing I use to
+validate that nothing of importance was changed except what we
+wanted)).
+
+So, can people please suggest which elements they'd like to be so
+customizable?  The list of all docbook elements is at
+http://www.docbook.org/tdg5/en/html/chunk-part-d64e8789.html , and
+the CLL in docbook-normalized format is it
+http://vrici.lojban.org/~rlpowell/media/public/cll_processed_xhtml-2016-06-25.xml
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at https://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
