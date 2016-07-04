@@ -1,0 +1,1548 @@
+<div style="text-align: right;">'''[[zantufa jonma'o smuni/jbo|banjubu'o]] / [[zantufa jonma'o smuni/fr|français]] / [[zantufa jonma'o smuni/ja|日本語]] / [[zantufa jonma'o smuni/en|English]]'''</div>
+{{Jbocre/en}}
+
+==Semantics of forethought logical connectives==
+The [[zantufa jonma'o|forethought connectives]] of [[zantufa|Zantufa]] that is a series of parsers for unofficial Lojban is much more expressive than that of official grammar.
+
+Zantufa is syntactic parser, and it does not fix rules for sematics by itself.
+
+Here is only a suggestion of semantics of the forethought logical connectives in order to gain profit from expressiveness of Zantufa grammar.
+
+The sentences in Lojban here follow the grammar of [http://guskant.github.io/gerna_cipra/zantufa-1.16.html Zantufa_1.16].
+
+==List of symbols used on this page==
+
+{| class="wikitable" style="text-align: center;"
+|-
+! Symbol
+! Definition
+|-
+| ¬P
+| '''na ku''' P
+|-
+| P ∨ Q
+| P '''i ja''' Q
+|-
+| [[Image:ija.png|alt="so'i zo ja"]]
+| ((((P<sub>0</sub> ∨ P<sub>1</sub>) ∨ P<sub>2</sub>) ∨ ...) ∨ P<sub>n</sub>)
+|-
+| P ∧ Q
+| P '''i je''' Q
+|-
+| [[Image:ije.png|alt="so'i zo je"]]
+| ((((P<sub>0</sub> ∧ P<sub>1</sub>) ∧ P<sub>2</sub>) ∧ ...) ∧ P<sub>n</sub>)
+|-
+| P ↔ Q
+| P '''i jo''' Q
+|-
+| [[Image:ijo.png|alt="so'i zo jo"]]
+| ((((P<sub>0</sub> ↔ P<sub>1</sub>) ↔ P<sub>2</sub>) ↔ ...) ↔ P<sub>n</sub>)
+|-
+| P ⊕ Q
+| P '''i jonai''' Q
+|-
+| [[Image:ijonai.png|alt="so'i lu jonai li'u"]]
+| ((((P<sub>0</sub> ⊕ P<sub>1</sub>) ⊕ P<sub>2</sub>) ⊕ ...) ⊕ P<sub>n</sub>)
+|-
+| P ⊏ Q
+| P '''i ju''' Q
+|-
+| [[Image:iju.png|alt="so'i zo ju"]]
+| ((((P<sub>0</sub> ⊏ P<sub>1</sub>) ⊏ P<sub>2</sub>) ⊏ ...) ⊏ P<sub>n</sub>) <br /> = P<sub>0</sub>
+|-
+| P ⊐ Q
+| P '''i se ju''' Q
+|-
+| [[Image:iseju.png|alt="so'i lu seju li'u"]]
+| ((((P<sub>0</sub> ⊐ P<sub>1</sub>) ⊐ P<sub>2</sub>) ⊐ ...) ⊐ P<sub>n</sub>) <br /> = P<sub>n</sub>
+|}
+
+In the following explanation, examples for 3-ary or 4-ary connection are sometimes accompanied with a truth value table. 
+The falseness is represented by 0; the truth is represented by 1.
+
+Examples for 3-ary connection are sometimes accompanied with a Venn diagram. 
+<span style="background-color:#FFFFFF;">White color represents falseness</span>; <span style="background-color:#FFAB58;">orange color represents truth</span>.
+
+==ga==
+===ga A gi B gi C gi ...===
+====Definition====
+{|
+|-
+|'''ga''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= [[Image:ija.png|alt="so'i zo ja"]]
+|}
+====Example====
+3-ary case:
+{'''ga A gi B gi C'''}=(A∨B)∨C
+
+[[Image:venn-ga.png|thumb|ga zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!A∨B
+!(A∨B)∨C
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|0
+|0
+|0
+|-
+|}
+===ga bo A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''ga bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|'''ga''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|[[Image:ija.png|alt="so'i zo ja"]]
+|}
+===ga nai A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''ga nai''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|'''ga''' ¬P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|}
+====Example====
+3-ary case:
+{'''ga nai A gi B gi C'''}=(¬A∨B)∨C
+
+[[Image:venn-ganai.png|thumb|ga zei nai zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!¬A∨B
+!(¬A∨B)∨C
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|-
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|}
+===ga nai bo A gi B gi C gi ...===
+====Definition====
+{|
+|-
+|'''ga nai bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|[[Image:ganaibo.png|alt="ganaibo"]]
+|}
+====Example====
+3-ary case:
+
+{|
+|-
+| 
+|{'''ga nai bo A gi B gi C'''}
+|-
+|=
+|((A→B)∧(B→C))
+|-
+|=
+|((¬A∨B)∧(¬B∨C))
+|}
+
+[[Image:venn-ganaibo.png|thumb|ga zei nai zei bo zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!¬A∨B
+!¬B∨C
+!(¬A∨B)∧(¬B∨C)
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|}
+=====Difference=====
+{'''ga nai bo''' A '''gi''' B '''gi''' C} ≠ {A '''i na ja''' B '''i na ja''' C}
+
+{|
+|-
+| 
+|A '''i na ja''' B '''i na ja''' C
+|-
+|=
+|(A → B) → C
+|-
+|=
+|¬(¬A ∨ B) ∨ C
+|}
+
+[[Image:venn-inaja.png|thumb|i zei na zei ja zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!¬A∨B
+!¬(¬A∨B)∨C
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|}
+
+==ge==
+===ge A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''ge''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|[[Image:ije.png|alt="so'i zo je"]]
+|}
+====Example====
+3-ary case:
+{'''ge A gi B gi C'''}=(A∧B)∧C
+
+[[Image:venn-ge.png|thumb|ge zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!A∧B
+!(A∧B)∧C
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|-
+|0
+|0
+|0
+|0
+|0
+|-
+|}
+===ge bo A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''ge bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|'''ge''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|[[Image:ije.png|alt="so'i zo je"]]
+|}
+===ge nai A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''ge nai''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|'''ge''' ¬P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|}
+====Example====
+3-ary case:
+{'''ge nai A gi B gi C'''}=(¬A∧B)∧C
+
+[[Image:venn-genai.png|thumb|ge zei nai zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!¬A∧B
+!(¬A∧B)∧C
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|-
+|0
+|0
+|0
+|0
+|0
+|-
+|}
+
+===ge nai bo A gi B gi C gi ...===
+====Definition====
+{|
+|-
+|'''ge nai bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|[[Image:genaibo.png|alt="genaibo"]]
+|}
+====Example====
+3-ary case:
+
+{|
+|-
+| 
+|{'''ge nai bo A gi B gi C'''}
+|-
+|=
+|{'''ge nai A gi nai B gi nai C'''}
+|-
+|=
+|{'''A i na je nai B i je nai C'''}
+|-
+|=
+|(¬A∧¬B)∧¬C
+|}
+
+[[Image:venn-genaibo.png|thumb|ge zei nai zei bo zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!¬A∧¬B
+!(¬A∧¬B)∧¬C
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|-
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|}
+
+==go==
+===go A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''go''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|[[Image:ijo.png|alt="so'i zo jo"]]
+|}
+====Example====
+3-ary case:
+{'''go A gi B gi C'''}=(A↔B)↔C
+
+[[Image:venn-go.png|thumb|go zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!A↔B
+!(A↔B)↔C
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|}
+
+===go bo A gi B gi C gi ...===
+====Definition====
+{|
+|-
+|'''go bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|[[Image:gobo.png|alt="gobo"]]
+|}
+====Example====
+3-ary case:
+
+{|
+|-
+| 
+|{'''go bo A gi B gi C'''}
+|-
+|=
+|((A↔B)∧(B↔C))
+|}
+
+[[Image:venn-gobo.png|thumb|go zei bo zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!A↔B
+!B↔C
+!(A↔B)∧(B↔C)
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|}
+
+===go nai A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''go nai''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|'''go''' ¬P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|}
+====Example====
+3-ary case:
+{'''go nai A gi B gi C'''}=(¬A↔B)↔C
+
+[[Image:venn-gonai.png|thumb|go zei nai zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!¬A↔B
+!(¬A↔B)↔C
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|}
+
+===go nai bo A gi B gi C gi ...===
+====Definition====
+It is defined recursively as follows.
+
+{|
+|+ style="text-align:left;font-weight:bold;" | 2-ary case of P<sub>0</sub> and P<sub>1</sub>:
+|-
+| 
+|'''go nai bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> ('''gi'i''')
+|-
+|=
+|'''go nai''' P<sub>0</sub> '''gi''' P<sub>1</sub> ('''gi'i''')
+|-
+|=
+| P<sub>0</sub> ⊕ P<sub>1</sub>
+|-
+|=
+| ¬P<sub>0</sub> ↔ P<sub>1</sub>
+|}
+
+{|
+|+ style="text-align:left;font-weight:bold;" | 3-ary case of P<sub>0</sub>, ... , P<sub>n</sub> (n≥2):
+|-
+| 
+|'''go nai bo''' P<sub>0</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|(('''go nai bo''' P<sub>0</sub> '''gi''' ... '''gi''' P<sub>n-1</sub> ('''gi'i''')) ⊕ P<sub>n</sub>) ∧ [[Image:gonaibo_na.png|alt="gonaibo_na"]]
+|}
+====Example====
+=====3-ary case:=====
+{|
+|-
+| 
+|{'''go nai bo A gi B gi C'''}
+|-
+|=
+|(('''go nai A gi B''') ⊕ C) ∧ ¬(A∧B)
+|-
+|=
+|((A⊕B)⊕C) ∧ ¬(A∧B)
+|}
+
+[[Image:venn-gonaibo.png|thumb|go zei nai zei bo zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!A⊕B
+!(A⊕B)⊕C
+!¬(A∧B)
+!((A⊕B)⊕C) ∧ ¬(A∧B)
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|}
+
+=====4-ary case:=====
+{|
+|-
+| 
+|{'''go nai bo A gi B gi C gi D'''}
+|-
+|=
+|(('''go nai bo A gi B gi C''') ⊕ D) ∧ ¬(A∧B) ∧ ¬(B∧C) ∧ ¬(C∧A) 
+|}
+
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!D
+!'''go nai bo A gi B gi C'''
+!('''go nai bo A gi B gi C''') ⊕ D
+!¬(A∧B)
+!¬(B∧C)
+!¬(C∧A)
+!(('''go nai bo A gi B gi C''') ⊕ D) ∧ ¬(A∧B) ∧ ¬(B∧C) ∧ ¬(C∧A)
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|0
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|}
+
+=====Difference=====
+{'''go nai bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')} ≠ {P<sub>0</sub> '''i jo nai''' P<sub>1</sub> '''i jo nai''' ... '''i jo nai''' P<sub>n</sub>}
+
+Here is, for example, the table of truth value of connection by {'''i jo nai'''}. It is different from that of {'''go nai bo A gi B gi C gi D'''}.
+
+{|
+|-
+| 
+|{A '''i jo nai''' B '''i jo nai''' C '''i jo nai''' D}
+|-
+|=
+|{A '''i na jo''' B '''i na jo''' C '''i na jo''' D}
+|-
+|=
+|((A ⊕ B) ⊕ C) ⊕ D
+|}
+
+[[Image:venn-ijonai.png|thumb|i zei jo zei nai zei venn]]
+{| class="wikitable" style="text-align: center;"
+|-
+!A
+!B
+!C
+!D
+!A ⊕ B
+!(A ⊕ B) ⊕ C
+!((A ⊕ B) ⊕ C) ⊕ D
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|-
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|-
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|0
+|0
+|-
+|0
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|style="background-color:#FFAB58;"|1
+|0
+|0
+|0
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|style="background-color:#FFAB58;"|1
+|-
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|-
+|}
+
+==gu==
+===gu A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''gu''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|[[Image:iju.png|alt="so'i zo ju"]]
+|-
+|= 
+|P<sub>0</sub> 
+|}
+====Example====
+3-ary case:
+
+{|
+|-
+| 
+|{'''gu A gi B gi C'''}
+|-
+|=
+|(A ⊏ B) ⊏ C
+|-
+|=
+|A
+|}
+
+[[Image:venn-gu.png|thumb|gu zei venn]]
+
+===gu bo A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''gu bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|'''gu''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|[[Image:iju.png|alt="so'i zo ju"]]
+|-
+|= 
+|P<sub>0</sub> 
+|}
+
+===gu nai A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''gu nai''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|'''gu''' ¬P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|¬P<sub>0</sub> 
+|}
+
+====Example====
+3-ary case:
+ 
+{|
+|-
+| 
+|{'''gu nai A gi B gi C'''}
+|-
+|=
+|{'''gu ¬A gi B gi C'''}
+|-
+|=
+|¬A
+|}
+
+[[Image:venn-gunai.png|thumb|gu zei nai zei venn]]
+
+===gu nai bo A gi B gi C gi ...===
+====Definition====
+{|
+|-
+| 
+|'''gu nai bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+| 
+|'''gu''' ¬P<sub>0</sub> '''gi''' ¬P<sub>1</sub> '''gi''' ... '''gi''' ¬P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|¬P<sub>0</sub> 
+|-
+|=
+|'''gu nai''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|}
+
+==segu==
+===se xi ky gu A gi B gi C gi ... (se gu, te gu, ve gu, xe gu, ..., se xi ro gu)===
+{|
+|-
+| 
+|'''se xi ky gu''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|= 
+|P<sub>0</sub> '''i se ju''' P<sub>1</sub> '''i se ju''' ... '''i se ju''' P<sub>k</sub> '''i ju''' ... '''i ju''' P<sub>n</sub>
+|-
+|=
+|[[Image:iseju_k.png|alt="ky lu seju li'u"]] '''i ju''' ... '''i ju''' P<sub>n</sub>
+|-
+|= 
+|P<sub>k</sub> '''i ju''' ... '''i ju''' P<sub>n</sub>
+|-
+|= 
+|[[Image:iju_k.png|alt="ny vu'u ky zo ju"]]
+|-
+|= 
+|P<sub>k</sub>
+|}
+
+{|
+|-
+| style="text-align:right;" | {'''se xi no gu'''}
+| style="text-align:center;" | =
+| {'''gu'''}
+|-
+| style="text-align:right;" | {'''se xi pa gu'''}
+| style="text-align:center;" | =
+| {'''se gu'''}
+|-
+| style="text-align:right;" | {'''se xi re gu'''}
+| style="text-align:center;" | =
+| {'''te gu'''}
+|-
+| style="text-align:right;" | {'''se xi ci gu'''}
+| style="text-align:center;" | =
+| {'''ve gu'''}
+|-
+| style="text-align:right;" | {'''se xi vo gu'''}
+| style="text-align:center;" | =
+| {'''xe gu'''}
+|-
+| 
+|...
+| 
+|}
+
+{|
+|-
+| {'''se xi ro gu''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')}
+|=
+| P<sub>n</sub>
+|}
+
+===se xi ky gu bo A gi B gi C gi ...===
+{|
+|-
+| 
+|'''se xi ky gu bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|'''se xi ky gu''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|P<sub>k</sub>
+|}
+
+===se xi ky gu nai A gi B gi C gi ...===
+{|
+|+ style="text-align:left;font-weight:bold;" | k=0 のとき
+|-
+| 
+|'''se xi no gu nai''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|'''gu''' ¬P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|¬P<sub>0</sub>
+|}
+
+{|
+|+ style="text-align:left;font-weight:bold;" | k≠0 のとき
+|-
+| 
+|'''se xi ky gu nai''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|'''se xi ky gu''' ¬P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|P<sub>k</sub>
+|}
+
+===se xi ky gu nai bo A gi B gi C gi ...===
+{|
+|-
+| 
+|'''se xi ky gu nai bo''' P<sub>0</sub> '''gi''' P<sub>1</sub> '''gi''' ... '''gi''' P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|'''se xi ky gu''' ¬P<sub>0</sub> '''gi''' ¬P<sub>1</sub> '''gi''' ... '''gi''' ¬P<sub>k</sub> '''gi''' ... '''gi''' ¬P<sub>n</sub> ('''gi'i''')
+|-
+|=
+|¬P<sub>k</sub>
+|}
