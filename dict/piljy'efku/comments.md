@@ -36,3 +36,24 @@ Oh no. I decided to use latex for the power operation itself, instead of
 playing with the ^ symbol.
 There you go. (Don't forget to cancel the vote... pe'u!)
 
+
+## 2016-07-27T14:44:07Z — gleki (comment 3018, on definition 68305, in reply to 3017)
+
+Re: downvoted cuz broken latex
+
+ractu wrote:
+> gleki wrote:
+> > gleki wrote:
+> > > this latex wont parse thus preventing pdf from generating.
+> > > 
+> > > downvoted until fixed.
+> > 
+> > ($x_4$ ^ $x_3$) is the problem
+> 
+> 
+> Oh no. I decided to use latex for the power operation itself, instead of 
+> playing with the ^ symbol.
+> There you go. (Don't forget to cancel the vote... pe'u!)
+
+other words like selpiljy'efku are not fixed yet
+
