@@ -1,4 +1,4 @@
-# mail/lojban-list thread db2c15b57b61-explicit_tanru | root cactk4+bcxno07yrbtd0_r7kajdx3bkzyxoddsutvhrpp=oeptq@mail.gmail.com | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread db2c15b57b61-explicit_tanru | root cactk4+bcxno07yrbtd0_r7kajdx3bkzyxoddsutvhrpp=oeptq@mail.gmail.com | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2016-07-29T08:57:47Z | Bruno Panasiewicz <ciuak.prog@gmail.com> | cactk4+bcxno07yrbtd0_r7kajdx3bkzyxoddsutvhrpp=oeptq@mail.gmail.com | mail/lojban-list/cur/1469782667.db2c15b57b610f50.jbomohi:2,S
 coi jbozabna
@@ -66,6 +66,172 @@ What do you think about such a convention?
 >
 > ~ mi'e la uakci mu'o re'i .e'e sai
 >   .i lo fanmo selsku be mi cu binxo co ke du'e va'e clani cai ~
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at https://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
+=== 3 | 2016-07-29T12:36:05Z | Bruno Panasiewicz <ciuak.prog@gmail.com> | cactk4+beijggbz3d_2owhdatpt8_xedse3qjdqubo54m9+cbcg@mail.gmail.com | mail/lojban-list/cur/1469795765.18fd7c1e73c92918.jbomohi:2,S
+​la gleki di'e ciska:
+​
+​
+
+>
+>
+> Em sexta-feira, 29 de julho de 2016 11:57:49 UTC+3, la uakci escreveu:
+>
+
+​What language is this header in?
+
+
+
+> coi jbozabna
+>>
+>> In Lojban, all tanru are made by putting two (or more; technically one
+>> brivla also
+>> makes for a tanru, but anyway) brivla next to each other.
+>>
+>> I'm considering something of a dialect/preference/whatever that would
+>> require a tanru
+>> to be enclosed in {ke} to make it a tanru; otherwise, it would break into
+>> two selbri.
+>> For example, {lo blanu stizu} would parse as {<lo blanu KU> [CU stizu
+>> VAU]}
+>>
+>
+> Maybe instead use alternatives to LE?
+> E.g.
+> {.i blanu bu stizu} already works like that.
+>
+
+​Good point, but while {bu} eats one word, *hypothetical cmavo* should eat
+one selbrisle.
+(Of course assuming that a {ke}-{ke'e} ​bracket counts as selbrisle.)
+
+
+
+>
+>
+>
+>> , and to
+>> express the intended 'blue chair', it'd be required to say {lo ke blanu
+>> stizu}.
+>>
+>
+> How would tanru containing >=3 selbrisle work? Would {lo blanu broda
+> broda} parse as {lo blanu cu broda broda}?
+>
+
+​That wouldn't parse here. Think about it in terms of a grammar:
+
+    jufra = sumti* selbri sumti* / sumti*
+    sumti = LE selbri
+    selbri = KE brivla* KEhE? / brivla
+
+{lo blanu stizu} parses as:
+
+jufra
+|
++---------+
+|         |
+sumti     selbri
+|         |
++--+      brivla
+|  |      |
+LE selbri |
+|  |      |
+|  brivla |
+|  |      |
+== =====  =====
+lo blanu  stizu
+(regular Lojban: lo blanu cu stizu)
+
+(Apologies for the cheesy ASCII tree, but anyways.)
+
+{lo ke blanu stizu}:
+
+jufra
+|
+sumti
+|
++--+
+|  |
+LE selbri
+|  |
+|  +--+------+
+|  |  |      |
+|  KE brivla brivla
+|  |  |      |
+== == =====  =====
+lo ke blanu  stizu
+(regular: lo blanu cu stizu)
+
+Your {lo blanu broda broda} doesn't parse - it'd parse to this point:
+
+jufra
+|
++---------+------+
+|         |      |
+sumti     selbri sumti
+|         |      |
++--+      brivla LE
+|  |      |      |
+LE selbri |      |
+|  |      |      |
+|  brivla |      |
+|  |      |      |
+== =====  =====  =====
+lo blanu  broda  broda!?
+
+That doesn't match (as you can see), since {broda} isn't among the selma'o
+BRIVLA
+(let's pretend BRIVLA is a selma'o).
+
+If we add NU, then your proposed thingy would work in context.
+It's also possible for an unmatching brivla to start a new bridi, with the
+{.i} elided:
+
+    selsku = (I* jufra)*
+
+Then:
+
+selsku
+|
++----------------+
+|                |
+jufra            jufra
+|                |
++---------+      selbri
+|         |      |
+sumti     selbri brivla
+|         |      |
++--+      brivla |
+|  |      |      |
+LE selbri |      |
+|  |      |      |
+|  brivla |      |
+|  |      |      |
+== =====  =====  =====
+lo blanu  broda  broda
+(regular: lo blanu cu broda .i broda)
+
+Hope it makes sense.
+
+~ mi'e la uakci mu'o re'i
+  .i .e'e ma'a jbokei gi'e nai jboke'i ~
+
+
+>
+> What do you think about such a convention?
+>>
+>> ~ mi'e la uakci mu'o re'i .e'e sai
+>>   .i lo fanmo selsku be mi cu binxo co ke du'e va'e clani cai ~
+>>
 >
 
 -- 
