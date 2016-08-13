@@ -44,3 +44,15 @@ guaranteed
 
 or just {co'a} {jmive} if you don't need jbena2
 
+
+## 2016-08-13T11:59:32Z — selpahi (comment 3026, on definition 453, in reply to 3025)
+
+Re: Asymmetry
+
+gleki wrote:
+> or just {co'a} {jmive} if you don't need jbena2
+
+lo cifnu pu lo nu ri jbena cu jmive ne'i lo gutra
+
+Just remove jbena3 and jbena4.
+
