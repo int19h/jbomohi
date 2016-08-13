@@ -71,3 +71,17 @@ producing offspring?
 
 how are viruses "born"?
 
+
+## 2016-08-13T12:09:06Z — gleki (comment 3028, on definition 453, in reply to 3026)
+
+Re: Asymmetry
+
+selpahi wrote:
+> gleki wrote:
+> > or just {co'a} {jmive} if you don't need jbena2
+> 
+> lo cifnu pu lo nu ri jbena cu jmive ne'i lo gutra
+
+i na'i pe'i i lo za'e cifnu pu lo nu ri jbena na pe'i cifnu gi'e ja'a pe'i 
+pagbu lo se tarbi
+
