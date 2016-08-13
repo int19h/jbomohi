@@ -85,3 +85,21 @@ selpahi wrote:
 i na'i pe'i i lo za'e cifnu pu lo nu ri jbena na pe'i cifnu gi'e ja'a pe'i 
 pagbu lo se tarbi
 
+
+## 2016-08-13T12:09:40Z — gleki (comment 3029, on definition 453, in reply to 3028)
+
+Re: Asymmetry
+
+gleki wrote:
+> selpahi wrote:
+> > gleki wrote:
+> > > or just {co'a} {jmive} if you don't need jbena2
+> > 
+> > lo cifnu pu lo nu ri jbena cu jmive ne'i lo gutra
+> 
+> i na'i pe'i i lo za'e cifnu pu lo nu ri jbena na pe'i cifnu gi'e ja'a 
+pe'i 
+> pagbu lo se tarbi
+
+i sei mi pu co'u morji se'u coi lo bergu
+
