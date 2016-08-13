@@ -56,3 +56,18 @@ lo cifnu pu lo nu ri jbena cu jmive ne'i lo gutra
 
 Just remove jbena3 and jbena4.
 
+
+## 2016-08-13T12:07:06Z — gleki (comment 3027, on definition 453)
+
+generally broken
+
+some animals are born in the form of egg, in viviparous it's not. what is 
+{jbena} for each of these cases? what is {jbena} for plants (seeds)? is 
+metamorphosis a {nu} {jbena} (egg => larva, larva => chrysalis, chrysalis 
+=> imago)?
+
+is binary fission a nunjbena process? or such animals are immortal and not 
+producing offspring?
+
+how are viruses "born"?
+
