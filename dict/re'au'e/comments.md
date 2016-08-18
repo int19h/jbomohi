@@ -90,3 +90,10 @@ zozeizeizeizeifaho wrote:
 
 ouch, s/je'u nai/je'u nai i/
 
+
+## 2016-08-18T18:51:27Z — lin (comment 3033)
+
+Is this word really necessary?
+
+It's no shorter than {sexipa}.
+
