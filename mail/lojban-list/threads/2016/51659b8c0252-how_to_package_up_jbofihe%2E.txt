@@ -1,0 +1,37 @@
+# mail/lojban-list thread 51659b8c0252-how_to_package_up_jbofihe%2E | root 20160904053438.gl29323@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2016-09-04T05:34:38Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20160904053438.gl29323@stodi.digitalkingdom.org | mail/lojban-list/cur/1472967278.51659b8c0252c0bd.jbomohi:2,S
+
+Just wrote these docs for myself and thought it might come in handy
+for others some day:
+
+
+How this package was created; based on
+https://github.com/jordansissel/fpm/wiki/PackageMakeInstall
+
+   yum install flex
+   yum install bison
+   yum install gcc
+   gem install fpm
+   cd /usr/src/
+   sudo git clone https://github.com/rc0/jbofihe.git
+   cd jbofihe/
+   sudo chown -R rlpowell:users .
+   sudo chcon -R -t user_home_t .
+   mkdir /tmp/installdir
+   perl config.pl --prefix=/tmp/installdir/usr/local
+   make all
+   make install
+   fpm -s dir -t rpm -n jbofihe -v 0.39 -C /tmp/installdir usr/local
+   find /tmp/installdir -type f | sort
+   rpm -qpl jbofihe-0.39-1.x86_64.rpm | sort
+   sudo rpm -i jbofihe-0.39-1.x86_64.rpm
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at https://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
