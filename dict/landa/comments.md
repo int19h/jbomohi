@@ -44,3 +44,19 @@ gleki wrote:
 butbit should work in this situation if people are willing to diversify its
 meaning slightly in general strings.
 
+
+## 2016-09-15T17:48:00Z — gleki (comment 3051)
+
+landa1
+
+it's possible that the curren def. is broken. 
+
+.i mi zvati me'o ubu ky noi landa lo pendo be mi
+
+this requires 'me'o ubu ky' (or {li}) to be understood both as zvati2 
+(place) and as landa1 (text or number).
+
+moving to landa2 might be one option.
+
+ISO fuhivla is another option.
+
