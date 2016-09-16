@@ -20,4 +20,38 @@ Each version specification literally encodes the swaps as an ordered string of b
 
 If two specifications are connected by "ce'o", then they left-group but in cases of conflict, the latter one prevails. They can compound so that if the first-mentioned version swaps X and Y while the latter-mentioned version swaps X and Z such that they do not really conflict, then the swaps happen in left-to-right order so that new-X is old-Z, new-Y is old-X, and new-Z is old-Y. The whole specification must be uttered when "ce'o"-connected.
 
+The version specification is optionally terminated by "boi".
+
+Throughout this section, a swap option will be denoted by "{X, Y}." where X and Y are words or rafsi (in quotes); this means that the old meaning of X is proposed to be the new meaning of Y and that the old meaning of Y is proposed to be the new meaning of X. Note that the ordering of these two words is immaterial: the pairing is symmetric. Nothing else is included in the option other than this swap and each list entry of an option will specify only the swap.
+
+In English, kyfy specifications of Tcekitaujau may be written in the following form "Tcekitaujau kf.[mode].[tier].[version]".
+
+The case of "jo'au tcekitaujau" is the only one in this schema which may refer to any dialect whatsoever of Tcekitau without actually having to list which they are. Every other standard activation which lists a mode activates exactly that specification; any unmentioned specification is inactive. So, "jo'au tcekitaujau kyfy pi'e pa pi'e pa pi'e vaivai" activates Tcekitaujau kf.1.1.FF and nothing else.
+
+
 == Tier "1": the primary/basic dialect ==
+
+Tier "1" deals with the eponymous words "ce", "ki", "tau", "jau", and "du", as well as a small set of related words, in that order. This tier is closed, meaning that it is very rare for new options to be added to it. The options are as follows, in this order:
+
+# {"ce'u", "ce"}.
+# {"ke'a", "ki"}.
+# {"tu'a", "tau"}.
+# {"jo'u", "jau"}.
+# {"jo'u", "joi"}.
+# {"jo'u", "jei"}.
+# {"joi", "jau"}.
+# {"du'u", "du"}.
+
+
+(End of list.)
+
+There are 8 entries in the list. Each entry gets assigned a bit, which is on or off depending on whether the utterer whiches to activate the swap; "on" and "off" are each assigned one of the symbols "0" or "1" bijectively based on mode specification (see earlier). The bits are arranged into a string in the order in which their corresponding options are presented in the immediately prior list. This string is the '''version specification precursor'''. As it is eight bits long, it can be converted to a two-digit hexadecimal string; for the sake of clarity, the last bit in the version specification precursor is in the singles ("2^0"'s) position while thebfirst bit therein is in the "2^7"'s position. This must be done. The resulting two-digit hexadecimal string is the final version specifier.
+
+If more entries are added to this list, this method must be revised. Additionally, it is is advised that they come either at the end or the beginning, for the sake of back-compatibility.
+
+When multiple entries swap overlapping words, they are applied in left-to-right (standard) reading order. So, for example, if both ''{"jo'u", "jau"}'' and ''{"joi", "jau"}'', which overlap at "jau", are "on" then new-"joi" takes on the meaning of old-"jo'u", new-"jo'u" takes on the meaning of old-"jau", and new-"jau" takes on the meaning of old-"joi".
+
+Examples:
+* If none of these options are activated, then the version is "00" when the mode specification is "1"; the version is "FF" if the mode is "0". But why would one specify the mode and tier if one were not going to use it at all?
+* If all of the options are activated (heirarchically, remember), then the version is "FF" if the mode is "1"; the version is "00" if the mode is "0".
+* If options #1, #2, #3, and #8 are activated (but none of the rest (that is: words beginning with "j") are activated), then the version specification precursor in mode "1" is "11100001"; thus, in this mode, the version specification is "E1" ("rei pa"). In "0" mode, then the precursor is "00011110", so the version specification is "1E" ("pa rei"). Note that it is not always the case that the digits are swapped.
