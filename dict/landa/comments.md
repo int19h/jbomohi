@@ -132,3 +132,49 @@ x1 is the address/name of object x2 in standard/system x3
 
 Colloquial names? :)
 
+
+## 2016-09-16T07:17:20Z — krtisfranks (comment 3055, in reply to 3054)
+
+Re: Suggestions for a terbri for the standard, and for a note which could be included
+
+gleki wrote:
+> krtisfranks wrote:
+> > I suggest adding another terbri at the end of all of these suggestions 
+> > which describes/specifies which ISO standard is actually being used.
+> 
+> 
+> Makes sense, e.g. JUDRI semantic frame/megaframe is like that:
+> 
+> x1 is the address/name of object x2 in standard/system x3
+
+Nice!
+
+ 
+> > It 
+> > could be just "{la} {ci} {pa} {xa} {xa}", or it could be "{la} {ci} 
+{pa} 
+> > {xa} {xa} {pi'e} {pa}", or "{la} {ci} {pa} {xa} {xa} {pi'e} {pa} {pi'e}
+
+> > .alfas, {pi'e} {re}" (this name is a non-precedential mock-up). Heck, 
+it 
+> > could even be a standard other than from ISO, although I know of none.
+> 
+> Colloquial names? :)
+
+Uh... I suppose. I personally would not do that and would object in a 
+non-official role (such as a normal conversant, rather than on a 
+prescriptive publication in an official capacity), per the proposed note. 
+(Unless you were suggesting an improvement to the terminology of said note,
+in which case: Lol, yeah! That is what I was looking for!)
+
+
+
+By the way:
+> it is a code which is bijectively assigned
+This is actually not true. For example, there are reserved codes; "UK" is 
+not the official code of the UK, but it is reserved by them, while "GB" is 
+the official code assigned to them. Some reserved codes have been 
+unreserved and assigned to another entity or reserved by other entities 
+(although, I think, still on the behalf of the original reserving entity 
+thus far).
+
