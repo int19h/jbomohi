@@ -50,24 +50,35 @@ Tier "1" deals with the eponymous words "ce", "ki", "tau", "jau", and "du", as w
 # {"ce'u", "ce"}.
 # {"ke'a", "ki"}.
 # {"tu'a", "tau"}.
+# {"joi", "jei"}.
 # {"jo'u", "jau"}.
 # {"jo'u", "joi"}.
 # {"jo'u", "jei"}.
-# {"joi", "jau"}.
 # {"du'u", "du"}.
 
 
 (End of list.)
 
+Note that this list follows what one might expect from the name of the dialect family, except for the fourth entry which is put there for technical reasons.
+
 There are 8 entries in the list. Each entry gets assigned a bit, which is on or off depending on whether the utterer whiches to activate the swap; "on" and "off" are each assigned one of the symbols "0" or "1" bijectively based on mode specification (see earlier). The bits are arranged into a string in the order in which their corresponding options are presented in the immediately prior list. This string is the '''version specification precursor'''. As it is eight bits long, it can be converted to a two-digit hexadecimal string; for the sake of clarity, the last bit in the version specification precursor is in the singles ("2^0"'s) position while thebfirst bit therein is in the "2^7"'s position. This must be done. The resulting two-digit hexadecimal string is the final version specifier.
 
 Thus, just for emphasis, there are 2^8 versions in this tier, each having its own two-digit hexadecimal version name.
 
+==== Administrivia ====
+
+
 If more entries are added to this list, this method must be revised. Additionally, it is is advised that they come either at the end or the beginning, for the sake of back-compatibility.
 
-When multiple entries swap overlapping words, they are applied in left-to-right (standard) reading order. So, for example, if both ''{"jo'u", "jau"}'' and ''{"joi", "jau"}'', which overlap at "jau", are "on" then new-"joi" takes on the meaning of old-"jo'u", new-"jo'u" takes on the meaning of old-"jau", and new-"jau" takes on the meaning of old-"joi".
+When multiple entries swap overlapping words, they are applied in left-to-right (standard) reading order in the bit string (od est: earlier/lesser-numbered options in the aforementioned list are applied first). So, for example, if both ''{"jo'u", "joi"}''  (option #6) and ''{"joi", "jei"}'' (option #4), which overlap at "joi", are "on", then the following occurs:
+* Initially, "joi" means CLL-"joi", "jei" means CLL-"jei", "jo'u" means CLL-"jo'u".
+* Then, option #4 is applied (despite my presentation of saying option #6 and then option #4). The result is that new-"joi" means CLL-"jei" and new-"jei" means CLL-"joi". "jo'u" is untouched and still means CLL-"jo'u".
+*Then, option #6 is applied. Consequently, newer-"joi" means CLL-"jo'u", and newer-"jo'u" means new-"joi" (which is CLL-"jei"). New-"jei" is untouched and still means CLL-"joi". This terminates the overlapping swaps.
+* In conclusion, the final state is that "joi" now means CLL-"jo'u", "jei" now means CLL-"joi", and "jo'u" now means CLL-"jei".
 
-Examples:
+
+==== Examples ====
+
 * If none of these options are activated, then the version is "00" when the mode specification is "1"; the version is "FF" if the mode is "0". But why would one specify the mode and tier if one were not going to use it at all?
 * If all of the options are activated (heirarchically, remember), then the version is "FF" if the mode is "1"; the version is "00" if the mode is "0".
 * If options #1, #2, #3, and #8 are activated (but none of the rest (that is: words beginning with "j") are activated), then the version specification precursor in mode "1" is "11100001"; thus, in this mode, the version specification is "E1" ("rei pa"). In "0" mode, then the precursor is "00011110", so the version specification is "1E" ("pa rei"). Note that it is not always the case that the hexadeximal digits are swapped.
