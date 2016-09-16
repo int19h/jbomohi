@@ -60,3 +60,31 @@ moving to landa2 might be one option.
 
 ISO fuhivla is another option.
 
+
+## 2016-09-16T06:59:50Z — krtisfranks (comment 3052, in reply to 3051)
+
+Re: landa1
+
+gleki wrote:
+> it's possible that the curren def. is broken. 
+> 
+> .i mi zvati me'o ubu ky noi landa lo pendo be mi
+> 
+> this requires 'me'o ubu ky' (or {li}) to be understood both as zvati2 
+> (place) and as landa1 (text or number).
+> 
+> moving to landa2 might be one option.
+> 
+> ISO fuhivla is another option.
+
+Yeah, I have kind of noticed that oddity but did not know how to phrase it.
+You did nicely. I think that I would prefer to just move it to landa2. If 
+other ISO gismu have this problem, they should follow suit.
+
+So, it will be "x1 is the country with ISO name x2 of people x3"? That 
+seems fine to me. Maybe a little redundant with {gugde}, and maybe also 
+with the people terbri (there x3, presently landa2) because ISO countries 
+are defined geopolitical organizations with well-defined and automatically 
+associated populations and territories etc., but it definitely works and 
+provides the functionality and shade of separate meaning that we desire.
+
