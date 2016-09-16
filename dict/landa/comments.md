@@ -109,3 +109,26 @@ language). Few people walk around calling their country intentionally by
 its ISO code (unless it happens to match other common abbreviations or 
 labels).
 
+
+## 2016-09-16T07:05:23Z — gleki (comment 3054, in reply to 3053)
+
+Re: Suggestions for a terbri for the standard, and for a note which could be included
+
+krtisfranks wrote:
+> I suggest adding another terbri at the end of all of these suggestions 
+> which describes/specifies which ISO standard is actually being used.
+
+
+Makes sense, e.g. JUDRI semantic frame/megaframe is like that:
+
+x1 is the address/name of object x2 in standard/system x3
+
+
+> It 
+> could be just "{la} {ci} {pa} {xa} {xa}", or it could be "{la} {ci} {pa} 
+> {xa} {xa} {pi'e} {pa}", or "{la} {ci} {pa} {xa} {xa} {pi'e} {pa} {pi'e} 
+> .alfas, {pi'e} {re}" (this name is a non-precedential mock-up). Heck, it 
+> could even be a standard other than from ISO, although I know of none.
+
+Colloquial names? :)
+
