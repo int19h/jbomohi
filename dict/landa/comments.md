@@ -88,3 +88,24 @@ are defined geopolitical organizations with well-defined and automatically
 associated populations and territories etc., but it definitely works and 
 provides the functionality and shade of separate meaning that we desire.
 
+
+## 2016-09-16T07:01:04Z — krtisfranks (comment 3053)
+
+Suggestions for a terbri for the standard, and for a note which could be included
+
+I suggest adding another terbri at the end of all of these suggestions 
+which describes/specifies which ISO standard is actually being used. It 
+could be just "{la} {ci} {pa} {xa} {xa}", or it could be "{la} {ci} {pa} 
+{xa} {xa} {pi'e} {pa}", or "{la} {ci} {pa} {xa} {xa} {pi'e} {pa} {pi'e} 
+.alfas, {pi'e} {re}" (this name is a non-precedential mock-up). Heck, it 
+could even be a standard other than from ISO, although I know of none.
+
+It maybe should be noted in the notes (for this and other ISO zi'evla) that
+the code is not necessarily an actual 'full' or endonymous name for the 
+subject (country in this case). It is not really a normal label or 
+abbreviation; it is a code which is bijectively assigned to the country as 
+a label, but not necessarily in normal usage (in English or the native 
+language). Few people walk around calling their country intentionally by 
+its ISO code (unless it happens to match other common abbreviations or 
+labels).
+
