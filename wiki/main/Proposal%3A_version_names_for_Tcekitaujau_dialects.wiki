@@ -64,7 +64,7 @@ Tier "1" deals with the eponymous words "ce", "ki", "tau", "jau", and "du", as w
 
 Note that this list follows what one might expect from the name of the dialect family, except for the fourth entry which is put there for technical reasons.
 
-There are 8 entries in the list. Each entry gets assigned a bit, which is on or off depending on whether the utterer whiches to activate the swap; "on" and "off" are each assigned one of the symbols "0" or "1" bijectively based on mode specification (see earlier). The bits are arranged into a string in the order in which their corresponding options are presented in the immediately prior list. This string is the '''version specification precursor'''. As it is eight bits long, it can be converted to a two-digit hexadecimal string; for the sake of clarity, the last bit in the version specification precursor is in the singles ("2^0"'s) position while thebfirst bit therein is in the "2^7"'s position. This must be done. The resulting two-digit hexadecimal string is the final version specifier.
+There are 8 entries in the list. Each entry gets assigned a bit, which is on or off depending on whether the utterer whishes to activate the swap; "on" and "off" are each assigned one of the symbols "0" or "1" bijectively based on mode specification (see earlier). The bits are arranged into a string in the order in which their corresponding options are presented in the immediately prior list so that the nth bit represents exactly the nth entry in the list and its value (represented by "0" xor "1") represents the activation status of that option. So, for example, if the mode is "1", then "00100001" means exactly that "tu'a" and "tau" are mutually swapped and that "du'u" and "du" are mutually swapped, in this tier. This string is the '''version specification precursor'''. As it is eight bits long, it can be converted to a two-digit hexadecimal string; for the sake of clarity, the last bit in the version specification precursor is in the singles ("2^0"'s) position while thebfirst bit therein is in the "2^7"'s position. This must be done. The resulting two-digit hexadecimal string is the final version specifier.
 
 Thus, just for emphasis, there are 2^8 versions in this tier, each having its own two-digit hexadecimal version name.
 
@@ -83,12 +83,12 @@ When multiple entries swap overlapping words, they are applied in left-to-right 
 ==== Examples ====
 
 * If none of these options are activated, then the version is "00" when the mode specification is "1"; the version is "FF" if the mode is "0". But why would one specify the mode and tier if one were not going to use it at all?
-* If all of the options are activated (heirarchically, remember), then the version is "FF" if the mode is "1"; the version is "00" if the mode is "0".
+* If all of the options are activated (hierarchically, remember), then the version is "FF" if the mode is "1"; the version is "00" if the mode is "0".
 * If options #1, #2, #3, and #8 are activated (but none of the rest (that is: words beginning with "j") are activated), then the version specification precursor in mode "1" is "11100001"; thus, in this mode, the version specification is "E1" ("rei pa"). In "0" mode, then the precursor is "00011110", so the version specification is "1E" ("pa rei"). Note that it is not always the case that the hexadeximal digits are swapped.
 
 ==== Alternative ====
 
-The version specification may be preceded by ASCII "a" (Lojban: ".a'y bu"). Iff this is the case, then everything specified previous for Tier 1 applies, but the following ordered list is supposed instead:
+The version specification may be immediately preceded by ASCII "a" (Lojban: ".a'y bu"). This does not affect the process of converting a version specification precursor to the numeric part of the final version specification for any given string (for the version specification precursor); it is simply appended to the beginning of the version specification. Iff this is the case, then everything specified previous for Tier 1 applies, but the following ordered list is supposed instead:
  
 ('''List 1:2''')
 
@@ -104,6 +104,8 @@ The version specification may be preceded by ASCII "a" (Lojban: ".a'y bu"). Iff 
 (End of list.)
 
 This is done for the sake of grouping all of the "j"-initial words, which have a lot of overlap together in one hexadecimal digit.
+
+So, in Tier 1 for a given mode, version "5C" (from precursor: "01011100") is equivalent to version "a4#E" (from precursor: "01001110").
 
 === Tier 2: cmavo-swapping - secondary proposed swaps, miscellaneous in nature ===
 
