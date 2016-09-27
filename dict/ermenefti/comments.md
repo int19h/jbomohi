@@ -66,3 +66,39 @@ it
 x1 is exegesis (an explanation or critical interpretation) of 
 text/book/object x2 done by x3; x1/x2 is exegetical; x3 are exegetes?
 
+
+## 2016-09-27T18:28:16Z — krtisfranks (comment 3068, on definition 63507, in reply to 3067)
+
+Re: Result/interpretation terbri
+
+gleki wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > krtisfranks wrote:
+> > > > Why not have a terbri for what the result of the analysis is?
+> > > 
+> > > 
+> > > have in mind any semantic frames in gimste similar to the one you 
+> desire?
+> > 
+> > In a way, it is somewhat close to lijda3: "sharing common 
+> > beliefs/practices/tenets including x3".  The only this is that there is
+
+> no 
+> > sharing. It is just the 'belief' (meaning "interpretation") that is 
+> > specific.
+> > 
+> > It is also almost exactly backward in terbri structure from {smuni}. 
+So, 
+> it
+> > would follow "se te se te se smuni" (there is probably a better way by 
+> > which to say that).
+> 
+> {smuni} is more frequent than {lijda}. So maybe a new word:
+> 
+> x1 is exegesis (an explanation or critical interpretation) of 
+> text/book/object x2 done by x3; x1/x2 is exegetical; x3 are exegetes?
+
+I am fine with that if you are. Does it break anything? I would include the
+current definition too, with relabelles terbri.
+
