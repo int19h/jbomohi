@@ -36,3 +36,33 @@ It is also almost exactly backward in terbri structure from {smuni}. So, it
 would follow "se te se te se smuni" (there is probably a better way by 
 which to say that).
 
+
+## 2016-09-27T06:26:04Z — gleki (comment 3067, on definition 63507, in reply to 3066)
+
+Re: Result/interpretation terbri
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > Why not have a terbri for what the result of the analysis is?
+> > 
+> > 
+> > have in mind any semantic frames in gimste similar to the one you 
+desire?
+> 
+> In a way, it is somewhat close to lijda3: "sharing common 
+> beliefs/practices/tenets including x3".  The only this is that there is 
+no 
+> sharing. It is just the 'belief' (meaning "interpretation") that is 
+> specific.
+> 
+> It is also almost exactly backward in terbri structure from {smuni}. So, 
+it
+> would follow "se te se te se smuni" (there is probably a better way by 
+> which to say that).
+
+{smuni} is more frequent than {lijda}. So maybe a new word:
+
+x1 is exegesis (an explanation or critical interpretation) of 
+text/book/object x2 done by x3; x1/x2 is exegetical; x3 are exegetes?
+
