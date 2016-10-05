@@ -227,3 +227,10 @@ Conditions terbri
 The terbri that specify the conditions being imposed upon the system can 
 probably also incorporate a sense of "while in macrostate".
 
+
+## 2016-10-05T09:31:43Z — gleki (comment 3069)
+
+entropi1
+
+what does "amount" mean? number?
+
