@@ -210,3 +210,25 @@ Ilmen wrote:
 
 Okey-dokey!
 
+
+## 2016-10-18T07:55:25Z — krtisfranks (comment 3071, on definition 68606, in reply to 2932)
+
+Re: Alternative word choice
+
+Ilmen wrote:
+> krtisfranks wrote:
+> > Okay, then I shall move my proposals. NOIhAU works just as well for me.
+
+> Do 
+> > you agree?
+> 
+> Well, I think it would be fine. Incidentally, you should add one or two 
+> examples to your two cmavo proposals. I'm having trouble understanding 
+> their purpose; examples would probably help. :)
+
+The move has taken place. It actually ended up at {noi'a'u}, with {noi'au} 
+being similar but not quite the same.
+
+Examples will be, eventually, forthcoming. I have explanations and examples
+written down on my phone, somewhere...
+
