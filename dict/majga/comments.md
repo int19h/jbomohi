@@ -130,3 +130,38 @@ system used in order to define how the units are being used. For example,
 it might be theoretically possible to 'rotate' in some way so that positive
 masses become negative; we just happen to all agree.
 
+
+## 2016-10-30T09:13:42Z — gleki (comment 3080, on definition 57033, in reply to 3079)
+
+Re: Terbri issues
+
+krtisfranks wrote:
+> The current definition is:
+> "x1 (number/quantity; contextless default: li ma'u .a li no) is the 
+> (rest/inertial) mass of x2 (object) in units x3".
+> 
+> Should the first terbri be, instead, a dimensionful number so that lo(i) 
+> {grake} fills it and the amount thereof (se grake; accessed by {be}) is 
+the
+> current-x1 (subject to the same constraints and, possibly, defaults)? 
+This 
+> would make much more sense.
+
+yep.
+
+Also I have no clue what grake3 is for.
+
+And what is the current majga3 for?
+
+> 
+> There might also be room for a new third terbri expressing the coordinate
+
+> system used in order to define how the units are being used. For example,
+
+> it might be theoretically possible to 'rotate' in some way so that 
+positive
+> masses become negative; we just happen to all agree.
+
+
+How would you fill that new third terbricmi?
+
