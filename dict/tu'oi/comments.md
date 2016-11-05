@@ -25,3 +25,11 @@ is
 
 Actually, you noted that. Never mind. :P
 
+
+## 2016-11-05T09:27:31Z — gleki (comment 3082)
+
+lo setmima be?
+
+so if setmima2 is a member but not members, then basically ko'a ce tu'oi = 
+lo setmima be ko'a ?
+
