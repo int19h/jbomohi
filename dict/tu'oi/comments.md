@@ -33,3 +33,16 @@ lo setmima be?
 so if setmima2 is a member but not members, then basically ko'a ce tu'oi = 
 lo setmima be ko'a ?
 
+
+## 2016-11-06T04:18:22Z — krtisfranks (comment 3083, in reply to 3082)
+
+Re: lo setmima be?
+
+gleki wrote:
+> so if setmima2 is a member but not members, then basically ko'a ce tu'oi 
+= 
+> lo setmima be ko'a ?
+
+Yes. But I am not sure whether or not it can be multiple. In any case, just
+throw in a {po'o} immediately after {ko'a} and you are good to go.
+
