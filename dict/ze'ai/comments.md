@@ -22,3 +22,10 @@ cnino
 
 ie nai pei smudu'i fa zo ze'ai pe ma'oi ze'a zo ze'a kau
 
+
+## 2016-11-11T10:00:20Z — zozeizeizeizeifaho (comment 3088, in reply to 3087)
+
+Re: ma smuni
+
+si sa'u
+
