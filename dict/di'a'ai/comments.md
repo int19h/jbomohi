@@ -43,3 +43,32 @@ say, perhaps because of the similarity of the "a" in the second two
 syllables. It could be seen as suggesting the word {.ai}, as in, I *intend*
 to go away for a while, but really mostly I chose it for the sound. 
 
+
+## 2016-11-23T06:33:35Z — krtisfranks (comment 3097, in reply to 3096)
+
+Re: Etymology
+
+selckiku wrote:
+> krtisfranks wrote:
+> > Is there any particular reason for your choice of valsi for this 
+selvla, 
+> > apart from the duality with its counterpart?
+> 
+> 
+> Well, a long time ago I started noticing that people were abusing {de'a} 
+> and {di'a} to mean specifically "AFK" and "back" and I felt like it would
+
+> be appropriate to have more specific terms. The first sounds I thought of
+
+> were {de'a'oi} and {di'a'oi}, since -oi is the most common ending for 
+COI. 
+> After experimenting with them for a while I eventually found that the 
+> sounds {de'a'ai} and {di'a'ai} felt a little more natural or smoother to 
+> say, perhaps because of the similarity of the "a" in the second two 
+> syllables. It could be seen as suggesting the word {.ai}, as in, I 
+*intend*
+> to go away for a while, but really mostly I chose it for the sound. 
+
+Okay, cool! I like it. I picked up on the event contours etymons, but I was
+not sure about the rest.
+
