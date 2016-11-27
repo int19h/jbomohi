@@ -11,3 +11,9 @@ encompass this particular meaning of "pretty," and rearranging the English
 words to avoid such confusion in the future. If no one objects in the next 
 few days, I'll make the changes myself.
 
+
+## 2016-11-27T07:21:04Z — gleki (comment 3099, on definition 19106)
+
+i su'o da na zanru i ku'i ma zabna smuvelcki
+
+
