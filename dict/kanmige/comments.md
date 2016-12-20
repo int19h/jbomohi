@@ -6,3 +6,16 @@ I do not understand what this word means. I would like to be more helpful
 than that, but I do not want to bias any explanation. Could you just 
 rephrase it? Maybe that would help me.
 
+
+## 2016-12-20T12:37:44Z — gleki (comment 3115, on definition 69053, in reply to 3114)
+
+Re: Confusion (.uinaisai)
+
+krtisfranks wrote:
+> I do not understand what this word means. I would like to be more helpful
+
+> than that, but I do not want to bias any explanation. Could you just 
+> rephrase it? Maybe that would help me.
+
+added two examples. better?
+
