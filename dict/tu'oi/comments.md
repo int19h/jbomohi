@@ -46,3 +46,16 @@ gleki wrote:
 Yes. But I am not sure whether or not it can be multiple. In any case, just
 throw in a {po'o} immediately after {ko'a} and you are good to go.
 
+
+## 2016-12-26T06:49:28Z — krtisfranks (comment 3118)
+
+{zi'o}
+
+I would like to note that {zi'o} cannot be used in place of {tu'oi} because
+that means that there is a version of the sentence in which the terbri is 
+deleted such that the result is intended, or one is forming a set which has
+{zi'o} (the meaning, not the quoted word) as an element, which is 
+essentially meaningless as far as I can tell. In any case, {zi'o} either 
+directly fills or is an element of a set which fills a terbri; it is not 
+modifying the connective, but instead the selbri.
+
