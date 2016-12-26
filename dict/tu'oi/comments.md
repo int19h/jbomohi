@@ -59,3 +59,15 @@ essentially meaningless as far as I can tell. In any case, {zi'o} either
 directly fills or is an element of a set which fills a terbri; it is not 
 modifying the connective, but instead the selbri.
 
+
+## 2016-12-26T07:28:35Z — gleki (comment 3121)
+
+Nil
+
+This is an interesting cmavo. Usually people use concatenation of an array 
+(e.g. an array that has only one element which is X, setmima be ko'a, 
+probably, if setmima2 is exhaustive, is it?) with a Nil array.
+
+Do we have a word for concatenation of arrays? ({konkatena} operates on 
+chars, it seems)
+
