@@ -35,3 +35,10 @@ Should
 
 That is a bad definition then.
 
+
+## 2017-01-01T07:11:58Z — krtisfranks (comment 3126)
+
+Etymology?
+
+Out of curiosity, what is the etymology of this word?
+
