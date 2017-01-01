@@ -42,3 +42,14 @@ Etymology?
 
 Out of curiosity, what is the etymology of this word?
 
+
+## 2017-01-01T08:08:33Z — gleki (comment 3129, in reply to 3126)
+
+Re: Etymology?
+
+krtisfranks wrote:
+> Out of curiosity, what is the etymology of this word?
+
+
+maybe as a rhyme to {te'a}?
+
