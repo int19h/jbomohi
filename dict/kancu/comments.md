@@ -191,3 +191,37 @@ to the set of extended real numbers (not even positive finite ones). Note
 that, in partovular, {ci'ai'u} is not necessarily involved and that 
 ordering the range of the function is not necessary.
 
+
+## 2017-01-03T00:33:39Z — krtisfranks (comment 3135, on definition 551, in reply to 3130)
+
+Re: Issues
+
+krtisfranks wrote:
+> The second word is something along the lines of "enumerate", "tabulate", 
+> "tally", or "count up". This is a task performed by someone (a counter) 
+and
+> depends on the method.
+
+Maybe the best way to describe this meaning is the idea that the counter 
+lists numbers sequentially (in order) (with a temporal or spatial delay 
+between each entry in the ordered list). 
+
+Changing the structure of the word somewhat, this would just require the 
+input of an ordered list, a description of what constitutes the start (if 
+counting eggs, which is the first one? if counting down seconds, what marks
+when the countdown begins?), and what must happen in order to proceed from 
+one item in the list to the next one (pointing at a different egg, one 
+second passing, etc.). There would be no terbri for counting units/steps 
+(current kancu4), as this would just be derived information from the list 
+(and the counting unit would fluctuate/be variable as desired by the 
+counter).
+
+Aside: That last point is important too. {kancu} is broken because it 
+cannot handle the counter adjusting the counting unit. Even if it could 
+handle the meaning "count( )down", and I do not think that it can, the unit
+between numbers must be the same. That means that the events in that one 
+scene from /Harry Potter and the Prisoner of Azkaban/ movie from 2004, 
+which involves Dre Head counting down by varied units, cannot be described 
+by {kancu} under my current interpretation (that kancu4 must be a 
+constant).
+
