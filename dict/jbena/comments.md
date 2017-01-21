@@ -187,3 +187,46 @@ http://jbovlaste.lojban.org/comments.html?valsi=453;natlangword=0;commentid
 That is a good point. But I would have just said "born via means x_i amd by
 standard x_j".
 
+
+## 2017-01-21T10:58:58Z — gleki (comment 3145, on definition 453, in reply to 3144)
+
+Re: Asymmetry
+
+krtisfranks wrote:
+
+> gleki wrote:
+> > oops, discussion got disrupted. In regard to 
+> > 
+> 
+http://jbovlaste.lojban.org/comments.html?valsi=453;natlangword=0;commentid
+> > =3027;definition=453 what I mean is that either 'jbena' is just 'se 
+rorci
+> 
+> > [be fi zi'o]' or "co'a jmive" or it's not, in the latter case it can be
+
+> > important to specify time-place of birth to understand how one is being
+
+> > "born". if time is understood not as timestamp but as period (born 
+while 
+> > stopping being a larva and becoming an imago) and place (moulting out 
+of 
+> > your old shell), then dropping jbena3 and jbena4 is unnecessary.
+> 
+> That is a good point. But I would have just said "born via means x_i amd 
+by
+> standard x_j".
+
+So {jbena} then becomes superfluous since we have {co'a} {panzi} or {rorci}
+(the latter for the case ">1 sexes" plus a special viewpoint). For stages 
+of biodevelopment there needs to be a new brivla completing {makcu} with 
+means of getting into the stage. Another brivla might be needed to shows 
+the circle of life (e.g. imago => egg => larva => imago) like
+
+x1 enters its new stage of development (e.g. by laying eggs) by procreating
+your-new-stage/offspring x2  (e.g. eggs of turning yourself into a larva).
+
+This of course immediately leads to the bear-goo problem of "what is 
+individuum?" but that can be expressed via additional means like ("no 
+change of individuality from egg to larva" / "change of individuality from 
+imago to egg")
+
