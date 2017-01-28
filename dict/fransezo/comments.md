@@ -15,3 +15,12 @@ the stress in the right position, unlike {franse}.
 
 I like {franse}, too, however. 
 
+
+## 2017-01-28T13:57:28Z — selpahi (comment 3148, on definition 69183, in reply to 3146)
+
+Re: Why the 
+
+Oh, I just remembered.
+
+The -o ending is because cultural gismu all end in -o.
+
