@@ -24,3 +24,11 @@ Oh, I just remembered.
 
 The -o ending is because cultural gismu all end in -o.
 
+
+## 2017-02-05T20:26:47Z — selpahi (comment 3151, on definition 69183, in reply to 3146)
+
+Re: Why the 
+
+Oh, and of course under current rules, *{franse} is not even a legal 
+brivla, because it's a slinku'i.
+
