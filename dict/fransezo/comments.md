@@ -32,3 +32,14 @@ Re: Why the
 Oh, and of course under current rules, *{franse} is not even a legal 
 brivla, because it's a slinku'i.
 
+
+## 2017-02-06T10:01:37Z — gleki (comment 3152, on definition 69183, in reply to 3151)
+
+Re: Why the 
+
+selpahi wrote:
+> Oh, and of course under current rules, *{franse} is not even a legal 
+> brivla, because it's a slinku'i.
+
+i ka steiano xi vei ni'e spano
+
