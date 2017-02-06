@@ -49,3 +49,17 @@ reality of {tsida}'s meaning. Moreover, etymology would be discarded.
 Note: I am not saying "should these alternative forms exist?". They already
 do. I am merely asking whether they should be /preferred/.
 
+
+## 2017-02-06T22:58:25Z — krtisfranks (comment 3154, in reply to 3153)
+
+Re: Endings
+
+krtisfranks wrote: 
+> Note: I am not saying "should these alternative forms exist?". They 
+already
+> do. I am merely asking whether they should be /preferred/.
+
+It should also be noted that preferred forms of gismu determine possible or
+actualized rafsi (which are not subject to similarity conflicts quotienting
+out threads in rafsi space) for that word.
+
