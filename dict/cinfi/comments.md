@@ -26,3 +26,10 @@ zozeizeizeizeifaho wrote:
 
 fu'e .ii .oi .a'e fu'o bu'o. mi pu gasfli vau .u'ucai!
 
+
+## 2017-02-18T19:47:46Z — zozeizeizeizeifaho (comment 3165, on definition 69336, in reply to 3164)
+
+Re: zo cinfo
+
+ki'e sutra be lo ka cikre
+
