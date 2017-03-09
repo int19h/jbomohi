@@ -14,3 +14,18 @@ krtisfranks wrote:
 
 See notes to the definition of {vrusi}.
 
+
+## 2017-03-09T23:06:43Z — krtisfranks (comment 3173, on definition 42417, in reply to 3172)
+
+Re: 
+
+gleki wrote:
+> krtisfranks wrote:
+> > How is this word different from "{vrusi}".
+> 
+> See notes to the definition of {vrusi}.
+
+
+So this one is specifically for taste (the mouth/tongue)? Is that pure 
+distinction even anatomically possible for humans?
+
