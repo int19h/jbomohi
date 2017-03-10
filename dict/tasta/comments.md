@@ -49,3 +49,27 @@ maybe tear tongue apart or close your nose? :)
 
 zo'onai, {tasta} is a component of {vrusi} but not its only component.
 
+
+## 2017-03-10T15:36:54Z — krtisfranks (comment 3177, on definition 42417, in reply to 3176)
+
+Re: 
+
+gleki wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > krtisfranks wrote:
+> > > > How is this word different from "{vrusi}".
+> > > 
+> > > See notes to the definition of {vrusi}.
+> > 
+> > 
+> > So this one is specifically for taste (the mouth/tongue)? Is that pure 
+> > distinction even anatomically possible for humans?
+> 
+> maybe tear tongue apart or close your nose? :) 
+> 
+> zo'onai, {tasta} is a component of {vrusi} but not its only component.
+
+
+Okay, that is fair enough and both important and fundamental. I am aboard.
+
