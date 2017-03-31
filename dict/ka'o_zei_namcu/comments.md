@@ -19,3 +19,22 @@ On the other hand, it could be useful in some circumstances (such as when
 talking about all complex numbers with real part 1/2, or when x1 is not 
 explicit).
 
+
+## 2017-03-31T20:34:19Z — krtisfranks (comment 3182, on definition 57149, in reply to 3181)
+
+Re: Parts
+
+> Additionally, why should we 
+> culturally prioritize the Cartesian decomposition over other 
+decompositions
+> (such as radius-angle decomposition)?
+
+One reason: we are using "{ka'o}" which does this. If we wanted a different
+decomposition, we could use something else (such as "{ka'o'ei}").
+
+___
+
+It should be noted, though, that there are other ways to express imaginary 
+numbers than just these two. For example, there is a certain structure on a
+certain set of matrices which is isomorphic with C.
+
