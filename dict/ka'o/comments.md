@@ -132,3 +132,19 @@ denotes the set of all integers); presently, there are only two: "0" and
 "i" (which means 1*i). But this representational base is selected for 
 demonstration purposes only.
 
+
+## 2017-03-31T21:51:46Z — krtisfranks (comment 3184, on definition 1697, in reply to 3183)
+
+Re: Issue
+
+Sorry for the formatting errors. I think that must of it is readable if you
+realize that the final section is a footnote for the discussion about a 
+generalized decimal system with "i" as a digit.
+
+For everything else, pay little attention to the "?"'s and formatting, 
+close quotation marks when it seems appropriate, etc. Some of the links do 
+not seem to work when they should. When in doubt, click "reply" on the 
+comment and see how what it is in the slightly more raw version.
+
+Again, sorry.
+
