@@ -148,3 +148,26 @@ comment and see how what it is in the slightly more raw version.
 
 Again, sorry.
 
+
+## 2017-03-31T22:00:10Z — krtisfranks (comment 3185, on definition 1697, in reply to 3183)
+
+Re: Issue
+
+krtisfranks wrote:
+
+> 
+> Zeroth, the CLL description gives it two properties: "?ka'o? is both a 
+> special number (meaning ?i?) and a number punctuation mark (separating 
+the 
+> real and the imaginary parts of a complex number).".
+
+The same issue arises with the description of " {fi'u} ". That problem was 
+implicitly resolved by the introduction of " {fai'u} ". Presumably, upon 
+its adoption, "fi'u" will be restricted only to VUhU as a fraction-slash 
+operator which will then take in implicit "xo'ei"'s as operands unless 
+explicitly contradicted (in which case, we would need to be careful in 
+defining its defaults).
+
+So, as that was resolved, so should the issue with "ka'o" be resolved (upon
+the introduction of "ka'o'ai").
+
