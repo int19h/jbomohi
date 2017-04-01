@@ -174,3 +174,23 @@ not used in Lojban or much of anywhere else).
 This would take on the functionality of, roughly, the coins operator 
 (denoted ":") in Haskell.
 
+
+## 2017-04-01T00:03:27Z — krtisfranks (comment 3188, in reply to 3187)
+
+Re: Could be extended
+
+krtisfranks wrote:
+> Maybe extend it to (usually finite) tuples, sequences, lists, etc. too?
+> 
+> In that case, it could work sort of the element Cartesian product (which 
+is
+> not used in Lojban or much of anywhere else).
+> 
+> This would take on the functionality of, roughly, the coins operator 
+> (denoted ":") in Haskell.
+
+Well, except for typing.
+
+"++" is, of course, the better analog. But I just wanted to maje sure that 
+coins was mentioned somewhere.
+
