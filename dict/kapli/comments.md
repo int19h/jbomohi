@@ -361,3 +361,99 @@ gleki wrote:
 Yes, I did it, though I did not touch most of official gismu because one
 downvote is too powerless against 100000 upvotes.
 
+
+## 2017-04-11T20:34:18Z — krtisfranks (comment 3192, on definition 57041, in reply to 1559)
+
+Re: It's only my sentiment
+
+gusnikantu wrote:
+> Importance is not enough reason for creating gismu. Each name for
+> race/tribe/culture is important for people who concern it, but there are
+> many names for them, while we have only a limited space for gismu.
+> Besides, again, White and Black is not names for race/tribe/culture as
+> discussed above.
+
+No, it is not enough. Importance gets a concept a word. Function would then
+get it a brivla. But I provided other reasons as well; in particular, 
+utility and fundamentality should motivate the selection of a gismu in 
+favor of this word.
+
+I would also add that this concept is important to those who are not White 
+as well. This idea is one of the fundamental driving forces in the vast 
+majority of human history for the last five centuries, at least. This is of
+global inportance. It is not an other categorization by a minor tribe; it 
+is a cornerstone of modern society for some of the most powerful and 
+largest nations on the planet and played a profound role in every inhabited
+continent on Earth.
+
+I would not call it a tribal distinction or its own society; I would 
+describe it more as a prominent feature of consideration within a society, 
+which carries with it immense social, cultural, financial, and other 
+implications. Ethnicity is something of a culture which lives in and around
+other culture.
+
+Moreover, this word has - built into its structure - the ability to 
+reference the surrounding culture/society system. This further widens its 
+scope of utility. Whiteness does not mean exactly the same thing in New 
+York City as it does in Birmingham, Alabama - let alone in some part of 
+Bolivia. There is plenty of overlap and historical connection, which is 
+important too (and why I think that this cna be unified into a single 
+concept), but the differences are accounted for by way of the terbri.
+
+> > If you do not like this word, you can either ignore it or introduce a
+> > synonymous non-gismu brivla that is satisfactory to you in order to
+> > alleviate your concerns.
+> 
+> 
+> I actually don't need a word for White or Black people, because I prefer
+> tanru for them if necessary, reflecting their vagueness of 
+categorization.
+
+What sort of tanru would you use? Some might be good. But I am not sure 
+that you can capture all of the details in a reasonable and brief manner. I
+think that the important implication - that this is part of one's identity 
+and is inherent to them based on their present and past cultural/societal 
+setting, and that it is a means of asserting all sorts of societal 
+privileges and protections, as well as a means of grouping certain people 
+in a way which has cultural inplications individually and more widely for 
+generations to come - is likely lost in those tanru and therefore would be 
+difficult to regain via lujvo. zi'evla seems like the only reasonable 
+option to me.
+
+> I cannot ignore wasting of gismu space for categorization of
+> skin-colors/hair-curliness etc. or races/tribes/cultures, because I want
+> the space to be used for more valuable concepts. I will therefore 
+continue
+> downvoting gismu for those.
+
+It is not about skin color really, though. It is about ethnicity - a 
+cultural identity and the resulting treatment in a society. Aesthetics are 
+just a basis for assessing this trait/identity feature. If redheads 
+underwent similar treatment (as they might have), then I would be willing 
+to adopt a word for them too. But if they did not, then they can be 
+described simply via mention of hair color.
+
+It is not possible to be culturally neutral whilst considering culture and 
+other abstract human constructs. But they must be linguistically supported 
+somehow. Perhaps all such cultural words should be made into zi'evla. I am 
+not sure that that really helps, but it could be done. However, since that 
+is not the case, then it seems perfectly reasonable - nay, necessary - to 
+introduce a word for this concept and to have it be a gismu. We should 
+accept its provisional introduction for now, and then we can discuss 
+tranaferring all such gismu to zi'evla space. Anything less would be 
+asymmetric and unjustifiable. There is no reason for "merko", "ketco", 
+"glico", or any of the others to exist as gismu while this word does not. 
+They all deserve words and they all deserve to be in the same category of 
+word. (Aside: Moreover, I would actually argue that a decent number of 
+these words, including this one, should be gismu).
+
+___
+
+Removing the word from the language does not make any of the problems 
+inherent to racism better, by the way. It is important to be able to talk 
+about these things; a name is control. (The intersection of these claims 
+with the Sapir-Whorf Hypothesis could be interesting).
+
+We have a lexical gap in Lojban and that gap is a significant obstacle to 
+translation efforts and mere discussion.
+
