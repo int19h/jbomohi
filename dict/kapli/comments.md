@@ -457,3 +457,10 @@ with the Sapir-Whorf Hypothesis could be interesting).
 We have a lexical gap in Lojban and that gap is a significant obstacle to 
 translation efforts and mere discussion.
 
+
+## 2017-04-12T04:12:03Z — gleki (comment 3193, on definition 57041, in reply to 3192)
+
+Re: It's only my sentiment
+
+i ro djica tu'a lo #uilkinse cu fliba
+
