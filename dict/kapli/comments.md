@@ -464,3 +464,23 @@ Re: It's only my sentiment
 
 i ro djica tu'a lo #uilkinse cu fliba
 
+
+## 2017-04-12T06:05:30Z — gleki (comment 3194, on definition 57041, in reply to 3193)
+
+Re: It's only my sentiment
+
+Seriously
+
+1. Some courts approved apes of having a subset of human rights. Which 
+means they are almost-nation and thus they must be moved out of gicmu space
+according of this proposed cultural neutrality policy. Other animals look 
+somewhat salient to me too. Therefore, I propose moving cats and dogs into 
+fu'ivla space.
+2. How can this word be bad? Someone can google this word and be annoyed 
+even if such word is downvoted. Being pc imo is the only justification of 
+not creating such words. But such people can be annoyed even if they find 
+such words in fu'ivla/lujvo space. So just a warning in "jargon" field like
+"non-universal Western culture" might be enough.
+3. can't see whether being a gicmu or non-gicmu makes any difference. how 
+many people have complained of {besto} by far?
+
