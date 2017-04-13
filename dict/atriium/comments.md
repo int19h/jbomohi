@@ -15,3 +15,32 @@ tried 'atriium' instead. But it does very spefically refer to a word from
 latin so that is why I stayed close to the original ( like: spagetis ) It 
 was adopted into English ( and Dutch btw ) without change also. 
 
+
+## 2017-04-13T05:32:15Z — krtisfranks (comment 3197, on definition 69497, in reply to 3196)
+
+Re: cmevla, not brivla
+
+martain wrote:
+> The server did not accept my initial suggestion 'atriiume'
+
+Oh, yeah. That is a tosmabru. Sorry. I did not pay attention to that, 
+earlier.
+
+> therefore I 
+> tried 'atriium' instead.
+
+It still needs to be a brivla though. 
+
+> But it does very spefically refer to a word from 
+> latin so that is why I stayed close to the original ( like: spagetis )
+
+Yes, that makes sense and is good. The right morphology would be that of a 
+fu'ivla, which is appropriate.
+
+> It 
+> was adopted into English ( and Dutch btw ) without change also.
+
+This is irrelevant because we are discussing - in particular - Lojban 
+morphology, which is bijective with the classing of a word. cmevla classing
+is wrong for this meaning.
+
