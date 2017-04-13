@@ -88,3 +88,28 @@ What do you mean exactly? And how do I do that? Also, I applied the
 suggestions given above and now defined the word as 'artriiume' instead of 
 'atriium'.
 
+
+## 2017-04-13T08:03:17Z — gleki (comment 3202, on definition 69497, in reply to 3201)
+
+Re: cmevla, not brivla
+
+martain wrote:
+> What do you mean exactly?
+
+
+I mean that "atrium" has at least two meanings: 
+https://en.wiktionary.org/wiki/atrium#English
+
+> And how do I do that?
+
+You may wish to add those lujvo.
+{atriium zei kumfa} and {atriium zei briju} are lujvo.
+You can enter them as words.
+
+> Also, I applied the 
+> suggestions given above and now defined the word as 'artriiume' instead 
+of 
+> 'atriium'.
+
+k
+
