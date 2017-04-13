@@ -69,3 +69,13 @@ Re: cmevla, not brivla
 I will add a new word with your suggestion then, does this entry delete 
 itself?
 
+
+## 2017-04-13T05:52:44Z — gleki (comment 3200, on definition 69497, in reply to 3197)
+
+Re: cmevla, not brivla
+
+> It still needs to be a brivla though. 
+
+{atriium zei kumfa}, {atriium zei briju} depending on meaning chosen might 
+be other choices.
+
