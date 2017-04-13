@@ -79,3 +79,12 @@ Re: cmevla, not brivla
 {atriium zei kumfa}, {atriium zei briju} depending on meaning chosen might 
 be other choices.
 
+
+## 2017-04-13T07:12:15Z — martain (comment 3201, on definition 69497, in reply to 3200)
+
+Re: cmevla, not brivla
+
+What do you mean exactly? And how do I do that? Also, I applied the 
+suggestions given above and now defined the word as 'artriiume' instead of 
+'atriium'.
+
