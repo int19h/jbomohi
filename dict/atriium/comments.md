@@ -61,3 +61,11 @@ eliminate a lot of the tosmabru gotchas. Then you just craft the ending to
 your preference, so long as it ends with a vowel and follows the form of a 
 brivla in all other properties.
 
+
+## 2017-04-13T05:46:13Z — martain (comment 3199, on definition 69497, in reply to 3198)
+
+Re: cmevla, not brivla
+
+I will add a new word with your suggestion then, does this entry delete 
+itself?
+
