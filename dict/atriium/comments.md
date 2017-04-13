@@ -44,3 +44,20 @@ This is irrelevant because we are discussing - in particular - Lojban
 morphology, which is bijective with the classing of a word. cmevla classing
 is wrong for this meaning.
 
+
+## 2017-04-13T05:36:35Z — krtisfranks (comment 3198, on definition 69497, in reply to 3197)
+
+Re: cmevla, not brivla
+
+krtisfranks wrote:
+> martain wrote:
+> > The server did not accept my initial suggestion 'atriiume'
+> 
+> Oh, yeah. That is a tosmabru. Sorry. I did not pay attention to that, 
+> earlier.
+
+You could make the initial syllable "-ar" instead of just "a-". That would 
+eliminate a lot of the tosmabru gotchas. Then you just craft the ending to 
+your preference, so long as it ends with a vowel and follows the form of a 
+brivla in all other properties.
+
