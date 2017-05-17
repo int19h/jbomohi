@@ -1,29 +1,549 @@
-{{:informal description of the PEG morphology algorithm}}
+This is a description of the formal PEG morphology algorithm. If there are or appear to be discrepancies between this description and the formal grammar, the formal grammar wins.
+
+Given any string of characters, this algorithm will split it uniquely into words, including possibly some non-lojban words.
+
+We examine the string from the left, and words are extracted one by one from the left.
+# Extract all [[Morphology: special characters|pauses]], if there are any. 
+# Extract a [[Morphology: words|word]] and then any following [[Morphology: special characters|pauses]], if there are any.
+# Repeat 2 until there is nothing left.
+
 ==Morphology: Rules of formation==
-{{:Morphology: Rules of formation}}
+
+These are the rules for generating Lojban words. Any speech generated following these rules will be uniquely decomposable by the [[BPFK Section: PEG Morphology Algorithm|PEG Morphology Algorithm]].
+
+=== pauses ===
+*You <u>may not</u> pause in the middle of any word.
+*You <u>may</u> pause between any two words.
+*You <u>must</u> pause in the following cases:
+**Before any word that starts with a vowel or diphthong or y.
+**Before and after a cmevla.
+**Between a finally stressed cmavo and a brivla that starts with a cluster.
+**Between two cmavo of form CVCy (without an intervening pause) and a string of one or more rafsi (including gismu and fu'ivla as possible final rafsi).
+**Before and after a non-lojban-word. 
+
+=== cmevla ===
+*A cmevla can consist of any number of syllables (possibly none) and must have a final consonant or consonant cluster (details of what is a permissible final cluster still to be worked out). 
+
+=== cmavo ===
+*A cmavo consists of a non-h, non-cluster syllable followed by zero or more h-syllables (Any stress is allowed, but see pause rules).
+
+=== gismu ===
+*A gismu can have either CCVCV or CVC/CV forms, where CC is an initial-pair. The first vowel must be stressed and the second unstressed.
+
+=== fu'ivla ===
+*A fu'ivla is any string of non-y syllables such that: 
+**It does not begin with h or with a consonantal-syllable.
+**Only the penultimate vocalic syllable is stressed (therefore it must have at least two vocalic syllables).
+**The last syllable ends in a vowel or a diphthong.
+**It does not begin with a cmavo-form followed by a cmavo, a gismu, a fu'ivla or a lujvo (tosmabru test). 
+**It does not consist of a string of rafsi (lujvo test).
+**It does not consist of a consonant followed by a string of rafsi (slinku'i test).
+
+=== lujvo ===
+*A lujvo is any string of two or more rafsi such that:
+**It has penultimate stress.
+**The final rafsi ends in a vowel or diphthong.
+**If the first rafsi is an unstressed CVV-rafsi or is followed by another CVV-rafsi, it must be immediately followed by either an r-hyphen or n-hyphen.
+**If the first rafsi is a CVC-rafsi, and the second consonant plus what follows is a lujvo, then the CVC-rafsi must have a y-hyphen.
+**Any CVC-rafsi followed by a consonant such that the pair is impermissible requires a y-hyphen.
+**gismu and fu'ivla are allowed as final rafsi.
+**extended (brivla and fu'ivla) rafsi can only be preceded by y-final rafsi.
+**extended rafsi that begin with a vowel or diphthong take an {'} if they are preceded by another rafsi.
+
+=== rafsi ===
+*gismu-rafsi have the forms CVCCy, CCVCy, CCV, CVC(y), CVV(r/n). The parenthesized hyphens are always allowed, and sometimes required (see lujvo).
+*brivla-rafsi are any y-less brivla, minus the stress, followed by {'y}.
+*fu'ivla-rafsi is a fu'ivla that end in CV with the V changed to y if
+**it is not a string of y-less rafsi plus CVCy or CCy. (lujvy test)
+**it is not a consonant plus a string of y-less rafsi plus CVCy or CCy. (slinkujy test)
+
+
 ==Morphology: words==
-{{:Morphology: words}}
+
+A ''word'' can be a ''lojban-word'' or a [[Morphology: special characters|non-lojban-word]].
+
+A ''lojban-word'' can be a [[morphology: cmevla|cmevla]], a [[Morphology: cmavo|cmavo]] or a [[Morphology: brivla|brivla]].
+
+If the string begins with a [[morphology: cmevla|cmevla]], extract it, else if it begins with a [[Morphology: cmavo|cmavo]], extract it, else if it begins with a [[Morphology: brivla|brivla]], extract it, else it begins with a [[Morphology: special characters|non-lojban-word]], and so extract it.
+
 ==Morphology: cmevla==
-{{:morphology: cmevla}}
+
+
+To check if a string begins with a ''cmevla'', extract as many ''cmevla-syllaboid''s as you can from the left (possibly none), then you must find a consonant or cluster (details of which clusters are allowed are still to be worked out) followed by a [[Morphology: special characters|pause]]. In that case, you have a ''cmevla'', otherwise the string does not begin with a ''cmevla''. 
+
+A ''cmevla-syllaboid'' consists of an optional [[Morphology: syllables|coda]], any number of  [[Morphology: syllables|consonantal-syllable]]s (possibly none), an [[Morphology: syllables|onset]] and a [[Morphology: vowels|nucleus]]. It can also be a [[Morphology: vowels|digit]], which stands for the syllable corresponding to its name, as in '''la .2005nan. '''(''the year 2005''). The reason to include the coda and consonantal-syllables as part of the syllaboid is so that things like "ndoi" are admissible.
+
+===  List of examples that maybe should parse but don't ===
+
+* '''masytcusets'''
+
+
 ==Morphology: cmavo==
-{{:Morphology: cmavo}}
+
+To check whether a string begins with a ''cmavo'', first you have to check that it does not begin with a [[morphology: cmevla|cmevla]] or with a ''CVCy-lujvo''.
+
+A ''CVCy-lujvo'' consists of a [[Morphology: rafsi|CVC-rafsi]], then a [[Morphology: vowels|y]], then any number of [[Morphology: rafsi|initial-rafsi]] (possibly none) and finally a [[Morphology: brivla|brivla-core]].
+
+If the string does not begin with a [[morphology: cmevla|cmevla]] or with a ''CVCy-lujvo'', then it begins with a ''cmavo'' if it begins with a ''cmavo-form'' and is followed by a [[Morphology: special characters|pause]] or by a [[Morphology: words|Lojban-word]]. 
+
+A ''cmavo-form'' consists of a non-[[Morphology: consonants|h]], non-[[Morphology: consonants|cluster]] [[Morphology: syllables|onset]], any number of [[Morphology: syllables|nucleus]] (possibly none), and a final [[Morphology: vowels|nucleus]] which is not [[Morphology: syllables|stressed]] or, if [[Morphology: syllables|stressed]], it is not followed by a [[Morphology: consonants|cluster]]. A ''cmavo-form'' can also consist of one or more [[Morphology: vowels|y']]<nowiki/>s in a row, or of a [[Morphology: special characters|digit]].
+
 ==Morphology: brivla==
-{{:Morphology: brivla}}
+
+A string begins with a ''brivla'' if it does not begin with a [[Morphology: cmavo|cmavo]] and consists of any number of [[Morphology: rafsi|initial-rafsi]] (possibly none) followed by a ''brivla-core''.
+
+A ''brivla-core'' is the part of a ''brivla'' that carries the penultimate stress. It can be a [[Morphology: fu'ivla|fu'ivla]], a [[Morphology: gismu|gismu]], a [[Morphology: rafsi|CVV-final-rafsi]] or a ''short-lujvo''.
+
+A ''short-lujvo'' consists of a [[Morphology: rafsi|stressed-initial-rafsi]] and a [[Morphology: rafsi|short-final-rafsi]].
+
+''Note that a ''CVV-final-rafsi'' ''<u>needs at least one</u>'' ''initial-rafsi'' ''<u>in front in order to constitute a</u>'' ''brivla'', ''<u>otherwise it will be taken as a</u>'' ''cmavo''.''
+
+-----------
+
+A ''lujvo'' is any ''brivla'' that is not only a [[Morphology: gismu|gismu]] or only a [[Morphology: fu'ivla|fu'ivla]].
+
+
 ==Morphology: fu'ivla==
-{{:Morphology: fu'ivla}}
+
+A string begins with a ''fu'ivla'' if it does not begin with a [[Morphology: cmavo|cmavo]] or a ''rafsi-string'' or a ''slinku'i'', it does begin with a non-[[Morphology: consonants|h]] [[Morphology: syllables|onset]], and consists of any number of [[Morphology: syllables|onstressed-syllable]]s (possibly none), one [[Morphology: syllables|stressed-syllable]] and then a [[Morphology: syllables|final-syllable]].
+
+A ''rafsi-string'' consists of any number of [[Morphology: rafsi|y-less-rafsi]] (possibly none) followed by a [[Morphology: gismu|gismu]], a [[Morphology: rafsi|CVV-final-rafsi]], or a [[Morphology: rafsi|stressed-y-less-rafsi]] and a [[Morphology: rafsi|short-final-rafsi]]
+
+A ''slinku'i'' consists of a [[Morphology: consonants|consonant]] followed by a ''rafsi-string''.
+
 ==Morphology: extended rafsi==
-{{:Morphology: extended rafsi}}
+
+''any-extended-rafsi'' is a [[Morphology: fu'ivla|fu'ivla]], a ''fu'ivla-rafsi'', a  ''stressed-fu'ivla-rafsi'', a ''brivla-rafsi'' or a ''stressed-brivla-rafsi''.
+
+A ''fu'ivla-rafsi'' consists of one or more [[Morphology: syllables|unstressed-syllable]]s and a [[Morphology: syllables|y-syllable]] and possibly a [[Morphology: consonants|h]], such that it starts with a non-[[Morphology: consonants|h]] [[Morphology: syllables|onset]], it doesn't start with a [[Morphology: cmavo|cmavo]], and it is not a y-final ''rafsi-string'' or a ''slinkujy''.
+
+A ''stressed-fu'ivla-rafsi'' consists of any number of [[Morphology: syllables|unstressed-syllable]]s (possibly none), one [[Morphology: syllables|stressed-syllable]] and then a [[Morphology: syllables|y-syllable]], such that it starts with a non-[[Morphology: consonants|h]] [[Morphology: syllables|onset]], it doesn't start with a [[Morphology: cmavo|cmavo]], and it is not a y-final ''rafsi-string'' or a ''slinkujy''.
+
+A ''brivla-rafsi'' consists of two or more [[Morphology: syllables|unstressed-syllable]]s, an [[Morphology: consonants|h]]), and a [[Morphology: vowels|y]] and possibly another [[Morphology: consonants|h]], such that it starts with a non-[[Morphology: consonants|h]] [[Morphology: syllables|onset]], it doesn't start with a [[Morphology: cmavo|cmavo]], and it is not a ''slinkujy''.
+
+A ''stressed-brivla-rafsi'' consists of one or more [[Morphology: syllables|unstressed-syllable]]s, one [[Morphology: syllables|stressed-syllable]], an [[Morphology: consonants|h]]), and a [[Morphology: vowels|y]], such that it starts with a non-[[Morphology: consonants|h]] [[Morphology: syllables|onset]], it doesn't start with a [[Morphology: cmavo|cmavo]], and it is not a ''slinkujy''.
+
+A ''slinkujy'' is a  [[Morphology: consonants|consonant]] followed by a y-final ''rafsi-string''
+
+A y-final ''rafsi-string'' consists of any number of [[Morphology: rafsi|y-less-rafsi]] (possibly none) followed by a  [[Morphology: rafsi|y-rafsi]], a [[Morphology: rafsi|stressed-y-rafsi]], a [[Morphology: rafsi|stressed-y-less-rafsi]] plus an [[Morphology: consonants|initial-pair]] and a [[Morphology: vowels|y]], or just an [[Morphology: consonants|initial-pair]] and a [[Morphology: vowels|y]].
+
 ==Morphology: gismu==
-{{:Morphology: gismu}}
+
+
+''gismu'' consists either of an [[Morphology: consonants|initial-pair]], a [[Morphology: vowels|stressed-vowel]], and a [[Morphology: syllables|final-syllable]] composed of [[Morphology: consonants|consonant]] [[Morphology: vowels|vowel]] (CCVCV), or of a [[Morphology: consonants|consonant]], a [[Morphology: vowels|stressed-vowel]], a [[Morphology: consonants|consonant]], and a [[Morphology: syllables|final-syllable]] composed of [[Morphology: consonants|consonant]] [[Morphology: vowels|vowel]] (CVC/CV).
+
 ==Morphology: rafsi==
-{{:Morphology: rafsi}}
+
+
+A ''CVV-final-rafsi'' consists of a [[Morphology: consonants|consonant]], a [[Morphology: syllables|stressed-vowel]], an [[Morphology: consonants|h]] and a [[Morphology: syllables|final-syllable]] [[Morphology: vowels|vowel]] (CVhV).
+
+A ''short-final-rafsi''  is a [[Morphology: syllables|final-syllable]] consisting of a  [[Morphology: consonants|consonant]] and a [[Morphology: vowels|diphthong]] (CVV), or an  [[Morphology: consonants|initial-pair]] and a [[Morphology: vowels|vowel]] (CCV).
+
+An ''initial-rafsi'' is an [[Morphology: extended rafsi|extended-rafsi]], a ''y-rafsi'', or a ''y-less-rafsi'' not the beginning of [[Morphology: extended rafsi|any-extended-rafsi]].
+
+A ''stressed-initial-rafsi'' is a [[Morphology: extended rafsi|stressed-extended-rafsi]], a ''stressed-y-rafsi'', or a ''stressed-y-less-rafsi''. 
+
+A ''y-rafsi'' is a CCVCy, CVCCy or CVCy form with an [[Morphology: syllables|unstressed-vowel]], possibly followed by an [[Morphology: consonants|h]] (in case a [[Morphology: syllables|nucleus]]-initial [[Morphology: extended rafsi|extended-rafsi]] follows).
+
+A ''stressed-y-rafsi'' is a CCVCy, CVCCy or CVCy form with a [[Morphology: syllables|stressed-vowel]]. In this case an [[Morphology: consonants]] can never follow because there are no single-syllable [[Morphology: extended rafsi|extended-rafsi]] that could come after it.
+
+A ''y-less-rafsi'' is a CVC, CCV or CVV form rafsi with [[Morphology: syllables|unstressed-vowel]]s such that they are not the beginning of a ''y-rafsi'' and such that they are not followed by [[Morphology: extended rafsi|any-extended-rafsi]].
+
+A ''stressed-y-less-rafsi'' is a CVC, CCV or CVV form rafsi with final [[Morphology: syllables|stressed-vowel]]s such that they are not the beginning of a ''stressed-y-rafsi''.
+
+A stressed or unstressed CVV form rafsi include a possible ''r-hyphen'' at the end. 
+
+An ''r-hyphen'' is an 'r' if what follows is a consonant and an 'n' if what follows is an 'r'.
+
 ==Morphology: syllables==
-{{:Morphology: syllables}}
+
+
+A ''syllable'' consists of an ''onset'', a ''non-[[Morphology: vowels|y]] nucleus'', and a ''coda''. (A ''y-nucleus'' is excluded from the definition of ''syllable'' just for convenience, because ''y-syllable''s are not allowed in [[Morphology: fu'ivla|''fu'ivla'']]. ''y-syllable''s in [[Morphology: brivla|''brivla'']] always have an empty ''coda'').
+
+An ''onset'' is an [[Morphology: consonants|initial]] consonant or cluster, or a [[Morphology: vowels|glide]], or an [[Morphology: consonants|h]], or empty. (An empty onset can only appear at the beginning of a word, an ''h onset'' can never appear at the beginning of a word, a ''glide'' onset can never appear immediately after a diphthong). 
+
+A ''nucleus'' is a [[Morphology: vowels|diphthong]], or a [[Morphology: vowels|vowel]], or a [[Morphology: vowels|y]], not followed directly by another ''nucleus''.
+
+A ''coda'' is a single [[Morphology: consonants|consonant]], or empty, not the start of a ''consonantal-syllable'', nor of an [[Morphology: consonants|initial]] consonant or cluster.
+
+A ''consonantal-syllable'' consists of a [[Morphology: consonants|consonant]] and a [[Morphology: consonants|syllabic]] consonant, and must always be followed by another ''consonantal-syllable'' or by an [[Morphology: consonants|initial]] consonant or cluster. 
+
+A ''final-syllable'' (of a [[Morphology: brivla|brivla]]) is a ''syllable'' whose nucleus is not ''stressed'', followed directly by a [[Morphology: special characters|pause]] or by a [[Morphology: words|Lojban-word]] other than a [[morphology: cmevla|cmevla]].
+
+A ''stressed-syllable'', a ''stressed-diphthong'' and a ''stressed-vowel'' are, respectively, a ''syllable'', a [[Morphology: vowels|diphthong]] and a [[Morphology: vowels|vowel]] with where the vowel is ''stressed'' ('A', 'E', 'I', 'O', 'U') or with ''stress'' being marked by being followed (possibly after intervening y and/or consonantal syllables) by just one ''syllable'' and then by a [[Morphology: special characters|pause]]. (The use of capital 'I' and 'U' in [[Morphology: vowels|glide]] position, or capital consonants, is not taken as a mark of stress).
+
+An ''unstressed-syllable'', an ''unstressed-diphthong'' and an ''unstressed-vowel'' are, respectively, a ''syllable'', a [[Morphology: vowels|diphthong]] and a [[Morphology: vowels|vowel]] not ''stressed'' as described above.
+
 ==Morphology: vowels==
-{{:Morphology: vowels}}
+
+A ''glide'' is '''i''' or '''u''' when followed by a [[Morphology: syllables|nucleus]] and not followed by abother ''glide''.
+
+A ''diphthong'' is one of '''ai''',  '''au''', '''ei''', '''oi''' not followed by a ''glide''.
+
+A ''vowel'' is one of '''a''', '''e''', '''i''', '''o''', '''u''' not followed by a [[Morphology: syllables|nucleus]].
+
+'''a''' is any number of [[Morphology: special characters|commas]] (possibly none) and the character 'a' or 'A'.
+
+'''e''' is any number of [[Morphology: special characters|commas]] (possibly none) and the character 'e' or 'E'.
+
+'''i''' is any number of [[Morphology: special characters|commas]] (possibly none) and the character 'i' or 'I'.
+
+'''o''' is any number of [[Morphology: special characters|commas]] (possibly none) and the character 'o' or 'O'.
+
+'''u''' is any number of [[Morphology: special characters|commas]] (possibly none) and the character 'u' or 'U'.
+
+'''y''' is any number of [[Morphology: special characters|commas]] (possibly none) and the character 'y' or 'Y'.
+
 ==Morphology: consonants==
-{{:Morphology: consonants}}
+
+An ''initial'' is empty or one of the following single consonants or clusters, in any case not followed by another consonant:
+<tab class=wikitable>
+&nbsp; 	r 	l 	c	cr	cl	s	sr	sl	 	 	 	 	j	-	-	z	-	-
+f	fr	fl	cf	cfr	cfl	sf	sfr	sfl	 	v	vr	vl	jv	jvr	jvl	zv	zvr	zvl
+p	pr	pl	cp	cpr	cpl	sp	spr	spl	 	b	br	bl	jb	jbr	jbl	zb	zbr	zbl
+k	kr	kl	ck	ckr	ckl	sk	skr	skl	 	g	gr	gl	jg	jgr	jgl	zg	zgr	zgl
+t	tr	-	ct	ctr	-	st	str	-	 	d	dr	-	jd	jdr	-	zd	zdr	-
+x	xr	xl	-	-	-	-	-	-	 	-	-	-	-	-	-	-	-	-
+m	mr	ml	cm	cmr	cml	sm	smr	sml	 	 	 	 	jm	jmr	jml	zm	zmr	zml
+n	-	-	cn	-	-	sn	-	-	 	 	 	 	-	-	-	-	-	-
+---	---	---	---	---	---	---	---	---	 	---	---	---	---	---	---	---	---	---
+ 	 	 	tc	 	 	ts	 	 	 	 	 	 	dj		 	dz	 	 &nbsp;
+</tab>
+
+There are in all 102 possible initials, including the empty one.
+
+An ''initial-pair'' is an initial cluster that consist of exactly two consonants. 
+
+An ''affricate'' pair is one of '''tc''', '''ts''', '''dj''', '''dz'''.
+
+A ''consonant'' is a ''voiced'' consonant, an ''unvoiced'' consonant or a ''syllabic'' consonant.
+
+A ''voiced'' consonant is one of '''b''', '''d''', '''g''', '''j''', '''v''', '''z'''.
+
+An ''unvoiced'' consonant is one of '''c''', '''f''', '''k''', '''p''', '''s''', '''t''', '''x'''.
+
+A ''syllabic'' consonant is one of '''l''', '''m''', '''n''', '''r'''.
+
+'''l''' is zero or more [[Morphology: special characters|commas]] and 'l' or 'L', not followed by '''h''' or '''l'''.
+
+'''m''' is zero or more [[Morphology: special characters|commas]] and 'm' or 'M', not followed by '''h''' or '''m''' or '''z'''.
+
+'''n''' is zero or more [[Morphology: special characters|commas]] and 'n' or 'N', not followed by '''h''' or '''n''' or an ''affricate''.
+
+'''r''' is zero or more [[Morphology: special characters|commas]] and 'r' or 'R'.not followed by '''h''' or '''r'''.
+
+'''f''' is zero or more [[Morphology: special characters|commas]] and 'f' or 'F', not followed by '''h''' or '''f''' or any ''voiced'' consonant.
+
+'''p''' is zero or more [[Morphology: special characters|commas]] and 'p' or 'P', not followed by '''p''' or '''P''' or any ''voiced'' consonant.
+
+'''t''' is zero or more [[Morphology: special characters|commas]] and 't' or 'T', not followed by '''h''' or '''t''' or any ''voiced'' consonant.
+
+'''k''' is zero or more [[Morphology: special characters|commas]] and 'k' or 'K', not followed by '''h''' or '''k''' or '''x''' or any ''voiced'' consonant.
+
+'''x''' is zero or more [[Morphology: special characters|commas]] and 'x' or 'X', not followed by '''h''' or '''x''' or '''k''' or '''c''' or any ''voiced'' consonant.
+
+'''c''' is zero or more [[Morphology: special characters|commas]] and 'c' or 'C', not followed by '''h''' or '''c''' or '''s''' or '''x''' or any ''voiced'' consonant.
+
+'''s''' is zero or more [[Morphology: special characters|commas]] and 's' or 'S', not followed by '''h''' or '''s''' or '''c''' or any ''voiced'' consonant.
+
+'''j''' is zero or more [[Morphology: special characters|commas]] and 'j' or 'J', not followed by '''h''' or '''j''' or '''z''' or any '''unvoiced''' consonant.
+
+'''z''' is zero or more [[Morphology: special characters|commas]] and 'z' or 'Z', not followed by '''h''' or '''z''' or '''j''' or any ''unvoiced'' consonant.
+
+'''b''' is zero or more [[Morphology: special characters|commas]] and 'b' or 'B', not followed by '''h''' or '''b''' or any ''unvoiced'' consonant.
+
+'''d''' is zero or more [[Morphology: special characters|commas]] and 'd' or 'D', not followed by '''h''' or '''d''' or any ''unvoiced'' consonant.
+
+'''g''' is zero or more [[Morphology: special characters|commas]] and 'g' or 'G', not followed by '''h''' or '''g''' or any ''unvoiced'' consonant.
+
+'''v''' is zero or more [[Morphology: special characters|commas]] and 'v' or 'V', not followed by '''h''' or '''v''' or any ''unvoiced'' consonant.
+
+'''h''' is zero or more [[Morphology: special characters|commas]] and ' ' ' or 'h', followed by a [[Morphology: syllables|nucleus]].
+
 ==Morphology: special characters==
-{{:Morphology: special characters}}
+
+A ''digit'' is one of ''1'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''0''. They can stand for the syllables '''pa''', '''re''', '''ci''', '''vo''', '''mu''', '''xa''', '''ze''', '''bi''', '''so''', '''no''' in [[Morphology: cmavo|cmavo]], in which case they constitute the whole [[Morphology: cmavo|cmavo]], as part of a [[Morphology: cmene|cmene]], anywhere but at the end of it. They cannot appear in [[Morphology: brivla|brivla]].
+
+A ''pause'' is any number (at least one) of ''space-character''s, possibly preceded by ''commas''.
+
+A ''space-character'' is a blank, a dot, a question mark, an exclamation mark, an end-of-line or an end of string.
+
+A ''comma'' is accepted anywhere and absorbed by the following character, treated as if it wasn't there (not a space!).
+
+A ''non-lojban-word'' is any string of non-''space-character''s up to the next ''pause'' such that it does not begin with a [[Morphology: words|Lojban-word]]. Any string that contains an unrecognized character or an impermissible sequence is a ''non-lojban-word''.
+
+
 ==Another informal description of the morphology, less tied to the PEG rules==
-{{:informal description of the PEG morphology algorithm/condensed}}
+
+This is an attempt at describing the PEG morphology in a less formal way, condensed into a single page. It also includes some experimental rules, marked as such, that open up previously forbidden word shapes.
+
+=== Phonemes ===
+
+At the most basic level, an utterance is made of phonemes. Here are the main classes of phonemes (there are subclasses as seen later):
+
+* consonants ({{jvs|zunsna}}):
+** '''bdgjvz''' (voiced), '''cfkpstx''' (unvoiced), '''lmnr''' (syllabic)
+* glides ({{jvs|karmlisna}}): '''i u'''
+* h ('''me'o .y'y'''): ''' ' '''
+* word break (glottal stop) ({{jvs|depybu'i}}): '''.'''
+* vowels ({{jvs|karsna}}): '''a e i o u'''
+* diphthongs: '''au ai ei oi'''
+* y ('''me'o .ybu'''): '''y'''
+
+The comma (me'o slaka bu) isn't a phoneme, but is used to separate syllables for clarity. Removing it has no effect.
+
+'''i''' and '''u''' are vowels, unless a vowel or diphthong follows, in which case they are glides. '''iau''' is a glide and a diphthong; '''iaua''' is two glide-vowel pairs.
+
+At this level, strings of consonants follow these rules:
+* consonants can be next to consonants, word breaks, vowels, diphthongs, and '''y'''
+* no consonant can be followed by itself
+* voiced consonants can't be next to voiceless ones, and vice versa
+* sibilants (cjsz) can't be next to each other
+* '''x''' can't be next to '''c''' or '''k'''
+* the substrings '''mz''', '''nts''', '''ntc''', '''ndz''', '''ndj''' are not allowed
+
+Glides must follow a word break, vowel, diphthong, or '''y''', and be followed by a vowel, diphthong, or '''y'''. '''i''' as a glide can't follow a diphthong ending in '''i''', and '''u''' as a glide can't follow the diphthong '''au'''.
+
+'''h''' must both follow and be followed by a vowel, diphthong, or '''y'''.
+
+Vowels, diphthongs, and '''y''' can be next to consonants, glides, '''h''', and word breaks.
+
+=== Syllables ===
+
+These are the shapes syllables ({{jvs|slaka}}) can have:
+
+* Vowel syllable
+** a word break, a glide, or up to three consonants
+** then a vowel or a diphthong
+** then optionally a consonant
+{{mu|.a, spa, pan, blaif, stra}}
+
+* h-syllable
+** the letter '''''''
+** then a vowel or diphthong
+** then optionally a consonant
+{{mu|'u, 'ei, 'am}}
+
+* y-syllable
+** a word break, a glide, or up to three consonants
+** then the letter y
+{{mu|by, .y, gry, zbly}}
+
+* hy-syllable
+** the string ''''y'''
+
+* consonantal syllable ({{jvs|zunsnaslaka}})
+** a consonant
+** then a syllabic consonant
+{{mu|fl, sm, rn}}
+
+{{Ombox
+| image = none
+| text = <div id="ysyll"><strong>[[#exp|Experimental]]</strong></div><div>
+* y-consonant syllable: a consonant, '''y''', then another consonant. These behave exactly like consonantal syllables, and when the second consonant is a syllabic one, the syllable with a '''y''' is equivalent to the one without when distinguishing between words.
+</div>
+}}
+
+When a syllable starts with more than one consonant, the rules for these clusters ({{jvs|zunsnagri}}) are more restrictive than the general ones above. These are the permissible initial doubles, stolen with love from CLL:
+
+    pl pr                       fl fr
+    bl br                       vl vr
+    
+    cp cf      ct ck cm cn      cl cr
+    jb jv      jd jg jm
+    sp sf      st sk sm sn      sl sr
+    zb zv      zd zg zm
+    
+    tc tr      ts               kl kr
+    dj dr      dz               gl gr
+    
+    ml mr                       xl xr
+
+And the permissible initial triples:
+
+    cfr cfl sfr sfl   jvr jvl zvr zvl
+    cpr cpl spr spl   jbr jbl zbr zbl
+    ckr ckl skr skl   jgr jgl zgr zgl
+    ctr     str       jdr     zdr
+    cmr cml smr sml   jmr jml zmr zml
+
+When segmenting text into syllables, when a consonant could possibly either start a syllable or end one, it's always taken to start one. In other words, onsets are greedy, codas are lazy.
+
+=== Words ===
+
+Words can be {{jvs|cmavo}}, {{jvs|cmevla}}, or {{jvs|brivla}}. cmavo and brivla are made of syllables, while cmevla are free strings of phonemes.
+
+cmavo are composed of:
+
+* one vowel- or '''y'''-syllable, with at most one initial consonant and no final consonant
+* optionally followed by any number of '''h'''- or '''hy'''-syllables without any final consonants
+
+{{mu|.a, ba, bai, ba'i, ba'ai, by, by'i, ia, iai, iy, ua'ai'y}}
+
+There are two exceptions: '''ybu''', also spelled '''y.bu''', is a single cmavo despite the medial consonant and word break, and '''y''' surrounded by word breaks and not followed by '''bu''' is a word break itself, not a cmavo.
+
+cmavo can be stressed on any syllable.
+
+cmevla are arbitrary strings of phonemes, following phoneme but not syllable restrictions, starting with a word break, containing no word breaks, and ending with a consonant followed by a word break. They can be stressed anywhere.
+
+{{Ombox
+| image = none
+| text = <div><strong>Experimental</strong></div><div>
+There is also an [[Defining brivla without using lujvo rules|alternative definition of brivla that doesn't depend on rafsi]].
+</div>
+}}
+
+A brivla is composed of any number of initial {{jvs|rafsi}} followed by a final rafsi. It must begin with a vowel syllable, end with a vowel- or '''h'''-syllable, and have at least two syllables. It may not be a [[#slinkuhi|slinkuhi]], and may not start with a sequence of cmavo that yields a valid word when removed. Stress (marked here with a grave accent) is on the second-last vowel- or '''h'''-syllable.
+
+A final rafsi is:
+
+(1) a zihevla:
+* a vowel syllable
+* followed by any number of vowel, h-, or consonantal syllables
+* followed by a vowel- or h-syllable with no final consonant
+* is not a gismu or sequence of more than one rafsi
+* can stand alone as a brivla (meets the other requirements above)
+{{mu|cpi,kù,ku&nbsp; àl,ga&nbsp; fì,pr,koi&nbsp; glàu,ka&nbsp; sprà,'e}}
+
+(2) or a gismu:
+* a CV vowel syllable followed by a CCV one
+* or a CVC one then a CV one
+* or a CCV one then a CV one
+{{mu|pà,stu&nbsp; vèd,li&nbsp; tsà,ni}}
+
+(3) or a short final rafsi:
+* a CVV or CCV vowel syllable, e.g. '''xau''', '''cpa'''
+* or a CV vowel syllable followed by a 'V h-syllable, e.g. '''fà'i'''
+
+{{Ombox
+| image = none
+| text = <div id="rafsi3a"><strong>[[#exp|Experimental]]</strong></div><div>
+(3a) or a CV syllable. These must be at least one rafsi ending in '''y''' in the part of the word preceding a CV rafsi, and a CV rafsi may not directly follow a rafsi of [[#rafsi8|type 8]].
+{{mu|dat,ky,nèi,bi  cmà,vyr,fy,ja -> well-formed lujvo:|datky-nei-bi    cmavyrfy-ja}}
+{{mu|bla,ny,kàir,ze -> coarser-grained lujvo:|blany-kairze       (type 3a can't follow type 8)}}
+{{mu|xag,màu,ri -> single zihevla:|xagmauri           (no y-rafsi preceding "ri")}}
+</div>
+}}
+
+An initial rafsi is any one of these:
+
+(4) a gismu followed by the syllable ''''y''', e.g. '''fasnu'y'''
+
+(5) a gismu with its final vowel replaced with '''y''', e.g. '''fasny'''
+
+(6) a zihevla followed by the syllable ''''y''', e.g. '''sorpeka'y'''
+
+(7) a CV vowel syllable followed by a Cy '''y'''-syllable, e.g. '''fa,ky'''
+
+<span id="rafsi8">(8)</span> a vowel syllable of the form CVC, CCV, or CVVr
+* or a CV syllable followed by a 'V or 'Vr syllable
+* may not be followed by a rafsi derived from a zihevla
+{{mu|'''gas'''&nbsp; '''jbu'''&nbsp; '''gaur'''&nbsp; '''li,'ar'''}}
+
+(9) a vowel syllable of the form CVV
+* or a CV syllable followed by a 'V syllable
+* may not be followed by a rafsi derived from a zihevla
+{{mu|'''gau'''&nbsp; '''li,'a'''}}
+
+{{Ombox
+| image = none
+| text = <div id="rafsi9a"><strong>[[#exp|Experimental]]</strong></div><div>
+(9a) a CV syllable, with the restrictions of [[#rafsi3a|(3a)]], and that no competing interpretation where the CV is the beginning of a [[#rafsi8|type 8]] rafsi parses.
+* e.g. '''tat,py,ri,nun,lì,'u''' ->    '''tatpy-ri-nun-li'u''';&nbsp;      '''sla,by,si,ri,ju'''     ->    '''slaby-si-ri-ju''';&nbsp;      '''va,ny,nu,plì,ste'''    -> '''!! vany-nup-liste'''
+
+(9b) a CV and then a 'y syllable, with the restrictions of [[#rafsi3a|(3a)]] only.
+* e.g. '''va,ny,nu,'y,plì,ste''' ->    '''vany-nu'y-pli-ste'''
+</div>}}
+
+(10) a type 8 or 9 rafsi followed by a type 3 rafsi followed by ''''y'''
+{{mu|'''cau,cni,'y'''&nbsp; '''ri,'ar,ju,'o,'y'''&nbsp; '''mul,fau,'y''',&nbsp; '''jbo,jbe,'y'''}}
+
+(11) a zihevla that ends in a vowel syllable, ending in a vowel and not a diphthong, with the final vowel replaced with y, unless the result breaks up into any other valid string of rafsi
+{{mu|'''ka,'or,ty'''&nbsp; '''a,sny'''}}
+
+<span id="rafsirecog">Note</span> that while all rafsi are valid syllables by themselves, strings of them are recognized as strings of phonemes, not syllables. For example '''gastro''', even though its syllable structure is '''gà,stro''', is a lujvo made of two rafsi '''gas''' '''tro'''.
+
+If a CVVr or CV'Vr rafsi is followed by a rafsi beginning with '''r''', and only then, the final '''r''' of the first rafsi is replaced with an '''n'''.
+If a rafsi ending in '''y''' is followed by a rafsi beginning with a vowel, and only then, an ''' ' ''' is prepended to the second rafsi. In other situations where sticking two rafsi together violates phoneme or syllable rules, the left rafsi needs to be replaced with one ending with '''y'''.
+
+A brivla consisting of just a zihevla is called a zihevla, one consisting of just a gismu is a gismu, and all others are called lujvo.
+
+A <span id="slinkuhi">slinkuhi</span> ({{jvs|valslinku'i}}) is a [''consonant followed by a string of rafsi that up to its first y-syllable, or if no y-syllables, in its entirety, is composed of non-zihevla rafsi''] that itself can't be broken up into a string of rafsi.
+{{mu|''p''rà,'i&nbsp; ''s''pòr,te&nbsp; ''z''bla,zdà,vro&nbsp; ''c''nar,jy,fra,gà,ri&nbsp; ''z''gà,stro ''(see note on [[#rafsirecog|rafsi recognition]] above)}}
+
+Other non-words also behave like slinkuhi, in that prepending a cmavo makes them a word, but these arise from rules other than the one named slinkuhi.
+{{mu|cpa&nbsp; cpau&nbsp; cpra&nbsp; cprau&nbsp; (''brivla must have 2+ syllables'')}}
+{{mu|cl,pàr,nu&nbsp; (''brivla must start with a vowel syllable'')}}
+
+A <span id="tosmabru">tosmabru</span> ({{jvs|valrtosmabru}}) is a string intended to be a brivla but which decomposes into multiple words. tosmabru can be coerced into being brivla by adding a consonant at the end of the last syllable of the first cmavo.
+* gau,tcì,ni -> gau tcini; cmavo + gismu
+* gaur,tcì,ni -> gaurtcini; a single lujvo
+* .a,'u,nain,mo -> .a'u nainmo; cmavo + zi'evla
+* .a,'ur,nain,mo -> .a'urnainmo; a single zihevla
+* boi,kèi,foi -> boi kèi foi; three cmavo
+* boir,kèi,foi -> boirkeifoi; a single lujvo
+
+=== Word breaks, glottal stops ===
+
+All word breaks may be pronounced as glottal stops, and some word breaks have to. Glottal stops are required before and after all cmevla, as well as before all words starting with a vowel or "y". They are also required after certain cmavo:
+
+* When pronouncing two words together would break a phonotactic rule, they need to be separated with a glottal stop.
+{{mu|"au" "uàn,mo" -> {.au .uanmo} }}
+
+* Each pair of cmavo of the form CV Cy followed by either a brivla or a cmavo of the form CVV or CV'V needs a glottal stop at one of the word breaks. (This is the only case where cmavo-shaped syllables are absorbed by brivla by default but can be detached.)
+{{mu|"ca" "vy" "càr,vi" -> {ca vy. carvi} /ʃa.vəʔ.ˈʃar.vi/ |(/ʃa.və.ˈʃar.vi/ would be {cavycarvi}, a lujvo)}}
+
+{{Ombox
+| image = none
+| text = <div id="cikybi"><strong>[[#exp|Experimental]]</strong></div><div>
+This also applies to CV Cy CV sequences: /ˈʃi.kə.bi/ is {cikybi}, /ˈʃiʔ.kə.bi/ is {ci. ky bi}
+</div>}}
+
+* Every stressed cmavo followed by a brivla starting with a consonant cluster needs a glottal stop after the cmavo.
+{{mu|"bà" "sna,jù,'i" -> {bà. snaju'i} /ˈbaʔ.sna.ˈʒu.hi/|(/ˈba.sna.ˈʒu.hi/ would be {basna jù'i}, a gismu and a cmavo)}}
+
+=== Splitting a stream of speech into words ===
+
+This is a simplified procedure to split speech into words, not taking arbitrary quotes (ZOI, ZOhOI, MEhOI, GOhOI) into account. The input is a (magically) perfectly recognized string of phonemes, with the vowels marked for stress.
+
+Each split described below is to be treated as a boundary of the speech stream for subsequent steps. These chunks will get increasingly smaller until they all coincide with single words.
+
+(1) Split the stream at each glottal stop or pause.
+
+(2) If the stream ends with a consonant, stop processing it.
+
+(3) Detect the syllables in the stream. For each stressed syllable:
+* If the syllable after it is also stressed, split between the two syllables.
+* If not, find the next vowel or h-syllable after it, and split the stream after that syllable, unless the syllable after that begins with ''' ' ''' - don't split in that case.
+
+(4) Try to read a cmavo, then after that cmavo try to read a cmavo, or if that fails, a brivla. 
+* If the stream ends after the first cmavo read, stop processing it. 
+* If two cmavo are read, split the stream after the first one, and stop processing the first part. 
+* If a cmavo and brivla are read, split the stream after the cmavo and stop processing both parts. 
+* If only a cmavo is read, but this cmavo is shorter than the stream, try to read a brivla from the start of the stream. If that succeeds, stop processing the stream. If not, declare the stream malformed and abandon ship.
+
+Repeat the above step for each piece where processing was not stopped, until no such pieces remain.
+
+An example:
+      còiju'idoi.rktk.si'audàuràtcucubaziba'acazgùnta
+  (1) còiju'idoi  rktk  si'audàuràtcucubaziba'acazgùnta
+  (2) còiju'idoi  [rktk]  si'audàuràtcucubaziba'acazgùnta
+  (3) còi,ju,'i,doi  [rktk]  si,'au,dàu,rà,tcu,cu,ba,zi,ba,'a,ca,zgùn,ta
+      còi,ju,'i,doi  [rktk]  si,'au,dàu  rà,tcu  cu,ba,zi,ba,'a,ca,zgùn,ta
+  (4) (còi),(ju,'i),doi
+      [coi]  (ju,'i),(doi)
+      [coi]  [ju'i]  [doi]
+  (4) (si,'au),(dàu)
+      [si'au]  [dau]
+  (4) (rà),(tcu)!
+      (rà,tcu)
+      [ratcu]
+  (4) (cu),(ba),zi,ba,'a,ca,zgùn,ta
+      [cu]  (ba),(zi),ba,'a,ca,zgùn,ta
+      [cu]  [ba]  (zi),(ba,'a),ca,zgùn,ta
+      [cu]  [ba]  [zi]  (ba,'a),(ca),zgùn,ta
+      [cu]  [ba]  [zi]  [ba'a]  (ca),(zgùn,ta)!
+      [cu]  [ba]  [zi]  [ba'a]  (ca,zgùn,ta)
+      [cu]  [ba]  [zi]  [ba'a]  [cazgunta]
+
+Result: coi ju'i doi rktk si'au dau ratcu cu ba zi ba'a cazgunta
