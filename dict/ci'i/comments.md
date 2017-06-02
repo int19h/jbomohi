@@ -38,3 +38,24 @@ of decimal). Even just "ci'ino" in our current definition (not as VUhU+PA)
 should refer to infty*(10^1) + 0*(10^0) = infty, where "10" refers to the 
 base (contextless default: decimal).
 
+
+## 2017-06-02T23:01:56Z — krtisfranks (comment 3215, on definition 1431, in reply to 3214)
+
+Re: Complex infinity, etc.
+
+krtisfranks wrote:
+> And any such transfinite thing should, 
+> perhaps, be put in VUhU too. Otherwise, it temporarily breaks the reading
+
+> of the digit string as belonging to a base (such as the contextless 
+default
+> of decimal). Even just "ci'ino" in our current definition (not as 
+VUhU+PA) 
+> should refer to infty*(10^1) + 0*(10^0) = infty, where "10" refers to the
+
+> base (contextless default: decimal).
+
+See also: "{ci'i'e}", "{ci'i'o}", "{ci'i'oi}".
+
+The recommendation of putting "{ci'i}" in VUhU applies to them as well.
+
