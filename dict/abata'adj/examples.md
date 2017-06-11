@@ -5,3 +5,7 @@ la .abata'adj. mo
 ## 2017-06-11T06:06:03Z — lakanro (example 906)
 
 la .abata'adj. mo
+
+## 2017-06-11T07:16:41Z — lakanro (example 907)
+
+la .abata'adj. mo
