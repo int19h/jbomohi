@@ -50,3 +50,24 @@ I see no way by which to reconcile these differences, even if we add sumti
 slots to the alternative definition as considered. Fundamentally, one 
 mentions f(t_i)'s and one simply mentions f and t_i's.
 
+
+## 2017-07-14T06:01:38Z — krtisfranks (comment 3225, on definition 69711, in reply to 3224)
+
+Re: Qualms
+
+krtisfranks wrote:
+> alternative definition. In the actual entry's definition, one would 
+specify
+
+The aforementioned 'actual entry definition' is:
+"$x_1$ (amount/value (li/ni) or labelled entity) is the difference 
+between/change in (states/realizations of/output from) general and relevant
+idea/object of interest or function/aspect/property/topic/dependent 
+parameter/dependent variable $x_2$ under or due to a change in 
+(independent) 
+parameter/variable/index/identification/ownership/property/aspect $x_3$ 
+(generic name) to (later) specific 
+state/realization/value/person/entity/meaning $x_4$ from (earlier) specific
+state/realization/value/person/entoty/meaning $x_5$ (type matches that of 
+$x_3$), under circumstances/conditions/with(in) scope/with caveats $x_6$."
+
