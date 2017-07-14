@@ -1,0 +1,52 @@
+## 2017-07-14T05:56:21Z — krtisfranks (comment 3224, on definition 69711)
+
+Qualms
+
+First, the cardinality of its terbri is currently six. Typically, non-joke 
+gismu are at-most-5-ary, or are arbitrary-ary. Thus, this word is 
+nonstandard.
+
+Second, "delta" in English and technical usage has many usages. The most 
+common or generally useful such - in my current, subjective estimation - is
+either this one or the following:
+
+"x_1 (value) is the difference or change in a function between values x_2 
+and x_3 in that order (x_2 - x_3)."
+
+We could possibly specify what the function is or the other conditions 
+under which the change took place. But the primary point here is that the 
+relevantly changing independent variable in question is not explicitly 
+specified and the changing values (labelled "x_2" and "x_3" in this 
+alternative definition) are instances of the function and not of the 
+variable, unlike the definition supplied in the actual entry.
+
+In other words, one would say, for example, "my profit today from shoe 
+sales" and "my profit yesterday from shoe sales" in the context of the 
+alternative definition. In the actual entry'a definition, one would specify
+(in the same example) that the function is my profot from shoe sale, the 
+variable is time, and one is measuring the change in the function as the 
+variable changes to today from yesterday.
+
+This alternative definition allows for a bit more flexibility than that of 
+the actual entry. For example, disparate quantities of the same rough type 
+or dimensions, which could be hard to group/categorize/specify in one 
+function name, can be easily compared. For example, one could measure the 
+difference between employee wages and the value which they add to their 
+employer via sales revenue. These are specific types of monetary value that
+the employee 'provides' (one being negative and one being positive for each
+the employer and the employee (but it changes depending on the subject)); 
+however, the employee may provide other monetary value to the employer (or 
+the world at large), so it is hard to name exactly what types of values are
+being considered and mutually compared here (id est: what the name of the 
+function is).
+
+On the other hand, the current definition, while perhaps slightly more 
+clunky, has its own uses and is more explicit and clear when the uses of 
+each definition option overlap. Additionally, the alternative definition is
+perhaps too close to other words in Lojban which mean "change" or 
+"difference" (in various senses) and, so, can just be rolled up into those.
+
+I see no way by which to reconcile these differences, even if we add sumti 
+slots to the alternative definition as considered. Fundamentally, one 
+mentions f(t_i)'s and one simply mentions f and t_i's.
+
