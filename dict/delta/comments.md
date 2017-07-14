@@ -71,3 +71,20 @@ state/realization/value/person/entity/meaning $x_4$ from (earlier) specific
 state/realization/value/person/entoty/meaning $x_5$ (type matches that of 
 $x_3$), under circumstances/conditions/with(in) scope/with caveats $x_6$."
 
+
+## 2017-07-14T06:13:04Z — krtisfranks (comment 3226)
+
+Unintended, "bu"-related consequences
+
+I just re-realized that when this word or, for example, "{sigma}" are 
+followed immediately by "{bu}", the result will be a reference to a symbol 
+which means mathematical entities (such as the difference operator or value
+- or, in that example, a sigma (id est: ~p-) value or a ~variance). Thus, 
+if one is saying the Greek alphabet in Lojban using the convention of just 
+saying the Greek letter's name immediately followed by "bu", then they 
+would need to change the scheme a bit for "?" and maybe "?" (and "?" etc.).
+Now, they could Lojbanize a bit differently (such as by using cmevla or 
+different transcriptions/pronunciations (especially relevant for modern 
+Greek delta)), but it is an issue which must be addressed and accounted 
+for.
+
