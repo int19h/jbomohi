@@ -51,3 +51,11 @@ definition should be careful to specify which), but it cannot be from a
 direction. So, we should rephrase, if we include this information as a 
 sumti slot at all.
 
+
+## 2017-09-09T11:18:10Z — gleki (comment 3232, on definition 18295)
+
+xN notation?
+
+looks like notation is taken from {carbi'e}. {taifnu} has no c-/b- veljvo 
+seltau or tertau.
+
