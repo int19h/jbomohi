@@ -178,3 +178,10 @@ unreserved and assigned to another entity or reserved by other entities
 (although, I think, still on the behalf of the original reserving entity 
 thus far).
 
+
+## 2017-09-17T05:01:51Z — gleki (comment 3233, on definition 56899)
+
+spofu
+
+must be 'la'e me'o ubu sy.' or something as landa1
+
