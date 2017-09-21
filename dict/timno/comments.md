@@ -57,3 +57,10 @@ Re: vlakra jo'u nu simsa dukse su'o drata je cipra gismu
 zo kakti ji'a jai cumki .i zabna lo ka tamsmi lo jungo joi lo fu'ivla poi 
 xa'o zasti
 
+
+## 2017-09-21T13:22:21Z — lakanro (comment 3237)
+
+why timne has the same four-letter rafsi
+
+it's so bad
+
