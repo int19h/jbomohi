@@ -64,3 +64,14 @@ why timne has the same four-letter rafsi
 
 it's so bad
 
+
+## 2017-09-23T12:36:26Z — gleki (comment 3238, in reply to 3237)
+
+Re: why timne has the same four-letter rafsi
+
+lakanro wrote:
+> it's so bad
+
+
+but luckily it seems to be downvoted by the author 'emselves.
+
