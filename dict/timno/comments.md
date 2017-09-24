@@ -75,3 +75,24 @@ lakanro wrote:
 
 but luckily it seems to be downvoted by the author 'emselves.
 
+
+## 2017-09-24T22:25:09Z — krtisfranks (comment 3240, in reply to 3238)
+
+Re: why timne has the same four-letter rafsi
+
+gleki wrote:
+> lakanro wrote:
+> > it's so bad
+> 
+> 
+> but luckily it seems to be downvoted by the author 'emselves.
+
+Also luckily: The words are the same. I am of the opinion that any two 
+gismu which are in similarity conflict with one another (under the 
+condition that the conflict does not involve the letters "b", "p", "f", or 
+"v" or - separately - "z", "s", "c", or "j"!) are the same word for all 
+purposes whatsoever except the assignment of short rafsi (which preferences
+the canonical form) and a few other technical details, and thus must have 
+exactly the same (essentially singular) meaning. This pair satisfy these 
+properties and none of the exceptions apply, so we are all good.
+
