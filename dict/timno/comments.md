@@ -158,3 +158,20 @@ these
 
 not "difficult", it's "different"
 
+
+## 2017-10-01T00:19:14Z — krtisfranks (comment 3244, in reply to 3242)
+
+Re: why timne has the same four-letter rafsi
+
+lakanro wrote:
+> > i don't think so,they are so difficult, we can only choose one of them.
+> 
+> 
+> not "difficult", it's "different"
+
+
+Oh, for some reason, when I looked last time, both terms pulled up the same
+page. But now, when I do it, I see that they are in fact different. So, 
+everything that I said is totally wrong and should be ignored; you are 
+right.
+
