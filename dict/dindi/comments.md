@@ -12,3 +12,14 @@ there is something wrong
 
 conflicts with dinti
 
+
+## 2017-10-02T04:45:01Z — gleki (comment 3247, in reply to 3243)
+
+Re: there is something wrong
+
+lakanro wrote:
+> conflicts with dinti
+
+
+i downvoted {dindi} and added {uigdei} instead.
+
