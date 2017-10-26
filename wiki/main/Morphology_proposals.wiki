@@ -1,0 +1,271 @@
+This is a grab bag of changes to the
+[[BPFK Section: Formal Morphology|morphology]] grammar that people have
+considered over the years.  Unless noted otherwise, [[BPFK]]'s working
+morphology, as implemented by 
+[http://lojban.github.io/ilmentufa/camxes.html ilmentufa], is used as a
+baseline for describing the proposals. See also 
+[[Talk:controversial points in the morphology|this discussion]] from when the
+BPFK morphology was first being developed.
+
+== CyC syllables as alternative or replacement for consonantal syllables ==
+
+Proposed by [[User:Xorxes|la xorxes]] and others. Rationale: some speakers find
+syllabic consonants difficult to pronounce or to distinguish from -yC-
+sequences.
+
+xorxes's [[zasni gerna cenba vreji#syllabic consonants|original proposal]] was
+to allow these syllables only for [[type 3 fu'ivla]] hyphens; more recent
+variants have no such restriction.
+
+'''Newly grammatical''': sin'''cyr'''boua, sip'''nyb'''zu
+
+ brivla_head = !cmavo !slinkuhi !h &syllable unstressed_syllable*
+ # Change y to y_hyphen in every y-rafsi rule
+ y_hyphen = y &onset
+ stress = (consonant / glide)* h? y? coda? syllable pause
+ consonantal_syllable = onset y coda / consonant &syllabic coda
+
+'''In the wild'''
+
+{{irci|len=10|durka|suf=(2008)|xu cirla '''cidjrbyrga'''}}
+{{irci|len=10|jukni|suf=(2010)|lo '''juknynba''' cu mutce kukte}}
+{{irci|len=10|tsani|suf=(2012)|i do co'e ca lo '''xo'yldei'''}}
+{{irci|len=10|selpahi|suf=(2014)|pe'i lo '''saltyrkaisara''' mi cnino .i ca lo cabdei mi citka lo salta be lo laktuka jo'u lo tamca jo'u lo clazme .i no'e cinri .i ku'i mi na pante}}
+{{irci|len=10|lablanu|suf=(2015)|mi ca '''gugylsisku''' .i mi na facki no da}}
+{{irci|len=10|Amnadya|suf=(2015)|.i so'o '''gernyrkasu''' cu srana zo ca}}
+{{irci|len=10|fegmese|suf=(2016)|ti'e zmadu so'a drata '''linyksu''' lo ka lo pilno be ce'u cu nitcu lo ka kurji ... ri xu}}
+
+== Removing or simplifying the slinkuhi rules ==
+
+Proposed by many and made official in TLI [[Loglan]]. Rationale is that
+[[slinku'i]] in its current form makes the morphology unnecessarily hard to learn
+and use in fluent speech. Also often part of calls to
+[http://selpahi.weebly.com/lojban/how-to-get-rid-of-formal-rafsi do away with assigned rafsi],
+since slinkuhi exists to favour words made of those.
+
+=== Killing .oisai'yvla (brivla rafsi merger) ===
+
+The least radical of the slinku'i proposals. '''sai'yvla''' would become a
+valid word, removing the only instance where a string beginning with a single
+consonant can be a slinku'i.
+
+'''Newly grammatical''': sai'yvla
+
+'''No longer grammatical''': .oisai'yvla (would parse as two words)
+
+ initial_rafsi = !slihykru extended_rafsi / y_rafsi / !any_fuhivla_rafsi y_less_rafsi !any_fuhivla_rafsi
+ any_fuhivla_rafsi = fuhivla / fuhivla_rafsi / stressed_fuhivla_rafsi
+ stressed_extended_rafsi = stressed_hy_rafsi / stressed_fuhivla_rafsi
+ extended_rafsi = hy_rafsi / fuhivla_rafsi
+ stressed_fuhivla_rafsi = fuhivla_head stressed_syllable consonantal_syllable* onset y
+ fuhivla_rafsi = &unstressed_syllable fuhivla_head onset y h?
+ slihykru = (CCV_rafsi / stressed_CCV_rafsi) h y onset
+ hy_rafsi = (long_rafsi unstressed_vowel / CCV_rafsi / CVV_rafsi) h y h?
+
+
+=== slinku'i only on word-final or -'y rafsi ===
+
+This is what Loglan has implemented, and what Lojbanists usually mean by
+"getting rid of slinku'i". '''sporte''' would become a valid word, but not
+'''sli'a''', so that CVV and CV'V rafsi behave identically with regards to
+hyphen requirements. Some also propose that sequences like '''dja'y-''' remain
+as slinku'i so that brivla rafsi like '''-uidja'y-''' stay valid.
+
+'''Newly grammatical''': sporte zdanco'o klesnai krinju
+
+'''No longer grammatical''': .esporte .adjunte .asfalte bavlamdei faglitki .islenska lojbangirzu
+
+ slinkuhi = consonant CVV_final_rafsi
+ # Plus the changes above and optionally removal of the slihykru rule
+
+'''In the wild'''
+{{irci|len=10|dbrock|suf=(2007)|mi nelci lo lenku '''djarpitsa'''}}
+{{irci|len=10|timonator|suf=(2008)|i bazibo lo '''cridrimpe''' cu renro lo bolci be lo fagri mi}}
+{{irci|len=10|latros|suf=(2011)|.i ro da poi ke'a '''cmacrordra''' zo'u ro de zo'u de me'au da de}}
+{{irci|len=10|klaku|suf=(2012)|ko kibrolinki '''plokso'''}}
+{{irci|len=10|danr|suf=(2014)|.i mi '''ckaklyzu'e''' mu'i lo nu tatpi ru'e .i ku'i za'u re'u casnu cu'e}}
+{{irci|len=10|menli|suf=(2014)|lo nu da'i la datnymu'e remna cu simsa lo drata '''brotkaste''' pe BBC cu se cumki lo nu lo vreji be lo nu la .robin. cu fonxa tavla cu nenri lo '''brotkaste''' vau :P}}
+{{irci|len=10|emna|suf=(2015)|no'i xu do jinvi co '''jbofnu''' mapti co selcme zo .emna}}
+{{irci|len=10|gleki|suf=(2015)|ie i xu do ba favgau lo '''frontende'''}}
+{{irci|len=10|omni___|suf=(2015)|lo ka sruri na '''dzistribu''' .i lo du'u lo tadni cu sruri lo ckule na nibli lo du'u ro lo tadni cu sruri lo ckule}}
+{{irci|len=10|clakre|suf=(2016)|mi na se cmene zo '''clarke''' .i ku'i se cmene zo clakre}}
+{{irci|len=10|uakci|suf=(2016)|.i je lo nu tai zukte cu se jalge lo nu do'e lo cmalu '''skrine''' cu za'u to zmadu lo na se me'oi br toi mei co linji}}
+{{irci|len=10|la_aLEKsolas|suf=(2017)|ju'opei lo '''tsaibaklo''' lo vajraifla cu citka}}
+
+=== No slinku'i at all ===
+
+Under this option, '''vla'i''' would become a word and the lujvo for
+'''balvi''' + '''lamji''' would come out as '''bavyla'i'''.
+
+=== Transitional dialects ===
+
+[[User:Ctefaho|la ctefa'o]] and others propose ways for slinku'i-ful and
+slinku'i-less dialects to share the same lexicon. slinku'i-ful dialects could
+import what they see as slinku'i by prepending a glottal stop.  Relative to the
+[[#-y syllables within non-lujvo|suf=(lujvo–zi'evla merger)|lujvo-zi'evla merger]]
+proposal below:
+
+ brivla = !cmavo brivla_head brivla_core &post_word
+ post_word = pause / !nucleus !slinkuhi lojban_word
+
+slinku'i-less dialects could keep words that used to depend on slinku'i glue
+together using an [[#Expansion of the CVCy-lujvo rule to non-lujvo|extended CVCy-lujvo rule]].
+
+'''In the wild'''
+{{irci|len=10|Ilmen|suf=(2017)|sei ca lo nu viska zo ckt cu pensi be '''lo. tcuktci''' bangu}}
+{{irci|len=10|solpahi|suf=(2017)|pu lo nu casnu cu pensi zo temkracabdu'i .i lo nu na birti pu mukti lo '''nu. pretsku'''}}
+
+== Forbidding certain initial clusters ==
+
+[[User:Selpahi|la solpahi]] proposes to remove all consonant triples as well as
+'''ml-''' and '''mr-''' as initial clusters. Rationale is that [[jvajvo|regular prefixes]]
+such as '''kam-''' would be less likely to cause [[tosmabru]], and that some
+existing words (notably of CVCCCVCV shape) would be preserved 
+[[#slinku'i only on word-final or -'y rafsi|if slinku'i were to be abolished]].
+
+Eight gismu would need to be regenerated: {{jvs|mlana}} {{jvs|mlatu}}
+{{jvs|mleca}} {{jvs|mledi}} {{jvs|mluni}} {{jvs|mraji}} {{jvs|mrilu}}
+{{jvs|mruli}}.
+
+Some other words no longer grammatical: citmle mlatejami mlongena mlumitu mri'au skripto skrolbake spranto strelka stribilo
+
+ other <- p / t !l / k / f / x / b / d !l / g / v / m !liquid / n !liquid
+ # initial replaced with initial_pair everywhere except inital_pair itself
+
+'''In the wild'''
+{{irci|len=10|solpahi|suf=(2016)|su'a mi na'o nelci lo danlu .i lo '''maltu''' jo'a (to .u'i pei toi) cu mupli}}
+{{irci|len=10|solpahi|suf=(2016)|mi nelci lo '''malna''' si frikative}}
+{{irci|len=10|jelca|suf=(2017)|.i melbi fa lo tarci '''maltu'''}}
+
+== Forbidding certain clusters altogether ==
+
+[[User:Ctefaho|la ctefa'o]] proposes to forbid clusters '''md''', '''mt''',
+'''nb''', '''np''', which are prone to assimilation.
+
+27 gismu would need to be regenerated: {{jvs|canpa}} {{jvs|cenba}}
+{{jvs|cimde}} {{jvs|cinba}} {{jvs|denpa}} {{jvs|famti}} {{jvs|femti}}
+{{jvs|finpe}} {{jvs|janbe}} {{jvs|jimte}} {{jvs|kanba}} {{jvs|kumte}}
+{{jvs|lanbi}} {{jvs|lunbe}} {{jvs|mamta}} {{jvs|nanba}} {{jvs|panpi}}
+{{jvs|penbi}} {{jvs|semto}} {{jvs|senpi}} {{jvs|sumti}} {{jvs|tanbo}}
+{{jvs|tinbe}} {{jvs|tunba}} {{jvs|vamtu}} {{jvs|vanbi}} {{jvs|zenba}}
+
+Some other words no longer grammatical: bavlamdei cinpa'i donpre kinpau menbi'a prulamdei runbau samda'o vimku'a
+
+'''In the wild'''
+{{irci|len=10|timthelion_|suf=(2006)|do jinga lo titnamba}}
+{{irci|len=10|dbrock|suf=(2007)|ta'o mi ro roi cusku zo titnamba}}
+{{irci|len=10|codrus|suf=(2009)|.i mi citka lo grute titnamba}}
+
+== Allowing some new medial clusters ==
+
+Calls to make '''mz''' a valid cluster have always been commonplace.
+[[User:Lalxu|la lalxu]] also proposes to allow '''n''' plus affricate clusters.
+
+ m <- comma* [mM] !h !glide !m
+ n <- comma* [nN] !h !glide !n
+
+'''In the wild'''
+{{irci|len=10|rlpowell|suf=(2005)|je'e .i ca lo mergu'e so'a mi'a salci lo '''bavlamzeldei''' po'o}}
+{{irci|len=10|timonator|suf=(2008)|mi badri lo nu do na '''samzva'''}}
+{{irci|len=10|menli|suf=(2014)|.i ua la .randol.'''xolmz'''. noi loglo jatna cu ba'o se micka'a}}
+{{irci|len=10|selpahi|suf=(2015)|lo '''larkamzi'e''' cu krali ro larfi'i}}
+{{irci|len=10|Ilmen|suf=(2015)|ni'o mi ca'o tcidu fi tau lo .itku'ile genkasu noi ba'u '''memzma''' la pa no no mei}}
+{{irci|len=10|mungojelly|suf=(2015)|ni'o mi '''mumblenomzvati''' ca doi ro do}}
+{{irci|len=10|solpahi|suf=(2016)|.oi se'i mi za'u re'u xaksu lo '''temze'u''' si ze'u zei temci fau lo nu da'arta'a co palcau}}
+{{irci|len=10|bongnanba|suf=(2016)|.i mu'a sei jijnu ti noi tabypinsi je pavmei jo'u ti noi penbi je pavmei va'o lo nu mi co'a ponse su drata pinsi cu na '''memze'a'''}}
+
+
+== Adding a new diphthong ==
+
+This is often part of proposals to add new series of cmavo, so that they can
+both stay short and fit into the existing initial consonant patterns. 
+[[User:Spheniscine|la zipcpi]] has proposed '''[[Eulojban|eu]]''',
+[[User:Selpahi|la solpahi]] '''ui''' [uj].
+
+== -y syllables within non-lujvo (lujvo–zi'evla merger) ==
+
+Proposed by many over the years, especially together with 
+[http://selpahi.weebly.com/lojban/how-to-get-rid-of-formal-rafsi removal of assigned rafsi].
+Usually implemented by removing any detection of rafsi that isn't related to
+slinku'i. slinku'i itself only applies at the beginning of a word, not after
+hyphens.
+
+ BRIVLA = brivla
+ brivla = !cmavo !slinkuhi !slihykru !h brivla_head brivla_core &post_word
+ brivla_head = &syllable (unstressed_syllable / medial_syllable)*
+ brivla_core = stressed_syllable medial_syllable* final_syllable
+ medial_syllable = &(onset !vowel !diphthong) any_syllable
+ slihykru = (CCV_rafsi / stressed_CCV_rafsi) (h / initial_pair) y onset
+ rafsi_string = y_less_rafsi* (gismu / CVV_final_rafsi / stressed_y_less_rafsi short_final_rafsi / y_rafsi / stressed_y_rafsi / hy_rafsi / stressed_hy_rafsi))
+
+For a slinku'i-less variant, change rafsi_string to the one
+[[#slinku'i only on word-final or -'y rafsi|shown here]] and remove
+initial_pair from slihykru.
+
+'''In the wild'''
+{{irci|len=10|kamsen|suf=(2007)|lo '''tavlrgedyflai''' be le lojbo cecmu}}
+{{irci|len=10|timonator|suf=(2008)|i ki'u bo la anar dasni lo nukni se dasni be lo '''prenrpairyto'''}}
+{{irci|len=10|tsani|suf=(2012)|i ji'asa'e '''mibykemymo'ydji'''}}
+{{irci|len=10|zahlman|suf=(2012)|u'i pe'i lonu '''nanbrdonyto''' bevri cu no'e nu jarco loka tsali}}
+{{irci|len=10|gleki|suf=(2014)|lo'e '''banfyracolotli''' cu nelci lo ka citka lo me'oi fpcalep vau sei mi pu reisku}}
+{{irci|len=10|mukti|suf=(2014)|na nitcu lo cnino '''bauplyfuzykamni''' .i na manku .i lo jbopre cu lazni lo ka viska}}
+{{irci|len=10|akmnlrse|suf=(2015)|.i mo .i la'a ca '''sipnybi''' gi'e ba ke fau gi '''ciknybi''' gi di'a gunrizu}}
+{{irci|len=10|selpahi|suf=(2015)|.i .au pei mi '''merdjygau'''}}
+{{irci|len=10|durka42|suf=(2015)|'''plisyta'oi''' je tcati}}
+{{irci|len=10|Ilmen|suf=(2016)|mi pu zu pensi lo nu zo sfataba da'i valsi lo si'o za'e '''xorsyflai'''}}
+{{irci|len=10|solpahi|suf=(2017)|pe'i lo nu '''zi'evlygau''' tai tu'a di'u cu ji'i no roi xagzenri'a}}
+
+== Expansion of the CVCy-lujvo rule to non-lujvo ==
+
+Proposed by [[User:Selpahi|la solpahi]] and others. One of two ways to remove
+this last bit of privilege given to traditional lujvo after 
+[[#-y syllables within non-lujvo (lujvo–zi'evla merger)|unifying brivla]] and
+[[#slinku'i only on word-final or -'y rafsi|removing the slinku'i rule]].
+
+This would turn streams of sound currently parsed as multiple words -- any
+sequence of the form [cmavo not ending in y] [one or more cmavo ending in y]
+[non-cmevla word] -- into single brivla. Notably, '''.a'y'''-style letterals
+would very often require glottal stops after them.
+
+ CVCy_lujvo = onset nucleus medial_syllable+ (brivla / final_syllable)
+
+'''In the wild'''
+{{irci|len=10|solpahi|suf=(2016)|mi pu '''mojyko''' lo du'u lo cabdei cu xavdei}}
+
+== CCy-shaped cmavo ==
+
+Proposed by [[User:Mudri|la mudri]] as a way to expand letteral space.
+
+{{irci|len=10|ziren|suf=(2009)|doi '''djy.''' mi pu kibro ciska lo ve ciksi fe be la tenuar. pe mi}}
+
+== Restricting cmevla to valid syllables ==
+
+Proposed by [[User:Xorxes|la xorxes]] and others, as the simplest way of
+reducing the amount of cmevla that the parser accepts but speakers find
+ungrammatical.
+
+ cmevla = jbocme
+
+'''In the wild'''
+{{irci|len=10|tsani|suf=(2015)|.i xebni mu'i ra'u lo nu iy. jai nandu fai lo ka ce se pilno ci'e la .'''linukys'''.}}
+{{irci|len=10|solpahi|suf=(2016)|.i do'a nai mi sinma la .'''kymir'''. ki'u lo nu ri troci lo ka tcidu}}
+
+== Allowing glides after consonants in cmevla (partial revert of [[BPFK Section: Ban on consonant-glide-vowel strings|BPFK decision]]) ==
+
+Proposed by [[User:Ilmen|la .ilmen.]] and others, as sort of a counterpoint to the above proposal.
+
+{{irci|len=10|Ilmen|suf=(2016)|ua la '''idiot'''.bot. co'a zifre}}
+{{irci|len=10|lynn|suf=(2016)|.ua mi tirna fi tu'a la .teilr.'''suift'''. fe tu'a la'o xy. file_94.oga .xy.}}
+{{irci|len=10|ilmen|suf=(2016)|.i xu zo .'''period'''. cmene fe ji'a lo namcu mocle'u lo glibau baupli}}
+
+== Allowing glides after consonants, but not within initial clusters (partial revert of [[BPFK Section: Ban on consonant-glide-vowel strings|BPFK decision]]) ==
+
+Proposed by [[User:Tsani|la tsani]] and others. 
+
+== CGV syllables as alternative or replacement for CV'V cmavo and rafsi ([[La Alta]]) ==
+
+Proposed by [[User:Gleki|la gleki]] and [[User:Aleksolas|la .aleksolas.]]
+
+== Treatment of VGV sequences similarly to V'V (as in CLL) ==
+
+Proposed by [[User:Gleki|la gleki]].
