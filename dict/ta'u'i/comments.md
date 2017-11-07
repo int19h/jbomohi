@@ -12,3 +12,12 @@ in another, similar word) to look at any construct which has a seltau? If
 so, how does one distinguish and back-count through selbri, relative 
 clauses, BE links, and everything else (in addition to full sumti).
 
+
+## 2017-11-07T08:21:47Z — krtisfranks (comment 3257)
+
+"{co}"
+
+To me, how this word interacts with "co" is pretty clear, but I just want 
+to know whether it is not so to others or whether there are any issues in 
+implementing this.
+
