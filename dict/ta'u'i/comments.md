@@ -34,3 +34,11 @@ Rather, this word simply takes "ax+by" and sets b=b`ab``, where b` and b``
 are any other seltau present in y's construct and which compound with this 
 word (which represents/pastes in seltau a).
 
+
+## 2017-11-07T08:51:07Z — krtisfranks (comment 3259)
+
+Necessary to follow by explicit tertau
+
+Is it truly necessary (and net advantageous) to require that this word is 
+always immediately followed by some explicit tertau?
+
