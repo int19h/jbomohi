@@ -21,3 +21,16 @@ To me, how this word interacts with "co" is pretty clear, but I just want
 to know whether it is not so to others or whether there are any issues in 
 implementing this.
 
+
+## 2017-11-07T08:27:01Z — krtisfranks (comment 3258)
+
+Factoring out seltau
+
+This word does not factor out seltau (it does not take "ax+ay" and produce 
+"a(x+y)"). I would like this function somehow (in another word), but I do 
+not know how to make it happen just yet.
+
+Rather, this word simply takes "ax+by" and sets b=b`ab``, where b` and b`` 
+are any other seltau present in y's construct and which compound with this 
+word (which represents/pastes in seltau a).
+
