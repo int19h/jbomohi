@@ -42,3 +42,10 @@ Necessary to follow by explicit tertau
 Is it truly necessary (and net advantageous) to require that this word is 
 always immediately followed by some explicit tertau?
 
+
+## 2017-11-08T00:42:03Z — lakanro (comment 3260)
+
+can you make some examples?
+
+can you make some examples?
+
