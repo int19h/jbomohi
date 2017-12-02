@@ -14,3 +14,12 @@ gleki wrote:
 
 Not really, {se} {du'u} *selbri goes here* is closer.
 
+
+## 2017-12-02T20:04:39Z — gleki (comment 3271, on definition 68523)
+
+Ultimate example 
+
+What would re, broda,brode,brodi mean here? What exactly is quoted here ? 
+
+zo'ai mi noi broda vau re klama noi brode ku noi brodi
+
