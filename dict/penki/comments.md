@@ -12,3 +12,12 @@ gleki wrote:
 > 
 I added {penka}.
 
+
+## 2017-12-29T10:06:22Z — lakanro (comment 3283, on definition 69793, in reply to 3281)
+
+Re: conflicts with {fenki}
+
+gleki wrote:
+> 
+I added {penka}.
+
