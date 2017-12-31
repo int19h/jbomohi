@@ -25,3 +25,20 @@ lakanro wrote:
 
 Even worse. Why not "{kaprinai}"?
 
+
+## 2017-12-31T10:46:49Z — lakanro (comment 3287, on definition 70367, in reply to 3286)
+
+Re: Why not 
+
+krtisfranks wrote:
+> lakanro wrote:
+> > krtisfranks wrote:
+> > > 
+> > the fu'ivla form of karpa is karpinai
+> 
+> 
+> Even worse. Why not "{kaprinai}"?
+
+
+kaprinai is a tosmabru lujvo
+
