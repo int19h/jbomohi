@@ -12,3 +12,16 @@ krtisfranks wrote:
 > 
 the fu'ivla form of karpa is karpinai
 
+
+## 2017-12-31T01:34:53Z — krtisfranks (comment 3286, on definition 70367, in reply to 3285)
+
+Re: Why not 
+
+lakanro wrote:
+> krtisfranks wrote:
+> > 
+> the fu'ivla form of karpa is karpinai
+
+
+Even worse. Why not "{kaprinai}"?
+
