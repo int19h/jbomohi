@@ -42,3 +42,23 @@ krtisfranks wrote:
 
 kaprinai is a tosmabru lujvo
 
+
+## 2018-01-04T06:00:30Z — krtisfranks (comment 3288, on definition 70367, in reply to 3287)
+
+Re: Why not 
+
+lakanro wrote:
+> krtisfranks wrote:
+> > lakanro wrote:
+> > > krtisfranks wrote:
+> > > > 
+> > > the fu'ivla form of karpa is karpinai
+> > 
+> > 
+> > Even worse. Why not "{kaprinai}"?
+> 
+> 
+> kaprinai is a tosmabru lujvo
+
+Ah, you are right. Thanks!
+
