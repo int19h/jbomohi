@@ -48,3 +48,10 @@ weird ISO character strings like ---25T23:50.
 On the other hand, {joi'i} is in VUhU. And also there's that VUhU-JOI merge
 proposal, which I don't know the status of...
 
+
+## 2018-01-19T12:06:22Z — lakanro (comment 3290)
+
+new definition
+
+i add a definition for "mekso to string". please vote my definition
+
