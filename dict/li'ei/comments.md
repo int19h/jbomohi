@@ -62,3 +62,17 @@ new definition
 
 i add a definition for "mekso to string". please vote my definition
 
+
+## 2018-01-20T07:04:16Z — lakanro (comment 3294, on definition 66452, in reply to 2014)
+
+Re: Justification
+
+spheniscine wrote:
+> This is to replace use of {me'o} for arbitrary character strings that mix
+
+> letters and numbers, past a proposal that would separate them 
+grammatically
+> in all other places, including within LI...LOhO.
+
+why not put it in LI
+
