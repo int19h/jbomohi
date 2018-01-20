@@ -11,3 +11,14 @@ ZO
 
 I EDIT IT BECAUSE IT SHOULD BE IN SELMAhO ZO
 
+
+## 2018-01-20T05:39:52Z — gleki (comment 3293, in reply to 3292)
+
+Re: ZO
+
+lakanro wrote:
+> I EDIT IT BECAUSE IT SHOULD BE IN SELMAhO ZO
+
+
+better to create new defs
+
