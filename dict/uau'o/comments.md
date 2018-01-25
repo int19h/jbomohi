@@ -18,3 +18,14 @@ https://mw.lojban.org/papri/BPFK_Section:_Irrealis_Attitudinals#cmavo:_.e.2
 Yes, pretty much. It just avoids conflict and is onamonapiaic (for 
 me/English speakers, anyway).
 
+
+## 2018-01-25T16:50:11Z — gleki (comment 3298, on definition 70406, in reply to 3296)
+
+Re: BPFK's e'e?
+
+gleki wrote:
+> 
+https://mw.lojban.org/papri/BPFK_Section:_Irrealis_Attitudinals#cmavo:_.e.2
+> 7e_.28UI1.29
+{e'ei} could be related
+
