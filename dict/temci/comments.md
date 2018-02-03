@@ -62,3 +62,42 @@ interval would have positive measure). Moreover, if there were to be
 additional dimensions of time, the path taken between distinct points in 
 time would become important.
 
+
+## 2018-02-03T07:58:29Z — gleki (comment 3306, in reply to 3305)
+
+Re: temci2 and temci3 order; also introduce temci4?
+
+krtisfranks wrote:
+> Should it be the case that temci2 and temci3 are ordered such that temci3
+
+> is after temci2 (in some frame of reference), thereby making temci1 an 
+> ordered or directed line segment/interval? For typical purposes, this 
+would
+> add some utility to the word, but there could be situations in which it 
+> would be troublesome. (These need not even be exotic: If one does not 
+know 
+> the order of events A and B in time, then one's ordered application of 
+the 
+> selbri to them will reveal a potentially undesirable bias).
+> 
+> ___
+> 
+> Regardless of the first answer, I believe that we should specify a fourth
+
+> sumti slot which indicates the geometry or frame of reference for the 
+> interval separating the events (see "{danci}"). For example, some events 
+> are simultaneous in one frame (their time interval, if inclusive on 
+either 
+> end, would form a singleton set) but are time-separated in another (the 
+> interval would have positive measure). Moreover, if there were to be 
+> additional dimensions of time, the path taken between distinct points in 
+> time would become important.
+
+
+you specify the frame with a new brivla and inside its abstraction place 
+specify `ka ce'u ce'u ce'u temci`
+
+
+As for "interval" I think {niltei} which is a part of {temci}'s def. is 
+just fine.
+
