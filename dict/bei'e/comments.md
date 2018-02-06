@@ -52,3 +52,36 @@ Example: "lo klama bei'e lo ckule lo zdani lo vi dargu lo karce be'o" = "lo
 klama be lo ckule bei fi lo zdani bei fo lo vi dargu bei fu lo karce be'o".
 "
 
+
+## 2018-02-06T07:02:36Z — gleki (comment 3310, on definition 68122, in reply to 3309)
+
+Re: Same minds think alike
+
+krtisfranks wrote:
+> Heh. I was going to add this same word with the following 
+> meaning/description:
+> "
+> Open-ended sumti-linking.
+> 
+> Operates as "{be}" does at first: it fills the first open sumti slot of 
+the
+> immediately preceding word (which must be a brivla) with the next sumti 
+> which is uttered. However, it does not terminate with the conclusion of 
+> that sumti. It stays open (now linking as does "{bei}") filling 
+successive 
+> heretofore-unfilled sumti slots of the immediately preceding brivla in 
+turn
+> with the subsequent sumti (in order); slots can be skipped via explicit 
+> utterance of "{zo'e}" or usage of FA, or by having already explicitly 
+> filled them. Terminates with "{be'o}" (elidable).
+> 
+> Example: "lo klama bei'e lo ckule lo zdani lo vi dargu lo karce be'o" = 
+"lo
+> klama be lo ckule bei fi lo zdani bei fo lo vi dargu bei fu lo karce 
+be'o".
+> "
+
+Currently, possible via "lo klama be nu'i lo ckule lo zdani lo vi dargu lo 
+karce [nu'u]"
+Only one syllable longer.
+
