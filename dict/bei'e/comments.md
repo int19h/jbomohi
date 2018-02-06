@@ -29,3 +29,26 @@ spheniscine wrote:
 
 indeed given that one day a brivla can get more terbricmi
 
+
+## 2018-02-06T06:07:50Z — krtisfranks (comment 3309, on definition 68122)
+
+Same minds think alike
+
+Heh. I was going to add this same word with the following 
+meaning/description:
+"
+Open-ended sumti-linking.
+
+Operates as "{be}" does at first: it fills the first open sumti slot of the
+immediately preceding word (which must be a brivla) with the next sumti 
+which is uttered. However, it does not terminate with the conclusion of 
+that sumti. It stays open (now linking as does "{bei}") filling successive 
+heretofore-unfilled sumti slots of the immediately preceding brivla in turn
+with the subsequent sumti (in order); slots can be skipped via explicit 
+utterance of "{zo'e}" or usage of FA, or by having already explicitly 
+filled them. Terminates with "{be'o}" (elidable).
+
+Example: "lo klama bei'e lo ckule lo zdani lo vi dargu lo karce be'o" = "lo
+klama be lo ckule bei fi lo zdani bei fo lo vi dargu bei fu lo karce be'o".
+"
+
