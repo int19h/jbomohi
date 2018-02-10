@@ -1,0 +1,53 @@
+It could be beneficial to better handle syllabic consonants in Lojban, particularly with respect to stress.
+
+Two of the most popularly spoken languages on the planet at the current time, English and Mandarin Chinese, have r-colored vowels; both of these are source languages for Lojban. In English, some r-colored central vowels are stressed.
+
+Unless marked otherwise, all commentary or ideas presented originated from lai .krtisfranks. (or, maybe it should be "lai .kýrtys. franks.").
+
+== Proposal #0: General Revision ==
+
+Make it so that it is acceptable to expand most (any?) syllabic consonant(s) C to the string "y"+C (where "+" represents ordered concatenation), reading from the left. For the purpose of counting syllables/vowel( cluster)s from the end of the a word in order to determine stress, the "y" would would not be counted. Moreover, unless explicitly marked as stressed (in writing), "y" will never be considered to be stressed; stressed "y" will not automatically arise from the stressed-penult rule. (In fact, we could make it so that "y" can be stressed only in the presence of a so-called syllabic consonant if we wanted, although I am not sure that that is advisable).
+
+For example: "yr" would represent an r-colored unstressed schwa [ɚ].
+
+* The "curv" in "curvilinear" could be rendered as "kyrv", where before it would have been "krv".
+* "bangrbububu" would be interchangeable with "bangyrbububu" in all cases.
+
+This proposal is not necessary for what follows but is worth considering and, in a sense, completes the proposal. We would have to be careful about how this would interact with Lojban's phonotactics and word-boundary-determination rules.
+
+=== Benefits ===
+
+* Can properly render words like "'Murica" (ignoring the stress, three syllables). ".mrykys.", ".mrykas.", ".mrikas." do not work because it loses the syllabic "r" (it is /'mɝ.ə.kə/, not any of: /mrə.kə/, /mrə.(')ka/, /'mri.ka/ (resp.)). Note that the two-syllable case would be fine in Lojban without this proposal (".mrkys.") if we ignore stress, but this is just an example.
+* Can properly render on-glide diphthongs with so-called/would-be syllabic consonants. For example, the English word "world" would be rendered as ".uyr(y)ld." (the "uyr" seqence is the one of interest) if we ignore stress; notice that ".urld." without any such expansion and that this rendering loses the on-glide quality of the "u".
+
+=== Costs ===
+
+* There could be occasions when this conflicts with parsing rules. We would need to except those; too many and the rule may become inwieldy. In particular, non-hyphen "y" are unacceptable in brivla; this proposal would have to change that, a small bit.
+* The result of this rule would be that one cannot tell when "y"+C is the result of such an expansion (meaning that the string can collapse to just C) and when it is not supposed to be. So, any string of form "y"+C could be re-rendered as simply C, even when this was not the intention. I am not sure that this is actually a problem, however.
+
+== Proposal #1: Main Proposal - Stressed Syllabic Nuclei ==
+
+Allow syllabic consonants (or, more specifically and perhaps more accurately, their syllabic nuclei) to be stressed; this should be interpreted/occur (in writing) only when such is explicitly marked, and it will not automatically arise from the stressed-penult rule.
+
+=== Options ===
+
+These are some options for how to mark a stressed syllabic nucleus in this context.
+
+* Capitalize the nuclear (syllabic) consonant in the syllable. This would yield ".kRtys." for "Curtis". That would mean that capitalization rules would need to be more careful (only the nucleus of the stressed syllable should be marked by capitalization); this is relatively simple to implement and to type.
+* Accent the nuclear (syllabic) consonant in the syllable. This would yield ".kŕtys." for "Curtis". Each could arguably be considered to be a new lerfu; in theory, any consonant can act in this role, so we would nearly double the entire lerfu set. These are also hard to type in most interfaces.
+* Prepend the relevant (would-be syllabic) consonant C with an accented "y" (resulting in "ý"+C). This would yield ".kýrtys." for "Curtis". "ý" could arguably be considered to be a lerfu separate from .ybu (for better of for worse). Note that this letter would represent an r-colored stressed 'schwa' [ɝ], rather than an r-colored unstressed schwa [ɚ] which is the natural interpretation of "yr" in Lojban. This option is not particularly difficult to type nowadays and is consistent with accenting (only) other vowels in order to represent their stressed states. If "ý" is unavailable, then we can accept "Y" (capital "y") in its stead. In this subproposal, stressed syllabic consonants C would necessarily be expanded to the form of "y"+C (but the "y" gets accented to "ý").
+
+Only the last option is compatible with Proposal #2.
+
+=== Benefits ===
+
+* Can render names more accurately, such as: "Curtis" (".kýrtys." is better than ".krtys." (which has no stress) or ".krtis." (which is stressed improperly and has the final vowel's quality changed from schwa to /i/)) and "Myrtle" (".mýrt(y)l" is better than ".mrtl." (no stress; very compact and ugly; not similar to the English)).
+
+
+== Proposal #2: On-Glide+"y" Sequences ==
+
+Additionally, we should at least provide for and officially recognizing the possibility of on-glide diphthongs of the form G+"y"+C for glide vowel G (either "i" or "u" at present) and generic consonant (or empty string) C. I would also want to see explicit mention of how to handle such a thing in a new version of the CLL and other lessons.
+
+=== Benefits ===
+
+*Can render on-glide diphthongs with so-called/would-be syllabic consonants. For example, the English word "world" would be rendered as ".uyr(y)ld." (the "uyr" seqence is the one of interest); notice that ".urld." without any such expansion and that this rendering loses the on-glide quality of the "u".
