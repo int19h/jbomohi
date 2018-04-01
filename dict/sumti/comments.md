@@ -5,3 +5,15 @@ Ambiguous gloss
 The gloss "argument" probably warrants a sense "independent variable" or 
 something, to distinguish it from the sense meaning "dispute" or "debate"
 
+
+## 2018-04-01T03:03:51Z — krtisfranks (comment 3332, on definition 1116, in reply to 3330)
+
+Re: Ambiguous gloss
+
+jmive wrote:
+> The gloss "argument" probably warrants a sense "independent variable" or 
+> something, to distinguish it from the sense meaning "dispute" or "debate"
+
+Agreed. But this is part of the official word list (and is an extremely 
+important gismu), and so I am hesitant to change it.
+
