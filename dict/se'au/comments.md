@@ -43,3 +43,19 @@ durka42 wrote:
 
 Done. I can supply more if desired.
 
+
+## 2018-04-02T06:03:15Z — krtisfranks (comment 3333, in reply to 1465)
+
+Re: dare
+
+Ilmen wrote:
+> I humbly recommend to always create a predicate word (brivla) before
+> considering making a cmavo shorthand, may it be a mathematical operator 
+or
+> anything else. Because Lojban is meant to be primarily a predicate
+> language. ;-)
+> 
+> mi'e la .ilmen. mu'o
+
+Mathematical operators /are/ predicates.
+
