@@ -29,3 +29,12 @@ I upvoted this definition instead of the other one because it's closer to
 the original meaning. It's a loan word, after all. For ?blackmailing?, 
 better to create a new word, I guess.
 
+
+## 2018-05-16T02:05:04Z — Wuzzy (comment 3353, on definition 69858)
+
+Upvoted.
+
+I upvoted this definition instead of the other one because it's closer to
+the original meaning. It's a loan word, after all. For ?blackmailing?,
+better to create a new word, I guess.
+
