@@ -20,3 +20,12 @@ gleki wrote:
 I agree, given how blackmail is aimed at a person. Posting an alternative 
 definition.
 
+
+## 2018-05-16T02:04:14Z — Wuzzy (comment 3352)
+
+Upvoted.
+
+I upvoted this definition instead of the other one because it's closer to 
+the original meaning. It's a loan word, after all. For ?blackmailing?, 
+better to create a new word, I guess.
+
