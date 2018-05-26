@@ -5,3 +5,11 @@ Picture
 Can you link me to a picture (under your permanent control) which 
 demonstrates this position?
 
+
+## 2018-05-26T03:29:01Z — krtisfranks (comment 3362, on definition 70720)
+
+Picture
+
+Can you link me to a picture (under your permanent control) which 
+demonstrates this position?
+
