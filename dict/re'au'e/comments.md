@@ -121,3 +121,13 @@ why not {sese} or {sexino}?
 why not {sese} or {sexino}? 
 
 
+
+## 2018-06-06T08:17:14Z — krtisfranks (comment 3374, on definition 63975, in reply to 3369)
+
+Re: why not {sese} or {sexino}? 
+
+gleki wrote:
+> 
+
+Both are fine. This one just happens to be elemental.
+
