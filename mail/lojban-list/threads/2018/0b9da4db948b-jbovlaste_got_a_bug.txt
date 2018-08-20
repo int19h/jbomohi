@@ -1,0 +1,65 @@
+# mail/lojban-list thread 0b9da4db948b-jbovlaste_got_a_bug | root cao7bv+gdrsvgg2qjvmtkvm-eg4fwas=sk0bk-mhu67fzmwoiwa@mail.gmail.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2018-08-20T05:24:50Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20180820052450.gn15098@stodi.digitalkingdom.org | mail/lojban-list/cur/1534742690.8bfb9621f09f3230.jbomohi:2,S
+On Sat, Aug 18, 2018 at 10:35:35PM +0300, Gleki Arxokuna wrote:
+> http://jbovlaste.lojban.org/dict/coi
+> 
+> 
+> no idea why is that happening. probably we need to roll back
+> latest commits?
+
+So it turns out the database needs to be cleaned more often; I've
+fixed that.
+
+This revealed some further corruption; there should never be two
+valsi with the same name in the DB, but there were.
+
+There were two "ue'i"; one of them is now http://jbovlaste.lojban.org/dict/xue'i
+
+I would like y'all to move whatever useful data is there to the real
+ue'i and then I'll delete xue'i; let me know when I can do that.
+
+There were two "jboselbau"; one of them had no definitions and I've
+deleted it.
+
+jbovlaste=# select valsiid, word, typeid from valsi where word='ue''i';
+ valsiid | word | typeid
+---------+------+--------
+   28921 | ue'i |      8
+   32520 | ue'i |      8
+(2 rows)
+
+jbovlaste=# update valsi set word='xue''i' where valsiid=32520;
+UPDATE 1
+jbovlaste=# select valsiid, word, typeid from valsi where word='jboselbau';
+ valsiid |   word    | typeid
+---------+-----------+--------
+   32454 | jboselbau |      4
+   32513 | jboselbau |      4
+(2 rows)
+
+jbovlaste=# update valsi set word='jboselxau' where valsiid=32513;
+UPDATE 1
+
+jbovlaste=# select * from definitions where valsiid=32520;
+ langid | valsiid | definitionnum | definitionid | definition  |    notes     | userid |    time    | selmaho | jargon
+--------+---------+---------------+--------------+-------------+--------------+--------+------------+---------+--------
+      1 |   32520 |         71019 |        71019 | sei ue'inmo | .i {ue'inmo} |    523 | 1533291649 | UI1     |
+(1 row)
+
+jbovlaste=# select * from definitions where valsiid=32513;
+ langid | valsiid | definitionnum | definitionid | definition | notes | userid | time | selmaho | jargon
+--------+---------+---------------+--------------+------------+-------+--------+------+---------+--------
+(0 rows)
+
+jbovlaste=# delete from valsi where valsiid=32513;
+DELETE 1
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To post to this group, send email to lojban@googlegroups.com.
+Visit this group at https://groups.google.com/group/lojban.
+For more options, visit https://groups.google.com/d/optout.
+
+
