@@ -15,3 +15,14 @@ I can think of several reasons: {oi} {ro'o} covers a broader kind of
 physical discomfort than specifically "experiencing pain", and also pain 
 might not even be {oi}-worthy in some cases (e.g. masochism).
 
+
+## 2018-08-23T05:08:36Z — gleki (comment 3388, on definition 67153)
+
+what is oi'unai? 
+
+if oi'u is nociceptive/inflammatory / pathological pain then whats the 
+reverse thing?
+
+
+ https://en.wikipedia.org/wiki/Pain#Classification
+
