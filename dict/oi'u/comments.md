@@ -26,3 +26,14 @@ reverse thing?
 
  https://en.wikipedia.org/wiki/Pain#Classification
 
+
+## 2018-08-23T05:08:36Z — gleki (comment 3389, on definition 67153)
+
+what is oi'unai? 
+
+if oi'u is nociceptive/inflammatory / pathological pain then whats the 
+reverse thing?
+
+
+ https://en.wikipedia.org/wiki/Pain#Classification
+
