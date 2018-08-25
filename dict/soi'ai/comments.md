@@ -49,3 +49,26 @@ However, for the exact bull's eye (exact center point), while it is
 technically possible to hit it, there is a 0% chance of doing so because 
 almost all of board (in a technical sense) is not the exact center point.
 
+
+## 2018-08-25T19:06:52Z — gleki (comment 3397, on definition 68955, in reply to 3394)
+
+Re: how is it different from {so'a}?
+
+krtisfranks wrote:
+> gleki wrote:
+> > 
+> 
+> "{so'a}" is a laic/colloquial. It just means "a lot".
+
+then {so'i}? 
+
+> 
+> But this is a mathematical term/jargon. In this sense, almost all of a 
+> dartboard is not the exact bull's eye or on any infinitely thin 
+> (mathematically ideal) curve which creates a boundary between regions. 
+The 
+> area of the rest of the dartboard is the same as the dartboard as a 
+whole.
+
+related to {ga'o} then? 
+
