@@ -96,3 +96,34 @@ an
 Well, there is psychic/emotional pain and that can be relieved. So, this 
 word can be general with respect to type.
 
+
+## 2018-08-25T20:23:49Z — gleki (comment 3401, on definition 67153, in reply to 3399)
+
+Re: what is oi'unai? 
+
+krtisfranks wrote:
+> gleki wrote:
+> > lalxu wrote:
+> > > gleki wrote:
+> > > > if oi'u is nociceptive/inflammatory / pathological pain then whats 
+> the 
+> > > > reverse thing?
+> > > > 
+> > > > 
+> > > >  https://en.wikipedia.org/wiki/Pain#Classification
+> > > 
+> > > Pain relief, I would guess: feeling an aspirin start to work, putting
+
+> an 
+> > > ice pack on a bruise, getting an injection of morphine, etc.
+> > 
+> > 
+> > then what is {oi'ubu'onai}? 
+> 
+> Well, there is psychic/emotional pain and that can be relieved. So, this 
+> word can be general with respect to type.
+
+
+i dont understand how {oi'unai} differs from {oi'ubu'onai} and where to use
+which
+
