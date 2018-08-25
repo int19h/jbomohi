@@ -72,3 +72,29 @@ whole.
 
 related to {ga'o} then? 
 
+
+## 2018-08-25T20:15:15Z — krtisfranks (comment 3400, on definition 68955, in reply to 3397)
+
+Re: how is it different from {so'a}?
+
+gleki wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > 
+> > 
+> > "{so'a}" is a laic/colloquial. It just means "a lot".
+> 
+> then {so'i}? 
+> 
+> > 
+> > But this is a mathematical term/jargon. In this sense, almost all of a 
+> > dartboard is not the exact bull's eye or on any infinitely thin 
+> > (mathematically ideal) curve which creates a boundary between regions. 
+> The 
+> > area of the rest of the dartboard is the same as the dartboard as a 
+> whole.
+> 
+> related to {ga'o} then? 
+
+Not too closely, actually. :/
+
