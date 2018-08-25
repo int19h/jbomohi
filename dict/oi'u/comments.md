@@ -52,3 +52,22 @@ gleki wrote:
 Pain relief, I would guess: feeling an aspirin start to work, putting an 
 ice pack on a bruise, getting an injection of morphine, etc.
 
+
+## 2018-08-25T04:45:23Z — gleki (comment 3391, on definition 67153, in reply to 3390)
+
+Re: what is oi'unai? 
+
+lalxu wrote:
+> gleki wrote:
+> > if oi'u is nociceptive/inflammatory / pathological pain then whats the 
+> > reverse thing?
+> > 
+> > 
+> >  https://en.wikipedia.org/wiki/Pain#Classification
+> 
+> Pain relief, I would guess: feeling an aspirin start to work, putting an 
+> ice pack on a bruise, getting an injection of morphine, etc.
+
+
+then what is {oi'ubu'onai}? 
+
