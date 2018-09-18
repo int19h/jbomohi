@@ -23,3 +23,12 @@ start? I would say that "to'ai {xi} n(y)" would yield:
 That is, for integer subscript n > -2, "to'ai xi n" drags-and-drops the 
 (n+2)nd sumti slot into the first position.
 
+
+## 2018-09-18T09:45:30Z — lalxu (comment 3425, on definition 37908, in reply to 3416)
+
+Re: Drag-and-Drop Conversion for nth Slot, n > 5.
+
+Why offset by 2? Just as {se} has default implicit subscript 2, and 
+{sexixa} swaps x1 and x6, I would say {to'ai} = {to'aixici} and work from 
+there.
+
