@@ -32,3 +32,17 @@ Why offset by 2? Just as {se} has default implicit subscript 2, and
 {sexixa} swaps x1 and x6, I would say {to'ai} = {to'aixici} and work from 
 there.
 
+
+## 2018-09-19T02:14:57Z — krtisfranks (comment 3426, on definition 37908, in reply to 3425)
+
+Re: Drag-and-Drop Conversion for nth Slot, n > 5.
+
+lalxu wrote:
+> Why offset by 2? Just as {se} has default implicit subscript 2, and 
+> {sexixa} swaps x1 and x6, I would say {to'ai} = {to'aixici} and work from
+
+> there.
+
+I generally like to start counting at some language-universal value, but I 
+am actually okay with your suggestion, upon reflection.
+
