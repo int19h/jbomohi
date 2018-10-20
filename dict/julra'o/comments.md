@@ -18,3 +18,21 @@ dislike
 
 noralujv is official?
 
+
+## 2018-10-20T23:53:50Z — krtisfranks (comment 3432, on definition 8588, in reply to 3431)
+
+Re: Ew
+
+gleki wrote:
+> krtisfranks wrote:
+> > I understand that this is on official lists and stuff, but I really 
+> dislike
+> > this word for this concept.
+> 
+> 
+> noralujv is official?
+
+
+It is in the official gismu list as a note. That is what I meant. Idk how 
+official that actually is.
+
