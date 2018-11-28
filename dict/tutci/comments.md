@@ -19,3 +19,10 @@ neotdelimoe, daje esli tutci1 ispol'zuyetsa v drugih tsel'ah. Naprotiv,
 dl'a {pilno}, pilno3 oznatchaet tsel' ispol'zovaniya pilno2, kotoruyu 
 stavit pered soboy pilno1.
 
+
+## 2018-11-28T05:24:42Z — rlpowell (comment 3458, on definition 36539, in reply to 3408)
+
+Re: tutci vs pilno
+
+Ја могу јести стакло, и то ми не штети.
+
