@@ -12,3 +12,14 @@ Re: possible error
 
 Or is there a historical reason?
 
+
+## 2018-12-09T20:14:40Z — gleki (comment 3461, in reply to 3460)
+
+Re: possible error
+
+HerpDerp wrote:
+> Or is there a historical reason?
+
+
+I don't remember but I suppose final -n is a mnemonic for nai
+
