@@ -79,3 +79,10 @@ bad choice. Now I agree that it needs to change.
 
 I just turned my thumb around.
 
+
+## 2019-01-18T11:11:55Z — gleki (comment 3471, on definition 71274)
+
+notes
+
+https://groups.google.com/d/msg/lojban/6NtZWhv4AzM/-zI9Qrq6LYoJ
+
