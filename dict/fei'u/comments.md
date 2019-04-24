@@ -41,3 +41,18 @@ yield nonsense (just like the 'SI prefixes' would). For example,
 "ki'orxu'e tei'a re fei'u snidu" would be "square kiloreds per second",
 which is
 
+
+## 2019-04-24T18:48:25Z — krtisfranks (comment 3479, on definition 66354, in reply to 3478)
+
+Re: Clarification
+
+> Oh, and these words essentially make units (whatever those may be) a
+> special subclass in BRIVLA. I think that that should be documented
+> somewhere. I guess that they could be applied to non-units and simply
+> yield nonsense (just like the 'SI prefixes' would). For example,
+> "ki'orxu'e tei'a re fei'u snidu" would be "square kiloreds per second",
+> which is
+
+nonsensical but grammatically proper and expressible. (It might have
+meaning in a joke or something).
+
