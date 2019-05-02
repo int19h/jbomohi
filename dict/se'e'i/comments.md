@@ -28,3 +28,9 @@ very clear which option we mean (and possibly use a different word from
 "merge", or rewrite the Lojban definitions, depending on which meaning is
 chosen/intended) and then review all of my edits and related creations.
 
+
+## 2019-05-02T19:14:44Z — gleki (comment 3482, on definition 71339)
+
+se xi vei pa a re broda i se xi vei su'o prami
+
+
