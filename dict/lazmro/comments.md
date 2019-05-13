@@ -32,3 +32,20 @@ life
 
 Any other gismu suitable? Maybe zasti, u'i ge'ezo'oru'esai?
 
+
+## 2019-05-13T13:10:53Z — krtisfranks (comment 3486, on definition 71377, in reply to 3484)
+
+Re: 
+
+gleki wrote:
+> krtisfranks wrote:
+> > I think that it is acceptable to use "morsi" as a veljvo here. I have
+a
+> > pretty broad view of what constitutes death, and it does not require
+> life
+> > (according to my worldview), though.
+> 
+> Any other gismu suitable? Maybe zasti, u'i ge'ezo'oru'esai?
+
+"{lazytolcfa}" or "{lazysti}" (depending on the exact context)?
+
