@@ -49,3 +49,11 @@ the
 Oh, I see: You made ".{i'a'a}" etc. for FFFF. Okay then! All is good.
 False alarm.
 
+
+## 2019-05-15T21:16:52Z — ues (comment 3490, on definition 71379, in reply to 3489)
+
+Re: FFFF
+
+Yes, I thought about it and concluded that separate words were necessary.
+u'i "false alarm".
+
