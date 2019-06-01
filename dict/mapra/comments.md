@@ -39,3 +39,24 @@ Re: Justification
 
 «mapnysmi ranti»: "Cotton-like 'soft'".
 
+
+## 2019-06-01T17:02:57Z — dunyroll (comment 3499, on definition 56599)
+
+mapra = soft (? english)
+
+Moelleux. Qui retrouve sa forme de façon douce, non brusque. La
+composition de l'objet n'a pas d'importance.
+
+
+En cuisine:
+
+Le gâteau est moelleux.
+
+En literie:
+
+L'oreiller est moelleux.
+Le coussin est moelleux.
+La couette est moelleux.
+L'édredon est moelleux.
+Le matelas est moelleux.
+
