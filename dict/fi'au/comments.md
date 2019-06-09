@@ -19,3 +19,9 @@ mutually interleave so as to produce the extended fraction. This word
 essentially preserves the notation (replacing "K(a/b)" with "K((a,b))", 
 which is easy enough to track) while making it more correct.
 
+
+## 2019-06-09T17:53:35Z — gleki (comment 3500)
+
+Examples of translation from Western math to mekso needed. Selmaho too
+
+
