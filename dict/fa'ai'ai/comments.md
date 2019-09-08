@@ -9,3 +9,20 @@ any natural numbers $n_1, n_2, ..., n_m$, it is true that $dr(n_1 + n_2
 (in general function form) can be expressed via "fa'ai'ai" where $f$ = '+'
 ("{su'i}"), $g$ = '$dr$', and $S$ = "ro".
 
+
+## 2019-09-08T05:41:45Z — krtisfranks (comment 3517, on definition 71498, in reply to 3516)
+
+Re: Example
+
+(It did not display before, so I am hoping to fix that)
+
+krtisfranks wrote:
+> Example: Ultimate digital roots are preserved under integer addition.
+Let "dr" denote the ultimate digital root function in decimal base. Then
+for any nonnegative integer m and for any natural numbers n_1, n_2, ...,
+n_m, it is true that dr(n_1 + n_2 +...+ n_m) = dr(n_1) + dr(n_2) +...+
+dr(n_m), where m = 0 implies an empty sum which we conventionally define
+to be equal to 0. The rhs in that equation (in general function form) can
+be expressed via "fa'ai'ai" where f = '+' (Lojban: "{su'i}"), g = 'dr',
+and S = "ro".
+
