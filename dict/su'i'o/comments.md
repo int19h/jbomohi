@@ -31,3 +31,25 @@ krtisfranks wrote:
 Fixed. Btw, i think the problem are spaces within latex expressions. iirc,
 they are forbidden.
 
+
+## 2019-12-04T21:49:18Z — krtisfranks (comment 3535, on definition 71499, in reply to 3534)
+
+Re: Please fix latex
+
+gleki wrote:
+> krtisfranks wrote:
+> > gleki wrote:
+> > > You have $ symbol omitted (a trailing one most likely) in at least
+one
+> > > case
+> > 
+> > I cannot even load the page.
+> 
+> Fixed. Btw, i think the problem are spaces within latex expressions.
+iirc,
+> they are forbidden.
+
+
+Uh-oh: I do that a lot. I will try to be careful to avoid it in the
+future.
+
