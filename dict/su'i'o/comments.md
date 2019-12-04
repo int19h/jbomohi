@@ -16,3 +16,18 @@ gleki wrote:
 
 I cannot even load the page.
 
+
+## 2019-12-04T19:23:30Z — gleki (comment 3534, on definition 71499, in reply to 3533)
+
+Re: Please fix latex
+
+krtisfranks wrote:
+> gleki wrote:
+> > You have $ symbol omitted (a trailing one most likely) in at least one
+> > case
+> 
+> I cannot even load the page.
+
+Fixed. Btw, i think the problem are spaces within latex expressions. iirc,
+they are forbidden.
+
