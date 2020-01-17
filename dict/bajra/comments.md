@@ -4,3 +4,11 @@ Missing place
 
 Shouldn't there be an x4 place for gait here?
 
+
+## 2020-01-17T05:28:52Z — ues (comment 3539, on definition 65094, in reply to 3538)
+
+Re: Missing place
+
+ues wrote:
+> Shouldn't there be an x4 place for gait here? (In the lojban definition)
+
