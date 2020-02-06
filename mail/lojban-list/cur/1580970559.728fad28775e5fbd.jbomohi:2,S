@@ -1,0 +1,843 @@
+Received: from mail-qt1-f186.google.com ([209.85.160.186]:46197)
+	by stodi.digitalkingdom.org with esmtps (TLSv1.3:TLS_AES_128_GCM_SHA256:128)
+	(Exim 4.92)
+	(envelope-from <lojban+bncBCW7JPVOKYIMDZHO6ECRUBEXQJZDO@googlegroups.com>)
+	id 1izafI-0007W1-EO
+	for lojban-list-archive@lojban.org; Wed, 05 Feb 2020 22:29:31 -0800
+Received: by mail-qt1-f186.google.com with SMTP id d9sf3161493qtq.13
+        for <lojban-list-archive@lojban.org>; Wed, 05 Feb 2020 22:29:28 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1580970562; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=LYHkOcTt9+USi5K9n3UjM27Zc+2tkugx5TNCNL19I3/UwXQQ4GabLWrIyH9v7i2cQV
+         Jq/0xfF43Z2DSNMQ3ERB4ibzb4thvjaSd9PgSSxVrUVcqkMKjColUePoAPp+6vDhqQ6s
+         WRvgVK/A6dNgIuFzuo4sdy7lua9+iZZE978lyqZi7Uuwz6ZU+IY8FVfvX+1Jm17AI9TM
+         CSs8TMERuLvpUP0JafQCyEJHc1W0ikspZnBQ2KMhVtVCmvwrgNSOUlco29p41UjMfncv
+         x3Ev25ftLiHeu154znlli5Qv4TNl7iCjQZhooLrlfk4KHk7912l1lkthZ68R+OwTaa6D
+         XQEg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=list-unsubscribe:list-subscribe:list-archive:list-help:list-post
+         :list-id:mailing-list:precedence:reply-to:user-agent
+         :content-transfer-encoding:content-disposition:mime-version
+         :mail-followup-to:message-id:subject:to:from:date:sender
+         :dkim-signature;
+        bh=J02buCm5RVL0adNRNIA/vEUOhAdI15XNe8B8O+L8j8I=;
+        b=LjW+PWy0+iFZrgGWNK05eb4J7x+yhtazdBxdzD78duMLE2yBZ4mzwsA4c4YZyG47aO
+         M3Kks5XfdxtAatRo+ZQ4KzEW9wlkw/01kp536G7hVV/RtFHKhFt2mUpPGvIj1e8HtJVs
+         o+UqxQ1duxObQh9IQUULQFSoXkKJIhECik9BtKBaJEzBHE07CXM7G7zgqSsRkbuSNJIY
+         Jl0wOS8jmWrlkqo8mXVA61TCc0n1NzWeKHdQrh+gtcKnL+fYZgg3FeaxPGT/20agOw5T
+         H/sRH+0qhJym1HzkunzsNwv7VwRP8hYfWWr8TIhU3dfuljOfABCLLt+2Qx7yogm9vaou
+         +FFg==
+ARC-Authentication-Results: i=2; gmr-mx.google.com;
+       spf=pass (google.com: best guess record for domain of rlpowell@digitalkingdom.org designates 173.13.139.236 as permitted sender) smtp.mailfrom=rlpowell@digitalkingdom.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mail-followup-to
+         :mime-version:content-disposition:content-transfer-encoding
+         :user-agent:x-original-sender:x-original-authentication-results
+         :reply-to:precedence:mailing-list:list-id:list-post:list-help
+         :list-archive:list-subscribe:list-unsubscribe;
+        bh=J02buCm5RVL0adNRNIA/vEUOhAdI15XNe8B8O+L8j8I=;
+        b=cFIw2x4480w/VS904veZEmjXZoVH3Ltj3a4ycoElrD1hAeIgL85sXNj3lUG2u72rwJ
+         xnSMoYcYzevikRSE8UdH2owbQLNOinwsKTiDim+IFpOynpIZrHvwNwvXnOfoi0Op32rR
+         0E8f45u/WspDerwXECBMXCtQk+yaBvfZG5lMcjLFH6dKyxhTJoGVbnbvj/anRStgmQYR
+         /Sf/mbvEWjcx2ZrJJi5WHKSThDQHzAWd7Cs4m4e9JisSJlpyoH56u29XGKnC3u05HZ/g
+         FTUuwLZ46ye/Lunj53y6WUOHi8NWKH+mDYfr9Vv7VBfwyBciDQXMcbY5HCZrgVBBfBNl
+         z9Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=sender:x-gm-message-state:date:from:to:subject:message-id
+         :mail-followup-to:mime-version:content-disposition
+         :content-transfer-encoding:user-agent:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:x-spam-checked-in-group:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe;
+        bh=J02buCm5RVL0adNRNIA/vEUOhAdI15XNe8B8O+L8j8I=;
+        b=iOQYPnvoH5hRqPWPwf7YpwJRsouqLInBkTykcfkDITf737bPQ/TxNpV558OVuMm1lN
+         bgVOj8b/WAiL4/GjVgOCBF+GoJnY3NVfBhntwVs9Lo9FOTU/0ZEA0s4csIvNRV+y+52V
+         WCZXZ6RDD92NP8g1+DKJtaCehejZNoMwbm+bJ9Ju2DruFqLzGj5qoDVwGuOOPY9TvvkF
+         55vTOvzsLKAkpYOCTZI5SLXrjdq5ze0KgL4xXCebEVri2yg/GWU26jUCb536y5/zbNx3
+         lz0Gm3isdk+VltScVANuwve0wsSie/PiLdb9WaGBhQSMVpSIa8aKNV9UNUZLHjd3IJSh
+         9Whw==
+Sender: lojban@googlegroups.com
+X-Gm-Message-State: APjAAAXrI6Zk86b18sEKjc7n2qoN1OBmCo6Rjsla6upqxyk2UhuddIf9
+	khqjLrF5DMy6MrMPk1cwnf4=
+X-Google-Smtp-Source: APXvYqyw+NfHchHjLi30vqlU6n34jg+/CJsGuAbhf4AO4l8Usklk2VOx7DZyohgW6kwwwqYi26HHzA==
+X-Received: by 2002:a37:742:: with SMTP id 63mr1178412qkh.31.1580970562058;
+        Wed, 05 Feb 2020 22:29:22 -0800 (PST)
+X-BeenThere: lojban@googlegroups.com
+Received: by 2002:a37:58a:: with SMTP id 132ls2313282qkf.7.gmail; Wed, 05 Feb
+ 2020 22:29:21 -0800 (PST)
+X-Received: by 2002:a37:a881:: with SMTP id r123mr1202698qke.275.1580970561335;
+        Wed, 05 Feb 2020 22:29:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1580970561; cv=none;
+        d=google.com; s=arc-20160816;
+        b=EfdpLBxpf1yM1zGm++xe5LEnu5vhaC20X2+LY6FOpPUUmRg3snCcnYm0GIKnXLv+oI
+         2m7t/CupAcEST+aRrIynF6kPJ7GXFttDhmWaO8ilZakjvifJV/F9hD51hyBdcNboQNcw
+         9RuaPn8D+74C24Oghj9OzTEmDMGDdqxKpwgSV4DkXPFL0AcKJ0/qkZHp/LQRIC1QPe/x
+         M9LoelsXgJmdUZ/G0ez7YMHaCzAFwjylmJwVAfrQ8vXMmk8FXc48uclRT628oBO51JxT
+         kFYpyQA9BGBTwGkn24lN4A+Adecli2gaNmjeH+Yafk5KXeyHXbODg6QZnoncA0Wf/s4C
+         +jzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=user-agent:content-transfer-encoding:content-disposition
+         :mime-version:mail-followup-to:message-id:subject:to:from:date;
+        bh=paoLZz/hwEsrY1gsqZYQKB4CPQYx449eE3LIYXssWMY=;
+        b=0/qs7ayVj/Q1Hsope//ZqUOIUZVWUR/oqE1fixrMhZ8nn9VQu/XTX3zT3TiWoSNSrd
+         egzF0+yO3xmtgfADvQC8XoP+myNFjsZOnNZD8ExFKfSXBWZFwktQalg0Iy8bfzwGGO9M
+         EVZPcr3LSxWISI5Kgi68OujkbNiPKmVkpN4uNNbYnfKoxAyzBeD19WYEQNi/0cdgVk2F
+         pthzZFDXAskwlMMDer6fay7wR7V9HHKITbXRvt3pmChGcAbJILu3mFzBnHuqv9AlwMNS
+         ZsYqBBSqTgPDIsO2zxf66wNm1HJmlPfvRUa0bdcIDGq8REG5xZxB7WiZh7sbO+/i9oqA
+         Y/7A==
+ARC-Authentication-Results: i=1; gmr-mx.google.com;
+       spf=pass (google.com: best guess record for domain of rlpowell@digitalkingdom.org designates 173.13.139.236 as permitted sender) smtp.mailfrom=rlpowell@digitalkingdom.org
+Received: from stodi.digitalkingdom.org (mail.digitalkingdom.org. [173.13.139.236])
+        by gmr-mx.google.com with ESMTPS id 14si125736qke.3.2020.02.05.22.29.20
+        for <lojban@googlegroups.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Feb 2020 22:29:21 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of rlpowell@digitalkingdom.org designates 173.13.139.236 as permitted sender) client-ip=173.13.139.236;
+Received: from rlpowell by stodi.digitalkingdom.org with local (Exim 4.92)
+	(envelope-from <rlpowell@digitalkingdom.org>)
+	id 1izaf9-0007Vv-NT
+	for lojban@googlegroups.com; Wed, 05 Feb 2020 22:29:19 -0800
+Date: Wed, 5 Feb 2020 22:29:19 -0800
+From: Robin Lee Powell <rlpowell@digitalkingdom.org>
+To: lojban@googlegroups.com
+Subject: [lojban] What's going with CloudFlare and caching and such.
+Message-ID: <20200206062919.GU26741@stodi.digitalkingdom.org>
+Mail-Followup-To: lojban@googlegroups.com
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="Q68bSM7Ycu6FN28Q"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.11.3 (2019-02-01)
+X-Original-Sender: rlpowell@digitalkingdom.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: best guess record for domain of rlpowell@digitalkingdom.org
+ designates 173.13.139.236 as permitted sender) smtp.mailfrom=rlpowell@digitalkingdom.org
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+X-Spam-Checked-In-Group: lojban@googlegroups.com
+X-Google-Group-Id: 1004133512417
+List-Post: <https://groups.google.com/group/lojban/post>, <mailto:lojban@googlegroups.com>
+List-Help: <https://groups.google.com/support/>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <https://groups.google.com/group/lojban
+List-Subscribe: <https://groups.google.com/group/lojban/subscribe>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+1004133512417+unsubscribe@googlegroups.com>,
+ <https://groups.google.com/group/lojban/subscribe>
+X-Spam-Score: -2.7 (--)
+X-Spam_score: -2.7
+X-Spam_score_int: -26
+X-Spam_bar: --
+Content-Length: 28541
+
+
+--Q68bSM7Ycu6FN28Q
+Content-Type: text/plain; charset="UTF-8"
+Content-Disposition: inline
+
+Some of you have noticed problems with dynamic content on lojban.org
+now that we've started using CloudFlare.  I haven't been able to
+figure out how to fix this, so here's what's going on; maybe
+somebody else will have ideas.
+
+So the goal of CloudFlare, primarily, was to make it so that if my
+server went down, the site would be basically fine.  This we have
+acheived.
+
+However, to do so, I had to use brute force.  Here's our CloudFlare
+page rules:
+
+*lojban.org/*&*          Cache Level: Bypass
+*lojban.org/*edit*       Cache Level: Bypass
+*lojban.org/*Special:*  Cache Level: Bypass
+*lojban.org/*Talk:*     Cache Level: Bypass
+*lojban.org/*           Browser Cache TTL: 30 minutes, Always Online: On, Cache Level: Cache Everything, Edge Cache TTL: 2 hours, Origin Cache Control: Off
+
+That last one is a very large hammer that says "just cache the hell
+out of everything".
+
+The reason I need that hammer is that mediawiki is returning
+absurdly wrong caching headers.  Here's an example that entirely
+bypasses CloudFlare:
+
+$ curl -k -v -H 'Host: mw.lojban.org' -L https://jukni.lojban.org/papri/pronunciation 2>&1 | less 
+[snip]
+< HTTP/1.1 200 OK
+< Date: Thu, 06 Feb 2020 06:26:31 GMT
+< Server: Apache/2.4.38 (Debian)
+< X-Powered-By: PHP/7.3.14
+< X-Content-Type-Options: nosniff
+< Content-language: en
+< Vary: Accept-Encoding,Cookie
+< Expires: Thu, 01 Jan 1970 00:00:00 GMT
+< Cache-Control: private, must-revalidate, max-age=0
+
+^^ That.   That Cache-Control line is absurd, and effectively
+completely disableds CloudFlare.
+
+I have tested this by talking *directly* to the mediawiki server,
+no SSL, no proxies, no nothing; it's the same.
+
+Our LocalSettings.php file is attached.
+
+I don't care if the solution is on the mediawiki side or the
+CloudFlare side, but at this point I've sunk more time into this
+than I can afford and I've come up empty, so I'd appreciate any
+ideas you might have.
+
+Having said that, if you're going to point me at
+https://www.mediawiki.org/wiki/Manual:CloudFlare#Integration_with_MediaWiki
+, you'll need to tell me exactly which part you think is relevant,
+and why.  Most of that page is about making X-Forwarded-For: do the
+right thing, which is totally irrelevant to this problem.
+
+Thanks for any help.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/20200206062919.GU26741%40stodi.digitalkingdom.org.
+
+--Q68bSM7Ycu6FN28Q
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: attachment; filename="ls.php.txt"
+Content-Transfer-Encoding: 8bit
+
+<?php
+# This file was automatically generated by the MediaWiki 1.19.2
+# installer. If you make manual changes, please keep track in case you
+# need to recreate them later.
+#
+# See includes/DefaultSettings.php for all configurable settings
+# and their default values, but don't forget to make changes in _this_
+# file, not there.
+#
+# Further documen for configuration settings may be found at:
+# http://www.mediawiki.org/wiki/Manual:Configuration_settings
+
+# Protect against web entry
+if ( !defined( 'MEDIAWIKI' ) ) {
+        exit;
+}
+
+## Uncomment this to disable output compression
+# $wgDisableOutputCompression = true;
+
+$wgSitename      = "Lojban";
+$wgMetaNamespace = "Lojban";
+
+## The URL base path to the directory containing the wiki;
+## defaults for all runtime URL paths are based off of this.
+## For more information on customizing the URLs please see:
+## http://www.mediawiki.org/wiki/Manual:Short_URL
+$wgScriptPath       = "";
+$wgScriptExtension  = ".php";
+$wgArticlePath = "/papri/$1";
+//$wgArticlePath = "/wiki/$1";  # Virtual path. This directory MUST be different from the one used in $wgScriptPath
+
+## The protocol and server name to use in fully-qualified URLs
+<%- if test.length > 1 -%>
+$wgServer           = "http://mw-test.lojban.org";
+$wgCanonicalServer  = "http://mw-test.lojban.org";
+<%- else -%>
+$wgServer           = "https://mw.lojban.org";
+$wgCanonicalServer  = "https://mw.lojban.org";
+<%- end -%>
+
+## The relative URL path to the skins directory
+$wgStylePath        = "$wgScriptPath/skins";
+
+## The relative URL path to the logo.  Make sure you change this from the default,
+## or else you'll overwrite your logo when you upgrade!
+$wgLogo             = "$wgScriptPath/images/148px-redit2_no_uenzi.svg.png";
+
+## UPO means: this is also a user preference option
+
+$wgEnableEmail      = true;
+$wgEnableUserEmail  = true; # UPO
+
+$wgSMTP = array(
+ 'host'     => "mail.lojban.org", // could also be an IP address. Where the SMTP server is located
+ 'IDHost'   => "lojban.org",      // Generally this will be the domain name of your website (aka mywiki.org)
+ 'port'     => 25,                 // Port to use when connecting to the SMTP server
+ 'auth'     => false,               // Should we use SMTP authentication (true or false)
+ 'username' => "",     // Username to use for SMTP authentication (if being used)
+ 'password' => ""       // Password to use for SMTP authentication (if being used)
+);
+
+$wgEmergencyContact = "webmaster@lojban.org";
+$wgPasswordSender   = "webmaster@lojban.org";
+
+$wgEnotifUserTalk      = true; # UPO
+$wgEnotifWatchlist     = true; # UPO
+$wgEmailAuthentication = true;
+
+## Database settings
+$wgDBtype           = "mysql";
+# See run_database.sh for why we're talking to jukni
+$wgDBserver         = "jukni:11036";  # Not 'localhost'; that will try to do a socket connection, instead of TCP
+# FIXME: ^^
+# $wgDBserver         = "jukni:<%= test ? 11037 : 11036 %>";  # Not 'localhost'; that will try to do a socket connection, instead of TCP
+$wgDBname           = "mediawiki";
+$wgDBuser           = "root";
+$wgDBpassword       = "<%= File.read('DO_NOT_CHECK_IN/mysql_password.txt').chomp %>";
+
+# MySQL specific settings
+$wgDBprefix         = "";
+
+# MySQL table options to use during installation or update
+$wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
+
+# Experimental charset support for MySQL 5.0.
+$wgDBmysql5 = true;
+
+## Shared memory settings
+$wgMainCacheType    = CACHE_ANYTHING;
+$wgMemCachedServers = array();
+
+## To enable image uploads, make sure the 'images' directory
+## is writable, then set this to true:
+
+# InstantCommons allows wiki to use images from http://commons.wikimedia.org
+$wgUseInstantCommons  = true;
+
+## If you use ImageMagick (or any other shell command) on a
+## Linux server, this will need to be set to the name of an
+## available UTF-8 locale
+$wgShellLocale = "en_US.utf8";
+
+## If you want to use image uploads under safe mode,
+## create the directories images/archive, images/thumb and
+## images/temp, and make them all writable. Then uncomment
+## this, if it's not already uncommented:
+#$wgHashedUploadDirectory = false;
+
+## Set $wgCacheDirectory to a writable directory on the web server
+## to make your wiki go slightly faster. The directory should not
+## be publically accessible from the web.
+## $wgCacheDirectory = "$IP/cache";
+
+# Site language code, should be one of the list in ./languages/Names.php
+$wgLanguageCode = "en";
+
+$wgSecretKey = "<%= File.read('DO_NOT_CHECK_IN/wgsecret_password.txt').chomp %>";
+
+# Site upgrade key. Must be set to a string (default provided) to turn on the
+# web installer while LocalSettings.php is in place
+$wgUpgradeKey = false;
+
+## Default skin: you can change the default skin. Use the internal symbolic
+## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
+$wgDefaultSkin = "vector";
+
+## For attaching licensing metadata to pages, and displaying an
+## appropriate copyright notice / icon. GNU Free Documentation
+## License and Creative Commons licenses are supported so far.
+$wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
+$wgRightsUrl  = "";
+$wgRightsText = "";
+$wgRightsIcon = "";
+
+# Path to the GNU diff3 utility. Used for conflict resolution.
+$wgDiff3 = "/usr/bin/diff3";
+
+# Query string length limit for ResourceLoader. You should only set this if
+# your web server has a query string length limit (then set it to that limit),
+# or if you have suhosin.get.max_value_length set in php.ini (then set it to
+# that value)
+$wgResourceLoaderMaxQueryLength = -1;
+
+
+
+# End of automatically generated settings.
+# Add more configuration options below.
+# =============================================
+# =============================================
+
+#GENERAL PATCHES
+//$wgAllowUserJs = true;//allows WikEd for all users, probably useless for wikEd since it's already enabled from Common.js
+$wgCompressRevisions=true;//compress the database
+$wgMaxArticleSize=10000;//CLL and ELG are large texts. We need them on on a single page
+//require_once "$IP/extensions/NativeSvgHandler/NativeSvgHandler.php";
+//$wgParserCacheType = CACHE_NONE;
+$wgExternalLinkTarget = '_blank';//in order to open external links in a new window / tab.
+$wgDefaultUserOptions['watchdefault'] = 1;
+
+#GUI PAGE ELEMENTS
+$wgFavicon = "/extensions/LojbanFavicon.ico";
+
+// DISABLED PER https://github.com/lojban/lmw/issues/1
+// require_once( "$IP/extensions/LogoFunctions/LogoFunctions.php" );//you can change the logo
+
+$wgUsePathInfo = true;        # Enable use of pretty URLs
+$wgCapitalLinks = false;
+$wgCapitalLinkOverrides [NS_TEMPLATE] = true;
+$wgCapitalLinkOverrides [828] = true;
+//$wgFooterIcons = array();//removes icons in the footer
+##Combating bulky interface for non-logged-in users
+//$wgDefaultUserOptions ['editsection'] = false;//hide the section edit links for users who are not logged in
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## ##Sidebar customizations
+## require_once( "$IP/extensions/CustomNavBlocks/CustomNavBlocks.php" );
+## $wgCustomNavBlocksEnable = true;
+
+// DISABLED PER https://github.com/lojban/lmw/issues/1
+//require_once("$IP/extensions/CSS/CSS.php");
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## # Skins. Mobile devices optimization:
+## require_once "$IP/skins/Metrolook/Metrolook.php";
+## // $wgDefaultUserOptions['skinmetrolook-collapsiblenav'] = 0;
+## $wgMetrolookFeatures = array( 'collapsiblenav' => array('global' => false, 'user' => false ), );
+## //$wgValidSkinNames['metrolook'] = 'Metrolook';
+## //$SearchBar = false;
+## $wgMetrolookLogo = false;
+## $wgMetrolookUploadButton = false;
+## $wgMetrolookDownArrow = false;
+## $wgMetrolookLine = false;
+## /*
+## $wgMetrolookBartile = false;
+## $wgMetrolookMobile = false;
+## */
+## $DownArrow = false;
+## $Logoshow = false;
+## $UploadButton = false;
+## $Line = false;
+
+// Vector skin
+wfLoadSkin( 'Vector' );
+$wgVectorUseSimpleSearch = true;
+$wgVectorUseIconWatch = true;
+
+// DISABLED PER https://github.com/lojban/lmw/issues/1
+//require_once "$IP/skins/Vector/Vector.php";
+//$wgVectorFeatures['collapsiblenav']['global'] = false; //Allow users to enable CollapsibleNav in their preferences.
+//$wgVectorFeatures['collapsiblenav']['user'] = true;
+//$wgVectorFeatures['collapsibletabs']['global'] = true;
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## require_once "$IP/extensions/WikiArticleFeeds/WikiArticleFeeds.php";
+## require_once "$IP/extensions/MobileFrontend/MobileFrontend.php";
+
+// No longer works with MW 1.28 - rlpowell
+//require_once "$IP/extensions/Mantle/Mantle.php";
+
+$wgMFAutodetectMobileView = true;
+
+#CACHE.PERFOMANCE
+$wgUseFileCache = false;//advise: better to set to false otherwise mobilefrontend is not reliablw
+$wgFileCacheDirectory = "$IP/cache";
+$wgShowIPinHeader = false;
+$wgEnableSidebarCache=true;
+$wgUseGzip = true;
+$wgDisableCounters = true;//Note: If you’re using caching, keeping counters on will not be of use anyway because in most cases the requested page will delivered to the users from cache and database update will not take place.
+//$wgMiserMode = true; //better to keep it false
+
+
+#SYNTAX EXTENDED
+//require_once( "$IP/extensions/Poem/Poem.php" );
+wfLoadExtension( 'Cite' );
+wfLoadExtension( 'ParserFunctions' );
+$wgPFEnableStringFunctions = true;
+wfLoadExtension( 'Variables' );
+wfLoadExtension( 'Scribunto' );
+$wgScribuntoDefaultEngine = 'luastandalone';
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## wfLoadExtension( 'DynamicPageList' );
+## // require_once("$IP/extensions/SimpleTable/SimpleTable.php");//only version 1.2 (not later!!!) works
+## //enableSemantics('mw<%= test %>.lojban.org');
+## //include_once( "$IP/extensions/SemanticForms/SemanticForms.php" );
+## require_once "$IP/extensions/SimpleMathJax/SimpleMathJax.php";
+## #$wgSimpleMathJaxSize = 120;
+## /** There is a bug in Extension:MathJax with MediaWiki 1.19.0, 1.20.0 and 1.21.1
+## *   If you are using any form of PHP caching on your wiki and you have setup
+## *   your wiki to use variable caching like $wgMainCacheType = CACHE_ACCEL;
+## *   you could encounter issues with rendering of formulas.
+## *   If so uncomment the last line.
+## */
+
+# Robin's server alias
+///combat alias mw.lojban.org that made you think you loggined from Robin's server
+$wgUsePrivateIPs = true;
+$wgSquidServersNoPurge = array( '173.13.139.233', '192.168.123.132', '173.13.139.235' );
+///end combat mw.lojban.org
+
+
+
+# UPLOADING
+$wgUseSharedUploads = true; //trying to allow images from Wikimedia (instantcommons)
+$wgAllowJavaUploads = true; // allows uploading if "This file did not pass file verification"
+$wgAllowExternalImages = true;
+$wgAllowImageMoving = true;
+$wgUseImageMagick = true;
+$wgImageMagickConvertCommand = "/usr/bin/convert";
+$wgImageMagickTempDir = '/srv/mediawiki/cache';
+$wgMaxShellMemory = 1048576;
+# allow more file types:
+# trying to get pdfs to work
+## $wgMimeDetectorCommand = "file -bi";
+ini_set( 'memory_limit', '364M' );
+$wgUploadSizeWarning = true;
+$wgAllowCopyUploads = true; //////      EXTREMELY IMPORTNAT FOR UTL UPLOADING
+$wgVerifyMimeType = false;
+$wgCheckFileExtensions = false;
+$wgStrictFileExtensions = false; // lets allow all extensions
+$wgFileExtensions[] = array( 'webp','sip', 'png', 'gif', 'jpg', 'jpeg', 'bmp', 'svg','pdf','djvu','djv','doc','mp3','swf','chm','diff','docx', 'ttf' );
+$wgFileBlacklist = array();
+$wgMimeTypeBlacklist= array();
+$wgDisableUploadScriptChecks = true;
+$wgEnableUploads= true;
+$wgGenerateThumbnailOnParse = true;//if false you will break thumbs
+$wgUploadDirectory = $IP . '/images/';
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## require_once("$IP/extensions/UploadLocal/UploadLocal.php");
+## $wgUploadLocalDirectory = $IP . '/files';
+
+# NEWS
+wfLoadExtension( 'RSS' );
+$wgRSSUrlWhitelist = array( '*' );
+$wgRSSAllowLinkTag=true;
+
+// No longer works with MW 1.28 - rlpowell
+// require_once( "$IP/extensions/RandomText/random.php" );
+
+//require_once("$IP/extensions/News/News.php");
+
+// DISABLED PER https://github.com/lojban/lmw/issues/1
+//require_once( 'extensions/Wikilog/Wikilog.php' );
+//Wikilog::setupBlogNamespace( 100 );
+
+# FORUM
+// DISABLED PER https://github.com/lojban/lmw/issues/1
+//annotating. Try to emulate Google Docs commenting here using various extensions:
+//require_once("$IP/extensions/Annotator/Annotator.php");
+//require_once("$IP/extensions/WikiForum/WikiForum.php");
+//$wgWikiForumAllowAnonymous=true;
+//$wgGroupPermissions['*']['wikiforum-moderator'] = false;
+//$wgGroupPermissions['*']['wikiforum-admin'] = false;
+//$wgGroupPermissions['user']['wikiforum-moderator'] = true;
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## require_once("$IP/extensions/SocialProfile/SocialProfile.php");
+## $wgUserProfileDisplay['friends'] = true;
+## $wgUserProfileDisplay['foes'] = true;
+## $wgUserBoard = true;
+## $wgUserProfileDisplay['board'] = true;
+## $wgUserProfileDisplay['stats'] = true;
+## $wgFriendingEnabled = true;
+
+##Flow
+/*
+ * If index rebuilds fail, uncomment this:
+ *
+require_once "$IP/extensions/Flow/Flow.php";
+ */
+/*
+require_once "$IP/extensions/Echo/Echo.php";
+require_once "$IP/extensions/Thanks/Thanks.php";
+$wgFlowContentFormat = 'html';
+$wgFlowEditorList = array( 'visualeditor', 'none' );
+$wgFlowOccupyPages = array ( );
+$wgFlowOccupyNamespaces = array( );
+$wgFlowOccupyPages = array ( 'Talk:Main Page', 'Mywiki talk:WikiProject Flow', 'Talk:Flow QA' );
+$wgFlowOccupyNamespaces = array( NS_USER_TALK );
+*/
+
+##WEBCHAT
+// DISABLED PER https://github.com/lojban/lmw/issues/1
+// require_once("$IP/extensions/WebChat/WebChat.php");
+// IRC Server to connect to, not required when using the freenodeChat web client.
+// $wgWebChatServer  = 'irc.freenode.net';
+// Channel to connect to.
+// $wgWebChatChannel = '#jbosnu,#ckule,#lojban';
+// Which web chat client to use, 'freenodeChat' is required when connecting to freenode,
+// but 'Mibbit' can be used for other networks.
+// $wgWebChatClient = 'freenodeChat';
+
+
+#Editor
+//require_once( "$IP/extensions/CharInsert/CharInsert.php" );
+## VisualEditor + Parsoid:
+# require_once("$IP/extensions/VisualEditor/VisualEditor.php");
+// By default, VE is only enabled in NS_MAIN
+# $wgVisualEditorNamespaces = array( NS_MAIN, NS_TALK, NS_USER, NS_USER_TALK, NS_IMAGE, NS_CATEGORY);
+// Enable by default for everybody
+# $wgDefaultUserOptions['visualeditor-enable'] = 1;
+// Don't allow users to disable it
+# $wgHiddenPrefs[] = 'visualeditor-enable';
+// OPTIONAL: Enable VisualEditor's experimental code features
+//$wgVisualEditorEnableExperimentalCode = true;
+// URL to the Parsoid instance
+// MUST NOT end in a slash due to Parsoid bug
+# $wgVisualEditorParsoidURL = 'http://localhost:9999';
+// Interwiki prefix to pass to the Parsoid instance
+// Parsoid will be called as $url/$prefix/$pagename
+# $wgVisualEditorParsoidPrefix = 'localhost';
+// List of skins VisualEditor integration supports
+# $wgVisualEditorSupportedSkins = array( 'vector', 'apex', 'monobook', 'minerva', 'metrolook' );
+// Whether to enable the (experimental for now) TOC widget
+# $wgVisualEditorEnableTocWidget = false;
+// Whether to show the "welcome to the beta" dialog the first time a user uses VisualEditor
+# $wgVisualEditorShowBetaWelcome = false;
+
+
+#SEARCH
+//require_once( "$IP/extensions/OpenSearchXml/OpenSearchXml.php" );
+#Set default searching
+$wgNamespacesToBeSearchedDefault = array(
+        NS_MAIN =>           true,
+        NS_TALK =>           true,
+        NS_USER =>           true,
+        NS_USER_TALK =>      true,
+        NS_PROJECT =>        false,
+        NS_PROJECT_TALK =>   false,
+        NS_FILE =>           true,
+        NS_FILE_TALK =>      true,
+        NS_MEDIAWIKI =>      false,
+        NS_MEDIAWIKI_TALK => false,
+        NS_TEMPLATE =>       false,
+        NS_TEMPLATE_TALK =>  false,
+        NS_HELP =>           false,
+        NS_HELP_TALK =>      false,
+        NS_CATEGORY =>       true,
+        NS_CATEGORY_TALK =>  true
+);
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## # PAGE MANAGEMENT
+## ini_set( 'max_input_vars', 3000);//for ReplaceText
+## require_once( "$IP/extensions/ReplaceText/ReplaceText.php" );
+## //require_once ( "$IP/extensions/MassEditRegex/MassEditRegex.php" );
+## //$wgGroupPermissions['sysop']['masseditregex'] = true; // Allow administrators to use Special:MassEditRegex
+## //$wgGroupPermissions['massedit']['masseditregex'] = true; // Create 'massedit' group where members can use Special:MassEditRegex without being sysops
+## //require_once("$IP/extensions/DeleteOldRevisions2/DeleteOldRevisions2.php");//security issues with this extension
+##
+## // DISABLED PER https://github.com/lojban/lmw/issues/1
+## //require_once("$IP/extensions/DeleteBatch/DeleteBatch.php");
+##
+## require_once("$IP/extensions/Renameuser/Renameuser.php");
+## //include_once("$IP/extensions/AdminLinks/AdminLinks.php");
+## //require_once("$IP/extensions/PageAttachment/SetupExtension.php");//Enable it back when it starts to support localisation
+##
+##
+## #WIDGETS
+## //$wgRawHtml = true; // very dangerous! please don't add the content unless it's of utter importance
+## //require_once( "$IP/extensions/HTMLets/HTMLets.php" );
+## //$wgHTMLetsDirectory = "$IP/htmlets";
+## require_once("$IP/extensions/Widgets/Widgets.php");
+## $wgGroupPermissions['user']['editwidgets'] = true;
+## /*require_once( "$IP/extensions/GoogleAdSense/GoogleAdSense.php" );
+## $wgGoogleAdSenseClient = 'ca-pub-1161714373457356';
+## $wgGoogleAdSenseSlot = '7612993623';
+## $wgGoogleAdSenseID = 'First for LMW';
+## $wgGoogleAdSenseAnonOnly = true;
+## // Width of the AdSense box, specified in your AdSense account
+## $wgGoogleAdSenseWidth  = 120;
+## // Height of the AdSense box, specified in your AdSense account
+## $wgGoogleAdSenseHeight = 600;
+## */
+
+// Needed for MobileFrontend
+$wgMFDefaultSkinClass = 'SkinVector';
+
+$wgGroupPermissions['*']['edit'] = false;
+$wgGroupPermissions['user']['edit'] = true;
+$wgGroupPermissions['sysop']['edit'] = true;
+$wgGroupPermissions['*']['create'] = false;
+$wgGroupPermissions['user']['create'] = true;
+$wgGroupPermissions['sysop']['create'] = true;
+
+##confirm account:
+require_once "$IP/extensions/ConfirmAccount/ConfirmAccount.php";
+$wgGroupPermissions['user']['createaccount'] = true;
+$wgConfirmAccountContact = 'thelogicallanguagegroup@gmail.com';
+$wgGroupPermissions['bureaucrat']['confirmaccount-notify'] = true;
+$wgMakeUserPageFromBio = false;
+$wgAutoWelcomeNewUsers = false;
+$wgConfirmAccountRequestFormItems = array(
+        'UserName'        => array( 'enabled' => true ),
+        'RealName'        => array( 'enabled' => false ),
+        'Biography'       => array( 'enabled' => false, 'minWords' => 3 ),
+        'AreasOfInterest' => array( 'enabled' => false ),
+        'CV'              => array( 'enabled' => false ),
+        'Notes'           => array( 'enabled' => true ),
+        'Links'           => array( 'enabled' => false ),
+        'TermsOfService'  => array( 'enabled' => false ),
+);
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## ##delete accounts
+## wfLoadExtension( 'UserMerge' );
+## // By default nobody can use this function, enable for bureaucrat?
+## $wgGroupPermissions['bureaucrat']['usermerge'] = true;
+## // optional: default is array( 'sysop' )
+## $wgUserMergeProtectedGroups = array();
+
+
+#GOOGLE ANALYTICS
+/*require_once "$IP/extensions/googleAnalytics/googleAnalytics.php";
+// Replace xxxxxxx-x with YOUR GoogleAnalytics UA number
+$wgGoogleAnalyticsAccount = "UA-45171210-1";
+// Optional Variables (both default to true)
+$wgGoogleAnalyticsIgnoreSysops = true;
+$wgGoogleAnalyticsIgnoreBots = true;
+//$wgGoogleAnalyticsIgnoreUsers=true;//only for modified extension
+// If you use AdSense as well and have linked your accounts, set this to true to enable tracking
+$wgGoogleAnalyticsAddASAC = false;*/
+// require_once "$IP/extensions/UniversalAnalyticsIntegration/UniversalAnalyticsIntegration.php";
+// Google Universal Analytics account id (e.g. "UA-12345678-1")
+$wgGoogleAnalyticsAccount = "UA-45171210-1";
+// HTML code for other web analytics (can be used along with Google Universal Analytics)
+$wgGoogleAnalyticsOtherCode = "";
+// Do NOT include web analytics code in any pages displayed to sysops (exclude sysops from web analytics).
+$wgGoogleAnalyticsIgnoreSysops = true;
+// Do NOT include web analytics code in any pages displayed to bots (exclude bots from web analytics).
+$wgGoogleAnalyticsIgnoreBots = true;
+// Do NOT include web analytics code in any pages displayed to any logged in users (exclude all users from web analytics).
+$wgGoogleAnalyticsIgnoreAllUsers = false;
+// It is possible to use 'noanalytics' permission to exclude specific groups from web analytics.
+// Array with NUMERIC namespace IDs where web analytics code should NOT be included.
+$wgGoogleAnalyticsIgnoreNsIDs = array();
+// Array with page names (see magic word {{FULLPAGENAME}}) where web analytics code should NOT be included.
+$wgGoogleAnalyticsIgnorePages = array();
+
+##Google Universal Analytics
+#require_once "$IP/extensions/GoogleTagManager/GoogleTagManager.php";
+// Replace GTM-XXXXXX with your Google Tag Manager container ID
+#$wgGoogleTagManagerContainerID = "GTM-MTCB68";
+
+# EXPORT AS PDF/Word
+#require_once("$IP/extensions/PdfExport/PdfExport.php");
+
+## Define only one of the following backends:
+
+# PrinceXML
+#$wgPdfExportPrincePath = '/usr/bin/prince'; // Path to the PrinceXML binary
+#$wgPdfExportPrincePhpInterface = $IP . '/extensions/PdfExport/prince.php'; // Path to the prince.php file from the prince website.
+
+# MWLib
+#$wgPdfExportMwLibPath = '/usr/local/bin/mw-render'; // Path to the mw-render binary
+
+# MPdf
+#$wgPdfExportMPdf = $IP . '/extensions/PdfExport/mpdf/mpdf.php'; // Path to the main mPDF.php file
+
+# DomPDF
+#$wgPdfExportDomPdfConfigFile = $IP . '/extensions/PdfExport/dompdf/dompdf_config.inc.php'; // Path to the DomPdf config file
+
+# HTMLDoc
+#$wgPdfExportHtmlDocPath = '/usr/local/bin/htmldoc';
+
+/*require_once( "$IP/extensions/Collection/Collection.php" );
+$wgCollectionFormats = array(
+    'rl' => 'PDF', # enabled by default
+    'odf' => 'ODT',
+    'docbook' => 'DocBook XML',
+    'xhtml' => 'XHTML 1.0 Transitional',
+    'epub' => 'e-book (EPUB)',
+    //'zim' => 'Kiwix (OpenZIM)',
+);
+$wgPdfExportAttach = true;
+//require_once "$IP/extensions/DocExport/DocExport.php";
+$egDocexportCleanHtmlParams = false;
+include_once("$IP/extensions/DataTransfer/DataTransfer.php");
+$wgGroupPermissions['user']['datatransferimport'] = true;
+*/
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## #MULTILINGUAL WIKI
+## $EXT = "$IP/extensions";
+## $wgExtensionAssetsPath = "{$wgScriptPath}/../extensions";
+## require_once( "$EXT/Babel/Babel.php" );
+##
+## require_once( "$EXT/cldr/cldr.php" );
+##
+## //require_once( "$EXT/CleanChanges/CleanChanges.php" );
+## $wgCCTrailerFilter = true;
+## $wgCCUserFilter = false;
+## $wgDefaultUserOptions['usenewrc'] = 1;
+##
+## require_once( "$EXT/LocalisationUpdate/LocalisationUpdate.php" );
+## $wgLocalisationUpdateDirectory = "$IP/cache";
+##
+## require_once( "$EXT/Translate/Translate.php" );
+## $wgGroupPermissions['*']['translate'] = true;
+## $wgGroupPermissions['*']['translate-messagereview'] = true;
+## $wgGroupPermissions['*']['translate-groupreview'] = true;
+## $wgGroupPermissions['*']['translate-import'] = true;
+## $wgGroupPermissions['*']['pagetranslation'] = true;
+## $wgGroupPermissions['*']['translate-manage'] = true;
+## $wgTranslateDocumentationLanguageCode = 'qqq';
+## $wgExtraLanguageNames['qqq'] = 'Message documentation'; # No linguistic content. Used for documenting messages
+##
+## require_once( "$EXT/UniversalLanguageSelector/UniversalLanguageSelector.php" );
+## $wgLoginLanguageSelector=true;//must be important for saving the deteced language while tregistering. not tested
+## $wgULSGeoService = true;
+## $wgULSEnable = true;
+## $wgULSAnonCanChangeLanguage = false;
+## $wgULSPosition = 'none';
+
+//for autotranslating sidebar elements. I'd suggest simply using Mediaiwki: namespace pages instead.
+/*$wgTblePageTranslation = true;
+ranslateCC['wiki-sidebar'] = 'addSidebarMessageGroup';
+function addSidebarMessageGroup( $id ) {
+        $mg = new WikiMessageGroup( $id, 'sidebar-messages' );
+        $mg->setLabel( 'Sidebar' );
+        $mg->setDescription( 'Messages used in the sidebar of this wiki' );
+        return $mg;
+}*/
+
+## ## REMOVED FOR MW 1.34 UPGRADE 1 Feb 2020
+##
+## #QUIZ
+## require_once("$IP/extensions/Quiz/Quiz.php");
+## $egMWQuizzerAdmins = array('WikiSysop');
+## //!require_once('extensions/mediawikiquizzer/mediawikiquizzer.php');
+## //!MediaWikiQuizzer::setupNamespace(104); // 104 - ????????? ?????? ???????????? ????
+## #Poll/Voting
+## //!require_once "$IP/extensions/AJAXPoll/AJAXPoll.php";
+## //!require_once( "$IP/extensions/SecurePoll/SecurePoll.php" );
+## //require_once( "$IP/extensions/QPoll/qp_user.php" );
+## //!require_once "$IP/extensions/Poll/Poll.php";
+## //require_once("$IP/extensions/BucketVoting/BucketVoting.php");
+## //$wgBucketVoting_admingroup="sysop";
+
+# Debug LMW:
+/*
+$wgShowExceptionDetails = true;
+$wgShowDebug=true;
+error_reporting( -1 );
+ini_set( 'display_errors', 1 );
+*/
+
+# EmbedVideo
+#old version: require_once( "$IP/extensions/EmbedVideo/EmbedVideo.php" );
+#disabled due to too much client side BS: wfLoadExtension( 'EmbedVideo' );
+
+# NON SORTED, disabled
+//require_once( "$IP/extensions/FileSystemListing/FileSystemListing.php" );
+//require_once("$IP/extensions/DirList/DirList.php");//disabled. Crashes Parsoid!!!
+//require_once( "$IP/extensions/ArticleComments/ArticleComments.php" );
+//require_once( "$IP/extensions/UserAdmin/UserAdmin.php" );
+//require_once( "$IP/extensions/Gadgets/Gadgets.php" );
+//require_once("$IP/extensions/GraphViz/GraphViz.php");
+//require_once( "$IP/extensions/WYSIWYG/WYSIWYG.php" );
+//require_once("$IP/extensions/SiteGraph/SiteGraph.php");
+
+$wgShowExceptionDetails = true;
+
+--Q68bSM7Ycu6FN28Q--
+
