@@ -1,4 +1,4 @@
-# mail/lojban-list thread 728fad28775e-what's_going_with_cloudflare_and_caching_and_su | root 20200206062919.gu26741@stodi.digitalkingdom.org | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 728fad28775e-what's_going_with_cloudflare_and_caching_and_su | root 20200206062919.gu26741@stodi.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2020-02-06T06:29:19Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20200206062919.gu26741@stodi.digitalkingdom.org | mail/lojban-list/cur/1580970559.728fad28775e5fbd.jbomohi:2,S
 Some of you have noticed problems with dynamic content on lojban.org
@@ -63,4 +63,107 @@ Thanks for any help.
 You received this message because you are subscribed to the Google Groups "lojban" group.
 To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/20200206062919.GU26741%40stodi.digitalkingdom.org.
+
+
+=== 2 | 2020-02-06T07:49:33Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20200206074933.gv26741@stodi.digitalkingdom.org | mail/lojban-list/cur/1580975373.da77329115d03821.jbomohi:2,S
+On Wed, Feb 05, 2020 at 10:29:19PM -0800, Robin Lee Powell wrote:
+> Some of you have noticed problems with dynamic content on lojban.org
+> now that we've started using CloudFlare.  I haven't been able to
+> figure out how to fix this, so here's what's going on; maybe
+> somebody else will have ideas.
+> 
+> So the goal of CloudFlare, primarily, was to make it so that if my
+> server went down, the site would be basically fine.  This we have
+> acheived.
+> 
+> However, to do so, I had to use brute force.  Here's our CloudFlare
+> page rules:
+> 
+> *lojban.org/*&*          Cache Level: Bypass
+> *lojban.org/*edit*       Cache Level: Bypass
+> *lojban.org/*Special:*  Cache Level: Bypass
+> *lojban.org/*Talk:*     Cache Level: Bypass
+> *lojban.org/*           Browser Cache TTL: 30 minutes, Always Online: On, Cache Level: Cache Everything, Edge Cache TTL: 2 hours, Origin Cache Control: Off
+> 
+> That last one is a very large hammer that says "just cache the hell
+> out of everything".
+> 
+> The reason I need that hammer is that mediawiki is returning
+> absurdly wrong caching headers.  Here's an example that entirely
+> bypasses CloudFlare:
+> 
+> $ curl -k -v -H 'Host: mw.lojban.org' -L https://jukni.lojban.org/papri/pronunciation 2>&1 | less 
+> [snip]
+> < HTTP/1.1 200 OK
+> < Date: Thu, 06 Feb 2020 06:26:31 GMT
+> < Server: Apache/2.4.38 (Debian)
+> < X-Powered-By: PHP/7.3.14
+> < X-Content-Type-Options: nosniff
+> < Content-language: en
+> < Vary: Accept-Encoding,Cookie
+> < Expires: Thu, 01 Jan 1970 00:00:00 GMT
+> < Cache-Control: private, must-revalidate, max-age=0
+> 
+> ^^ That.   That Cache-Control line is absurd, and effectively
+> completely disableds CloudFlare.
+
+FWIW, I turned the test site on at , for example ,
+http://mw-test.lojban.org/papri/Pronunciation (which is a very
+simple, static page).
+
+If you look at the headers there you'll see:
+
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+
+And below is the entire LocalSettings.php file for the test site; as
+you can see it's absurdly simple.
+
+So, again, I have no idea why mediawiki is saying not to cache the
+pages ever.
+
+Also, $wgUseSquid = true; makes no difference.
+
+- ------------
+
+$ cat /var/www/mediawiki/LocalSettings.php | grep -v '^#'
+<?php
+
+if ( !defined( 'MEDIAWIKI' ) ) {
+        exit;
+}
+
+
+$wgSitename      = "Lojban";
+$wgMetaNamespace = "Lojban";
+
+$wgScriptPath       = "";
+$wgScriptExtension  = ".php";
+$wgArticlePath = "/papri/$1";
+//$wgArticlePath = "/wiki/$1";  # Virtual path. This directory MUST be different from the one used in $wgScriptPath
+
+$wgServer           = "http://mw-test.lojban.org";
+$wgCanonicalServer  = "http://mw-test.lojban.org";
+
+$wgStylePath        = "$wgScriptPath/skins";
+
+$wgDBtype           = "mysql";
+$wgDBserver         = "jukni:11036";  # Not 'localhost'; that will try to do a socket connection, instead of TCP
+$wgDBname           = "mediawiki";
+$wgDBuser           = "root";
+$wgDBpassword       = "[snip]";
+
+$wgDBprefix         = "";
+
+$wgDBTableOptions   = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
+
+$wgDBmysql5 = true;
+
+- ------------
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/20200206074933.GV26741%40stodi.digitalkingdom.org.
+
 
