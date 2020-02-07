@@ -1,4 +1,4 @@
-# mail/lojban-list thread 728fad28775e-what's_going_with_cloudflare_and_caching_and_su | root 20200206062919.gu26741@stodi.digitalkingdom.org | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 728fad28775e-what's_going_with_cloudflare_and_caching_and_su | root 20200206062919.gu26741@stodi.digitalkingdom.org | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2020-02-06T06:29:19Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20200206062919.gu26741@stodi.digitalkingdom.org | mail/lojban-list/cur/1580970559.728fad28775e5fbd.jbomohi:2,S
 Some of you have noticed problems with dynamic content on lojban.org
@@ -166,4 +166,117 @@ You received this message because you are subscribed to the Google Groups "lojba
 To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/20200206074933.GV26741%40stodi.digitalkingdom.org.
 
+
+
+=== 3 | 2020-02-07T12:58:58Z | "Mike S." <maikxlx@gmail.com> | caoywwb18qpfalowjosc-jxbiepdj1e1j35epehcvqvmupi1=hw@mail.gmail.com | mail/lojban-list/cur/1581080338.614958bc77f5abc8.jbomohi:2,S
+On Thu, Feb 6, 2020 at 1:29 AM Robin Lee Powell <rlpowell@digitalkingdom.org>
+wrote:
+
+> Some of you have noticed problems with dynamic content on lojban.org
+> now that we've started using CloudFlare.  I haven't been able to
+> figure out how to fix this, so here's what's going on; maybe
+> somebody else will have ideas.
+>
+> So the goal of CloudFlare, primarily, was to make it so that if my
+> server went down, the site would be basically fine.  This we have
+> acheived.
+>
+
+Judging from what I saw during the last outage, I believe Cloudflare is
+caching only pages that have been requested at least once. Assuming I am
+right about that, I don't know if there is a way to make Cloudflare cache
+the whole site without clicking through every page on the Wiki.  By the
+way, I don't care about this issue since the site is up most of the time
+anyway, but since the whole point of the exercise is to cache pages and
+that doesn't necessarily happen, I thought I'd mention it!
+
+As far as the main issue, I can only guess.  It might have something to do
+with an extension hijacking the Cache-Control header, but I don't know.
+
+At any rate, your bypass rule for talk pages seems to be working okay.
+Since we don't know what the problem is, I suggest the following for a temp
+fix --  Please add the following rules in the proper location:
+
+*lojban.org/*LFK*          Cache Level: Bypass
+*lojban.org/*[bypasscache]*          Cache Level: Bypass
+
+The first line will help the new committee work on their pages.  The second
+line will allow a person to work on an arbitrary page without the cache.
+When the page is finished, it can then be moved to the correct location.
+
+I *believe* these rules will be sufficient for the time being and get you
+off the hook.  Your help is very much appreciated!.
+
+-Mike
+
+
+
+
+>
+> However, to do so, I had to use brute force.  Here's our CloudFlare
+> page rules:
+>
+> *lojban.org/*&*          Cache Level: Bypass
+> *lojban.org/*edit*       Cache Level: Bypass
+> *lojban.org/*Special:*  Cache Level: Bypass
+> *lojban.org/*Talk:*     Cache Level: Bypass
+> *lojban.org/*           Browser Cache TTL: 30 minutes, Always Online: On,
+> Cache Level: Cache Everything, Edge Cache TTL: 2 hours, Origin Cache
+> Control: Off
+>
+> That last one is a very large hammer that says "just cache the hell
+> out of everything".
+>
+> The reason I need that hammer is that mediawiki is returning
+> absurdly wrong caching headers.  Here's an example that entirely
+> bypasses CloudFlare:
+>
+> $ curl -k -v -H 'Host: mw.lojban.org' -L
+> https://jukni.lojban.org/papri/pronunciation 2>&1 | less
+> [snip]
+> < HTTP/1.1 200 OK
+> < Date: Thu, 06 Feb 2020 06:26:31 GMT
+> < Server: Apache/2.4.38 (Debian)
+> < X-Powered-By: PHP/7.3.14
+> < X-Content-Type-Options: nosniff
+> < Content-language: en
+> < Vary: Accept-Encoding,Cookie
+> < Expires: Thu, 01 Jan 1970 00:00:00 GMT
+> < Cache-Control: private, must-revalidate, max-age=0
+>
+> ^^ That.   That Cache-Control line is absurd, and effectively
+> completely disableds CloudFlare.
+>
+> I have tested this by talking *directly* to the mediawiki server,
+> no SSL, no proxies, no nothing; it's the same.
+>
+> Our LocalSettings.php file is attached.
+>
+> I don't care if the solution is on the mediawiki side or the
+> CloudFlare side, but at this point I've sunk more time into this
+> than I can afford and I've come up empty, so I'd appreciate any
+> ideas you might have.
+>
+> Having said that, if you're going to point me at
+> https://www.mediawiki.org/wiki/Manual:CloudFlare#Integration_with_MediaWiki
+> , you'll need to tell me exactly which part you think is relevant,
+> and why.  Most of that page is about making X-Forwarded-For: do the
+> right thing, which is totally irrelevant to this problem.
+>
+> Thanks for any help.
+>
+> --
+> You received this message because you are subscribed to the Google Groups
+> "lojban" group.
+> To unsubscribe from this group and stop receiving emails from it, send an
+> email to lojban+unsubscribe@googlegroups.com.
+> To view this discussion on the web visit
+> https://groups.google.com/d/msgid/lojban/20200206062919.GU26741%40stodi.digitalkingdom.org
+> .
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/CAOYwWb18QpfALOwJoSc-JxbiePDj1e1J35ePeHCVQVMUpi1%3DHw%40mail.gmail.com.
 
