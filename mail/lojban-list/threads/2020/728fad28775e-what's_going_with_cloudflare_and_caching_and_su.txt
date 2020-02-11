@@ -1,4 +1,4 @@
-# mail/lojban-list thread 728fad28775e-what's_going_with_cloudflare_and_caching_and_su | root 20200206062919.gu26741@stodi.digitalkingdom.org | 8 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 728fad28775e-what's_going_with_cloudflare_and_caching_and_su | root 20200206062919.gu26741@stodi.digitalkingdom.org | 9 messages | rendered by jbomohi mail-v1
 
 === 1 | 2020-02-06T06:29:19Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20200206062919.gu26741@stodi.digitalkingdom.org | mail/lojban-list/cur/1580970559.728fad28775e5fbd.jbomohi:2,S
 Some of you have noticed problems with dynamic content on lojban.org
@@ -510,7 +510,51 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/CAOYwWb3JDuQvcX-e6SSKZhAt3Nrc5ss26D8fP3Sz%2B2YPNpgZJg%40mail.gmail.com.
 
 
-=== 7 | 2020-02-07T17:35:34Z | "la .eris." <wizkarim@gmail.com> | d444e62c-2706-4bd5-ba06-84da52b2c69c@googlegroups.com | mail/lojban-list/cur/1581096934.fcb1e6542be8a465.jbomohi:2,S
+=== 7 | 2020-02-11T23:43:50Z | "Mike S." <maikxlx@gmail.com> | caoywwb2d6h0xb+jsx36z6q0_epa2qj-d4t=rfnh=3aji9ev5ha@mail.gmail.com | mail/lojban-list/cur/1581464630.9e135e873ac0037d.jbomohi:2,S
+On Tue, Feb 11, 2020 at 4:04 PM Mike S. <maikxlx@gmail.com> wrote:
+>
+>
+> I was sorta wondering why it was done the way it was done.  Are you using
+CloudFlare partly to minimize the load on your server?
+>
+> Also, does adding a "Bypass" rule for a page deactivate the cache
+entirely for that page? (That would obviously be very bad for some pages.)
+>
+> If the answer to both questions is no, why not bypass all dynamically
+generated pages like so:
+>
+> *lojban.org/papri/*          Cache Level: Bypass
+> *lojban.org/*php*          Cache Level: Bypass
+> *lojban.org/*           Browser Cache TTL: 30 minutes, Always Online: On,
+Cache Level: Cache Everything, Edge Cache TTL: 2 hours, Origin Cache
+Control: Off
+>
+> ... assuming, again, the caching mechanism continues to work, which we
+could test in order to be sure.
+>
+> The first line makes the whole Wiki live when accessed through the short
+URL.  The second any pages directly invoking php, which includes page edits
+(which need to be bypassed).
+
+I don't think this setup is going to work based on my reading of the docs
+at
+https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-
+which says pretty plainly
+
+Cache Level - Bypass - Cloudflare does not cache.
+
+There must be a way to do it though.  It's an obvious use case.  I'll read
+the docs more a little later.  Are you using the free plan or a paid one?
+
+-Mike
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/CAOYwWb2d6H0xB%2BJSx36Z6Q0_Epa2Qj-D4t%3DRFnh%3D3AJi9eV5hA%40mail.gmail.com.
+
+
+=== 8 | 2020-02-07T17:35:34Z | "la .eris." <wizkarim@gmail.com> | d444e62c-2706-4bd5-ba06-84da52b2c69c@googlegroups.com | mail/lojban-list/cur/1581096934.fcb1e6542be8a465.jbomohi:2,S
 Personally, this is seeming like more trouble than it's worth. Pages keep 
 displaying improperly (looking like I'm not logged in, or like someone else 
 is logged in). I'd prefer to just have the site down when your server is 
@@ -590,7 +634,7 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/d444e62c-2706-4bd5-ba06-84da52b2c69c%40googlegroups.com.
 
 
-=== 8 | 2020-02-11T07:07:57Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20200211070757.gd2023@stodi.digitalkingdom.org | mail/lojban-list/cur/1581404877.095f6668e6810f97.jbomohi:2,S
+=== 9 | 2020-02-11T07:07:57Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20200211070757.gd2023@stodi.digitalkingdom.org | mail/lojban-list/cur/1581404877.095f6668e6810f97.jbomohi:2,S
 
 
 On Fri, Feb 07, 2020 at 09:35:34AM -0800, la .eris. wrote:
