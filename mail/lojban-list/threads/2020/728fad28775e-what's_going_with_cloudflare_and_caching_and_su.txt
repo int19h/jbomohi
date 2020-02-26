@@ -1,4 +1,4 @@
-# mail/lojban-list thread 728fad28775e-what's_going_with_cloudflare_and_caching_and_su | root 20200206062919.gu26741@stodi.digitalkingdom.org | 9 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 728fad28775e-what's_going_with_cloudflare_and_caching_and_su | root 20200206062919.gu26741@stodi.digitalkingdom.org | 10 messages | rendered by jbomohi mail-v1
 
 === 1 | 2020-02-06T06:29:19Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20200206062919.gu26741@stodi.digitalkingdom.org | mail/lojban-list/cur/1580970559.728fad28775e5fbd.jbomohi:2,S
 Some of you have noticed problems with dynamic content on lojban.org
@@ -676,5 +676,95 @@ cache control headers.
 You received this message because you are subscribed to the Google Groups "lojban" group.
 To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/20200211070757.GD2023%40stodi.digitalkingdom.org.
+
+
+
+=== 10 | 2020-02-26T07:15:39Z | Robin Lee Powell <rlpowell@digitalkingdom.org> | 20200226071539.ge4720@stodi.digitalkingdom.org | mail/lojban-list/cur/1582701339.0f094d8ecd3ae52a.jbomohi:2,S
+How's the behaviour now?  You should be seeing that logging in gets
+you the live site without caching.
+
+On Fri, Feb 07, 2020 at 09:35:34AM -0800, la .eris. wrote:
+> Personally, this is seeming like more trouble than it's worth. Pages keep 
+> displaying improperly (looking like I'm not logged in, or like someone else 
+> is logged in). I'd prefer to just have the site down when your server is 
+> down and have everything work properly the rest of the time.
+> 
+> Incidentally, how do the Wikimedia Foundation wikis handle caching?
+> 
+> -Aris (aka. bookofportals)
+> 
+> On Wednesday, February 5, 2020 at 10:29:23 PM UTC-8, Robin Lee Powell wrote:
+> >
+> > Some of you have noticed problems with dynamic content on lojban.org 
+> > now that we've started using CloudFlare.  I haven't been able to 
+> > figure out how to fix this, so here's what's going on; maybe 
+> > somebody else will have ideas. 
+> >
+> > So the goal of CloudFlare, primarily, was to make it so that if my 
+> > server went down, the site would be basically fine.  This we have 
+> > acheived. 
+> >
+> > However, to do so, I had to use brute force.  Here's our CloudFlare 
+> > page rules: 
+> >
+> > *lojban.org/*&*          Cache Level: Bypass 
+> > *lojban.org/*edit*       Cache Level: Bypass 
+> > *lojban.org/*Special:*  Cache Level: Bypass 
+> > *lojban.org/*Talk:*     Cache Level: Bypass 
+> > *lojban.org/*           Browser Cache TTL: 30 minutes, Always Online: On, 
+> > Cache Level: Cache Everything, Edge Cache TTL: 2 hours, Origin Cache 
+> > Control: Off 
+> >
+> > That last one is a very large hammer that says "just cache the hell 
+> > out of everything". 
+> >
+> > The reason I need that hammer is that mediawiki is returning 
+> > absurdly wrong caching headers.  Here's an example that entirely 
+> > bypasses CloudFlare: 
+> >
+> > $ curl -k -v -H 'Host: mw.lojban.org' -L 
+> > https://jukni.lojban.org/papri/pronunciation 2>&1 | less 
+> > [snip] 
+> > < HTTP/1.1 200 OK 
+> > < Date: Thu, 06 Feb 2020 06:26:31 GMT 
+> > < Server: Apache/2.4.38 (Debian) 
+> > < X-Powered-By: PHP/7.3.14 
+> > < X-Content-Type-Options: nosniff 
+> > < Content-language: en 
+> > < Vary: Accept-Encoding,Cookie 
+> > < Expires: Thu, 01 Jan 1970 00:00:00 GMT 
+> > < Cache-Control: private, must-revalidate, max-age=0 
+> >
+> > ^^ That.   That Cache-Control line is absurd, and effectively 
+> > completely disableds CloudFlare. 
+> >
+> > I have tested this by talking *directly* to the mediawiki server, 
+> > no SSL, no proxies, no nothing; it's the same. 
+> >
+> > Our LocalSettings.php file is attached. 
+> >
+> > I don't care if the solution is on the mediawiki side or the 
+> > CloudFlare side, but at this point I've sunk more time into this 
+> > than I can afford and I've come up empty, so I'd appreciate any 
+> > ideas you might have. 
+> >
+> > Having said that, if you're going to point me at 
+> > https://www.mediawiki.org/wiki/Manual:CloudFlare#Integration_with_MediaWiki 
+> > , you'll need to tell me exactly which part you think is relevant, 
+> > and why.  Most of that page is about making X-Forwarded-For: do the 
+> > right thing, which is totally irrelevant to this problem. 
+> >
+> > Thanks for any help. 
+> >
+> 
+> -- 
+> You received this message because you are subscribed to the Google Groups "lojban" group.
+> To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+> To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/d444e62c-2706-4bd5-ba06-84da52b2c69c%40googlegroups.com.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/20200226071539.GE4720%40stodi.digitalkingdom.org.
 
 
