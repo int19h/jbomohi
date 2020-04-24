@@ -1,4 +1,4 @@
-# mail/lojban-list thread 23348211c77e-where_is_the_latest%2Fofficial_peg_grammar%3F | root 86zhbyh1om.fsf@cmarib.ramside | 10 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 23348211c77e-where_is_the_latest%2Fofficial_peg_grammar%3F | root 86zhbyh1om.fsf@cmarib.ramside | 11 messages | rendered by jbomohi mail-v1
 
 === 1 | 2020-03-30T05:06:01Z | scope845hlang343jbo@icebubble.org | 86zhbyh1om.fsf@cmarib.ramside | mail/lojban-list/cur/1585544761.23348211c77e142a.jbomohi:2,S
 So, I see that the lojban.org Web site is now a Wiki (a cute term for a
@@ -437,5 +437,131 @@ make sense, I shall stop asking you to clarify what you mean.
 You received this message because you are subscribed to the Google Groups "lojban" group.
 To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/864ktfy15o.fsf%40cmarib.ramside.
+
+
+
+=== 11 | 2020-04-24T20:29:20Z | scope845hlang343jbo@icebubble.org | 86tv181vbz.fsf@cmarib.ramside | mail/lojban-list/cur/1587760160.1ac70df77b080d6e.jbomohi:2,S
+Bob LeChevalier <lojbab@lojban.org> writes:
+
+> On 4/14/2020 1:59 PM, scope845hlang343jbo@icebubble.org wrote:
+>> Gleki Arxokuna <gleki.is.my.name@gmail.com> writes:
+
+>> None of what you have writen here makes any sense to me.  What do you
+>> mean?
+>
+> As I said in my other answer (which I seem to have been sending only
+> to you and not to the list, so I will continue that way), the official
+
+Hm.  That reply of mine wasn't address to you, it was addressed to Gleki
+Arxokuna <gleki.is.my.name@gmail.com>.
+
+>> yet we still don't have a complete grammar
+>
+> The official YACC grammar in CLL is considered complete.
+
+I realize that the YACC is "considered" authoritative, but it is not
+complete.  For starters, it requires a separate lexer.  Neither the
+lexer nor parser are usable unless you're in an environment where you
+can run code written in C.  And, if you do get them to run, the results
+are not correct.  Neither elidable terminators nor magic words are
+handled correctly, and there is no formal specification (just narrative
+descriptions in the CLL) for how they should work.  For example, I have
+yet to see a parser which handles SA correctly.
+
+> I don't understand any PEG grammar; it is gobbledygook to me.
+
+PEG is fairly straightforward.  You just have to learn the operators
+used in the parsing expressions, and their precedences.
+
+> If a PEG formalization cannot be easily used by a real human being to
+> learn and use the language, more easily than the official YACC
+> version, the PEG formalization is pretty much useless.
+
+> But there is little real value in a PEG grammar that is merely
+> identical to the YACC specification, with no added functionality,
+> which is why provable equivalence isn't important enough to bother
+> with.
+
+No, no, there would be HUGE value in it!  A PEG formalization would be
+useful because (1) it would, finally, be a complete specification of
+Lojban orthography, morphology, and grammar; (2) it would, finally,
+provide proof that Lojban is unambiguous; (3) it would be readily
+portable to any computing system, using any programming language; and
+(4) it would provide parse trees that could be used to implement a
+variety of useful tools for processing Lojban text.
+
+Proving equivalence between the PEG and the YACC is vitally important
+because (A) there should be some way to be sure that PEG-based tools are
+designed and implemented correctly; and (B) if a PEG formulation is ever
+adopted as the official grammar, we would want to make sure it's fully
+compatible with the historical YACC version of the grammar.
+
+> It might be nice to have a lexer/parser that can operate on based on
+> an official formal grammar but not at the expense of someone being
+> able to actually use the formal grammar to learn the language.
+
+> I don't even like E-BNF, which many people apparently prefer to the
+> YACC grammar.
+
+The E-BNF is quite readable, although the E-BNF in the CLL has MANY
+errors in it.  I find the YACC almost completely unintelligible.  I only
+refer to the YACC when verifying or making corrections to the E-BNF.
+
+> There have been attempts to formalize the morphpology as an algorithm,
+> which my wife worked on with a couple other people.
+
+Yes, I know.  I remember talking with her about it at Logfest in 2006.
+Now 14 years later, I still haven't figured out what Lojban's morphology
+rules are supposed to be.  That's actually why I'm reading the PEG: to
+figure out Lojban's morphology rules.
+
+> started playing with PEG grammars.  Again, Nora's algorithm was "good
+> enough" in that it completely specified the rules, even if it didn't
+> match any formalization scheme.
+
+What we have isn't good enough, because it's an incomplete specification
+of Lojban morphology.  Aside from the PEG, there is no way to distiguish
+fu'ivla from lujvo, for instance.  There are a lot of constructs which
+could be classified either way, and the CLL doesn't provide enough rules
+to disambiguate those cases.
+
+> In the early oughts, we started trying to formalize the morphology in
+> a fixed algorithm, NOT in any schema such as YACC or PEG or even BNF,
+> and we reached a more or less satisfactory conclusion, though the
+
+Where might this alogrithm be documented?  (If you're referring to the
+lujvo-making alogrithm printed in the CLL, it's not complete.)
+
+> But no one was ever satisfied with any particular formalization, and
+> it has never been a big priority.
+
+I don't understand how formalizing the morphology CAN'T be an important
+priority; it's essential to proving the unambiguity of the language.
+
+> result was never officially approved because people were pursuing the
+> PEG approach by then.  Nora wrote a simplistic Turbo-Pascal program to
+> verify that algorithm matched human understanding (which is the
+
+Pascal code is not readily usable in modern computing environments, and
+can't readily be translated into rules which ARE useful in modern
+software.  Nor is it particularly readable, if one is trying to learn
+(decipher) the Lojban morphology rules.
+
+> Who is waiting?  There's probably no real market for anything more
+> sophisticated than we have now.  And the approval of "dotside" would
+
+Everyone, I think?  That's why there's so much interest in PEG
+formalizations.  What we have now is a collection of toys.  What we want
+is a collection of tools.  So far, all of our "tools" are really just
+assorted collections of hacks: cobbled-together bits of software which
+implement approximations of Lojban, each implemented for/in its own very
+specific computing environment.
+
+BTW, thank for your post RE: Jeff Prothero.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/86tv181vbz.fsf%40cmarib.ramside.
 
 
