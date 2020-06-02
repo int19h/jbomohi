@@ -1,0 +1,50 @@
+{{jbocre/en}}
+Expressing certain ideas such as "I like apples more than you like oranges" is tricky with '''zmadu'''. We can say '''lo ni mi nelci lo plise cu zmadu lo ni do nelci lo najnimre''', but there is redundancy in this sentence: we repeat the selbri '''nelci'''. A solution might be to introduce a new selbri based on '''zmadu''' dealing in ''binary'' relations instead of unary ones. A potential definition might be: "x1 is related to x2 by x5 (ka) more than x3 is related to x4 by x5 (ka) [by amount x6]". This is not only cumbersome because it has more places than '''zmadu''', but it also doesn't generalize to relations of higher arities. Instead, I propose a ''pattern'' interpretation of the (optional) '''ce'ai'''-prenex in a '''ka'''-abstraction. This interpretation allows expressing several complex ideas, with one application being to give a general solution to the above example problem.
+
+== ka-abstractions and the ce'ai-prenex ==
+Recall the identity '''ko'a ckaji lo ka ce'u broda''' = '''ko'a broda'''. This uses the "anonymous" bound variable '''ce'u''': each appearance of '''ce'u''' denotes a new slot in the property-abstraction being constructed. The slot numbering is ''lexical'', meaning that the x1 slot of the property is associated to the first '''ce'u''', the x2 slot is associated to the second '''ce'u''', and so on. Given that multiple occurrences of '''ce'u''' are distinct bound variables, it could be tricky to express a reflexive action such as "talking to oneself". One approach is to use '''goi''' as in '''mi ckaji lo ka ce'u goi ko'a tavla ko'a'''. The alternative, due to la latro'a, is to use the ce'ai-prenex: '''mi ckaji lo ka ko'a ce'ai ko'a ko'a tavla'''. In this syntax, '''ce'u''' is unused. Instead, variables appearing in the ce'ai-prenex are binders, and their order matters in the same way that '''ce'u''' appearance order matters. In case both a ce'ai-prenex and anonymous variables are used, then the anonymous variables are understood as positioned ''after'' all anonymous variables, e.g.
+
+: lo ka ko'a ko'e ce'ai ko'a ce'u ko'e zukte
+
+is equivalent to
+
+: lo ka ko'a ko'e ko'i ce'ai ko'a ko'i ko'e zukte
+
+which refers to a selbri equivalent to '''se te se zukte'''.
+
+== A pattern syntax for lambdas ==
+
+Given that '''ce'ai''' exists to formally bind variables in '''ka'''-abstractions, there is a natural extension to a syntax of ''patterns''. The most basic pattern is a variable, e.g. '''ko'a'''. More complex patterns are built from descriptions (using gadri) and connectives (especially '''ce'o''').
+
+=== Connective-based patterns ===
+
+Let's jump right in with an example using '''ce'o''',
+
+: mi ce'o do ckaji lo ka ko'a ce'o ko'e ce'ai ko'a ko'e rinsa
+
+The interpretation is '''mi do rinsa'''.
+
+The way pattern matching works is to ''line up'' the argument '''mi ce'o do''' against the pattern '''ko'a ce'o ko'e'''. Then '''mi'' fills '''ko'a''' and '''do''' fills '''ko'e'''. A natural thing to consider now is what happens in a nontrivial case, where the pattern and the argument don't obviously line up this way. Let's slightly rephrase the example.
+
+: mi'o ckaji lo ka ko'a ce'o ko'e ce'ai ko'a ko'e rinsa
+
+Here we use '''mi'o''' instead of '''mi ce'o do'''. So we line up '''mi'o''' against the pattern '''ko'a ce'o ko'e''', and this forces us to interpret '''mi'o''' as an ordered pair. There are two natural such interpretations: '''mi ce'o do''' and '''do ce'o mi'''. The effect is a ''universal reading'', so the whole statement claims
+
+: '''mi do rinsa''' and '''do mi rinsa'''
+
+More generally, when an argument can be decomposed in multiple ways to satisfy a pattern, then all decompositions are considered. Typically though, patterns and arguments are to be constructed to have exactly one meaning. To force an existential reading in this case, one can first convert '''mi'o''' to a sequence using '''vu'i''' (LAhE). This conversion operator gives an unspecified ordering, so '''vu'i mi'o ckaji lo ka ko'a ce'o ko'e ce'ai ko'a ko'e rinsa''' leaves it up to context whether the interpretation is '''mi do rinsa''' or '''do mi rinsa'''.
+
+Now that we understand '''ce'o''' patterns, we can say "I like apples more than you like oranges" using '''zmadu'''.
+
+: mi ce'o lo plise do ce'o lo najnimre cu zmadu lo ni ko'a ce'o ko'e ce'ai ko'a ko'e nelci
+
+Using the jargon of functional programming, '''lo ni ko'a ce'o ko'e ce'ai ko'a ko'e broda''' is said to ''uncurry'' the first two places of '''broda'''. To make this operation more convenient, we introduce [http://jbovlaste.lojban.org/dict/ka'oi the experimental MOI cmavo] '''ka'oi'''.
+
+=== Description-based patterns ===
+Although the original problem statement only motivated the development of connective-based patterns, in particular ones built from '''ce'o''', one can further extend the syntax and the semantics to include descriptions formed from gadri.
+
+Consider the pattern '''lo pendo be ko'a''' in the example
+: mi ckaji lo ka lo pendo be ko'a ce'ai ko'a tadni
+This says "My friend studies", albeit in a very roundabout way.
+
+Using the "lining up" interpretation strategy, we match '''mi''' with '''lo pendo be ko'a'''. This makes sense if in context, I am a friend of someone, and the variable '''ko'a''' is made to refer to that person. Using '''lo''' to form the pattern is what gives the contextual interpretation. Different gadri could give different interpretations, but I leave developing these new interpretations as future work.
