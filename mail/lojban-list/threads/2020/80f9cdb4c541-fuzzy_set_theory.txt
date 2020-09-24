@@ -1,0 +1,183 @@
+# mail/lojban-list thread 80f9cdb4c541-fuzzy_set_theory | root 26178faa-5071-42af-bb34-bd41c30cb274n@googlegroups.com | 1 messages | rendered by jbomohi mail-v1
+
+=== 1 | 2020-09-24T17:47:13Z | Corbin Simpson <mostawesomedude@gmail.com> | 26178faa-5071-42af-bb34-bd41c30cb274n@googlegroups.com | mail/lojban-list/cur/1600969633.80f9cdb4c5411c99.jbomohi:2,S
+
+coi
+
+la gleki asks in private communication whether I've figured out fuzzy set 
+theory semantics.
+
+# The boring parts
+
+What are truth values? We'll need to presume them in order to get started. 
+The truth values are a partially ordered collection with at least two 
+members, often called "true" and "false" or "top" and "bottom" or "1" and 
+"0". (A partial order is like a less-than-or-equal relation, but might not 
+relate all elements.) We require that "false" is less-than-or-equal to 
+"true".
+
+To do more with truth values, we also have conjunction and disjunction, 
+with the requirement that "false" absorbs conjunction and is a unit for 
+disjunction, and "true" absorbs disjunction and is a unit for conjunction. 
+In demonstrative terms, "false and X" should be "false", "false or X" 
+should be "X", "true or X" should be "true", and "true and X" should be 
+"X". We also want a negation which sends "true" to "false", "false" to 
+"true", is an involution, and obeys the De Morgan laws. By being 
+involutive, I mean that negated negation is just identity, and the De 
+Morgan laws are simple classical rules relating negation and 
+conjunction/disjunction.
+
+The Booleans are the typical truth values, with the typical multiplication 
+and addition for conjunction and disjunction, and the typical (only 
+possible) negation. Today, though, we'll consider the real numbers instead, 
+with 0 as false and 1 as true. We have our choice of conjunction and 
+disjunction (reader's exercise: Look up "t-norm") but we will choose 
+two-argument minimum and maximum. Since this is a t-norm, we satisfy De 
+Morgan's laws. The real numbers are big enough to do measure theory and 
+thus probability theory; we will want to take integrals later.
+
+To be aggressively concrete, here's some Python code.
+
+    zero = 0.0
+    one = 1.0
+    conjunction = lambda x, y: min(x, y)
+    disjunction = lambda x, y: max(x, y)
+    negation = lambda x: 1.0 - x
+
+What are sets? Classically: A set is a collection of elements. A fuzzy set 
+is a collection of elements with associated truth values for each element; 
+these associated values form a membership function on the set, sending each 
+element to its truth value. We can think of membership in a fuzzy set as 
+"graded" or "by degrees"; the question is not whether an element is a 
+member of a fuzzy set, but by how much an element is a member.
+
+In the traditional constructive sense, a set is a procedure for enumerating 
+elements. A fuzzy set enumerates a truth value alongside each element, 
+indicating the degree to which the element belongs to the set. When 
+disjunction is used to tally up the truth values per element, then we 
+recover the normal constructive notions of cardinality and membership. Note 
+that the question of membership is still as hard as before, but now there's 
+an additional question for each grade: Is the given element a member with 
+at least a truth value above the chosen grade? That is, constructively, "is 
+it ever at least half-true?" is as hard as "is it ever true?"
+
+What is negation? The complement of a fuzzy set has all of the normal 
+problems of asking what is not among its elements. Fuzzy set theory is 
+always defined relative to a universe of discourse. For Lojban, this has 
+amusing consequences. Suppose {mlatu} designates a fuzzy set (discarding 
+species for now). Then {na mlatu} would also designate a fuzzy set. Since I 
+am not a cat (with high probability) my grade in {na mlatu} must be quite 
+truthy, but {na} is an involution and so I am a member of {na na mlatu} == 
+{mlatu} with low but not-quite-zero probability.
+
+We might be able to fix this with first-order many-sorted logic, which 
+enforces type constraints on elements. This isn't really visible 
+classically, but constructively we could imagine that enumerating {mlatu} 
+will either include me with tiny/zero probability if we're using full 
+second-order logic, or never include me when using first-order many-sorted 
+logic. In the latter, there is a "sort of sets of cats" and I simply am not 
+of the correct type to be considered as a cat. (cf my earlier mail 
+"Difficult logical questions")
+
+Maybe this isn't a problem, though. After all, actually being completely 
+certain about something is well-known to be a problem which impedes 
+Bayesian reasoning, Cromwell's Rule. It is far safer to default to things 
+being almost certainly, but not quite false, when considering possibilities.
+
+What about relations? Everything immediately generalizes cleanly, but let's 
+spell it out. A fuzzy (binary) relation has, for each pair of related 
+elements, an associated truth value. Think of a relation as enumerating 
+rows of tuples; to make it fuzzy, we are appending a truth value onto each 
+tuple. Returning to {mlatu}, the fuzzy relation between mlatu1 and mlatu2 
+indicates the degree to which each given cat is of each species.
+
+(Category theory time! Let R be the real numbers and Rel the category of 
+sets and relations; the Goguen category Rel(R) has fuzzy relations as 
+objects and is monoidal closed (so that its arrows are also fuzzy 
+relations); under any choice of t-norm, we can proceed as normal. 
+Everything is obviously correct; just pipe the truth values through each 
+diagram and use disjunction to make everything commute.)
+
+Finally, set union and intersection are given by disjunction and 
+conjunction respectively on their truth values. Simple and sweet.
+
+# The bikeshed parts
+
+Lojban appears to already have {jei} set up to handle fuzziness. Simply 
+allow {du'u} to generalize to {jei} and we're done, right?
+
+Well... The first objection that I know of is that {jei} is not much used, 
+and so we have to have the typical discussion of whether or not formalism 
+and clarification are appropriate things to do. Maybe a different 
+abstractor should be used; maybe {du'u} should have a du'u3 for truth 
+values or probabilities; etc.
+
+A more interesting objection is that {du'u} and {jei} can't code for truth 
+values without somehow reducing all propositions down to truth values, e.g. 
+{lo du'u mi mlatu} is obviously just "false", while {lo jei mi mlatu} is 
+some small non-zero epsilon. However, this is reductive and not how truth 
+values actually work. Any rich-enough logic (say, that can express Peano 
+arithmetic) suffers Tarski's Undefinability and will have propositions 
+which simply do not have consistent truth values assigned. In other words, 
+the membership function can be partial. (cf "Difficult logical questions" 
+and constructivism)
+
+A deeper objection to the mere existing syntax comes from the idea of 
+"Boolean blindness", the sort of obliviousness to Booleans caused by 
+overexposure to classical logic. {li pa} and {li no} are poor ways to say 
+"true" and "false" in the symbolic sense. I don't have suggestions here, 
+just a highlight of the problem.
+
+Another problem that I don't have suggestions for handling is the inability 
+to talk about fuzzy selbri. There ought to be a BAI so that {lo broda BAI 
+li PA} performs some sort of graded selection and only considers those 
+broda1 which grade at least PA in membership/relation. But not only is 
+there no such BAI, there are not even any reasonable candidates among the 
+gismu for {fi'o} nonce tagging.
+
+Which gismu? {pacna} specifically predicts information not yet known to 
+pacna1; it's an agent making a prediction using a model. {cunso} describes 
+random variables with cunso3 being a probability distribution function 
+(PDF) rather than a fuzzy grade; it is possible to build random variables 
+from fuzzy sets but they are not the same thing. Both {pacna} and {cunso} 
+seem to require the passage of time, which is also a problem. {cu'o} and 
+{lakne} are possible candidates but also have the same problems with time.
+
+In the framing set up so far, la gleki's central question for me was 
+whether we can have a selbri with a structure like "x1 is an element of 
+fuzzy set x2 with probability/grade x3".
+
+We've covered some issues around this sort of selbri: Negation causes 
+impredicative quantification over all sorts of elements, and we can't just 
+obtain the selbri by adding a BAI to {cmima}. Another issue: Should this 
+selbri itself be "crisp"; that is, non-fuzzy? It's known that fuzzy logic 
+can't tell whether sets are crisp, so it might not matter. We can't even 
+tell if the set of truth values is crisp; there are usually uncomputable 
+real numbers, unless we're constructive and we use an axiom to force all 
+real numbers to be computable ala Turing.
+
+That said, I'll start the bikeshed by proposing {raucmi}, "c1 is an element 
+of fuzzy set c2 with membership grade g1 (g2=unity, g3=pa jei c1 cmima c2)" 
+which neatly does the minimum required.
+
+Finally, what if somebody doesn't want fuzzy logic? Then they can go back 
+to Boolean logic. Pick a threshold near 1, like 0.99. Then send all truth 
+values above 0.99 to "true", all values below 1 - 0.99 to "false", and 
+everything in the middle to "inconclusive". This is a standard three-valued 
+logic. When the threshold is 0.5, then two-valued Boolean logic is the 
+result. But we should stress that this is always an arbitrary choice rather 
+than a core feature of fuzzy logic; there's no way to force somebody to not 
+interpret {du'u} as {jei}.
+
+I hope that this clarifies fuzzy set theory a bit. As you can hopefully 
+see, most of the issues of set theory are inherited unchanged, and we get 
+many new difficult questions about probability theory. Indeed, the next 
+chapter would be to explore measures on fuzzy sets.
+
+mi'e la korvo .i di'ai
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/26178faa-5071-42af-bb34-bd41c30cb274n%40googlegroups.com.
+
