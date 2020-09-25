@@ -20,3 +20,11 @@ Thanks.
 
 -Robin
 
+
+## 2020-09-25T13:38:02Z — prenuvaic (comment 3560, on definition 15196)
+
+ok
+
+wow. sibvidru is a very visceral, vivid way of describing a meme, and
+perhaps a little too metaphorical?
+
