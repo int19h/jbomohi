@@ -13,3 +13,12 @@ prenuvaic wrote:
 > .i zo manymamta noi remni lujvo cu pluka mi
 *rimni
 
+
+## 2020-10-06T20:31:48Z — prenuvaic (comment 3571, on definition 15624, in reply to 3569)
+
+Re: pluka
+
+prenuvaic wrote:
+> .i zo manymamta noi remni lujvo cu pluka mi
+*rimni
+
