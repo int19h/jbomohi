@@ -72,3 +72,24 @@ ten-fifteen part.
 For example, {py'ai} begins with p- becauses 21 modulo 10 = 1, and p- is
 the consonant of the base digit {pa}.
 
+
+## 2020-11-26T18:27:42Z — Ilmen (comment 3608, on definition 72084, in reply to 3607)
+
+Re: Pattern
+
+Ilmen wrote:
+> • no, pa, re, ci, vo, mu, xa, ze, bi, so, dau, fei, gai, jau, rei, vai,
+> xy'au, zy'ei, by'ai, sy'au, ny'ei, py'ai, ry'au, cy'ei, vy'ai, my'au,
+> xy'ei, zy'ai, by'au, sy'ei, ny'ai, py'au, ry'ei, cy'ai, vy'au, my'ei,
+...
+> 
+> In the above sequence, the CV'VV digits are made by combining the
+> consonants from the 0-9 base digits with the diphthong endings from the
+> ten-fifteen part.
+> For example, {py'ai} begins with p- becauses 21 modulo 10 = 1, and p- is
+> the consonant of the base digit {pa}.
+
+That's certainly not the most elegant system, but it's trying to be
+consistent with the patterns already present in the zero-fifteen official
+digits.
+
