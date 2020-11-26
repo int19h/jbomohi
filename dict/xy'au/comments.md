@@ -45,3 +45,30 @@ multiple such algorithms to exist and would eat up cmavo space with a
 density in proportion to how many algorithms exist). I never managed it
 though.
 
+
+## 2020-11-26T18:25:42Z — Ilmen (comment 3607, on definition 72084, in reply to 3566)
+
+Re: Pattern
+
+krtisfranks wrote:
+> I do not really see the pattern in this series. It seems to be ("-y'au",
+> "-y'ei", "-y'ai"), but I am not sure why these suffixes were chosen, nor
+> do I understand how the first letter was chosen, nor why you stopped
+where
+> you did.
+> 
+> I have long thought that we should go up to twenty-three because
+> base-twenty-four is common (military time) and it is not too many
+(unlike
+> perhaps base-sixty).
+
+• no, pa, re, ci, vo, mu, xa, ze, bi, so, dau, fei, gai, jau, rei, vai,
+xy'au, zy'ei, by'ai, sy'au, ny'ei, py'ai, ry'au, cy'ei, vy'ai, my'au,
+xy'ei, zy'ai, by'au, sy'ei, ny'ai, py'au, ry'ei, cy'ai, vy'au, my'ei, ...
+
+In the above sequence, the CV'VV digits are made by combining the
+consonants from the 0-9 base digits with the diphthong endings from the
+ten-fifteen part.
+For example, {py'ai} begins with p- becauses 21 modulo 10 = 1, and p- is
+the consonant of the base digit {pa}.
+
