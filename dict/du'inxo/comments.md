@@ -31,3 +31,13 @@ is a temporal part of binxo-1, or maybe, depending on the exact semantics
 assigned to it, that binxo-1 ceases to exist whilst its components become
 the components of binxo-2 as this latter starts to exist.
 
+
+## 2020-11-27T09:09:56Z — Ilmen (comment 3611, on definition 72183, in reply to 3609)
+
+Re: Can you elaborate?
+
+Ilmen wrote:
+> {jaxycfa} (jai cfari) is another possible word form for {co'a ckaji}.
+
+With regard to ka-binxo, I now remember there's also {kaicfa}.
+
