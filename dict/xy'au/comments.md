@@ -115,3 +115,10 @@ simple mistake of me. :)
 But if going up to base twenty-four is desirable, we may add a few more in
 accordance to the set pattern.
 
+
+## 2020-11-27T10:20:09Z — Ilmen (comment 3613, on definition 72084, in reply to 3612)
+
+Re: Pattern
+
+s/of me/of mine
+
