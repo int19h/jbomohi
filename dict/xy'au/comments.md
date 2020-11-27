@@ -93,3 +93,25 @@ That's certainly not the most elegant system, but it's trying to be
 consistent with the patterns already present in the zero-fifteen official
 digits.
 
+
+## 2020-11-27T10:19:26Z — Ilmen (comment 3612, on definition 72084, in reply to 3566)
+
+Re: Pattern
+
+krtisfranks wrote:
+>  nor do I understand how the first letter was chosen, nor why you
+stopped where you did.
+
+I stopped at twenty-one as base twenty is the second most common number
+base cross-linguistically if we ignore the hybrid base vigesimal-decimal
+which is a bit more common than pur vigesimal (
+https://wals.info/chapter/131 ), so this would make Lojban a little more
+culturally neutral; having a digit for twenty and not just stopping at
+nineteen makes the declaration of application of base twenty (e.g. with
+{ju'u} more convenient (otherwise you need to say "in base ten × 2" or so,
+unless you decide that radix declarations are always in base ten, which
+isn't culturally neutral). But I think adding a digit for twenty-one was a
+simple mistake of me. :)
+But if going up to base twenty-four is desirable, we may add a few more in
+accordance to the set pattern.
+
