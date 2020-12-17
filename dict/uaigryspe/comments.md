@@ -12,3 +12,17 @@ that such a relationship has been true in the past for the given subjects
 (remarriage implies a once-and-future spouse, and is allowed by this
 word).
 
+
+## 2020-12-17T08:04:39Z — krtisfranks (comment 3619, on definition 72306)
+
+tanru order of the veljvo
+
+I am somewhat more in favor of "speni .uaigre" than of ".uaigre speni",
+but the former had morphological issues/concerns. I think that this
+construction can be justified by taking the view that Lojban treats all
+times somewhat equally or elliptically; "speni" does not mean simply
+"(current) spouse" but also "future spouse". Thus, this construction
+specifies that the 'tense', so to speak, is future and not current (with
+no implication about the past), meaning that the type of spousal
+relationship here is a future-and-not-current spousal one.
+
