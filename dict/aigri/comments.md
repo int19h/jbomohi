@@ -14,3 +14,18 @@ krtisfranks wrote:
 
 ({eiksyuaigryspe} parses too, fwiw)
 
+
+## 2020-12-17T16:58:16Z — krtisfranks (comment 3622, on definition 72313, in reply to 3621)
+
+Re: Created due to morphological/phonotactical issues with 
+
+zozeizeizeizeifaho wrote:
+> krtisfranks wrote:
+> > This form combines more easily in lujvo.
+> 
+> ({eiksyuaigryspe} parses too, fwiw)
+
+
+True. I was initially considering that to be not malformed/malformatted,
+but I actually think that it might be fine.
+
