@@ -47,3 +47,14 @@ danr wrote:
 djica tu'a lu fabu na mleca fi febu fe su'o pa cmima be fibu li'u
 .i mi ckirytce do loka kajdyzu'e .i .ai sai cikre
 
+
+## 2020-12-22T09:40:37Z — krtisfranks (comment 3627, on definition 1184)
+
+Comparative
+
+Note that if x4 is a set of exactly x1 and one other element, then this
+functions as a comparative. In ither words, it unites "zmadu" and "mleca"
+into one word with the direction/parity being specified by x3, although it
+gets somewhat redundant if actually expressed (thus, the main utility for
+this purpose is in leaving x3 elliptical).
+
