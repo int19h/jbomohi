@@ -27,3 +27,10 @@ algorithm; I changed the Hindi translation because it seemed to be wrong in
 this word (I kept the Chinese after having checked it with Google 
 Translate). I also expanded the terbri.
 
+
+## 2020-12-29T17:02:25Z — Ilmen (comment 3630, on definition 70464)
+
+Clash with "sanmi"
+
+Unfortunately "sanmo" clashes with "sanmi".
+
