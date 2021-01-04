@@ -140,3 +140,24 @@ before. One thing though. Doesn't the removal of a final vowel in fu'ivla,
 as in "ka'orta" -> "ka'orty" require a final vowel blocking rule similar
 to gismu? Is this just for certain fu'ivla?
 
+
+## 2021-01-04T06:42:53Z — zozeizeizeizeifaho (comment 3639, in reply to 3638)
+
+Re: fu'ivla can now be used in lujvo?
+
+ues wrote:
+> Thanks for this. I am glad that fu'ivla are allowed to be used in
+initial
+> and non-initial states now. Somehow I had never ran across any like this
+> before. One thing though. Doesn't the removal of a final vowel in
+fu'ivla,
+> as in "ka'orta" -> "ka'orty" require a final vowel blocking rule similar
+> to gismu? Is this just for certain fu'ivla?
+
+
+This hasn't been formally decided, but afaik, ccV[']VCV and CV[']VC/CV
+spaces have been kept free of final vowel conflicts so far.
+
+Shapes like ccVCVCV and CVC/CVCV don't need a rule like this since their
+final vowel is never removed.
+
