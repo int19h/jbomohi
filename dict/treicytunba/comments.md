@@ -189,3 +189,49 @@ I personally think that zevla should be prohibited from matching except
 for final vowel clusters (after either the final consonant or the final
 on-glide).
 
+
+## 2021-01-06T01:45:16Z — ues (comment 3641, in reply to 3640)
+
+Re: fu'ivla can now be used in lujvo?
+
+krtisfranks wrote:
+> zozeizeizeizeifaho wrote:
+> > ues wrote:
+> > > Thanks for this. I am glad that fu'ivla are allowed to be used in
+> > initial
+> > > and non-initial states now. Somehow I had never ran across any like
+> this
+> > > before. One thing though. Doesn't the removal of a final vowel in
+> > fu'ivla,
+> > > as in "ka'orta" -> "ka'orty" require a final vowel blocking rule
+> similar
+> > > to gismu? Is this just for certain fu'ivla?
+> > 
+> > 
+> > This hasn't been formally decided, but afaik, ccV[']VCV and CV[']VC/CV
+> > spaces have been kept free of final vowel conflicts so far.
+> > 
+> > Shapes like ccVCVCV and CVC/CVCV don't need a rule like this since
+their
+> > final vowel is never removed.
+> 
+> I personally think that zevla should be prohibited from matching except
+> for final vowel clusters (after either the final consonant or the final
+> on-glide).
+
+I go beyond this. I demand a vowel-blocking rule for all fu'ivla to which
+this vowel-dropping feature applies. Otherwise we would have to introduce
+an assigned rafsi system for fu'ivla similar to three-letter rafsi, which
+in me induces nausea, or there would be certain grammatical ambiguity in
+any cases where the only distinguishable facet of a vowel-dropping fu'ivla
+is the final vowel. Has this really not been addressed by the LFK? I
+honestly cannot even find a resource that discusses this, other than the
+code you provided, which goes beyond my paygrade.
+
+At the very least this rule should be made readily accessible on the
+lojban website for nintadni and a decision needs to be reached about the
+final vowel rule, namely whether to create a blocking rule or disallow
+vowel dropping. I see that xorlo is featured further down on the home
+page. This rule is comparably important if we don't want users to be
+confused when they come across rafsi fu'ivla in the wild.
+
