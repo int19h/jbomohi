@@ -1,4 +1,4 @@
-# mail/lojban-list thread 8c73e03c66dd-reasoning_by_analogy | root 86o8iru85f.fsf@cmarib.ramside | 11 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 8c73e03c66dd-reasoning_by_analogy | root 86o8iru85f.fsf@cmarib.ramside | 12 messages | rendered by jbomohi mail-v1
 
 === 1 | 2020-12-18T03:04:28Z | scope845hlang343jbo@icebubble.org | 86o8iru85f.fsf@cmarib.ramside | mail/lojban-list/cur/1608260668.8c73e03c66dd9ad0.jbomohi:2,S
 As imprecise human beings saddled with the inheritance of natural
@@ -526,7 +526,129 @@ To view this discussion on the web visit https://groups.google.com/d/msgid/lojba
 
 
 
-=== 9 | 2021-01-06T21:13:47Z | scope845hlang343jbo@icebubble.org | 86im89g450.fsf@cmarib.ramside | mail/lojban-list/cur/1609967627.ebb5694ea2bd1d13.jbomohi:2,S
+=== 9 | 2021-01-07T17:59:57Z | Jacob Thomas Errington <jake@mail.jerrington.me> | ab3d25ae-5b02-e7e0-a93a-4900fc5120ef@mail.jerrington.me | mail/lojban-list/cur/1610042397.87195f20b9f36ba3.jbomohi:2,S
+On 2021-01-06 14:13, scope845hlang343jbo@icebubble.org wrote:
+
+>
+> An example of a sentence exhibiting that ambiguity might be {ko'a ce'o
+> ko'e ckaji loka porsi}.  Would that mean {ko'a ce'o ko'e porsi} or {ko'a
+> porsi ko'e}?  It would be ambiguous.
+>
+> A way to resolve such ambiguity might be to treat {lo ka broda} as a
+> solitary sumti (not a sequence) when the {ka} phrase doesn't contain
+> {ce'u}, but as a sequence when it contains multiple {ce'u}.  Such a rule
+> could become unwieldy when the property contains many arguments, i.e.
+> {lo ka ce'u broda ce'u ce'u ce'u ...}.  So, I might propose the
+> following rule:
+>
+>    (1) The property is interpreted as a sequence when two or more {ce'u}
+>        are explicity expressed within it.
+>
+>    (2) Otherwise (when there are zero or one {ce'u}), it is interpreted
+>        as a solitary sumti (as opposed to a sequence).
+>
+>    (3) Any unexpressed places following the second {ce'u}, if any, are
+>        assumed to be {ce'u}.
+Rule 3 only really works in simple abstractions; how does one deal with 
+situations like {lo ka ce'u broda lo pendo be ce'u}?
+>
+> This rule would introduce two questions: (A) How would one speak about a
+> sequence with just one element?, and (B) How would one differentiate
+> between properties with different numbers of arguments (arities)?
+>
+> If I say {ko'a ce'o zi'o ckaji lo ka ce'u porsi}, I'm speaking about a
+> sequence containing one element, {ko'a}, but I'm not saying that {ko'a
+> porsi}.  On the other hand, if I say {ko'a ckaji loka ce'u ce'u porsi},
+> then it'd be true that {ko'a porsi}; it'd be the sequence {lo porsi ce'o
+> lo se porsi be ri}.  The problem of specifying a sequence with just one
+> element (A) is a challenged posed by Lojban's infix syntax, not by
+> abstractors like {ka}.
+I think a pretty reasonable interpretation of {ko'a ce'o zi'o} is a 
+1-tuple. Reminds me of Python's syntax (x,) for a 1-tuple.
+>
+> Issue (B), however, does not suggest any easy solutions.  Would {lo ka
+> ce'u broda ce'u} be a property with two arguments, or a property with
+> more than two arguments, such as {lo ka ce'u broda ce'u ce'u} or {lo ka
+> ce'u broda ce'u ce'u ce'u}, with the trailing {ce'u} unexpressed?  It
+> might be possible to quantify the number of arguments.
+>
+> A ternary property, {lo ka ce'u broda ce'u ce'u}, could be expressed as
+> something like {lo ci ka broda} or {lo cimei ka broda}.  However, the
+> tanru form would introduce the semantic ambiguity inherent in tanru.
+> And the form with an inner quantifier might run afoul of Lojban's normal
+> interpertation of quantifiers.
+I'm not in favour of introducing an exception to the interpretation of 
+inner quantifiers to be able to specify the number of arguments, 
+especially when we're just cooking up new interpretations without 
+consulting any existing usage. Right now, there is no situation where 
+the number of arguments to a ka-abstraction is completely unclear. The 
+overt {ce'u} in a ka abstraction each represent separate sumti places 
+without any implicit tuple unpacking.
+> This could be solved, however, by treating quantified abstractions as
+> "magic", kind of like the way quantified variables of selma'o GOhA are
+> treated magically in the terms of a prenex (preceeding {zo'u}).  I.e.,
+> {ro bu'a zo'u broda} doesn't mean the same thing as {roda zo'u broda},
+> because {ro bu'a zo'u} is magic.  So, if we consider {lo su'o ka} magic,
+> could we use this mechanism to speak about multi-variable properties?
+
+I don't agree that the existence of a wart in the language is a good 
+justification for the introduction of new warts. Not to mention that 
+following the shift in the last ten years to understand ka-abstractions 
+as reified selbri, there isn't really any reason to use {bu'a} except 
+maybe a slightly cleaner syntax. Ignoring syntax cleanliness, why say
+
+   .i ro bu'a zo'u da bu'a
+
+when you could say
+
+   .i ro da poi selkai (zi'o) zo'u de da ckaji
+
+
+I think that tuple unpacking / pattern matching is interesting, which is 
+why I already solved this exact problem by leveraging the experimental 
+cmavo {ce'ai}.
+
+The way {ce'ai} works in general is that each sumti appearing in it is 
+understood as a binder. We concocted {ce'ai} back in ~2013 when 
+discussing how to reuse {ce'u} within a ka-abstraction. Here's a 
+contrived example:
+
+   without ce'ai: {.i mi ckaji lo ka ce'u goi ko'a batci ko'a}
+   with ce'ai: {.i mi ckaji lo ka ko'a ce'ai ko'a ko'a batci}
+
+The idea is to have something specifically for introducing ce'u-like 
+bound variables, similar to the way {da} works in {zo'u}. My pattern 
+matching idea extends the original definition of {ce'ai} to allow more 
+complex sumti to appear in the {ce'ai}-clause, understanding them as 
+patterns. For example:
+
+   {ko'a ce'o ko'e ckaji lo ka X ce'o Y ce'ai X broda Y} interprets to 
+{ko'a broda ko'e}
+
+(I'm writing capital letters to stand for the equivalent BY cmavo.)
+
+It's also aligned with usual programming language theory because we use 
+the introduction form for tuples {ce'o} as a means of deconstructing the 
+tuple.
+
+Personally, I see many pros, and very few cons. In fact, the only con I 
+can see is the use of an experimental cmavo. But using an experimental 
+cmavo for something that's admittedly a niche application seems right on 
+brand to me.
+
+.i mi'e la tsani mu'o
+
+P.S. are you a member of roljbogu'e discord server?
+
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/ab3d25ae-5b02-e7e0-a93a-4900fc5120ef%40mail.jerrington.me.
+
+
+
+=== 10 | 2021-01-06T21:13:47Z | scope845hlang343jbo@icebubble.org | 86im89g450.fsf@cmarib.ramside | mail/lojban-list/cur/1609967627.ebb5694ea2bd1d13.jbomohi:2,S
 Jacob Thomas Errington <jake@mail.jerrington.me> writes:
 
 > You can put fi'o tags in more places than that. Try these in a parser.
@@ -620,7 +742,7 @@ To view this discussion on the web visit https://groups.google.com/d/msgid/lojba
 
 
 
-=== 10 | 2021-01-07T05:52:58Z | Hugh O'Byrne <hobyrne@gmail.com> | caeyhndujwqzsx2bjrqrjbd3u4au8optxygsybg0btt4ea5rvuw@mail.gmail.com | mail/lojban-list/cur/1609998778.703c983436335909.jbomohi:2,S
+=== 11 | 2021-01-07T05:52:58Z | Hugh O'Byrne <hobyrne@gmail.com> | caeyhndujwqzsx2bjrqrjbd3u4au8optxygsybg0btt4ea5rvuw@mail.gmail.com | mail/lojban-list/cur/1609998778.703c983436335909.jbomohi:2,S
 Oh, man.  It's like walking past an expensive restaurant, and getting the
 smell of... oh, just sumptuous.  I love it, but all I can do is smell it.
 I don't have the brainpower to be in the circle, but I absolutely love that
@@ -736,7 +858,7 @@ To unsubscribe from this group and stop receiving emails from it, send an email 
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/CAEYHNDuJWqzSX2BJrqrjbD3u4AU8OptXyGsybg0Btt4ea5RvUw%40mail.gmail.com.
 
 
-=== 11 | 2021-01-07T14:29:18Z | Jacob Thomas Errington <jake@mail.jerrington.me> | 562e4432-9329-49e3-42d8-cce39c4f27fe@mail.jerrington.me | mail/lojban-list/cur/1610029758.65746e13e5f3c9b6.jbomohi:2,S
+=== 12 | 2021-01-07T14:29:18Z | Jacob Thomas Errington <jake@mail.jerrington.me> | 562e4432-9329-49e3-42d8-cce39c4f27fe@mail.jerrington.me | mail/lojban-list/cur/1610029758.65746e13e5f3c9b6.jbomohi:2,S
 
 On 2021-01-06 16:13, scope845hlang343jbo@icebubble.org wrote:
 > Jacob Thomas Errington <jake@mail.jerrington.me> writes:
