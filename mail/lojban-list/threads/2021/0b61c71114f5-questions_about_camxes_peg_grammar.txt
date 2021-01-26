@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b61c71114f5-questions_about_camxes_peg_grammar | root 86h7n66pji.fsf@cmarib.ramside | 2 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b61c71114f5-questions_about_camxes_peg_grammar | root 86h7n66pji.fsf@cmarib.ramside | 3 messages | rendered by jbomohi mail-v1
 
 === 1 | 2021-01-24T20:36:01Z | scope845hlang343jbo@icebubble.org | 86h7n66pji.fsf@cmarib.ramside | mail/lojban-list/cur/1611520561.0b61c71114f570ee.jbomohi:2,S
 doi la camxes .a la masatos.xagiuaras .a la gleki .a la ilmen .e zo'e
@@ -294,4 +294,74 @@ Must be buried in this mriste or the wiki. It's all BPFK discussions.
 You received this message because you are subscribed to the Google Groups "lojban" group.
 To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/29e01fda-fe26-4fde-959f-119dadd9d82fn%40googlegroups.com.
+
+
+=== 3 | 2021-01-26T18:59:00Z | mezohe <wow.jvs@gmail.com> | d795ff9b-9857-eeed-d128-ae141a482266@gmail.com | mail/lojban-list/cur/1611687540.21f2e88fdf2fa4fb.jbomohi:2,S
+2021-01-24 21:36 scope845hlang343jbo@icebubble.org:
+> 
+> le preti xi re pi'e ci zo'u:
+> 
+>   {za'a} The PEG grammar, in several places, uses constructs like:
+> 
+>     pehe_sa <- PEhE_clause (!PEhE_clause (sa_word / SA_clause !PEhE_clause))* SA_clause
+> 
+>     cehe_sa <- CEhE_clause (!CEhE_clause (sa_word / SA_clause !CEhE_clause))* SA_clause
+> 
+>   This is an idiom which appears repeatedly in the PEG, but there is no
+>   explanation for what this is doing or why.
+> 
+>   {.e'u} Some higher-level explanation of how erasure words are handled
+>   would be helpful.
+> 
+
+The CONSTRUCT_sa rules are meant to match the text that a {sa} deletes
+followed by the {sa} itself. For example:
+
+{nelci fa do ce'e ti pe'e je mi ce'e ta sa pe'e je mi'o ce'e ta}
+                     ^------pehe_sa------^
+
+Though CONSTRUCT_sa itself doesn't limit what comes after it, it is only
+referred to at the beginning of the corresponding CONSTRUCT rule, which
+ensures that what follows is something that can start the same kind of
+construct that starts the deleted text.
+
+The negative lookaheads are there so that only one "jump" "back" (of
+course, the parser actually speculates about SAs basically everywhere)
+to the closest start of a CONSTRUCT happens.
+
+SA implemented in this way is flaky (for example, {sa sa}, instead of
+deleting a longer text, works like a single {sa}), and it's buggy in all
+camxes versions that I've used. In ilmentufa camxes, for example,
+sa-deletions can't include zei-lujvo or bu-letterals. SA handling in
+PEGs other than standard camxes is even more broken or has been fully
+removed.
+
+> 
+> le preti xi re pi'e vo zo'u:
+> 
+>   {za'a} The PEG contains many non-terminals of the form
+>   "<someword>_clause", "<someword>_pre", "<someword>_post",
+>   "<someword>_sa", "pre_clause", and "post_clause", but there is no
+>   explanation of what this is doing or why.
+> 
+>   {.e'u} Some higher-level explanation of the conventions used for
+>   naming the non-terminals, and how they interact, would be helpful.
+> 
+
+"Clause" in camxes means a word together with any free modifiers before
+(pre_clause) or after it (post_clause). pre_clause handles only BAhE.
+post_clause handles SI and indicators, and prevents parsing of parts of
+zei-lujvo and bu-letterals as their usual selmaho.
+
+I think the grammar uses individual SELMAhO_pre and SELMAhO_post rules,
+instead of using pre_clause and post_clause directly in SELMAhO_clause,
+only as a relic of an earlier, now removed, way of handling SA. Another
+relic of this is the name of any_word_SA_handling, which no longer has
+anything to do with SA.
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/d795ff9b-9857-eeed-d128-ae141a482266%40gmail.com.
+
 
