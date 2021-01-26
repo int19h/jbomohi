@@ -1,4 +1,4 @@
-# mail/lojban-list thread 0b61c71114f5-questions_about_camxes_peg_grammar | root 86h7n66pji.fsf@cmarib.ramside | 1 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 0b61c71114f5-questions_about_camxes_peg_grammar | root 86h7n66pji.fsf@cmarib.ramside | 2 messages | rendered by jbomohi mail-v1
 
 === 1 | 2021-01-24T20:36:01Z | scope845hlang343jbo@icebubble.org | 86h7n66pji.fsf@cmarib.ramside | mail/lojban-list/cur/1611520561.0b61c71114f570ee.jbomohi:2,S
 doi la camxes .a la masatos.xagiuaras .a la gleki .a la ilmen .e zo'e
@@ -136,4 +136,162 @@ You received this message because you are subscribed to the Google Groups "lojba
 To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/86h7n66pji.fsf%40cmarib.ramside.
 
+
+
+=== 2 | 2021-01-26T05:45:43Z | "gleki.is...@gmail.com" <gleki.is.my.name@gmail.com> | 29e01fda-fe26-4fde-959f-119dadd9d82fn@googlegroups.com | mail/lojban-list/cur/1611639943.64cd0b307e71d46b.jbomohi:2,S
+
+
+Em segunda-feira, 25 de janeiro de 2021 às 00:35:34 UTC+3, 
+scope845hlang343jbo@icebubble.org escreveu:
+
+> doi la camxes .a la masatos.xagiuaras .a la gleki .a la ilmen .e zo'e 
+>
+> I'm looking at the PEG grammar for Lojban in the repository at 
+> https://github.com/lojban/ilmentufa and have some questions... 
+>
+>
+> le preti xi pa pi'e pa zo'u: 
+>
+> {za'a} The build system is written in Javascript, and doesn't use a 
+> traditional build system, i.e. "make". {.uanai} Why
+
+
+There are implementations in Java (the original camxes), in python and iirc 
+in haskell 
+
+>
+> {.e'u} I think the system would be much clearer if it used standard 
+> tools like make, sed, awk, and/or diff/patch. Because PEG files are 
+> line-oriented, awk would probably be preferable to sed. Most systems 
+> that have git (the format of the repository) will already have these 
+> tools. Providing the alternative grammars as diffs would probably be 
+> ideal, because diffs are easily read and understood by human beings, 
+> and can be applied manually, without even needing any extra software 
+> at all. (Any text editor would suffice.) 
+>
+> If I actually did use the JS script to build the alternative grammars, 
+> the next thing I'd do would be to run a diff on them, anyway, to see 
+> what changes are made in each of the grammars. So, using diff & patch 
+> would seem to be most sensible. 
+>
+>
+> le preti xi pa pi'e re zo'u: 
+>
+> {za'a} The README.md is rather confusing and written in broken 
+> English. {ru'a} Without intending any offense, it appears as if 
+> English is not the author's native language. 
+>
+> {.e'u} I would be happy to discuss the README, off-list, to figure out 
+> what the author means, and help re-work the README to make it clearer 
+> and more understandable. 
+>
+>
+> le preti xi pa pi'e ci zo'u: 
+>
+> {za'a} The .peg files contain a brief description of the syntax of 
+> parsing expressions: 
+>
+> ... 
+> # 3) Concatenation is expressed by juxtaposition with no operator symbol. 
+> # 4) / represents *ORDERED* alternation (choice). If the first 
+> # option succeeds, the others will never be checked. 
+> # 5) ? indicates that the element to the left is optional. 
+> # 6) * represents optional repetition of the construct to the left. 
+> # 7) + represents one_or_more repetition of the construct to the left. 
+> ... 
+>
+> {.uanai} However, it does not specify the order of operations or 
+> relative precedence of each of the operators. For example, does 
+> "a <- b c / d" mean "a <- (b c) / d" or "a <- b (c / d)"? And 
+> does "x <- y / z+" mean "x <- (y / z)+" or "x <- y / (z+)"? 
+>
+> {ja'o} One can intuit the intended order of operations by reading the 
+> file, with a knowledge of Lojban grammar, but {.e'u} more specificity 
+> would be helpful. 
+>
+>
+> le preti xi re pi'e pa zo'u: 
+>
+> {za'a} I noticed that you handle elidible terminators differently in 
+> the PEG than in the EBNF. For example, in the EBNF, one of the 
+> alternatives for sumti-6_97 is: 
+>
+> LI # mex /LOhO#/ 
+>
+> But in the PEG, it's: 
+>
+> li_clause <- LI_clause free* mex LOhO_elidible free* 
+>
+> {ja'o} In the EBNF, the free* are only allowed if the terminator is 
+> present. But, in the PEG, it appears that free* can follow an elided 
+> terminator. 
+>
+> {.uanai} What's the rationale for doing this? How do you determine to 
+> which construct the free modifiers apply when the terminator is 
+> omitted? 
+>
+>
+> le preti xi re pi'e re zo'u: 
+>
+> {za'a} There is at least one place in the PEG where the PEG grammar 
+> differs from the EBNF (and the YACC). For example: 
+>
+> #stag = simple_tense_modal ((jek / joik) simple_tense_modal)* 
+> stag <- simple_tense_modal ((jek / joik) simple_tense_modal)* / 
+> tense_modal (joik_jek tense_modal)* 
+>
+> {ja'o} The PEG rule which would comply with the EBNF grammar is 
+> commented-out, and replaced with a rule which allows full "tag"s 
+> (i.e., full {fi'o} clauses) anywhere that only simple tags ("stag"s) 
+> used to be allowed. This changes (by expanding it) the set of 
+> utterances that would represent grammatical Lojban text. 
+>
+> {.uanai} What's the rationale for doing this? 
+>
+> {.e'u} If the intent is to implement an extension to Lojban's grammar, 
+> shouldn't this be split-out into a separate "experimental" PEG, like 
+> the others? 
+>
+>
+> le preti xi re pi'e ci zo'u: 
+>
+> {za'a} The PEG grammar, in several places, uses constructs like: 
+>
+> pehe_sa <- PEhE_clause (!PEhE_clause (sa_word / SA_clause !PEhE_clause))* 
+> SA_clause 
+>
+> cehe_sa <- CEhE_clause (!CEhE_clause (sa_word / SA_clause !CEhE_clause))* 
+> SA_clause 
+>
+> This is an idiom which appears repeatedly in the PEG, but there is no 
+> explanation for what this is doing or why.
+
+
+
+
+Must be buried in this mriste or the wiki. It's all BPFK discussions.  
+
+>
+>
+> {.e'u} Some higher-level explanation of how erasure words are handled 
+> would be helpful. 
+>
+>
+> le preti xi re pi'e vo zo'u: 
+>
+> {za'a} The PEG contains many non-terminals of the form 
+> "<someword>_clause", "<someword>_pre", "<someword>_post", 
+> "<someword>_sa", "pre_clause", and "post_clause", but there is no 
+> explanation of what this is doing or why. 
+>
+> {.e'u} Some higher-level explanation of the conventions used for 
+> naming the non-terminals, and how they interact, would be helpful. 
+>
+> .i ki'esai fa'o 
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/29e01fda-fe26-4fde-959f-119dadd9d82fn%40googlegroups.com.
 
