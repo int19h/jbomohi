@@ -30,3 +30,17 @@ compared objects followed by a predicate.
 For your first suggestion {simjovgo} might be a possible spelling, and for
 the second one maybe {jovgy'emna} or .{emnyjovgo}
 
+
+## 2021-01-29T08:29:24Z — zozeizeizeizeifaho (comment 3651, on definition 72393, in reply to 3650)
+
+Re: Broadening
+
+zozeizeizeizeifaho wrote:
+> For your first suggestion {simjovgo} might be a possible spelling, and
+for
+> the second one maybe {jovgy'emna} or .{emnyjovgo}
+
+or {simjovgo} would rather mean "$x_1$ all have the same truth value", and
+"$x_1$ either all satisfy $x_2$ or all don't" would have to be something
+else, {simkaijovgo} maybe
+
