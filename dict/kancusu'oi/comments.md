@@ -24,3 +24,26 @@ implies →.
 You can find predicates for {su'oi} and {ro'oi} with one argument, without
 the implied connective, at {suzdza} and {roldza}.
 
+
+## 2021-01-30T21:12:50Z — krtisfranks (comment 3652, on definition 69442, in reply to 3649)
+
+Re: Why have two sumti slots?
+
+zozeizeizeizeifaho wrote:
+> {kancusu'oi} and the others are meant to cover the meanings of
+quantifiers
+> when given two predicates. As in:
+> 
+> > su'o mlatu cu barda
+> > ro mlatu cu barda
+> 
+> where the first implies ∧ between {mlatu} and {barda} and the second
+> implies →.
+> 
+> You can find predicates for {su'oi} and {ro'oi} with one argument,
+without
+> the implied connective, at {suzdza} and {roldza}.
+
+Okay, but why not make it arbitrarily many (including possibly infinitely
+many)?
+
