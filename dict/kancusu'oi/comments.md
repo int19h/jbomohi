@@ -47,3 +47,29 @@ without
 Okay, but why not make it arbitrarily many (including possibly infinitely
 many)?
 
+
+## 2021-01-31T09:28:57Z — zozeizeizeizeifaho (comment 3653, on definition 69442, in reply to 3652)
+
+Re: Why have two sumti slots?
+
+krtisfranks wrote:
+> Okay, but why not make it arbitrarily many (including possibly
+infinitely
+> many)?
+
+Since the quantifier grammar allows at most two predicates as arguments, I
+hadn't thought about how they might generalize! Now that I do, I'm
+confused.
+
+{su'oi}'s expansion uses the associative ∧, and
+> su'oi gi [ke'a] broda gi brode gi brodi [gi'i]
+(forgive the grammar) would make sense as
+> ∃x (broda(x) ∧ brode(x) ∧ brodi(x))
+
+but what would
+> ro'oi gi broda gi brode gi brodi
+best mean?
+> ?? ∀x ((broda(x) → brode(x)) → brodi(x))
+> ?? ∀x (broda(x) → (brode(x) → brodi(x)))
+> ?? ∀x (broda(x) → (brode(x) ∧ brodi(x)))
+
