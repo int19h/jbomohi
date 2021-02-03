@@ -86,3 +86,10 @@ hypothetical {mantaGAPci}.
 I could reassign the cmavo to {gy'a}, but this won't remove the fact
 Lojban already requires the aformentioned -y/-a distinction.
 
+
+## 2021-02-03T21:04:08Z — Ilmen (comment 3657, on definition 72407, in reply to 3656)
+
+Re: Four issues
+
+Also, the hypothetical letteral for {gu} would be {gu bu}.
+
