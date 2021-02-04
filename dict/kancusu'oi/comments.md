@@ -125,3 +125,46 @@ outlined.
 I am going off how I use it and have seen it be used. We can, of course,
 define it in any manner which we want.
 
+
+## 2021-02-04T22:14:12Z — zozeizeizeizeifaho (comment 3658, on definition 69442, in reply to 3655)
+
+Re: Why have two sumti slots?
+
+krtisfranks wrote:
+> I actually think that "{ro'oi}" should not require and implication like
+> that at all. It might require implication, but it is not necessarily
+> structured in any of those ways. "∀x ∈ A, (P(x))" just means "x ∈ A ⇒
+> P(x)"; if "A" is omitted, then the universal set/set of discourse is
+meant
+> (where "set" can be replaced by "category", "object", or some other
+> structure, depending on context). 
+> 
+
+This is where one of xorlo's weirdnesses shows itself. Single-predicate
+{ro'oi} is supposed to mean that in a domain of individuals, all
+combinations of them satisfy the predicate. Treating two-predicate {ro'oi}
+the same, just with the domain stated explicitly, would result in
+unexpected meanings when both of the predicates are non-distributive.
+Take:
+
+> ro'oi tavlysi'u cu nelcysi'u ja xebnysi'u
+
+Say the domain contains the individuals A, B, C, D, E, of which A and B
+talk to each other, and C and D do too. Under the reading with two
+predicates and implication, this sentence would mean that:
+
+- A and B like or hate each other, and
+- C and D like or hate each other.
+
+Taking the {tavlysi'u} to specify a domain for a simple
+> ro'oi da nelcysi'u ja xebnysi'u
+on the other hand, would give a meaning of:
+
+- A likes or hates each other (sic), and
+- A and B like or hate each other, and
+- A, B and C like or hate each other, and so on for every combination of
+A, B, C and D.
+
+So I think only the all-predicate version (your second option) would make
+sense here.
+
