@@ -93,3 +93,14 @@ Re: Four issues
 
 Also, the hypothetical letteral for {gu} would be {gu bu}.
 
+
+## 2021-02-05T06:33:44Z — krtisfranks (comment 3659, on definition 72407, in reply to 3657)
+
+Re: Four issues
+
+Ilmen wrote:
+> Also, the hypothetical letteral for {gu} would be {gu bu}.
+
+Sure, but there have been some moves toward CV*'y format for such
+purposes.
+
