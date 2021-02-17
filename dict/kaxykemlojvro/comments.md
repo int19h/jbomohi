@@ -5,3 +5,15 @@ Erm
 I think you have these reversed; {kanxe} means conjunction, "and", while 
 {vlina} means disjunction, "or".
 
+
+## 2021-02-17T18:30:14Z — Wuzzy (comment 3665, on definition 66080, in reply to 2086)
+
+Re: Erm
+
+spheniscine wrote:
+> I think you have these reversed; {kanxe} means conjunction, "and", while 
+> {vlina} means disjunction, "or".
+
+
+Fixed!
+
