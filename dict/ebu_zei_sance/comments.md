@@ -23,3 +23,10 @@ permitting this type of zei lujvo. I wish that these rules were made
 readily accessible on the lojban website so that they could be known and
 verified. .i ku'i ma do ka'e se gasnu
 
+
+## 2021-02-19T13:58:26Z — Wuzzy (comment 3667, on definition 71562, in reply to 3666)
+
+Re: Not grammatical
+
+Oops.
+
