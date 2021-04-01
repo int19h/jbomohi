@@ -1,0 +1,599 @@
+Return-path: <lojban+bncBDR4PLGBUIBBBLGOTCBQMGQEXQQ2TZA@googlegroups.com>
+Envelope-to: lojban-list-archive@lojban.org
+Delivery-date: Thu, 01 Apr 2021 13:04:05 -0700
+Received: from mail-ot1-f64.google.com ([209.85.210.64]:54120)
+	by stodi.digitalkingdom.org with esmtps  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.94)
+	(envelope-from <lojban+bncBDR4PLGBUIBBBLGOTCBQMGQEXQQ2TZA@googlegroups.com>)
+	id 1lS3Xp-00H4oP-WC
+	for lojban-list-archive@lojban.org; Thu, 01 Apr 2021 13:04:05 -0700
+Received: by mail-ot1-f64.google.com with SMTP id u8sf2985050otq.20
+        for <lojban-list-archive@lojban.org>; Thu, 01 Apr 2021 13:03:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20161025;
+        h=sender:date:from:to:message-id:in-reply-to:references:subject
+         :mime-version:x-original-sender:reply-to:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:list-subscribe
+         :list-unsubscribe;
+        bh=b9RX1dhjPtQyLqfQtBZ9pbJMelKnthmWpjb6chzJ7Vk=;
+        b=E3AnSPdO3DT6HHBA+m1x7nt13Megd3i6CwZR+i0ivg9YeVQUMpRsNEeDi1avPSYrSB
+         kGcUJJabNmO0z/uBbgdSvfV4KSu4OPLPDdmoJBJCbIsOimEQH9OMD1cLKJ/VnWArS2TN
+         Gnn9he0LHuPgNzY895lp5hm8A0pYZUc3oUGN/IT5i7s66BkQAMCrIuqOROWCO38dhMI/
+         YKWfXJJDZcdPXvnt9CHpAj9vsGzcTmOdQsNfRJNLLHG1dXRPgPy6AQqXXSXEJqbguWwG
+         gkGIeB+r6mNNxaOeBS0UmAC2VYKKhEZI5ANfLbf9Ky+4XATI+hcP/+VudJVNMatl68y5
+         LiKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :x-original-sender:reply-to:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:list-subscribe:list-unsubscribe;
+        bh=b9RX1dhjPtQyLqfQtBZ9pbJMelKnthmWpjb6chzJ7Vk=;
+        b=E8B9odEK3qM5WQlS8R3hf1WMUnLOdlpEntmL1RQjhJ5jTYaNFJtlxFN9EQQE6PGG10
+         Flift5Ieks74THF6Oo08tIIPWGjj+3t3s23eCY71feOP6ApPf1xYnmXPPiJ5XqaSFmJ5
+         yoBM0CIWHx/qx4s/99daQ+V7t+A7qXeC54UOCVdoMDm3rSJkqqcO6RVFpViirnRZdp6V
+         Xo//iMiKC9mAQydPv7MtsSuxRfFIM5wZ4wr+Ns4zBkf6E5wy7e6Ekz5erNpM/LymEvSF
+         DoBhtJ6AIVdLhXBxAAg2JwLwRP7VHvqxRdNyLONCmNPEgzv33NKBcY1G8ZGGtY/x4WNJ
+         eZTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=sender:x-gm-message-state:date:from:to:message-id:in-reply-to
+         :references:subject:mime-version:x-original-sender:reply-to
+         :precedence:mailing-list:list-id:x-spam-checked-in-group:list-post
+         :list-help:list-archive:list-subscribe:list-unsubscribe;
+        bh=b9RX1dhjPtQyLqfQtBZ9pbJMelKnthmWpjb6chzJ7Vk=;
+        b=nXGh+dA6PeQIStZHALRXJ6WBqADrfvjsrGq0fax+H4jtvv8sKnWx/7d3Wb176WHP/8
+         WDaAgfnv4L2zX9xyUeszS5OjZCgMbWrNjpzF2UoB635XzXy0REvEWNxy6auLI99/BSIB
+         P7NbsrQ+m0ESfRm8Fyx1DNLDbj3sKACOT8zOr5Zr+CuZX6tsLAYopD+2USMZGGEeydC2
+         rgHGal9qCEoWYIea9VIri+uLCd8snCWLW8HdW51pZb+AK9tpxRI5N4iHu9byIljyirHE
+         PZQx9sLi2fOBxEyxqCG35zSHoehM9xK+fQWOhm02p4+nWn4iU8XUyn+WpaLFGUrMAmCK
+         DJow==
+Sender: lojban@googlegroups.com
+X-Gm-Message-State: AOAM532omNPI/FYNlCbmh4zfbkUrH/px+PPaMrB9oVt5PsKVBveDHqLV
+	Z1NcdjLvUf+J4MBzM+GcVbk=
+X-Google-Smtp-Source: ABdhPJzxn/yEuQUgKnzLLvsZ72DJZKE/9+h31uD5asgNU3c9/pCiM3h3amAzQzb12xEx1pC3/Y2b/Q==
+X-Received: by 2002:a05:6830:1ae6:: with SMTP id c6mr8433066otd.124.1617307436862;
+        Thu, 01 Apr 2021 13:03:56 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 2002:a9d:12f2:: with SMTP id g105ls1645436otg.6.gmail; Thu, 01
+ Apr 2021 13:03:56 -0700 (PDT)
+X-Received: by 2002:a9d:68c1:: with SMTP id i1mr8456698oto.169.1617307436236;
+        Thu, 01 Apr 2021 13:03:56 -0700 (PDT)
+Date: Thu, 1 Apr 2021 13:03:55 -0700 (PDT)
+From: Corbin Simpson <mostawesomedude@gmail.com>
+To: lojban <lojban@googlegroups.com>
+Message-Id: <872ff21c-712d-4a4b-8f4f-351d6ff549dan@googlegroups.com>
+In-Reply-To: <5d8ed35bc26ecb99ee250fe535f68e01@staticfree.info>
+References: <ac15b0d5-c27c-4d8c-a459-4f80e9970bddn@googlegroups.com>
+ <2d3e019b-5f57-4288-98a8-cc7fe3bf41a2n@googlegroups.com>
+ <16ccd800-23f0-4c9f-9ee7-8c7f4f08223en@googlegroups.com>
+ <5d8ed35bc26ecb99ee250fe535f68e01@staticfree.info>
+Subject: Re: [lojban] Re: Lojban is a logical failure
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_12595_336872654.1617307435457"
+X-Original-Sender: MostAwesomeDude@gmail.com
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+X-Spam-Checked-In-Group: lojban@googlegroups.com
+X-Google-Group-Id: 1004133512417
+List-Post: <https://groups.google.com/group/lojban/post>, <mailto:lojban@googlegroups.com>
+List-Help: <https://groups.google.com/support/>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <https://groups.google.com/group/lojban
+List-Subscribe: <https://groups.google.com/group/lojban/subscribe>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+1004133512417+unsubscribe@googlegroups.com>,
+ <https://groups.google.com/group/lojban/subscribe>
+X-Spam-Score: -2.6 (--)
+X-Spam_score: -2.6
+X-Spam_score_int: -25
+X-Spam_bar: --
+Content-Length: 23788
+
+------=_Part_12595_336872654.1617307435457
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_12596_995161743.1617307435457"
+
+------=_Part_12596_995161743.1617307435457
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+I'm not a math genius. I'm just some person who was told that Lojban is a=
+=20
+logical language and decided to take "logical" seriously as an adjective.
+
+For what it's worth, it sounds like you understand what's going on in terms=
+=20
+of social dynamics. To paraphrase your quote, I am rude to la gleki because=
+=20
+la gleki has disrespected me for years *and* because la gleki has refused=
+=20
+to study and work on understanding formal maths. I am happy to talk to any=
+=20
+of the 730+ members who have *not* spent the past few years being=20
+backhanded and dismissive on IRC.
+
+This isn't my first post to the list, either. I strongly recommend reading=
+=20
+the posts from the past year, especially the ones where I went entirely=20
+unanswered [0][1][2]. You also should know that I am following the=20
+tradition of Clifford in directly critiquing the goals and status of Lojban=
+=20
+[3].
+
+[0] https://groups.google.com/g/lojban/c/L8NFx18ZePc
+[1] https://groups.google.com/g/lojban/c/F-mntSJHz7w
+[2] https://groups.google.com/g/lojban/c/LwYwRLtsajs
+[3] https://groups.google.com/g/lojban/c/gkIpyzNXykw
+On Thursday, April 1, 2021 at 11:15:43 AM UTC-7 xxv wrote:
+
+> I'm just a lurker here, but you came in really hot and are now being=20
+> mean to people. Perhaps, IDK, be cool and we can work this whole thing=20
+> out together? Not everyone is a math genius like you.
+>
+> "People may be rude to you because they are unhappy, someone hurt them=20
+> recently, you were disrespectful towards them, or because they were=20
+> never taught the correct way to act around people." [0]
+>
+> [0] https://www.wikihow.com/Be-Cool
+>
+> On 2021-04-01 13:14, Corbin Simpson wrote:
+> > You are literally standing in front of the detailed plan, complete
+> > with links and notes, built from years of conversation about the
+> > nature of Lojban and maths, and you have the audacity to ask "do we
+> > have a plan?" {mi'a} have a plan, and it's the one I just explained.
+> > {mi'o} have a different plan: you need to learn some maths and stop
+> > being so squeamish about working directly with logic itself.
+> >=20
+> > Start from the definition of a category. Every category gives a logic;
+> > the objects of the category are equivalence classes of propositions,
+> > and the modus-ponens of the logic is witnessed by the category's
+> > arrows. This is the foundation of categorical logic. From there, you
+> > can learn about type theory and topos theory.
+> >=20
+> > I have spoon-fed you for years on IRC, and in this moment, you are
+> > like Henry the 8th in "A Man for All Seasons" [0], a vain king who
+> > believes himself to be a master of both English and Latin, who stands
+> > in the mud without even thinking about it, and who demonstrates their
+> > lack of understanding every time they refuse to engage in
+> > self-directed study.
+> >=20
+> > [0] https://en.wikipedia.org/wiki/A_Man_for_All_Seasons
+> >=20
+> > On Thursday, April 1, 2021 at 10:02:48 AM UTC-7 gleki.is...@gmail.com
+> > wrote:
+> >=20
+> >> Em quinta-feira, 1 de abril de 2021 =C3=A0s 18:08:28 UTC+3,
+> >> mostawe...@gmail.com escreveu:
+> >>=20
+> >>> Hey all,
+> >>>=20
+> >>> Time for the sort-of-annual reminder that Lojban falls far short
+> >>> of its goals. I'll spell out an explicit recipe for achieving
+> >>> those goals.
+> >>>=20
+> >>> Suppose that Lojban were logical; that is, suppose that it has a
+> >>> logic [0]. A logic has three components:
+> >>>=20
+> >>> * A collection of letters which form a collection of words
+> >>> * A grammar which indicates whether a sequence of words is a
+> >>> well-formed sentence
+> >>> * A collection of rewrite rules which each match sequences of
+> >>> words within well-formed sentences and replace them with new
+> >>> sequences of words which are still well-formed
+> >>>=20
+> >>> We have two of three, for what it's worth. The failure is in this
+> >>> third component. If we had all three, then we might call Lojban a
+> >>> *type theory* [1]. In a type theory, we start with a sentence, and
+> >>> then apply rewrite rules to create new sentences. A sequence of
+> >>> rewrite rules, along with a starting sentence, is called a *proof*
+> >>> when the rules can be applied in sequence to the starting sentence
+> >>> in order to produce a new final sentence.
+> >>>=20
+> >>> The defining feature of type theory is types. A type is a
+> >>> collection of proofs, called *elements* of the type, which might
+> >>> be equivalent to each other. To show equivalence for two objects,
+> >>> we would need a pair of proofs which transform one object into
+> >>> another. We can also do this for two different proofs which lead
+> >>> to the same element in the same type, by transforming one proof
+> >>> into another, and so on. (This leads to [2].)
+> >>>=20
+> >>> Contrary to popular belief, types are emergent features of type
+> >>> theory; they do not have to be predefined. If we had a collection
+> >>> of rewrite rules for Lojban, then we could discover types within
+> >>> Lojban's existing corpus. A ready stream of examples comes from
+> >>> the fact that sets are like partial (*truncated*) types; they have
+> >>> elements and equivalence, but no proofs.
+> >>>=20
+> >>> In fact, this would give the native type theory [3][4][5] of
+> >>> Lojban. A native type theory is one which is generated directly
+> >>> from the three components I mentioned earlier, but ignoring any
+> >>> "types" which might be defined internally already. For example,
+> >>> {ctaipe} does not actually refer to Lojban's types. The native
+> >>> type theory could be directly put to use computationally:
+> >>>=20
+> >>> * To prove formal facts about Lojban utterances [6]
+> >>> * To optimize Lojban utterances, shortening or clarifying them [7]
+> >>> * To synthesize Lojban utterances which describe a
+> >>> partially-specified world [8]
+> >>>=20
+> >>> * To compile Lojban utterances into executable programs [9]
+> >>>=20
+> >>> Iterating on CLL has not produced the rewrite rules that we might
+> >>> desire. It sketches several rules and even gives some examples for
+> >>> the "logical" connectives, but it is far from complete. Similarly,
+> >>> la brismu suggests a handful of rewrite rules borrowed from CLL
+> >>> and other logics, but is missing the tense system, BAI,
+> >>> Lojban-in-Lojban grammar, mekso, and much more.
+> >>>=20
+> >>> Lojban only cosplays as a logical language. We could fix that, if
+> >>> we cared to learn the relevant maths.
+> >>=20
+> >> Do we have a plan? No deadlines but some plan might be needed. Where
+> >> to start from? Can we solve problems iteratively?
+> >>=20
+> >>> Peace,
+> >>>=20
+> >>> ~ C.
+> >>>=20
+> >>> [0] https://ncatlab.org/nlab/show/logic
+> >>>=20
+> >>> [1] https://ncatlab.org/nlab/show/type+theory
+> >>> [2] https://ncatlab.org/nlab/show/homotopy%20type%20theory
+> >>> [3]
+> >>>=20
+> >> https://golem.ph.utexas.edu/category/2021/02/native_type_theory.html
+> >>>=20
+> >>> [4]
+> >>>=20
+> >>=20
+> >=20
+> https://golem.ph.utexas.edu/category/2021/03/native_type_theory_part_2.ht=
+ml
+> >>>=20
+> >>> [5]
+> >>>=20
+> >>=20
+> >=20
+> https://golem.ph.utexas.edu/category/2021/03/native_type_theory_part_3_1.=
+html
+> >>> [6] http://us.metamath.org/
+> >>> [7] https://egraphs-good.github.io/
+> >>> [8] https://github.com/webyrd/Barliman
+> >>> [9] http://docs.idris-lang.org/en/latest/
+> >=20
+> > --
+> > You received this message because you are subscribed to the Google
+> > Groups "lojban" group.
+> > To unsubscribe from this group and stop receiving emails from it, send
+> > an email to lojban+un...@googlegroups.com.
+> > To view this discussion on the web visit
+> >=20
+> https://groups.google.com/d/msgid/lojban/16ccd800-23f0-4c9f-9ee7-8c7f4f08=
+223en%40googlegroups.com
+> > [1].
+> >=20
+> >=20
+> > Links:
+> > ------
+> > [1]
+> >=20
+> https://groups.google.com/d/msgid/lojban/16ccd800-23f0-4c9f-9ee7-8c7f4f08=
+223en%40googlegroups.com?utm_medium=3Demail&utm_source=3Dfooter
+>
+
+--=20
+You received this message because you are subscribed to the Google Groups "=
+lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/=
+lojban/872ff21c-712d-4a4b-8f4f-351d6ff549dan%40googlegroups.com.
+
+------=_Part_12596_995161743.1617307435457
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div>I'm not a math genius. I'm just some person who was told that Lojban i=
+s a logical language and decided to take "logical" seriously as an adjectiv=
+e.<br></div><div><br></div><div>For what it's worth, it sounds like you und=
+erstand what's going on in terms of social dynamics. To paraphrase your quo=
+te, I am rude to la gleki because la gleki has disrespected me for years *a=
+nd* because la gleki has refused to study and work on understanding formal =
+maths. I am happy to talk to any of the 730+ members who have *not* spent t=
+he past few years being backhanded and dismissive on IRC.<br></div><div><br=
+></div><div>This isn't my first post to the list, either. I strongly recomm=
+end reading the posts from the past year, especially the ones where I went =
+entirely unanswered [0][1][2]. You also should know that I am following the=
+ tradition of Clifford in directly critiquing the goals and status of Lojba=
+n [3].<br></div><div><br></div><div>[0] https://groups.google.com/g/lojban/=
+c/L8NFx18ZePc<br></div><div>[1] https://groups.google.com/g/lojban/c/F-mntS=
+JHz7w<br></div><div>[2] https://groups.google.com/g/lojban/c/LwYwRLtsajs<br=
+></div><div>[3] https://groups.google.com/g/lojban/c/gkIpyzNXykw<br></div><=
+div class=3D"gmail_quote"><div dir=3D"auto" class=3D"gmail_attr">On Thursda=
+y, April 1, 2021 at 11:15:43 AM UTC-7 xxv wrote:<br/></div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin: 0 0 0 0.8ex; border-left: 1px solid rgb(=
+204, 204, 204); padding-left: 1ex;">I&#39;m just a lurker here, but you cam=
+e in really hot and are now being=20
+<br>mean to people. Perhaps, IDK, be cool and we can work this whole thing=
+=20
+<br>out together? Not everyone is a math genius like you.
+<br>
+<br>&quot;People may be rude to you because they are unhappy, someone hurt =
+them=20
+<br>recently, you were disrespectful towards them, or because they were=20
+<br>never taught the correct way to act around people.&quot; [0]
+<br>
+<br>[0] <a href=3D"https://www.wikihow.com/Be-Cool" target=3D"_blank" rel=
+=3D"nofollow" data-saferedirecturl=3D"https://www.google.com/url?hl=3Den&am=
+p;q=3Dhttps://www.wikihow.com/Be-Cool&amp;source=3Dgmail&amp;ust=3D16173923=
+70542000&amp;usg=3DAFQjCNGS23j4UYxVZo0RsFZ7__HFQFocaA">https://www.wikihow.=
+com/Be-Cool</a>
+<br>
+<br>On 2021-04-01 13:14, Corbin Simpson wrote:
+<br>&gt; You are literally standing in front of the detailed plan, complete
+<br>&gt; with links and notes, built from years of conversation about the
+<br>&gt; nature of Lojban and maths, and you have the audacity to ask &quot=
+;do we
+<br>&gt; have a plan?&quot; {mi&#39;a} have a plan, and it&#39;s the one I =
+just explained.
+<br>&gt; {mi&#39;o} have a different plan: you need to learn some maths and=
+ stop
+<br>&gt; being so squeamish about working directly with logic itself.
+<br>&gt;=20
+<br>&gt; Start from the definition of a category. Every category gives a lo=
+gic;
+<br>&gt; the objects of the category are equivalence classes of proposition=
+s,
+<br>&gt; and the modus-ponens of the logic is witnessed by the category&#39=
+;s
+<br>&gt; arrows. This is the foundation of categorical logic. From there, y=
+ou
+<br>&gt; can learn about type theory and topos theory.
+<br>&gt;=20
+<br>&gt; I have spoon-fed you for years on IRC, and in this moment, you are
+<br>&gt; like Henry the 8th in &quot;A Man for All Seasons&quot; [0], a vai=
+n king who
+<br>&gt; believes himself to be a master of both English and Latin, who sta=
+nds
+<br>&gt; in the mud without even thinking about it, and who demonstrates th=
+eir
+<br>&gt; lack of understanding every time they refuse to engage in
+<br>&gt; self-directed study.
+<br>&gt;=20
+<br>&gt; [0] <a href=3D"https://en.wikipedia.org/wiki/A_Man_for_All_Seasons=
+" target=3D"_blank" rel=3D"nofollow" data-saferedirecturl=3D"https://www.go=
+ogle.com/url?hl=3Den&amp;q=3Dhttps://en.wikipedia.org/wiki/A_Man_for_All_Se=
+asons&amp;source=3Dgmail&amp;ust=3D1617392370542000&amp;usg=3DAFQjCNFBWkM5g=
+1I63zT6XOzeQaHAC4Bwpw">https://en.wikipedia.org/wiki/A_Man_for_All_Seasons<=
+/a>
+<br>&gt;=20
+<br>&gt; On Thursday, April 1, 2021 at 10:02:48 AM UTC-7 <a href data-email=
+-masked rel=3D"nofollow">gleki.is...@gmail.com</a>
+<br>&gt; wrote:
+<br>&gt;=20
+<br>&gt;&gt; Em quinta-feira, 1 de abril de 2021 =C3=A0s 18:08:28 UTC+3,
+<br>&gt;&gt; <a href data-email-masked rel=3D"nofollow">mostawe...@gmail.co=
+m</a> escreveu:
+<br>&gt;&gt;=20
+<br>&gt;&gt;&gt; Hey all,
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; Time for the sort-of-annual reminder that Lojban falls far=
+ short
+<br>&gt;&gt;&gt; of its goals. I&#39;ll spell out an explicit recipe for ac=
+hieving
+<br>&gt;&gt;&gt; those goals.
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; Suppose that Lojban were logical; that is, suppose that it=
+ has a
+<br>&gt;&gt;&gt; logic [0]. A logic has three components:
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; * A collection of letters which form a collection of words
+<br>&gt;&gt;&gt; * A grammar which indicates whether a sequence of words is=
+ a
+<br>&gt;&gt;&gt; well-formed sentence
+<br>&gt;&gt;&gt; * A collection of rewrite rules which each match sequences=
+ of
+<br>&gt;&gt;&gt; words within well-formed sentences and replace them with n=
+ew
+<br>&gt;&gt;&gt; sequences of words which are still well-formed
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; We have two of three, for what it&#39;s worth. The failure=
+ is in this
+<br>&gt;&gt;&gt; third component. If we had all three, then we might call L=
+ojban a
+<br>&gt;&gt;&gt; *type theory* [1]. In a type theory, we start with a sente=
+nce, and
+<br>&gt;&gt;&gt; then apply rewrite rules to create new sentences. A sequen=
+ce of
+<br>&gt;&gt;&gt; rewrite rules, along with a starting sentence, is called a=
+ *proof*
+<br>&gt;&gt;&gt; when the rules can be applied in sequence to the starting =
+sentence
+<br>&gt;&gt;&gt; in order to produce a new final sentence.
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; The defining feature of type theory is types. A type is a
+<br>&gt;&gt;&gt; collection of proofs, called *elements* of the type, which=
+ might
+<br>&gt;&gt;&gt; be equivalent to each other. To show equivalence for two o=
+bjects,
+<br>&gt;&gt;&gt; we would need a pair of proofs which transform one object =
+into
+<br>&gt;&gt;&gt; another. We can also do this for two different proofs whic=
+h lead
+<br>&gt;&gt;&gt; to the same element in the same type, by transforming one =
+proof
+<br>&gt;&gt;&gt; into another, and so on. (This leads to [2].)
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; Contrary to popular belief, types are emergent features of=
+ type
+<br>&gt;&gt;&gt; theory; they do not have to be predefined. If we had a col=
+lection
+<br>&gt;&gt;&gt; of rewrite rules for Lojban, then we could discover types =
+within
+<br>&gt;&gt;&gt; Lojban&#39;s existing corpus. A ready stream of examples c=
+omes from
+<br>&gt;&gt;&gt; the fact that sets are like partial (*truncated*) types; t=
+hey have
+<br>&gt;&gt;&gt; elements and equivalence, but no proofs.
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; In fact, this would give the native type theory [3][4][5] =
+of
+<br>&gt;&gt;&gt; Lojban. A native type theory is one which is generated dir=
+ectly
+<br>&gt;&gt;&gt; from the three components I mentioned earlier, but ignorin=
+g any
+<br>&gt;&gt;&gt; &quot;types&quot; which might be defined internally alread=
+y. For example,
+<br>&gt;&gt;&gt; {ctaipe} does not actually refer to Lojban&#39;s types. Th=
+e native
+<br>&gt;&gt;&gt; type theory could be directly put to use computationally:
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; * To prove formal facts about Lojban utterances [6]
+<br>&gt;&gt;&gt; * To optimize Lojban utterances, shortening or clarifying =
+them [7]
+<br>&gt;&gt;&gt; * To synthesize Lojban utterances which describe a
+<br>&gt;&gt;&gt; partially-specified world [8]
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; * To compile Lojban utterances into executable programs [9=
+]
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; Iterating on CLL has not produced the rewrite rules that w=
+e might
+<br>&gt;&gt;&gt; desire. It sketches several rules and even gives some exam=
+ples for
+<br>&gt;&gt;&gt; the &quot;logical&quot; connectives, but it is far from co=
+mplete. Similarly,
+<br>&gt;&gt;&gt; la brismu suggests a handful of rewrite rules borrowed fro=
+m CLL
+<br>&gt;&gt;&gt; and other logics, but is missing the tense system, BAI,
+<br>&gt;&gt;&gt; Lojban-in-Lojban grammar, mekso, and much more.
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; Lojban only cosplays as a logical language. We could fix t=
+hat, if
+<br>&gt;&gt;&gt; we cared to learn the relevant maths.
+<br>&gt;&gt;=20
+<br>&gt;&gt; Do we have a plan? No deadlines but some plan might be needed.=
+ Where
+<br>&gt;&gt; to start from? Can we solve problems iteratively?
+<br>&gt;&gt;=20
+<br>&gt;&gt;&gt; Peace,
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; ~ C.
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; [0] <a href=3D"https://ncatlab.org/nlab/show/logic" target=
+=3D"_blank" rel=3D"nofollow" data-saferedirecturl=3D"https://www.google.com=
+/url?hl=3Den&amp;q=3Dhttps://ncatlab.org/nlab/show/logic&amp;source=3Dgmail=
+&amp;ust=3D1617392370542000&amp;usg=3DAFQjCNF_tiKBe_abyxJo-KaUhq5GdkCYnA">h=
+ttps://ncatlab.org/nlab/show/logic</a>
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; [1] <a href=3D"https://ncatlab.org/nlab/show/type+theory" =
+target=3D"_blank" rel=3D"nofollow" data-saferedirecturl=3D"https://www.goog=
+le.com/url?hl=3Den&amp;q=3Dhttps://ncatlab.org/nlab/show/type%2Btheory&amp;=
+source=3Dgmail&amp;ust=3D1617392370543000&amp;usg=3DAFQjCNHoXH_JmqpxBNAzk3P=
+ljBzyMvmuXg">https://ncatlab.org/nlab/show/type+theory</a>
+<br>&gt;&gt;&gt; [2] <a href=3D"https://ncatlab.org/nlab/show/homotopy%20ty=
+pe%20theory" target=3D"_blank" rel=3D"nofollow" data-saferedirecturl=3D"htt=
+ps://www.google.com/url?hl=3Den&amp;q=3Dhttps://ncatlab.org/nlab/show/homot=
+opy%2520type%2520theory&amp;source=3Dgmail&amp;ust=3D1617392370543000&amp;u=
+sg=3DAFQjCNFUDTIsf7_2EJAoTxNVrWupIKsftA">https://ncatlab.org/nlab/show/homo=
+topy%20type%20theory</a>
+<br>&gt;&gt;&gt; [3]
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt; <a href=3D"https://golem.ph.utexas.edu/category/2021/02/native=
+_type_theory.html" target=3D"_blank" rel=3D"nofollow" data-saferedirecturl=
+=3D"https://www.google.com/url?hl=3Den&amp;q=3Dhttps://golem.ph.utexas.edu/=
+category/2021/02/native_type_theory.html&amp;source=3Dgmail&amp;ust=3D16173=
+92370543000&amp;usg=3DAFQjCNGxej9mwEIVNMp76wbMSbm96eXazg">https://golem.ph.=
+utexas.edu/category/2021/02/native_type_theory.html</a>
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; [4]
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;=20
+<br>&gt; <a href=3D"https://golem.ph.utexas.edu/category/2021/03/native_typ=
+e_theory_part_2.html" target=3D"_blank" rel=3D"nofollow" data-saferedirectu=
+rl=3D"https://www.google.com/url?hl=3Den&amp;q=3Dhttps://golem.ph.utexas.ed=
+u/category/2021/03/native_type_theory_part_2.html&amp;source=3Dgmail&amp;us=
+t=3D1617392370543000&amp;usg=3DAFQjCNF8lDmPZnKp-vZh-psFohf-o0cmCw">https://=
+golem.ph.utexas.edu/category/2021/03/native_type_theory_part_2.html</a>
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;&gt; [5]
+<br>&gt;&gt;&gt;=20
+<br>&gt;&gt;=20
+<br>&gt; <a href=3D"https://golem.ph.utexas.edu/category/2021/03/native_typ=
+e_theory_part_3_1.html" target=3D"_blank" rel=3D"nofollow" data-saferedirec=
+turl=3D"https://www.google.com/url?hl=3Den&amp;q=3Dhttps://golem.ph.utexas.=
+edu/category/2021/03/native_type_theory_part_3_1.html&amp;source=3Dgmail&am=
+p;ust=3D1617392370543000&amp;usg=3DAFQjCNH6HgftDqqrkzZRxVRbBIkenMAiOw">http=
+s://golem.ph.utexas.edu/category/2021/03/native_type_theory_part_3_1.html</=
+a>
+<br>&gt;&gt;&gt; [6] <a href=3D"http://us.metamath.org/" target=3D"_blank" =
+rel=3D"nofollow" data-saferedirecturl=3D"https://www.google.com/url?hl=3Den=
+&amp;q=3Dhttp://us.metamath.org/&amp;source=3Dgmail&amp;ust=3D1617392370543=
+000&amp;usg=3DAFQjCNFN30LvmfKDE-keYFu93wlo0lEh4w">http://us.metamath.org/</=
+a>
+<br>&gt;&gt;&gt; [7] <a href=3D"https://egraphs-good.github.io/" target=3D"=
+_blank" rel=3D"nofollow" data-saferedirecturl=3D"https://www.google.com/url=
+?hl=3Den&amp;q=3Dhttps://egraphs-good.github.io/&amp;source=3Dgmail&amp;ust=
+=3D1617392370543000&amp;usg=3DAFQjCNFZEiLoX4Yfb8gawkubobvT4makPw">https://e=
+graphs-good.github.io/</a>
+<br>&gt;&gt;&gt; [8] <a href=3D"https://github.com/webyrd/Barliman" target=
+=3D"_blank" rel=3D"nofollow" data-saferedirecturl=3D"https://www.google.com=
+/url?hl=3Den&amp;q=3Dhttps://github.com/webyrd/Barliman&amp;source=3Dgmail&=
+amp;ust=3D1617392370543000&amp;usg=3DAFQjCNFmxbyY3legF0ooWk1pVbpfUj9ckA">ht=
+tps://github.com/webyrd/Barliman</a>
+<br>&gt;&gt;&gt; [9] <a href=3D"http://docs.idris-lang.org/en/latest/" targ=
+et=3D"_blank" rel=3D"nofollow" data-saferedirecturl=3D"https://www.google.c=
+om/url?hl=3Den&amp;q=3Dhttp://docs.idris-lang.org/en/latest/&amp;source=3Dg=
+mail&amp;ust=3D1617392370543000&amp;usg=3DAFQjCNEUfEIsVBN0lxmFerf1QWprl2cCP=
+Q">http://docs.idris-lang.org/en/latest/</a>
+<br>&gt;=20
+<br>&gt;  --
+<br>&gt; You received this message because you are subscribed to the Google
+<br>&gt; Groups &quot;lojban&quot; group.
+<br>&gt; To unsubscribe from this group and stop receiving emails from it, =
+send
+<br>&gt; an email to <a href data-email-masked rel=3D"nofollow">lojban+un..=
+.@googlegroups.com</a>.
+<br>&gt; To view this discussion on the web visit
+<br>&gt; <a href=3D"https://groups.google.com/d/msgid/lojban/16ccd800-23f0-=
+4c9f-9ee7-8c7f4f08223en%40googlegroups.com" target=3D"_blank" rel=3D"nofoll=
+ow" data-saferedirecturl=3D"https://www.google.com/url?hl=3Den&amp;q=3Dhttp=
+s://groups.google.com/d/msgid/lojban/16ccd800-23f0-4c9f-9ee7-8c7f4f08223en%=
+2540googlegroups.com&amp;source=3Dgmail&amp;ust=3D1617392370543000&amp;usg=
+=3DAFQjCNErELUVXhoHbzkAg1JkEt-UdKwItQ">https://groups.google.com/d/msgid/lo=
+jban/16ccd800-23f0-4c9f-9ee7-8c7f4f08223en%40googlegroups.com</a>
+<br>&gt; [1].
+<br>&gt;=20
+<br>&gt;=20
+<br>&gt; Links:
+<br>&gt; ------
+<br>&gt; [1]
+<br>&gt; <a href=3D"https://groups.google.com/d/msgid/lojban/16ccd800-23f0-=
+4c9f-9ee7-8c7f4f08223en%40googlegroups.com?utm_medium=3Demail&amp;utm_sourc=
+e=3Dfooter" target=3D"_blank" rel=3D"nofollow" data-saferedirecturl=3D"http=
+s://www.google.com/url?hl=3Den&amp;q=3Dhttps://groups.google.com/d/msgid/lo=
+jban/16ccd800-23f0-4c9f-9ee7-8c7f4f08223en%2540googlegroups.com?utm_medium%=
+3Demail%26utm_source%3Dfooter&amp;source=3Dgmail&amp;ust=3D1617392370543000=
+&amp;usg=3DAFQjCNEMLodILXcezCTb2J2m_CWafN0N-g">https://groups.google.com/d/=
+msgid/lojban/16ccd800-23f0-4c9f-9ee7-8c7f4f08223en%40googlegroups.com?utm_m=
+edium=3Demail&amp;utm_source=3Dfooter</a>
+<br></blockquote></div>
+
+<p></p>
+
+-- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;lojban&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:lojban+unsubscribe@googlegroups.com">lojban+unsub=
+scribe@googlegroups.com</a>.<br />
+To view this discussion on the web visit <a href=3D"https://groups.google.c=
+om/d/msgid/lojban/872ff21c-712d-4a4b-8f4f-351d6ff549dan%40googlegroups.com?=
+utm_medium=3Demail&utm_source=3Dfooter">https://groups.google.com/d/msgid/l=
+ojban/872ff21c-712d-4a4b-8f4f-351d6ff549dan%40googlegroups.com</a>.<br />
+
+------=_Part_12596_995161743.1617307435457--
+
+------=_Part_12595_336872654.1617307435457--
+
