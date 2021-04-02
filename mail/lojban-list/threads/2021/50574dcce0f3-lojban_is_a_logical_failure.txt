@@ -1,4 +1,4 @@
-# mail/lojban-list thread 50574dcce0f3-lojban_is_a_logical_failure | root ac15b0d5-c27c-4d8c-a459-4f80e9970bddn@googlegroups.com | 10 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 50574dcce0f3-lojban_is_a_logical_failure | root ac15b0d5-c27c-4d8c-a459-4f80e9970bddn@googlegroups.com | 11 messages | rendered by jbomohi mail-v1
 
 === 1 | 2021-04-01T15:08:28Z | Corbin Simpson <mostawesomedude@gmail.com> | ac15b0d5-c27c-4d8c-a459-4f80e9970bddn@googlegroups.com | mail/lojban-list/cur/1617289708.50574dcce0f336f1.jbomohi:2,S
 Hey all,
@@ -1183,4 +1183,167 @@ Best,
 You received this message because you are subscribed to the Google Groups "lojban" group.
 To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/CAOYwWb1hDUDEUoE0RzFMfVVU4%2Bx2oYaE_ArVVt6in9R2uwbP_w%40mail.gmail.com.
+
+
+=== 11 | 2021-04-02T11:48:19Z | Corbin Simpson <mostawesomedude@gmail.com> | 32cb2274-7e23-4680-91f7-eb21fda4ae7cn@googlegroups.com | mail/lojban-list/cur/1617364099.6977a02bbc413ca0.jbomohi:2,S
+Hi Mike,
+
+While you're correct that the number of rules will not be ~10, like in a 
+typical logic, but more like ~10,000; I do not find this to be a serious 
+obstacle. Metamath [0] has tens of thousands of handwritten derivations, 
+and a machine can check that they are well-formed and valid proofs in only 
+a few seconds. I think that the main difficulty is in composing the rules 
+in the first place.
+
+The semantics I recommend for Lojban is a fragment of second-order logic 
+(SOL). This embeds cleanly into HOL. Proof search is infeasible, but that 
+is typical of programming languages; rather than hypernymy getting in the 
+way of proof search, hypernymy offers many choices for folks writing in 
+Lojban to express themselves with nuance.
+
+There exist at least two gismu, {dugri} and {tenfa}, which address the same 
+underlying relation. As an immediate and very satisfying consequence, 
+Lojban cannot have a normal form without some arbitrary violence [6] to the 
+baseline, in the form of a choice which well-orders the gismu. (We could go 
+alphabetically, of course.)
+
+Many words have been spilled on tanru. To be brief, writing (=>) for 
+implication, I recommend the principles that:
+
+* Each lujvo => each implied seljvajvo [1] from its terbri
+* Each lujvo => the tanru it was made from
+* Each tanru => its tertau
+
+So, for example, from {nanbymlatu} "catloaf; cat sitting in a loaf shape" 
+we could conclude {mlatu} "cat". Similarly, from {xekri mlatu} "black cat" 
+we could conclude {mlatu}. It is okay that adjectives are vague; they still 
+constrain what's logically possible, and that is enough.
+
+Note also that, borrowing a bit of category theory, we should expect some 
+allegory-like [7] behavior here. Specifically, if we imagine the 
+(hypothetical!) rule that {xekri} => {skari}, then {xekri mlatu} => {skari 
+mlatu} should be available, via some *two-dimensional rule* which allows us 
+to lift rules on selbri to rules on seltau.
+
+I strongly recommend that you read through my notes on formalization and 
+rewrite rules [2]. I will summarize some points based on your specific 
+listing:
+
+* FA: These form a group (each FA rule can be undone, there's a do-nothing 
+rule, FA rules compose) and so we only need one rule for 
+introducing/eliminating each of the five FA, plus five more for swapping FA 
+and generating a permutation group. Similar reasoning applies to SE.
+* CU, KU, terminators in general: We could require that a parse tree is 
+associated to each utterance. Then, the rules for terminators each say that 
+a particular sort of branch in the parse tree can, because of the 
+neighboring branches, optionally have a CU or KU or etc. You're quite 
+correct that this is infeasible in Metamath or other embed-your-own-grammar 
+systems that don't know about parse trees.
+* NA: Should be in a distinct fragment of logic from the rest of the core. 
+Lojban is relational, and relational logic is very different from Cartesian 
+logic. If we are talking about relations first, rather than quantifiers 
+first, then we should imagine bridi as not being true or false, but being 
+true in zero or more contexts, with falsity being the special case where 
+zero contexts work. This is all beside the fact that topos-based HOL 
+doesn't necessarily have LEM or AOC [3]. {su'o} => {naku ro naku} doesn't 
+work except in the special case of Boolean situations.
+* Modal logic: Should also be in a distinct fragment. Making modal logic 
+not collapse is something of a magic trick. In a tradition of Gödel, we 
+imagine that modal logic S4 can embed IPC, the intuitionistic propositional 
+calculus, but in order to make S4 work, we need something like an embedding 
+of S4 into Peano arithmetic. The path for this ends up being IPC => S4 => 
+LP => PA, where LP has the same modal behavior as S4, but whenever 
+something is possible, LP carries a *proof* that it is possible. The upshot 
+is that Lojban doesn't carry around those proofs, and so a lot of work will 
+be required to infer them. See [4] or [5] for explanation.
+
+There are totally non-logical particles that must be handled by parsers, 
+like SA/SI/SU, so once again we have an immediate and satisfying 
+consequence: No, baseline Lojban cannot be totally formalized at the 
+syntactic level in terms of logic, and must be expanded first.
+
+I hope that this is interesting food for thought. Yes, we must immediately 
+agree that many parts of the baseline are not formalizable, and provably 
+so. But the bulk of the baseline is gismu, and those are definitely related 
+to each other, in addition to coding for relations in their own right. 
+Where those relations can be formalized, we can derive rewrite rules. I 
+haven't implemented them in code, but in la brismu, I give Peano arithmetic 
+and basic manipulation of bridi, as well as a set-theoretic definition of 
+{du} and {lo}; I think that there are concrete useful things to draw from 
+formal efforts.
+
+[0] http://us.metamath.org/mpeuni/mmset.html
+[1] https://mw.lojban.org/papri/seljvajvo
+[2] https://github.com/MostAwesomeDude/brismu/
+[3] https://en.wikipedia.org/wiki/Diaconescu%27s_theorem
+[4] https://sartemov.ws.gc.cuny.edu/files/2013/01/Vienna2011-FOLP.pdf
+[5] https://www.youtube.com/watch?v=RfSYN5wEW5U
+[6] 
+https://math.stackexchange.com/questions/1493341/what-exactly-did-hermann-weyl-mean
+[7] https://ncatlab.org/nlab/show/allegory
+
+
+On Thursday, April 1, 2021 at 6:03:32 PM UTC-7 Mike S. wrote:
+
+> Greetings Corbin,
+>
+> On Thu, Apr 1, 2021 at 11:08 AM Corbin Simpson <mostawe...@gmail.com> 
+> wrote:
+>
+>> Hey all,
+>>
+>> Time for the sort-of-annual reminder that Lojban falls far short of its 
+>> goals. I'll spell out an explicit recipe for achieving those goals.
+>>
+>> Suppose that Lojban were logical; that is, suppose that it has a logic 
+>> [0]. A logic has three components:
+>>
+>> * A collection of letters which form a collection of words
+>> * A grammar which indicates whether a sequence of words is a well-formed 
+>> sentence
+>> * A collection of rewrite rules which each match sequences of words 
+>> within well-formed sentences and replace them with new sequences of words 
+>> which are still well-formed
+>>
+>
+> What sort of rewrite rules do you mean?  Are you talking about the 
+> transformation rules of propositional logic, for example, given "P and Q" 
+> conclude "P" (i.e. conjunction elimination)? Those sorts of rules are just 
+> the tip of the iceberg for something like Lojban.
+>
+> If you are talking about the total collection of possible rewrite rules, 
+> including trivial ones, that could be posited for Lojban, then I suspect 
+> that the collection size would be staggering -- off the top of my head: 
+> within clauses, you can reorder terms and the matrix predicate using FA; 
+> depending on context, you can alternate CU and KU and other terminators; 
+> again, depending on context, you can sometimes move NA KU (at least thanks 
+> to Xorlo rules you can) and sometimes not, and of course, su'o can be 
+> rewritten as naku ro naku; there are bucket loads of particles which can 
+> interact with either clauses or more locally that have some modal-logic 
+> effect.  Even if you could sort out all the scope issues, sorting out the 
+> semantics would not be easy.  Then there is the actual lexicon; in general 
+> any predicate might have one or more equivalent decompositions (given x1 is 
+> a mother conclude x1 is a female parent) and probably has one or more 
+> hypernymic replacements (given x1 is a cat, conclude x1 is a feline, or 
+> carnivore, or mammal, or vertebrate, or ...).  Finally there is the 
+> (non-)compositional nature of tanru, the centerpiece of Lojban's 
+> semantics.  Thankfully, in practice most tanru are hyponyms of the tertau, 
+> so we can be relatively sure a xekri mlatu is a cat, though we can't be 
+> fully sure it's a black one, because "je" is not necessarily to be presumed 
+> (bizarrely to me).
+>
+> I don't see how one could go about being totally thorough in specifying 
+> rewrite rules, and I am not sure it's even possible.  But maybe you have 
+> something much more focused in mind -- like a fragment of the full Lojban 
+> language that would be easier to manage.  That might work. I don't know.
+>
+> Best,
+> -Mike
+>
+>
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/32cb2274-7e23-4680-91f7-eb21fda4ae7cn%40googlegroups.com.
 
