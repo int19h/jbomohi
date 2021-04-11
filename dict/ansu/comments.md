@@ -29,3 +29,13 @@ English. The addition of {.ansu} fills the gap of accompaniment-less
 dancing, which doesn't mean that {dansu} with its second slot is not
 useful, of course.
 
+
+## 2021-04-11T18:04:10Z — Ilmen (comment 3670, in reply to 3669)
+
+Re: Methodology?
+
+I hadn't thought of {jansu} and {ransu} at all when chosing {ansu} as the
+word form; if people find it annoying that several gismu could correspond
+to the ismu form "ansu", I could instead assign to that meaning some
+a-priori form, i.e. a so-called {blalalavla}. :) 
+
