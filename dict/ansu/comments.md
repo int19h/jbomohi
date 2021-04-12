@@ -39,3 +39,21 @@ word form; if people find it annoying that several gismu could correspond
 to the ismu form "ansu", I could instead assign to that meaning some
 a-priori form, i.e. a so-called {blalalavla}. :) 
 
+
+## 2021-04-12T06:08:26Z — ues (comment 3671, in reply to 3670)
+
+Re: Methodology?
+
+Ilmen wrote:
+> I hadn't thought of {jansu} and {ransu} at all when chosing {ansu} as
+the
+> word form; if people find it annoying that several gismu could
+correspond
+> to the ismu form "ansu", I could instead assign to that meaning some
+> a-priori form, i.e. a so-called {blalalavla}. :) 
+
+
+Interesting. I suppose you're aware of the rafsi for zi'o being "zil". So
+zildansu would be equivalent, though not as brief, and could be applied to
+any other gismu for that matter.
+
