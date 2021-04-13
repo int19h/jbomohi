@@ -57,3 +57,29 @@ Interesting. I suppose you're aware of the rafsi for zi'o being "zil". So
 zildansu would be equivalent, though not as brief, and could be applied to
 any other gismu for that matter.
 
+
+## 2021-04-13T13:09:29Z — Ilmen (comment 3672, in reply to 3671)
+
+Re: Methodology?
+
+ues wrote:
+> Ilmen wrote:
+> > I hadn't thought of {jansu} and {ransu} at all when chosing {ansu} as
+> the
+> > word form; if people find it annoying that several gismu could
+> correspond
+> > to the ismu form "ansu", I could instead assign to that meaning some
+> > a-priori form, i.e. a so-called {blalalavla}. :) 
+> 
+> 
+> Interesting. I suppose you're aware of the rafsi for zi'o being "zil".
+So
+> zildansu would be equivalent, though not as brief, and could be applied
+to
+> any other gismu for that matter.
+
+zil- is usually interpreted as applying to the first slot of the source
+predicate, so people would expect at first blush to see {zildansu} to mean
+"x₁ is a music/rythme on which there is dancing"; {zilseldansu} would be
+more explicit but longer.
+
