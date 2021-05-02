@@ -124,42 +124,43 @@ This document was originated to provide a clearing house for discussion related 
 
 Magic words are all cmavo that interact directly with the nature of the speech stream, so SI SA SU ZO ZOI LOhU LEhU ZEI BU BAhE FAhO.
 
-The two documents that were used to construct this page are [http://www.lojban.org/files/machine-grammars/g grammar.300] (which is a plain text document, and really should be renamed to have .txt after it) and [http://lojban.org/publications/reference_grammar/chapter19.html efGram Chapter 19], section 16.
+The two documents that were used to construct this page are [http://www.lojban.org/files/machine-grammars/g grammar.300] (which is a plain text document, and really should be renamed to have .txt after it) and [http://lojban.org/publications/reference_grammar/chapter19.html RefGram Chapter 19], section 16.
 
 It is worth noting that these two documents contradict each other on many points.  In particular, the order of operations is substantially different (grammar.300 handles zoi before lo'u...le'u, for example).
 
-==  Outstanding Questions ==
 
-* Is nested lo'u...le'u allowed?
-** Not really, but lo'u has no effect and we allow "zo le'u".
+==Outstanding Questions==
 
-* Does zoi function in lo'u...le'u?
-** No.  If you need to quote a broken zoi, use another zoi.
+*Is nested lo'u...le'u allowed?
+**Not really, but lo'u has no effect and we allow "zo le'u".
 
-* What does BAhE+BU do?
-** Just empasizes the BU.
+*Does zoi function in lo'u...le'u?
+**No.  If you need to quote a broken zoi, use another zoi.
 
-* The red book claims that UI cmavo can't mark BU.  What's up with that?
+*What does BAhE+BU do?
+**Just empasizes the BU.
+
+*The red book claims that UI cmavo can't mark BU.  What's up with that?
 ** I have no idea, but I'm ignoring it.  UI can mark anything that doesn't grab it.
 
-* What do we do about ZOI, SI and SA interactions?  Is SI allowed as a ZOI delimiter?  Does SI after a ZOI clause erase the whole thing?
-** SI, SA and SU are not allowed ZOI delimiters.  4 SI for ZOI erasure from outside.  SA+ZOI+SI works.  ZOI+SI == nothing.
+*What do we do about ZOI, SI and SA interactions?  Is SI allowed as a ZOI delimiter?  Does SI after a ZOI clause erase the whole thing?
+**SI, SA and SU are not allowed ZOI delimiters.  4 SI for ZOI erasure from outside.  SA+ZOI+SI works.  ZOI+SI == nothing.
 
-* Does SU go back to the last NIhO, LU, TUhE, or TO (as grammar.300 claims) or the beginning of input (as the Red Book claims)?
-** The latter; SA can be used for the other things, and if SU works the former way there is no way to unequivocably erase to the beginning of input.
+*Does SU go back to the last NIhO, LU, TUhE, or TO (as grammar.300 claims) or the beginning of input (as the Red Book claims)?
+**The latter; SA can be used for the other things, and if SU works the former way there is no way to unequivocably erase to the beginning of input.
 
-* grammer.300 claims that ZEI works on ZOI, ZO and LOhU...LEhU clauses.  I'm pretty sure this is just a YACC side effect; it certainly seems amazingly ridiculous to me.  If anyone disagrees, let me know.
-** It doesn't do any harm, and allows certain useful things (like ZEI lujvo with the various words that ZEI can't bind to in them).
+*grammer.300 claims that ZEI works on ZOI, ZO and LOhU...LEhU clauses.  I'm pretty sure this is just a YACC side effect; it certainly seems amazingly ridiculous to me.  If anyone disagrees, let me know.
+**It doesn't do any harm, and allows certain useful things (like ZEI lujvo with the various words that ZEI can't bind to in them).
 
-==  Meta-Rules ==
+==Meta-Rules==
 
-# Magic words lay claim to, or "grab", other words, with varying effects.
+#Magic words lay claim to, or "grab", other words, with varying effects.
 
-# Magic word grabbing proceeds by an order of precedence.  The effect of a magic word can be to prevent the operation of another magic word (zo in particular) in which case the word that has been so grabbed no longer is allowed to grab other words.
+#Magic word grabbing proceeds by an order of precedence.  The effect of a magic word can be to prevent the operation of another magic word (zo in particular) in which case the word that has been so grabbed no longer is allowed to grab other words.
 
-# No two magic words may grab the same word, unless the interaction between those two magic words has been clearly defined. Any attempt to do so is an error.
+#No two magic words may grab the same word, unless the interaction between those two magic words has been clearly defined. Any attempt to do so is an error.
 
-==  Magic Words Handling ==
+==Magic Words Handling==
 
 (based on C16 S19 of the RefGram)
 
@@ -167,87 +168,87 @@ In order of precedence.  selma'o names used throughout.  + means "a member of th
 
 # Y is completely ignored (i.e. considered whitespace) except before BU.
 
-# ZOI cmavo use the following word as a delimiting word, no matter what it is, execept Y (which is ignored); and SI, SA and SU (which erase it).
+#ZOI cmavo use the following word as a delimiting word, no matter what it is, execept Y (which is ignored); and SI, SA and SU (which erase it).
 
-# ZO quotes the following word, no matter what it is, except Y.  Words quoted with ZO lose their grammatical functions.
+#ZO quotes the following word, no matter what it is, except Y.  Words quoted with ZO lose their grammatical functions.
 
-# FAhO terminates the word or text stream unequivocably, unless quoted with ZO, ZOI or LOhU...LEhU.
+#FAhO terminates the word or text stream unequivocably, unless quoted with ZO, ZOI or LOhU...LEhU.
 
-# LOhU quotes all following Lojban words up to a LEhU (but not a ZO+LEhU; this is to allow nested LOhU...LEhU quotes inside a LOhU...LEhU, so you can talk about mistakes you made that include a previous error quote).  Except for the ZO+LEhU case (which should be read as simply LEhU inside a LOhU...LEhU quote) all Lojban words within a LOhU...LEhU quote are read without any grammar and have no grammatical effects.
+#LOhU quotes all following Lojban words up to a LEhU (but not a ZO+LEhU; this is to allow nested LOhU...LEhU quotes inside a LOhU...LEhU, so you can talk about mistakes you made that include a previous error quote).  Except for the ZO+LEhU case (which should be read as simply LEhU inside a LOhU...LEhU quote) all Lojban words within a LOhU...LEhU quote are read without any grammar and have no grammatical effects.
 
-# LEhU is ungrammatical except at the end of a LOhU quotation and after ZO.
+#LEhU is ungrammatical except at the end of a LOhU quotation and after ZO.
 
-# SI erases the preceding word unless it is a ZO.  Y is ignored.
+#SI erases the preceding word unless it is a ZO.  Y is ignored.
 
-# SA erases the preceding word and other words, unless the preceding word is a ZO.  SA erases back until it sees a word of the same selma'o as the word that follows SA.  The previous same-selma'o word is itself erased.  Y is ignored for selma'o matching purposes. 
+#SA erases the preceding word and other words, unless the preceding word is a ZO.  SA erases back until it sees a word of the same selma'o as the word that follows SA.  The previous same-selma'o word is itself erased.  Y is ignored for selma'o matching purposes.
 
-# SU erases itself and all words back to the beginning of the current conversation for the speaker that says it.  If spoken twice, it also erases the other speaker's words.  In computer input cases SU, in general, erases itself and all words to the beginning of the input (as most computer input cases cannot distinguish between speakers).
+#SU erases itself and all words back to the beginning of the current conversation for the speaker that says it.  If spoken twice, it also erases the other speaker's words.  In computer input cases SU, in general, erases itself and all words to the beginning of the input (as most computer input cases cannot distinguish between speakers).
 
-# ZEI combines the preceding and the following word into a lujvo.  For words to its left, it does not affect SI, SA, and SU (it affects whatever is to the left after the erasing is done; if nothing is left an error result); ZO and LOhU (which quote it); ZOI (which uses it as a delimiter); BAhE and Y (which it skips); ZEI (which would lead to grouping issues, and hence is an error to attempt); and FAhO (which makes no sense because the stream ends at the FAhO).  For words to its right, it does not affect SI, SA, and SU (which erase it); BAhE and Y (which it skips); ZEI (which would lead to grouping issues, and hence is an error to attempt); and FAhO (which results in an error).  ZO, ZOI and LOhU...LEhU clauses are attached to the ZEI lujvo in their entirety.  BAhE effects ZEI as usual, so ZEI skips over any preceeding BAhE cmavo to affect the word before them.
+#ZEI combines the preceding and the following word into a lujvo.  For words to its left, it does not affect SI, SA, and SU (it affects whatever is to the left after the erasing is done; if nothing is left an error result); ZO and LOhU (which quote it); ZOI (which uses it as a delimiter); BAhE and Y (which it skips); ZEI (which would lead to grouping issues, and hence is an error to attempt); and FAhO (which makes no sense because the stream ends at the FAhO).  For words to its right, it does not affect SI, SA, and SU (which erase it); BAhE and Y (which it skips); ZEI (which would lead to grouping issues, and hence is an error to attempt); and FAhO (which results in an error).  ZO, ZOI and LOhU...LEhU clauses are attached to the ZEI lujvo in their entirety.  BAhE effects ZEI as usual, so ZEI skips over any preceeding BAhE cmavo to affect the word before them.
 
-# BU makes the preceding word into a lerfu word, except for ZO, ZEI and LOhU (which quote it), ZOI (which uses it as a delimiter); LEhU (which would result in bizarrely re-opening the LOhU...LEhU, and hence is an error);  SI, SA and SU (it affects whatever is to the left after the erasing is done; if nothing is left an error results); BAhE (which it skips); BU (which would lead to grouping issues, and hence is an error to attempt); and FAhO (after which anything, including BU, is ignored).  Note that Y is specifically included.  BAhE effects BU as usual, so BU skips over any preceeding BAhE cmavo to affect the word before them.  Multiple BU may be used in succession, in which case a new letteral is formed for each additional BU (i.e. "broda bu" is a different letteral from "broda bu bu").  However, "bu bu" by itself is illegal.
+#BU makes the preceding word into a lerfu word, except for ZO, ZEI and LOhU (which quote it), ZOI (which uses it as a delimiter); LEhU (which would result in bizarrely re-opening the LOhU...LEhU, and hence is an error);  SI, SA and SU (it affects whatever is to the left after the erasing is done; if nothing is left an error results); BAhE (which it skips); BU (which would lead to grouping issues, and hence is an error to attempt); and FAhO (after which anything, including BU, is ignored).  Note that Y is specifically included.  BAhE effects BU as usual, so BU skips over any preceeding BAhE cmavo to affect the word before them.  Multiple BU may be used in succession, in which case a new letteral is formed for each additional BU (i.e. "broda bu" is a different letteral from "broda bu bu").  However, "bu bu" by itself is illegal.
 
-==  Marking Words ==
+==Marking Words==
 
 Some words are almost, but not quite, magic words, in that they mark and affect nearby words, but do not change the special effects of other magic words.  Hence they don't really fall in to the magic word precedence list.
 
-* BAhE marks the following word, except for SI, SA and SU (which erase it), or unless it is preceded by ZO (which quotes it) or ZOI (which uses it as a delimiter). Multiple BAhE cmavo may be used in succession, in which case they all affect the next non-BAhE word.  BAhE skips Y as usual.
-* Attitudinals (UI and CAI cmavo) mark the previous word, except for SI, SA and SU (the attitudinal marks whatever is to the left after the erasing is done, if anything); ZO, LOhU or ZEI (which quote it); ZOI (which uses it as a delimiter); BAhE (BAhE marks the attitudinal, which in turn marks the word before the stream of BAhE); Y (which is ignored); FAhO (which there can be nothing to the right of).  Attitudinals are permitted following any word of the grammar, without interfering with that word's grammatical function, or causing any effect on the grammatical interpretation of any other token in the text.  Multiple UI cmavo may be used in succession. They may also be used at the beginning of text.  A following NAI is made part of the attitudinal.
+*BAhE marks the following word, except for SI, SA and SU (which erase it), or unless it is preceded by ZO (which quotes it) or ZOI (which uses it as a delimiter). Multiple BAhE cmavo may be used in succession, in which case they all affect the next non-BAhE word.  BAhE skips Y as usual.
+*Attitudinals (UI and CAI cmavo) mark the previous word, except for SI, SA and SU (the attitudinal marks whatever is to the left after the erasing is done, if anything); ZO, LOhU or ZEI (which quote it); ZOI (which uses it as a delimiter); BAhE (BAhE marks the attitudinal, which in turn marks the word before the stream of BAhE); Y (which is ignored); FAhO (which there can be nothing to the right of).  Attitudinals are permitted following any word of the grammar, without interfering with that word's grammatical function, or causing any effect on the grammatical interpretation of any other token in the text.  Multiple UI cmavo may be used in succession. They may also be used at the beginning of text.  A following NAI is made part of the attitudinal.
 
-* DAhO, FUhE, and FUhO are the same as UI, but do not absorb a following NAI.
+*DAhO, FUhE, and FUhO are the same as UI, but do not absorb a following NAI.
 
-==  Special SI and SA Cases ==
+==Special SI and SA Cases==
 
 SI gets very complicated in a few cases, so here we go.  Some SA notes here too.
 
-* SI has no effect inside LOhU...LEhU or after ZO (or inside a ZOI quote, of course).
-* Multiple SI erase back through more words, rather than operating on themselves or something.  Duh.
+*SI has no effect inside LOhU...LEhU or after ZO (or inside a ZOI quote, of course).
+*Multiple SI erase back through more words, rather than operating on themselves or something.  Duh.
 
-* SI is valid at the beginning of input, but only to deal with the fact computer parsing is often done line by line, and two lines can be from the same speaker (e.g. "mi broda co" followed later by "si do").
-* SA+SI == nothing.
+*SI is valid at the beginning of input, but only to deal with the fact computer parsing is often done line by line, and two lines can be from the same speaker (e.g. "mi broda co" followed later by "si do").
+*SA+SI == nothing.
 
-* SU+SI == nothing.
-* SA+any word (except ZO)+SI == nothing (assuming that the SA is valid, i.e. that there is a word of the same selma'o as the word after SA to erase back to).  For ZO you need two SI.
+*SU+SI == nothing.
+*SA+any word (except ZO)+SI == nothing (assuming that the SA is valid, i.e. that there is a word of the same selma'o as the word after SA to erase back to).  For ZO you need two SI.
 
-** Not quite true; doesn't work for ZO or (probably) ZOI.
-* ZO+any word+SI == ZO
+**Not quite true; doesn't work for ZO or (probably) ZOI.
+*ZO+any word+SI == ZO
 
-* ZO+any word+SI+SI == nothing
-* SI has no effect in a LOhU...LEhU even though ZO+LEhU does, so you can't do ZO+LEhU+SI+SI inside a LOhU...LEhU quote to get nothing.
+*ZO+any word+SI+SI == nothing
+*SI has no effect in a LOhU...LEhU even though ZO+LEhU does, so you can't do ZO+LEhU+SI+SI inside a LOhU...LEhU quote to get nothing.
 
 * A SI immediately after the terminating LEhU of a LOhU...LEhU quote erases the LEhU, opening up the quote again.  A string of SI in that position keeps erasing through the quote, possibly destroying it entirely (although SA+LOhU+SI is normally a much better way of accomplishing this goal).  As soon as a non-SI word interrupts the string of SI after the terminating LEhU, that word and all other words until the next unquoted LEhU are considered part of the quote again, and have no grammatical function.
-* SA can destroy LOhU...LEhU quotes, of course.  LOhU...LEhU+SA+LOhU, in particular, is exactly equivalent to just LOhU (hence, the quote is re-opened).  SA cannot erase to any other word in a LOhU...LEhU quote (because they are not considered part of any selma'o) except for ZO if a ZO+LEhU quote is used inside the LOhU...LEhU quote (because the ZO is used grammatically in this case, and hence has a selma'o in practice).
+*SA can destroy LOhU...LEhU quotes, of course.  LOhU...LEhU+SA+LOhU, in particular, is exactly equivalent to just LOhU (hence, the quote is re-opened).  SA cannot erase to any other word in a LOhU...LEhU quote (because they are not considered part of any selma'o) except for ZO if a ZO+LEhU quote is used inside the LOhU...LEhU quote (because the ZO is used grammatically in this case, and hence has a selma'o in practice).
 
-* SI can back into a ZOI quote in the same manner as into a LOhU...LEhU quote, except that all of the quoted non-Lojban text (which is considered non-Lojban text even if it clearly is) is treated as one word.  So:
-** ZOI+delimiter+text+delimiter+SI == ZOI+delimiter+text
+*SI can back into a ZOI quote in the same manner as into a LOhU...LEhU quote, except that all of the quoted non-Lojban text (which is considered non-Lojban text even if it clearly is) is treated as one word.  So:
+**ZOI+delimiter+text+delimiter+SI == ZOI+delimiter+text
 
-** ZOI+delimiter+text+delimiter+SI+SI == ZOI+delimiter
-** ZOI+delimiter+text+delimiter+SI+SI+SI == ZOI
+**ZOI+delimiter+text+delimiter+SI+SI == ZOI+delimiter
+**ZOI+delimiter+text+delimiter+SI+SI+SI == ZOI
 
-** ZOI+delimiter+text+delimiter+SI+SI+SI+SI == nothing
-* As a result of the above, if you really want to destroy a whole ZOI quote, SA+ZOI+SI is strongly reccomended.
+**ZOI+delimiter+text+delimiter+SI+SI+SI+SI == nothing
+*As a result of the above, if you really want to destroy a whole ZOI quote, SA+ZOI+SI is strongly reccomended.
 
-* ZOI+SI == nothing (i.e. if you haven't presented a delimiter yet, SI can still operate).
-* ZOI + SA + ZOI + SI still == nothing.
+*ZOI+SI == nothing (i.e. if you haven't presented a delimiter yet, SI can still operate).
+*ZOI + SA + ZOI + SI still == nothing.
 
-==  Error Cases ==
+==Error Cases==
 
 The following cases are explicitely defined as bad, i.e. error cases.
 
-* ZO + any word + BU
-* ZOI+delimiter+text+delimiter + BU
+*ZO + any word + BU
+*ZOI+delimiter+text+delimiter + BU
 
-* ZEI + ZEI
-* BAhE + end of text
+*ZEI + ZEI
+*BAhE + end of text
 
-* start of text + BU
+*start of text + BU
 
-==  Non-Error Cases ==
+==Non-Error Cases==
 
 Cases that are degenerate and strange, but not errors.
 
-* BU + ZEI + BU
-* BAhE + ZOI -- ZOI retains its usual meaning
+*BU + ZEI + BU
+*BAhE + ZOI -- ZOI retains its usual meaning
 
-* BAhE + ZO -- ZO retains its usual meaning
-* DAhO (and friends) + NAI + ZEI + any word
+*BAhE + ZO -- ZO retains its usual meaning
+*DAhO (and friends) + NAI + ZEI + any word
