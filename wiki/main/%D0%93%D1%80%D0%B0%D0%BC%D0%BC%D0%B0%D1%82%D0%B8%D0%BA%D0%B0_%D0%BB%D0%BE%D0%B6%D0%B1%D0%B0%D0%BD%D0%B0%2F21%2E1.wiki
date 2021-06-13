@@ -1,396 +1,206 @@
-===21.1. EBNF грамматика ложбана===
+===21.1. '''РБНФ''' грамматика ложбана===
 
-Машинная грамматика ложбана, EBNF версия, окончательный базис.
+Окончательная РБНФ версия синтаксиса языка ложбан.
 
-Этот EBNF-документ является общественным достоянием согласно решению его автора, The Logical Language Group, Inc. Свяжитесь с этой организацией по адресу: 2904 Beau Lane, Fairfax VA 22031 USA 703-385-0273 (intl: +1 703 385 0273)
+<u>Этот РБНФ-документ является общественным достоянием</u> согласно решению его создателей, The Logical Language Group, Inc. Свяжитесь с этой организацией по адресу: 2904 Beau Lane, Fairfax VA 22031 USA 703-385-0273 (междунар.: +1 703 385 0273)
 
-Объяснение обозначений:
-
-Все правила имеют форму:
-
-имя<sub>номер</sub> = bnf-выражение
+====Объяснение обозначений====
+Все правила имеют форму: '''имя<sub>номер</sub> = bnf-выражение'''
 
 что означает: грамматическая конструкция «имя» определён через «bnf-выражение». Номер является перекрестной ссылкой этой грамматики к номеру правила в грамматике YACC. Имена такиее же, что и в грамматике YACC, за исключением того, что подправила в грамматике YACC помечены как A, B, C, ... по сравнению с 1, 2, 3, .... в данной грамматике. Кроме того, правило 971 помечено как «simple_tag» в грамматике YACC, но «stag» в этой грамматике из-за его частого появления.
 
-# Имена в нижнем регистре - это грамматические конструкции.
-# Имена в ВЕРХНЕМ РЕГИСТРЕ являются именами selma'o (лексем) и являются терминальными.
-# Конкатенация выражается последовательным позициронириованием конструкций без какого-либо символа оператора.
-# | представляет чередование (выбор).
-# [] представляет собой необязательный элемент.
+#Имена в нижнем регистре - это грамматические конструкции.
+#Имена в ВЕРХНЕМ РЕГИСТРЕ являются именами selma'o (лексем) и являются терминальными.
+#Конкатенация выражается последовательным позициронириованием конструкций без какого-либо символа оператора.
+#| представляет чередование (выбор).
+#[] представляет собой необязательный элемент.
 # & представляет собой "и / или" («A & B» - это фактически то же, что и «A | B | A B»).
-# ... представляет собой необязательное повторение конструкции слева. По умолчанию подразумевается левое группирование; правое группирование показано явной ссылающейся на саму себя рекурсией без «...»
-# () используется для указания группировки других операторов. В противном случае «...» имеет степень группировки больше, чем &, которая группируется сильнее, чем при использовании |.
-# # является сокращением для "[free ...]", конструкции, которая появляется во многих местах.
-# // - это границы для так называемого опускаемого завершителя, которого можно опустить в речи (без изменения смысла), если только это не приводит к грамматической неоднозначности.
+#... представляет собой необязательное повторение конструкции слева. По умолчанию подразумевается левое группирование; правое группирование показано явной ссылающейся на саму себя рекурсией без «...»
+#() используется для указания группировки других операторов. В противном случае «...» имеет степень группировки больше, чем &, которая группируется сильнее, чем при использовании |.
+#<nowiki># является сокращением для "[free ...]", конструкции, которая появляется во многих местах.</nowiki>
+#// - это границы для так называемого опускаемого завершителя, которого можно опустить в речи (без изменения смысла), если только это не приводит к грамматической неоднозначности.
+ text<sub>0</sub> = [NAI ...] [CMENE ... # | (indicators & free ...)] [joik-jek] text-1
 
-text<sub>0</sub>=
+ text-1<sub>2</sub> = [(I [jek | joik] [[stag] BO] #) ... | NIhO ... #] [paragraphs]
 
-[NAI ...] [CMENE ... # | (indicators & free ...)] [joik-jek] text-1
+ paragraphs<sub>4</sub> = paragraph [NIhO ... # paragraphs]
 
-text-1<sub>2</sub>=
+ paragraph<sub>10</sub> = (statement | fragment) [I # [statement | fragment]] ...
 
-[(I [jek | joik] [[stag] BO] #) ... | NIhO ... #] [paragraphs]
+ statement<sub>11</sub> = statement-1 | prenex statement
 
-paragraphs<sub>4</sub>=
+ statement-1<sub>12</sub> = statement-2 [I joik-jek [statement-2]] ...
 
-paragraph [NIhO ... # paragraphs]
+ statement-2<sub>13</sub> = statement-3 [I [jek | joik] [stag] BO # [statement-2]]
 
-paragraph<sub>10</sub>=
+ statement-3<sub>14</sub> = sentence | [tag] TUhE # text-1 /TUhU#/
 
-(statement | fragment) [I # [statement | fragment]] ...
+ fragment<sub>20</sub> = ek # | gihek # | quantifier | NA # | terms /VAU#/ | prenex | relative-clauses | links | linkargs
 
-statement<sub>11</sub>=
+ prenex<sub>30</sub> = terms ZOhU #
 
-statement-1 | prenex statement
+ sentence<sub>40</sub> = [terms [CU #]] bridi-tail
 
-statement-1<sub>12</sub>=
+ subsentence<sub>41</sub> = sentence | prenex subsentence
 
-statement-2 [I joik-jek [statement-2]] ...
+ bridi-tail<sub>50</sub> = bridi-tail-1 [gihek [stag] KE # bridi-tail /KEhE#/ tail-terms]
 
-statement-2<sub>13</sub>=
+ bridi-tail-1<sub>51</sub> = bridi-tail-2 [gihek # bridi-tail-2 tail-terms] ...
 
-statement-3 [I [jek | joik] [stag] BO # [statement-2]]
+ bridi-tail-2<sub>52</sub> = bridi-tail-3 [gihek [stag] BO # bridi-tail-2 tail-terms]
 
-statement-3<sub>14</sub>=
+ bridi-tail-3<sub>53</sub> = selbri tail-terms | gek-sentence
 
-sentence | [tag] TUhE # text-1 /TUhU#/
+ gek-sentence<sub>54</sub> = gek subsentence gik subsentence tail-terms | [tag] KE # gek-sentence /KEhE#/ | NA # gek-sentence
 
-fragment<sub>20</sub>=
+ tail-terms<sub>71</sub> = [terms] /VAU#/
 
-ek # | gihek # | quantifier | NA # | terms /VAU#/ | prenex | relative-clauses | links | linkargs
+ terms<sub>80</sub> = terms-1 ...
 
-prenex<sub>30</sub>=
+ terms-1<sub>81</sub> = terms-2 [PEhE # joik-jek terms-2] ...
 
-terms ZOhU #
+ terms-2<sub>82</sub> = term [CEhE # term] ...
 
-sentence<sub>40</sub>=
+ term<sub>83</sub> = sumti | (tag | FA #) (sumti | /KU#/) | termset | NA KU #
 
-[terms [CU #]] bridi-tail
+ termset<sub>85</sub> = NUhI # gek terms /NUhU#/ gik terms /NUhU#/ | NUhI # terms /NUhU#/
 
-subsentence<sub>41</sub>=
+ sumti<sub>90</sub> = sumti-1 [VUhO # relative-clauses]
 
-sentence | prenex subsentence
+ sumti-1<sub>91</sub> = sumti-2 [(ek | joik) [stag] KE # sumti /KEhE#/]
 
-bridi-tail<sub>50</sub>=
+ sumti-2<sub>92</sub> = sumti-3 [joik-ek sumti-3] ...
 
-bridi-tail-1 [gihek [stag] KE # bridi-tail /KEhE#/ tail-terms]
+ sumti-3<sub>93</sub> = sumti-4 [(ek | joik) [stag] BO # sumti-3]
 
-bridi-tail-1<sub>51</sub>=
+ sumti-4<sub>94</sub> = sumti-5 | gek sumti gik sumti-4
 
-bridi-tail-2 [gihek # bridi-tail-2 tail-terms] ...
+ sumti-5<sub>95</sub> = [quantifier] sumti-6 [relative-clauses] | quantifier selbri /KU#/ [relative-clauses]
 
-bridi-tail-2<sub>52</sub>=
+ sumti-6<sub>97</sub> = (LAhE # | NAhE BO #) [relative-clauses] sumti /LUhU#/ | KOhA # | lerfu-string /BOI#/ | LA # [relative-clauses] CMENE ... # | (LA | LE) # sumti-tail /KU#/ | LI # mex /LOhO#/ | ZO any-word # | LU text /LIhU#/ | LOhU any-word ... LEhU # | ZOI any-word anything any-word #
 
-bridi-tail-3 [gihek [stag] BO # bridi-tail-2 tail-terms]
+ sumti-tail<sub>111</sub> = [sumti-6 [relative-clauses]] sumti-tail-1 | relative-clauses sumti-tail-1
 
-bridi-tail-3<sub>53</sub>=
+ sumti-tail-1<sub>112</sub> = [quantifier] selbri [relative-clauses] | quantifier sumti
 
-selbri tail-terms | gek-sentence
+ relative-clauses<sub>121</sub> = relative-clause [ZIhE # relative-clause] ...
 
-gek-sentence<sub>54</sub>=
+ relative-clause<sub>122</sub> = GOI # term /GEhU#/ | NOI # subsentence /KUhO#/
 
-gek subsentence gik subsentence tail-terms | [tag] KE # gek-sentence /KEhE#/ | NA # gek-sentence
+ selbri<sub>130</sub> = [tag] selbri-1
 
-tail-terms<sub>71</sub>=
+ selbri-1<sub>131</sub> = selbri-2 | NA # selbri
 
-[terms] /VAU#/
+ selbri-2<sub>132</sub> = selbri-3 [CO # selbri-2]
 
-terms<sub>80</sub>=
+ selbri-3<sub>133</sub> = selbri-4 ...
 
-terms-1 ...
+ selbri-4<sub>134</sub> = selbri-5 [joik-jek selbri-5 | joik [stag] KE # selbri-3 /KEhE#/] ...
 
-terms-1<sub>81</sub>=
+ selbri-5<sub>135</sub> = selbri-6 [(jek | joik) [stag] BO # selbri-5]
 
-terms-2 [PEhE # joik-jek terms-2] ...
+ selbri-6<sub>136</sub> = tanru-unit [BO # selbri-6] | [NAhE #] guhek selbri gik selbri-6
 
-terms-2<sub>82</sub>=
+ tanru-unit<sub>150</sub> = tanru-unit-1 [CEI # tanru-unit-1] ...
 
-term [CEhE # term] ...
+ tanru-unit-1<sub>151</sub> = tanru-unit-2 [linkargs]
 
-term<sub>83</sub>=
+ tanru-unit-2<sub>152</sub> = BRIVLA # | GOhA [RAhO] # | KE # selbri-3 /KEhE#/ | ME # sumti /MEhU#/ [MOI #] | (number | lerfu-string) MOI # | NUhA # mex-operator | SE # tanru-unit-2 | JAI # [tag] tanru-unit-2 | any-word (ZEI any-word) ... | NAhE # tanru-unit-2 | NU [NAI] # [joik-jek NU [NAI] #] ... subsentence /KEI#/
 
-sumti | (tag | FA #) (sumti | /KU#/) | termset | NA KU #
+ linkargs<sub>160</sub> = BE # term [links] /BEhO#/
 
-termset<sub>85</sub>=
+ links<sub>161</sub> = BEI # term [links]
 
-NUhI # gek terms /NUhU#/ gik terms /NUhU#/ | NUhI # terms /NUhU#/
+ quantifier<sub>300</sub> = number /BOI#/ | VEI # mex /VEhO#/
 
-sumti<sub>90</sub>=
+ mex<sub>310</sub> = mex-1 [operator mex-1] ... | FUhA # rp-expression
 
-sumti-1 [VUhO # relative-clauses]
+ mex-1<sub>311</sub> = mex-2 [BIhE # operator mex-1]
 
-sumti-1<sub>91</sub>=
+ mex-2<sub>312</sub> = operand | [PEhO #] operator mex-2 ... /KUhE#/
 
-sumti-2 [(ek | joik) [stag] KE # sumti /KEhE#/]
+ rp-expression<sub>330</sub> = rp-operand rp-operand operator
 
-sumti-2<sub>92</sub>=
+ rp-operand<sub>332</sub> = operand | rp-expression
 
-sumti-3 [joik-ek sumti-3] ...
+ operator<sub>370</sub> = operator-1 [joik-jek operator-1 | joik [stag] KE # operator /KEhE#/] ...
 
-sumti-3<sub>93</sub>=
+ operator-1<sub>371</sub> = operator-2 | guhek operator-1 gik operator-2 | operator-2 (jek | joik) [stag] BO # operator-1
 
-sumti-4 [(ek | joik) [stag] BO # sumti-3]
+ operator-2<sub>372</sub> = mex-operator | KE # operator /KEhE#/
 
-sumti-4<sub>94</sub>=
+ mex-operator<sub>374</sub> = SE # mex-operator | NAhE # mex-operator | MAhO # mex /TEhU#/ | NAhU # selbri /TEhU#/ | VUhU #
 
-sumti-5 | gek sumti gik sumti-4
+ operand<sub>381</sub> = operand-1 [(ek | joik) [stag] KE # operand /KEhE#/]
 
-sumti-5<sub>95</sub>=
+ operand-1<sub>382</sub> = operand-2 [joik-ek operand-2] ...
 
-[quantifier] sumti-6 [relative-clauses] | quantifier selbri /KU#/ [relative-clauses]
+ operand-2<sub>383</sub> = operand-3 [(ek | joik) [stag] BO # operand-2]
 
-sumti-6<sub>97</sub>=
+ operand-3<sub>385</sub> = quantifier | lerfu-string /BOI#/ | NIhE # selbri /TEhU#/ | MOhE # sumti /TEhU#/ | JOhI # mex-2 ... /TEhU#/ | gek operand gik operand-3 | (LAhE # | NAhE BO #) operand /LUhU#/
 
-(LAhE # | NAhE BO #) [relative-clauses] sumti /LUhU#/ | KOhA # | lerfu-string /BOI#/ | LA # [relative-clauses] CMENE ... # | (LA | LE) # sumti-tail /KU#/ | LI # mex /LOhO#/ | ZO any-word # | LU text /LIhU#/ | LOhU any-word ... LEhU # | ZOI any-word anything any-word #
+ number<sub>812</sub> = PA [PA | lerfu-word] ...
 
-sumti-tail<sub>111</sub>=
+ lerfu-string<sub>817</sub> = lerfu-word [PA | lerfu-word] ...
 
-[sumti-6 [relative-clauses]] sumti-tail-1 | relative-clauses sumti-tail-1
+ lerfu-word<sub>987</sub> = BY | any-word BU | LAU lerfu-word | TEI lerfu-string FOI
 
-sumti-tail-1<sub>112</sub>=
+ ek<sub>802</sub> = [NA] [SE] A [NAI]
 
-[quantifier] selbri [relative-clauses] | quantifier sumti
+ gihek<sub>818</sub> = [NA] [SE] GIhA [NAI]
 
-relative-clauses<sub>121</sub>=
+ jek<sub>805</sub> = [NA] [SE] JA [NAI]
 
-relative-clause [ZIhE # relative-clause] ...
+ joik<sub>806</sub> = [SE] JOI [NAI] | interval | GAhO interval GAhO
 
-relative-clause<sub>122</sub>=
+ interval<sub>932</sub> = [SE] BIhI [NAI]
 
-GOI # term /GEhU#/ | NOI # subsentence /KUhO#/
+ joik-ek<sub>421</sub> = joik # | ek #
 
-selbri<sub>130</sub>=
+ joik-jek<sub>422</sub> = joik # | jek #
 
-[tag] selbri-1
+ gek<sub>807</sub> = [SE] GA [NAI] # | joik GI # | stag gik
 
-selbri-1<sub>131</sub>=
+ guhek<sub>808</sub> = [SE] GUhA [NAI] #
 
-selbri-2 | NA # selbri
+ gik<sub>816</sub> = GI [NAI] #
 
-selbri-2<sub>132</sub>=
+ tag<sub>491</sub> = tense-modal [joik-jek tense-modal] ...
 
-selbri-3 [CO # selbri-2]
+ stag<sub>971</sub> = simple-tense-modal [(jek | joik) simple-tense-modal] ...
 
-selbri-3<sub>133</sub>=
+ tense-modal<sub>815</sub> = simple-tense-modal # | FIhO # selbri /FEhU#/
 
-selbri-4 ...
+ simple-tense-modal<sub>972</sub> = [NAhE] [SE] BAI [NAI] [KI] | [NAhE] (time [space] | space [time]) & CAhA [KI] | KI | CUhE
 
-selbri-4<sub>134</sub>=
+ time<sub>1030</sub> = ZI & time-offset ... & ZEhA [PU [NAI]] & interval-property ...
 
-selbri-5 [joik-jek selbri-5 | joik [stag] KE # selbri-3 /KEhE#/] ...
+ time-offset<sub>1033</sub> = PU [NAI] [ZI]
 
-selbri-5<sub>135</sub>=
+ space<sub>1040</sub> = VA & space-offset ... & space-interval & (MOhI space-offset)
 
-selbri-6 [(jek | joik) [stag] BO # selbri-5]
+ space-offset<sub>1045</sub> = FAhA [NAI] [VA]
 
-selbri-6<sub>136</sub>=
+ space-interval<sub>1046</sub>= ((VEhA & VIhA) [FAhA [NAI]]) & space-int-props
 
-tanru-unit [BO # selbri-6] | [NAhE #] guhek selbri gik selbri-6
+ space-int-props<sub>1049</sub> = (FEhE interval-property) ...
 
-tanru-unit<sub>150</sub>=
+ interval-property<sub>1051</sub> = number ROI [NAI] | TAhE [NAI] | ZAhO [NAI]
 
-tanru-unit-1 [CEI # tanru-unit-1] ...
+ free<sub>32</sub> = SEI # [terms [CU #]] selbri /SEhU/ | SOI # sumti [sumti] /SEhU/ | vocative [relative-clauses] selbri [relative-clauses] /DOhU/ | vocative [relative-clauses] CMENE ... # [relative-clauses] /DOhU/ | vocative [sumti] /DOhU/ | (number | lerfu-string) MAI | TO text /TOI/ | XI # (number | lerfu-string) /BOI/ | XI # VEI # mex /VEhO/
 
-tanru-unit-1<sub>151</sub>=
+ vocative<sub>415</sub> = (COI [NAI]) ... & DOI
 
-tanru-unit-2 [linkargs]
+ indicators<sub>411</sub> = [FUhE] indicator ...
 
-tanru-unit-2<sub>152</sub>=
+ indicator<sub>413</sub> = (UI | CAI) [NAI] | Y | DAhO | FUhO
 
-BRIVLA # | GOhA [RAhO] # | KE # selbri-3 /KEhE#/ | ME # sumti /MEhU#/ [MOI #] | (number | lerfu-string) MOI # | NUhA # mex-operator | SE # tanru-unit-2 | JAI # [tag] tanru-unit-2 | any-word (ZEI any-word) ... | NAhE # tanru-unit-2 | NU [NAI] # [joik-jek NU [NAI] #] ... subsentence /KEI#/
+=====Следующие правила являются неформальными:=====
+ word<sub>1100</sub> = [BAhE] any-word [indicators]
 
-linkargs<sub>160</sub>=
+ any-word = “любое одинарное слово (не включает составные cmavo)”
 
-BE # term [links] /BEhO#/
+ anything = “любой текст вообще, неважно ложбанский или нет”
 
-links<sub>161</sub>=
-
-BEI # term [links]
-
-quantifier<sub>300</sub>=
-
-number /BOI#/ | VEI # mex /VEhO#/
-
-mex<sub>310</sub>=
-
-mex-1 [operator mex-1] ... | FUhA # rp-expression
-
-mex-1<sub>311</sub>=
-
-mex-2 [BIhE # operator mex-1]
-
-mex-2<sub>312</sub>=
-
-operand | [PEhO #] operator mex-2 ... /KUhE#/
-
-rp-expression<sub>330</sub>=
-
-rp-operand rp-operand operator
-
-rp-operand<sub>332</sub>=
-
-operand | rp-expression
-
-operator<sub>370</sub>=
-
-operator-1 [joik-jek operator-1 | joik [stag] KE # operator /KEhE#/] ...
-
-operator-1<sub>371</sub>=
-
-operator-2 | guhek operator-1 gik operator-2 | operator-2 (jek | joik) [stag] BO # operator-1
-
-operator-2<sub>372</sub>=
-
-mex-operator | KE # operator /KEhE#/
-
-mex-operator<sub>374</sub>=
-
-SE # mex-operator | NAhE # mex-operator | MAhO # mex /TEhU#/ | NAhU # selbri /TEhU#/ | VUhU #
-
-operand<sub>381</sub>=
-
-operand-1 [(ek | joik) [stag] KE # operand /KEhE#/]
-
-operand-1<sub>382</sub>=
-
-operand-2 [joik-ek operand-2] ...
-
-operand-2<sub>383</sub>=
-
-operand-3 [(ek | joik) [stag] BO # operand-2]
-
-operand-3<sub>385</sub>=
-
-quantifier | lerfu-string /BOI#/ | NIhE # selbri /TEhU#/ | MOhE # sumti /TEhU#/ | JOhI # mex-2 ... /TEhU#/ | gek operand gik operand-3 | (LAhE # | NAhE BO #) operand /LUhU#/
-
-number<sub>812</sub>=
-
-PA [PA | lerfu-word] ...
-
-lerfu-string<sub>817</sub>=
-
-lerfu-word [PA | lerfu-word] ...
-
-lerfu-word<sub>987</sub>=
-
-BY | any-word BU | LAU lerfu-word | TEI lerfu-string FOI
-
-ek<sub>802</sub>=
-
-[NA] [SE] A [NAI]
-
-gihek<sub>818</sub>=
-
-[NA] [SE] GIhA [NAI]
-
-jek<sub>805</sub>=
-
-[NA] [SE] JA [NAI]
-
-joik<sub>806</sub>=
-
-[SE] JOI [NAI] | interval | GAhO interval GAhO
-
-interval<sub>932</sub>=
-
-[SE] BIhI [NAI]
-
-joik-ek<sub>421</sub>=
-
-joik # | ek #
-
-joik-jek<sub>422</sub>=
-
-joik # | jek #
-
-gek<sub>807</sub>=
-
-[SE] GA [NAI] # | joik GI # | stag gik
-
-guhek<sub>808</sub>=
-
-[SE] GUhA [NAI] #
-
-gik<sub>816</sub>=
-
-GI [NAI] #
-
-tag<sub>491</sub>=
-
-tense-modal [joik-jek tense-modal] ...
-
-stag<sub>971</sub>=
-
-simple-tense-modal [(jek | joik) simple-tense-modal] ...
-
-tense-modal<sub>815</sub>=
-
-simple-tense-modal # | FIhO # selbri /FEhU#/
-
-simple-tense-modal<sub>972</sub>=
-
-[NAhE] [SE] BAI [NAI] [KI] | [NAhE] (time [space] | space [time]) & CAhA [KI] | KI | CUhE
-
-time<sub>1030</sub>=
-
-ZI & time-offset ... & ZEhA [PU [NAI]] & interval-property ...
-
-time-offset<sub>1033</sub>=
-
-PU [NAI] [ZI]
-
-space<sub>1040</sub>=
-
-VA & space-offset ... & space-interval & (MOhI space-offset)
-
-space-offset<sub>1045</sub>=
-
-FAhA [NAI] [VA]
-
-space-interval<sub>1046</sub>=
-
-((VEhA & VIhA) [FAhA [NAI]]) & space-int-props
-
-space-int-props<sub>1049</sub>=
-
-(FEhE interval-property) ...
-
-interval-property<sub>1051</sub>=
-
-number ROI [NAI] | TAhE [NAI] | ZAhO [NAI]
-
-free<sub>32</sub>=
-
-SEI # [terms [CU #]] selbri /SEhU/ | SOI # sumti [sumti] /SEhU/ | vocative [relative-clauses] selbri [relative-clauses] /DOhU/ | vocative [relative-clauses] CMENE ... # [relative-clauses] /DOhU/ | vocative [sumti] /DOhU/ | (number | lerfu-string) MAI | TO text /TOI/ | XI # (number | lerfu-string) /BOI/ | XI # VEI # mex /VEhO/
-
-vocative<sub>415</sub>=
-
-(COI [NAI]) ... & DOI
-
-indicators<sub>411</sub>=
-
-[FUhE] indicator ...
-
-indicator<sub>413</sub>=
-
-(UI | CAI) [NAI] | Y | DAhO | FUhO
-
-Следующие правила являются неформальными:
-
-word<sub>1100</sub>=
-
-[BAhE] any-word [indicators]
-
-any-word =
-
-“любое одинарное слово (не включает составные cmavo)”
-
-anything =
-
-“любой текст вообще, неважно ложбанский или нет”
-
-null<sub>1101</sub>=
-
-any-word SI | utterance SA | text SU
-
-FAhO является универсальным завершителем и сигнализирует о завершении входного текста, подвергаемого синтаксическому разбору.
+ null<sub>1101</sub> = any-word SI | utterance SA | text SU
+"FAhO" является универсальным завершителем и сигнализирует о завершении входного текста, подвергаемого синтаксическому разбору.
