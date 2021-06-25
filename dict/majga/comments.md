@@ -257,3 +257,14 @@ defaults)?
 
 A brivla for rest mass/energy is necessary though.
 
+
+## 2021-06-25T12:39:21Z — gleki (comment 3677, on definition 57033, in reply to 3676)
+
+Re: Terbri issues
+
+gleki wrote:
+
+> A brivla for rest mass/energy is necessary though.
+
+ended up with {cadytilju}. Not sure about relativistic mass though.
+
