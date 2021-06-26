@@ -865,3 +865,27 @@ energy and mass. When I heft an apple, it turns out that a lot of its
 perceived mass is 'actually' binding energies in and between atoms, rather
 than the sum of the masses of the subatomic particles alone.
 
+
+## 2021-06-26T14:59:33Z — gleki (comment 3690, on definition 57033, in reply to 3685)
+
+Re: Terbri issues
+
+krtisfranks wrote:
+
+> I did not use grake3. But I read it as specifying the relevant
+> standard/definition of the gram. Is it the "mass of 1 cm^3 of water"
+> standard, the "(1/1000) of the mass of the International Prototype
+> Kilogram" standard, the recent "defining hbar exactly with identified
+> value" standard, or something else?
+> 
+> One would have to specify whether rest mass or Relativistic mass is
+meant,
+> or specify the frame of reference.
+
+So {grake} is to be used for both rest and relativistic masses.
+
+Do you think {tilju} should be limited to those two masses too? Right now
+it includes weight.
+
+The place structure of relativistic mass would be the same as for {majga}?
+
