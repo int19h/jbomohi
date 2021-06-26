@@ -77,3 +77,38 @@ A similar notice would be made for "{xampo}" and its derivatives, such as
 Despite all of these concerns, I believe that this is the correct way to
 go forward.
 
+
+## 2021-06-26T10:04:43Z — krtisfranks (comment 3684, in reply to 2853)
+
+Re: Signum
+
+krtisfranks wrote:
+> It should be pointed out which convention is used for what "positive 
+> electric charge" means. The user can say "this is positive" but the 
+> definition really should specify an automatic interpretation of that 
+> utterance  (which may be overridden by an explicit statement of
+convention 
+> by the user). I propose that "positive" charge is any charge which has a 
+> signum equal to the signum of the charge of an electron.
+> 
+> This matches other definitions which I have supplied.
+> 
+> This will necessitate the careful translation of any material on 
+> electricity or related things. In particular, conventional current will 
+> match typical electric current, voltages (potentials; the additional
+good 
+> news is that electron orbits in classical models resemble gravitational 
+> wells, which makes more intuitive sense) will be negative to English 
+> convention, and the Lojbanic magnetic-south will be what English
+speakers 
+> describe as "magnetic-north" (the additional good news is that
+geological 
+> North on Earth is current Lojbanic magnetic-north). This all makes
+sense.
+
+
+Correction/clarification: The aforementioned lujvo are defined already,
+but they lack specificity enough to avoid ambiguity wrt charge signum
+conventions. We can clarify them at no cost. I would, even so, find a
+rafsi other than "-mar-" though.
+
