@@ -205,3 +205,21 @@ from
 
 Can you provide an example of {dikca} with all places filled?
 
+
+## 2021-06-26T14:56:41Z — gleki (comment 3689, on definition 285, in reply to 3683)
+
+Re: Signum convention
+
+krtisfranks wrote:
+
+> It is also the case that, if we were to name the signs of electricity
+from
+> scratch while knowing what we know now, then it would be rather more
+> natural for us to label protons as negatively charged and electrons as
+> positively charged. Notice that there is nothing inherent about
+"negative"
+> referring to the electron's charge signum.
+
+
+Can you provide an example of {dikca} with all places filled?
+
