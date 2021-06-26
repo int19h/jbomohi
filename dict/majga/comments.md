@@ -495,3 +495,99 @@ as:
 (1') "ko'a xapsnidu li ni'u pa" vel sim.
 (2') "ko'a se dikca fi lo xapsnidu be li ni'u pa" vel sim.
 
+
+## 2021-06-26T09:41:23Z — gleki (comment 3682, on definition 57033, in reply to 3681)
+
+Re: Terbri issues
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > gleki wrote:
+> > > > krtisfranks wrote:
+> > > > > gleki wrote:
+> > > > > > krtisfranks wrote:
+> > > > > > > The current definition is:
+> > > > > > > "x1 (number/quantity; contextless default: li ma'u .a li no)
+> is
+> > > the 
+> > > > > > > (rest/inertial) mass of x2 (object) in units x3".
+> > > > > > > 
+> > > > > > > Should the first terbri be, instead, a dimensionful number
+so
+> > that 
+> > > > > lo(i) 
+> > > > > > > {grake} fills it and the amount thereof (se grake; accessed
+by
+> > > {be})
+> > > > is
+> > > > > 
+> > > > > > the
+> > > > > > > current-x1 (subject to the same constraints and, possibly,
+> > > > defaults)? 
+> > > > > > This 
+> > > > > > > would make much more sense.
+> > > > > > 
+> > > > > > yep.
+> > > > > > 
+> > > > > > Also I have no clue what grake3 is for.
+> > > > > > 
+> > > > > > And what is the current majga3 for?
+> > > > > > 
+> > > > > > > 
+> > > > > > > There might also be room for a new third terbri expressing
+the 
+> > > > > coordinate
+> > > > > > 
+> > > > > > > system used in order to define how the units are being used.
+> For 
+> > > > > example,
+> > > > > > 
+> > > > > > > it might be theoretically possible to 'rotate' in some way
+so
+> > that 
+> > > > > > positive
+> > > > > > > masses become negative; we just happen to all agree.
+> > > > > > 
+> > > > > > 
+> > > > > > How would you fill that new third terbricmi?
+> > > > > 
+> > > > > I am not really sure because I do not have a good grasp of what
+it
+> > > means 
+> > > > > yet. I am not sure that it is even useful.
+> > > > 
+> > > > 
+> > > > A brivla for rest mass/energy is necessary though.
+> > > 
+> > > 
+> > > Maybe we can directly follow the analogy of "{dikca}":
+> > > x1 is mass (gravitational charge/current, or inertial mass) on/in/of
+> x2,
+> > > of polarity/quantity x3 (default: nonnegative; dimensionful).
+> > > 
+> > > Note: I slightly dislike the "current" option in both definitions.
+But
+> > one
+> > > can specify whether the charges in question are stationary in or on
+> the
+> > > body.
+> > 
+> > 
+> > Then how to say "it has rest mass of 1 kilo"? 
+> 
+> At least two broad ways:
+> (1) "ko'a grake li pa ki'o", "ko'a ki'ogra (li pa)", vel sim.
+> (2) Using my newly proposed definition of "majga": "ko'a se majga fi lo
+> grake be li pa ki'o", vel sim.
+> 
+> Similarly, one could translate "it has an electric charge of -1 coulomb"
+> as:
+> (1') "ko'a xapsnidu li ni'u pa" vel sim.
+> (2') "ko'a se dikca fi lo xapsnidu be li ni'u pa" vel sim.
+
+
+I actually thought it's grake3 where you specify which definition of mass
+you need. So you want grake to be used both for relativistic mass and rest
+mass?
+
