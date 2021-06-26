@@ -399,3 +399,15 @@ one
 
 Then how to say "it has rest mass of 1 kilo"? 
 
+
+## 2021-06-26T08:50:26Z — gleki (comment 3680, on definition 57033, in reply to 3679)
+
+Re: Terbri issues
+
+gleki wrote:
+
+> Then how to say "it has rest mass of 1 kilo"? 
+
+
+And also "The mass of an electron is about ..."?
+
