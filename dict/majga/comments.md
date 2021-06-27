@@ -926,3 +926,55 @@ Idk about "{tilju}". I take it to really mean "heavy", as in "having a lot
 of mass/inertia". It is neither "weight" nor "mass" themselves. Much like
 "{clani}" means "long" but not "displacement" (a d kinda not "length").
 
+
+## 2021-06-27T14:29:36Z — gleki (comment 3692, on definition 57033, in reply to 3691)
+
+Re: Terbri issues
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > 
+> > > I did not use grake3. But I read it as specifying the relevant
+> > > standard/definition of the gram. Is it the "mass of 1 cm^3 of water"
+> > > standard, the "(1/1000) of the mass of the International Prototype
+> > > Kilogram" standard, the recent "defining hbar exactly with
+identified
+> > > value" standard, or something else?
+> > > 
+> > > One would have to specify whether rest mass or Relativistic mass is
+> > meant,
+> > > or specify the frame of reference.
+> > 
+> > So {grake} is to be used for both rest and relativistic masses.
+> > 
+> > Do you think {tilju} should be limited to those two masses too? Right
+> now
+> > it includes weight.
+> > 
+> > The place structure of relativistic mass would be the same as for
+> {majga}?
+> 
+> I think that "{grake}" can be used for all masses and maybe also
+stresses,
+> energies, or momenta in the right contexts. But definitely masses.
+> 
+> Aside from a potential mention of/terbri frame of reference, I do not
+see
+> any need for different base words for rest and Relativistic masses.
+> 
+> Idk about "{tilju}". I take it to really mean "heavy", as in "having a
+lot
+> of mass/inertia". It is neither "weight" nor "mass" themselves. Much
+like
+> "{clani}" means "long" but not "displacement" (a d kinda not "length").
+
+So can you please change the definition if you believe the new terbri is
+better?
+
+I'm not sure what to do with E=mc^2 equivalence.
+
+
+We are still lacking other properties of physical bodies, right? Ideally
+there should be a page listing them all.
+
