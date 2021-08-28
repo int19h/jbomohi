@@ -1,4 +1,4 @@
-# mail/lojban-list thread 9648f2586931-help_parsing_lojban_from_python%3F_%28hey,_rile | root 20210827021139.go309000@gmail.com | 3 messages | rendered by jbomohi mail-v1
+# mail/lojban-list thread 9648f2586931-help_parsing_lojban_from_python%3F_%28hey,_rile | root 20210827021139.go309000@gmail.com | 4 messages | rendered by jbomohi mail-v1
 
 === 1 | 2021-08-27T02:11:39Z | Robin Lee Powell <robinleepowell@gmail.com> | 20210827021139.go309000@gmail.com | mail/lojban-list/cur/1630030299.9648f25869314e7a.jbomohi:2,S
 
@@ -83,5 +83,92 @@ Sent from my iPhone
 You received this message because you are subscribed to the Google Groups "lojban" group.
 To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
 To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/B6AB9786-1025-4F5E-A196-C83556B8EDC6%40gmail.com.
+
+
+
+=== 4 | 2021-08-28T04:02:24Z | Robin Lee Powell <robinleepowell@gmail.com> | 20210828040224.gs309000@gmail.com | mail/lojban-list/cur/1630123344.b9615923de0a8ec5.jbomohi:2,S
+Feel free to come find me on Libera IRC, or suggest a preferred chat
+option for you.
+
+The stuff I want is actually quite simple, though:
+
+(1) I want to confirm that camxes-py is the preferred Python option
+these days
+
+(2) I want to be able to run "run" (see
+https://github.com/teleological/camxes-py/blob/master/camxes.py#L89
+) or something like it in a direct, straightforward way, i.e.:
+
+          import camxespy
+          tree = camxespy.run("mi klama", transformer='camxes-morphology')
+
+, and tree should contain an obvious python representation of the
+parse tree.
+
+This requires, AFAICT (I don't actually know Python very well) that
+camxes-py have a library struture to it that it doesn't currently
+have and that the options be configurable in some way other than
+OptionParser.
+
+I can actually do all that myself, but I'm not really a pythonista
+and what I do won't be idiomatic at all.
+
+Stretch goals:
+
+(3) Update to most-recent parsimonious; it currently breaks on
+0.8.1, but works on 0.6.2
+
+(4) Update to Python 3, but I'm perfectly capable of making a PR for
+this myself.
+
+(5) Make a mode that collapses productions with only one child, i.e.
+make the output look like this (in terms of productions not syntax):
+
+        rlpowell@stodi> echo "mi klama" | camxes -f
+        Flat layout requested.
+         text=(  sentence=(  CMAVO=(  KOhA=( mi )  )  BRIVLA=(  gismu=( klama )  )  )  )
+
+Instead of this:
+
+root@66324b4aed4b:/src# python camxes.py "mi klama"
+["text",["text_1",["paragraphs",["paragraph",["statement",["statement_1",["statement_2",["statement_3",["sentence",[["terms",["terms_1",["terms_2",["abs_term",["abs_term_1",["sumti",["sumti_1",["sumti_2",["sumti_3",["sumti_4",["sumti_5",["sumti_6",["KOhA_clause",[["KOhA","mi"]]]]]]]]]]]]]]],["CU"]],["bridi_tail",["bridi_tail_1",["bridi_tail_2",["bridi_tail_3",["selbri",["selbri_1",["selbri_2",["selbri_3",["selbri_4",["selbri_5",["selbri_6",["tanru_unit",["tanru_unit_1",["tanru_unit_2",["BRIVLA_clause",[["BRIVLA",["gismu","klama"]]]]]]]]]]]]]],["tail_terms",["VAU"]]]]]]]]]]]]]]]
+
+, but as I said before this is not hard to do after the fact once
+you have the parse tree.
+
+
+On Fri, Aug 27, 2021 at 11:15:54PM -0400, Riley Martinez-Lynch
+wrote:
+> Robin, I'd be happy to make whatever changes are needed to make it
+> work. I don't see the CLI interface as an essential part of the
+> interface, and if I can do something to make it easier to access
+> programmatically, I'd like to do that. Glad to take cues here, or
+> if you wanted to jump on a call or chat, can do that too.
+> 
+> Sent from my iPhone
+> 
+> > On Aug 26, 2021, at 10:11 PM, Robin Lee Powell <robinleepowell@gmail.com> wrote:
+> > 
+> > ﻿
+> > In service to making certain parts of the lojban.org infra a bit
+> > more resilient, I'm updating some stuff that uses
+> > https://github.com/lojban/python-camxes .  This relies on java and
+> > the camxes jar, which, whatever, but it's also built on LEPL, which
+> > no longer works (see for example
+> > https://github.com/modoboa/modoboa/issues/1780 ).
+> > 
+> > https://github.com/teleological/camxes-py is a pure Python
+> > replacement, but is a CLI program rather than a library; it's really
+> > not designed to be used as a library.  I'd love it if someone
+> > updated and fixed that.
+> > 
+> > Unless there's another option?  What's the state of the art in this
+> > space?
+> > 
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/20210828040224.GS309000%40gmail.com.
 
 
