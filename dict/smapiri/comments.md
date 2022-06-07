@@ -15,3 +15,10 @@ viktor wrote:
 
 Yes.
 
+
+## 2022-06-07T15:08:03Z — krtisfranks (comment 3708, on definition 72830)
+
+Is a map not just a function?
+
+See "{fancu}".
+
