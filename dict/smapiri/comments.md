@@ -22,3 +22,15 @@ Is a map not just a function?
 
 See "{fancu}".
 
+
+## 2022-06-09T09:42:31Z — varikvalefor (comment 3709, on definition 72830, in reply to 3708)
+
+Re: Is a map not just a function?
+
+krtisfranks wrote:
+> See "{fancu}".
+
+
+The functions constitute a proper subset of the mappings.  Nonequivalent
+are "{fancu}" and "{smapiri}".
+
