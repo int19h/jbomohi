@@ -34,3 +34,18 @@ krtisfranks wrote:
 The functions constitute a proper subset of the mappings.  Nonequivalent
 are "{fancu}" and "{smapiri}".
 
+
+## 2022-06-10T07:47:02Z — krtisfranks (comment 3711, on definition 72830, in reply to 3709)
+
+Re: Is a map not just a function?
+
+varikvalefor wrote:
+> krtisfranks wrote:
+> > See "{fancu}".
+> 
+> 
+> The functions constitute a proper subset of the mappings.  Nonequivalent
+> are "{fancu}" and "{smapiri}".
+
+How are you defining "mapping" then? :)
+
