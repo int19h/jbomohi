@@ -49,3 +49,20 @@ varikvalefor wrote:
 
 How are you defining "mapping" then? :)
 
+
+## 2022-06-12T07:16:27Z — varikvalefor (comment 3712, on definition 72830, in reply to 3711)
+
+Re: Is a map not just a function?
+
+krtisfranks wrote:
+> How are you defining "mapping" then? :)
+
+"Map" is used as a synonym of "morphism", which is roughly equivalent to
+"correspondence between objects of a class".
+However, "map" is a bit ambiguous", as the category theorists' use of
+"map" differs from the set theorists' use of "map".
+
+Using "morphism" instead of "map" is probably a good idea.
+
+Thanks for pointing out the lack of clarity.
+
