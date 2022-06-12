@@ -1,0 +1,202 @@
+Return-path: <lojban+bncBDGLJAP6YQPBBR6VS6KQMGQEEXFKOOQ@googlegroups.com>
+Envelope-to: lojban-list-archive@lojban.org
+Delivery-date: Sun, 12 Jun 2022 06:31:57 -0700
+Received: from mail-oa1-f64.google.com ([209.85.160.64]:33638)
+	by d05c5d92ccf2 with esmtps  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.94.2)
+	(envelope-from <lojban+bncBDGLJAP6YQPBBR6VS6KQMGQEEXFKOOQ@googlegroups.com>)
+	id 1o0Nh3-002Nl9-C8
+	for lojban-list-archive@lojban.org; Sun, 12 Jun 2022 06:31:57 -0700
+Received: by mail-oa1-f64.google.com with SMTP id 586e51a60fabf-10139448dd6sf51127fac.0
+        for <lojban-list-archive@lojban.org>; Sun, 12 Jun 2022 06:31:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20210112;
+        h=sender:date:from:to:message-id:subject:mime-version
+         :x-original-sender:reply-to:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:list-subscribe:list-unsubscribe;
+        bh=YkhPtTrGVrbdCl2ORsAvZgYz/EEjxvDmXR+Q5njZZ8U=;
+        b=Vnk3dgjm43ByLhcDkXzKSmNBOxHbMYjZ9lbx6t0C9gKzBZOvFlq+FD1VGAz3nkzNSE
+         wMxGYRm0kh3CfCjd7pUJkd0fSlLPbgU5+Wpx7BKBeQ4OLrFQ823HxZhUiQkODH1197Wt
+         Q8H3TvX7f2QYeERpLiVP6fwUAb4RCWFH+rYs1eltIonXHfr/ydFtKba/sQFF6CmXIuNw
+         3G/SzQhRF83DgNFZj+fKw3Rabnogkr+4ZX1KFa6ktvRyizxzQI8NUe10FJn8yliumEp6
+         uAJTxgiU+VOpXpkkT1XJi8vf17xZHIuNLeXHCm1kERWXQpqgpKyVK3NXUoLo85NW6FlX
+         gdfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=sender:x-gm-message-state:date:from:to:message-id:subject
+         :mime-version:x-original-sender:reply-to:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:list-subscribe
+         :list-unsubscribe;
+        bh=YkhPtTrGVrbdCl2ORsAvZgYz/EEjxvDmXR+Q5njZZ8U=;
+        b=HLHa2RMH+BTEZcf5KOWNPSUW5Xytw2scSW5qSyzXnonnA58R3DtRNtZYE/EW5asKHi
+         Oy2aCLPAgbMKYCBC5qdF16ocvkKtNV8/UNRxgDxxTi4iaiw7Pv2G5ZyPhqmVMeWgoMOK
+         BlbGWgpRezmKTCD6mjJAd+6gWKN22IPGPSGDVpo4kou6kdNcPMJCIgyfugRLzkIrW9i/
+         KnbkCpB3s/XeNLlu3V+BXLf634yrjOmhUsZvgDW221GgexSbOxMkRogjLun/KANbs2q0
+         CQPofku+g3Kv8wuQ9Z21wQjDR9pGjp7B4gGtsjQ0wk/gOnR9XfxmJBxSbEcDDZMIdOtQ
+         tjcA==
+Sender: lojban@googlegroups.com
+X-Gm-Message-State: AOAM533h9EVAkJpJBB/kWARnVjds9x/uwiOjPzVOLXKAwMCjxAiN22Gy
+	67x2zW6ik/KaNyW7eqwkM2A=
+X-Google-Smtp-Source: ABdhPJzoVlU4vLa/ZSkNyNCIwGnEZ8DeebI7t9T141opDypG5ebnoNuPOO0GuCDMR3ry/FyfipdxKQ==
+X-Received: by 2002:a05:6870:f61c:b0:f1:ccf4:ab25 with SMTP id ek28-20020a056870f61c00b000f1ccf4ab25mr4894680oab.238.1655040712328;
+        Sun, 12 Jun 2022 06:31:52 -0700 (PDT)
+X-BeenThere: lojban@googlegroups.com
+Received: by 2002:a05:6830:1c74:b0:60c:1f54:e67 with SMTP id
+ s20-20020a0568301c7400b0060c1f540e67ls60762otg.5.gmail; Sun, 12 Jun 2022
+ 06:31:51 -0700 (PDT)
+X-Received: by 2002:a9d:6552:0:b0:605:e866:1b58 with SMTP id q18-20020a9d6552000000b00605e8661b58mr22585390otl.224.1655040711165;
+        Sun, 12 Jun 2022 06:31:51 -0700 (PDT)
+Received: by 2002:a05:6808:2095:b0:32f:280f:174e with SMTP id 5614622812f47-32f280f7399msb6e;
+        Sun, 12 Jun 2022 01:32:55 -0700 (PDT)
+X-Received: by 2002:a05:6870:f599:b0:100:ed2e:bb1d with SMTP id eh25-20020a056870f59900b00100ed2ebb1dmr4445864oab.205.1655022775463;
+        Sun, 12 Jun 2022 01:32:55 -0700 (PDT)
+Date: Sun, 12 Jun 2022 01:32:55 -0700 (PDT)
+From: Oleg Parashchenko <olpa@uucode.com>
+To: lojban <lojban@googlegroups.com>
+Message-Id: <d1a72031-b3ed-4164-bfba-bfa5fa65893bn@googlegroups.com>
+Subject: [lojban] Lojban tokenizer for machine learning, first version
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_866_567319235.1655022775249"
+X-Original-Sender: olpa@uucode.com
+Reply-To: lojban@googlegroups.com
+Precedence: list
+Mailing-list: list lojban@googlegroups.com; contact lojban+owners@googlegroups.com
+List-ID: <lojban.googlegroups.com>
+X-Google-Group-Id: 1004133512417
+List-Post: <https://groups.google.com/group/lojban/post>, <mailto:lojban@googlegroups.com>
+List-Help: <https://groups.google.com/support/>, <mailto:lojban+help@googlegroups.com>
+List-Archive: <https://groups.google.com/group/lojban
+List-Subscribe: <https://groups.google.com/group/lojban/subscribe>, <mailto:lojban+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+1004133512417+unsubscribe@googlegroups.com>,
+ <https://groups.google.com/group/lojban/subscribe>
+X-Spam-Score: 0.2 (/)
+X-Spam_score: 0.2
+X-Spam_score_int: 2
+X-Spam_bar: /
+X-Spam-Report: Spam detection software, running on the system "bcda1c85505f",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ @@CONTACT_ADDRESS@@ for details.
+ 
+ Content preview:  Hello everyone, I've just released the first version of a
+   lojban tokenizer. It is intended for use in machine learning applications
+   and therefore is a bit different from a linguistic tokenizer. In particular,
+    it does [...] 
+ 
+ Content analysis details:   (0.2 points, 5.0 required)
+ 
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -0.5 BAYES_05               BODY: Bayes spam probability is 1 to 5%
+                             [score: 0.0207]
+ -0.0 RCVD_IN_DNSWL_NONE     RBL: Sender listed at https://www.dnswl.org/,
+                              no trust
+                             [209.85.160.64 listed in list.dnswl.org]
+ -0.0 RCVD_IN_MSPIKE_H2      RBL: Average reputation (+2)
+                             [209.85.160.64 listed in wl.mailspike.net]
+  0.0 SPF_HELO_NONE          SPF: HELO does not publish an SPF Record
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+  1.6 DATE_IN_PAST_03_06     Date: is 3 to 6 hours before Received: date
+  0.2 HEADER_FROM_DIFFERENT_DOMAINS From and EnvelopeFrom 2nd level
+                             mail domains are different
+  0.0 HTML_MESSAGE           BODY: HTML included in message
+ -0.1 DKIM_VALID_EF          Message has a valid DKIM or DK signature from
+                             envelope-from domain
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily
+                             valid
+ -1.0 MAILING_LIST_MULTI     Multiple indicators imply a widely-seen list
+                             manager
+ -0.0 DKIMWL_WL_MED          DKIMwl.org - Medium trust sender
+
+------=_Part_866_567319235.1655022775249
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_867_689596740.1655022775249"
+
+------=_Part_867_689596740.1655022775249
+Content-Type: text/plain; charset="UTF-8"
+
+Hello everyone,
+
+I've just released the first version of a lojban tokenizer. It is intended 
+for use in machine learning applications and therefore is a bit different 
+from a linguistic tokenizer. In particular, it does sub-word tokenization.
+
+Additionally, there is a lexer, which can be used to develop alternative 
+tokenizers.
+
+Home page: https://github.com/olpa/lojban-mt/tree/master/tokenizer/
+
+Fast start:
+
+```
+$ VERSION=1.0.0
+$ pip3 install 
+https://github.com/olpa/lojban-mt/releases/download/tokenizer-v${VERSION}/jbotokenizer-${VERSION}.tar.gz
+
+$ echo 'coirodo' | jboparse.py
+coi ro do
+
+$ jboparse.py coi ro do
+coi ro do
+
+$ jboparse.py coi ro do --lex
+(<TokenClass.CMAVO: 2>, 'coi') (<TokenClass.SKIP: 1>, ' ')
+(<TokenClass.CMAVO: 2>, 'ro') (<TokenClass.SKIP: 1>, ' ')
+(<TokenClass.CMAVO: 2>, 'do')
+
+$ jboparse.py lojbangirz
+logji## bangu## girzu
+
+$ python3
+>>> from jbotokenizer import text_to_tokens
+>>> text_to_tokens('ma nuzba')
+['ma', 'nuzba']
+
+Regards,
+Oleg
+
+-- 
+You received this message because you are subscribed to the Google Groups "lojban" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to lojban+unsubscribe@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/lojban/d1a72031-b3ed-4164-bfba-bfa5fa65893bn%40googlegroups.com.
+
+------=_Part_867_689596740.1655022775249
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello everyone,<div><br></div><div>I've just released the first version of =
+a lojban tokenizer. It is intended for use in machine learning applications=
+ and therefore is a bit different from a linguistic tokenizer. In particula=
+r, it does sub-word tokenization.<br><br>Additionally, there is a lexer, wh=
+ich can be used to develop alternative tokenizers.<br><br>Home page: https:=
+//github.com/olpa/lojban-mt/tree/master/tokenizer/<br><br>Fast start:<br><b=
+r>```<br>$ VERSION=3D1.0.0<br>$ pip3 install https://github.com/olpa/lojban=
+-mt/releases/download/tokenizer-v${VERSION}/jbotokenizer-${VERSION}.tar.gz<=
+br><br>$ echo 'coirodo' | jboparse.py<br>coi ro do<br><br>$ jboparse.py coi=
+ ro do<br>coi ro do<br><br>$ jboparse.py coi ro do --lex<br>(&lt;TokenClass=
+.CMAVO: 2&gt;, 'coi') (&lt;TokenClass.SKIP: 1&gt;, ' ')<br>(&lt;TokenClass.=
+CMAVO: 2&gt;, 'ro') (&lt;TokenClass.SKIP: 1&gt;, ' ')<br>(&lt;TokenClass.CM=
+AVO: 2&gt;, 'do')<br><br>$ jboparse.py lojbangirz<br>logji## bangu## girzu<=
+br><br>$ python3<br>&gt;&gt;&gt; from jbotokenizer import text_to_tokens<br=
+>&gt;&gt;&gt; text_to_tokens('ma nuzba')<br>['ma', 'nuzba']<br></div><div><=
+br></div><div>Regards,</div><div>Oleg</div>
+
+<p></p>
+
+-- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;lojban&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:lojban+unsubscribe@googlegroups.com">lojban+unsub=
+scribe@googlegroups.com</a>.<br />
+To view this discussion on the web visit <a href=3D"https://groups.google.c=
+om/d/msgid/lojban/d1a72031-b3ed-4164-bfba-bfa5fa65893bn%40googlegroups.com?=
+utm_medium=3Demail&utm_source=3Dfooter">https://groups.google.com/d/msgid/l=
+ojban/d1a72031-b3ed-4164-bfba-bfa5fa65893bn%40googlegroups.com</a>.<br />
+
+------=_Part_867_689596740.1655022775249--
+
+------=_Part_866_567319235.1655022775249--
