@@ -15,3 +15,10 @@ krtisfranks wrote:
 
 If so, then would "{toldajbu}" be "barely unacceptable/slightly bad"?
 
+
+## 2022-11-12T20:39:13Z — krtisfranks (comment 3724, on definition 73025)
+
+Etymology
+
+What is the etymology of this word?
+
