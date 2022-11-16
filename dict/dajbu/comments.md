@@ -37,3 +37,15 @@ krtisfranks wrote:
 
 Not exactly, more like a weaker/more neutral version of (se) zanru
 
+
+## 2022-11-16T16:15:55Z — janbe (comment 3726, on definition 73025, in reply to 3724)
+
+Re: Etymology
+
+krtisfranks wrote:
+> What is the etymology of this word?
+
+
+Sorry, I forgot to add it. It's there now. It is from Japanese 大丈夫
+(daijoubu).
+
