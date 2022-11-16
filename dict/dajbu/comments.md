@@ -22,3 +22,18 @@ Etymology
 
 What is the etymology of this word?
 
+
+## 2022-11-16T16:14:04Z — janbe (comment 3725, on definition 73025, in reply to 3723)
+
+Re: Mere?
+
+krtisfranks wrote:
+> krtisfranks wrote:
+> > Is this meant to indicate "merely/barely acceptable"?
+> 
+> 
+> If so, then would "{toldajbu}" be "barely unacceptable/slightly bad"?
+
+
+Not exactly, more like a weaker/more neutral version of (se) zanru
+
