@@ -32,3 +32,20 @@ where
 cmevla don't imply anything just like "lojban" doesn't imply anything
 about a logical language.
 
+
+## 2022-11-24T18:44:28Z — gleki (comment 3730, on definition 73045, in reply to 3728)
+
+Re: why not teksas?
+
+ficstek wrote:
+> gleki wrote:
+> > 
+> 
+> Because "teksas", even if it's a valid cmene, implies "cteki srasu".
+> Having the seventh letter helps to eliminate any possible ambiguity 
+where
+> it splits naturally into component rafsi.
+
+cmevla don't imply anything just like "lojban" doesn't imply anything
+about a logical language.
+
