@@ -91,3 +91,17 @@ spheniscine wrote:
 
 I have been laughed at for trying to avoid this problem.
 
+
+## 2022-12-20T14:34:14Z — HerpDerp (comment 3733, in reply to 2485)
+
+Re: Downvoted?
+
+Wuzzy wrote:
+> [...] {narca'acando}
+I think the most jbosarxe thing is to use narcando, but it's somewhat
+awkward. One interpretation would be that it's not very jbosarxe to be
+vauge in the particular manner of akta, but really, lojban doesn't have an
+animate/inanimate distinction for activeness, and trying to force one with
+/≪cabra≫ is just awkward, on top of cando not having a short
+terminal rafsi.
+
