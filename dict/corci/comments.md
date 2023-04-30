@@ -220,3 +220,25 @@ bit redundant and this can (I think: must) happen.
 
 At least approximately, it seems so.
 
+
+## 2023-04-30T08:16:11Z — gleki (comment 3743, on definition 56846, in reply to 2882)
+
+Re: corci1?
+
+krtisfranks wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > > How to say "I made a gesture".
+> > > "mi (pu) cocygau", if you like the proposed cmarafsi.
+> > 
+> > 
+> > ok, it'd probably be {cocyzu'e}.
+> 
+> That works at least as well.
+
+cocyzu'e is to be unwrapped as
+
+zukte lo ka ko'a corci fi lo xadni be ce'u 
+
+?
+
