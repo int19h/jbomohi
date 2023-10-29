@@ -29,3 +29,20 @@ lunanightfern wrote:
 > 
 > (meant to ask what does ‘spoopy’ even mean?)
 
+
+## 2023-10-29T00:46:46Z — lunanightfern (comment 3769, on definition 73342, in reply to 3768)
+
+Re: What does spupi even mean?
+
+merrybot wrote:
+> yknow the 'you have been visited by trumpet skelton of the abyss'
+> 
+> lunanightfern wrote:
+> > lunanightfern wrote:
+> > > ? lol
+> > 
+> > 
+> > (meant to ask what does ‘spoopy’ even mean?)
+
+alright.
+
