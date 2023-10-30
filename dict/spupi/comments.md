@@ -46,3 +46,26 @@ merrybot wrote:
 
 alright.
 
+
+## 2023-10-30T02:58:09Z — krtisfranks (comment 3770, on definition 73342, in reply to 3769)
+
+Re: What does spupi even mean?
+
+lunanightfern wrote:
+> merrybot wrote:
+> > yknow the 'you have been visited by trumpet skelton of the abyss'
+> > 
+> > lunanightfern wrote:
+> > > lunanightfern wrote:
+> > > > ? lol
+> > > 
+> > > 
+> > > (meant to ask what does ‘spoopy’ even mean?)
+> 
+> alright.
+
+
+It is something which is intended to be spooky/scary/creepy (especially
+for the Halloween season), or which would be, so except that it is either
+comical or cute. A baby who is dressed up as a vampire would be spoopy.
+
