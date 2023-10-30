@@ -69,3 +69,30 @@ It is something which is intended to be spooky/scary/creepy (especially
 for the Halloween season), or which would be, so except that it is either
 comical or cute. A baby who is dressed up as a vampire would be spoopy.
 
+
+## 2023-10-30T03:42:25Z — lunanightfern (comment 3771, on definition 73342, in reply to 3770)
+
+Re: What does spupi even mean?
+
+krtisfranks wrote:
+> lunanightfern wrote:
+> > merrybot wrote:
+> > > yknow the 'you have been visited by trumpet skelton of the abyss'
+> > > 
+> > > lunanightfern wrote:
+> > > > lunanightfern wrote:
+> > > > > ? lol
+> > > > 
+> > > > 
+> > > > (meant to ask what does ‘spoopy’ even mean?)
+> > 
+> > alright.
+> 
+> 
+> It is something which is intended to be spooky/scary/creepy (especially
+> for the Halloween season), or which would be, so except that it is
+either
+> comical or cute. A baby who is dressed up as a vampire would be spoopy.
+
+I see!	Thanks for the explanation.
+
