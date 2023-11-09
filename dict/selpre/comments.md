@@ -68,3 +68,9 @@ That would mean changing the definition of {prenu}, and Jbovlaste is IMHO
 not the right place to argue about that. I suggest you bring it up on
 http://www.lojban.org/tiki/BPFK+Section:+gismu+Issues.
 
+
+## 2023-11-09T07:21:21Z — krtisfranks (comment 3774, on definition 18254)
+
+prenu2 does not officially exist
+
+
