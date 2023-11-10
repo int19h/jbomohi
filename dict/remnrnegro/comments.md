@@ -19,3 +19,17 @@ people
 
 you can Admin Request it but idk how often that's checked if ever
 
+
+## 2023-11-10T20:57:13Z — gleki (comment 3777, on definition 69808, in reply to 3775)
+
+Re: this word absolutely should not be in the language
+
+hzrn wrote:
+> I don't even know how this flew for 5 whole years. I don't know if
+people
+> have the power to delete words from this system, but if they do, it is
+> asbolutely needed here.
+
+Wikipedia contains an entry just as it has entries for other obsolete
+concepts 
+
