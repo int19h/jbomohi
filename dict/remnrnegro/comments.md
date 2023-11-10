@@ -6,3 +6,16 @@ I don't even know how this flew for 5 whole years. I don't know if people
 have the power to delete words from this system, but if they do, it is
 asbolutely needed here.
 
+
+## 2023-11-10T16:03:36Z — merrybot (comment 3776, on definition 69808, in reply to 3775)
+
+Re: this word absolutely should not be in the language
+
+hzrn wrote:
+> I don't even know how this flew for 5 whole years. I don't know if
+people
+> have the power to delete words from this system, but if they do, it is
+> asbolutely needed here.
+
+you can Admin Request it but idk how often that's checked if ever
+
