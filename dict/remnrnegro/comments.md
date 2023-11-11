@@ -50,3 +50,26 @@ gleki wrote:
 
 this is different though?? this is Racism. we Don't need that here
 
+
+## 2023-11-11T10:48:24Z — gleki (comment 3780, on definition 69808, in reply to 3778)
+
+Re: this word absolutely should not be in the language
+
+merrybot wrote:
+> gleki wrote:
+> > hzrn wrote:
+> > > I don't even know how this flew for 5 whole years. I don't know if
+> > people
+> > > have the power to delete words from this system, but if they do, it
+is
+> > > asbolutely needed here.
+> > 
+> > Wikipedia contains an entry just as it has entries for other obsolete
+> > concepts 
+> 
+> this is different though?? this is Racism. we Don't need that here
+
+
+Why can Wikipedia have racism and jbovlaste cannot?
+Notice racism might be even in gismu (e.g. take cinki)
+
