@@ -102,3 +102,53 @@ obsolete
 wikipedia is discussing racism historically. this entry is being
 racist. (as for zo cinki: ..............)
 
+
+## 2023-11-11T16:09:37Z — gleki (comment 3782, on definition 69808, in reply to 3781)
+
+Re: this word absolutely should not be in the language
+
+merrybot wrote:
+> gleki wrote:
+> > merrybot wrote:
+> > > gleki wrote:
+> > > > hzrn wrote:
+> > > > > I don't even know how this flew for 5 whole years. I don't know
+if
+> > > > people
+> > > > > have the power to delete words from this system, but if they do,
+> it
+> > is
+> > > > > asbolutely needed here.
+> > > > 
+> > > > Wikipedia contains an entry just as it has entries for other
+> obsolete
+> > > > concepts 
+> > > 
+> > > this is different though?? this is Racism. we Don't need that here
+> > 
+> > 
+> > Why can Wikipedia have racism and jbovlaste cannot?
+> > Notice racism might be even in gismu (e.g. take cinki)
+> 
+> wikipedia is discussing racism historically. this entry is
+being
+> racist. (as for zo cinki: ..............)
+
+
+maybe you can create a new definition of the word but i can't see
+immediately how it can be improved.
+
+Lojban was never neutral because world changes. E.g. no gismu for Roman
+Empire but a gismu for Soviet Union although both countries no longer
+exist (this was different when Lojban was born).
+
+Same for {fonxa}, {skami}, {kacma}.
+
+Had Lojban been born in the beginning of the 20th century it would be
+possible such obsolete words for human races would be present just like we
+have {fonxa} and {kacma} reminding us of past epochs.
+
+Wiktionary has such word just fine.
+
+https://en.wiktionary.org/wiki/negroid#English
+
