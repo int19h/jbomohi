@@ -437,3 +437,98 @@ qualified to really discuss whether the word form itself is acceptable;
 "maska" was my attempt at deriving a zevla ibternally and removing some of
 the etymological baggage while still being able to address race.
 
+
+## 2023-11-12T16:16:33Z — krtisfranks (comment 3788, on definition 69808, in reply to 3785)
+
+Re: this word absolutely should not be in the language
+
+gleki wrote:
+> lunanightfern wrote:
+> > gleki wrote:
+> > > merrybot wrote:
+> > > > gleki wrote:
+> > > > > merrybot wrote:
+> > > > > > gleki wrote:
+> > > > > > > hzrn wrote:
+> > > > > > > > I don't even know how this flew for 5 whole years. I don't
+> > know
+> > > if
+> > > > > > > people
+> > > > > > > > have the power to delete words from this system, but if
+they
+> > do,
+> > > > it
+> > > > > is
+> > > > > > > > asbolutely needed here.
+> > > > > > > 
+> > > > > > > Wikipedia contains an entry just as it has entries for other
+> > > > obsolete
+> > > > > > > concepts 
+> > > > > > 
+> > > > > > this is different though?? this is Racism. we Don't need that
+> here
+> > > > > 
+> > > > > 
+> > > > > Why can Wikipedia have racism and jbovlaste cannot?
+> > > > > Notice racism might be even in gismu (e.g. take cinki)
+> > > > 
+> > > > wikipedia is discussing racism historically. this entry is
+> > > being
+> > > > racist. (as for zo cinki: ..............)
+> > > 
+> > > 
+> > > maybe you can create a new definition of the word but i can't see
+> > > immediately how it can be improved.
+> > > 
+> > > Lojban was never neutral because world changes. E.g. no gismu for
+> Roman
+> > > Empire but a gismu for Soviet Union although both countries no
+longer
+> > > exist (this was different when Lojban was born).
+> > > 
+> > > Same for {fonxa}, {skami}, {kacma}.
+> > > 
+> > > Had Lojban been born in the beginning of the 20th century it would
+be
+> > > possible such obsolete words for human races would be present just
+> like
+> > we
+> > > have {fonxa} and {kacma} reminding us of past epochs.
+> > > 
+> > > Wiktionary has such word just fine.
+> > > 
+> > > https://en.wiktionary.org/wiki/negroid#English
+> > 
+> > English is a language with a very long history.  Wiktionary indeed has
+a
+> > page defining that word, but that is a word which already exists, and
+> > therefore should have an already-existing definition listed. 
+> Wiktionary,
+> > being part of the Wikimedia family of wikis, is not making anything
+new
+> > here.
+> > 
+> > The page you linked writes “dated, offensive” for both the adjectival
+> and
+> > nominal forms of that word, so, pray tell, is it truly necessary to
+> create
+> > such *new* for the *sole purpose* of demeaning towards black people?  
+     Do
+> > we really miss much if we *don’t* have racist words in our dictionary?
+> 
+> It's fine to add "offensive" to notes if this word. This word is down
+> voted anyway.
+> 
+> How are you going to translate old books where this English word exists? 
+> 
+> Next time someone will say we need to delete words for freedom in Lojban
+> because it offends employers.
+
+Having concepts/words for race is necessary. That is why I introduced (the
+apparently rather disliked) "{maska}". This word could be okay, but I
+would really like the English definition to be changed because it makes me
+extremely uncomfortable. Also, I am not a Black person and thus am not
+qualified to really discuss whether the word form itself is acceptable;
+"maska" was my attempt at deriving a zevla ibternally and removing some of
+the etymological baggage while still being able to address race.
+
