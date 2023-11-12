@@ -741,3 +741,20 @@ etymological
 
 The same person also made {remnrxaustralo} and {remnrmongolo}
 
+
+## 2023-11-12T19:21:01Z — gleki (comment 3791, on definition 69808, in reply to 3775)
+
+Re: this word absolutely should not be in the language
+
+hzrn wrote:
+> I don't even know how this flew for 5 whole years. I don't know if
+people
+> have the power to delete words from this system, but if they do, it is
+> asbolutely needed here.
+
+If the database is supposed to be append-only to prevent erasing history
+then the only way to fight vandalism (not necessarily obsolete words but
+also spam ads and revealing PII) would be make downvoted definitions
+return 404. however, this is now not possible since one word might have
+several definitions at once. so just reworking jbovlaste is necessary.
+
