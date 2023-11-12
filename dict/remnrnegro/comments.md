@@ -217,3 +217,48 @@ nominal forms of that word, so, pray tell, is it truly necessary to create
 such *new* for the *sole purpose* of demeaning towards black people?  Do
 we really miss much if we *don’t* have racist words in our dictionary?
 
+
+## 2023-11-12T03:51:58Z — lunanightfern (comment 3784, on definition 69808, in reply to 3783)
+
+Re: this word absolutely should not be in the language
+
+lunanightfern wrote:
+> gleki wrote:
+[...]
+> > maybe you can create a new definition of the word but i can't see
+> > immediately how it can be improved.
+> > 
+> > Lojban was never neutral because world changes. E.g. no gismu for
+Roman
+> > Empire but a gismu for Soviet Union although both countries no longer
+> > exist (this was different when Lojban was born).
+> > 
+> > Same for {fonxa}, {skami}, {kacma}.
+> > 
+> > Had Lojban been born in the beginning of the 20th century it would be
+> > possible such obsolete words for human races would be present just
+like
+> we
+> > have {fonxa} and {kacma} reminding us of past epochs.
+> > 
+> > Wiktionary has such word just fine.
+> > 
+> > https://en.wiktionary.org/wiki/negroid#English
+> 
+> English is a language with a very long history.  Wiktionary indeed has a
+> page defining that word, but that is a word which already exists, and
+> therefore should have an already-existing definition listed. 
+Wiktionary,
+> being part of the Wikimedia family of wikis, is not making anything new
+> here.
+> 
+> The page you linked writes “dated, offensive” for both the adjectival
+and
+> nominal forms of that word, so, pray tell, is it truly necessary to
+create
+> such *new* for the *sole purpose* of demeaning towards black people?	Do
+> we really miss much if we *don’t* have racist words in our dictionary?
+
+As for {cinki}, it is similar merely by coincidence.  There is nothing
+offensive within the definition nor its etymology.
+
