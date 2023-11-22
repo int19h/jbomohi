@@ -59,3 +59,10 @@ or
 
 Mathematical operators /are/ predicates.
 
+
+## 2023-11-22T07:54:29Z — krtisfranks (comment 3796, on definition 57189)
+
+This word is absolutely critical to mathematical expression in Lojban
+
+Do not downvote it unless you have something better.
+
