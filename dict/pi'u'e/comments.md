@@ -30,3 +30,33 @@ explicitly defined formula.
 
 English mathematical writing usually lacks this degree of clarity.
 
+
+## 2023-11-22T07:51:27Z — krtisfranks (comment 3795, in reply to 3794)
+
+Re: Utility
+
+krtisfranks wrote:
+> This word functions as "$\cdot$" herein:
+> 
+> Operator $\cdot: S \times S → S \times S$, such that $(a, b) \mapsto (a,
+> b)$.
+> In other words: $a \cdot b = (a, b)$.
+> 
+> Then, make such operator a big operator.
+> 
+> This then allows one to generate tuples of arbitrary size without
+> "$\dots$". For example:
+> $(x_1, x_2, \dots, x_n)$ is ambiguous because the rule of construction
+is
+> not specified and the ellipsis relies on intuition but is not
+technically
+> defined, whereas $\times_{i \in \[1, n\] \cap \mathbb{Z}} (x_i)$ is not
+> ambiguous. It also allows for extension to infinitely many terms via an
+> explicitly defined formula.
+> 
+> English mathematical writing usually lacks this degree of clarity.
+
+
+Ah, none of the math writing is rendering. I will try to fix this later.
+For now, click "reply" in order to see the TeX version.
+
