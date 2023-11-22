@@ -66,3 +66,14 @@ This word is absolutely critical to mathematical expression in Lojban
 
 Do not downvote it unless you have something better.
 
+
+## 2023-11-22T19:16:45Z — gleki (comment 3797, on definition 57189)
+
+Translations of examples?
+
+Would like to have translations of examples provided into
+
+1. math notation (which standard)
+2. Explanation
+3. Laymen explanation of possible 
+
