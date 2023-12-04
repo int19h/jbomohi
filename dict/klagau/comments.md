@@ -3,3 +3,13 @@
 lonu, not "loka"
 
 
+
+## 2023-12-04T21:22:06Z — hzrn (comment 3802, on definition 73429, in reply to 3801)
+
+Re: lonu, not 
+
+gleki wrote:
+> 
+
+ki'e, fixed
+
