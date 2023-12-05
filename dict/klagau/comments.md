@@ -27,3 +27,23 @@ hzrn wrote:
 
 why is jvs replacing newlines with [backslash] [percent] now .....
 
+
+## 2023-12-05T05:51:51Z — rlpowell (comment 3804, on definition 73429, in reply to 3803)
+
+Re: lonu, not 
+
+merrybot wrote:
+> hzrn wrote:
+> > gleki wrote:
+> > > 
+> > 
+> > ki'e, fixed
+> 
+> 
+> why is jvs replacing newlines with [backslash] [percent] now .....
+
+Come find me on Telegram or IRC or Discord or something if you *really*
+want to know.  :D ;_;
+
+Fixed.
+
