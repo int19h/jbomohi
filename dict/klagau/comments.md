@@ -13,3 +13,17 @@ gleki wrote:
 
 ki'e, fixed
 
+
+## 2023-12-05T01:02:52Z — merrybot (comment 3803, on definition 73429, in reply to 3802)
+
+Re: lonu, not 
+
+hzrn wrote:
+> gleki wrote:
+> > 
+> 
+> ki'e, fixed
+
+
+why is jvs replacing newlines with [backslash] [percent] now .....
+
