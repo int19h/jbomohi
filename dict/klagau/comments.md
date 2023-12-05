@@ -47,3 +47,27 @@ want to know.  :D ;_;
 
 Fixed.
 
+
+## 2023-12-05T14:48:37Z — merrybot (comment 3805, on definition 73429, in reply to 3804)
+
+Re: lonu, not 
+
+rlpowell wrote:
+> merrybot wrote:
+> > hzrn wrote:
+> > > gleki wrote:
+> > > > 
+> > > 
+> > > ki'e, fixed
+> > 
+> > 
+> > why is jvs replacing newlines with [backslash] [percent] now .....
+> 
+> Come find me on Telegram or IRC or Discord or something if you *really*
+> want to know.  :D ;_;
+> 
+> Fixed.
+
+
+i have no idea what your discord is .u'i; mine is la.evis.
+
