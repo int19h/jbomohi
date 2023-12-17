@@ -69,3 +69,15 @@ I like both your new words and your suggestion to reassign this word's
 current meaning to {cau'e} because it keeps the series going and it fits in
 nicely with NAhE.
 
+
+## 2023-12-17T12:07:37Z — gleki (comment 3811, on definition 66537, in reply to 2061)
+
+Re: Date
+
+krtisfranks wrote:
+> I have been tossing this idea around for roughly two years at least but 
+> today seemed like a good day to add it.
+
+
+{xo'eva'e} basically
+
