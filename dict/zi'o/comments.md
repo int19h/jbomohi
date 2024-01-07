@@ -50,3 +50,20 @@ style. So you may translate sets of cmavo definitions into your "dialect"
 of English so that BPFK can adopt this set of new definitions as the 
 reference ones.
 
+
+## 2024-01-07T17:10:15Z — krtisfranks (comment 3814)
+
+rafsi "-zil-": which place gets deleted?
+
+In lujvo which involve the rafsi "-zil-", which place(s) get deleted? Is
+it the first (unoccupied) one, or is it the last (unoccupied) one, or is
+it purely vague (and potentially plural)? My interpretation is that it is
+the last option, but it might be better to specify a hard rule. On the
+other hand, we would need to have a general way of targeting alternative
+but specific places for deletion in that case. Note that later sumti slots
+will tend to be less useful and thus more likely to be deleted.
+
+Also, which brivla is affected is not totally clear to me. I have some
+natural interpretations, but I am not sure that they are actually
+justified by any text. I need to review.
+
