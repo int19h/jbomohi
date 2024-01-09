@@ -17,3 +17,9 @@ few days, I'll make the changes myself.
 i su'o da na zanru i ku'i ma zabna smuvelcki
 
 
+
+## 2024-01-09T00:21:05Z — krtisfranks (comment 3816)
+
+Why no sumti slot for the standard by which muchness is assessed?
+
+
