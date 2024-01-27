@@ -58,3 +58,23 @@ gleki wrote:
 i admit i don't see why these need to exist? like venzvocma could just be
 cmadi'ave'u
 
+
+## 2024-01-27T18:33:19Z — gleki (comment 3829, on definition 73496, in reply to 3828)
+
+Re: also how do you even use this word
+
+merrybot wrote:
+> gleki wrote:
+> > merrybot wrote:
+> > > 
+> > 
+> > https://groups.google.com/g/lojban/c/64L-yY8ete8/m/kgWQbXt6Q-QJ
+> 
+> 
+> i admit i don't see why these need to exist? like venzvocma could just
+be
+> cmadi'ave'u
+
+You can never say if a lujvo is a jvajvo or what are jvajvo rules. With
+rafybri this is changed
+
