@@ -33,3 +33,13 @@ AFTER the concept of rafybri was proposed. Unfortunate. One cannot even
 reserve this concept in jbovlaste because zve/zvi/zvo/zvu don't have
 corresponding gismu originally specified.
 
+
+## 2024-01-27T17:25:58Z — gleki (comment 3827, on definition 73496, in reply to 3825)
+
+Re: also how do you even use this word
+
+merrybot wrote:
+> 
+
+https://groups.google.com/g/lojban/c/64L-yY8ete8/m/kgWQbXt6Q-QJ
+
