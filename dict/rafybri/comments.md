@@ -43,3 +43,18 @@ merrybot wrote:
 
 https://groups.google.com/g/lojban/c/64L-yY8ete8/m/kgWQbXt6Q-QJ
 
+
+## 2024-01-27T17:50:51Z — merrybot (comment 3828, on definition 73496, in reply to 3827)
+
+Re: also how do you even use this word
+
+gleki wrote:
+> merrybot wrote:
+> > 
+> 
+> https://groups.google.com/g/lojban/c/64L-yY8ete8/m/kgWQbXt6Q-QJ
+
+
+i admit i don't see why these need to exist? like venzvocma could just be
+cmadi'ave'u
+
