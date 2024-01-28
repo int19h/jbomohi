@@ -103,3 +103,34 @@ gleki wrote:
 lujvo need not be regular to begin with - {jvonu'oblo} etc - and besides
 dictionaries and asking exist
 
+
+## 2024-01-28T07:49:54Z — gleki (comment 3831, on definition 73496, in reply to 3830)
+
+Re: also how do you even use this word
+
+merrybot wrote:
+> gleki wrote:
+> > merrybot wrote:
+> > > gleki wrote:
+> > > > merrybot wrote:
+> > > > > 
+> > > > 
+> > > > https://groups.google.com/g/lojban/c/64L-yY8ete8/m/kgWQbXt6Q-QJ
+> > > 
+> > > 
+> > > i admit i don't see why these need to exist? like venzvocma could
+just
+> > be
+> > > cmadi'ave'u
+> > 
+> > You can never say if a lujvo is a jvajvo or what are jvajvo rules.
+With
+> > rafybri this is changed
+> 
+> 
+> lujvo need not be regular to begin with - {jvonu'oblo} etc - and besides
+> dictionaries and asking exist
+
+
+Yes. Whereas rafybri are always regular.
+
