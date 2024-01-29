@@ -170,3 +170,47 @@ besides
 
 there's no difference morphologically
 
+
+## 2024-01-29T02:22:49Z — gleki (comment 3833, on definition 73496, in reply to 3832)
+
+Re: also how do you even use this word
+
+merrybot wrote:
+> gleki wrote:
+> > merrybot wrote:
+> > > gleki wrote:
+> > > > merrybot wrote:
+> > > > > gleki wrote:
+> > > > > > merrybot wrote:
+> > > > > > > 
+> > > > > > 
+> > > > > >
+https://groups.google.com/g/lojban/c/64L-yY8ete8/m/kgWQbXt6Q-QJ
+> > > > > 
+> > > > > 
+> > > > > i admit i don't see why these need to exist? like venzvocma
+could
+> > just
+> > > > be
+> > > > > cmadi'ave'u
+> > > > 
+> > > > You can never say if a lujvo is a jvajvo or what are jvajvo rules.
+> > With
+> > > > rafybri this is changed
+> > > 
+> > > 
+> > > lujvo need not be regular to begin with - {jvonu'oblo} etc - and
+> besides
+> > > dictionaries and asking exist
+> > 
+> > 
+> > Yes. Whereas rafybri are always regular.
+> 
+> 
+> there's no difference morphologically
+
+
+If you see jve or zve/I/o/u or fVf rafsi you immediately know it's a
+rafybrisni and understand you don't need a dictionary to convert it to a
+deep gismu structure.
+
