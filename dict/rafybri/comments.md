@@ -309,3 +309,67 @@ Esefsyborxenze'a (link:
 {zgikemfi'inalka'esefsysajyke'ejvekemsefsyda'atoiflike'ejvejagborkemjilryj
 vesefsyborxenze'a}) contains several jve rafsi but is not a rafybrisni
 
+
+## 2024-01-29T09:02:10Z — glekizmiku (comment 3836, on definition 73496, in reply to 3835)
+
+Re: also how do you even use this word
+
+merrybot wrote:
+> gleki wrote:
+> > merrybot wrote:
+> > > gleki wrote:
+> > > > merrybot wrote:
+> > > > > gleki wrote:
+> > > > > > merrybot wrote:
+> > > > > > > gleki wrote:
+> > > > > > > > merrybot wrote:
+> > > > > > > > > 
+> > > > > > > > 
+> > > > > > > >
+> > https://groups.google.com/g/lojban/c/64L-yY8ete8/m/kgWQbXt6Q-QJ
+> > > > > > > 
+> > > > > > > 
+> > > > > > > i admit i don't see why these need to exist? like venzvocma
+> > could
+> > > > just
+> > > > > > be
+> > > > > > > cmadi'ave'u
+> > > > > > 
+> > > > > > You can never say if a lujvo is a jvajvo or what are jvajvo
+> rules.
+> > > > With
+> > > > > > rafybri this is changed
+> > > > > 
+> > > > > 
+> > > > > lujvo need not be regular to begin with - {jvonu'oblo} etc - and
+> > > besides
+> > > > > dictionaries and asking exist
+> > > > 
+> > > > 
+> > > > Yes. Whereas rafybri are always regular.
+> > > 
+> > > 
+> > > there's no difference morphologically
+> > 
+> > 
+> > If you see jve or zve/I/o/u or fVf rafsi you immediately know it's a
+> > rafybrisni and understand you don't need a dictionary to convert it to
+a
+> > deep gismu structure.
+> 
+>
+zgikemfi'inalka'esefsysajyke'eJVEkemsefsyda'atoiflike'eJVEjagborkemjilryJV
+> Esefsyborxenze'a (link:
+>
+{zgikemfi'inalka'esefsysajyke'ejvekemsefsyda'atoiflike'ejvejagborkemjilryj
+> vesefsyborxenze'a}) contains several jve rafsi but is not a rafybrisni
+
+
+I thought the explanation was clear enough what rafybri is.
+rafybri is just bridi compressed into lujvo that is unambiguously
+translated into a bridi.
+
+ve'urzvocma = vecnu fo su'o da xi rau cmalu
+
+cmajvemle = cmalu je melbi
+
