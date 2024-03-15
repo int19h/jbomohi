@@ -17,3 +17,20 @@ merrybot wrote:
 "{kakne}" already has "-ka'e-" as its cmarafsi. That seems pretty perfect
 in my opinion.
 
+
+## 2024-03-15T07:14:59Z — merrybot (comment 3845, on definition 1695, in reply to 3844)
+
+Re: thoughts on assigning -kaz- to this?
+
+krtisfranks wrote:
+> merrybot wrote:
+> > personally i don't feel like we need a gismu for quantum mechanical
+(zo
+> > kazra)
+> 
+> "{kakne}" already has "-ka'e-" as its cmarafsi. That seems pretty
+perfect
+> in my opinion.
+
+ahh true
+
