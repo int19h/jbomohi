@@ -27,3 +27,12 @@ krtisfranks wrote:
 
 again to bpfk-list please for changing official definitions.
 
+
+## 2024-04-16T08:33:47Z — krtisfranks (comment 3852)
+
+Scientific notation and measurement error
+
+Measurement errors (such as "$(1.23 \pm 0.03)$ fluxnarfs") should be
+expressed via this word or, upon the rare occasion which allows it, via
+"{mi'i'au}".
+
