@@ -23,3 +23,28 @@ now that we have some other options.
 (Even if we go with something like this one, maybe using "-sel-" instead
 of "-zil-", thereby yielding "{nilselcmikezrai}", would be better?)
 
+
+## 2024-04-16T08:52:56Z — krtisfranks (comment 3854, on definition 64874, in reply to 3853)
+
+Re: why does this word start with kem
+
+krtisfranks wrote:
+> merrybot wrote:
+> > there's nothing before it
+> 
+> Honestly, I have no idea. I may have had a reason. It probably was a
+> vestige of some other thing that I was tossing around before settling on
+> this word, but I forgot to delete it. Maybe it is a typo for some other
+> rafsi which I meant (I have no idea which). I discern no reason for it
+> right now.
+> 
+> Let us use "{nilzilcmikezrai}" instead! Or perhaps an even better word,
+> now that we have some other options.
+> (Even if we go with something like this one, maybe using "-sel-" instead
+> of "-zil-", thereby yielding "{nilselcmikezrai}", would be better?)
+
+
+"{kazmyrai}" is staring me in the face and is my preference among all of
+these options. Obviously, it has an experimental veljvo, but... it would
+be hard to improve on, if we just accept that gismu.
+
