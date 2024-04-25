@@ -69,3 +69,52 @@ https://twitter.com/sailorrooscout/status/1781701469160264040 seems to
 suggest there is now a eukaryote capable of nitogen fixing; but maybe i
 misinterpreted
 
+
+## 2024-04-25T05:22:50Z — krtisfranks (comment 3863, on definition 73558, in reply to 3861)
+
+Re: Is it an organelle or a eukaryotic cell?
+
+merrybot wrote:
+> krtisfranks wrote:
+> > Organelles, to my knowledge, exist only in eukaryotic cells, but there
+> is
+> > nonetheless a difference between the cell itself/as a whole and one of
+> its
+> > organelles. My reading says that nitroplasts are the organelle, not
+the
+> > cell which possesses the said organelle. As such, I am not sure that
+> > "{mulslemijyji'e}" is appropriate. Maybe "{ji'eslerango}"?
+> > 
+> > (Note: I think that "{rango}" is better than "{pagbu}" for this
+purpose
+> > because organization is implied by "organelle" but not necessarily by
+> > "part", and prokaryotic cells do have parts even if they are not fully
+> > organized. Even RNA is an organized part, but is not an organelle and
+is
+> > not centralized in a prokaryotic cell. Meanwhile "rango", while
+glossed
+> as
+> > "organ" need not be constrained to the English laïc meaning or a
+jargon
+> > meaning of the term; in fact, it should not be so, given that it is a
+> > gismu. I am okay with generalizing or analogizing the Lojban word to
+> cells
+> > (and even nonbiological bodies, while we are at it).
+> 
+> 
+> i'm not a biologist but the thread at
+> https://twitter.com/sailorrooscout/status/1781701469160264040 seems to
+> suggest there is now a eukaryote capable of nitogen fixing; but maybe i
+> misinterpreted
+
+After a quick skim, it seems like biologists originally thought that it
+was a cell which did the fixation, but now believe that it is an organelle
+which does it. I propose that we regloss this word as "nitrogen-fixing
+cell / cell which contains or performs the nitrogen-fixing function of
+nitroplasts (regardless of its possessing an organelle which is dedicated
+to such purpose)" and then create another word for the proposed organelle.
+That way, we do not oass judgment on nor interpret the science, but cover
+both bases - have our ammonia cake and eat it too, so to speak.
+
+Also, I fell prey to a tolsmabru. I intended "{ji'erslerango}".
+
