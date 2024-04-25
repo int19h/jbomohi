@@ -177,3 +177,26 @@ way for veljvo involving numbers and "{ratni}").
 I think that I had other concerns, but I forgot them and this list is
 enough to be getting by on, for now.
 
+
+## 2024-04-25T12:57:09Z — merrybot (comment 3866, on definition 73558, in reply to 3864)
+
+Re: We need to standardize how zevla rafsi work.
+
+krtisfranks wrote:
+> merrybot wrote:
+> > krtisfranks wrote:
+> > > I like "-selcy-" here, though.
+> > 
+> > 
+> > it is standardized, the -sle- version parses in
+> > https://latkerlo.com/jvotci-test/ but jvs doesn't like it
+> 
+> 
+> What is the difference between the brarafsi for the single zevla
+> *"{sle'anmo}" and the ordered concatenation of "-sle-" (cmarafsi for
+gismu
+> "{selci}") and zevla *"{anmo}"?
+
+
+it would be -sle'y'anmona'y-
+
