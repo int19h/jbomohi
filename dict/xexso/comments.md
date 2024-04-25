@@ -36,3 +36,11 @@ We had a locally-hacked version of latex2html, and apparently said local
 hack is no longer necessary.
 "
 
+
+## 2024-04-25T03:43:59Z — krtisfranks (comment 3858, on definition 1285)
+
+Added gloss word to the official English definition
+
+Idk how cool that is in general, but I think that it could be okay in this
+case.
+
