@@ -25,3 +25,15 @@ meaning of the term; in fact, it should not be so, given that it is a
 gismu. I am okay with generalizing or analogizing the Lojban word to cells
 (and even nonbiological bodies, while we are at it).
 
+
+## 2024-04-25T04:32:10Z — merrybot (comment 3860, on definition 73558, in reply to 3857)
+
+Re: We need to standardize how zevla rafsi work.
+
+krtisfranks wrote:
+> I like "-selcy-" here, though.
+
+
+it is standardized, the -sle- version parses in
+https://latkerlo.com/jvotci-test/ but jvs doesn't like it
+
