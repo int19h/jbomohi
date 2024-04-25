@@ -200,3 +200,63 @@ gismu
 
 it would be -sle'y'anmona'y-
 
+
+## 2024-04-25T13:41:07Z — merrybot (comment 3867, on definition 73558, in reply to 3865)
+
+Re: Non-precedential
+
+krtisfranks wrote:
+> I really like this word, but we need to make sure to note that it is
+> non-precedential in several regards, mostly relating to chemistry. We
+just
+> do not want to box ourselves in for this one word. It should be subject
+to
+> future revision based on future Lojban standards, conventions, and
+patches
+> which address at least the following issues.
+> 
+> First, some people use constructs of form 'number rafsi + atomic group
+> gismu (or zevla) rafsi' not for formula expression, as is done here
+> ("reltrano" here means "$N_2$, diatomic nitrogren"), but instead for
+> indicating which element in that group is meant (so "reltrano" would
+mean
+> "phosphorus"). We need to determine a standard.
+> 
+> Second, ".{anmona}" would be a slightly unusual compound name, and we
+may
+> want to make it formulaic, even though "ammon-" is standardized by
+IUPAC.
+> 
+> Third, we need to distinguish between a string which is like
+> "reltranyselcy'anmona" such that the diatomic nitrogen and ammonia are
+> treated as separate terms and a similar string such that they are
+treated
+> as a single compound ("ultranitrogenous ammonia" or something; even if
+it
+> is not chemically possible, the word could describe the concept and the
+> rules for interpretation should be regular).
+> 
+> The preceding three issues would be addressed if/when any of us,
+> eventually, actually gets around to translating IUPAC nomenclature
+> standards into Lojban.
+> 
+> Fourth, Lojban generally would benefit from a way of specifying "this
+> veljvo seltau goes into the nth sumti slot of the veljvo tertau", for
+each
+> positive integer n.
+> 
+> (Notice that the first and fourth points combine in an especially nasty
+> way for veljvo involving numbers and "{ratni}").
+> 
+> I think that I had other concerns, but I forgot them and this list is
+> enough to be getting by on, for now.
+
+
+1. huh interesting
+
+2. the {anmona} entry has existed since 2017
+
+3. there is a -{bo}r- after the anmona to glue it to the binxo
+
+4. agree
+
