@@ -118,3 +118,21 @@ both bases - have our ammonia cake and eat it too, so to speak.
 
 Also, I fell prey to a tolsmabru. I intended "{ji'erslerango}".
 
+
+## 2024-04-25T05:37:07Z — krtisfranks (comment 3864, on definition 73558, in reply to 3860)
+
+Re: We need to standardize how zevla rafsi work.
+
+merrybot wrote:
+> krtisfranks wrote:
+> > I like "-selcy-" here, though.
+> 
+> 
+> it is standardized, the -sle- version parses in
+> https://latkerlo.com/jvotci-test/ but jvs doesn't like it
+
+
+What is the difference between the brarafsi for the single zevla
+*"{sle'anmo}" and the ordered concatenation of "-sle-" (cmarafsi for gismu
+"{selci}") and zevla *"{anmo}"?
+
