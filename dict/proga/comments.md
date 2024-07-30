@@ -14,3 +14,15 @@ or executed/performed via methods $x_4$" (where the latter could include
 both pseudocode explaining the details of the operation, or how the
 program is being compiled and run, etc.)?
 
+
+## 2024-07-30T10:33:25Z — gleki (comment 3876, on definition 67492, in reply to 3874)
+
+Re: Почему «кошка»?
+
+krtisfranks wrote:
+> In case Cyrillic does not render in comments: Why does it mention "cat"?
+
+
+Something cultural. That programmers are supposed to like cats. Or vice
+versa. Might be no longer trendy though
+
