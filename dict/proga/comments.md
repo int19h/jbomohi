@@ -4,3 +4,13 @@
 
 In case Cyrillic does not render in comments: Why does it mention "cat"?
 
+
+## 2024-07-30T06:11:33Z — krtisfranks (comment 3875, on definition 65936)
+
+Additional sumti slots
+
+What about "via/with/in/on computer $x_3$" or "written in language $x_4$
+or executed/performed via methods $x_4$" (where the latter could include
+both pseudocode explaining the details of the operation, or how the
+program is being compiled and run, etc.)?
+
