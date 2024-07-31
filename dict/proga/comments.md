@@ -39,3 +39,20 @@ krtisfranks wrote:
 
 words do not need 7 billion slots all the time
 
+
+## 2024-07-31T02:09:48Z — merrybot (comment 3878, on definition 67492, in reply to 3876)
+
+Re: Почему «кошка»?
+
+gleki wrote:
+> krtisfranks wrote:
+> > In case Cyrillic does not render in comments: Why does it mention
+"cat"?
+> 
+> 
+> Something cultural. That programmers are supposed to like cats. Or vice
+> versa. Might be no longer trendy though
+
+
+maybe because many programmers are furries
+
