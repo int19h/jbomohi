@@ -26,3 +26,16 @@ krtisfranks wrote:
 Something cultural. That programmers are supposed to like cats. Or vice
 versa. Might be no longer trendy though
 
+
+## 2024-07-31T02:06:49Z — merrybot (comment 3877, on definition 65936, in reply to 3875)
+
+Re: Additional sumti slots
+
+krtisfranks wrote:
+> What about "via/with/in/on computer $x_3$" or "written in language $x_4$
+> or executed/performed via methods $x_4$" (where the latter could include
+> both pseudocode explaining the details of the operation, or how the
+> program is being compiled and run, etc.)?
+
+words do not need 7 billion slots all the time
+
