@@ -100,3 +100,26 @@ vice
 Most likely because programmers used to be perceived as nerds and loners
 who'd live with cats only. Or because their hands smell of mice.
 
+
+## 2024-08-03T02:26:23Z — gleki (comment 3881, on definition 65936, in reply to 3875)
+
+Re: Additional sumti slots
+
+krtisfranks wrote:
+> What about "via/with/in/on computer $x_3$" or "written in language $x_4$
+> or executed/performed via methods $x_4$" (where the latter could include
+> both pseudocode explaining the details of the operation, or how the
+> program is being compiled and run, etc.)?
+
+
+No matter what etymology currently says proga is a borrowing not from
+loglan but from major langs (in programmer's Russian it's even spelled as
+прога). So nothing special was assumed. 
+
+As for semantic frames I'd think of selge'a, bangu frames or of  zmiku and
+kanji minji.
+Not every program is supposed to be run on certain hardware. Sometimes
+it's just text. on the other hand some processor instructions can be
+hardware bound. So I'd ditch this cipra gismu in favor of particular
+meanings.
+
