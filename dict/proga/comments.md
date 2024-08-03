@@ -56,3 +56,25 @@ gleki wrote:
 
 maybe because many programmers are furries
 
+
+## 2024-08-03T02:21:13Z — gleki (comment 3879, on definition 67492, in reply to 3878)
+
+Re: Почему «кошка»?
+
+merrybot wrote:
+> gleki wrote:
+> > krtisfranks wrote:
+> > > In case Cyrillic does not render in comments: Why does it mention
+> "cat"?
+> > 
+> > 
+> > Something cultural. That programmers are supposed to like cats. Or
+vice
+> > versa. Might be no longer trendy though
+> 
+> 
+> maybe because many programmers are furries
+
+Most likely because programmers used to be perceived as nerds and loners
+who'd live with cats only. Or because their hands smell of mice.
+
