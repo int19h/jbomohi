@@ -31,3 +31,15 @@ cmacyganit wrote:
 it's usually assumed nakni is about biological sex (XY/WZ systems etc.)
 whereas nanmu/ninmu is about gender
 
+
+## 2024-11-09T11:26:50Z — cmacyganit (comment 3891, on definition 73694, in reply to 3890)
+
+Re: Should be based on nanmu
+
+gleki-ponjo wrote:
+> it's usually assumed nakni is about biological sex (XY/WZ systems etc.)
+> whereas nanmu/ninmu is about gender
+
+Based on jiknakni being officially endorsed for *culturally* masculine
+things, it's definitely not just biological, at least in lujvo. 
+
