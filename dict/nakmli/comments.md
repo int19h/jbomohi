@@ -43,3 +43,20 @@ gleki-ponjo wrote:
 Based on jiknakni being officially endorsed for *culturally* masculine
 things, it's definitely not just biological, at least in lujvo. 
 
+
+## 2024-11-10T05:28:57Z — gleki-ponjo (comment 3892, on definition 73694, in reply to 3891)
+
+Re: Should be based on nanmu
+
+cmacyganit wrote:
+> gleki-ponjo wrote:
+> > it's usually assumed nakni is about biological sex (XY/WZ systems
+etc.)
+> > whereas nanmu/ninmu is about gender
+> 
+> Based on jiknakni being officially endorsed for *culturally* masculine
+> things, it's definitely not just biological, at least in lujvo. 
+
+x1 is a male/buck of species x2 evidencing masculine
+physical/biological/genetic trait(s) x3 (ka); x1 is masculine.
+
