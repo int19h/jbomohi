@@ -15,3 +15,14 @@ cmacyganit wrote:
 
 how useful would that be
 
+
+## 2024-11-18T09:24:51Z — Ilmen (comment 3896, on definition 2321, in reply to 3893)
+
+Re: Would it be good to add stuff for digits in higher bases?
+
+cmacyganit wrote:
+> Or is there a way to replace them?
+
+There are experimental digits from 16 (xy'au) up to 21 (fy'ai), for
+supporting base 20.
+
