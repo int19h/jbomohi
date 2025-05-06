@@ -116,3 +116,13 @@ UTF-8 symbols lost.
 {me'o} {sigma} {bu} is the symbol. {sigma} {bu} is an anaphorical 
 pro-sumti.
 
+
+## 2025-05-06T23:55:07Z — bairyn (comment 3913)
+
+ki'e
+
+Thanks for the thoughtful definition.  I like it, even if it's a bit long,
+and when I started learning differential equations a long time ago, I came
+up with a model like this to aid in more rigorously understanding or
+proving the ideas, rather than just presuming the deductions.
+
