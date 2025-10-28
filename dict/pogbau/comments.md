@@ -14,3 +14,12 @@ Also I don't know exactly what place structure was intended. Definitely
 'se pogbau' is a user, but I wouldn't object if someone suggested a
 different place structure beyond that.
 
+
+## 2025-10-28T21:18:52Z — gleki-ponjo (comment 3925, on definition 74308)
+
+Should be pogyselge'a
+
+Or just kompili
+
+bangu is for spoken languages 
+
