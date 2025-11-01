@@ -23,3 +23,16 @@ Or just kompili
 
 bangu is for spoken languages 
 
+
+## 2025-11-01T02:03:51Z — merrybot (comment 3926, on definition 74308, in reply to 3925)
+
+Re: Should be pogyselge'a
+
+gleki-ponjo wrote:
+> Or just kompili
+> 
+> bangu is for spoken languages 
+
+
+not necessarily, see eg {cocybau}
+
