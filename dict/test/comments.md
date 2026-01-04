@@ -383,3 +383,11 @@ One last test
 
 अकककक​
 
+
+## 2026-01-04T21:11:51Z — cmacyganit (comment 3936, on definition 74464, in reply to 3935)
+
+Re: कख​कख​
+
+
+It does not render devanagari in the dictionary export
+
