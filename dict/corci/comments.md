@@ -242,3 +242,9 @@ zukte lo ka ko'a corci fi lo xadni be ce'u
 
 ?
 
+
+## 2026-02-27T23:13:59Z — bairyn (comment 3962, on definition 56846)
+
+lonu capyju'i krapagzba
+
+I just wanted to say, I appreciate your thoughtfulness in carefully constructing this word. ra simlu loka mapti seva'u la lojban .i mi sinma le do seke valsi gundu'a viku .ijubo gismu marbartu .i ta'o pa cmalu tcila zo'u sera'a lo vlakra zo'oi djestcur simlu be fi mi loka jbimau zo'oi jestur
