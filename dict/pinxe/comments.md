@@ -9,3 +9,12 @@ Can one use this term to drink liquids not suitable for consumption, such as oil
 
 
 I understand «pinxe» as not being limited by suitability. The definition seems good enough to me, but if you want a definition that gives more emphasis or allowance to unsuitability beyond this wording's ‘/drink/’, you could perhaps choose a definition that replaces ‘refreshment’ with ‘\[refreshment]’. I sometimes use gismu more broadly, as in «lo mi karce puzi pinxe lo livla ctile» as one way to say my car was just filled up with gas, or less broadly as in it might be used to describe Socrates's murder; often context is enough to understand adequately, and if more precision is needed it can be communicated or requested, e.g. with lujvo to modify the gismu or tanru or other phrases. UI3c cmavo or «sa'e\[nai]» might also be helpful.
+
+## 2026-02-28T11:14:46Z — loblat (comment 3967, on definition 14609, in reply to 3942)
+
+
+
+The version I tried to modify:
+
+x1&nbsp;(agent) drinks/imbibes fluid/liquid 𝑥2&nbsp;from/out-of container/source&nbsp;𝑥3.\
+Yes, I think you can drink gas.
