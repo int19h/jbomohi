@@ -7,3 +7,17 @@ I'm not sure which dialect of Lojban you're using in this definition. The LLG CL
 ni'o So under LLG CLL Lojban, «broda co brode do» is «broda be do co brode», and «broda co brode be do» is «brode be do co broda».
 
 ni'o I suggest repurposing {co'ai} for the seltau, not left unit; this would then be most useful for a tanru *without* {co}. But you don't need an extra word to fill in the tertau after the tanru when using {co}.
+
+## 2026-03-18T16:02:56Z — gleki (comment 3992, on definition 71472, in reply to 3988)
+
+
+
+
+
+
+&gt; So under LLG CLL Lojban, «broda co brode do» is «broda be do co brode
+
+
+not true. see:
+
+[https://la-lojban.github.io/uncll/romoi/xhtml_section_chunks/section-co-inversion.html](https://la-lojban.github.io/uncll/romoi/xhtml_section_chunks/section-co-inversion.html)
