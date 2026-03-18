@@ -21,3 +21,13 @@ ni'o I suggest repurposing {co'ai} for the seltau, not left unit; this would the
 not true. see:
 
 [https://la-lojban.github.io/uncll/romoi/xhtml_section_chunks/section-co-inversion.html](https://la-lojban.github.io/uncll/romoi/xhtml_section_chunks/section-co-inversion.html)
+
+## 2026-03-18T17:53:05Z — bairyn (comment 3993, on definition 71472, in reply to 3992)
+
+
+
+Oh, wow, you're right; I must have glossed over that part in 5.8 (which I also cited).  Thanks for the correction; I agree with you.  It says it plainly right after it says the place structure is the same.
+
+
+
+Sorry for my mistake; I missed that key part.  I'll have to review my definitions and make sure this part of the CLL is accounted for; possibly next week.
