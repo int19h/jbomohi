@@ -31,3 +31,20 @@ After thinking through 9.13 a bit more, I think I've come around to thinking of 
 ​
 
 I'll revise my definitions again to state them as equivalent. Are you going to still leave the vote below 1?
+
+## 2026-03-22T05:09:31Z — gleki (comment 4005, on definition 74914, in reply to 4002)
+
+
+
+&gt; The reason is that CLL 9.13 says that na'eki'u does not mean fi'o na'e krinu, but that the modal is something other than «krinu», i.e. something not «krinu» (e.g. mukti).
+
+
+It doesn't say so. It talks about negated modals being something else. So it's negated modal vs modal
+
+
+
+Similarly if you take na'e krinu it would be something else on the scale. Of course it can be rinka etc. That'd be negated selbrisni vs selbrisni
+
+
+
+As for modal vs selbrisni to me it's apparent they are equivalent via fi'o
