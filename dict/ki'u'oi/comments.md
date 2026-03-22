@@ -68,3 +68,9 @@ Yes, I think two possible scales/sets for «na'e krinu» are the one from {krinu
 ​
 
 By the way, what prompted the cmavo sequence was me wanting to move janbe's old definition of {noi'ai} to {nai'oi} or something else, so I could get the clean pattern I wanted for {poi'ai} without adding irregularities, and I ended up choosing up a «'oi» suffix. There are other words I'm more proud of than just {ki'u'oi} that I think would probably be worth defending.
+
+## 2026-03-22T05:53:25Z — bairyn (comment 4008, on definition 74914, in reply to 4006)
+
+
+
+Okay, fair enough. Thanks for your feedback.
