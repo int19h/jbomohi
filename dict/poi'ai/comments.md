@@ -17,3 +17,9 @@ That said, you could probably restructure a bridi to put the would-be outer brid
 ​
 
 Perhaps ‘there is an integer x such that is\_even(x)’ might sound like a better phrasing than ‘there is an integer x. It is even.’, even if this isn't the only way to say it (e.g. {mansa}).
+
+## 2026-03-22T07:54:19Z — gleki (comment 4011, on definition 74923, in reply to 4010)
+
+
+
+{je} is precisely intersection of unions, hence restriction. Same as poi
