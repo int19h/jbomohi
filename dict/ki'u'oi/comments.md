@@ -21,3 +21,13 @@ I'll revise these definitions to mention that «to'eki'u» is likely interpretab
 What you say of tohekihu is equally applied to tohe krinu/tolkihu 
 
 NAhE form a scale and that scale is defined by ci'u
+
+## 2026-03-22T05:00:11Z — bairyn (comment 4004, on definition 74914, in reply to 4003)
+
+
+
+After thinking through 9.13 a bit more, I think I've come around to thinking of «na'e BAI» as ‘forwarding’ the «na'e» to the modal selbri as a better interpretation. Probably my reading into it as though the modal itself had to be different was unnecessary.
+
+​
+
+I'll revise my definitions again to state them as equivalent. Are you going to still leave the vote below 1?
