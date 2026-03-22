@@ -13,3 +13,11 @@ I see you downvoted these definitions. I'll grant perhaps «to'eki'u» could be 
 ​
 
 I'll revise these definitions to mention that «to'eki'u» is likely interpretable to mean the same thing. Why did you downvote?
+
+## 2026-03-22T04:38:06Z — gleki (comment 4003, on definition 74914, in reply to 4002)
+
+
+
+What you say of tohekihu is equally applied to tohe krinu/tolkihu 
+
+NAhE form a scale and that scale is defined by ci'u
