@@ -48,3 +48,9 @@ Similarly if you take na'e krinu it would be something else on the scale. Of cou
 
 
 As for modal vs selbrisni to me it's apparent they are equivalent via fi'o
+
+## 2026-03-22T05:09:51Z — gleki (comment 4006, on definition 74914, in reply to 4004)
+
+
+
+I don't see any reason for cmavo proliferation here
