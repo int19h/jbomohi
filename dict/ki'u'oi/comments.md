@@ -54,3 +54,17 @@ As for modal vs selbrisni to me it's apparent they are equivalent via fi'o
 
 
 I don't see any reason for cmavo proliferation here
+
+## 2026-03-22T05:53:06Z — bairyn (comment 4007, on definition 74914, in reply to 4005)
+
+
+
+Okay, I think you're right and I was wrong. (I'm humble enough to be able to admit that.) Thanks for thinking through that and explaining.
+
+​
+
+Yes, I think two possible scales/sets for «na'e krinu» are the one from {krinu} to {tolki'u}, and secondly one that puts {krinu} in a collection with types of justifications like {mukti} and {nibli}.
+
+​
+
+By the way, what prompted the cmavo sequence was me wanting to move janbe's old definition of {noi'ai} to {nai'oi} or something else, so I could get the clean pattern I wanted for {poi'ai} without adding irregularities, and I ended up choosing up a «'oi» suffix. There are other words I'm more proud of than just {ki'u'oi} that I think would probably be worth defending.
