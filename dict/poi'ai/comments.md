@@ -23,3 +23,14 @@ Perhaps ‘there is an integer x such that is\_even(x)’ might sound like a bet
 
 
 {je} is precisely intersection of unions, hence restriction. Same as poi
+
+## 2026-03-22T10:40:31Z — gleki (comment 4012, on definition 74923, in reply to 4010)
+
+
+
+&gt; Perhaps ‘there is an integer x such that is\_even(x)’ might sound like a better phrasing than ‘there is an integer x
+
+
+
+
+This sounds more like je/poi vs. noi/ju'e
