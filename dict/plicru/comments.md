@@ -17,3 +17,9 @@ No. My vision is what English "to give a pen" really implies. dunda means to giv
 The English definition (and notes) for *dunda* doesn't seem to isolate the meaning to *property*, especially when it mentions "gives/donates gift/present" (implying a physical item). When you say "to give a pen", is the implication "to let someone use a pen"? Usually whenever I say this phrase, I mean "to lend someone a pen with the expectation that it will be returned".
 
 FYI: Whenever I ask these questions, it is not meant to be pedantic. I very much care about the meanings of words and I prefer to choose them without a potential misinterpretation.
+
+## 2026-03-26T14:41:57Z — gleki (comment 4019, in reply to 4018)
+
+
+
+To lend someone a pen to be returned later is a more correct definition, I agree. I don't think it's related to dunda. To me the approximation is "to allow to use". If you suggest better terms covering more nuances pls share.
