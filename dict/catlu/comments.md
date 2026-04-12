@@ -9,3 +9,9 @@ Howdy! I'm a bit confused on what this definition is ultimately capturing. "to v
 
 
 {catlu} specifically refers to the action of "looking," while {viska} specifically refers to "seeing something." {zgana} means "to observe", but you can observe in any other non-visual way.
+
+## 2026-04-12T09:26:12Z — gleki (comment 4984, on definition 108, in reply to 4982)
+
+
+
+[https://mw.lojban.org/papri/BPFK_Section:_sensory_gismu](https://mw.lojban.org/papri/BPFK_Section:_sensory_gismu)
