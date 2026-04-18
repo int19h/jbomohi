@@ -15,3 +15,13 @@ What, is my Lojban regulated or owned by you? Do you decide rules on this platfo
 ​
 
 If you really wanted LLG Lojban only definitions, or e.g. APA English only English definitions, I suppose you have a few options. You could just react by vote and comment like you did, you could promote your choice of guidelines perhaps like here, or you could pursue adding rules to Lensisku so users are not free to add definitions outside a given dialect, or Lensisku itself could be updated to e.g. list LLG Lojban and non-LLG Lojban as different languages or else add a language dialect/sub-type field, or you could maybe promote a social etiquette here for using LLG Lojban without extensions.
+
+## 2026-04-18T11:12:00Z — loblat (comment 4988, on definition 75014, in reply to 4987)
+
+
+
+Please note that I have always been skeptical of grammatical reforms that are not backward compatible.
+
+If you use different Lojban dialects without using words like {jo'au}, I assume it's a BPFK reformed dialect. Asking listeners/readers to identify "what dialect this is" goes against the original design principle of Lojban — that is, relying on context to understand the grammatical function of a word. In fact, most of the creators of the dialects shattered the myth that "Lojban dialects are mutually intelligible."
+
+You incorrectly used the "contradiction" emoji. I have reason to suspect you don't know that this emoji is related to logic and don't know how to determine whether a set of propositions is "contradictory."
