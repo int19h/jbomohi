@@ -25,3 +25,11 @@ Please note that I have always been skeptical of grammatical reforms that are no
 If you use different Lojban dialects without using words like {jo'au}, I assume it's a BPFK reformed dialect. Asking listeners/readers to identify "what dialect this is" goes against the original design principle of Lojban — that is, relying on context to understand the grammatical function of a word. In fact, most of the creators of the dialects shattered the myth that "Lojban dialects are mutually intelligible."
 
 You incorrectly used the "contradiction" emoji. I have reason to suspect you don't know that this emoji is related to logic and don't know how to determine whether a set of propositions is "contradictory."
+
+## 2026-04-18T18:20:29Z — bairyn (comment 4990, on definition 75014, in reply to 4988)
+
+
+
+Okay, that seems a tad presumptuous. It's just the emoji labeled «to'e tugni». I have my language set to Lojban here. I didn't think much of it. It wasn't from a lack of familiarity with logic as you suspected.
+
+Anyway, I don't assume someone's Lojban is necessarily LLG Lojban. Using e.g. «jo'auzo'e» in a definition or adding a dialect field to a definition could probably be pleasing to the greatest number of people involved here, but it doesn't sound like the person who makes decisions on Lensisksu is likely to want to add a dialect field.
