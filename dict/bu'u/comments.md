@@ -11,3 +11,9 @@ Re: zo zvati na mapti
 
 lo sumti pe zo bu'u ku ji'a ka'e fasnu
 
+
+## 2026-04-22T23:08:31Z — TranqyPoo (comment 4993, on definition 1406)
+
+Mental picture
+
+From the statements that I have seen where *bu'u* is used, it seems that what follows *bu'u* is the encompassing place. Take, for instance: *xu do gleki ca le nu do ca'o cadzu bu'u le purdi*. Literally, this would be saying that you are walking in the same place as the garden. What would be different if the term was replaced with *ne'i*? When initially learning this term, I thought that what follows would be another object within the same space (room, floor, sphere of influence, etc.)
