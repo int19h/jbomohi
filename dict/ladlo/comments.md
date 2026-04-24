@@ -17,3 +17,9 @@ leal leal
 وفي uafii
 
 -&gt; lenli
+
+## 2026-04-24T05:20:58Z — gleki (comment 4996, on definition 73609, in reply to 4995)
+
+
+
+For Russian predani or laialnii can also work
