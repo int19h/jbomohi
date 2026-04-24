@@ -23,3 +23,9 @@ leal leal
 
 
 For Russian predani or laialnii can also work
+
+## 2026-04-24T06:38:10Z — loblat (comment 4997, on definition 73609, in reply to 4996)
+
+
+
+OK. Regardless of whether predani or laialnii is used, `lenli` has the highest score.
