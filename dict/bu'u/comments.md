@@ -29,3 +29,13 @@ Same as English "at" vs "inside"
 
 
 I admit that I am still confused. 'At' also means 'inside'. I believe one could theoretically replace 'at' with 'inside' or 'in' and produce the same meaning, albeit unidiomatically. If *bu'u* is the space equivalent of *ca*, then I would expect something like: "*mi cadzu bu'u le mi pendo ne'i le tcadu*". Is this wrong?
+
+## 2026-04-28T23:54:45Z — indigo (comment 5001, on definition 1406, in reply to 5000)
+
+
+
+bu'u comes from zvati
+
+ne'i comes from nenri
+
+According to Ilmen, nenri = ro pagbu be *x*1 cu zvati *x*2
