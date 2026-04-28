@@ -23,3 +23,9 @@ From the statements that I have seen where *bu'u* is used, it seems that what fo
 
 
 Same as English "at" vs "inside"
+
+## 2026-04-28T03:38:05Z — TranqyPoo (comment 5000, on definition 1406, in reply to 4994)
+
+
+
+I admit that I am still confused. 'At' also means 'inside'. I believe one could theoretically replace 'at' with 'inside' or 'in' and produce the same meaning, albeit unidiomatically. If *bu'u* is the space equivalent of *ca*, then I would expect something like: "*mi cadzu bu'u le mi pendo ne'i le tcadu*". Is this wrong?
