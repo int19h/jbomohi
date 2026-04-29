@@ -39,3 +39,11 @@ bu'u comes from zvati
 ne'i comes from nenri
 
 According to Ilmen, nenri = ro pagbu be *x*1 cu zvati *x*2
+
+## 2026-04-29T22:34:07Z — loblat (comment 5002, on definition 1406, in reply to 5000)
+
+
+
+"&nbsp;'At' also means 'inside' " Yes for English, no for Lojban. You can't stay "inside" of a city.
+
+And yes, {bu'u}&nbsp;is the space equivalent of&nbsp;{ca}. But {ne'i} is not the space equivalent of&nbsp;{ca} — it is more like {ca'o}.
