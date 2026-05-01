@@ -47,3 +47,11 @@ According to Ilmen, nenri = ro pagbu be *x*1 cu zvati *x*2
 "&nbsp;'At' also means 'inside' " Yes for English, no for Lojban. You can't stay "inside" of a city.
 
 And yes, {bu'u}&nbsp;is the space equivalent of&nbsp;{ca}. But {ne'i} is not the space equivalent of&nbsp;{ca} — it is more like {ca'o}.
+
+## 2026-05-01T20:42:30Z — TranqyPoo (comment 5004, on definition 1406, in reply to 5002)
+
+
+
+Disclaimer: I'm not trying to be argumentative, but seeking to understand what fundamentally distinguishes these two meanings.
+
+I interpret {ne'i} as "within the boundaries of" (as stated in {nenri}). One cannot exit the boundaries of the city and still be at the city and therefore, it seems perfectly logical/idiomatic to use {ne'i} to say "at the city". Additionally, in English, "coincident with" and "at the same place as" are used for when 2 or more objects exist in the same place, not that an object exists within another object or boundary. This is relevant as this term was originally defined in English. It is strange to me that the meaning portrayed in its original definition does not match its current usage in Lojban. Is there something I'm missing here?
