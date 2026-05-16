@@ -55,3 +55,32 @@ And yes, {bu'u}&nbsp;is the space equivalent of&nbsp;{ca}. But {ne'i} is not the
 Disclaimer: I'm not trying to be argumentative, but seeking to understand what fundamentally distinguishes these two meanings.
 
 I interpret {ne'i} as "within the boundaries of" (as stated in {nenri}). One cannot exit the boundaries of the city and still be at the city and therefore, it seems perfectly logical/idiomatic to use {ne'i} to say "at the city". Additionally, in English, "coincident with" and "at the same place as" are used for when 2 or more objects exist in the same place, not that an object exists within another object or boundary. This is relevant as this term was originally defined in English. It is strange to me that the meaning portrayed in its original definition does not match its current usage in Lojban. Is there something I'm missing here?
+
+## 2026-05-16T13:22:55Z — gleki (comment 5010, on definition 1406, in reply to 5004)
+
+
+
+## ne'i - "in/inside"
+
+treats a location like a container. They emphasize that you are surrounded by walls, boundaries.
+
+\&gt; I am in the kitchen. (Enclosed by walls)\\
+
+\&gt; The money is inside the safe. (Heavily enclosed/hidden)
+
+## bu'u - "at"
+
+treats a place as a single point on a map. It is used when you are focused on the location as a whole, or the purpose/event happening there, rather than the physical walls. It also includes the immediate vicinity (e.g., standing just outside a building).
+
+\&gt; "I am at the cinema" (You could be waiting by the front door or inside watching the movie).
+
+\&gt; "Let's meet at the train station" (Treating the station as a destination/point on a map).
+
+## Difference
+&gt;&nbsp;***He is in the school.***
+\&gt; He is strictly inside the building.
+&gt;&nbsp;**He is at the school.**
+\&gt; He is at the school's location. He could be in the parking lot, on the sports field, or inside the building.
+
+## vi - "in the vicinity"
+&gt;&nbsp;**I'm standing just outside a building.**
