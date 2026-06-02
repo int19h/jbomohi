@@ -2,9 +2,9 @@
 id = 55465
 word = "pagre"
 lang = "en-simple"
-author = "gleki"
-updated = "2014-03-27T00:44:47Z"
-version = 0
+author = "bandil"
+updated = "2026-06-02T12:14:10.627328Z"
+version = 988
 score = 2
 score_as_of = "2026-09-13"
 status = "current"
