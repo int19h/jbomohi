@@ -15,3 +15,9 @@ this is a good suggestion, but I would think that ‹ny bu› could also mean ñ
 
 
 `ny boxna bu` for ñ?
+
+## 2026-06-23T18:51:13Z — ezras (comment 5031, on definition 74237, in reply to 5030)
+
+
+
+tei...foi are needed here as well, otherwise this is interpreted as two separate letterals.
