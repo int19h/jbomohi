@@ -86,3 +86,9 @@ notes
 
 https://groups.google.com/d/msg/lojban/6NtZWhv4AzM/-zI9Qrq6LYoJ
 
+
+## 2026-07-09T10:43:41Z — loblat (comment 5038, on definition 71274)
+
+moved to {xe'ei}
+
+As above.
