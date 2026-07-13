@@ -78,3 +78,13 @@ is cultural transmission worthy of coining a new word.
 You'd need to wait for the word to be noticed and documented by someone
 else not involved in the word-coining activity.
 
+
+## 2026-07-13T00:12:44Z — loblat (comment 5042)
+
+
+
+[https://mw.lojban.org/papri/la_nikyge'u](https://mw.lojban.org/papri/la_nikyge'u)
+
+[https://mw.lojban.org/papri/lo_ro_ponjo_papri#la_nikyge'u](https://mw.lojban.org/papri/lo_ro_ponjo_papri#la_nikyge'u)
+
+I believe creators should avoid creating words that are neither commonly used nor clearly defined, based on their own preferences.
