@@ -17,3 +17,9 @@ But I think it'd be good to add {zo'ei} and {tu'a} on the list of words to see; 
 ​
 
 (I suppose you could argue that technically the type of {su'u} involved with a {tu'a} can be one that extracts a concrete related sumti, not a traditional abstraction, and then {tu'a} could work more generally. Even then, it's still handy to have constructs that don't emphasize or connote traditional abstractions like «lonu». Personally, I normally don't use {tu'a} when I don't want an abstraction, even if you might be able to shoehorn an interpretation that technically works in there. Normally I see {zo'ei} as a more correct choice in this case.)
+
+## 2026-07-28T19:54:29Z — gleki (comment 5065, on definition 75322, in reply to 5064)
+
+
+
+yes, object is just **su'u ... be lo ka dacti** so you may make a lojban definiton of the word you propose. by the same token **zo'ei** is useless.
