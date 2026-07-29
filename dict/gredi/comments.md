@@ -9,3 +9,9 @@ also made of x2 ?
 
 
 I was also thinking about the x2.  Maybe something like ‘grid of tiles/lines/purpose x2’, maybe polished up a bit.
+
+## 2026-07-29T05:02:24Z — loblat (comment 5075, on definition 75327, in reply to 5066)
+
+
+
+Added an alternative definition. Feel free to edit.
