@@ -23,3 +23,21 @@ But I think it'd be good to add {zo'ei} and {tu'a} on the list of words to see; 
 
 
 yes, object is just **su'u ... be lo ka dacti** so you may make a lojban definiton of the word you propose. by the same token **zo'ei** is useless.
+
+## 2026-07-29T02:39:45Z — bairyn (comment 5071, on definition 75322, in reply to 5065)
+
+
+
+Nice, simple construction.
+
+​
+
+I think yours is a reasonable perspective but not the only reasonable perspective. I don't think {zo'ei} is useless since {tu'a} seems more likely to mean a traditional abstraction, like «lonu», but {zo'ei} means «zo'e pe». It has value and use since it can be more precise and provide savings with fewer words. There may be words with similar meanings or synonyms, but that doesn't mean they have no value. Perhaps a synonym may evolve its own nuances and subtle differences and become more worth its cost to its users. I feel like my Lojban is richer for having {zo'ei}, although I don't think this one word in the whole is a particularly important decision. But you don't have to use them, though, and I know that probably you prefer fewer cmavo.
+
+​
+
+At this point it just seems a choice of dialect, for {tu'a}. If you were making decisions for a specification of Lojban that people were free to choose from among alternative options (like other standards or forks or small dialects or modifications), you would probably vote differently from me on what would show up in the spec on this.
+
+​
+
+Here's a concrete example where having {zo'ei} helps: «mi djica tu'a do» sounds more like you want some state involving you, or some interaction with you, (e.g. to play a game of chess, or to talk with you, or your presence), and meanings, affected by context, of «lonu» have a higher probability than «zo'ei do» would, which puts the probabilities of a concrete object that is not a traditional abstraction on more equal footing; it may or may not be a concrete object. If one agrees with {zo'ei}, then {zo'ei} could be seen as more general than {tu'a}, and {tu'a} could be seen a special case of {zo'ei} with higher probabilities on normal abstractions you'd be more likely to expect in that place, which still allows room for special abstraction types that extract objects. Perhaps another way to think of it is semantic probability distributions, with {tu'a} and {zo'ei} having different ones. But yeah, it's also possible to re-interpret {tu'a} as not connotating usual abstractions where concrete objects have a low probability. That isn't how I've interpreted {tu'a}, which is why {zo'ei} exists, but it's a possible variation. A more general and vague {tu'a} such as you mentioned supports the same cases as {tu'a} vs {zo'ei} but with a different and more uniform probability distribution. {tu'a} seems to me more focused on abstractions, which still allows for a form that extracts a concrete sumti, and {zo'ei} seems to me more focused on anything associated with the thing, abstraction or not.
