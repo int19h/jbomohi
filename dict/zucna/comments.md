@@ -54,3 +54,9 @@ zucna4.
 Both {zucna} and {dutso} needs a shorter definition
 
 
+
+## 2026-08-07T11:38:38Z — gleki (comment 5098, on definition 66166, in reply to 5094)
+
+
+
+There is simple English language available
