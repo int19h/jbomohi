@@ -45,3 +45,11 @@ totus wrote:
 > i.e. either for really basic words, or for commonly-used words.  "Peach
 > tree" hardly fits into either category!
 
+
+## 2026-08-07T06:55:06Z — loblat (comment 5095, on definition 18968)
+
+wording suggestion
+
+Experimental rafsi: -mel- (from {melbi} since it is seldom used).
+
+Proposed rafsi: -mel- from {melbi}.
