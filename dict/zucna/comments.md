@@ -48,3 +48,9 @@ configurations, vectorial cross-products, etc. Anything which may be
 considered right-handed is zucna in some sense and from some 'perspective'
 zucna4.
 
+
+## 2026-08-07T06:48:25Z — loblat (comment 5094, on definition 66166)
+
+Both {zucna} and {dutso} needs a shorter definition
+
+
