@@ -27,3 +27,23 @@ Is there a difference in meaning with {seljibri}?
 the main difference though is that this word was intended to make loads and loads of compounds. often people say *lo mikce* and imply 'a doctor', but *lo mikce* is just a person who treats someone else; if I take care of a sick person, I am *le mikce be le bilma*, even if I am not a doctor — that would be a *micyzoi* instead, which is a shorter way to say *micyseljibri*.
 
 the comparison that indigo makes with *-pre-* when used as a suffix is quite apt; *-zoi-* is just more specific.
+
+## 2026-08-08T16:01:12Z — gleki (comment 5106, on definition 75632, in reply to 5104)
+
+
+
+Lojban already has a word for an object with a function. 
+
+minji (yes, how can you tell if a doctor is a human or not. Better for a doctor to be a machine just doing their work instead of a human thinking of their family while performing their job functions)
+
+
+
+Otherwise approximations of English nouns include 
+
+zukte
+
+certu
+
+vlipa
+
+na'o
