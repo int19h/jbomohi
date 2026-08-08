@@ -17,3 +17,13 @@ The rafsi, apparently.
 
 
 Is there a difference in meaning with {seljibri}?
+
+## 2026-08-08T01:49:17Z — mati! (comment 5104, on definition 75632, in reply to 5103)
+
+
+
+*zobri* is more broad than *seljibri*. [this word is a collective coinage by me and janbe; we discussed its shape, rafsi, meaning and so on for quite a while before adding it here.] it's supposed to parallel Toaq *che* (somewhat similar to the English suffixes -er, -ist and so on). if you *zobri lo ka broda* it means that it is in some sense your job or function to *broda*, or that you could be described as a "broda-ist".
+
+the main difference though is that this word was intended to make loads and loads of compounds. often people say *lo mikce* and imply 'a doctor', but *lo mikce* is just a person who treats someone else; if I take care of a sick person, I am *le mikce be le bilma*, even if I am not a doctor — that would be a *micyzoi* instead, which is a shorter way to say *micyseljibri*.
+
+the comparison that indigo makes with *-pre-* when used as a suffix is quite apt; *-zoi-* is just more specific.
