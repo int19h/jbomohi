@@ -53,3 +53,9 @@ na'o
 
 
 I do not care about your feedback. Keep it to yourself.
+
+## 2026-08-09T00:55:59Z — loblat (comment 5112, on definition 75632)
+
+rafsi...
+
+If the word {zobri} is the counterpart to -che in Toaq, then why is there a -zob-?
