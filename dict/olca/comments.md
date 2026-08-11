@@ -3,3 +3,9 @@
 katci ganda
 
 {katci}, {ganda}
+
+## 2026-08-11T08:50:46Z — loblat (comment 5116, on definition 75446)
+
+Etymology typo
+
+{tolcando} not {tolcanci}.
