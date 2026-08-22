@@ -2,9 +2,9 @@
 id = 76105
 word = "cnasi"
 lang = "en-simple"
-author = "loblat"
-updated = "2026-08-22T01:27:56.028289Z"
-version = 0
+author = "gleki"
+updated = "2026-08-22T02:42:06.471966Z"
+version = 2941
 score = 1
 score_as_of = "2026-09-13"
 status = "current"
