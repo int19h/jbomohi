@@ -1,6 +1,6 @@
 # jbomo'i — functional specification
 
-Status: **draft v0.6, 2026-08-27**. Authors: Fable (spec), the human partner (adjudication). Implementer: Codex. Changes are recorded in `doc/decisions/` (`2026-08-27-scope-and-policies.md`, `2026-08-27-repo-identities-sources.md`, `2026-08-27-dump-schemas.md`, `2026-08-27-mail-sources.md`, `2026-08-27-root-date-licence-loglan.md`); the deferred v0.1 material (indexes, a librarian service, Discord/web/MCP interfaces) is preserved in `doc/future/librarian-service.md` and is **out of scope**.
+Status: **draft v0.7, 2026-08-27**. Authors: Fable (spec), the human partner (adjudication). Implementer: Codex. Changes are recorded in `doc/decisions/` (`2026-08-27-scope-and-policies.md`, `2026-08-27-repo-identities-sources.md`, `2026-08-27-dump-schemas.md`, `2026-08-27-mail-sources.md`, `2026-08-27-root-date-licence-loglan.md`, `2026-08-27-loglan-inventory.md`); the deferred v0.1 material (indexes, a librarian service, Discord/web/MCP interfaces) is preserved in `doc/future/librarian-service.md` and is **out of scope**.
 
 Conventions: MUST / SHOULD / MAY as in RFC 2119. "Corpus" means the Lojban historical record as materialised on the `main` branch. Paths are relative to the `tools` checkout unless prefixed `main:`.
 
@@ -257,9 +257,17 @@ Research conclusions contributed by humans or by harness sessions. `notes/<YYYY>
 
 Notes and attestations are **contributed content**: they are committed to `main` directly (or via pull request), one commit each, `Event: contributed`, author = contributor, date = contribution time (the only commits not carrying a source time). A `build` harvests them from the previous `main` history (or a `git bundle` of it) before rebuilding and replays them in date order, so re-linearisation never loses contributions.
 
-### 3.9 Loglan (`loglan/`) — pending inventory
+### 3.9 Loglan (`loglan/`) and LLG publications (`llg/`)
 
-Lojban is a 1987 fork of Loglan (James Cooke Brown, 1955–), so pre-fork Loglan documents are part of this history and post-fork Loglan Institute material is relevant to the disputes and to comparison. The inventory of what exists, in what format, and under what terms is `doc/research/loglan-sources.md` (in progress). Rules that already apply: only material whose republication is permitted is stored as text under `loglan/<year>/<slug>.txt` (rendering; header line naming the source and transformation, e.g. scan → OCR); everything else is recorded **cite-only** in `_meta/loglan/catalogue.csv` (title, author, date, where held, terms) so the librarian can point at it without the repository republishing it. One commit per document, author = the document's author in the `loglan.org` namespace, date = publication date (`pre-epoch` rule for anything before 1970). The section will be completed when the inventory lands.
+Lojban is a 1987 fork of Loglan (James Cooke Brown, 1955–); pre-fork Loglan documents are part of this history and post-fork Loglan Institute (TLI) material is relevant to the disputes and to comparison. Inventory, rights and dispositions: `doc/research/loglan-sources.md` §7.
+
+**`loglan/`** — one commit per document, author = the document's author in the `loglan.org` namespace (`<author-slug>@loglan.org`), date = publication date (`pre-epoch` rule before 1970, §2.6), `Source: loglan`, `Source-Id: loglan=<catalogue-id>`.
+
+- **Stored as text** (republication permitted): the 1992 Federal Circuit trademark opinion, *962 F.2d 1038* (public domain; `loglan/1992/fed-cir-962-f2d-1038.txt`); the TLI machine grammars `grammar80.y` (Trial 80, 1994) and `trial.85` and the LIP/LOD/MacTeach sources under TLI's stated grant ("use and modify … in any way which will be of benefit to the Loglan community"), stored with the grant text quoted in the header; the pre-fork bibliography extracted from `loglan.org/Loglan1/bibliography.html` as data (`_meta/loglan/bibliography.csv`); catalogue facts (ISBNs, page counts) from TLI's offerings page.
+- **Catalogued cite-only** (`_meta/loglan/catalogue.csv`: id, title, author, date, rights holder as stated, where held, URL, sha256 where fetched, size, status ∈ `cite | asked | permitted | refused`): everything TLI-copyrighted until permission is granted — *Loglan 1* (all editions), *Notebooks 1–3*, *The Loglanist*, *Lognet*, *Loglan 4&5*, the *Readings* audio (redistribution explicitly refused), Holmes' modern corpus, the Second Life transcripts — plus third-party items TLI cannot relicense (the June 1960 *Scientific American* article, © Scientific American; already present as an OCR'd PDF inside the wiki image set and not republished separately). A permission changes an item's status and moves its text under `loglan/<year>/…` in an ordinary `Event: created` commit dated at the document's publication date.
+- **Never stored**: nothing from Usenet or `loglangs.wiki` for now (cite-only rows); the `loglanists@ucsd.edu` archive does not exist (recorded as a negative finding in coverage).
+
+**`llg/`** — the Logical Language Group's own historical publications from `www.lojban.org/files/`: *ju'i lobypli* JL1–JL18 and *le lojbo karni* LK8–11, 18 (ASCII newsletters, 1987–1990s, the primary record of the fork years and the baseline era), the early brochures, draft textbook and dictionary files, `L1LONGRV.TXT` / `useoldL1.txt` (LLG's review of *Loglan 1*), `oldlog.txt` (old-Loglan ↔ gismu mapping), the Eaton frequency data, etymology files, and *The Loglan-Lojban Dispute* (also on the wiki). Stored as text (LLG material, republished under LLG's terms per §5), `llg/<year>/<slug>.txt` (byte-exact where already plain text; renderings for TeX/DOC/ZIP members with the §3.1.2 header), one commit per document, author = LLG or the named author in the `lojban.org` namespace, date = publication date, `Source: llg`, `Source-Id: llg=<path-on-file-server>`; `_meta/llg/files.csv` mirrors the file-server listing.
 
 ### 3.10 `_meta/` and coverage
 
@@ -351,7 +359,7 @@ Roles: the human partner adjudicates; **Fable directs and reviews**; **Codex imp
 
 ## 10. Open questions
 
-1. **Loglan** — which documents may be republished as text vs catalogued cite-only: pending `doc/research/loglan-sources.md`; §3.9 will be completed accordingly.
+1. **Loglan relicensing** — the ranked ask list in `doc/research/loglan-sources.md` §7.1 is with the human partner's TLI contact; each grant flips a catalogue row to `permitted` and adds the text (§3.9). Also to confirm: whether the TLI source-code grant is read as permitting a public mirror of the LIP/LOD sources (default: yes, with the grant quoted).
 2. **Mail size** vs GitHub's budget, measured at M1; companion repository only if needed.
 3. **Dump delivery** — `doc/ops/dump-request.md` has been handed to the server operator; the loaders are written against the schemas meanwhile and adjusted if the delivered tables differ.
 
