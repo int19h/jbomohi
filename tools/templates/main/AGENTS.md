@@ -19,11 +19,11 @@ index, or model behind it; you are the librarian.
 
 ```
 wiki/<ns>/<Title>.wiki        MediaWiki pages (mw.lojban.org), raw wikitext, full history in git
-tiki/<Page>.tiki              the pre-2013 Tiki wiki, with history (where captured)
+tiki/<Page>.tiki              the pre-2013 Tiki wiki with history; tiki/forums/ (WikiDiscuss threads), tiki/talk/ (page comments)
 mail/<list>/cur/…             mailing lists as Maildirs (raw RFC 822, one file per message)
 mail/<list>/threads/<YYYY>/…  rendered thread views: whole threads, decoded, in reply order
 irc/<channel>/<YYYY>/<date>.txt  IRC logs, one file per channel-day
-dict/<word>/                  dictionary: word.toml, <lang>-<id>.md per definition, comments.md, votes.csv
+dict/<word>/                  dictionary: word.toml (incl. etymology), <lang>-<id>.md per definition (with examples), comments.md
 cll/editions/<edition>/…      CLL as plain text, one file per chapter, per edition; cll/src is the DocBook submodule
 who/attestations.csv          dated, cited claims relating nicks, emails, wiki users — never resolved identities
 notes/<YYYY>/…                contributed research notes (maps to evidence, never evidence)
@@ -122,6 +122,11 @@ Dictionary status is per definition (scores, `status`), not a ratification.
   `who/attestations.csv` only records cited claims about that.
 - CLL: `1997-online-draft` is the pre-print draft; `1.0-errata-2014` is a
   reconstruction; editions are aligned by section number (`_meta/cll/alignment.csv`).
+- Dictionary: definition history is exact only from ~2024 (Lensisku's version
+  table); earlier definitions have one state whose date is a window between
+  the word's creation and the last edit (see the commit's `Event-Window:`).
+  Scores are aggregate; individual votes are not public.
+- Wiki and Tiki: anonymous or IP-only edits appear as `anonymous@<host>`.
 - Synthetic email addresses (`…@mw.lojban.org`, `…@jbovlaste.lojban.org`,
   `irclogs@lojban.org`) are git placeholders, not addresses.
 
