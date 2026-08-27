@@ -1,6 +1,6 @@
 # jbomo'i — functional specification
 
-Status: **draft v0.2, 2026-08-27**. Authors: Fable (spec), the human partner (adjudication). Implementer: Codex. Changes from v0.1 are recorded in `doc/decisions/2026-08-27-scope-and-policies.md`; the deferred v0.1 material (indexes, a librarian service, Discord/web/MCP interfaces) is preserved in `doc/future/librarian-service.md` and is **out of scope**.
+Status: **draft v0.3, 2026-08-27**. Authors: Fable (spec), the human partner (adjudication). Implementer: Codex. Changes are recorded in `doc/decisions/` (`2026-08-27-scope-and-policies.md`, `2026-08-27-repo-identities-sources.md`); the deferred v0.1 material (indexes, a librarian service, Discord/web/MCP interfaces) is preserved in `doc/future/librarian-service.md` and is **out of scope**.
 
 Conventions: MUST / SHOULD / MAY as in RFC 2119. "Corpus" means the Lojban historical record as materialised on the `main` branch. Paths are relative to the `tools` checkout unless prefixed `main:`.
 
@@ -53,7 +53,7 @@ Checkout `tools` at the repository root; the corpus is a git worktree of `main` 
 
 ### 2.3 Raw archive tier
 
-Downloaded dumps, zips, API responses, scraped pages and database dumps are **never committed** as such. They live in an archive directory (`JBOMOHI_ARCHIVE`, default `~/lojban/archive`) as immutable content-addressed objects with manifests `{source, kind, origin, fetched_at, sha256, bytes, coverage {from, to, counts}, notes}`. Manifests are tracked on `main:_meta/archive/` so the projection is reproducible by anyone with the same objects. Public objects MAY be mirrored as assets of a GitHub Release tagged with the snapshot (§10.3); private database dumps are never mirrored — their manifests suffice to prove what was used.
+Downloaded dumps, zips, API responses, scraped pages and database dumps are **never committed** as such. They live in an archive directory (`JBOMOHI_ARCHIVE`, default `~/lojban/archive`) as immutable content-addressed objects with manifests `{source, kind, origin, fetched_at, sha256, bytes, coverage {from, to, counts}, notes}`. Manifests are tracked on `main:_meta/archive/` so the projection is reproducible by anyone with the same objects. Public objects are mirrored as assets of the GitHub Release for each snapshot tag (never checked into the repository); private database dumps are never mirrored — their manifests suffice to prove what was used.
 
 The raw **mail** is the exception to "never committed": the Maildirs on `main` *are* the raw objects (§3.3), because the repository's purpose is to publish them.
 
@@ -65,8 +65,19 @@ The raw **mail** is the exception to "never committed": the Maildirs on `main` *
 
 One commit per **source event**: a wiki revision; a Tiki page version; a mail message; an IRC day file (import or amendment); a dictionary definition version; a dictionary comment; one day of dictionary votes; a CLL edition rendering; a `_meta`/instruction refresh; a contributed note or attestation. Batching several events into one commit is forbidden except for the daily vote batch.
 
-- **Author** = the source author: `GIT_AUTHOR_NAME`/`EMAIL` from the source verbatim (mail `From:`); where the source has a username but no email, a synthetic `<username>@<source-host>` (`Gleki@mw.lojban.org`, `xod@irc.lojban.org` is *not* used — IRC day files are authored by the logger, see §3.4). Synthetic addresses are documented in `main:README.md`.
-- **Committer** = `jbomohi <jbomohi@lojban.org>` (placeholder, Open Question §10.2).
+- **Author and committer** are both the **namespaced identity of the person who made the original edit or message**. Each source is its own namespace, so the same username in two sources is two identities (`mw.lojban.org:guskant` ≠ `tiki.lojban.org:guskant` ≠ `jbovlaste.lojban.org:guskant`); relating them is the job of `who/attestations.csv` (§3.7), never of the projection. Git identities are rendered as:
+
+  | namespace | git name | git email |
+  |---|---|---|
+  | mail (`From:` header) | the display name as written (or the local part if none) | the address as written — the archive's own identifier |
+  | `mw.lojban.org:<user>` | `<user>` | `<user>@mw.lojban.org` |
+  | `tiki.lojban.org:<user>` | `<user>` | `<user>@tiki.lojban.org` |
+  | `jbovlaste.lojban.org:<user>` (jbovlaste and Lensisku share one user namespace unless `doc/research/dump-schemas.md` shows otherwise) | `<user>` | `<user>@jbovlaste.lojban.org` |
+  | IRC day files (many speakers) | `irclogs` | `irclogs@irc.lojban.org` |
+  | tool-generated commits (renderings, vote batches, refreshes) | `jbomohi` | `tools@jbomohi.invalid` |
+  | contributed notes/attestations | the contributor's own git identity | as configured by the contributor |
+
+  Usernames are used verbatim (case preserved); characters not allowed in an email local part are percent-encoded. The `.invalid` and `*.lojban.org` placeholders are not deliverable addresses and `main:README.md` says so.
 - `GIT_AUTHOR_DATE` = `GIT_COMMITTER_DATE` = the source event time. UTC when the source is unambiguous; otherwise the source's own local time, with `Time-Confidence` set.
 - **Subject**: `<source>: <summary ≤ 72 chars>` — `wiki: BPFK Section: gadri (rev 108932) fix typo`, `mail/lojban: Re: [lojban] xorlo podcast`, `irc/lojban: 2015-06-20 (412 lines)`, `dict: kau en#12345 v3`, `cll: render 1.1-2019`, `meta: refresh README and coverage`, `notes: xorlo adoption (2004–2007)`.
 - **Trailers** (`Key: value`, one per line, at the end of the body):
@@ -131,7 +142,7 @@ Commit metadata describes the **event** (who, when, what, source id). File metad
 
 ### 3.2 Wiki (`wiki/`)
 
-**Source.** `https://mw.lojban.org/api.php` — `prop=revisions` with `rvprop=ids|timestamp|user|comment|size|sha1|content`, `rvlimit=max`, `rvdir=newer`, all namespaces except `File` binaries, full history; ≤ 1 request/s, `maxlag=5`. The local snapshot (`~/git/lojban-wiki`) is a page-count cross-check only. The 66 pages it could not fetch are retried by title each update and listed in `_meta/wiki/errors.csv` while they fail.
+**Sources.** Initial import from a **full SQL dump** of the MediaWiki database supplied by the site operator (tables and private columns per `doc/research/dump-schemas.md`; passwords/emails/tokens are excluded before the dump leaves the server). Ongoing updates from `https://mw.lojban.org/api.php` — `prop=revisions` with `rvprop=ids|timestamp|user|comment|size|sha1|content`, `rvlimit=max`, `rvdir=newer`, `rvstart` = last imported timestamp, all namespaces except `File` binaries; ≤ 1 request/s, `maxlag=5`. The projector accepts either input for any range and MUST produce identical events from both (a determinism test at M1). The local snapshot (`~/git/lojban-wiki`) is a page-count cross-check only. The 66 pages it could not fetch are retried by title each update and listed in `_meta/wiki/errors.csv` while they fail.
 
 **Layout.** `wiki/<ns>/<slug(title)>.wiki`, `<ns>` ∈ `main, talk, user, user_talk, lojban, lojban_talk, userwiki, userwiki_talk, file, file_talk, template, template_talk, category, category_talk, module, module_talk, mediawiki, mediawiki_talk, help, help_talk`. `File:` pages keep the description wikitext; media are manifest-only in `_meta/wiki/media.csv` (`pageid,title,url,sha1,size,mime,uploaded,uploader`). Redirects are stored as their wikitext.
 
@@ -145,7 +156,7 @@ Commit metadata describes the **event** (who, when, what, source id). File metad
 
 #### 3.2.5 Tiki (`tiki/`)
 
-`https://tiki.lojban.org` (`tiki-index.php?page=`, `tiki-pagehistory.php?page=`), HTML scrape ≤ 1 request/s; coverage ≈ 2001–2015; best effort (M2). `tiki/<slug(page)>.tiki` (Tiki markup, HTML-unescaped, otherwise byte-exact), one commit per version (`Source: tiki`, `Source-Id: tiki=<page>@<version>`, author from the history table, `exact`). `_meta/tiki/pages.csv`, `versions.csv`, with a `migrated_to` column naming the MediaWiki page where an import template (`{{BPFK Section from tiki|…}}`) or identical title establishes the correspondence.
+Initial and only import from a **SQL dump** of the Tiki database (`tiki_pages`, `tiki_history`, and the forum/comment tables that hold the old discussion threads which MediaWiki Talk pages still link to — per `doc/research/dump-schemas.md`); the Tiki is read-only, so there is no ongoing update path, and HTML scraping of `tiki-pagehistory.php` is only the fallback if no dump is obtainable. Coverage ≈ 2001–2015 (M2). Old forum threads are projected as `tiki/forums/<forum>/<thread-id>.txt` in post order (rendering; header line per §3.1.2), one commit per post, `Source-Id: tiki=forum/<threadId>`. `tiki/<slug(page)>.tiki` (Tiki markup, HTML-unescaped, otherwise byte-exact), one commit per version (`Source: tiki`, `Source-Id: tiki=<page>@<version>`, author from the history table, `exact`). `_meta/tiki/pages.csv`, `versions.csv`, with a `migrated_to` column naming the MediaWiki page where an import template (`{{BPFK Section from tiki|…}}`) or identical title establishes the correspondence.
 
 ### 3.3 Mail (`mail/<list>/`)
 
@@ -177,7 +188,7 @@ A real Maildir readable by mutt/notmuch/mu; files are born in `cur/` with the Se
 
 ### 3.5 Dictionary (`dict/<word>/`)
 
-**Sources.** Initial replay from full jbovlaste and Lensisku database dumps (schemas per §10.5; the loader is written against the dumps). Ongoing: Lensisku's public changes feed / version API where available, else periodic dumps diffed by primary key. jbovlaste's read-only site is scraped only for comment/etymology pages absent from the dumps.
+**Sources.** Initial replay from full jbovlaste and Lensisku database dumps (both applications are open source, so the schemas are known in advance: `doc/research/dump-schemas.md`; the loader is written against those schemas, and private columns are excluded before the dump leaves the server). Ongoing: Lensisku's public changes feed / version API where available, else periodic dumps diffed by primary key. jbovlaste's read-only site is scraped only for comment/etymology pages absent from the dumps.
 
 **Layout.** `dict/<slug(word)>/word.toml` (`word, type, rafsi, selmaho, created, creator, source_ids`); `dict/<slug(word)>/<lang>-<definition-id>.md` with `+++` front matter (`id, word, lang, author, created, updated, version, score, status, source, keywords = [{word, sense, place}], examples`) and body = definition text verbatim, then `## Notes` verbatim; `comments.md` (append-only, `## <ISO date> — <author> (comment <id>, on definition <id>)` + text; replies noted `(in reply to <id>)`); `votes.csv` (`definition_id,voter,date,value`; voter as published by the source, §10.5).
 
@@ -185,7 +196,7 @@ A real Maildir readable by mutt/notmuch/mu; files are born in `cur/` with the Se
 
 ### 3.6 CLL (`cll/`)
 
-**Source.** A git **submodule** at `cll/src` (upstream `lojban/cll` or the fork `int19h/cll`, §10.4) so upstream commits, tags and history are preserved verbatim. Plus tracked per-edition plain-text renderings `cll/editions/<edition>/<ch>-<slug>.txt`:
+**Source.** A git **submodule** at `cll/src` pointing at the fork `https://github.com/int19h/cll` (decided; it carries every edition including 1.2.x and 1.3.x, with the upstream `lojban/cll` tags mirrored) so commits, tags and history are preserved verbatim. Plus tracked per-edition plain-text renderings `cll/editions/<edition>/<ch>-<slug>.txt`:
 
 | edition | source ref | note |
 |---|---|---|
@@ -299,15 +310,14 @@ Roles: the human partner adjudicates; **Fable directs and reviews**; **Codex imp
 
 ## 10. Open questions
 
-1. **GitHub organisation/repository name** and whether `main` and `tools` live in the same repository (default: yes, `int19h/jbomohi`); issue tracker there.
-2. **Committer identity** for `main` commits (name/email) and for CI pushes.
-3. **Raw archive mirroring**: whether public raw objects (irclogs zip, MHonArc scrapes, wiki API dumps) are attached to snapshot Releases for reproducibility (recommendation: yes, per snapshot).
-4. **CLL submodule source**: `lojban/cll` (upstream, no 1.3.x) vs `int19h/cll` (fork, all editions). Recommendation: the fork, with the upstream tags mirrored.
-5. **Dictionary dumps**: schema (on receipt); whether vote rows name voters in the public data (if not, `votes.csv` carries counts per day only); whether jbovlaste comments migrated to Lensisku.
-6. **Licence/provenance statement** for the repository: the sources' terms (wiki policy, LLG copyright on CLL, list archives) need one paragraph each in `README.md`; recommendation: republish under the sources' own terms, stated per directory, no new licence claimed.
-7. **Root-commit date**: dated at the earliest source event (recommendation) vs a fixed date.
-8. **Tiki scraping**: acceptable to the site owner? (ask before M2).
-9. **Mail size**: whether both Maildirs' raw messages fit GitHub's budget (measured at M1); companion repository only if not.
+1. **Mail archive plan** — which archives are primary per list and era, and the dedupe strategy across mail.lojban.org, the `lists-plain` zips, Google Groups, and any Yahoo/eGroups remnants: pending `doc/research/mail-sources-inventory.md`; §3.3 will be amended with the resulting acquisition table.
+2. **Dictionary and wiki dump details** — exact tables, private columns to strip, whether jbovlaste vote rows name voters, whether jbovlaste comments migrated to Lensisku: pending `doc/research/dump-schemas.md`; §3.2, §3.2.5, §3.5 will be amended.
+3. **Licence/provenance statement** per source in `main:README.md` (recommendation: republish under each source's own terms, stated per directory, no new licence claimed).
+4. **Root-commit date**: the earliest source event's time (recommendation) vs a fixed date.
+5. **Mail size** vs GitHub's budget, measured at M1; companion repository only if needed.
+6. **Obtaining the dumps**: who exports the MediaWiki, Tiki, jbovlaste and Lensisku databases (all hosted together), with private columns removed, and how they are handed over (they never enter git or CI).
+
+Decided since v0.2 (`doc/decisions/2026-08-27-repo-identities-sources.md`): repository `https://github.com/int19h/jbomohi` (both branches, `tools` default); author = committer = namespaced source identity (§2.5); public raw objects as snapshot Release assets, never in the repository; CLL from the `int19h/cll` fork; initial wiki/Tiki import from SQL dumps, wiki updates via the API, Tiki read-only.
 
 ---
 
