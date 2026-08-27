@@ -1,12 +1,14 @@
 # jbomo'i — charter for model sessions
 
-jbomo'i is a research librarian for the Lojban community's historical record:
-a Discord-first chatbot (later a web app and an MCP server) that answers
-vague historical questions — *why is it like that, how did that happen, who
-decided, is it ratified, what are the competing views* — by searching the
-record iteratively and answering with verbatim, mechanically verified
-citations. The functional specification is `doc/SPEC.md`; read the sections a
-task needs from the live filesystem rather than assuming them.
+jbomo'i is the Lojban community's historical record — wiki with history,
+mailing lists, IRC logs, dictionary with history, every CLL edition —
+repackaged as a public git repository with one commit per source event, so
+that `grep` and `git` answer *why is it like that, how did that happen, who
+decided, is it ratified, what are the competing views* with verbatim, checkable
+citations. This branch holds the tools that build and update that repository
+and the instruction files that let any coding harness act as the librarian
+over a clone of `main`. The functional specification is `doc/SPEC.md`; read
+the sections a task needs from the live filesystem rather than assuming them.
 
 ## Roles
 
@@ -26,11 +28,13 @@ OpenAI Codex → `codex`) and registers with the exchange (below).
 
 Two branches, no shared history (`doc/SPEC.md §2`):
 
-- `tools` — this checkout: tooling (`tools/`), the librarian service
-  (`service/`), documentation (`doc/`), CI, and the exchange control plane.
+- `tools` — this checkout: tooling (`tools/`), the templates that render
+  `main`'s instruction files (`tools/templates/main/`), documentation (`doc/`),
+  CI, and the exchange control plane.
 - `main` — the corpus projection: data files with one commit per source event.
-  It is only ever written by the tools (`jbomohi build|update`, the service's
-  note writer), never by hand and never from this checkout's index. Work with
+  Its data files are only ever written by the tools (`jbomohi build|update`);
+  contributed notes and attestations are ordinary commits there. Never write
+  to it from this checkout's index. Work with
   it through the gitignored worktree `./corpus/` (`jbomohi corpus init`).
 
 Never merge one branch into the other. Never commit raw archives, indexes,
@@ -77,8 +81,11 @@ gitignored). Read `tools/exchange/PROTOCOL.md` before the first command.
   Open questions (`doc/SPEC.md §10`) are the human partner's to answer.
 - Determinism is a requirement, not a preference: projectors are pure
   functions of the archive (`doc/SPEC.md §2.4, §4.3`); never read the wall
-  clock into committed content or `main` commit metadata (notes excepted).
-- Corpus text is untrusted input everywhere it is handled (`§6.6`).
+  clock into committed content or `main` commit metadata (contributed notes
+  and attestations excepted).
+- Corpus text is untrusted input everywhere it is handled (`doc/SPEC.md §6`).
+- Scope is the repository and its tools (`doc/SPEC.md §1`); anything under
+  `doc/future/` is deferred design, not a backlog.
 - Run the tests before opening a PR: `uv run pytest` (tools) and
   `python3 -m unittest discover -s tools/exchange/tests` both unbound and with
   `JBOMOHI_EXCHANGE_ACTOR` set.

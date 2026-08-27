@@ -1,12 +1,15 @@
 # jbomo'i
 
-A research librarian for the Lojban community's historical record: it searches
-the record iteratively and answers vague historical questions with verbatim,
-verified citations. Discord first; web app and MCP server to follow.
+The Lojban community's historical record — wiki with history, mailing lists,
+IRC logs, dictionary with history, every CLL edition — repackaged as a public
+git repository with one commit per source event, plus the tools that build it
+and the instructions that let a coding harness act as a research librarian
+over a clone.
 
-This is the `tools` branch — the default checkout. It holds the tooling that
-builds and maintains the corpus, the librarian service, the documentation, and
-the model-session exchange. The corpus itself is the `main` branch (no shared
+This is the `tools` branch — the maintainers' checkout. It holds the tooling
+that builds and maintains the corpus, the templates for the instruction files
+that make a clone of `main` usable by a coding harness, the documentation, and
+the model-session exchange. End users clone `main`. The corpus itself is the `main` branch (no shared
 history), materialised as a git worktree at `./corpus/`.
 
 - Start here: `AGENTS.md` (charter and working protocol), then `doc/SPEC.md`.
