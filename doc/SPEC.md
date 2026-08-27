@@ -1,6 +1,6 @@
 # jbomo'i — functional specification
 
-Status: **draft v0.7, 2026-08-27**. Authors: Fable (spec), the human partner (adjudication). Implementer: Codex. Changes are recorded in `doc/decisions/` (`2026-08-27-scope-and-policies.md`, `2026-08-27-repo-identities-sources.md`, `2026-08-27-dump-schemas.md`, `2026-08-27-mail-sources.md`, `2026-08-27-root-date-licence-loglan.md`, `2026-08-27-loglan-inventory.md`); the deferred v0.1 material (indexes, a librarian service, Discord/web/MCP interfaces) is preserved in `doc/future/librarian-service.md` and is **out of scope**.
+Status: **draft v0.8, 2026-08-27**. Authors: Fable (spec), the human partner (adjudication). Implementer: Codex. Changes are recorded in `doc/decisions/` (`2026-08-27-scope-and-policies.md`, `2026-08-27-repo-identities-sources.md`, `2026-08-27-dump-schemas.md`, `2026-08-27-mail-sources.md`, `2026-08-27-root-date-licence-loglan.md`, `2026-08-27-loglan-inventory.md`); the deferred v0.1 material (indexes, a librarian service, Discord/web/MCP interfaces) is preserved in `doc/future/librarian-service.md` and is **out of scope**.
 
 Conventions: MUST / SHOULD / MAY as in RFC 2119. "Corpus" means the Lojban historical record as materialised on the `main` branch. Paths are relative to the `tools` checkout unless prefixed `main:`.
 
@@ -142,6 +142,15 @@ Commit metadata describes the **event** (who, when, what, source id). File metad
 
 `slug()`: NFC; keep `[A-Za-z0-9'_,-]`; space → `_`; percent-encode everything else (including `/`, `:`, `.`); percent-encode a leading `.`/`-`; cap at 200 bytes (excess → `-` + 8 hex of SHA-1 of the full title). Injective per namespace on MediaWiki titles (most namespaces here are case-sensitive; `User`, `MediaWiki`, `Template`, `Module` and their talk namespaces are first-letter-capitalised, so titles differing only in first-letter case are one page there and two pages in the main namespace) and on dictionary words; `_meta/<source>/*.csv` maps title/word ↔ path so nothing depends on inverting it.
 
+#### 3.1.6 Third-party repositories: submodule or vendored copy
+
+Sources that are themselves version-controlled elsewhere (the CLL DocBook, grammars and parsers, §3.6, §3.11) are brought in by one of two mechanisms, never both for the same source:
+
+- **Submodule** when the source lives in a git repository: pinned to a commit under `<dir>/src` (or a named subdirectory when a project has several), with the upstream URL recorded in `.gitmodules` and `_meta/<source>/upstream.toml` (`url, default_branch, pinned_commit, pinned_at, first_commit_date, licence`). The upstream history is *theirs* and is not replayed into `main`; a pin bump is one event commit (`Source: <source>`, `Event: edited`, `Source-Id: <source>=<upstream commit>`, date = the upstream commit's committer date, author = the upstream committer in the `github.com` namespace, i.e. `<login>@users.noreply.github.com`). A clone needs `--recurse-submodules`; `main:README.md` says so and lists every submodule.
+- **Vendored copy** when the source exists only as files (a zip, tarball, web page, Wayback capture): stored as text under the source directory, one commit per known release or capture, `Event: import`, date = the release/capture date, `Source-Id: <source>=<version-or-capture-date>`, provenance (URL, sha256, capture date) in `_meta/<source>/provenance.csv`. Binary-only material (jars, compiled parsers) is not stored; its provenance row is.
+
+Where a file-only artefact later turns out to have a surviving repository, the vendored history is left in place (it is a record of what was published when) and the submodule is added alongside.
+
 ### 3.2 Wiki (`wiki/`)
 
 **Sources.** Initial import from a **full SQL dump** of the MediaWiki database supplied by the site operator (tables and private columns per `doc/research/dump-schemas.md`; passwords/emails/tokens are excluded before the dump leaves the server). Ongoing updates from `https://mw.lojban.org/api.php` — `prop=revisions` with `rvprop=ids|timestamp|user|comment|size|sha1|content`, `rvlimit=max`, `rvdir=newer`, `rvstart` = last imported timestamp, all namespaces except `File` binaries; ≤ 1 request/s, `maxlag=5`. The projector accepts either input for any range and MUST produce identical events from both (a determinism test at M1). The local snapshot (`~/git/lojban-wiki`) is a page-count cross-check only. The 66 pages it could not fetch are retried by title each update and listed in `_meta/wiki/errors.csv` while they fail.
@@ -268,6 +277,10 @@ Lojban is a 1987 fork of Loglan (James Cooke Brown, 1955–); pre-fork Loglan do
 - **Never stored**: nothing from Usenet or `loglangs.wiki` for now (cite-only rows); the `loglanists@ucsd.edu` archive does not exist (recorded as a negative finding in coverage).
 
 **`llg/`** — the Logical Language Group's own historical publications from `www.lojban.org/files/`: *ju'i lobypli* JL1–JL18 and *le lojbo karni* LK8–11, 18 (ASCII newsletters, 1987–1990s, the primary record of the fork years and the baseline era), the early brochures, draft textbook and dictionary files, `L1LONGRV.TXT` / `useoldL1.txt` (LLG's review of *Loglan 1*), `oldlog.txt` (old-Loglan ↔ gismu mapping), the Eaton frequency data, etymology files, and *The Loglan-Lojban Dispute* (also on the wiki). Stored as text (LLG material, republished under LLG's terms per §5), `llg/<year>/<slug>.txt` (byte-exact where already plain text; renderings for TeX/DOC/ZIP members with the §3.1.2 header), one commit per document, author = LLG or the named author in the `lojban.org` namespace, date = publication date, `Source: llg`, `Source-Id: llg=<path-on-file-server>`; `_meta/llg/files.csv` mirrors the file-server listing.
+
+### 3.11 Grammars and parsers (`grammars/`) — pending inventory
+
+Every formal grammar and parser implementation of Lojban is part of the record: the official YACC/EBNF grammars, jbofihe, the original Java/Rats! camxes and its PEG, camxes.js and the ilmentufa family (standard, beta, experimental, maftufa, maltufa, morphology), zantufa and its offshoots, zasni gerna, tersmu, the various ports, and jbotci. Inventory in progress: `doc/research/grammars-inventory.md`. Rule already fixed by §3.1.6: git-hosted implementations become submodules under `grammars/<name>/`, file-only ones (notably the Java camxes if no repository survives) are vendored one commit per release with provenance; `_meta/grammars/index.csv` (`name, author, language, formalism, dialect, years, mechanism, upstream, licence`) is the human-readable map, and `main:AGENTS.md` explains which grammar corresponds to which dialect. The section will be completed when the inventory lands.
 
 ### 3.10 `_meta/` and coverage
 
