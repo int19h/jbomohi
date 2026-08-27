@@ -1,0 +1,34 @@
+# Participant registry for the exchange. This file is the single model
+# allow-list: actors are sessions that register themselves with
+# `exchange.py join --model <slug>` and are named <slug>_<n>; the helper
+# derives message-id syntax, broadcast expansion, and default provenance
+# from it. Adding a model is an edit here, never a code change.
+
+protocol = "jbomohi-mail/v1"
+spool = ".exchange"
+
+[models.codex]
+active = true
+display_name = "Codex"
+client = "codex"
+model = "session-selected"
+broadcast_recipient = true
+
+[models.fable]
+active = true
+display_name = "Fable"
+client = "claude"
+model = "claude-fable-5"
+broadcast_recipient = true
+
+# The human partner may address any actor and adjudicates disagreements, but
+# is never a broadcast recipient and never owes an acknowledgement: messages
+# addressed to `human` are listed as ADDRESSED, never pending.
+[models.human]
+active = true
+display_name = "human partner"
+client = "none"
+model = "human"
+sessions = false
+broadcast_recipient = false
+acknowledges = false
