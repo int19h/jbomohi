@@ -27,6 +27,8 @@ dict/<word>/                  dictionary: word.toml (incl. etymology), <lang>-<i
 cll/editions/<edition>/…      CLL as plain text, one file per chapter, per edition; cll/src is the DocBook submodule
 who/attestations.csv          dated, cited claims relating nicks, emails, wiki users — never resolved identities
 notes/<YYYY>/…                contributed research notes (maps to evidence, never evidence)
+loglan/ llg/                  Loglan-era documents (where republication is permitted) and LLG's own 1980s–90s publications
+grammars/<name>/              every formal grammar and parser: official YACC/BNF baselines (1990, 1991, 1997), camxes (with its 2004–2011 revision history), ilmentufa, zantufa, zasni gerna, tersmu, jbofihe, ports — submodules or vendored, see _meta/grammars/index.csv
 _meta/                        coverage, archive manifests, CSV indexes (pages, revisions, messages, threads, days, definitions)
 ```
 

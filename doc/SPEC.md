@@ -1,6 +1,6 @@
 # jbomo'i — functional specification
 
-Status: **draft v0.8, 2026-08-27**. Authors: Fable (spec), the human partner (adjudication). Implementer: Codex. Changes are recorded in `doc/decisions/` (`2026-08-27-scope-and-policies.md`, `2026-08-27-repo-identities-sources.md`, `2026-08-27-dump-schemas.md`, `2026-08-27-mail-sources.md`, `2026-08-27-root-date-licence-loglan.md`, `2026-08-27-loglan-inventory.md`); the deferred v0.1 material (indexes, a librarian service, Discord/web/MCP interfaces) is preserved in `doc/future/librarian-service.md` and is **out of scope**.
+Status: **draft v0.9, 2026-08-27**. Authors: Fable (spec), the human partner (adjudication). Implementer: Codex. Changes are recorded in `doc/decisions/` (`2026-08-27-scope-and-policies.md`, `2026-08-27-repo-identities-sources.md`, `2026-08-27-dump-schemas.md`, `2026-08-27-mail-sources.md`, `2026-08-27-root-date-licence-loglan.md`, `2026-08-27-loglan-inventory.md`, `2026-08-27-grammars-inventory.md`); the deferred v0.1 material (indexes, a librarian service, Discord/web/MCP interfaces) is preserved in `doc/future/librarian-service.md` and is **out of scope**.
 
 Conventions: MUST / SHOULD / MAY as in RFC 2119. "Corpus" means the Lojban historical record as materialised on the `main` branch. Paths are relative to the `tools` checkout unless prefixed `main:`.
 
@@ -29,7 +29,7 @@ A **public git repository** whose `main` branch is the Lojban community's histor
 4. **Deterministic and rebuildable.** `main` is a function of (immutable raw archive, `tools` commit); the tools to rebuild and extend it live in the same repository on `tools` (§2.4, §4).
 5. **Time everywhere.** Every commit carries the source event time; every citation names a version; as-of is a `git` operation (§2.6).
 6. **Evidence bottoms out in primary units.** Notes and attestations cite primary units; an answer cites primary units, never a note (§3.8).
-7. **Coverage is explicit.** Every source states what it covers and what it is missing; negative answers are made relative to that coverage (§3.9, template AGENTS.md).
+7. **Coverage is explicit.** Every source states what it covers and what it is missing; negative answers are made relative to that coverage (§3.11, template AGENTS.md).
 8. **Corpus text is untrusted input** for any harness reading it; the instruction files say so (§6).
 
 ---
@@ -92,7 +92,7 @@ One commit per **source event**: a wiki revision; a Tiki page version; a mail me
 
 ### 2.6 Ordering, back-fill, as-of
 
-- `build` emits events in strict chronological order across sources (merge by event time; ties by source name, then id). Events whose true date is **before 1970** (pre-fork Loglan documents, §3.11) cannot carry their date in git: they are committed immediately after the root commit, in true-date order, with the date clamped to `1970-01-01T00:00:00Z`, `Time-Confidence: pre-epoch`, and the true date in a `Source-Date:` trailer and in `_meta/`.
+- `build` emits events in strict chronological order across sources (merge by event time; ties by source name, then id). Events whose true date is **before 1970** (pre-fork Loglan documents, §3.9) cannot carry their date in git: they are committed immediately after the root commit, in true-date order, with the date clamped to `1970-01-01T00:00:00Z`, `Time-Confidence: pre-epoch`, and the true date in a `Source-Date:` trailer and in `_meta/`.
 - `update` appends; a newly added source or late batch may therefore sit at the tip with old dates. `git log --since/--until/--author` still work (they use committer date = source time). **Per-file as-of** is always correct: `git log -1 --before=<date> -- <path>` then `git show <commit>:<path>`, because each event commit writes that file's state at that event.
 - **Whole-tree as-of** is guaranteed only at snapshot tags: `snapshot/<UTC ts>`, annotated, created after every `build`/`update`, message = the coverage summary.
 - `build` re-linearises; because citations use `Source-Id`s, nothing breaks.
@@ -120,6 +120,8 @@ dict/<word>/    definitions, comments, votes (§3.5)
 cll/            CLL source submodule + per-edition text renderings (§3.6)
 who/            alias attestations (§3.7)
 notes/          contributed research notes (§3.8)
+loglan/ llg/    Loglan documents and LLG publications (§3.9)
+grammars/       formal grammars and parsers: submodules, vendored and replayed histories (§3.10)
 ```
 
 #### 3.1.2 Encoding and fidelity
@@ -144,10 +146,12 @@ Commit metadata describes the **event** (who, when, what, source id). File metad
 
 #### 3.1.6 Third-party repositories: submodule or vendored copy
 
-Sources that are themselves version-controlled elsewhere (the CLL DocBook, grammars and parsers, §3.6, §3.11) are brought in by one of two mechanisms, never both for the same source:
+Sources that are themselves version-controlled elsewhere (the CLL DocBook, grammars and parsers, §3.6, §3.10) are brought in by one of two mechanisms, never both for the same source:
 
 - **Submodule** when the source lives in a git repository: pinned to a commit under `<dir>/src` (or a named subdirectory when a project has several), with the upstream URL recorded in `.gitmodules` and `_meta/<source>/upstream.toml` (`url, default_branch, pinned_commit, pinned_at, first_commit_date, licence`). The upstream history is *theirs* and is not replayed into `main`; a pin bump is one event commit (`Source: <source>`, `Event: edited`, `Source-Id: <source>=<upstream commit>`, date = the upstream commit's committer date, author = the upstream committer in the `github.com` namespace, i.e. `<login>@users.noreply.github.com`). A clone needs `--recurse-submodules`; `main:README.md` says so and lists every submodule.
 - **Vendored copy** when the source exists only as files (a zip, tarball, web page, Wayback capture): stored as text under the source directory, one commit per known release or capture, `Event: import`, date = the release/capture date, `Source-Id: <source>=<version-or-capture-date>`, provenance (URL, sha256, capture date) in `_meta/<source>/provenance.csv`. Binary-only material (jars, compiled parsers) is not stored; its provenance row is.
+
+- **Replayed history** when a source survives in a non-git version-control store (RCS/CVS files inside a backup): the revisions are converted (`rcs-fast-export`, `cvs2git`) and replayed into `main` as ordinary events — one commit per revision with its original author (in the source's namespace), date and log message, `Event: created|edited`, `Source-Id: <source>=<file>@<revision>` — because the history *is* the artefact and no upstream repository exists to point at.
 
 Where a file-only artefact later turns out to have a surviving repository, the vendored history is left in place (it is a record of what was published when) and the submodule is added alongside.
 
@@ -278,11 +282,19 @@ Lojban is a 1987 fork of Loglan (James Cooke Brown, 1955–); pre-fork Loglan do
 
 **`llg/`** — the Logical Language Group's own historical publications from `www.lojban.org/files/`: *ju'i lobypli* JL1–JL18 and *le lojbo karni* LK8–11, 18 (ASCII newsletters, 1987–1990s, the primary record of the fork years and the baseline era), the early brochures, draft textbook and dictionary files, `L1LONGRV.TXT` / `useoldL1.txt` (LLG's review of *Loglan 1*), `oldlog.txt` (old-Loglan ↔ gismu mapping), the Eaton frequency data, etymology files, and *The Loglan-Lojban Dispute* (also on the wiki). Stored as text (LLG material, republished under LLG's terms per §5), `llg/<year>/<slug>.txt` (byte-exact where already plain text; renderings for TeX/DOC/ZIP members with the §3.1.2 header), one commit per document, author = LLG or the named author in the `lojban.org` namespace, date = publication date, `Source: llg`, `Source-Id: llg=<path-on-file-server>`; `_meta/llg/files.csv` mirrors the file-server listing.
 
-### 3.11 Grammars and parsers (`grammars/`) — pending inventory
+### 3.10 Grammars and parsers (`grammars/`)
 
-Every formal grammar and parser implementation of Lojban is part of the record: the official YACC/EBNF grammars, jbofihe, the original Java/Rats! camxes and its PEG, camxes.js and the ilmentufa family (standard, beta, experimental, maftufa, maltufa, morphology), zantufa and its offshoots, zasni gerna, tersmu, the various ports, and jbotci. Inventory in progress: `doc/research/grammars-inventory.md`. Rule already fixed by §3.1.6: git-hosted implementations become submodules under `grammars/<name>/`, file-only ones (notably the Java camxes if no repository survives) are vendored one commit per release with provenance; `_meta/grammars/index.csv` (`name, author, language, formalism, dialect, years, mechanism, upstream, licence`) is the human-readable map, and `main:AGENTS.md` explains which grammar corresponds to which dialect. The section will be completed when the inventory lands.
+Every formal grammar and parser implementation of Lojban is part of the record. Inventory, provenance, licences and duplicates: `doc/research/grammars-inventory.md` (§4 is the authoritative table; this section fixes the rules). Layout `grammars/<name>/…` with `_meta/grammars/index.csv` (`name, author, language, formalism, dialect, years, mechanism, upstream, licence`), per-source `upstream.toml` (submodules) or `provenance.csv` (vendored/replayed), and a paragraph in `main:AGENTS.md` mapping grammars to dialects (official 1990/1991/1997 baselines; camxes "standard"; ilmentufa beta/experimental; zantufa; zasni gerna).
 
-### 3.10 `_meta/` and coverage
+- **Official grammar lineage — vendored, one commit per generation**, dated from the text in each file (never from HTTP `Last-Modified`, which reflects server migrations): the 1988–90 generations from `lojban.org/files/history/` (1989-02-25, 1989-09-23, 1990-05-06, **1st baseline 1990-07-20**; the undated `GRAMMAR.B17`/`GRAMMAR.NEW` at the 1990-07-20 boundary, flagged), the **2nd baseline 1991-06-23** and its 2.33/2.35/2.46/2.47 revisions (`GRAMMAR.233` from `parser.shar.gz`; `bnf.235`, `bnf.246`, `bnf.247`, `techfix.235`, restamped `bnf.28` recovered from Wayback 1999 captures; `grammar.235`/`grammar.247` were never published — recorded as gaps), the **3rd baseline 1997-01-10** (`bnf.300`, `techfix.300`, `xref.300`, `PD` — public domain by LLG's own dedication; `grammar.300` itself already arrives with `cll/src`), the LLG parser sources (1993-10-19 shar; binaries → provenance rows only), Nick Nicholas' NU-Prolog analyser (1993-08-07), and Cowan's parser 3.0.00 as the submodule `lojban/cll-parser` plus a provenance row for the 2003-11-13 tarball.
+- **camxes (Robin Lee Powell) — replayed history.** `hlg_backup__2011-01-11.tgz` from `teddyb.org/~rlpowell/hobbies/lojban/grammar/` (mirror it into the archive tier now; it is one person's home directory) contains `RCS/lojban.peg,v` with 39 dated revisions, 2004-03-18 → 2011-01-11, and log messages: replayed per §3.1.6 into `grammars/camxes/`, preceded by one 2004-03-28 import of the BNF→ABNF→PEG conversion chain and support files; the Java jar (2006-08-21) is binary → provenance row (the wiki's `lojban_peg_parser.zip` is the same bytes). `lojban/camxes` on GitHub is a snapshot whose HEAD deletes the grammar: optional submodule pinned at `1c1d9ec` (2011-01-13).
+- **Submodules** (pinned per `upstream.toml`, bumped as events per §3.1.6): `lojban/jbofihe` (tags `0_2`…`v0.44` are the release record); `mhagiwara/camxes.js`; **both** ilmentufa histories — `Ntsekees/ilmentufa` (original, ends 2015-12-10) and `lojban/ilmentufa` (fresh root 2016-02-02, canonical) — plus optionally `mezohe/gentufa`; `guskant/gerna_cipra` (zantufa, maftufa, maltufa); `YoshikuniJujo/zasni-gerna` (Haskell) and, low priority, his `lojban_parser`/`lojysamban`/`cakyrespa`; `gitlab.com/zugz/tersmu` (upstream) and `lojban/tersmu` (2026 continuation); `alanpost/jbogenturfahi` + `alanpost/genturfahi` (not the squashed `lojban/` copy); `lojban/camxes-py`; `eaburns/johaus`; `phma/valfendi`; `int19h/jbotci`; the long tail in inventory §2.7 (`zirsam`, `sneturfahi`, `nei`, `sotygeha`, `typed-lojban`, `genrei`, …) is included when the maintainer decides — default: include anything that parses Lojban and has a licence, list the rest in `index.csv` with `mechanism = cite`.
+- **zasni gerna (xorxes)**: the grammar is wiki text already in `wiki/`; vendored as an extracted `.peg` under `grammars/zasni-gerna/xorxes/`, dated 2015-01-21 (its last wiki revision), cross-referenced to the wiki unit.
+- **Duplicates are imported once** (inventory §4.3): `camxes-pamoi.peg` in ilmentufa is `lojban.peg` rev 1.39; `lojban/cll:scripts/yacc/lojban_grammar.y` is `grammar.300`; `lojban/cll-parser` is Cowan's tarball; the GitLab `lojban/` group and the `lojban-cvs*`/`La-Lojban/`/`lagleki/` copies are mirrors, never sources; `lojban/camxes-rs` is not a Lojban parser.
+- **Licences** are recorded per row in `index.csv` (GPL-2/3, AGPL-3, MIT, BSD-2/3, ISC, AFL-2.0, LLG's 1993 permission grant, public domain, and *none* for `lojban/camxes` and much of the long tail — recorded as "no licence", never assumed) and summarised in `main:README.md`'s provenance paragraph.
+- **Blocked**: `lojban-ebnf` (the human partner's, no remote yet) — `mechanism = pending` until published.
+
+### 3.11 `_meta/` and coverage
 
 `_meta/schema.toml` (`projection_schema`, renderer versions, tools commit), `_meta/archive/*.toml` (§2.3), per-source `coverage.toml` (`from, to, counts, gaps = [...], updated`), and the CSV indexes above. `build`/`update` re-render `README.md` (coverage tables) and the instruction files from `tools/templates/main/` as an `Event: refresh` commit at the tip, dated at the last event's time.
 
@@ -372,11 +384,12 @@ Roles: the human partner adjudicates; **Fable directs and reviews**; **Codex imp
 
 ## 10. Open questions
 
-1. **Loglan relicensing** — the ranked ask list in `doc/research/loglan-sources.md` §7.1 is with the human partner's TLI contact; each grant flips a catalogue row to `permitted` and adds the text (§3.9). Also to confirm: whether the TLI source-code grant is read as permitting a public mirror of the LIP/LOD sources (default: yes, with the grant quoted).
-2. **Mail size** vs GitHub's budget, measured at M1; companion repository only if needed.
-3. **Dump delivery** — `doc/ops/dump-request.md` has been handed to the server operator; the loaders are written against the schemas meanwhile and adjusted if the delivered tables differ.
+1. **Grammars long tail** — which of the small/unlicensed parsers in `doc/research/grammars-inventory.md` §2.7 to include as submodules (default above: include what parses Lojban and carries a licence); and publishing `lojban-ebnf` so it can be pinned.
+2. **Loglan relicensing** — the ranked ask list in `doc/research/loglan-sources.md` §7.1 is with the human partner's TLI contact; each grant flips a catalogue row to `permitted` and adds the text (§3.9). Also to confirm: whether the TLI source-code grant is read as permitting a public mirror of the LIP/LOD sources (default: yes, with the grant quoted).
+3. **Mail size** vs GitHub's budget, measured at M1; companion repository only if needed.
+4. **Dump delivery** — `doc/ops/dump-request.md` has been handed to the server operator; the loaders are written against the schemas meanwhile and adjusted if the delivered tables differ.
 
-Decided 2026-08-27 (see `doc/decisions/`): repository and default branch; namespaced commit identities; raw objects as Release assets; CLL fork; SQL-dump import for wiki/Tiki with API updates for the wiki; dictionary from one Lensisku dump with aggregate votes; the mail acquisition plan; `jbovlaste-admin` excluded; provenance per source under the sources' own terms; root commit at the Unix epoch with the `pre-epoch` rule for earlier documents.
+Decided 2026-08-27 (see `doc/decisions/`): repository and default branch; namespaced commit identities; raw objects as Release assets; CLL fork; SQL-dump import for wiki/Tiki with API updates for the wiki; dictionary from one Lensisku dump with aggregate votes; the mail acquisition plan; `jbovlaste-admin` excluded; provenance per source under the sources' own terms; root commit at the Unix epoch with the `pre-epoch` rule for earlier documents; the grammars/parsers plan (§3.10).
 
 ---
 
