@@ -9,3 +9,9 @@ Is there a difference between this and {jgira}?
 
 
 arrogant ≠ pride
+
+## 2026-08-29T10:20:29Z — indigo (comment 5138, on definition 15604, in reply to 5137)
+
+
+
+I defined cumla as no'e jgira, while la xorxes defined ckeji (but also zungi) as to'e jgira. Please consider.
