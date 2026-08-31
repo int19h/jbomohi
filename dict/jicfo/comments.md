@@ -3,3 +3,9 @@
 Etymology?
 
 
+
+## 2026-08-31T20:46:33Z — mati! (comment 5319, on definition 72225, in reply to 5142)
+
+
+
+← zh 接续 en follow, probably
