@@ -21,3 +21,9 @@ ma lojbo smuvelcki lo ka avju i mi na jimpe i xu smudu'i la'e zo ckaji ji zo kan
 
 
 i mu'a mi dunda fi do fe lo ka virnu i xu mi gasnu lo nu do avju lo ka virnu
+
+## 2026-09-01T11:14:03Z — MoheXoheKohe (comment 5329, on definition 15053, in reply to 5327)
+
+
+
+smudu'i lo se skudji tu'a zo tolcau .i lo ka avju da cu ka ponse ja ralte da
