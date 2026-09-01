@@ -1,10 +1,10 @@
 +++
 id = 76061
 word = "lokrmaia"
-lang = "jbo"
+lang = "art-picture"
 author = "MoheXoheKohe"
-updated = "2026-08-21T00:25:49.083118Z"
-version = 0
+updated = "2026-09-01T09:28:39.423026Z"
+version = 100349
 score = 1
 score_as_of = "2026-09-13"
 status = "current"
