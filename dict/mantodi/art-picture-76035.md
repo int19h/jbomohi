@@ -1,10 +1,10 @@
 +++
 id = 76035
 word = "mantodi"
-lang = "jbo"
+lang = "art-picture"
 author = "MoheXoheKohe"
-updated = "2026-08-20T14:59:22.119522Z"
-version = 0
+updated = "2026-09-01T09:27:21.459139Z"
+version = 100346
 score = 1
 score_as_of = "2026-09-13"
 status = "current"
