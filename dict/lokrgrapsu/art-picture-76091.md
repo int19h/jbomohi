@@ -1,10 +1,10 @@
 +++
 id = 76091
 word = "lokrgrapsu"
-lang = "jbo"
+lang = "art-picture"
 author = "MoheXoheKohe"
-updated = "2026-08-21T21:42:20.193741Z"
-version = 0
+updated = "2026-09-01T09:28:19.121979Z"
+version = 100348
 score = 1
 score_as_of = "2026-09-13"
 status = "current"
