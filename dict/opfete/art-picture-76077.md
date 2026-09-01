@@ -1,10 +1,10 @@
 +++
 id = 76077
 word = "opfete"
-lang = "jbo"
+lang = "art-picture"
 author = "MoheXoheKohe"
-updated = "2026-08-21T08:15:15.099001Z"
-version = 0
+updated = "2026-09-01T09:27:47.719728Z"
+version = 100347
 score = 1
 score_as_of = "2026-09-13"
 status = "current"
