@@ -15,3 +15,9 @@ zo tolcau cu se ni'udzau .i zo .avju cu selnelmau
 
 
 ma lojbo smuvelcki lo ka avju i mi na jimpe i xu smudu'i la'e zo ckaji ji zo kansa
+
+## 2026-09-01T11:07:14Z — gleki (comment 5327, on definition 15053, in reply to 5325)
+
+
+
+i mu'a mi dunda fi do fe lo ka virnu i xu mi gasnu lo nu do avju lo ka virnu
