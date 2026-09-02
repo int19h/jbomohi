@@ -292,7 +292,6 @@ Every formal grammar and parser implementation of Lojban is part of the record. 
 - **zasni gerna (xorxes)**: the grammar is wiki text already in `wiki/`; vendored as an extracted `.peg` under `grammars/zasni-gerna/xorxes/`, dated 2015-01-21 (its last wiki revision), cross-referenced to the wiki unit.
 - **Duplicates are imported once** (inventory §4.3): `camxes-pamoi.peg` in ilmentufa is `lojban.peg` rev 1.39; `lojban/cll:scripts/yacc/lojban_grammar.y` is `grammar.300`; `lojban/cll-parser` is Cowan's tarball; the GitLab `lojban/` group and the `lojban-cvs*`/`La-Lojban/`/`lagleki/` copies are mirrors, never sources; `lojban/camxes-rs` is not a Lojban parser.
 - **Licences** are recorded per row in `index.csv` (GPL-2/3, AGPL-3, MIT, BSD-2/3, ISC, AFL-2.0, LLG's 1993 permission grant, public domain, and *none* for `lojban/camxes` and much of the long tail — recorded as "no licence", never assumed) and summarised in `main:README.md`'s provenance paragraph.
-- **Blocked**: `lojban-ebnf` (the human partner's, no remote yet) — `mechanism = pending` until published.
 
 ### 3.11 `_meta/` and coverage
 
@@ -384,7 +383,7 @@ Roles: the human partner adjudicates; **Fable directs and reviews**; **Codex imp
 
 ## 10. Open questions
 
-1. **Grammars long tail** — which of the small/unlicensed parsers in `doc/research/grammars-inventory.md` §2.7 to include as submodules (default above: include what parses Lojban and carries a licence); and publishing `lojban-ebnf` so it can be pinned.
+1. **Grammars long tail** — which of the small/unlicensed parsers in `doc/research/grammars-inventory.md` §2.7 to include as submodules (default above: include what parses Lojban and carries a licence). `lojban-ebnf` is a private project and is out of scope (decided 2026-09-02).
 2. **Loglan relicensing** — the ranked ask list in `doc/research/loglan-sources.md` §7.1 is with the human partner's TLI contact; each grant flips a catalogue row to `permitted` and adds the text (§3.9). Also to confirm: whether the TLI source-code grant is read as permitting a public mirror of the LIP/LOD sources (default: yes, with the grant quoted).
 3. **Mail size** vs GitHub's budget, measured at M1; companion repository only if needed.
 4. **Dump delivery** — `doc/ops/dump-request.md` has been handed to the server operator; the loaders are written against the schemas meanwhile and adjusted if the delivered tables differ.
