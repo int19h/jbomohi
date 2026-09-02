@@ -42,7 +42,7 @@ def test_commit_event_sets_source_identity_date_message_and_tree(
     tmp_path: Path,
 ) -> None:
     corpus = unborn_worktree(tmp_path)
-    commit = commit_event(corpus, base_event())
+    commit = commit_event(base_event(), corpus)
     assert commit == git(corpus, "rev-parse", "HEAD")
     assert (corpus / "wiki/main/Test.wiki").read_text() == "first\n"
     assert git(corpus, "status", "--porcelain") == ""
@@ -64,6 +64,15 @@ def test_commit_event_sets_source_identity_date_message_and_tree(
     assert "Page-Id: 7" in metadata
 
 
+def test_commit_event_uses_the_configured_corpus_by_default(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    corpus = unborn_worktree(tmp_path)
+    monkeypatch.setenv("JBOMOHI_CORPUS", str(corpus))
+    commit = commit_event(base_event())
+    assert commit == git(corpus, "rev-parse", "HEAD")
+
+
 def test_pre_epoch_event_clamps_git_date_and_keeps_source_date(tmp_path: Path) -> None:
     corpus = unborn_worktree(tmp_path)
     event = base_event(
@@ -77,7 +86,7 @@ def test_pre_epoch_event_clamps_git_date_and_keeps_source_date(tmp_path: Path) -
         author=Identity.tool(),
         changes={"llg/paper.txt": "historical text\n"},
     )
-    commit_event(corpus, event)
+    commit_event(event, corpus)
     assert git(corpus, "show", "-s", "--format=%aI") == "1970-01-01T00:00:00Z"
     assert "Source-Date: 1960-05-01" in git(corpus, "show", "-s", "--format=%B")
 
@@ -101,14 +110,14 @@ def test_invalid_events_are_rejected(
 ) -> None:
     corpus = unborn_worktree(tmp_path)
     with pytest.raises(EventError, match=message):
-        commit_event(corpus, base_event(**change))
+        commit_event(base_event(**change), corpus)
 
 
 def test_commit_refuses_to_absorb_unrelated_worktree_changes(tmp_path: Path) -> None:
     corpus = unborn_worktree(tmp_path)
     (corpus / "unrelated.txt").write_text("human work\n")
     with pytest.raises(GitError, match="not clean"):
-        commit_event(corpus, base_event())
+        commit_event(base_event(), corpus)
 
 
 def test_identity_constructor_enforces_the_namespace_email() -> None:
@@ -132,5 +141,5 @@ def test_commit_refuses_to_traverse_a_tracked_symlink(tmp_path: Path) -> None:
         "fixture symlink",
     )
     with pytest.raises(EventError, match="refusing to traverse symlink"):
-        commit_event(corpus, base_event())
+        commit_event(base_event(), corpus)
     assert not outside.exists()

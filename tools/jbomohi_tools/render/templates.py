@@ -133,7 +133,7 @@ def commit_root(
         changes=render_main(repo_root, actual_context),
         trailers={"Renderer": "instructions/1"},
     )
-    return commit_event(corpus, event)
+    return commit_event(event, corpus)
 
 
 def commit_instruction_refresh(
@@ -155,4 +155,4 @@ def commit_instruction_refresh(
         changes=render_main(repo_root, context),
         trailers={"Renderer": "instructions/1"},
     )
-    return commit_event(corpus, event)
+    return commit_event(event, corpus)
