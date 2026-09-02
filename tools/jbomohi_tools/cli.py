@@ -1,0 +1,134 @@
+"""Command-line interface for the jbomo'i corpus tools."""
+
+from __future__ import annotations
+
+import argparse
+import logging
+from collections.abc import Callable, Sequence
+
+from .archive import ArchiveError, verify_archive
+from .config import Config, ConfigError
+from .corpus import CorpusError, corpus_status, init_corpus
+from .git import EventError, GitError
+
+LOG = logging.getLogger("jbomohi")
+Handler = Callable[[argparse.Namespace, Config], int]
+
+
+def _not_implemented(name: str) -> Handler:
+    def handler(_args: argparse.Namespace, _config: Config) -> int:
+        LOG.error("%s is scaffolded but not implemented in M0", name)
+        return 2
+
+    return handler
+
+
+def _corpus_init(_args: argparse.Namespace, config: Config) -> int:
+    status, created = init_corpus(config)
+    action = "created" if created else "exists"
+    print(
+        f"corpus {action}: path={status.path} branch={status.branch} "
+        f"head={status.head or 'unborn'} commits={status.commits}"
+    )
+    return 0
+
+
+def _corpus_status(_args: argparse.Namespace, config: Config) -> int:
+    status = corpus_status(config.corpus)
+    if not status.exists:
+        print(f"corpus missing: path={status.path}")
+        return 1
+    print(
+        f"corpus ready: path={status.path} branch={status.branch or 'detached'} "
+        f"head={status.head or 'unborn'} commits={status.commits}"
+    )
+    return 0
+
+
+def _archive_verify(_args: argparse.Namespace, config: Config) -> int:
+    status = corpus_status(config.corpus)
+    if not status.exists:
+        raise CorpusError(f"corpus worktree does not exist: {config.corpus}")
+    manifests = verify_archive(config.corpus, config.archive)
+    print(f"archive verify: ok ({len(manifests)} manifests)")
+    return 0
+
+
+def _leaf(
+    subparsers: argparse._SubParsersAction[argparse.ArgumentParser],
+    name: str,
+    handler: Handler,
+) -> argparse.ArgumentParser:
+    parser = subparsers.add_parser(name)
+    parser.set_defaults(handler=handler)
+    return parser
+
+
+def parser() -> argparse.ArgumentParser:
+    root = argparse.ArgumentParser(prog="jbomohi", description=__doc__)
+    root.add_argument("-v", "--verbose", action="count", default=0)
+    commands = root.add_subparsers(dest="command", required=True)
+
+    corpus = commands.add_parser("corpus", help="manage the main corpus worktree")
+    corpus_commands = corpus.add_subparsers(dest="corpus_command", required=True)
+    _leaf(corpus_commands, "init", _corpus_init)
+    _leaf(corpus_commands, "status", _corpus_status)
+
+    archive = commands.add_parser(
+        "archive", help="manage content-addressed raw archives"
+    )
+    archive_commands = archive.add_subparsers(dest="archive_command", required=True)
+    fetch = _leaf(archive_commands, "fetch", _not_implemented("archive fetch"))
+    fetch.add_argument("source")
+    fetch.add_argument("--since")
+    _leaf(archive_commands, "verify", _archive_verify)
+
+    build = _leaf(commands, "build", _not_implemented("build"))
+    build.add_argument("--sources", nargs="+")
+    build.add_argument("--until")
+
+    update = _leaf(commands, "update", _not_implemented("update"))
+    update.add_argument("sources", nargs="*")
+    _leaf(commands, "verify", _not_implemented("verify"))
+
+    cll = commands.add_parser("cll", help="CLL rendering commands")
+    cll_commands = cll.add_subparsers(dest="cll_command", required=True)
+    render = _leaf(cll_commands, "render", _not_implemented("cll render"))
+    render.add_argument("edition")
+
+    who = commands.add_parser("who", help="identity attestation helpers")
+    who_commands = who.add_subparsers(dest="who_command", required=True)
+    _leaf(who_commands, "propose", _not_implemented("who propose"))
+    _leaf(who_commands, "promote", _not_implemented("who promote"))
+
+    notes = commands.add_parser("notes", help="research note helpers")
+    notes_commands = notes.add_subparsers(dest="notes_command", required=True)
+    _leaf(notes_commands, "lint", _not_implemented("notes lint"))
+
+    cite = commands.add_parser("cite", help="stable citation helpers")
+    cite_commands = cite.add_subparsers(dest="cite_command", required=True)
+    resolve = _leaf(cite_commands, "resolve", _not_implemented("cite resolve"))
+    resolve.add_argument("citation")
+    return root
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    args = parser().parse_args(argv)
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(levelname)s %(name)s: %(message)s",
+    )
+    try:
+        config = Config.from_env()
+        return args.handler(args, config)
+    except (
+        ArchiveError,
+        ConfigError,
+        CorpusError,
+        EventError,
+        GitError,
+        OSError,
+        ValueError,
+    ) as exc:
+        LOG.error("%s", exc)
+        return 1

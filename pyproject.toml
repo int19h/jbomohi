@@ -1,0 +1,32 @@
+[project]
+name = "jbomohi-tools"
+version = "0.1.0"
+description = "Deterministic tools for building the jbomo'i historical corpus"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+jbomohi = "jbomohi_tools.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = ["pytest>=8.4,<9", "ruff>=0.12,<1"]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.uv.build-backend]
+module-root = "tools"
+
+[tool.pytest.ini_options]
+testpaths = ["tools/tests"]
+addopts = "-ra"
+
+[tool.jbomohi.dependency-reasons]
+uv-build = "PEP 517 build backend required to install the tools package and CLI with uv."
+pytest = "Test runner required by the M0 acceptance command `uv run pytest`."
+ruff = "Static lint and formatting checks required by the tools-branch CI contract."
