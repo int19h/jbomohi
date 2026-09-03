@@ -9,3 +9,9 @@ There are so many Lojban words for types of containers ... maybe some can be by 
 
 
 Shape maybe.
+
+## 2026-09-03T06:19:15Z — MoheXoheKohe (comment 5331, on definition 75321)
+
+Possible rafsi?
+
+It's possible that this can take rafsi *bov*?
