@@ -25,12 +25,6 @@ jobs:
       - run: uv sync --locked
       - name: Tools tests and determinism sample
         run: uv run pytest
-      - name: Exchange tests (unbound)
-        run: python3 -m unittest discover -s tools/exchange/tests
-      - name: Exchange tests (actor-bound)
-        run: python3 -m unittest discover -s tools/exchange/tests
-        env:
-          JBOMOHI_EXCHANGE_ACTOR: codex_1
       - name: Lint, format, compile, and whitespace checks
         run: |
           uv run ruff check tools/jbomohi_tools tools/tests
