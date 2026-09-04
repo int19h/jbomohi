@@ -70,9 +70,11 @@ issues define participants, duties, groups, review flow, and authority.
   Herdr session. `herdr-collab session join` only registers a participant
   started manually. Capture the returned UUID and set `HERDR_COLLAB_SESSION`.
 - At natural turn boundaries, inspect `herdr-collab inbox --pending` and
-  `herdr-collab status`; use `herdr-collab show <message-id>` for the complete
-  immutable message and its references. Do not force model turns or make
-  polling/waiting a standing end-of-turn action.
+  `herdr-collab status`. `herdr-collab show <message-id>` reads the selected
+  message body; `herdr-collab --json show <message-id>` exposes that selected
+  message's full record. Follow any `in_reply_to` or `supersedes` ids explicitly
+  to read related messages. Do not force model turns or make polling/waiting a
+  standing end-of-turn action.
 - Use durable `send` and `reply` for assignments, findings, questions,
   decisions, and handoffs. A direct `agent prompt` is transient and may alert
   a session to durable mail, but it is never the sole copy of load-bearing
