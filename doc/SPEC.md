@@ -43,13 +43,13 @@ Two branches with **no shared history**; neither is ever merged into the other.
 | branch | content | default checkout |
 |---|---|---|
 | `main` | the corpus projection (§3): data, `_meta/`, and the instruction files rendered from `tools/templates/main/` | for end users |
-| `tools` | tooling (`tools/`), documentation (`doc/`), templates, CI, the model-session exchange | for maintainers |
+| `tools` | tooling (`tools/`), documentation (`doc/`), templates, CI | for maintainers |
 
 `main`'s first (root) commit contains the rendered instruction files (`README.md`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.agents/rules/jbomohi.md`, `.gitignore`) and `_meta/schema.toml`, and is dated **`1970-01-01T00:00:00Z`** (the Unix epoch — git cannot represent earlier dates, so this is the earliest possible date and is distinct from every source event); every later commit is a source event, an instruction/`_meta` refresh, or a contributed note/attestation. The current `main` (a single `.gitignore` commit) is discarded and recreated as an orphan by the first `build`.
 
 ### 2.2 Working layout (maintainers)
 
-Checkout `tools` at the repository root; the corpus is a git worktree of `main` at `./corpus/` (gitignored), created by `jbomohi corpus init` (`git worktree add corpus main`, or `--orphan` when `main` does not exist). Tools resolve it from `JBOMOHI_CORPUS` (default `./corpus`). Untracked local state: `./corpus/`, `./.exchange/`, `./tmp/`, `./.venv/`.
+Checkout `tools` at the repository root; the corpus is a git worktree of `main` at `./corpus/` (gitignored), created by `jbomohi corpus init` (`git worktree add corpus main`, or `--orphan` when `main` does not exist). Tools resolve it from `JBOMOHI_CORPUS` (default `./corpus`). Untracked local state: `./corpus/`, `./tmp/`, `./.venv/`. The ignored `./.exchange/` path is legacy local state, not active coordination, and tools MUST NOT depend on it.
 
 ### 2.3 Raw archive tier
 
@@ -303,7 +303,7 @@ Every formal grammar and parser implementation of Lojban is part of the record. 
 
 ### 4.1 Language and layout
 
-Python ≥ 3.13 with `uv`; package `jbomohi_tools`, CLI `jbomohi` (`uv run jbomohi …`). Third-party dependencies only with a reason recorded in `pyproject.toml`. Layout: `tools/exchange/` (the exchange, §9), `tools/jbomohi_tools/` (`archive/`, `project/<source>.py`, `render/`, `who/`, `notes/`, `git.py`), `tools/templates/main/` (instruction files for `main`), `tools/tests/`, `doc/`, `.github/workflows/`.
+Python ≥ 3.13 with `uv`; package `jbomohi_tools`, CLI `jbomohi` (`uv run jbomohi …`). Third-party dependencies only with a reason recorded in `pyproject.toml`. Layout: `tools/jbomohi_tools/` (`archive/`, `project/<source>.py`, `render/`, `who/`, `notes/`, `git.py`), `tools/templates/main/` (instruction files for `main`), `tools/tests/`, `doc/`, `.github/workflows/`.
 
 ### 4.2 CLI
 
@@ -332,7 +332,7 @@ Every `main` commit has `Source`, `Source-Id`, `Event`, `Time-Confidence`; `Sour
 
 ### 4.5 Cadence and CI
 
-`.github/workflows/check.yml` on push/PR to `tools`: tests (tools and exchange, the latter unbound and bound), lint, determinism sample. `.github/workflows/update.yml` weekly + manual: checkout `tools`, worktree `main`, `archive fetch` for public sources (cached), `update`, `verify`, push `main` and the tag; a failing `verify` never pushes. The initial `build` runs locally (hours; 6-hour CI limit). Private dumps are applied locally with `jbomohi update dict --dump <file>` (and `wiki --dump`, `tiki --dump`); the operator-side export commands are `doc/ops/dump-request.md`.
+`.github/workflows/check.yml` on push/PR to `tools`: tool tests, lint, determinism sample. `.github/workflows/update.yml` weekly + manual: checkout `tools`, worktree `main`, `archive fetch` for public sources (cached), `update`, `verify`, push `main` and the tag; a failing `verify` never pushes. The initial `build` runs locally (hours; 6-hour CI limit). Private dumps are applied locally with `jbomohi update dict --dump <file>` (and `wiki --dump`, `tiki --dump`); the operator-side export commands are `doc/ops/dump-request.md`.
 
 ---
 
@@ -358,7 +358,7 @@ Rendered from `tools/templates/main/` into `main`'s root commit and refreshed at
 - **Determinism**: two full builds → identical `main` (commit hashes).
 - **Counts** vs `doc/research/data-survey.md` within tolerance (wiki pages 14,118 ± retried failures; unique lojban-list messages ≈ 77,5k after both Maildirs; IRC lines 1.10M in `raw/` ± the jbosnu split).
 - **Citation spot checks**: 30 citations sampled from `doc/eval/questions.jsonl` research answers resolve with `jbomohi cite resolve` to the expected text.
-- **Librarian dry run**: a fresh clone of `main`, a coding harness with no extra instructions, the 28 questions in `doc/eval/questions.jsonl`; Fable reviews answers for citation validity (every citation resolves; quotes verbatim) and attribution. This is the acceptance test of §5, not of any model.
+- **Librarian dry run**: a fresh clone of `main`, a coding harness with no extra instructions, the 28 questions in `doc/eval/questions.jsonl`; a task-designated review session checks answers for citation validity (every citation resolves; quotes verbatim) and attribution. This is the acceptance test of §5, not of any model.
 - **Size**: packed size and push feasibility recorded in `doc/decisions/`.
 
 ---
@@ -367,7 +367,7 @@ Rendered from `tools/templates/main/` into `main`'s root commit and refreshed at
 
 | # | deliverable | acceptance |
 |---|---|---|
-| **M0** | `tools` scaffold: `uv` project, CLI skeleton, `corpus init`, `commit_event`, templates, exchange, `check.yml` | tests green; `jbomohi corpus init` creates an orphan `main` with the rendered root commit |
+| **M0** | `tools` scaffold: `uv` project, CLI skeleton, `corpus init`, `commit_event`, templates, `check.yml` | tests green; `jbomohi corpus init` creates an orphan `main` with the rendered root commit |
 | **M1** | **The repository**: wiki (full history), `lojban-list` mail (both local Maildirs), IRC (`lojban`, `jbosnu`, `ckule`); `build`, `update`, `verify`, snapshot tags; `README`/`AGENTS` rendered; pushed to GitHub | §7 determinism, counts, citation spot checks, librarian dry run, size recorded |
 | **M2** | dict (from dumps, comments, votes), CLL submodule + editions + alignment, `who/` attestations + relays, `notes/` conventions + lint, Tiki, the other public lists (MHonArc), `update.yml` | as-of and diff questions in the dry run answered with resolving citations; `update.yml` completes one scheduled run |
 
@@ -377,7 +377,24 @@ Deferred beyond M2: `doc/future/librarian-service.md`.
 
 ## 9. Collaboration
 
-Roles: the human partner adjudicates; **Fable directs and reviews**; **Codex implements** on branches off `tools` and opens pull requests demonstrating acceptance with commands and outputs. Work items are GitHub issues (§10.1; `doc/issues/` until then). Sessions coordinate through `tools/exchange/` (`jbomohi-mail/v1`): `join`, `status` at the start and end of every substantive turn, `new`/`publish`/`ack`; see `tools/exchange/PROTOCOL.md`.
+The human partner adjudicates. Lead, implementation, research, and review are
+task duties assigned by the prompt, addressed mail, issue, or brief, not
+permanent model roles. GitHub issues (§10.1; `doc/issues/` until then) are the
+durable queue for tracked actionable work. Ad hoc research, diagnosis,
+discussion, and other untracked tasks MAY proceed directly from a human prompt
+or Collab mail. For an issue-backed task, participants MUST inspect and maintain
+the issue's scope, acceptance criteria, dependencies, and outcome; create or
+update an issue when a result should become durable backlog or a recorded
+decision. Multi-session work uses the external Herdr Collab project with the
+explicit id `jbomohi`; no checkout path or cwd selects it. Sessions and
+recipient groups are tailored to the task. Durable `send`, `reply`, `show`, and
+`ack` preserve assignments, findings, decisions, and disposition; direct Herdr
+prompts are transient wakeups and never the only record. Herdr Collab does not
+impose the workflow, review sequence, issue policy, or authority, and its
+external state is changed only through `herdr-collab`, never by editing files
+manually. Projects MAY use cache-aware resumable-pause and compaction
+conventions, but MUST NOT schedule forced model turns, polling, automatic
+compaction, or unattended dialog input.
 
 ---
 
