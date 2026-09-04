@@ -143,13 +143,15 @@ defines no roles, review order, or authority; the task brief does, and every
 participant remains bound by this librarian and citation contract.
 
 Keep assignments, evidence-bearing findings, decisions, and handoffs in
-durable `send` or `reply` messages; use `show` to read the complete record and
-`ack --disposition ...` to record that it was read and handled. Direct agent
-prompts are transient alerts, not durable disposition. Check mail at natural
-turn boundaries without forced polling, and never edit external collaboration
-state files manually. Before an anticipated long pause, persist a durable
-handoff, then compact only if requested while the context is still likely
-cached. Afterwards verify identity with
+durable `send` or `reply` messages. `show <message-id>` reads the selected body;
+use `--json` for that selected message's full record, and explicitly follow its
+`in_reply_to` or `supersedes` ids to read related messages. Use
+`ack --disposition ...` to record that the message was read and handled. Direct
+agent prompts are transient alerts, not durable disposition. Check mail at
+natural turn boundaries without forced polling, and never edit external
+collaboration state files manually. Before an anticipated long pause, persist
+a durable handoff, then compact only if requested while the context is still
+likely cached. Afterwards verify identity with
 `herdr-collab session show "$HERDR_COLLAB_SESSION" --live` rather than guessing
 a resume reference. If a cache-expired choice appears after a long idle pause,
 inspect that exact dialog and continue with the full existing context by
