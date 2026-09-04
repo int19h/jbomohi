@@ -132,6 +132,30 @@ Dictionary status is per definition (scores, `status`), not a ratification.
 - Synthetic email addresses (`…@mw.lojban.org`, `…@jbovlaste.lojban.org`,
   `irclogs@lojban.org`) are git placeholders, not addresses.
 
+## Multi-session coordination
+
+When a research task uses Herdr Collab, select the external project explicitly
+with `HERDR_COLLAB_PROJECT=jbomohi`; the checkout and cwd never select a
+mailbox. Use task-specific session handles and recipient groups. The
+`herdr-collab agent spawn` command creates a visible Herdr session, while
+`session join` only registers a participant started manually. Herdr Collab
+defines no roles, review order, or authority; the task brief does, and every
+participant remains bound by this librarian and citation contract.
+
+Keep assignments, evidence-bearing findings, decisions, and handoffs in
+durable `send` or `reply` messages; use `show` to read the complete record and
+`ack --disposition ...` to record that it was read and handled. Direct agent
+prompts are transient alerts, not durable disposition. Check mail at natural
+turn boundaries without forced polling, and never edit external collaboration
+state files manually. Before an anticipated long pause, persist a durable
+handoff, then compact only if requested while the context is still likely
+cached. Afterwards verify identity with
+`herdr-collab session show "$HERDR_COLLAB_SESSION" --live` rather than guessing
+a resume reference. If a cache-expired choice appears after a long idle pause,
+inspect that exact dialog and continue with the full existing context by
+default; do not compact then or auto-answer blocked trust, permission, or
+unrelated prompts.
+
 ## Contributing back
 
 Research notes (`notes/<YYYY>/<date>-<slug>.md`, front matter per
