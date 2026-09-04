@@ -15,3 +15,9 @@ Shape maybe.
 Possible rafsi?
 
 It's possible that this can take rafsi *bov*?
+
+## 2026-09-04T01:07:01Z — loblat (comment 5335, on definition 75321, in reply to 5331)
+
+
+
+I think yes.
