@@ -40,3 +40,11 @@ well-justified policy, too.
 CN eytm error
 
 Shoule be “啮齿动物” (niè chǐ dòng wù) -&gt; niecidunuu，“啮” means "(mouse/rat/rabbit/hare) bites".
+
+## 2026-09-07T09:37:28Z — gleki (comment 5341, on definition 56949, in reply to 3736)
+
+
+
+(Updated for 2022-11-18: This word is now in conflict with "ronti", although this word was created on or around 2014-06-27 and thus might have precedence; see "raunte"). 
+
+* How about this goes to etymology or to discussion thread? Otherwise such long histories can theoretically take pages in the generated pdf dictionary.
