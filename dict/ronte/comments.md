@@ -34,3 +34,9 @@ for experimental gismu to avoid conflicts, but I think that we should try
 to maintain that principle, at least for as long as we can. It is a
 well-justified policy, too.
 
+
+## 2026-09-07T09:16:08Z — loblat (comment 5340, on definition 56949)
+
+CN eytm error
+
+Shoule be “啮齿动物” (niè chǐ dòng wù) -&gt; niecidunuu，“啮” means "(mouse/rat/rabbit/hare) bites".
