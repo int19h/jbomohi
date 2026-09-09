@@ -3,3 +3,9 @@
 Existing synonym
 
 They have {tinri} already for this.
+
+## 2026-09-09T00:18:14Z — loblat (comment 5349, on definition 88572, in reply to 5342)
+
+
+
+{tedza} has no abstractions while {tinri} does.
