@@ -9,3 +9,9 @@ They have {tinri} already for this.
 
 
 {tedza} has no abstractions while {tinri} does.
+
+## 2026-09-09T01:16:47Z — indigo (comment 5350, on definition 88572)
+
+no'e ji to'e cinri
+
+don't care... vs. trying to avoid
