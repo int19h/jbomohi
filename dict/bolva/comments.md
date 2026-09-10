@@ -21,3 +21,9 @@ It's possible that this can take rafsi *bov*?
 
 
 I think yes.
+
+## 2026-09-10T17:09:54Z — MoheXoheKohe (comment 5358, on definition 75321)
+
+Add rafsi
+
+Add *bov* as the rafsi.
