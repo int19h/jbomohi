@@ -241,6 +241,8 @@ Deleted definitions (present in an earlier dump, absent later, or `status` in th
 
 
 **Timestamps.** Lensisku's `definition_versions.created_at` carries microseconds: events are ordered by the full source timestamp and the full value is kept in `_meta/dict/definitions.csv` and file front matter, while the git date is floored to the whole second (git's resolution); same-second events keep the §2.6 tie-break.
+
+**Clock skew between a word and its first definition.** Lensisku stamps `definitions.created_at` from the transaction start (`CURRENT_TIMESTAMP`) but `valsi.time` from application wall time, so a definition's baseline can precede its own word by a few seconds (1,353 rows, ≤ 7 s, in the 2026-09-13 export). The v0 event's window end and git date are the **effective** time `max(floor(definitions.created_at), valsi.time)`, so the word-created event always precedes its definition and the window never runs backwards; the full `created_at` stays in file metadata and indexes; `_meta/dict/coverage.toml` records `baseline_time_clamps = <n>`; an inversion larger than **10 seconds** fails the build as probable corruption rather than skew.
 **Indexes.** `_meta/dict/words.csv`, `definitions.csv` (`definition_id,word,lang,author,updated,versions,score,status,path`), `coverage.toml`.
 
 ### 3.6 CLL (`cll/`)
