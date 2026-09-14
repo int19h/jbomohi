@@ -279,6 +279,84 @@ def test_move_precedes_same_timestamp_redirect_revision() -> None:
     assert events[2].changes["wiki/main/Old.wiki"] == b"#REDIRECT [[New]]"
 
 
+def test_move_history_uses_each_hops_namespace() -> None:
+    page = WikiPageFragment(
+        1,
+        0,
+        "BPFK Section: Draft",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        1,
+        2,
+        "User:Draft",
+        datetime(2014, 1, 2, tzinfo=UTC),
+        "Gleki",
+        "publish",
+        0,
+        "BPFK Section: Draft",
+        False,
+    )
+    events = list(project([page], [move]))
+    assert events[0].changes == {"wiki/user/Draft.wiki": b"body"}
+    assert events[1].deletions == ("wiki/user/Draft.wiki",)
+    assert events[1].changes["wiki/main/BPFK_Section%3A_Draft.wiki"] == b"body"
+
+
+def test_pageid_zero_move_is_recovered_from_target_title() -> None:
+    page = WikiPageFragment(
+        1,
+        0,
+        "New",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        0,
+        0,
+        "Old",
+        datetime(2014, 1, 2, tzinfo=UTC),
+        "Gleki",
+        "rename",
+        0,
+        "New",
+        False,
+    )
+    events = list(project([page], [move]))
+    assert [event.source_id for event in events] == ["revid=1", "logid=5"]
+    assert events[0].changes == {"wiki/main/Old.wiki": b"body"}
+    assert events[1].event == "moved"
+    assert events[1].deletions == ("wiki/main/Old.wiki",)
+    assert events[1].changes["wiki/main/New.wiki"] == b"body"
+
+
 def test_preacquisition_delete_is_a_gap_not_an_event() -> None:
     [page] = parse_revision_response(
         response(

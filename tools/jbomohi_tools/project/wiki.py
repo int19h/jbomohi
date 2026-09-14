@@ -636,6 +636,70 @@ def _csv(columns: Sequence[str], rows: Iterable[dict[str, object]]) -> str:
     return stream.getvalue()
 
 
+def _page_move_chains(
+    pages: Sequence[WikiPage], log_events: Sequence[WikiLogEvent]
+) -> tuple[dict[int, tuple[WikiLogEvent, ...]], dict[int, int]]:
+    """Recover each page's title history without trusting old log page IDs."""
+
+    moves_by_target: dict[tuple[int, str], list[WikiLogEvent]] = defaultdict(list)
+    known_moves: dict[int, list[WikiLogEvent]] = defaultdict(list)
+    for item in log_events:
+        if item.log_type != "move":
+            continue
+        assert item.target_namespace is not None and item.target_title is not None
+        moves_by_target[(item.target_namespace, item.target_title)].append(item)
+        if item.pageid:
+            known_moves[item.pageid].append(item)
+
+    chains: dict[int, tuple[WikiLogEvent, ...]] = {}
+    owner_by_logid: dict[int, int] = {}
+    for page in pages:
+        target = (page.namespace, page.title)
+        before: tuple[datetime, int] | None = None
+        reverse_chain: list[WikiLogEvent] = []
+        while True:
+            candidates = [
+                item
+                for item in moves_by_target.get(target, ())
+                if (before is None or (item.timestamp, item.logid) < before)
+                and item.pageid in (0, page.pageid)
+            ]
+            if not candidates:
+                break
+            latest_time = max(item.timestamp for item in candidates)
+            latest = [item for item in candidates if item.timestamp == latest_time]
+            if len(latest) != 1:
+                raise WikiParseError(
+                    f"page {page.pageid}: ambiguous moves into namespace "
+                    f"{target[0]} title {target[1]!r} at "
+                    f"{latest_time.isoformat().replace('+00:00', 'Z')}"
+                )
+            item = latest[0]
+            previous_owner = owner_by_logid.get(item.logid)
+            if previous_owner is not None and previous_owner != page.pageid:
+                raise WikiParseError(
+                    f"move log {item.logid} belongs to both page {previous_owner} "
+                    f"and page {page.pageid}"
+                )
+            owner_by_logid[item.logid] = page.pageid
+            reverse_chain.append(item)
+            target = (item.namespace, item.title)
+            before = (item.timestamp, item.logid)
+
+        chain = tuple(reversed(reverse_chain))
+        reached_known = {item.logid for item in chain if item.pageid == page.pageid}
+        expected_known = {item.logid for item in known_moves.get(page.pageid, ())}
+        if reached_known != expected_known:
+            missing = ", ".join(
+                str(value) for value in sorted(expected_known - reached_known)
+            )
+            raise WikiParseError(
+                f"page {page.pageid}: move log(s) do not form a title chain: {missing}"
+            )
+        chains[page.pageid] = chain
+    return chains, owner_by_logid
+
+
 def project(
     fragments: Iterable[WikiPageFragment],
     logs: Iterable[WikiLogEvent] = (),
@@ -644,20 +708,16 @@ def project(
     """Project API- or dump-derived revisions and log events identically."""
 
     pages = merge_fragments(fragments)
-    page_by_id = {page.pageid: page for page in pages}
     log_events = sorted(logs, key=lambda item: (item.timestamp, item.logid))
-    moves: dict[int, list[WikiLogEvent]] = defaultdict(list)
-    for log in log_events:
-        if log.log_type == "move" and log.pageid in page_by_id:
-            moves[log.pageid].append(log)
+    moves, move_owner = _page_move_chains(pages, log_events)
     state_path: dict[int, str] = {}
     state_content: dict[int, bytes | None] = {}
     held_by_path: dict[str, int] = {}
     for page in pages:
-        initial_title = (
-            moves[page.pageid][0].title if moves[page.pageid] else page.title
-        )
-        state_path[page.pageid] = wiki_path(page.namespace, initial_title)
+        first_move = moves[page.pageid][0] if moves[page.pageid] else None
+        initial_namespace = first_move.namespace if first_move else page.namespace
+        initial_title = first_move.title if first_move else page.title
+        state_path[page.pageid] = wiki_path(initial_namespace, initial_title)
         state_content[page.pageid] = None
 
     revision_pages = [(revision, page) for page in pages for revision in page.revisions]
@@ -774,7 +834,13 @@ def project(
 
         assert isinstance(item, WikiLogEvent)
         old_path = wiki_path(item.namespace, item.title)
-        resolved_pageid = item.pageid if item.pageid in state_path else None
+        resolved_pageid = (
+            move_owner.get(item.logid)
+            if item.log_type == "move"
+            else item.pageid
+            if item.pageid in state_path
+            else None
+        )
         if resolved_pageid is None:
             resolved_pageid = held_by_path.get(old_path)
         if item.log_type == "move":

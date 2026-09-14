@@ -246,7 +246,11 @@ def parser() -> argparse.ArgumentParser:
     fetch = _leaf(archive_commands, "fetch", _archive_fetch)
     fetch.add_argument("source")
     fetch.add_argument(
-        "--since", help="source-specific timestamp or opaque continuation cursor"
+        "--since",
+        help=(
+            "UTC ISO timestamp for incremental acquisition; also refreshes cached "
+            "page discovery and revision responses"
+        ),
     )
     fetch.add_argument("--list", dest="list_name")
     fetch.add_argument("--max-pages", type=int)
