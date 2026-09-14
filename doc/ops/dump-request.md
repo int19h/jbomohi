@@ -16,10 +16,17 @@ DB=lojban_lens   # the Lensisku database (contains the migrated jbovlaste tables
 # a) everything except the tables that hold private data
 pg_dump -Fp --no-owner --no-privileges --exclude-table-data='*' --schema-only "$DB" > lensisku-schema.sql
 pg_dump -Fp --no-owner --no-privileges --data-only \
-  -T users -T definitionvotes -T natlangwordvotes \
+  -T users -T users_view -T definitionvotes -T natlangwordvotes \
   -T user_sessions -T user_session_events -T password_reset_requests -T password_change_verifications \
   -T oauth_accounts -T private_messages -T message_threads -T thread_participants -T user_message_blocks \
-  -T payments -T balance_transactions -T paypal_subscriptions -T payment_audit_log -T user_search_history \
+  -T message_encryption_keys -T message_notifications -T webrtc_signaling \
+  -T payments -T balance_transactions -T paypal_subscriptions -T payment_audit_log -T user_balances \
+  -T user_search_history -T assistant_chats -T user_notifications -T user_settings -T user_profile_images \
+  -T valsi_subscriptions -T follows -T comment_bookmarks -T comment_opinion_votes -T comment_reactions \
+  -T flashcards -T flashcard_levels -T flashcard_level_items -T flashcard_quiz_options -T flashcard_review_history \
+  -T user_flashcard_progress -T user_level_progress -T user_quiz_answer_history -T level_prerequisites \
+  -T collections -T collection_items -T collection_images -T collection_item_images -T collection_item_sounds \
+  -T cached_dictionary_exports -T wiki_articles -T wiki_sync_state \
   "$DB" > lensisku-public-data.sql
 
 # b) the public columns of users, as data only (no password, no email, no tokens, no votesize)
@@ -32,7 +39,7 @@ gzip lensisku-schema.sql lensisku-public-data.sql
 sha256sum lensisku-*.gz lensisku-*.csv
 ```
 
-If any table name above does not exist in your version, just drop that `-T` (a missing exclusion is harmless only if the table is absent; please do not remove an exclusion for a table that exists). If there are other tables you consider private, exclude them too and tell us their names.
+The exclusion list is the union of what the source schema and the 2026-09-13 export showed: everything per-user (chats with the site's AI assistant, notifications, settings, avatars, balances, subscriptions, follows, bookmarks, reactions, flashcard/quiz progress, collections — including private ones — and `users_view`, which exposes the private `votesize`), plus caches and the MediaWiki mirror we take from the source. If any table name above does not exist in your version, just drop that `-T` (a missing exclusion is harmless only if the table is absent; please do not remove an exclusion for a table that exists). If there are other tables you consider private, exclude them too and tell us their names.
 
 ### 1b. A separate jbovlaste database, if one still exists
 
