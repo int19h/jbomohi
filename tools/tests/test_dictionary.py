@@ -611,6 +611,33 @@ def test_project_keeps_intermediate_language_until_later_move() -> None:
     assert final.trailers["Moved-From"] == "dict/broda/fr-10.md"
 
 
+def test_project_accepts_a_null_text_block_as_empty_comment_content() -> None:
+    snapshot = _snapshot()
+    tables = dict(snapshot.tables)
+    tables["threads"] = (
+        _row(threadid="1", valsiid="20", natlangwordid=None, definitionid="10"),
+    )
+    tables["comments"] = (
+        _row(
+            commentid="1",
+            threadid="1",
+            parentid=None,
+            userid="1",
+            commentnum="1",
+            time="350",
+            subject="Empty",
+            content='[{"type":"text","data":null}]',
+            plain_content="",
+        ),
+    )
+    data = RawDictionaryDump(
+        tables=tables, users=snapshot.users, scores=snapshot.scores
+    )
+    events = list(project(data, export_date="2026-09-13"))
+    comment = next(event for event in events if event.source_id == "comment=1")
+    assert "Empty" in comment.changes["dict/broda/comments.md"]
+
+
 def test_jbovlaste_diff_reports_old_only_and_text_changes_without_merging() -> None:
     current = _snapshot()
     old_tables = {

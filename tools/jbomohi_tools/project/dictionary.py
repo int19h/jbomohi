@@ -965,11 +965,15 @@ def _comment_text(value: str, context: str) -> str:
             raise DictionaryParseError(f"{context}: block {index} must be an object")
         kind = block.get("type")
         data = block.get("data")
-        if not isinstance(kind, str) or not isinstance(data, str):
+        if not isinstance(kind, str) or (
+            data is not None and not isinstance(data, str)
+        ):
             raise DictionaryParseError(
-                f"{context}: block {index} lacks string type/data"
+                f"{context}: block {index} has type={type(kind).__name__} "
+                f"kind={kind!r} "
+                f"data={type(data).__name__}; expected strings"
             )
-        if kind == "text":
+        if kind == "text" and data is not None:
             text.append(data)
     return "\n".join(text)
 
