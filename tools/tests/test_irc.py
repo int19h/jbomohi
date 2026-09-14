@@ -76,8 +76,10 @@ def test_pre_utf8_and_transitional_dated_sources_normalize_deterministically() -
         ),
     )
     [unit] = parse_source(item)
-    assert unit.format == "legacy"
-    assert unit.tz == "unknown"
+    assert unit.format == "legacy+iso"
+    assert unit.tz == "-0400"
+    assert unit.time_confidence == "exact"
+    assert unit.source_time.isoformat() == "2010-10-02T22:00:00-04:00"
     assert unit.body == (
         "20:49:12 <Zarutian> café lojban",
         "21:58:00 <latros> coi rodo",
@@ -133,7 +135,7 @@ def test_dated_file_keeps_undated_tail_in_source_order() -> None:
     assert unit.undated_lines == 1
 
 
-def test_iso_dst_transition_day_is_marked_timezone_unknown() -> None:
+def test_iso_dst_transition_day_keeps_ordered_offsets_and_last_line_zone() -> None:
     [unit] = parse_source(
         source(
             "lojban/2010_11/2010_11_07.txt",
@@ -141,8 +143,23 @@ def test_iso_dst_transition_day_is_marked_timezone_unknown() -> None:
             "2010-11-07 01:15:00 EST/-0500 <b> after\n",
         )
     )
-    assert unit.tz == "unknown"
-    assert unit.time_confidence == "tz-unknown"
+    assert unit.tz == "-0400/-0500"
+    assert unit.time_confidence == "exact"
+    assert unit.source_time.isoformat() == "2010-11-07T01:15:00-05:00"
+
+
+def test_later_all_iso_day_in_legacy_transition_file_keeps_iso_format() -> None:
+    units = parse_source(
+        source(
+            "lojban/2010_10/transition.txt",
+            "01 Oct 2010 23:59:00 <a> legacy day\n"
+            "2010-10-02 00:01:00 EDT/-0400 <b> ISO day\n",
+        )
+    )
+    assert [unit.format for unit in units] == ["legacy", "iso"]
+    assert units[0].tz == "unknown"
+    assert units[1].tz == "-0400"
+    assert units[1].source_time.isoformat() == "2010-10-02T00:01:00-04:00"
 
 
 def test_irssi_day_markers_reconstruct_june_2015_dates() -> None:
@@ -346,6 +363,24 @@ def test_project_merges_overlapping_source_fragments() -> None:
         "05:00:00 <ilmen> second",
     ]
     assert list(project([first, second])) == list(project([second, first]))
+
+
+def test_project_merges_legacy_and_iso_fragments_with_the_iso_zone() -> None:
+    legacy = source(
+        "lojban/2010_10/legacy.txt",
+        "02 Oct 2010 20:49:12 <a> legacy\n",
+    )
+    iso = source(
+        "lojban/2010_10/iso.txt",
+        "2010-10-02 21:58:00 EDT/-0400 <b> ISO\n",
+    )
+    [event] = list(project([iso, legacy]))
+    output = event.changes["irc/lojban/2010/2010-10-02.txt"]
+    assert isinstance(output, str)
+    assert "tz=-0400" in output.splitlines()[0]
+    assert output.splitlines()[0].endswith("format=legacy+iso")
+    assert event.time_confidence == "exact"
+    assert event.source_time.isoformat() == "2010-10-02T21:58:00-04:00"
 
 
 def test_project_merges_dated_and_undated_fragments_for_one_day() -> None:

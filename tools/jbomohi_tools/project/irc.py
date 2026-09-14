@@ -256,6 +256,9 @@ def _unit_from_lines(
     tz_text: str,
     tzinfo: timezone,
     lines: Sequence[ParsedLine],
+    *,
+    time_confidence: str | None = None,
+    event_window: str | None = None,
 ) -> IrcUnit:
     if not lines:
         raise IrcParseError(f"{source.path}: empty IRC day {day.isoformat()}")
@@ -274,14 +277,17 @@ def _unit_from_lines(
         messages=sum(line.nick is not None for line in lines),
         nicks=len(nicks),
         source_time=source_time,
-        time_confidence="exact" if tz_text != "unknown" else "tz-unknown",
+        time_confidence=time_confidence
+        or ("exact" if tz_text != "unknown" else "tz-unknown"),
+        event_window=event_window,
         undated_lines=sum(line.clock == "--:--:--" for line in lines),
     )
 
 
 def _parse_iso(source: SourceObject, raw_lines: Sequence[str]) -> list[IrcUnit]:
     grouped: dict[date, list[ParsedLine]] = defaultdict(list)
-    offsets: dict[date, set[str]] = defaultdict(set)
+    offsets: dict[date, list[str]] = defaultdict(list)
+    last_offset: dict[date, str] = {}
     for number, raw in enumerate(raw_lines, 1):
         match = ISO_LINE.fullmatch(raw)
         if not match:
@@ -293,21 +299,25 @@ def _parse_iso(source: SourceObject, raw_lines: Sequence[str]) -> list[IrcUnit]:
         except ValueError as exc:
             raise IrcParseError(f"{source.path}:{number}: invalid ISO date") from exc
         clock = _clock(match["clock"], seconds=True)
-        offsets[day].add(match["offset"])
+        offset = match["offset"]
+        if offset not in offsets[day]:
+            offsets[day].append(offset)
+        last_offset[day] = offset
         grouped[day].append(_normalize_body(clock, match["body"]))
     units: list[IrcUnit] = []
     for day in sorted(grouped):
-        if len(offsets[day]) == 1:
-            offset = next(iter(offsets[day]))
-            units.append(
-                _unit_from_lines(
-                    source, day, "iso", offset, _zone(offset), grouped[day]
-                )
+        tz_text = "/".join(offsets[day])
+        units.append(
+            _unit_from_lines(
+                source,
+                day,
+                "iso",
+                tz_text,
+                _zone(last_offset[day]),
+                grouped[day],
+                time_confidence="exact",
             )
-        else:
-            units.append(
-                _unit_from_lines(source, day, "iso", "unknown", UTC, grouped[day])
-            )
+        )
     return units
 
 
@@ -315,11 +325,15 @@ def _parse_legacy(source: SourceObject, raw_lines: Sequence[str]) -> list[IrcUni
     grouped: dict[date, list[ParsedLine]] = defaultdict(list)
     current_day: date | None = None
     undated_days: set[date] = set()
+    kinds: dict[date, set[str]] = defaultdict(set)
+    offsets: dict[date, list[str]] = defaultdict(list)
+    last_offset: dict[date, str] = {}
     for number, raw in enumerate(raw_lines, 1):
         match = LEGACY_LINE.fullmatch(raw)
         if match:
             day = _calendar_date(match["year"], match["month"], match["day"])
             current_day = day
+            kinds[day].add("legacy")
             clock = _clock(match["clock"], seconds=len(match["clock"]) == 8)
             grouped[day].append(_normalize_body(clock, match["body"]))
             continue
@@ -332,6 +346,11 @@ def _parse_legacy(source: SourceObject, raw_lines: Sequence[str]) -> list[IrcUni
                     f"{source.path}:{number}: invalid ISO date"
                 ) from exc
             current_day = day
+            kinds[day].add("iso")
+            offset = iso["offset"]
+            if offset not in offsets[day]:
+                offsets[day].append(offset)
+            last_offset[day] = offset
             clock = _clock(iso["clock"], seconds=True)
             grouped[day].append(_normalize_body(clock, iso["body"]))
             continue
@@ -341,17 +360,38 @@ def _parse_legacy(source: SourceObject, raw_lines: Sequence[str]) -> list[IrcUni
             )
         grouped[current_day].append(_normalize_body("--:--:--", raw))
         undated_days.add(current_day)
-    return [
-        _unit_from_lines(
-            source,
-            day,
-            "legacy+undated" if day in undated_days else "legacy",
-            "unknown",
-            UTC,
-            grouped[day],
+    units: list[IrcUnit] = []
+    for day in sorted(grouped):
+        day_kinds = kinds[day]
+        has_undated = day in undated_days
+        if day_kinds == {"iso"}:
+            source_format = "iso+undated" if has_undated else "iso"
+        elif "iso" in day_kinds:
+            source_format = "legacy+iso+undated" if has_undated else "legacy+iso"
+        else:
+            source_format = "legacy+undated" if has_undated else "legacy"
+        if offsets[day]:
+            tz_text = "/".join(offsets[day])
+            tzinfo = _zone(last_offset[day])
+            confidence = "window" if has_undated else "exact"
+        else:
+            tz_text = "unknown"
+            tzinfo = UTC
+            confidence = "window" if has_undated else "tz-unknown"
+        event_window = f"{day.isoformat()}..{day.isoformat()}" if has_undated else None
+        units.append(
+            _unit_from_lines(
+                source,
+                day,
+                source_format,
+                tz_text,
+                tzinfo,
+                grouped[day],
+                time_confidence=confidence,
+                event_window=event_window,
+            )
         )
-        for day in sorted(grouped)
-    ]
+    return units
 
 
 def _parse_irssi(source: SourceObject, raw_lines: Sequence[str]) -> list[IrcUnit]:
@@ -663,36 +703,73 @@ def _merge_units(units: Sequence[IrcUnit]) -> IrcUnit:
     if len(units) == 1:
         return units[0]
     formats = {unit.format for unit in units}
-    legacy_family = formats <= {"legacy", "legacy+undated", "undated"}
-    if len(formats) == 1 or legacy_family:
+    legacy_family = formats <= {
+        "legacy",
+        "legacy+undated",
+        "legacy+iso",
+        "legacy+iso+undated",
+        "iso",
+        "iso+undated",
+        "undated",
+    }
+    if len(formats) == 1 and not legacy_family:
         body = _merge_same_format(units)
-        source_format = (
-            "legacy+undated"
-            if formats & {"legacy+undated", "undated"} and len(formats) > 1
-            else units[0].format
-        )
+        source_format = units[0].format
         tz_values = {unit.tz for unit in units}
         tz_text = next(iter(tz_values)) if len(tz_values) == 1 else "unknown"
-        if any(unit.undated_lines for unit in units):
-            confidence = "window"
+        confidence = units[0].time_confidence if len(tz_values) == 1 else "tz-unknown"
+        source_time = max(unit.source_time for unit in units)
+    elif legacy_family:
+        body = _merge_same_format(units)
+        has_legacy = any("legacy" in name for name in formats)
+        has_iso = any("iso" in name for name in formats)
+        has_undated = any(unit.undated_lines for unit in units)
+        if has_legacy and has_iso:
+            source_format = "legacy+iso+undated" if has_undated else "legacy+iso"
+        elif has_iso:
+            source_format = "iso+undated" if has_undated else "iso"
+        elif has_legacy:
+            source_format = "legacy+undated" if has_undated else "legacy"
         else:
-            confidence = (
-                units[0].time_confidence if len(tz_values) == 1 else "tz-unknown"
-            )
-        latest_unit = max(units, key=lambda unit: unit.source_time)
-        source_time = latest_unit.source_time
-        if confidence in {"tz-unknown", "window"}:
-            source_time = source_time.replace(tzinfo=UTC)
+            source_format = "undated"
+        known_offsets: list[str] = []
+        for unit in sorted(units, key=lambda item: item.source):
+            if unit.tz == "unknown":
+                continue
+            for offset in unit.tz.split("/"):
+                if offset not in known_offsets:
+                    known_offsets.append(offset)
+        tz_text = "/".join(known_offsets) if known_offsets else "unknown"
+        if has_undated:
+            confidence = "window"
+        elif known_offsets:
+            confidence = "exact"
+        else:
+            confidence = "tz-unknown"
+        dated = [line for line in body if not line.startswith("--:--:-- ")]
+        latest = (
+            max(time.fromisoformat(line[:8]) for line in dated)
+            if dated
+            else time(23, 59, 59)
+        )
+        tzinfo = _zone(known_offsets[-1]) if known_offsets else UTC
+        source_time = datetime.combine(
+            date.fromisoformat(units[0].date_key), latest, tzinfo=tzinfo
+        )
     elif formats == {"iso", "irssi"}:
         body, matched = _merge_iso_irssi(units)
-        iso_zones = {
-            unit.tz for unit in units if unit.format == "iso" and unit.tz != "unknown"
-        }
-        if matched and len(iso_zones) == 1:
+        iso_offsets: list[str] = []
+        for unit in sorted(units, key=lambda item: item.source):
+            if unit.format != "iso" or unit.tz == "unknown":
+                continue
+            for offset in unit.tz.split("/"):
+                if offset not in iso_offsets:
+                    iso_offsets.append(offset)
+        if matched and iso_offsets:
             source_format = "iso+irssi"
-            tz_text = next(iter(iso_zones))
+            tz_text = "/".join(iso_offsets)
             confidence = "exact"
-            tzinfo = _zone(tz_text)
+            tzinfo = _zone(iso_offsets[-1])
         else:
             source_format = "irssi"
             tz_text = "unknown"

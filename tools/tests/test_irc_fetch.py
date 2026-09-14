@@ -199,8 +199,11 @@ def test_http_client_bounds_response_bytes_and_redirect_origin(
         HttpClient().get("https://lojban.org/irclogs/x")
 
 
+@pytest.mark.parametrize(
+    "failure", [URLError("temporary"), TimeoutError("temporary"), OSError("temporary")]
+)
 def test_http_client_retries_transient_errors_with_bounded_backoff(
-    monkeypatch: pytest.MonkeyPatch,
+    monkeypatch: pytest.MonkeyPatch, failure: Exception
 ) -> None:
     class Response:
         headers = Message()
@@ -223,7 +226,7 @@ def test_http_client_retries_transient_errors_with_bounded_backoff(
         nonlocal calls
         calls += 1
         if calls == 1:
-            raise URLError("temporary")
+            raise failure
         return Response()
 
     monkeypatch.setattr("jbomohi_tools.archive.irc.urlopen", flaky)

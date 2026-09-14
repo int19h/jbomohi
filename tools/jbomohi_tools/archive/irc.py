@@ -145,7 +145,7 @@ class HttpClient:
                     else 2**attempt
                 )
                 delay = min(delay, 60.0)
-            except URLError as exc:
+            except (URLError, OSError) as exc:
                 last_error = exc
                 delay = 2**attempt
             if attempt + 1 < self.attempts:
