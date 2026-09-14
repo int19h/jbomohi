@@ -277,22 +277,30 @@ def test_projected_days_commit_as_one_source_event_each(tmp_path: Path) -> None:
 
 
 def test_update_amendment_uses_unique_digest_id_and_supersession_trailer() -> None:
-    item = source(
+    original = source(
+        "lojban/2014_03/2014_03_01.txt",
+        "2014-03-01 04:07:13 PST/-0800 <gleki> original\n",
+    )
+    amended = source(
         "lojban/2014_03/2014_03_01.txt",
         "2014-03-01 04:07:13 PST/-0800 <gleki> corrected\n",
     )
     output_path = "irc/lojban/2014/2014-03-01.txt"
-    [event] = list(
+    [initial] = list(project([original]))
+    [edited] = list(
         project(
-            [item],
+            [amended],
             amendments={
                 output_path: IrcAmendment("a" * 64, "b" * 64),
             },
         )
     )
-    assert event.event == "edited"
-    assert event.source_id == "2014-03-01@aaaaaaaaaaaa"
-    assert event.trailers == {"Supersedes-Manifestation": "bbbbbbbbbbbb"}
+    assert initial.event == "import"
+    assert initial.source_id == "2014-03-01"
+    assert initial.trailers == {}
+    assert edited.event == "edited"
+    assert edited.source_id == "2014-03-01@aaaaaaaaaaaa"
+    assert edited.trailers == {"Supersedes-Manifestation": "bbbbbbbbbbbb"}
 
 
 def test_update_amendment_rejects_noncanonical_digests() -> None:
