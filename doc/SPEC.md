@@ -78,7 +78,7 @@ One commit per **source event**: a wiki revision; a Tiki page version; a mail me
   | tool-generated commits (renderings, vote batches, refreshes) | `jbomohi` | `tools@jbomohi.invalid` |
   | contributed notes/attestations | the contributor's own git identity | as configured by the contributor |
 
-  Usernames are used verbatim (case preserved); characters not allowed in an email local part are percent-encoded. The `.invalid` and `*.lojban.org` placeholders are not deliverable addresses and `main:README.md` says so.
+  Usernames are used verbatim (case preserved) in projected file metadata and indexes. Git identity names cannot preserve `<`, `>`, or leading/trailing dots, so those characters are percent-encoded there; `%` is encoded first to keep the mapping injective. Characters not allowed in an email local part, including leading/trailing dots, are likewise percent-encoded. This encoding affects only git metadata, never the canonical source spelling in files. The `.invalid` and `*.lojban.org` placeholders are not deliverable addresses and `main:README.md` says so.
 - `GIT_AUTHOR_DATE` = `GIT_COMMITTER_DATE` = the source event time. UTC when the source is unambiguous; otherwise the source's own local time, with `Time-Confidence` set.
 - **Subject**: `<source>: <summary ≤ 72 chars>` — `wiki: BPFK Section: gadri (rev 108932) fix typo`, `mail/lojban: Re: [lojban] xorlo podcast`, `irc/lojban: 2015-06-20 (412 lines)`, `dict: kau en#12345 v3`, `cll: render 1.1-2019`, `meta: refresh README and coverage`, `notes: xorlo adoption (2004–2007)`.
 - **Trailers** (`Key: value`, one per line, at the end of the body):

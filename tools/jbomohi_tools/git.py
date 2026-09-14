@@ -10,7 +10,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 from pathlib import Path, PurePosixPath
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 EPOCH = datetime(1970, 1, 1, tzinfo=UTC)
 SOURCES = {
@@ -142,13 +142,25 @@ def _clean_text(label: str, value: str) -> str:
 
 
 def _encoded_local_part(value: str) -> str:
-    return quote(value, safe=HEX_ESCAPE_SAFE, encoding="utf-8", errors="strict")
+    encoded = quote(value, safe=HEX_ESCAPE_SAFE, encoding="utf-8", errors="strict")
+    return "".join(
+        "%2E"
+        if char == "."
+        and (
+            index == 0
+            or index + 1 == len(encoded)
+            or encoded[index - 1] == "."
+            or encoded[index + 1] == "."
+        )
+        else char
+        for index, char in enumerate(encoded)
+    )
 
 
-def _git_safe_mail_name(value: str) -> str:
-    """Percent-encode display-name bytes that git identity syntax cannot retain."""
+def _git_safe_name(value: str, *, label: str = "identity name") -> str:
+    """Injectively encode source-name syntax that git cannot retain."""
 
-    name = _clean_text("mail display name", value)
+    name = _clean_text(label, value)
     name = name.replace("%", "%25").replace("<", "%3C").replace(">", "%3E")
     if name.startswith("."):
         name = "%2E" + name[1:]
@@ -216,10 +228,22 @@ class Identity:
             return
         if any(char.isspace() for char in self.namespace) or "@" in self.namespace:
             raise EventError("identity namespace must be an email host")
-        expected = f"{_encoded_local_part(self.name)}@{self.namespace}"
-        if self.email != expected:
+        local_part, email_namespace = self.email.rsplit("@", 1)
+        if email_namespace != self.namespace:
             raise EventError(
-                f"namespaced identity email must be {expected!r}, got {self.email!r}"
+                f"namespaced identity email must end in @{self.namespace}, got {self.email!r}"
+            )
+        try:
+            source_name = unquote(local_part, encoding="utf-8", errors="strict")
+        except UnicodeDecodeError as exc:
+            raise EventError(
+                "namespaced identity email has invalid UTF-8 escaping"
+            ) from exc
+        expected_name = _git_safe_name(source_name)
+        expected_email = f"{_encoded_local_part(source_name)}@{self.namespace}"
+        if self.name != expected_name or self.email != expected_email:
+            raise EventError(
+                "namespaced identity name/email are not the canonical source-name encoding"
             )
 
     @classmethod
@@ -235,7 +259,11 @@ class Identity:
             "irc.lojban.org",
         } or host.startswith("anonymous:"):
             raise EventError(f"reserved identity namespace: {host!r}")
-        return cls(user, f"{_encoded_local_part(user)}@{host}", host)
+        return cls(
+            _git_safe_name(user, label="username"),
+            f"{_encoded_local_part(user)}@{host}",
+            host,
+        )
 
     @classmethod
     def mail(cls, address: str, display_name: str | None = None) -> Identity:
@@ -249,7 +277,11 @@ class Identity:
         if "@" not in email or any(char.isspace() for char in email):
             raise EventError("mail address must contain @ and no whitespace")
         local_part = email.rsplit("@", 1)[0]
-        return cls(_git_safe_mail_name(display_name or local_part), email, "mail")
+        return cls(
+            _git_safe_name(display_name or local_part, label="mail display name"),
+            email,
+            "mail",
+        )
 
     @classmethod
     def anonymous(cls, host: str) -> Identity:
@@ -268,7 +300,7 @@ class Identity:
 
     @classmethod
     def contributed(cls, name: str, email: str) -> Identity:
-        return cls(name, email, "contributed")
+        return cls(_git_safe_name(name), email, "contributed")
 
 
 def _valid_source(source: str) -> bool:

@@ -196,6 +196,41 @@ def test_mail_name_normalisation_is_preserved_in_the_commit(tmp_path: Path) -> N
     assert git(corpus, "show", "-s", "--format=%an") == "%2EJohn %3Cjc%3E%25%2E"
 
 
+def test_namespaced_git_name_and_email_escape_edge_dots() -> None:
+    assert Identity.namespaced("mw.lojban.org", ".i.") == Identity(
+        "%2Ei%2E", "%2Ei%2E@mw.lojban.org", "mw.lojban.org"
+    )
+    assert Identity.namespaced("mw.lojban.org", ".i..j.").email == (
+        "%2Ei%2E%2Ej%2E@mw.lojban.org"
+    )
+
+
+def test_source_name_encoding_is_injective_for_percent_escapes() -> None:
+    punctuation = Identity.namespaced("mw.lojban.org", "<x>")
+    literal_escape = Identity.namespaced("mw.lojban.org", "%3Cx%3E")
+    assert punctuation.name == "%3Cx%3E"
+    assert literal_escape.name == "%253Cx%253E"
+    assert punctuation.email == "%3Cx%3E@mw.lojban.org"
+    assert literal_escape.email == "%253Cx%253E@mw.lojban.org"
+    assert punctuation != literal_escape
+
+
+def test_namespaced_name_encoding_survives_in_the_commit(tmp_path: Path) -> None:
+    corpus = unborn_worktree(tmp_path)
+    event = base_event(author=Identity.namespaced("mw.lojban.org", ".i."))
+    commit_event(event, corpus)
+    assert git(corpus, "show", "-s", "--format=%an%n%ae").splitlines() == [
+        "%2Ei%2E",
+        "%2Ei%2E@mw.lojban.org",
+    ]
+
+
+def test_contributed_name_uses_the_same_git_safe_encoding() -> None:
+    assert Identity.contributed(".Contributor%", "person@example.org").name == (
+        "%2EContributor%25"
+    )
+
+
 def test_run_git_strips_repository_and_config_environment(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
