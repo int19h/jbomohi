@@ -122,8 +122,9 @@ Dictionary status is per definition (scores, `status`), not a ratification.
   Discord/Telegram users appear as `<relaybot> <name>: …` (see
   `who/relays.toml`); the same person uses many nicks over 25 years and
   `who/attestations.csv` only records cited claims about that. The May–October
-  2000 log is one undated block; only `[HH:MM]` times and rollover ordinals are
-  known.
+  2000 and May–December 2002 range logs are undated blocks; only `[HH:MM]`
+  times and rollover ordinals are known. Held lines whose timestamps are absent
+  use the explicit `--:--:--` placeholder.
 - CLL: `1997-online-draft` is the pre-print draft; `1.0-errata-2014` is a
   reconstruction; editions are aligned by section number (`_meta/cll/alignment.csv`).
 - Dictionary: definition history is exact only from ~2024 (Lensisku's version
