@@ -177,6 +177,37 @@ def test_fetch_old_lojban_list_stops_and_loads_numbered_raw(tmp_path: Path) -> N
     assert (resumed.downloaded, resumed.reused, resumed.next_missing) == (0, 1, 2)
 
 
+def test_fetch_old_lojban_list_records_empty_200_as_gap_and_continues(
+    tmp_path: Path,
+) -> None:
+    raw = (
+        b"From sender@example.org Sat Jan 1 00:00:00 2000\n"
+        b"From: Sender <sender@example.org>\n"
+        b"Date: Sat, 1 Jan 2000 00:00:00 +0000\n"
+        b"Message-ID: <two@example.org>\n\nbody\n"
+    )
+
+    class Client:
+        def get(self, url: str) -> bytes | None:
+            if url.endswith("/1"):
+                return b""
+            if url.endswith("/2"):
+                return raw
+            return None
+
+    report = fetch_old_lojban_list(
+        tmp_path,
+        client=Client(),
+        now=lambda: datetime(2026, 9, 14, tzinfo=UTC),
+    )
+    assert (report.downloaded, report.next_missing) == (2, 3)
+    manifests = [ArchiveManifest.load(path) for path in report.manifests]
+    assert [item.coverage["counts"]["messages"] for item in manifests] == [0, 1]
+    loaded = list(load_old_lojban_manifestations(tmp_path))
+    assert len(loaded) == 1
+    assert b"<two@example.org>" in loaded[0].raw.read()
+
+
 def test_fetch_mail_mboxes_discovers_validates_and_loads_gzip(tmp_path: Path) -> None:
     raw = (
         b"From sender@example.org Sat Jan 1 00:00:00 2000\n"
