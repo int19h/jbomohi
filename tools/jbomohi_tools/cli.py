@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import logging
 from collections.abc import Callable, Sequence
-from datetime import UTC, datetime, time
+from datetime import datetime
 from pathlib import Path
 
 from .archive import (
@@ -254,17 +254,9 @@ def _cll_render(args: argparse.Namespace, config: Config) -> int:
 def _until(value: str | None) -> datetime | None:
     if value is None:
         return None
-    try:
-        if len(value) == 10:
-            return datetime.combine(
-                datetime.fromisoformat(value).date(), time.max, UTC
-            ).replace(microsecond=0)
-        parsed = datetime.fromisoformat(value)
-    except ValueError as exc:
-        raise ValueError("--until must be an ISO date or timestamp") from exc
-    if parsed.tzinfo is None:
-        raise ValueError("--until timestamp must include a UTC offset")
-    return parsed.astimezone(UTC).replace(microsecond=0)
+    raise ValueError(
+        "--until is not supported until every selected projector accepts a cut-off"
+    )
 
 
 def _build(args: argparse.Namespace, config: Config) -> int:

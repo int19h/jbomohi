@@ -534,6 +534,7 @@ def test_ingest_tiki_export_writes_three_operator_export_manifests(
         assert manifest.source == "tiki"
         assert manifest.kind == "db-export"
         assert manifest.origin == "operator export 2026-09-13"
+        assert manifest.coverage["character_encoding"] == "latin1-transcoded"
         assert object_path(archive, manifest.sha256).is_file()
 
     (export / "tiki-user-preferences.tsv.gz").unlink()

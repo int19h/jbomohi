@@ -68,6 +68,10 @@ def _validate_coverage(path: Path, value: object) -> dict[str, Any]:
                 )
             clean_refs[clean_key] = object_id
         result["refs"] = clean_refs
+    if "character_encoding" in value:
+        result["character_encoding"] = _manifest_text(
+            path, "coverage.character_encoding", value["character_encoding"]
+        )
     return result
 
 
@@ -158,9 +162,12 @@ class ArchiveManifest:
             "[coverage]",
             f"from = {quote(coverage['from'])}",
             f"to = {quote(coverage['to'])}",
-            "",
-            "[coverage.counts]",
         ]
+        if "character_encoding" in coverage:
+            lines.append(
+                f"character_encoding = {quote(coverage['character_encoding'])}"
+            )
+        lines.extend(["", "[coverage.counts]"])
         lines.extend(
             f"{quote(name)} = {count}"
             for name, count in sorted(coverage["counts"].items())
