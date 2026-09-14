@@ -56,6 +56,14 @@ workflow.
 
 {{provenance}}
 
+Grammar and parser submodules retain their upstream licence files; the
+per-source terms (GPL-2.0/3.0, AGPL-3.0, MIT, BSD-2/3-Clause, ISC, AFL-2.0,
+the LLG permission grant, public domain, or explicitly `no licence`) are
+indexed in `_meta/grammars/index.csv`. A missing licence is recorded as such
+and never treated as a grant. Vendored official generations retain the LLG
+permission notice in their text; the third baseline carries its own public
+domain dedication.
+
 Email addresses and names appear as they do in the public archives.
 Synthetic addresses used as git author placeholders (`…@mw.lojban.org`,
 `…@jbovlaste.lojban.org`, `irclogs@irc.lojban.org`) are not deliverable.

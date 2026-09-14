@@ -8,9 +8,11 @@ from collections.abc import Callable, Sequence
 from pathlib import Path
 
 from .archive import (
+    GRAMMAR_VENDOR_FILES,
     ArchiveError,
     fetch_changes,
     fetch_cll,
+    fetch_grammars,
     fetch_irc,
     fetch_jbosnu_raw,
     fetch_mail_mboxes,
@@ -78,6 +80,18 @@ def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
             f"archive fetch cll: refs={len(report.refs)} "
             f"reused={str(report.reused_manifest).lower()} "
             f"manifest={report.manifest}"
+        )
+        return 0
+    if args.source == "grammars":
+        report = fetch_grammars(
+            config.archive,
+            vendor_sources=GRAMMAR_VENDOR_FILES,
+            camxes_backup=(config.archive / "teddyb" / "hlg_backup__2011-01-11.tgz"),
+        )
+        print(
+            f"archive fetch grammars: mirrors={len(report.mirrors)} "
+            f"reused={sum(item.reused_manifest for item in report.mirrors)} "
+            f"vendor_manifests={len(report.vendor_manifests)}"
         )
         return 0
     if args.source == "irc":

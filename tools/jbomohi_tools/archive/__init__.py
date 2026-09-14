@@ -9,6 +9,9 @@ from .dictionary import (
     fetch_changes,
     ingest_dictionary_exports,
 )
+from .grammars import VENDOR_FILES as GRAMMAR_VENDOR_FILES
+from .grammars import GrammarFetchError, GrammarFetchReport
+from .grammars import fetch as fetch_grammars
 from .irc import FetchReport as IrcFetchReport
 from .irc import IrcFetchError
 from .irc import fetch as fetch_irc
@@ -51,6 +54,7 @@ from .wiki import WikiFetchError
 from .wiki import fetch as fetch_wiki
 
 __all__ = [
+    "GRAMMAR_VENDOR_FILES",
     "MAILDIR_LISTS",
     "MHONARC_GAP_LISTS",
     "MHONARC_LISTS",
@@ -62,6 +66,8 @@ __all__ = [
     "DictionaryFetchError",
     "DictionaryFetchReport",
     "DictionaryIngestReport",
+    "GrammarFetchError",
+    "GrammarFetchReport",
     "IrcFetchError",
     "IrcFetchReport",
     "MailFetchError",
@@ -77,6 +83,7 @@ __all__ = [
     "extract_maildir_zip",
     "fetch_changes",
     "fetch_cll",
+    "fetch_grammars",
     "fetch_irc",
     "fetch_jbosnu_raw",
     "fetch_mail_mboxes",

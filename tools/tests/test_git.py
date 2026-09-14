@@ -80,6 +80,14 @@ def test_commit_event_uses_the_configured_corpus_by_default(
     assert commit == git(corpus, "rev-parse", "HEAD")
 
 
+def test_document_identity_uses_an_attested_author_slug() -> None:
+    identity = Identity.document("lojban.org", "Logical Language Group", "llg")
+    assert identity.name == "Logical Language Group"
+    assert identity.email == "llg@lojban.org"
+    with pytest.raises(EventError, match="invalid document author"):
+        Identity.document("lojban.org", "Name", "Not A Slug")
+
+
 def test_commit_event_writes_and_updates_a_gitlink(tmp_path: Path) -> None:
     corpus = unborn_worktree(tmp_path)
     first_id = "1" * 40
@@ -90,14 +98,9 @@ def test_commit_event_writes_and_updates_a_gitlink(tmp_path: Path) -> None:
         event="render",
         summary="render 1.0",
         author=Identity.tool(),
-        changes={
-            ".gitmodules": (
-                '[submodule "cll/src"]\n'
-                "\tpath = cll/src\n"
-                "\turl = https://github.com/int19h/cll\n"
-            )
-        },
+        changes={},
         gitlinks={"cll/src": first_id},
+        submodules={"cll/src": "https://github.com/int19h/cll"},
         trailers={"Edition": "1.0", "Renderer": "cll/1"},
     )
     commit_event(first, corpus)
@@ -112,11 +115,67 @@ def test_commit_event_writes_and_updates_a_gitlink(tmp_path: Path) -> None:
         author=Identity.tool(),
         changes={"cll/editions/1.1/01-about.txt": "rendered\n"},
         gitlinks={"cll/src": second_id},
+        submodules={"cll/src": "https://github.com/int19h/cll"},
         trailers={"Edition": "1.1", "Renderer": "cll/1"},
     )
     commit_event(second, corpus)
     assert git(corpus, "ls-tree", "HEAD", "cll/src") == (
         f"160000 commit {second_id}\tcll/src"
+    )
+
+
+def test_interleaved_gitlink_events_preserve_every_submodule_entry(
+    tmp_path: Path,
+) -> None:
+    corpus = unborn_worktree(tmp_path)
+    cll = base_event(
+        source="cll",
+        source_id="cll=one",
+        event="render",
+        summary="render one",
+        author=Identity.tool(),
+        changes={},
+        gitlinks={"cll/src": "1" * 40},
+        submodules={"cll/src": "https://example.invalid/cll"},
+    )
+    grammar = base_event(
+        source="grammars",
+        source_id="grammars/parser=" + "2" * 40,
+        event="created",
+        summary="pin parser",
+        author=Identity.tool(),
+        changes={},
+        gitlinks={"grammars/parser/src": "2" * 40},
+        submodules={"grammars/parser/src": "https://example.invalid/parser"},
+    )
+    commit_event(cll, corpus)
+    commit_event(grammar, corpus)
+    commit_event(
+        base_event(
+            source="cll",
+            source_id="cll=two",
+            event="render",
+            summary="render two",
+            author=Identity.tool(),
+            changes={},
+            gitlinks={"cll/src": "3" * 40},
+            submodules={"cll/src": "https://example.invalid/cll"},
+        ),
+        corpus,
+    )
+    assert (corpus / ".gitmodules").read_text() == (
+        '[submodule "cll/src"]\n'
+        "\tpath = cll/src\n"
+        "\turl = https://example.invalid/cll\n"
+        '[submodule "grammars/parser/src"]\n'
+        "\tpath = grammars/parser/src\n"
+        "\turl = https://example.invalid/parser\n"
+    )
+    assert git(corpus, "ls-tree", "HEAD", "cll/src").startswith(
+        "160000 commit " + "3" * 40
+    )
+    assert git(corpus, "ls-tree", "HEAD", "grammars/parser/src").startswith(
+        "160000 commit " + "2" * 40
     )
 
 

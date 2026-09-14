@@ -127,6 +127,13 @@ Dictionary status is per definition (scores, `status`), not a ratification.
   use the explicit `--:--:--` placeholder.
 - CLL: `1997-online-draft` is the pre-print draft; `1.0-errata-2014` is a
   reconstruction; editions are aligned by section number (`_meta/cll/alignment.csv`).
+- Grammars: the dated YACC/BNF generations under `grammars/official/` are the
+  official 1990, 1991 and 1997 baseline line. `camxes` is the later community
+  "standard" PEG lineage; `ilmentufa` preserves separate original and
+  post-2016 histories and carries standard, beta and experimental variants;
+  `gerna_cipra` carries zantufa/maftufa/maltufa; xorxes' `zasni gerna` is an
+  explicitly unofficial sibling. Consult `_meta/grammars/index.csv` before
+  treating parser output as the baseline language.
 - Dictionary: definition history is exact only from ~2024 (Lensisku's version
   table); earlier definitions have one state whose date is a window between
   the word's creation and the last edit (see the commit's `Event-Window:`).
