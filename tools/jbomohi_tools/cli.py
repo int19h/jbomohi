@@ -11,6 +11,7 @@ from .archive import (
     ArchiveError,
     fetch_changes,
     fetch_irc,
+    fetch_maildir_zip,
     ingest_dictionary_exports,
     ingest_tiki_export,
     verify_archive,
@@ -78,6 +79,15 @@ def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
             f"next_cursor={report.next_cursor or 'none'}"
         )
         return 0
+    if args.source == "mail":
+        if not args.list_name:
+            raise ArchiveError("archive fetch mail requires --list")
+        report = fetch_maildir_zip(config.archive, args.list_name)
+        print(
+            f"archive fetch mail: list={args.list_name} "
+            f"messages={report.inventory.messages} manifest={report.manifest}"
+        )
+        return 0
     return _not_implemented(f"archive fetch {args.source}")(args, config)
 
 
@@ -136,6 +146,7 @@ def parser() -> argparse.ArgumentParser:
     fetch.add_argument(
         "--since", help="source-specific timestamp or opaque continuation cursor"
     )
+    fetch.add_argument("--list", dest="list_name")
     ingest = archive_commands.add_parser("ingest")
     ingest_commands = ingest.add_subparsers(dest="ingest_source", required=True)
     dictionary = _leaf(ingest_commands, "dictionary", _archive_ingest_dictionary)

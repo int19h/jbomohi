@@ -89,6 +89,24 @@ def test_archive_fetch_dictionary_cli_wiring(
     assert "pages=2 changes=3 next_cursor=next" in capsys.readouterr().out
 
 
+def test_archive_fetch_mail_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:
+    config = SimpleNamespace(archive=tmp_path)
+    calls: list[tuple[Path, str]] = []
+
+    def fake_fetch(archive: Path, list_name: str):
+        calls.append((archive, list_name))
+        return SimpleNamespace(
+            inventory=SimpleNamespace(messages=7),
+            manifest=tmp_path / "manifest.toml",
+        )
+
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr("jbomohi_tools.cli.fetch_maildir_zip", fake_fetch)
+    assert main(["archive", "fetch", "mail", "--list", "lojban-list"]) == 0
+    assert calls == [(tmp_path, "lojban-list")]
+    assert "list=lojban-list messages=7" in capsys.readouterr().out
+
+
 def test_archive_ingest_dictionary_cli_wiring(
     monkeypatch, tmp_path: Path, capsys
 ) -> None:

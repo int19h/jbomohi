@@ -499,7 +499,12 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
     for relative, target, data in writes:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-        target.chmod(stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
+        mode = (
+            stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH
+            if re.fullmatch(r"mail/[^/]+/cur/[^/]+:2,S", relative)
+            else stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH
+        )
+        target.chmod(mode)
         paths.append(relative)
     for relative, target in deletions:
         if target.exists() or target.is_symlink():

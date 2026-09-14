@@ -196,6 +196,24 @@ def test_mail_name_normalisation_is_preserved_in_the_commit(tmp_path: Path) -> N
     assert git(corpus, "show", "-s", "--format=%an") == "%2EJohn %3Cjc%3E%25%2E"
 
 
+def test_maildir_cur_file_is_materialized_read_only_but_git_mode_is_portable(
+    tmp_path: Path,
+) -> None:
+    corpus = unborn_worktree(tmp_path)
+    path = "mail/lojban-list/cur/946684800.0123456789abcdef.jbomohi:2,S"
+    event = base_event(
+        source="mail/lojban-list",
+        source_id="message@example.org",
+        summary="message",
+        author=Identity.mail("sender@example.org", "Sender"),
+        changes={path: b"From: sender@example.org\r\n\r\nbody\r\n"},
+        trailers={"Message-Id": "message@example.org", "Thread": "thread"},
+    )
+    commit_event(event, corpus)
+    assert (corpus / path).stat().st_mode & 0o222 == 0
+    assert git(corpus, "ls-tree", "HEAD", path).split()[0] == "100644"
+
+
 def test_namespaced_git_name_and_email_escape_edge_dots() -> None:
     assert Identity.namespaced("mw.lojban.org", ".i.") == Identity(
         "%2Ei%2E", "%2Ei%2E@mw.lojban.org", "mw.lojban.org"
