@@ -12,6 +12,7 @@ from .archive import (
     fetch_changes,
     fetch_irc,
     ingest_dictionary_exports,
+    ingest_tiki_export,
     verify_archive,
     verify_manifests,
 )
@@ -92,6 +93,20 @@ def _archive_ingest_dictionary(args: argparse.Namespace, config: Config) -> int:
     return 0
 
 
+def _archive_ingest_tiki(args: argparse.Namespace, config: Config) -> int:
+    report = ingest_tiki_export(
+        config.archive,
+        Path(args.directory),
+        args.export_date,
+        character_encoding=args.character_encoding,
+    )
+    print(
+        f"archive ingest tiki: manifests={len(report.manifests)} "
+        f"pages={len(report.data.tables['tiki_pages'])} events={report.events}"
+    )
+    return 0
+
+
 def _leaf(
     subparsers: argparse._SubParsersAction[argparse.ArgumentParser],
     name: str,
@@ -126,6 +141,14 @@ def parser() -> argparse.ArgumentParser:
     dictionary = _leaf(ingest_commands, "dictionary", _archive_ingest_dictionary)
     dictionary.add_argument("directory")
     dictionary.add_argument("--export-date", required=True)
+    tiki = _leaf(ingest_commands, "tiki", _archive_ingest_tiki)
+    tiki.add_argument("directory")
+    tiki.add_argument("--export-date", required=True)
+    tiki.add_argument(
+        "--character-encoding",
+        choices=("latin1-transcoded", "utf8"),
+        default="latin1-transcoded",
+    )
     _leaf(archive_commands, "verify", _archive_verify)
 
     build = _leaf(commands, "build", _not_implemented("build"))
