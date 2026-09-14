@@ -151,6 +151,15 @@ def test_build_ignores_hostile_global_git_configuration(
     assert build_corpus(config, sources).head == expected
 
 
+def test_verify_accepts_an_event_with_no_changed_paths(tmp_path: Path) -> None:
+    config, _commit = tools_repo(tmp_path / "repo")
+    empty = replace(event("rev=1", 1, "unused"), changes={})
+    report = build_corpus(config, {"wiki": lambda: iter((empty,))})
+    verified = verify_corpus(config.corpus)
+    assert report.events == 1
+    assert verified.commits == 3
+
+
 def test_build_rejects_dirty_tools_before_replacing_main(tmp_path: Path) -> None:
     config, _commit = tools_repo(tmp_path / "repo")
     original = build_corpus(config, {}).head
