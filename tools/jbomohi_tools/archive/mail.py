@@ -62,7 +62,7 @@ MHONARC_LISTS = (
     "lojban_story",
     "pod",
 )
-MHONARC_GAP_LISTS = ("lojban-beginners",)
+MHONARC_GAP_LISTS = ("lojban-beginners", "lojban-list-old")
 _MHONARC_SUPPORTED = frozenset((*MHONARC_LISTS, *MHONARC_GAP_LISTS))
 _TRANSIENT_HTTP = {429, 500, 502, 503, 504}
 _MAX_ZIP_BYTES = 1024 * 1024 * 1024
@@ -583,6 +583,7 @@ def fetch_mhonarc(
     archive: Path,
     list_name: str,
     *,
+    start: int = 0,
     max_pages: int | None = None,
     client: PageClient | None = None,
     now: Callable[[], datetime] = lambda: datetime.now(UTC),
@@ -591,6 +592,8 @@ def fetch_mhonarc(
 
     if list_name not in _MHONARC_SUPPORTED:
         raise MailFetchError(f"unsupported MHonArc list: {list_name!r}")
+    if start < 0:
+        raise MailFetchError("MHonArc start must not be negative")
     if max_pages is not None and max_pages < 1:
         raise MailFetchError("max_pages must be positive")
     fetched_at = now()
@@ -601,7 +604,7 @@ def fetch_mhonarc(
     manifests: list[Path] = []
     downloaded = 0
     reused = 0
-    index = 0
+    index = start
     while max_pages is None or len(manifests) < max_pages:
         url = f"https://{MAIL_HOST}/lists/{list_name}/msg{index:05d}.html"
         existing_path = known.get(index)

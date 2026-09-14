@@ -95,7 +95,12 @@ def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
     if args.source == "mhonarc":
         if not args.list_name:
             raise ArchiveError("archive fetch mhonarc requires --list")
-        report = fetch_mhonarc(config.archive, args.list_name, max_pages=args.max_pages)
+        report = fetch_mhonarc(
+            config.archive,
+            args.list_name,
+            start=args.start,
+            max_pages=args.max_pages,
+        )
         print(
             f"archive fetch mhonarc: list={args.list_name} "
             f"downloaded={report.downloaded} reused={report.reused} "
@@ -184,6 +189,7 @@ def parser() -> argparse.ArgumentParser:
     )
     fetch.add_argument("--list", dest="list_name")
     fetch.add_argument("--max-pages", type=int)
+    fetch.add_argument("--start", type=int, default=0)
     ingest = archive_commands.add_parser("ingest")
     ingest_commands = ingest.add_subparsers(dest="ingest_source", required=True)
     dictionary = _leaf(ingest_commands, "dictionary", _archive_ingest_dictionary)

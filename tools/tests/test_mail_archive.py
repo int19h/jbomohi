@@ -169,6 +169,12 @@ def test_fetch_old_lojban_list_stops_and_loads_numbered_raw(tmp_path: Path) -> N
     assert (report.downloaded, report.reused, report.next_missing) == (1, 0, 2)
     [loaded] = list(load_old_lojban_manifestations(tmp_path))
     assert loaded.raw.read().startswith(b"From: Sender")
+    resumed = fetch_old_lojban_list(
+        tmp_path,
+        client=Client(),
+        now=lambda: datetime(2026, 9, 15, tzinfo=UTC),
+    )
+    assert (resumed.downloaded, resumed.reused, resumed.next_missing) == (0, 1, 2)
 
 
 def test_fetch_mail_mboxes_discovers_validates_and_loads_gzip(tmp_path: Path) -> None:
@@ -193,3 +199,19 @@ def test_fetch_mail_mboxes_discovers_validates_and_loads_gzip(tmp_path: Path) ->
     assert (report.downloaded, report.reused, report.messages) == (1, 0, 1)
     [loaded] = list(load_mbox_manifestations(tmp_path))
     assert b"Message-ID: <one@example.org>" in loaded.raw.read()
+    resumed = fetch_mail_mboxes(
+        tmp_path,
+        client=Client(),
+        now=lambda: datetime(2026, 9, 15, tzinfo=UTC),
+    )
+    assert (resumed.downloaded, resumed.reused, resumed.messages) == (0, 1, 1)
+
+    manifest_path = report.manifests[0]
+    text = manifest_path.read_text()
+    manifest_path.write_text(text.replace('"messages" = 1', '"messages" = 2'))
+    with pytest.raises(MailFetchError, match="message count disagrees"):
+        fetch_mail_mboxes(
+            tmp_path,
+            client=Client(),
+            now=lambda: datetime(2026, 9, 16, tzinfo=UTC),
+        )

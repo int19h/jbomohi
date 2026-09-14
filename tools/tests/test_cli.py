@@ -109,10 +109,16 @@ def test_archive_fetch_mail_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> N
 
 def test_archive_fetch_mhonarc_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:
     config = SimpleNamespace(archive=tmp_path)
-    calls: list[tuple[Path, str, int | None]] = []
+    calls: list[tuple[Path, str, int, int | None]] = []
 
-    def fake_fetch(archive: Path, list_name: str, *, max_pages: int | None):
-        calls.append((archive, list_name, max_pages))
+    def fake_fetch(
+        archive: Path,
+        list_name: str,
+        *,
+        start: int,
+        max_pages: int | None,
+    ):
+        calls.append((archive, list_name, start, max_pages))
         return SimpleNamespace(downloaded=2, reused=3, next_missing=5)
 
     monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
@@ -125,13 +131,15 @@ def test_archive_fetch_mhonarc_cli_wiring(monkeypatch, tmp_path: Path, capsys) -
                 "mhonarc",
                 "--list",
                 "announce",
+                "--start",
+                "7",
                 "--max-pages",
                 "5",
             ]
         )
         == 0
     )
-    assert calls == [(tmp_path, "announce", 5)]
+    assert calls == [(tmp_path, "announce", 7, 5)]
     assert "downloaded=2 reused=3 next_missing=5" in capsys.readouterr().out
 
 

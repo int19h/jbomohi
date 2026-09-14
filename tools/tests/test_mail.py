@@ -1,17 +1,23 @@
 from __future__ import annotations
 
 import zipfile
+from dataclasses import replace
 from datetime import UTC, datetime
 
 from jbomohi_tools.project.mail import (
     MailManifestation,
     RawMessage,
+    _Container,
+    _link,
+    _thread_key,
+    _thread_order,
     deduplicate,
     load_mbox,
     load_mh_zip,
     load_numbered_rfc822,
     normalize_message_id,
     normalize_subject,
+    parse_mail,
     project,
     reconstruct_mhonarc,
 )
@@ -138,6 +144,9 @@ def test_project_keeps_raw_maildir_and_builds_reference_thread() -> None:
     assert all(len(event.subject) <= 72 for event in events)
     assert "_meta/mail/lojban-list/messages.csv" in events[-1].changes
     assert "_meta/mail/lojban-list/coverage.toml" in events[-1].changes
+    coverage = events[-1].changes["_meta/mail/lojban-list/coverage.toml"]
+    assert "jbomohi archive fetch old-lojban-list" in coverage
+    assert "--list lojban-list-old --start 1" in coverage
     assert "mail/lojban-list/new/.keep" in events[0].changes
     assert "mail/lojban-list/tmp/.keep" in events[0].changes
 
@@ -167,6 +176,17 @@ three</pre><!--X-Body-of-Message-End-->
     assert b"References: <root@example.org>\r\n" in reconstructed
     assert b"X-Jbomohi-Manifestation: mhonarc\r\n" in reconstructed
     assert reconstructed.endswith(b"one & two\r\nthree\r\n")
+
+
+def test_reconstruct_mhonarc_r13_fallback_restores_at_sign() -> None:
+    page = b"""<!--X-Subject: Test -->
+<!--X-Date: Sat, 17 May 2003 15:37:00 &#45;0700 -->
+<!--X-Message-Id: test@example.org -->
+<!--X-From-R13: n.ebfgnNylpbf.pb.hx -->
+<!--X-Body-of-Message--><pre>body</pre><!--X-Body-of-Message-End-->
+"""
+    reconstructed = reconstruct_mhonarc(page)
+    assert b"From: a.rosta@lycos.co.uk\r\n" in reconstructed
 
 
 def test_numbered_raw_and_mbox_adapters_remove_transport_envelopes(
@@ -204,3 +224,150 @@ def test_mh_zip_adapter_loads_only_numeric_message_members(tmp_path) -> None:
     loaded = list(load_mh_zip(path))
     assert [item.archive_order for item in loaded] == [0, 1]
     assert b"<one@example.org>" in loaded[0].raw.read()
+
+
+def test_subject_fallback_only_joins_recent_orphans() -> None:
+    rows = (
+        manifestation(
+            message(
+                "a@example.org",
+                subject="Question",
+                date="Sat, 1 Jan 2000 00:00:00 +0000",
+            ),
+            order=0,
+        ),
+        manifestation(
+            message(
+                "b@example.org",
+                subject="Re: Question",
+                date="Sun, 30 Jan 2000 00:00:00 +0000",
+            ),
+            order=1,
+        ),
+        manifestation(
+            message(
+                "d@example.org",
+                subject="Question",
+                references="phantom@example.org",
+                date="Tue, 1 Feb 2000 00:00:00 +0000",
+            ),
+            order=2,
+        ),
+        manifestation(
+            message(
+                "c@example.org",
+                subject="Question",
+                date="Thu, 1 Jun 2000 00:00:00 +0000",
+            ),
+            order=3,
+        ),
+    )
+    parsed, _duplicates = deduplicate(rows)
+    roots, threads = _thread_order(parsed)
+    assert roots["a@example.org"] == roots["b@example.org"]
+    assert roots["d@example.org"] == "phantom@example.org"
+    assert roots["d@example.org"] != roots["a@example.org"]
+    assert roots["c@example.org"] not in {
+        roots["a@example.org"],
+        roots["d@example.org"],
+    }
+    assert sorted(map(len, threads.values())) == [1, 1, 2]
+
+
+def test_spam_headers_require_positive_prefix_not_rule_name() -> None:
+    clean = parse_mail(
+        manifestation(
+            message(
+                "clean@example.org",
+                extra=("X-Spam-Status: No, hits=1 tests=SPAM_PHRASE_00_01",),
+            ),
+            order=0,
+        )
+    )
+    spam = parse_mail(
+        manifestation(
+            message("spam@example.org", extra=("X-Spam-Status: Yes, score=9",)),
+            order=1,
+        )
+    )
+    assert not clean.spam_suspect
+    assert spam.spam_suspect
+
+
+def test_raw_8bit_from_and_subject_never_become_replacement_characters() -> None:
+    raw = (
+        b"From: Jos\xe9 Blanco <jose@example.org>\r\n"
+        b"Date: Sat, 1 Jan 2000 00:00:00 +0000\r\n"
+        b"Subject: Caf\xe9\r\n"
+        b"Message-ID: <eight@example.org>\r\n\r\nbody"
+    )
+    parsed = parse_mail(manifestation(raw, order=0))
+    assert parsed.from_name == "José Blanco"
+    assert parsed.subject == "Café"
+    assert parsed.raw_8bit_headers == 2
+    [event] = list(project((manifestation(raw, order=0),)))
+    assert "�" not in event.author.name
+    thread = next(value for path, value in event.changes.items() if "/threads/" in path)
+    assert "José Blanco" in thread
+    coverage = event.changes["_meta/mail/lojban-list/coverage.toml"]
+    assert "raw_8bit_headers = 2" in coverage
+
+
+def test_window_date_uses_nearest_archive_neighbors() -> None:
+    before = manifestation(
+        message("before@example.org", date="Sat, 1 Jan 2000 00:00:00 +0000"),
+        order=0,
+        source="files-mbox",
+    )
+    middle = manifestation(
+        b"From: Alice <alice@example.org>\r\nSubject: undated\r\n\r\nbody",
+        order=1,
+        source="files-mbox",
+    )
+    after = manifestation(
+        message("after@example.org", date="Mon, 3 Jan 2000 00:00:00 +0000"),
+        order=2,
+        source="files-mbox",
+    )
+    winners, _duplicates = deduplicate((before, middle, after))
+    undated = next(item for item in winners if not item.source_dated)
+    assert undated.timestamp == datetime(2000, 1, 1, tzinfo=UTC)
+    assert undated.event_window == "2000-01-01..2000-01-03"
+
+
+def test_undated_no_id_fallback_dedupes_across_archive_fetch_times() -> None:
+    raw = b"From: Alice <alice@example.org>\r\nSubject: same\r\n\r\nbody"
+    first = manifestation(raw, order=0, source="files-mbox")
+    second = replace(
+        manifestation(raw, order=0, source="old-lojban-list"),
+        archive_time=datetime(2027, 1, 1, tzinfo=UTC),
+    )
+    winners, duplicates = deduplicate((first, second))
+    assert len(winners) == 1
+    assert len(duplicates) == 1
+
+
+def test_reference_cycle_guard_refuses_the_cyclic_link() -> None:
+    parent = _Container("parent")
+    child = _Container("child")
+    assert _link(parent, child)
+    assert not _link(child, parent)
+    assert parent.parent is None
+
+
+def test_phantom_reference_is_thread_root_and_key_input() -> None:
+    parsed, _duplicates = deduplicate(
+        (
+            manifestation(
+                message(
+                    "child@example.org",
+                    references="phantom@example.org",
+                ),
+                order=0,
+            ),
+        )
+    )
+    roots, threads = _thread_order(parsed)
+    assert roots["child@example.org"] == "phantom@example.org"
+    assert list(threads) == ["phantom@example.org"]
+    assert _thread_key("phantom@example.org", "topic").startswith("6992fbabfb82-")

@@ -289,10 +289,17 @@ class Identity:
         Percent signs are escaped too, keeping this normalisation injective.
         """
 
-        email = _clean_text("mail address", address)
-        if "@" not in email or any(char.isspace() for char in email):
-            raise EventError("mail address must contain @ and no whitespace")
-        local_part = email.rsplit("@", 1)[0]
+        source_email = _clean_text("mail address", address)
+        if "@" not in source_email:
+            raise EventError("mail address must contain @")
+        email = source_email.replace("%", "%25")
+        email = "".join(
+            "".join(f"%{byte:02X}" for byte in character.encode("utf-8"))
+            if character.isspace()
+            else character
+            for character in email
+        )
+        local_part = source_email.rsplit("@", 1)[0]
         return cls(
             _git_safe_name(display_name or local_part, label="mail display name"),
             email,

@@ -199,6 +199,8 @@ def test_mail_name_normalisation_is_preserved_in_the_commit(tmp_path: Path) -> N
 def test_mail_name_edge_whitespace_is_encoded_injectively() -> None:
     assert Identity.mail("john@example.org", " John ").name == "%20John%20"
     assert Identity.mail("john@example.org", "%20John%20").name == "%2520John%2520"
+    assert Identity.mail('"Mike A"@example.org').email == '"Mike%20A"@example.org'
+    assert Identity.mail('"Mike%20A"@example.org').email == ('"Mike%2520A"@example.org')
 
 
 def test_maildir_cur_file_is_materialized_read_only_but_git_mode_is_portable(

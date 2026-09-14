@@ -12,10 +12,11 @@ import re
 import stat
 import unicodedata
 import zipfile
+from bisect import bisect_right
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, field, replace
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from email import policy
 from email.message import Message
 from email.parser import BytesHeaderParser, BytesParser
@@ -42,6 +43,27 @@ SOURCE_RANKS = {
     "files-mbox": 3,
     "mhonarc": 2,
     "files-zip": 1,
+}
+
+DEFAULT_ARCHIVE_GAPS: dict[str, dict[str, str]] = {
+    "lojban-list": {
+        "old_lojban_list": (
+            "not fully populated; resume: JBOMOHI_ARCHIVE=~/lojban/archive "
+            "uv run --isolated --python 3.13 jbomohi archive fetch old-lojban-list"
+        ),
+        "lojban_list_old": (
+            "selective gap source not populated; resume only after absent Message-IDs are known: "
+            "JBOMOHI_ARCHIVE=~/lojban/archive uv run --isolated --python 3.13 jbomohi "
+            "archive fetch mhonarc --list lojban-list-old --start 1"
+        ),
+    },
+    "lojban-beginners": {
+        "mhonarc_union": (
+            "not fully populated; resume: JBOMOHI_ARCHIVE=~/lojban/archive "
+            "uv run --isolated --python 3.13 jbomohi archive fetch mhonarc "
+            "--list lojban-beginners"
+        )
+    },
 }
 
 
@@ -93,7 +115,7 @@ class MailManifestation:
     archive_time: datetime
 
     def __post_init__(self) -> None:
-        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", self.list_name):
+        if not re.fullmatch(r"[a-z0-9][a-z0-9_-]*", self.list_name):
             raise MailParseError(f"unsafe mail list name: {self.list_name!r}")
         if self.archive_order < 0:
             raise MailParseError("mail archive order must not be negative")
@@ -127,10 +149,12 @@ class ParsedMail:
     timestamp: datetime
     time_confidence: str
     event_window: str | None
+    source_dated: bool
     references: tuple[str, ...]
     in_reply_to: str | None
     header_count: int
     spam_suspect: bool
+    raw_8bit_headers: int
     raw_sha1: str
     file: str = ""
     thread_key: str = ""
@@ -234,6 +258,11 @@ def _mhonarc_rendered_header(document: str, name: str) -> str:
     return " ".join(parser.text().split())
 
 
+def _mhonarc_from_r13(value: str) -> str:
+    decoded = codecs.decode(value, "rot_13")
+    return re.sub(r"([^\s<>]+)A([^\s<>]+)", r"\1@\2", decoded, count=1)
+
+
 def reconstruct_mhonarc(payload: bytes) -> bytes:
     """Reconstruct deterministic RFC 822 from one MHonArc message page."""
 
@@ -247,11 +276,9 @@ def reconstruct_mhonarc(payload: bytes) -> bytes:
     rendered_from = _mhonarc_rendered_header(document, "From")
     plain_from = _mhonarc_comment(document, "From")
     from_r13 = _mhonarc_comment(document, "From-R13")
-    from_value = (
-        rendered_from
-        or (plain_from[0] if plain_from else "")
-        or (codecs.decode(from_r13[0], "rot_13") if from_r13 else "")
-    )
+    from_value = rendered_from or (plain_from[0] if plain_from else "")
+    if not from_value and from_r13:
+        from_value = _mhonarc_from_r13(from_r13[0])
     message_id = message_ids[0] if message_ids else ""
     subject = subjects[0] if subjects else _mhonarc_rendered_header(document, "Subject")
     date_value = dates[0] if dates else _mhonarc_rendered_header(document, "Date")
@@ -317,9 +344,49 @@ def _decoded_header(message: Message, name: str) -> str:
     return "" if value is None else str(value)
 
 
+def _raw_header(raw: bytes, name: str) -> bytes | None:
+    header = (
+        raw.split(b"\r\n\r\n", 1)[0] if b"\r\n\r\n" in raw else raw.split(b"\n\n", 1)[0]
+    )
+    wanted = name.casefold().encode("ascii")
+    current_name: bytes | None = None
+    current_value = bytearray()
+    for line in header.replace(b"\r\n", b"\n").split(b"\n"):
+        if line.startswith((b" ", b"\t")) and current_name is not None:
+            current_value.extend(b" " + line.lstrip())
+            continue
+        if current_name == wanted:
+            return bytes(current_value)
+        field, separator, value = line.partition(b":")
+        if not separator:
+            current_name = None
+            current_value = bytearray()
+            continue
+        current_name = field.strip().lower()
+        current_value = bytearray(value.lstrip())
+    return bytes(current_value) if current_name == wanted else None
+
+
+def _decode_raw_header(value: bytes) -> str:
+    for encoding in ("utf-8", "cp1252", "iso-8859-1"):
+        try:
+            return value.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    raise AssertionError("ISO-8859-1 must decode every byte")
+
+
+def _preserved_header(raw: bytes, message: Message, name: str) -> tuple[str, bool]:
+    value = _raw_header(raw, name)
+    decoded = _decoded_header(message, name)
+    if value is not None and any(byte >= 128 for byte in value):
+        return _decode_raw_header(value), True
+    return decoded, False
+
+
 def _message_date(
     message: Message, manifestation: MailManifestation
-) -> tuple[datetime, str, str | None]:
+) -> tuple[datetime, str, str | None, bool]:
     date_value = _decoded_header(message, "Date")
     if date_value:
         try:
@@ -328,8 +395,13 @@ def _message_date(
             parsed = None
         if parsed is not None:
             if parsed.tzinfo is None:
-                return parsed.replace(tzinfo=UTC), "tz-unknown", None
-            return parsed.astimezone(UTC).replace(microsecond=0), "exact", None
+                return parsed.replace(tzinfo=UTC), "tz-unknown", None, True
+            return (
+                parsed.astimezone(UTC).replace(microsecond=0),
+                "exact",
+                None,
+                True,
+            )
     for received in message.get_all("Received", []):
         candidate = str(received).rsplit(";", 1)[-1].strip()
         try:
@@ -339,10 +411,15 @@ def _message_date(
         if parsed is not None:
             if parsed.tzinfo is None:
                 parsed = parsed.replace(tzinfo=UTC)
-            return parsed.astimezone(UTC).replace(microsecond=0), "tz-unknown", None
+            return (
+                parsed.astimezone(UTC).replace(microsecond=0),
+                "tz-unknown",
+                None,
+                True,
+            )
     timestamp = manifestation.archive_time.astimezone(UTC).replace(microsecond=0)
     day = timestamp.date().isoformat()
-    return timestamp, "window", f"{day}..{day}"
+    return timestamp, "window", f"{day}..{day}", False
 
 
 def _body_bytes(part: Message) -> bytes:
@@ -401,10 +478,10 @@ def parse_mail(manifestation: MailManifestation) -> ParsedMail:
     had_message_id = bool(normalized_id)
     if not normalized_id:
         normalized_id = f"{raw_sha1}@jbomohi.invalid"
-    subject = _decoded_header(message, "Subject")
+    subject, raw_subject = _preserved_header(raw, message, "Subject")
     if not subject.strip():
         subject = "[no subject]"
-    from_header = _decoded_header(message, "From")
+    from_header, raw_from = _preserved_header(raw, message, "From")
     if not from_header.strip():
         from_header = "unknown"
     from_name, from_address = parseaddr(from_header)
@@ -420,7 +497,9 @@ def parse_mail(manifestation: MailManifestation) -> ParsedMail:
     if not from_address or "@" not in from_address:
         from_address = f"unknown-{raw_sha1[:12]}@jbomohi.invalid"
         from_name = from_header
-    timestamp, confidence, event_window = _message_date(message, manifestation)
+    timestamp, confidence, event_window, source_dated = _message_date(
+        message, manifestation
+    )
     references = tuple(
         reference
         for header in message.get_all("References", [])
@@ -428,13 +507,13 @@ def parse_mail(manifestation: MailManifestation) -> ParsedMail:
     )
     in_reply_values = _references(_decoded_header(message, "In-Reply-To"))
     in_reply_to = in_reply_values[-1] if in_reply_values else None
-    spam_headers = " ".join(
-        _decoded_header(message, name)
-        for name in ("X-Spam-Flag", "X-Spam-Status", "X-Bogosity")
-    ).casefold()
     spam_suspect = (
-        "yes" in spam_headers
-        or "spam" in spam_headers
+        _decoded_header(message, "X-Spam-Flag").strip().casefold() == "yes"
+        or _decoded_header(message, "X-Spam-Status")
+        .lstrip()
+        .casefold()
+        .startswith("yes")
+        or _decoded_header(message, "X-Bogosity").lstrip().casefold().startswith("spam")
         or "*****spam*****" in subject.casefold()
     )
     return ParsedMail(
@@ -449,10 +528,12 @@ def parse_mail(manifestation: MailManifestation) -> ParsedMail:
         timestamp=timestamp,
         time_confidence=confidence,
         event_window=event_window,
+        source_dated=source_dated,
         references=references,
         in_reply_to=in_reply_to,
         header_count=sum(1 for _name, _value in message.raw_items()),
         spam_suspect=spam_suspect,
+        raw_8bit_headers=int(raw_subject) + int(raw_from),
         raw_sha1=raw_sha1,
     )
 
@@ -462,18 +543,77 @@ def _dedupe_key(message: ParsedMail) -> str:
         return "id:" + message.message_id
     body, _html = decoded_body(message.manifestation.raw.read())
     local_part = message.from_address.rsplit("@", 1)[0].casefold()
-    minute = message.timestamp.replace(second=0, microsecond=0).isoformat()
+    minute = (
+        message.timestamp.replace(second=0, microsecond=0).isoformat()
+        if message.source_dated
+        else ""
+    )
     material = "\0".join((message.normalized_subject, local_part, minute, body[:200]))
     return "fallback:" + hashlib.sha256(material.encode("utf-8")).hexdigest()
+
+
+def _assign_window_dates(messages: Sequence[ParsedMail]) -> list[ParsedMail]:
+    groups: dict[tuple[str, str], list[tuple[int, ParsedMail]]] = defaultdict(list)
+    for index, message in enumerate(messages):
+        key = (
+            message.manifestation.list_name,
+            message.manifestation.manifestation,
+        )
+        groups[key].append((index, message))
+    result = list(messages)
+    for items in groups.values():
+        ordered = sorted(
+            items,
+            key=lambda item: (
+                item[1].manifestation.archive_order,
+                item[1].manifestation.provenance,
+            ),
+        )
+        previous: list[datetime | None] = []
+        latest: datetime | None = None
+        for _index, message in ordered:
+            previous.append(latest)
+            if message.source_dated:
+                latest = message.timestamp
+        following: list[datetime | None] = [None] * len(ordered)
+        nearest: datetime | None = None
+        for position in range(len(ordered) - 1, -1, -1):
+            following[position] = nearest
+            if ordered[position][1].source_dated:
+                nearest = ordered[position][1].timestamp
+        for position, (original_index, message) in enumerate(ordered):
+            if message.source_dated:
+                continue
+            before = previous[position]
+            after = following[position]
+            if before is not None or after is not None:
+                timestamp = before or after
+                assert timestamp is not None
+                first = (before or timestamp).date()
+                last = (after or timestamp).date()
+                start, end = sorted((first, last))
+                event_window = f"{start.isoformat()}..{end.isoformat()}"
+            else:
+                timestamp = message.manifestation.archive_time.astimezone(UTC)
+                day = timestamp.date().isoformat()
+                event_window = f"{day}..{day}"
+            result[original_index] = replace(
+                message,
+                timestamp=timestamp.replace(microsecond=0),
+                event_window=event_window,
+            )
+    return result
 
 
 def deduplicate(
     manifestations: Iterable[MailManifestation],
 ) -> tuple[list[ParsedMail], list[DuplicateMail]]:
+    parsed_messages = _assign_window_dates(
+        [parse_mail(manifestation) for manifestation in manifestations]
+    )
     groups: dict[tuple[str, str], list[ParsedMail]] = defaultdict(list)
     keys: dict[tuple[str, str], str] = {}
-    for manifestation in manifestations:
-        parsed = parse_mail(manifestation)
+    for parsed in parsed_messages:
         key = _dedupe_key(parsed)
         scoped_key = (parsed.manifestation.list_name, key)
         groups[scoped_key].append(parsed)
@@ -688,17 +828,18 @@ def load_mh_zip(
         raise MailParseError(f"cannot load MH zip {path}: {exc}") from exc
 
 
-def _link(parent: _Container, child: _Container) -> None:
+def _link(parent: _Container, child: _Container) -> bool:
     ancestor: _Container | None = parent
     while ancestor is not None:
         if ancestor is child:
-            return
+            return False
         ancestor = ancestor.parent
     if child.parent is not None:
         child.parent.children.remove(child)
     child.parent = parent
     if child not in parent.children:
         parent.children.append(child)
+    return True
 
 
 def _walk_thread(
@@ -754,30 +895,75 @@ def _thread_order(
             else None
         )
 
-    subject_roots: dict[tuple[str, str], _Container] = {}
-    canonical_root: dict[str, _Container] = {}
-    for root in sorted(roots, key=lambda item: item.identifier):
-        first = first_message(root)
-        if first is None:
-            continue
-        key = (first.manifestation.list_name, first.normalized_subject)
-        if first.normalized_subject and key in subject_roots:
-            canonical_root[root.identifier] = subject_roots[key]
-        else:
-            subject_roots[key] = root
-            canonical_root[root.identifier] = root
-
-    message_roots: dict[str, str] = {}
-    grouped: dict[str, list[ParsedMail]] = defaultdict(list)
+    node_root: dict[str, str] = {}
+    base_grouped: dict[str, list[ParsedMail]] = defaultdict(list)
     for node in containers.values():
         if node.message is None:
             continue
         root = node
         while root.parent is not None:
             root = root.parent
-        root = canonical_root.get(root.identifier, root)
-        message_roots[node.message.message_id] = root.identifier
-        grouped[root.identifier].append(node.message)
+        node_root[node.message.message_id] = root.identifier
+        base_grouped[root.identifier].append(node.message)
+
+    roots_by_subject: dict[tuple[str, str], list[str]] = defaultdict(list)
+    root_times: dict[str, list[datetime]] = {}
+    for root in roots:
+        first = first_message(root)
+        if first is None:
+            continue
+        key = (first.manifestation.list_name, first.normalized_subject)
+        roots_by_subject[key].append(root.identifier)
+        root_times[root.identifier] = sorted(
+            message.timestamp for message in base_grouped[root.identifier]
+        )
+
+    canonical_root = {root.identifier: root.identifier for root in roots}
+
+    def canonical(identifier: str) -> str:
+        trail: list[str] = []
+        while canonical_root[identifier] != identifier:
+            trail.append(identifier)
+            identifier = canonical_root[identifier]
+        for item in trail:
+            canonical_root[item] = identifier
+        return identifier
+
+    orphans = sorted(
+        (
+            message
+            for message in messages
+            if not message.references and message.in_reply_to is None
+        ),
+        key=lambda item: (item.timestamp, item.message_id),
+    )
+    for orphan in orphans:
+        if not orphan.normalized_subject:
+            continue
+        own_root = node_root[orphan.message_id]
+        candidates: list[tuple[datetime, str]] = []
+        key = (orphan.manifestation.list_name, orphan.normalized_subject)
+        for other_root in roots_by_subject.get(key, ()):
+            if other_root == own_root:
+                continue
+            times = root_times[other_root]
+            position = bisect_right(times, orphan.timestamp) - 1
+            if position < 0:
+                continue
+            latest = times[position]
+            if orphan.timestamp - latest <= timedelta(days=90):
+                candidates.append((latest, canonical(other_root)))
+        if candidates:
+            _latest, target = max(candidates, key=lambda item: (item[0], item[1]))
+            if canonical(own_root) != target:
+                canonical_root[own_root] = target
+
+    message_roots: dict[str, str] = {}
+    grouped: dict[str, list[ParsedMail]] = defaultdict(list)
+    for message in messages:
+        root_id = canonical(node_root[message.message_id])
+        message_roots[message.message_id] = root_id
+        grouped[root_id].append(message)
 
     ordered: dict[str, list[ParsedMail]] = {}
     for root_id, items in grouped.items():
@@ -869,10 +1055,14 @@ def _summary(subject: str, list_name: str) -> str:
 
 
 def project(
-    manifestations: Iterable[MailManifestation], *, renderer: str = "mail-v1"
+    manifestations: Iterable[MailManifestation],
+    *,
+    renderer: str = "mail-v1",
+    archive_gaps: Mapping[str, Mapping[str, str]] | None = None,
 ) -> Iterator[Event]:
     """Deduplicate mail, build threads, and emit one event per unique message."""
 
+    gaps_by_list = DEFAULT_ARCHIVE_GAPS if archive_gaps is None else archive_gaps
     winners, duplicates = deduplicate(manifestations)
     by_list: dict[str, list[ParsedMail]] = defaultdict(list)
     for message in winners:
@@ -1076,6 +1266,7 @@ def project(
             f"unique_messages = {len(list_messages)}",
             f"duplicates = {len(list_duplicates)}",
             f"missing_message_id = {sum(not item.had_message_id for item in list_messages)}",
+            f"raw_8bit_headers = {sum(item.raw_8bit_headers for item in list_messages)}",
             f"spam_suspect = {sum(item.spam_suspect for item in list_messages)}",
             'jbovlaste_admin = "excluded; machine-generated source available separately"',
             "",
@@ -1092,6 +1283,18 @@ def project(
             ),
             "",
         ]
+        gaps = gaps_by_list.get(list_name, {})
+        if gaps:
+            coverage.extend(
+                [
+                    "[archive_gaps]",
+                    *(
+                        f"{json.dumps(name)} = {json.dumps(value)}"
+                        for name, value in sorted(gaps.items())
+                    ),
+                    "",
+                ]
+            )
         final_changes[f"_meta/mail/{list_name}/coverage.toml"] = "\n".join(coverage)
     final_event = replace(pending_event, changes=final_changes)
     final_event.validate()
