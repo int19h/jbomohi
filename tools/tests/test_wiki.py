@@ -7,10 +7,12 @@ from datetime import UTC, datetime
 import pytest
 from jbomohi_tools.git import Identity
 from jbomohi_tools.project.wiki import (
+    WikiLogEvent,
     WikiPageFragment,
     WikiParseError,
     WikiRevision,
     merge_fragments,
+    parse_log_response,
     parse_revision_response,
     project,
     slug,
@@ -196,7 +198,8 @@ def test_project_emits_revisions_anonymizes_ips_and_writes_final_indexes() -> No
     assert revisions.count(",anonymous,") == 2
     gaps = events[1].changes["_meta/wiki/gaps.csv"]
     assert isinstance(gaps, str)
-    assert "11,527,text suppressed; user suppressed; comment suppressed" in gaps
+    assert "11,,527,BPFK Section: gadri,2014-01-02T00:00:00Z," in gaps
+    assert "text suppressed; user suppressed; comment suppressed" in gaps
     assert all(len(event.subject) <= 72 for event in events)
 
 
@@ -209,3 +212,137 @@ def test_api_error_and_malformed_revision_fail_closed() -> None:
         parse_revision_response(
             response({"pageid": 1, "ns": 0, "title": "Page", "revisions": [bad]})
         )
+
+
+def test_move_precedes_same_timestamp_redirect_revision() -> None:
+    page = WikiPageFragment(
+        1,
+        0,
+        "New",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    redirect = WikiPageFragment(
+        2,
+        0,
+        "Old",
+        True,
+        (
+            WikiRevision(
+                2,
+                0,
+                datetime(2014, 1, 2, tzinfo=UTC),
+                "Gleki",
+                "redirect",
+                17,
+                "b" * 40,
+                "#REDIRECT [[New]]",
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        1,
+        0,
+        "Old",
+        datetime(2014, 1, 2, tzinfo=UTC),
+        "Gleki",
+        "rename",
+        0,
+        "New",
+        False,
+    )
+    events = list(project([page, redirect], [move]))
+    assert [event.source_id for event in events] == [
+        "revid=1",
+        "logid=5",
+        "revid=2",
+    ]
+    assert events[1].event == "moved"
+    assert events[1].deletions == ("wiki/main/Old.wiki",)
+    assert events[1].changes == {"wiki/main/New.wiki": b"body"}
+    assert events[1].trailers["Moved-From"] == "wiki/main/Old.wiki"
+    assert events[2].changes["wiki/main/Old.wiki"] == b"#REDIRECT [[New]]"
+
+
+def test_preacquisition_delete_is_a_gap_not_an_event() -> None:
+    [page] = parse_revision_response(
+        response(
+            {
+                "pageid": 1,
+                "ns": 0,
+                "title": "Held",
+                "revisions": [revision(1, content="held")],
+            }
+        )
+    )
+    deletion = WikiLogEvent(
+        9,
+        "delete",
+        0,
+        0,
+        "Gone",
+        datetime(2013, 1, 1, tzinfo=UTC),
+        "Gleki",
+        "delete inaccessible page",
+    )
+    events = list(project([page], [deletion]))
+    assert [event.source_id for event in events] == ["revid=1"]
+    gaps = events[-1].changes["_meta/wiki/gaps.csv"]
+    assert isinstance(gaps, str)
+    assert "9,0,Gone,2013-01-01T00:00:00Z,deleted; history not API-accessible" in gaps
+
+
+def test_parse_log_response_keeps_stable_move_and_delete_ids() -> None:
+    payload = json.dumps(
+        {
+            "query": {
+                "logevents": [
+                    {
+                        "logid": 5,
+                        "ns": 0,
+                        "title": "Old",
+                        "pageid": 1,
+                        "params": {
+                            "target_ns": 0,
+                            "target_title": "New",
+                            "suppressredirect": False,
+                        },
+                        "type": "move",
+                        "action": "move",
+                        "user": "Gleki",
+                        "timestamp": "2014-01-02T00:00:00Z",
+                        "comment": "rename",
+                    },
+                    {
+                        "logid": 9,
+                        "ns": 0,
+                        "title": "Gone",
+                        "pageid": 0,
+                        "params": {},
+                        "type": "delete",
+                        "action": "delete",
+                        "user": "Gleki",
+                        "timestamp": "2013-01-01T00:00:00Z",
+                        "comment": "",
+                    },
+                ]
+            }
+        }
+    ).encode()
+    events = parse_log_response(payload)
+    assert [event.logid for event in events] == [5, 9]
+    assert events[0].target_title == "New"
+    assert events[1].log_type == "delete"

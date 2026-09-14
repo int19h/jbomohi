@@ -11,9 +11,12 @@ import re
 import unicodedata
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
+from pathlib import Path
+from urllib.parse import urlsplit
 
+from ..archive.manifest import ArchiveManifest, object_path
 from ..git import Event, Identity
 
 
@@ -68,7 +71,7 @@ REVISION_COLUMNS = (
     "sha1",
     "comment",
 )
-GAP_COLUMNS = ("revid", "pageid", "reason")
+GAP_COLUMNS = ("revid", "logid", "pageid", "title", "timestamp", "reason")
 
 
 @dataclass(frozen=True, slots=True)
@@ -106,6 +109,21 @@ class WikiPage:
     @property
     def path(self) -> str:
         return wiki_path(self.namespace, self.title)
+
+
+@dataclass(frozen=True, slots=True)
+class WikiLogEvent:
+    logid: int
+    log_type: str
+    pageid: int
+    namespace: int
+    title: str
+    timestamp: datetime
+    user: str | None
+    comment: str
+    target_namespace: int | None = None
+    target_title: str | None = None
+    suppress_redirect: bool = False
 
 
 def slug(title: str) -> str:
@@ -278,6 +296,165 @@ def parse_revision_response(payload: bytes) -> list[WikiPageFragment]:
     return fragments
 
 
+def parse_log_response(payload: bytes) -> list[WikiLogEvent]:
+    """Parse move/delete entries from one formatversion=2 logevents response."""
+
+    try:
+        document = json.loads(payload)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise WikiParseError(f"invalid MediaWiki log JSON: {exc}") from exc
+    if not isinstance(document, dict):
+        raise WikiParseError("MediaWiki log response must be an object")
+    if "error" in document:
+        raise WikiParseError(f"MediaWiki API error: {document['error']!r}")
+    query = document.get("query")
+    entries = query.get("logevents") if isinstance(query, dict) else None
+    if not isinstance(entries, list):
+        raise WikiParseError("MediaWiki response has no query.logevents list")
+    events: list[WikiLogEvent] = []
+    for raw in entries:
+        if not isinstance(raw, dict):
+            raise WikiParseError("MediaWiki log event must be an object")
+        log_type = raw.get("type")
+        action = raw.get("action")
+        if (log_type, action) not in {("move", "move"), ("delete", "delete")}:
+            continue
+        logid = _integer(raw.get("logid"), "logid", minimum=1)
+        namespace = _integer(raw.get("ns"), "log namespace")
+        pageid = _integer(raw.get("pageid", 0), "log pageid")
+        title = raw.get("title")
+        if not isinstance(title, str) or not title:
+            raise WikiParseError(f"log event {logid}: title must be non-empty text")
+        user_value = raw.get("user")
+        user = None if raw.get("userhidden") else user_value
+        if user is not None and (not isinstance(user, str) or not user):
+            raise WikiParseError(f"log event {logid}: invalid user")
+        comment = "" if raw.get("commenthidden") else raw.get("comment", "")
+        if not isinstance(comment, str):
+            raise WikiParseError(f"log event {logid}: invalid comment")
+        params = raw.get("params", {})
+        if not isinstance(params, dict):
+            raise WikiParseError(f"log event {logid}: params must be an object")
+        target_namespace = None
+        target_title = None
+        suppress_redirect = False
+        if log_type == "move":
+            target_namespace = _integer(
+                params.get("target_ns"), "move target namespace"
+            )
+            target_title_value = params.get("target_title")
+            if not isinstance(target_title_value, str) or not target_title_value:
+                raise WikiParseError(f"log event {logid}: move target is missing")
+            target_title = target_title_value
+            suppress_redirect = bool(params.get("suppressredirect"))
+        events.append(
+            WikiLogEvent(
+                logid=logid,
+                log_type=log_type,
+                pageid=pageid,
+                namespace=namespace,
+                title=title,
+                timestamp=_timestamp(raw.get("timestamp")),
+                user=user,
+                comment=comment,
+                target_namespace=target_namespace,
+                target_title=target_title,
+                suppress_redirect=suppress_redirect,
+            )
+        )
+    return events
+
+
+def load_archive(archive: Path) -> list[WikiPageFragment]:
+    """Load and verify the newest archived response for each revision query."""
+
+    root = archive / "manifests" / "wiki" / "revisions"
+    if not root.exists():
+        return []
+    selected: dict[str, ArchiveManifest] = {}
+    for path in sorted(root.glob("*.toml")):
+        if path.is_symlink():
+            raise WikiParseError(f"wiki manifest must not be a symlink: {path}")
+        manifest = ArchiveManifest.load(path)
+        previous = selected.get(manifest.origin)
+        if previous is None or (manifest.fetched_at, manifest.sha256) > (
+            previous.fetched_at,
+            previous.sha256,
+        ):
+            selected[manifest.origin] = manifest
+    fragments: list[WikiPageFragment] = []
+    for origin, manifest in sorted(selected.items()):
+        parsed = urlsplit(origin)
+        if (
+            parsed.scheme != "https"
+            or parsed.hostname != "mw.lojban.org"
+            or parsed.path != "/api.php"
+        ):
+            raise WikiParseError(f"wiki manifest has invalid origin: {origin!r}")
+        obj = object_path(archive, manifest.sha256)
+        if obj.is_symlink():
+            raise WikiParseError(f"wiki archive object must not be a symlink: {obj}")
+        try:
+            payload = obj.read_bytes()
+        except OSError as exc:
+            raise WikiParseError(f"wiki archive object is unreadable: {obj}") from exc
+        if (
+            len(payload) != manifest.bytes
+            or hashlib.sha256(payload).hexdigest() != manifest.sha256
+        ):
+            raise WikiParseError(f"wiki archive object does not match manifest: {obj}")
+        fragments.extend(parse_revision_response(payload))
+    return fragments
+
+
+def load_log_archive(archive: Path) -> list[WikiLogEvent]:
+    """Load, verify, and deduplicate archived move/delete log batches."""
+
+    root = archive / "manifests" / "wiki" / "logevents"
+    if not root.exists():
+        return []
+    selected: dict[str, ArchiveManifest] = {}
+    for path in sorted(root.glob("*.toml")):
+        if path.is_symlink():
+            raise WikiParseError(f"wiki log manifest must not be a symlink: {path}")
+        manifest = ArchiveManifest.load(path)
+        previous = selected.get(manifest.origin)
+        if previous is None or (manifest.fetched_at, manifest.sha256) > (
+            previous.fetched_at,
+            previous.sha256,
+        ):
+            selected[manifest.origin] = manifest
+    events: dict[int, WikiLogEvent] = {}
+    for origin, manifest in sorted(selected.items()):
+        parsed = urlsplit(origin)
+        if (
+            parsed.scheme != "https"
+            or parsed.hostname != "mw.lojban.org"
+            or parsed.path != "/api.php"
+        ):
+            raise WikiParseError(f"wiki log manifest has invalid origin: {origin!r}")
+        obj = object_path(archive, manifest.sha256)
+        if obj.is_symlink():
+            raise WikiParseError(f"wiki log object must not be a symlink: {obj}")
+        try:
+            payload = obj.read_bytes()
+        except OSError as exc:
+            raise WikiParseError(
+                f"wiki log archive object is unreadable: {obj}"
+            ) from exc
+        if (
+            len(payload) != manifest.bytes
+            or hashlib.sha256(payload).hexdigest() != manifest.sha256
+        ):
+            raise WikiParseError(f"wiki log object does not match manifest: {obj}")
+        for event in parse_log_response(payload):
+            previous = events.get(event.logid)
+            if previous is not None and previous != event:
+                raise WikiParseError(f"log event {event.logid}: inconsistent duplicate")
+            events[event.logid] = event
+    return [events[logid] for logid in sorted(events)]
+
+
 def merge_fragments(fragments: Iterable[WikiPageFragment]) -> list[WikiPage]:
     grouped: dict[int, list[WikiPageFragment]] = defaultdict(list)
     for fragment in fragments:
@@ -325,6 +502,18 @@ def _summary(title: str, revid: int, comment: str) -> str:
     return f"{shown_title}{suffix}{comment_suffix}"
 
 
+def _log_summary(title: str, logid: int, comment: str) -> str:
+    cleaned_comment = " ".join(comment.split())[:40]
+    suffix = f" (log {logid})"
+    comment_suffix = f" {cleaned_comment}" if cleaned_comment else ""
+    budget = 72 - len("wiki: ") - len(suffix) - len(comment_suffix)
+    if budget < 1:
+        comment_suffix = ""
+        budget = 72 - len("wiki: ") - len(suffix)
+    shown_title = title if len(title) <= budget else title[: max(1, budget - 1)] + "…"
+    return f"{shown_title}{suffix}{comment_suffix}"
+
+
 def _csv(columns: Sequence[str], rows: Iterable[dict[str, object]]) -> str:
     stream = io.StringIO(newline="")
     writer = csv.DictWriter(stream, fieldnames=columns, lineterminator="\n")
@@ -333,12 +522,30 @@ def _csv(columns: Sequence[str], rows: Iterable[dict[str, object]]) -> str:
     return stream.getvalue()
 
 
-def project(fragments: Iterable[WikiPageFragment]) -> Iterator[Event]:
-    """Project API- or dump-derived page fragments into identical events."""
+def project(
+    fragments: Iterable[WikiPageFragment],
+    logs: Iterable[WikiLogEvent] = (),
+) -> Iterator[Event]:
+    """Project API- or dump-derived revisions and log events identically."""
 
     pages = merge_fragments(fragments)
+    page_by_id = {page.pageid: page for page in pages}
+    log_events = sorted(logs, key=lambda item: (item.timestamp, item.logid))
+    moves: dict[int, list[WikiLogEvent]] = defaultdict(list)
+    for log in log_events:
+        if log.log_type == "move" and log.pageid in page_by_id:
+            moves[log.pageid].append(log)
+    state_path: dict[int, str] = {}
+    state_content: dict[int, bytes | None] = {}
+    held_by_path: dict[str, int] = {}
+    for page in pages:
+        initial_title = (
+            moves[page.pageid][0].title if moves[page.pageid] else page.title
+        )
+        state_path[page.pageid] = wiki_path(page.namespace, initial_title)
+        state_content[page.pageid] = None
+
     revision_pages = [(revision, page) for page in pages for revision in page.revisions]
-    revision_pages.sort(key=lambda item: (item[0].timestamp, item[0].revid))
     page_rows = [
         {
             "pageid": page.pageid,
@@ -381,38 +588,157 @@ def project(fragments: Iterable[WikiPageFragment]) -> Iterator[Event]:
             gap_rows.append(
                 {
                     "revid": revision.revid,
+                    "logid": "",
                     "pageid": page.pageid,
+                    "title": page.title,
+                    "timestamp": revision.timestamp.isoformat().replace("+00:00", "Z"),
                     "reason": "; ".join(reasons),
                 }
             )
 
-    last_index = len(revision_pages) - 1
-    for index, (revision, page) in enumerate(revision_pages):
-        anonymous = _anonymous(revision.user) or revision.user_hidden
+    timeline = [
+        (revision.timestamp, 1, revision.revid, "revision", revision, page)
+        for revision, page in revision_pages
+    ]
+    timeline.extend(
+        (log.timestamp, 0, log.logid, "log", log, None) for log in log_events
+    )
+    timeline.sort(key=lambda item: (item[0], item[1], item[2]))
+    events: list[Event] = []
+    for _timestamp_value, _kind_order, _stable_id, kind, item, page in timeline:
+        if kind == "revision":
+            assert isinstance(item, WikiRevision) and isinstance(page, WikiPage)
+            anonymous = _anonymous(item.user) or item.user_hidden
+            author = (
+                Identity.anonymous("mw.lojban.org")
+                if anonymous
+                else Identity.namespaced("mw.lojban.org", item.user or "")
+            )
+            path = state_path[page.pageid]
+            changes: dict[str, str | bytes] = {}
+            if item.content is not None:
+                content = item.content.encode("utf-8")
+                other_page = held_by_path.get(path)
+                if other_page is not None and other_page != page.pageid:
+                    raise WikiParseError(
+                        f"revision {item.revid}: path already held by page {other_page}: {path}"
+                    )
+                changes[path] = content
+                state_content[page.pageid] = content
+                held_by_path[path] = page.pageid
+            events.append(
+                Event(
+                    source="wiki",
+                    source_id=f"revid={item.revid}",
+                    event="created" if item.parentid == 0 else "edited",
+                    time_confidence="exact",
+                    source_time=item.timestamp,
+                    summary=_summary(page.title, item.revid, item.comment),
+                    author=author,
+                    changes=changes,
+                    trailers={
+                        "Page-Id": str(page.pageid),
+                        "Parent-Rev": str(item.parentid),
+                    },
+                )
+            )
+            continue
+
+        assert isinstance(item, WikiLogEvent)
+        old_path = wiki_path(item.namespace, item.title)
+        resolved_pageid = item.pageid if item.pageid in state_path else None
+        if resolved_pageid is None:
+            resolved_pageid = held_by_path.get(old_path)
+        if item.log_type == "move":
+            assert item.target_namespace is not None and item.target_title is not None
+            target_path = wiki_path(item.target_namespace, item.target_title)
+            if resolved_pageid is None:
+                gap_rows.append(
+                    {
+                        "revid": "",
+                        "logid": item.logid,
+                        "pageid": item.pageid,
+                        "title": item.title,
+                        "timestamp": item.timestamp.isoformat().replace("+00:00", "Z"),
+                        "reason": "move; history not API-accessible",
+                    }
+                )
+                continue
+            content = state_content[resolved_pageid]
+            state_path[resolved_pageid] = target_path
+            if content is None or held_by_path.get(old_path) != resolved_pageid:
+                continue
+            held_by_path.pop(old_path)
+            held_by_path[target_path] = resolved_pageid
+            author = (
+                Identity.anonymous("mw.lojban.org")
+                if _anonymous(item.user)
+                else Identity.namespaced("mw.lojban.org", item.user or "")
+            )
+            events.append(
+                Event(
+                    source="wiki",
+                    source_id=f"logid={item.logid}",
+                    event="moved",
+                    time_confidence="exact",
+                    source_time=item.timestamp,
+                    summary=_log_summary(item.title, item.logid, item.comment),
+                    author=author,
+                    changes={target_path: content},
+                    deletions=(old_path,),
+                    trailers={
+                        "Log-Type": "move",
+                        "Moved-From": old_path,
+                        "Page-Id": str(resolved_pageid),
+                    },
+                )
+            )
+            continue
+
+        if resolved_pageid is None or held_by_path.get(old_path) != resolved_pageid:
+            gap_rows.append(
+                {
+                    "revid": "",
+                    "logid": item.logid,
+                    "pageid": item.pageid,
+                    "title": item.title,
+                    "timestamp": item.timestamp.isoformat().replace("+00:00", "Z"),
+                    "reason": "deleted; history not API-accessible",
+                }
+            )
+            continue
+        held_by_path.pop(old_path)
+        state_content[resolved_pageid] = None
         author = (
             Identity.anonymous("mw.lojban.org")
-            if anonymous
-            else Identity.namespaced("mw.lojban.org", revision.user or "")
+            if _anonymous(item.user)
+            else Identity.namespaced("mw.lojban.org", item.user or "")
         )
-        changes: dict[str, str | bytes] = {}
-        if revision.content is not None:
-            changes[page.path] = revision.content.encode("utf-8")
-        if index == last_index:
-            changes["_meta/wiki/pages.csv"] = _csv(PAGE_COLUMNS, page_rows)
-            changes["_meta/wiki/revisions.csv"] = _csv(REVISION_COLUMNS, revision_rows)
-            if gap_rows:
-                changes["_meta/wiki/gaps.csv"] = _csv(GAP_COLUMNS, gap_rows)
-        yield Event(
-            source="wiki",
-            source_id=f"revid={revision.revid}",
-            event="created" if revision.parentid == 0 else "edited",
-            time_confidence="exact",
-            source_time=revision.timestamp,
-            summary=_summary(page.title, revision.revid, revision.comment),
-            author=author,
-            changes=changes,
-            trailers={
-                "Page-Id": str(page.pageid),
-                "Parent-Rev": str(revision.parentid),
-            },
+        events.append(
+            Event(
+                source="wiki",
+                source_id=f"logid={item.logid}",
+                event="deleted",
+                time_confidence="exact",
+                source_time=item.timestamp,
+                summary=_log_summary(item.title, item.logid, item.comment),
+                author=author,
+                changes={},
+                deletions=(old_path,),
+                trailers={
+                    "Log-Type": "delete",
+                    "Page-Id": str(resolved_pageid),
+                },
+            )
         )
+
+    if events:
+        final_changes = dict(events[-1].changes)
+        final_changes["_meta/wiki/pages.csv"] = _csv(PAGE_COLUMNS, page_rows)
+        final_changes["_meta/wiki/revisions.csv"] = _csv(
+            REVISION_COLUMNS, revision_rows
+        )
+        if gap_rows:
+            final_changes["_meta/wiki/gaps.csv"] = _csv(GAP_COLUMNS, gap_rows)
+        events[-1] = replace(events[-1], changes=final_changes)
+    yield from events

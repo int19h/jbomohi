@@ -46,6 +46,9 @@ from .manifest import (
     verify_manifests,
 )
 from .tiki import TikiIngestReport, ingest_tiki_export
+from .wiki import FetchReport as WikiFetchReport
+from .wiki import WikiFetchError
+from .wiki import fetch as fetch_wiki
 
 __all__ = [
     "MAILDIR_LISTS",
@@ -69,6 +72,8 @@ __all__ = [
     "MhonarcFetchReport",
     "NumberedFetchReport",
     "TikiIngestReport",
+    "WikiFetchError",
+    "WikiFetchReport",
     "extract_maildir_zip",
     "fetch_changes",
     "fetch_cll",
@@ -78,6 +83,7 @@ __all__ = [
     "fetch_maildir_zip",
     "fetch_mhonarc",
     "fetch_old_lojban_list",
+    "fetch_wiki",
     "ingest_dictionary_exports",
     "ingest_tiki_export",
     "inspect_maildir_zip",

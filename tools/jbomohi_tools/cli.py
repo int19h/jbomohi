@@ -17,6 +17,7 @@ from .archive import (
     fetch_maildir_zip,
     fetch_mhonarc,
     fetch_old_lojban_list,
+    fetch_wiki,
     ingest_dictionary_exports,
     ingest_tiki_export,
     verify_archive,
@@ -84,6 +85,15 @@ def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
         print(
             f"archive fetch irc: downloaded={report.downloaded_logs} "
             f"reused={report.reused_logs} manifests={len(report.manifests)}"
+        )
+        return 0
+    if args.source == "wiki":
+        wiki = fetch_wiki(config.archive, args.since)
+        print(
+            f"archive fetch wiki: pages={wiki.pages} "
+            f"revision_batches={wiki.revision_batches} "
+            f"log_batches={wiki.log_batches} reused={wiki.reused_responses} "
+            f"manifests={len(wiki.manifests)}"
         )
         return 0
     if args.source == "dict":
