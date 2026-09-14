@@ -218,6 +218,7 @@ Legacy transition files may contain ISO lines: a day whose lines are all ISO is 
 dict/<slug(word)>/word.toml               word-level state: word, type, rafsi, selmaho, created, creator, etymology (with author/date), source ids
 dict/<slug(word)>/<lang>-<definition-id>.md  one file per definition: front matter + definition text + ## Notes + ## Examples
 dict/<slug(word)>/comments.md             append-only, one section per comment (threaded via "in reply to")
+dict/<slug(word)>/examples.md             append-only, word-level examples (source `definitionid = 0`), one section per example
 dict/_pages/<lang>/<pagename>.txt         jbovlaste's own wiki pages, every version (decompressed where compressed)
 ```
 
@@ -231,13 +232,15 @@ Definition front matter (`+++`): `id, word, lang, author, updated, version, scor
 | definition initial state (`created`) | `definitions` + `keywordmapping` + summed votes | `definitions.userId` | `definitions.time` with `Event-Window` | `definition=<id> version=0` |
 | definition `edited` | `definition_versions` (skipping rows with `mw_revid`, which are re-imported wiki revisions already in `wiki/`) | version author | `created_at` (exact); subject = the version's edit message | `definition=<id> version=<version_id>` |
 | `comment` | `comments` ⋈ `threads` (post-V81 JSONB: subject + text blocks, `header` block dropped) | comment author | `time` (exact) | `comment=<commentId>` |
-| example added | `example` | author | `time` (exact); appended to `## Examples` | `example=<exampleId>` |
+| example added | `example` | author | `time` (exact); appended to the target definition's `## Examples`, or to `examples.md` when `definitionid = 0` (word-level) | `example=<exampleId>` |
 | etymology added/edited | `etymology` | author | `time` (exact; edits in place → `window`) | `etymology=<etymologyId>` |
 | score change | dump-to-dump or feed-to-feed difference in the vote sum | `jbomohi` | later dump/feed date with `Event-Window` | `score=<definitionId>@<date>` |
 | jbovlaste wiki page version | `pages` | page author | `pages.time` (exact) | `jvspage=<pagename>@<version>` |
 
 Deleted definitions (present in an earlier dump, absent later, or `status` in the feed) become `Event: deleted` with `status = "deleted"` kept in the file's last state. Rows authored by `officialdata` are ordinary events (the feed hides them; the dump does not).
 
+
+**Timestamps.** Lensisku's `definition_versions.created_at` carries microseconds: events are ordered by the full source timestamp and the full value is kept in `_meta/dict/definitions.csv` and file front matter, while the git date is floored to the whole second (git's resolution); same-second events keep the §2.6 tie-break.
 **Indexes.** `_meta/dict/words.csv`, `definitions.csv` (`definition_id,word,lang,author,updated,versions,score,status,path`), `coverage.toml`.
 
 ### 3.6 CLL (`cll/`)
