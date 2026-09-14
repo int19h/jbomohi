@@ -53,7 +53,7 @@ Checkout `tools` at the repository root; the corpus is a git worktree of `main` 
 
 ### 2.3 Raw archive tier
 
-Downloaded dumps, zips, API responses, scraped pages and database dumps are **never committed** as such. They live in an archive directory (`JBOMOHI_ARCHIVE`, default `~/lojban/archive`) as immutable content-addressed objects with manifests `{source, kind, origin, fetched_at, sha256, bytes, coverage {from, to, counts}, notes}`. Manifests are tracked on `main:_meta/archive/` so the projection is reproducible by anyone with the same objects. Public objects are mirrored as assets of the GitHub Release for each snapshot tag (never checked into the repository); private database dumps are never mirrored — their manifests suffice to prove what was used. The `sha256` in manifests is the tool's own content address, computed at ingest; no externally supplied checksum is required, transported, or verified (decided 2026-09-14). Operator exports are archived like any other object, with `origin` naming the export (`operator export <date>`), never a temporary hosting URL.
+Downloaded dumps, zips, API responses, scraped pages and database dumps are **never committed** as such. They live in an archive directory (`JBOMOHI_ARCHIVE`, default `~/lojban/archive`) as immutable content-addressed objects with manifests `{source, kind, origin, fetched_at, sha256, bytes, coverage {from, to, counts}, notes}`. Manifests are tracked on `main:_meta/archive/` so the projection is reproducible by anyone with the same objects; kinds that produce one manifest per fetched page or message (`mhonarc-page`, `numbered-rfc822`) are tracked there as one consolidated TOML per list and kind (`_meta/archive/mail/<list>/<kind>.toml`, an array of tables with the same fields, ordered by origin) rather than tens of thousands of files, while the archive directory keeps the per-object manifests (decided 2026-09-14). Public objects are mirrored as assets of the GitHub Release for each snapshot tag (never checked into the repository); private database dumps are never mirrored — their manifests suffice to prove what was used. The `sha256` in manifests is the tool's own content address, computed at ingest; no externally supplied checksum is required, transported, or verified (decided 2026-09-14). Operator exports are archived like any other object, with `origin` naming the export (`operator export <date>`), never a temporary hosting URL.
 
 The raw **mail** is the exception to "never committed": the Maildirs on `main` *are* the raw objects (§3.3), because the repository's purpose is to publish them.
 
@@ -302,7 +302,7 @@ Every formal grammar and parser implementation of Lojban is part of the record. 
 
 ### 3.11 `_meta/` and coverage
 
-`_meta/schema.toml` (`projection_schema`, renderer versions, tools commit), `_meta/archive/*.toml` (§2.3), per-source `coverage.toml` (`from, to, counts, gaps = [...], updated`), and the CSV indexes above. `build`/`update` re-render `README.md` (coverage tables) and the instruction files from `tools/templates/main/` as an `Event: refresh` commit at the tip, dated at the last event's time.
+`_meta/schema.toml` (`projection_schema`, renderer versions, tools commit), `_meta/archive/*.toml` (§2.3), per-source `coverage.toml` (`from, to, counts, gaps = [...], updated`), and the CSV indexes above. `build`/`update` re-render `README.md` (coverage tables) and the instruction files from `tools/templates/main/` as an `Event: refresh` commit at the tip, dated at the last event's time. Per-source `_meta/<source>/**` index files ride each projector's final event; `update` folds those files into the refresh commit whenever the source yielded at least one new event, even when that final event's own `Source-Id` was already present (decided 2026-09-14).
 
 ---
 
@@ -335,7 +335,7 @@ Each source module exposes `fetch(archive, since) -> manifests` (network; writes
 
 ### 4.4 Invariants (`jbomohi verify`)
 
-Every `main` commit has `Source`, `Source-Id`, `Event`, `Time-Confidence`; `Source-Id` unique per `(Source, path)`; `_meta/*.csv` rows ↔ files; Maildirs contain only `cur/` files per §3.3 with mode `0444`, every message has a thread-view entry; IRC files parse under §3.4 and sit in the right year; dictionary front matter and `votes.csv` validate; notes lint clean; a determinism sample (rebuild the last 30 days of each source twice → identical commits).
+Every `main` commit has `Source`, `Source-Id`, `Event`, `Time-Confidence`; `Source-Id` unique per `(Source, path)`; `_meta/*.csv` rows ↔ files; Maildirs contain only `cur/` files per §3.3 (git stores them as `100644`; the tools materialise them `0444` in the worktree, which `verify` checks on the worktree, not the tree), every message has a thread-view entry; IRC files parse under §3.4 and sit in the right year; dictionary front matter and `votes.csv` validate; notes lint clean; a determinism sample (rebuild the last 30 days of each source twice → identical commits).
 
 ### 4.5 Cadence and CI
 
