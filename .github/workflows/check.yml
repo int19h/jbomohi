@@ -1,0 +1,33 @@
+name: check
+
+on:
+  push:
+    branches: [tools]
+  pull_request:
+    branches: [tools]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - name: Tools tests and determinism sample
+        run: uv run pytest
+      - name: Lint, format, compile, and whitespace checks
+        run: |
+          uv run ruff check tools/jbomohi_tools tools/tests
+          uv run ruff format --check tools/jbomohi_tools tools/tests
+          uv run python -m compileall -q tools/jbomohi_tools
+          git diff --check
