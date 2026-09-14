@@ -1,0 +1,33 @@
+# What the wiki projection covers, and the rows one input holds that
+# the other cannot serve (SPEC.md 3.2). Written by jbomohi build; do
+# not edit.
+
+pages = 14531
+pages_with_a_file = 14144
+revisions = 53680
+media_files = 4808
+not_projected = 21224
+
+[additive.export_revisions_without_actor_row]
+count = 2608
+cause = "no revision_actor_temp row and rev_actor = 0: the foreign half of a transwiki import, which MediaWiki 1.38 hides from api.php because RevisionStore inner-joins the temp table under SCHEMA_COMPAT_READ_TEMP"
+
+[additive.export_move_logs_without_actor_row]
+count = 1620
+cause = "log_actor names no actor row, so list=logevents hides the entry; all are from the 2013-2014 Move page script run"
+
+[additive.pages_outside_the_projected_namespaces]
+count = 310
+cause = "namespaces 274 Widget, 275 Widget talk and 1198 Translations are extension machinery SPEC.md 3.2 does not project"
+
+[additive.revisions_naming_no_page_row]
+count = 291
+cause = "rev_page names no row in page, so the revision cannot be placed and api.php cannot serve it either"
+
+[additive.deleted_revisions_rebuilt_from_archive]
+count = 1290
+cause = "archive rows: revisions of deleted pages the public API refuses"
+
+[additive.api_revisions_newer_than_the_export]
+count = 23
+cause = "edits made after the operator took the snapshot; the API path covers them"
