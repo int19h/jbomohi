@@ -355,8 +355,7 @@ def _history_records(corpus: Path) -> list[tuple[str, str, tuple[str, ...]]]:
     ).stdout
     records: list[tuple[str, str, tuple[str, ...]]] = []
     for chunk in output.split("\x1e"):
-        chunk = chunk.strip("\0\n")
-        if not chunk:
+        if not chunk.strip("\0\n"):
             continue
         try:
             commit, body, raw_paths = chunk.split("\0", 2)
