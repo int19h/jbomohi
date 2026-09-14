@@ -86,7 +86,8 @@ def tools_repo(path: Path) -> tuple[Config, str]:
     }
     run(path, "git", "commit", "-m", "tools", env=env)
     commit = git(path, "rev-parse", "HEAD")
-    return Config(path, path / "corpus", path / "archive"), commit
+    state = path.parent / f"{path.name}-state"
+    return Config(path, state / "corpus", state / "archive", state / "tmp"), commit
 
 
 def event(identifier: str, second: int, path: str) -> Event:
@@ -131,6 +132,8 @@ def test_build_is_transactional_chronological_and_deterministic(tmp_path: Path) 
     assert tools_commit in (config.corpus / "_meta/schema.toml").read_text()
     assert (config.corpus / "_meta/archive/wiki/source.toml").is_file()
     assert git(config.repo_root, "rev-parse", f"{first.snapshot}^{{}}") == first.head
+    assert config.tmp.is_dir()
+    assert not (config.repo_root / "tmp").exists()
 
     second = build_corpus(config, sources)
     assert second.head == first.head

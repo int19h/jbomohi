@@ -84,7 +84,7 @@ def test_corpus_status_runs_through_real_cli_configuration(
     capsys,
 ) -> None:
     root = tmp_path / "tools-checkout"
-    corpus = root / "corpus"
+    corpus = tmp_path / "corpus"
     subprocess.run(
         ["git", "init", "--initial-branch=tools", str(root)],
         check=True,
@@ -97,6 +97,7 @@ def test_corpus_status_runs_through_real_cli_configuration(
         capture_output=True,
         text=True,
     )
+    monkeypatch.setenv("JBOMOHI_CORPUS", str(corpus))
     monkeypatch.chdir(root)
     assert main(["corpus", "status"]) == 0
     assert f"corpus ready: path={corpus}" in capsys.readouterr().out
