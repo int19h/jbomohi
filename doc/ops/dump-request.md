@@ -46,7 +46,7 @@ The exclusion list is the union of what the source schema and the 2026-09-13 exp
 
 ```sh
 DB=jbovlaste
-pg_dump -Fp --no-owner --no-privileges -T users -T definitionvotes -T natlangwordvotes "$DB" | gzip > jbovlaste-public.sql.gz
+pg_dump -Fp --no-owner --no-privileges -T users -T users_view -T definitionvotes -T natlangwordvotes "$DB" | gzip > jbovlaste-public.sql.gz
 psql "$DB" -c "\copy (SELECT userid, username, realname, url, personal FROM users) TO 'jbovlaste-users-public.csv' CSV HEADER"
 psql "$DB" -c "\copy (SELECT definitionid, valsiid, langid, SUM(value) AS score, COUNT(*) AS votes, MAX(time) AS last_vote_time FROM definitionvotes GROUP BY definitionid, valsiid, langid) TO 'jbovlaste-definition-scores.csv' CSV HEADER"
 ```
