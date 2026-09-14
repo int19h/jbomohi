@@ -1,8 +1,10 @@
+> **Status 2026-09-14.** Lensisku, jbovlaste and Tiki exports were received on 2026-09-13 and are held in the local archive tier (per-user tables and `tiki_forums` were stripped locally; no re-export is needed). **Still wanted: the MediaWiki export (§2).**
+
 # Database export request — for the lojban.org server operator
 
 Purpose: jbomo'i (`https://github.com/int19h/jbomohi`) republishes the Lojban community's **public** record as a git repository with one commit per source event (wiki revision, definition edit, comment, …). Everything that is publicly visible on the sites goes in; everything that is not (passwords, e-mails, tokens, sessions, private messages, payments, IP addresses, unpublished/queued content, per-user notes, per-voter vote rows) must never leave your machine. The commands below produce exactly that split. Details and the reasoning behind every table are in `doc/research/dump-schemas.md` in the repository (verified against the jbovlaste, Lensisku, MediaWiki 1.38 and Tiki sources).
 
-Three databases are wanted; one dump each, gzip'd, with a `sha256sum` line for each file (a `SHA256SUMS` file next to the dumps is ideal). Rough sizes: Lensisku/jbovlaste tens of MB, MediaWiki a few hundred MB (the `text` table), Tiki tens of MB. Any transfer method is fine (a URL behind HTTP auth, scp, …); the files are consumed locally and are never checked into git or uploaded to CI.
+Three databases are wanted; one dump each, gzip'd. No checksums are needed. Rough sizes: Lensisku/jbovlaste tens of MB, MediaWiki a few hundred MB (the `text` table), Tiki tens of MB. Any transfer method is fine (a URL behind HTTP auth, scp, …); the files are consumed locally and are never checked into git or uploaded to CI.
 
 ---
 
@@ -36,7 +38,6 @@ psql "$DB" -c "\copy (SELECT userid, username, realname, url, personal, created_
 psql "$DB" -c "\copy (SELECT definitionid, valsiid, langid, SUM(value) AS score, COUNT(*) AS votes, MAX(time) AS last_vote_time FROM definitionvotes GROUP BY definitionid, valsiid, langid) TO 'lensisku-definition-scores.csv' CSV HEADER"
 
 gzip lensisku-schema.sql lensisku-public-data.sql
-sha256sum lensisku-*.gz lensisku-*.csv
 ```
 
 The exclusion list is the union of what the source schema and the 2026-09-13 export showed: everything per-user (chats with the site's AI assistant, notifications, settings, avatars, balances, subscriptions, follows, bookmarks, reactions, flashcard/quiz progress, collections — including private ones — and `users_view`, which exposes the private `votesize`), plus caches and the MediaWiki mirror we take from the source. If any table name above does not exist in your version, just drop that `-T` (a missing exclusion is harmless only if the table is absent; please do not remove an exclusion for a table that exists). If there are other tables you consider private, exclude them too and tell us their names.
@@ -77,7 +78,6 @@ mysql --batch --raw $DB -e \
 # c) only if $wgDefaultExternalStore is set in LocalSettings.php: the external-store cluster(s)
 # $MYSQLDUMP <cluster_db> blobs | gzip > wiki-es-cluster1.sql.gz
 
-sha256sum wiki-*.gz
 ```
 
 `--hex-blob` and `--default-character-set=binary` are essential: `text.old_text` holds compressed binary and must not be transcoded. Tables deliberately **not** requested: `user_properties`, `user_former_groups`, `bot_passwords`, `ipblocks*`, `watchlist*`, `user_newtalk`, `recentchanges`, `ip_changes`, `filearchive`, `uploadstash`, `objectcache`, `cu_*`, and any `user` column other than the five above. Two notes: `archive` (deleted revisions) is requested because deleted-then-restored history matters, but drop it if you prefer; revisions with `rev_deleted` bits are masked by our importer, not by the dump, so the dump does contain them in the clear — treat the file accordingly.
@@ -113,7 +113,6 @@ mysql --batch --raw $DB -e \
   "SELECT user, prefName, value FROM tiki_user_preferences WHERE prefName IN ('realName','user_information','email is public')" \
   | gzip > tiki-user-preferences.tsv.gz
 
-sha256sum tiki-*.gz
 ```
 
 Deliberately **not** requested: every other `users_users` column (`password`, `provpass`, `hash`, `challenge`, `valid`, `email`, login timestamps, avatars), the whole `tiki_forums` table (see above — its password columns cannot be filtered by `mysqldump`), `tiki_page_footnotes` (private per-user notes), `tiki_comments_queue` / `tiki_forums_queue` (never-published posts), `tiki_semaphores`, session/login tables, galleries and file blobs. The requested tables contain IP columns (`tiki_pages.ip`, `tiki_history.ip`, `tiki_comments.user_ip`, `tiki_actionlog.ip`); if you can null them before dumping (`UPDATE … SET ip=''` on a copy) please do — otherwise our importer discards them and they never enter the repository.
