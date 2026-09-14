@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import logging
 from collections.abc import Callable, Sequence
+from datetime import UTC, datetime, time
 from pathlib import Path
 
 from .archive import (
@@ -26,10 +27,12 @@ from .archive import (
     verify_archive,
     verify_manifests,
 )
+from .build import build_corpus, push_main_ranges, update_corpus, verify_corpus
 from .config import Config, ConfigError
 from .corpus import CorpusError, corpus_status, init_corpus
 from .git import EventError, GitError, commit_event, git_output
 from .project.cll import project as project_cll
+from .sources import SourceWiringError, source_factories
 
 LOG = logging.getLogger("jbomohi")
 Handler = Callable[[argparse.Namespace, Config], int]
@@ -246,6 +249,64 @@ def _cll_render(args: argparse.Namespace, config: Config) -> int:
         known.add(event.source_id)
         commits += 1
     print(f"cll render: edition={args.edition} commits={commits} head={head}")
+
+
+def _until(value: str | None) -> datetime | None:
+    if value is None:
+        return None
+    try:
+        if len(value) == 10:
+            return datetime.combine(
+                datetime.fromisoformat(value).date(), time.max, UTC
+            ).replace(microsecond=0)
+        parsed = datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise ValueError("--until must be an ISO date or timestamp") from exc
+    if parsed.tzinfo is None:
+        raise ValueError("--until timestamp must include a UTC offset")
+    return parsed.astimezone(UTC).replace(microsecond=0)
+
+
+def _build(args: argparse.Namespace, config: Config) -> int:
+    report = build_corpus(
+        config,
+        source_factories(config, args.sources),
+        until=_until(args.until),
+    )
+    print(
+        f"build: head={report.head} commits={report.commits} events={report.events} "
+        f"snapshot={report.snapshot}"
+    )
+    if args.push:
+        pushed = push_main_ranges(config.repo_root, report.snapshot)
+        print(f"push: main_updates={pushed.main_updates} snapshot={pushed.snapshot}")
+    return 0
+
+
+def _update(args: argparse.Namespace, config: Config) -> int:
+    report = update_corpus(config, source_factories(config, args.sources or None))
+    if report is None:
+        print("update: no new source events")
+    else:
+        print(
+            f"update: head={report.head} commits={report.commits} "
+            f"events={report.events} snapshot={report.snapshot}"
+        )
+        if args.push:
+            pushed = push_main_ranges(config.repo_root, report.snapshot)
+            print(
+                f"push: main_updates={pushed.main_updates} snapshot={pushed.snapshot}"
+            )
+    return 0
+
+
+def _verify(_args: argparse.Namespace, config: Config) -> int:
+    report = verify_corpus(config.corpus)
+    print(
+        f"verify: commits={report.commits} files={report.files} "
+        f"sources={report.sources} csv_indexes={report.csv_indexes} "
+        f"mail_messages={report.mail_messages}"
+    )
     return 0
 
 
@@ -303,13 +364,15 @@ def parser() -> argparse.ArgumentParser:
     wiki.add_argument("--export-date", required=True)
     _leaf(archive_commands, "verify", _archive_verify)
 
-    build = _leaf(commands, "build", _not_implemented("build"))
+    build = _leaf(commands, "build", _build)
     build.add_argument("--sources", nargs="+")
     build.add_argument("--until")
+    build.add_argument("--push", action="store_true")
 
-    update = _leaf(commands, "update", _not_implemented("update"))
+    update = _leaf(commands, "update", _update)
     update.add_argument("sources", nargs="*")
-    _leaf(commands, "verify", _not_implemented("verify"))
+    update.add_argument("--push", action="store_true")
+    _leaf(commands, "verify", _verify)
 
     cll = commands.add_parser("cll", help="CLL rendering commands")
     cll_commands = cll.add_subparsers(dest="cll_command", required=True)
@@ -347,6 +410,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         CorpusError,
         EventError,
         GitError,
+        SourceWiringError,
         OSError,
         ValueError,
     ) as exc:

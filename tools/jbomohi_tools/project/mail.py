@@ -48,19 +48,16 @@ SOURCE_RANKS = {
 DEFAULT_ARCHIVE_GAPS: dict[str, dict[str, str]] = {
     "lojban-list": {
         "old_lojban_list": (
-            "not fully populated; resume: JBOMOHI_ARCHIVE=~/lojban/archive "
-            "uv run --isolated --python 3.13 jbomohi archive fetch old-lojban-list"
+            "not fully populated; resume: jbomohi archive fetch old-lojban-list"
         ),
         "lojban_list_old": (
             "selective gap source not populated; resume only after absent Message-IDs are known: "
-            "JBOMOHI_ARCHIVE=~/lojban/archive uv run --isolated --python 3.13 jbomohi "
-            "archive fetch mhonarc --list lojban-list-old --start 1"
+            "jbomohi archive fetch mhonarc --list lojban-list-old --start 1"
         ),
     },
     "lojban-beginners": {
         "mhonarc_union": (
-            "not fully populated; resume: JBOMOHI_ARCHIVE=~/lojban/archive "
-            "uv run --isolated --python 3.13 jbomohi archive fetch mhonarc "
+            "not fully populated; resume: jbomohi archive fetch mhonarc "
             "--list lojban-beginners"
         )
     },

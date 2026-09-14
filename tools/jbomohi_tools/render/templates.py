@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -143,7 +144,15 @@ def commit_instruction_refresh(
     source_time: datetime,
     source_id: str,
     context: RenderContext,
+    extra_changes: Mapping[str, str | bytes] | None = None,
 ) -> str:
+    changes = render_main(repo_root, context)
+    overlap = changes.keys() & (extra_changes or {}).keys()
+    if overlap:
+        raise ValueError(
+            f"instruction refresh extra changes overlap templates: {', '.join(sorted(overlap))}"
+        )
+    changes.update(extra_changes or {})
     event = Event(
         source="meta",
         source_id=source_id,
@@ -152,7 +161,7 @@ def commit_instruction_refresh(
         source_time=source_time,
         summary="refresh instructions and coverage",
         author=Identity.tool(),
-        changes=render_main(repo_root, context),
+        changes=changes,
         trailers={"Renderer": "instructions/1"},
     )
     return commit_event(event, corpus)
