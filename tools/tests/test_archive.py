@@ -131,12 +131,18 @@ def test_manifest_round_trip_uses_deterministic_toml(tmp_path: Path) -> None:
         fetched_at=datetime(2026, 8, 27, tzinfo=UTC),
         sha256=obj.sha256,
         bytes=obj.bytes,
-        coverage={"from": "2000-01-01", "to": "2026-08-27", "counts": {"revisions": 1}},
+        coverage={
+            "from": "2000-01-01",
+            "to": "2026-08-27",
+            "counts": {"revisions": 1},
+            "refs": {"refs/tags/example": "a" * 40},
+        },
         notes="fixture",
     )
     path = tmp_path / "manifest.toml"
     manifest.write(path)
     assert ArchiveManifest.load(path) == manifest
+    assert '[coverage.refs]\n"refs/tags/example" = ' in path.read_text()
     with pytest.raises(ArchiveError, match="refusing to replace"):
         manifest.write(path)
 

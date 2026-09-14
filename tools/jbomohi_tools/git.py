@@ -47,6 +47,7 @@ RESERVED_TRAILERS = {
     "Event-Window",
 }
 TRAILER_NAME = re.compile(r"^[A-Z][A-Za-z0-9-]*$")
+GITLINK_ID = re.compile(r"^[0-9a-f]{40}$")
 HEX_ESCAPE_SAFE = (
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$&'*+-/=?^_`{|}~."
 )
@@ -193,6 +194,22 @@ def _iso_date(label: str, value: str) -> date:
         return date.fromisoformat(clean)
     except ValueError as exc:
         raise EventError(f"{label} must be an ISO date (YYYY-MM-DD)") from exc
+
+
+def _source_date(value: str) -> None:
+    if re.fullmatch(r"[0-9]{4}", value):
+        if int(value) == 0:
+            raise EventError("Source-Date must be YYYY, YYYY-MM, or YYYY-MM-DD")
+        return
+    if re.fullmatch(r"[0-9]{4}-[0-9]{2}", value):
+        year, month = (int(item) for item in value.split("-"))
+        if year == 0 or not 1 <= month <= 12:
+            raise EventError("Source-Date must be YYYY, YYYY-MM, or YYYY-MM-DD")
+        return
+    try:
+        _iso_date("Source-Date", value)
+    except EventError as exc:
+        raise EventError("Source-Date must be YYYY, YYYY-MM, or YYYY-MM-DD") from exc
 
 
 @dataclass(frozen=True, slots=True)
@@ -355,6 +372,7 @@ class Event:
     summary: str
     author: Identity
     changes: Mapping[str, str | bytes] = field(default_factory=dict)
+    gitlinks: Mapping[str, str] = field(default_factory=dict)
     deletions: tuple[str, ...] = ()
     body: str = ""
     source_date: str | None = None
@@ -387,7 +405,11 @@ class Event:
             if self.source_time >= EPOCH:
                 raise EventError("pre-epoch confidence requires a date before 1970")
         elif self.source_date is not None:
-            raise EventError("Source-Date is only valid for pre-epoch events")
+            if self.time_confidence != "exact":
+                raise EventError(
+                    "Source-Date is only valid for pre-epoch or exact events"
+                )
+            _source_date(self.source_date)
         if self.time_confidence == "window":
             if not self.event_window:
                 raise EventError("window events require Event-Window as <from>..<to>")
@@ -409,9 +431,13 @@ class Event:
         changed = {_safe_repo_path(path).as_posix() for path in self.changes}
         if any(not isinstance(value, (str, bytes)) for value in self.changes.values()):
             raise EventError("event changes must contain only text or bytes")
+        gitlinks = {_safe_repo_path(path).as_posix() for path in self.gitlinks}
+        for path, object_id in self.gitlinks.items():
+            if not isinstance(object_id, str) or not GITLINK_ID.fullmatch(object_id):
+                raise EventError(f"gitlink {path!r} must name a 40-digit object id")
         deleted = {_safe_repo_path(path).as_posix() for path in self.deletions}
-        if changed & deleted:
-            raise EventError("an event cannot both write and delete the same path")
+        if changed & deleted or changed & gitlinks or deleted & gitlinks:
+            raise EventError("an event cannot write, link, and delete the same path")
         for key, value in self.trailers.items():
             if key in RESERVED_TRAILERS or not TRAILER_NAME.fullmatch(key):
                 raise EventError(f"invalid or reserved event trailer: {key!r}")
@@ -518,6 +544,14 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
             raise EventError(f"event deletions must name files: {raw_path!r}")
         deletions.append((relative.as_posix(), target))
 
+    gitlinks: list[tuple[str, Path, str]] = []
+    for raw_path, object_id in sorted(event.gitlinks.items()):
+        relative = _safe_repo_path(raw_path)
+        target = _target(corpus, relative)
+        if target.exists() and not target.is_dir():
+            raise EventError(f"gitlink path is not a directory: {raw_path!r}")
+        gitlinks.append((relative.as_posix(), target, object_id))
+
     paths: list[str] = []
     for relative, target, data in writes:
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -535,6 +569,12 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
         paths.append(relative)
     if paths:
         run_git(corpus, ["add", "-A", "--", *paths])
+    for relative, target, object_id in gitlinks:
+        target.mkdir(parents=True, exist_ok=True)
+        run_git(
+            corpus,
+            ["update-index", "--add", "--cacheinfo", f"160000,{object_id},{relative}"],
+        )
 
     tree = git_output(corpus, ["write-tree"])
     commit_args = ["-c", "i18n.commitEncoding=UTF-8", "commit-tree", tree]

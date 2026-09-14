@@ -80,6 +80,61 @@ def test_commit_event_uses_the_configured_corpus_by_default(
     assert commit == git(corpus, "rev-parse", "HEAD")
 
 
+def test_commit_event_writes_and_updates_a_gitlink(tmp_path: Path) -> None:
+    corpus = unborn_worktree(tmp_path)
+    first_id = "1" * 40
+    second_id = "2" * 40
+    first = base_event(
+        source="cll",
+        source_id="cll=1.0",
+        event="render",
+        summary="render 1.0",
+        author=Identity.tool(),
+        changes={
+            ".gitmodules": (
+                '[submodule "cll/src"]\n'
+                "\tpath = cll/src\n"
+                "\turl = https://github.com/int19h/cll\n"
+            )
+        },
+        gitlinks={"cll/src": first_id},
+        trailers={"Edition": "1.0", "Renderer": "cll/1"},
+    )
+    commit_event(first, corpus)
+    assert git(corpus, "ls-tree", "HEAD", "cll/src") == (
+        f"160000 commit {first_id}\tcll/src"
+    )
+    second = base_event(
+        source="cll",
+        source_id="cll=1.1",
+        event="render",
+        summary="render 1.1",
+        author=Identity.tool(),
+        changes={"cll/editions/1.1/01-about.txt": "rendered\n"},
+        gitlinks={"cll/src": second_id},
+        trailers={"Edition": "1.1", "Renderer": "cll/1"},
+    )
+    commit_event(second, corpus)
+    assert git(corpus, "ls-tree", "HEAD", "cll/src") == (
+        f"160000 commit {second_id}\tcll/src"
+    )
+
+
+@pytest.mark.parametrize(
+    "gitlinks",
+    (
+        {"../outside": "1" * 40},
+        {"cll/src": "not-an-object"},
+        {"wiki/main/Test.wiki": "1" * 40},
+    ),
+)
+def test_event_rejects_unsafe_invalid_or_overlapping_gitlinks(
+    gitlinks: dict[str, str],
+) -> None:
+    with pytest.raises(EventError, match="unsafe corpus path|40-digit|same path"):
+        base_event(gitlinks=gitlinks).validate()
+
+
 def test_pre_epoch_event_clamps_git_date_and_keeps_source_date(tmp_path: Path) -> None:
     corpus = unborn_worktree(tmp_path)
     event = base_event(
@@ -96,6 +151,13 @@ def test_pre_epoch_event_clamps_git_date_and_keeps_source_date(tmp_path: Path) -
     commit_event(event, corpus)
     assert git(corpus, "show", "-s", "--format=%aI") == "1970-01-01T00:00:00Z"
     assert "Source-Date: 1960-05-01" in git(corpus, "show", "-s", "--format=%B")
+
+
+@pytest.mark.parametrize("source_date", ("1997", "2016-08", "2016-08-26"))
+def test_exact_event_accepts_an_independently_evidenced_source_date(
+    source_date: str,
+) -> None:
+    base_event(source_date=source_date).validate()
 
 
 def test_window_event_preserves_bounds_and_source_time(tmp_path: Path) -> None:
@@ -139,6 +201,16 @@ def test_window_event_preserves_bounds_and_source_time(tmp_path: Path) -> None:
         (
             {"time_confidence": "window", "event_window": "2004-01-01..not-a-date"},
             "ISO date",
+        ),
+        ({"source_date": "0000"}, "Source-Date must be"),
+        ({"source_date": "2016-13"}, "Source-Date must be"),
+        (
+            {
+                "time_confidence": "window",
+                "event_window": "2004-01-01..2004-01-03",
+                "source_date": "2004",
+            },
+            "pre-epoch or exact",
         ),
         ({"changes": {"../escape": "bad"}}, "unsafe corpus path"),
         ({"trailers": {"Source": "other"}}, "reserved event trailer"),
