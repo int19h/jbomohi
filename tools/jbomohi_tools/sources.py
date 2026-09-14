@@ -44,6 +44,11 @@ class SourceWiringError(RuntimeError):
     """Required archive inputs for a projector are absent or ambiguous."""
 
 
+# Complete page inventories recorded in SPEC.md section 3.3.
+OLD_LOJBAN_LIST_PAGE_COUNT = 19_674
+LOJBAN_BEGINNERS_MHONARC_PAGE_COUNT = 20_910
+
+
 def mediawiki_pages_from_corpus(corpus: Path) -> dict[str, str]:
     """Read the prior verified wiki title/path index for Tiki migration mapping."""
 
@@ -117,13 +122,13 @@ def dictionary_events(config: Config) -> Iterable[Event]:
     )
 
 
-def _tiki_titles(data) -> list[str]:
+def _tiki_titles(data, character_encoding: str) -> list[str]:
     return sorted(
         {
             decode_character_text(
                 row["pageName"] or b"",
                 "Tiki title",
-                "latin1-transcoded",
+                character_encoding,
                 allow_nul=True,
             )[0]
             for table in ("tiki_pages", "tiki_history")
@@ -136,23 +141,40 @@ def tiki_events(
     config: Config, mediawiki_pages: Mapping[str, str] | None = None
 ) -> Iterable[Event]:
     root = config.archive / "manifests" / "tiki" / "db-export"
+    manifests = sorted(root.glob("*.toml"))
+    if len(manifests) != 3:
+        raise SourceWiringError(
+            f"expected three Tiki db-export manifests, found {len(manifests)}"
+        )
+    encodings = {
+        ArchiveManifest.load(path).coverage.get("character_encoding")
+        for path in manifests
+    }
+    if len(encodings) != 1 or None in encodings:
+        raise SourceWiringError("Tiki export manifests disagree on character_encoding")
+    character_encoding = encodings.pop()
+    if character_encoding not in {"latin1-transcoded", "utf8"}:
+        raise SourceWiringError(
+            f"unsupported Tiki character_encoding: {character_encoding!r}"
+        )
+    assert isinstance(character_encoding, str)
     data = load_tiki_dump(
         _component(config.archive, root, "tiki-content.sanitized.sql.gz")
     )
     users = load_tiki_users(
         _component(config.archive, root, "tiki-users.tsv.gz"),
         _component(config.archive, root, "tiki-user-preferences.tsv.gz"),
-        character_encoding="latin1-transcoded",
+        character_encoding=character_encoding,
     )
     migrated = (
-        migrated_title_map(_tiki_titles(data), mediawiki_pages)
+        migrated_title_map(_tiki_titles(data, character_encoding), mediawiki_pages)
         if mediawiki_pages is not None
         else {}
     )
     return project_tiki(
         data,
         users,
-        character_encoding="latin1-transcoded",
+        character_encoding=character_encoding,
         migrated_titles=migrated,
     )
 
@@ -173,8 +195,10 @@ def _maildir_manifest(config: Config, list_name: str) -> Path:
 
 
 def mail_events(config: Config) -> Iterable[Event]:
+    temporary_root = config.repo_root / "tmp"
+    temporary_root.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(
-        prefix="jbomohi-mail-", dir=config.repo_root.parent
+        prefix="jbomohi-mail-", dir=temporary_root
     ) as temporary:
         root = Path(temporary)
         maildirs = []
@@ -199,33 +223,31 @@ def mail_events(config: Config) -> Iterable[Event]:
             mhonarc.append(
                 load_mhonarc_manifestations(config.archive, "lojban-beginners")
             )
-        old = list(load_old_lojban_manifestations(config.archive))
         sources = chain(
             *maildirs,
             load_mbox_manifestations(config.archive),
             *mhonarc,
             load_jbosnu_manifestations(config.archive),
-            old,
+            load_old_lojban_manifestations(config.archive),
         )
         gaps = {
             list_name: dict(values)
             for list_name, values in DEFAULT_ARCHIVE_GAPS.items()
         }
-        old_count = len(
-            list(
-                (
-                    config.archive
-                    / "manifests"
-                    / "mail"
-                    / "lojban-list"
-                    / "old-lojban-list"
-                ).glob("msg*.toml")
-            )
+        old_count = sum(
+            1
+            for _path in (
+                config.archive
+                / "manifests"
+                / "mail"
+                / "lojban-list"
+                / "old-lojban-list"
+            ).glob("msg*.toml")
         )
-        if old_count >= 19_674:
+        if old_count >= OLD_LOJBAN_LIST_PAGE_COUNT:
             gaps["lojban-list"].pop("old_lojban_list", None)
-        beginners_count = len(list(beginners_root.glob("msg*.toml")))
-        if beginners_count >= 20_910:
+        beginners_count = sum(1 for _path in beginners_root.glob("msg*.toml"))
+        if beginners_count >= LOJBAN_BEGINNERS_MHONARC_PAGE_COUNT:
             gaps.pop("lojban-beginners", None)
         yield from project_mail(sources, archive_gaps=gaps)
 

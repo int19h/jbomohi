@@ -52,10 +52,12 @@ def test_build_update_verify_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> 
             )
         ),
     )
-    assert main(["build", "--sources", "wiki", "--until", "2000-01-01"]) == 0
+    assert main(["build", "--sources", "wiki"]) == 0
     assert calls[0] == ("sources", ["wiki"])
     assert calls[1][0] == "build"
     assert "events=2" in capsys.readouterr().out
+
+    assert main(["build", "--sources", "wiki", "--until", "2000-01-01"]) == 1
 
     monkeypatch.setattr(
         "jbomohi_tools.cli.update_corpus",
