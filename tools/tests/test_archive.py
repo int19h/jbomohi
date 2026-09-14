@@ -9,6 +9,7 @@ from jbomohi_tools.archive import (
     ArchiveError,
     ArchiveManifest,
     object_path,
+    store_file,
     store_object,
     verify_archive,
 )
@@ -99,6 +100,26 @@ def test_store_object_is_content_addressed_immutable_and_idempotent(
     assert first == second
     assert first.path.read_bytes() == b"same bytes"
     assert first.path.stat().st_mode & 0o222 == 0
+
+
+def test_store_file_streams_content_and_reuses_the_same_object(tmp_path: Path) -> None:
+    source = tmp_path / "large.sql"
+    source.write_bytes((b"COPY data\n" * 200_000) + b"\\.\n")
+    first = store_file(tmp_path / "archive", source)
+    second = store_file(tmp_path / "archive", source)
+    assert first == second
+    assert first.bytes == source.stat().st_size
+    assert first.path.read_bytes() == source.read_bytes()
+    assert first.path.stat().st_mode & 0o222 == 0
+
+
+def test_store_file_rejects_symlink_inputs(tmp_path: Path) -> None:
+    source = tmp_path / "source"
+    source.write_bytes(b"payload")
+    link = tmp_path / "link"
+    link.symlink_to(source)
+    with pytest.raises(ArchiveError, match="regular file"):
+        store_file(tmp_path / "archive", link)
 
 
 def test_manifest_round_trip_uses_deterministic_toml(tmp_path: Path) -> None:
