@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import base64
 import gzip
 import json
+import zlib
 from datetime import UTC, datetime
 from email.message import Message
 from pathlib import Path
@@ -18,6 +20,7 @@ from jbomohi_tools.project.dictionary import (
     JBOVLASTE_COPY_COLUMNS,
     DictionaryParseError,
     RawDictionaryDump,
+    _page_content,
     jbovlaste_diff,
     load_copy_tables,
     load_dictionary_dump,
@@ -48,12 +51,16 @@ def test_copy_loader_decodes_pg_text_and_ignores_public_extra_tables(
     path.write_bytes(
         b"COPY public.extra (id) FROM stdin;\r\n1\r\n\\.\r\n"
         b"COPY public.sample (id, text, optional) FROM stdin;\r\n"
-        b"1\tline\\nwith\\ttab and \\\\ slash\t\\N\r\n\\.\r\n"
+        b"1\tline\\nwith\\ttab and \\\\ slash \\141 \\x62\t\\N\r\n\\.\r\n"
     )
     tables = load_copy_tables(path, columns, forbidden=frozenset())
     assert tables == {
         "sample": (
-            {"id": "1", "text": "line\nwith\ttab and \\ slash", "optional": None},
+            {
+                "id": "1",
+                "text": "line\nwith\ttab and \\ slash a b",
+                "optional": None,
+            },
         )
     }
 
@@ -324,8 +331,10 @@ def test_project_uses_baseline_then_edits_and_both_example_scopes() -> None:
     assert "definition example" in definition_example.changes["dict/broda/en-10.md"]
     definitions_index = events[-1].changes["_meta/dict/definitions.csv"]
     assert (
-        "10,broda,en,bob,1970-01-01T00:05:00.123456Z,2,3,current" in definitions_index
+        "10,broda,en,bob,1970-01-01T00:05:00.123456Z,2,3,2026-09-13,current"
+        in definitions_index
     )
+    assert 'score_as_of = "2026-09-13"' in edit.changes["dict/broda/en-10.md"]
     assert all(len(event.subject) <= 72 for event in events)
 
 
@@ -340,6 +349,40 @@ def test_project_rejects_a_nonbaseline_first_direct_version() -> None:
     )
     with pytest.raises(DictionaryParseError, match="earliest direct version"):
         list(project(broken, export_date="2026-09-13"))
+
+
+def test_word_rafsi_follow_definition_state_at_each_event() -> None:
+    snapshot = _snapshot()
+    definitions = list(snapshot.tables["definitions"])
+    definitions[0] = {**definitions[0], "rafsi": "new"}
+    versions = list(snapshot.tables["definition_versions"])
+    versions[0] = {**versions[0], "rafsi": "old"}
+    versions[1] = {**versions[1], "rafsi": "new"}
+    historical = RawDictionaryDump(
+        tables={
+            **snapshot.tables,
+            "definitions": tuple(definitions),
+            "definition_versions": tuple(versions),
+        },
+        users=snapshot.users,
+        scores=snapshot.scores,
+    )
+    events = list(project(historical, export_date="2026-09-13"))
+    baseline = next(
+        event for event in events if event.source_id == "definition=10 version=0"
+    )
+    edit = next(
+        event for event in events if event.source_id == "definition=10 version=101"
+    )
+    assert 'rafsi = ["bro", "old"]' in baseline.changes["dict/broda/word.toml"]
+    assert 'rafsi = ["bro", "new"]' in edit.changes["dict/broda/word.toml"]
+
+
+def test_compressed_jbovlaste_page_decodes_and_corruption_fails_closed() -> None:
+    encoded = base64.b64encode(zlib.compress(b"coi ro do")).decode()
+    assert _page_content(encoded, "t", "page") == "coi ro do"
+    with pytest.raises(DictionaryParseError, match="invalid compressed page content"):
+        _page_content("not-base64", "t", "page")
 
 
 def test_project_accepts_stale_legacy_definition_time_when_state_matches() -> None:

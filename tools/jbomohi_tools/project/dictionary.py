@@ -354,7 +354,6 @@ class _WordState:
     type_name: str
     creator: str
     definitions: dict[int, _DefinitionState]
-    current_definition_rafsi: tuple[str, ...]
     etymologies: list[tuple[int, str, str, datetime, str]]
     word_examples: list[tuple[int, str, datetime, str]]
     comments: list[tuple[int, datetime, str, str, str, int | None, int | None]]
@@ -817,7 +816,7 @@ def _render_word(state: _WordState) -> str:
             value
             for value in (
                 *state.word.rafsi.split(),
-                *state.current_definition_rafsi,
+                *(item.definition.rafsi for item in definition_states),
             )
             if value
         }
@@ -861,7 +860,11 @@ def _definition_id(value: _Definition | _Version) -> int:
 
 
 def _render_definition(
-    state: _DefinitionState, word: _Word, language: str, score: int
+    state: _DefinitionState,
+    word: _Word,
+    language: str,
+    score: int,
+    score_as_of: str,
 ) -> str:
     value = state.definition
     lines = [
@@ -873,6 +876,7 @@ def _render_definition(
         f"updated = {_quote(_iso(state.updated))}",
         f"version = {state.version}",
         f"score = {score}",
+        f"score_as_of = {_quote(score_as_of)}",
         'status = "current"',
         f"jargon = {_quote(value.jargon)}",
         f"selmaho = {_quote(value.selmaho)}",
@@ -1503,19 +1507,12 @@ def project(
             f"{shown}{suffix}"
         )
 
-    current_definition_rafsi: dict[int, set[str]] = defaultdict(set)
-    for definition in definitions.values():
-        if definition.rafsi:
-            current_definition_rafsi[definition.valsiid].add(definition.rafsi)
     word_states = {
         identifier: _WordState(
             word=value,
             type_name=types[value.typeid],
             creator=users[value.userid],
             definitions={},
-            current_definition_rafsi=tuple(
-                sorted(current_definition_rafsi.get(identifier, ()))
-            ),
             etymologies=[],
             word_examples=[],
             comments=[],
@@ -1728,6 +1725,7 @@ def project(
                     word,
                     languages[event_language],
                     scores.get(definition_id, 0),
+                    export_date,
                 ),
                 f"dict/{slug(word.word)}/word.toml": _render_word(state),
             }
@@ -1849,6 +1847,7 @@ def project(
                         word,
                         languages[state_language],
                         scores.get(definition_id, 0),
+                        export_date,
                     )
                 }
             events.append(
@@ -1995,6 +1994,7 @@ def project(
                 "updated": _iso(state.updated),
                 "versions": version_counts[definition_id],
                 "score": scores.get(definition_id, 0),
+                "score_as_of": export_date,
                 "status": "current",
                 "path": f"dict/{slug(word.word)}/{languages[definition.langid]}-{definition_id}.md",
             }
@@ -2005,6 +2005,7 @@ def project(
             'source = "Lensisku operator export"',
             'definition_initial_time_confidence = "window"',
             'definition_initial_window_end = "definitions.created_at"',
+            'etymology_time_confidence = "window"',
             'export_transfer_defects = "3 (integer fields repaired; text fields unverifiable)"',
             f"words = {len(words)}",
             f"definitions = {len(definitions)}",
@@ -2044,6 +2045,7 @@ def project(
             "updated",
             "versions",
             "score",
+            "score_as_of",
             "status",
             "path",
         ),
