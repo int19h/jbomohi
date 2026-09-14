@@ -160,13 +160,29 @@ def _encoded_local_part(value: str) -> str:
 def _git_safe_name(value: str, *, label: str = "identity name") -> str:
     """Injectively encode source-name syntax that git cannot retain."""
 
-    name = _clean_text(label, value)
+    if (
+        not isinstance(value, str)
+        or not value
+        or any(character in value for character in "\r\n\0")
+    ):
+        raise EventError(f"{label} must be non-empty text without line breaks or NUL")
+    name = value
     name = name.replace("%", "%25").replace("<", "%3C").replace(">", "%3E")
+    name = "".join(
+        f"%{ord(character):02X}" if ord(character) < 32 else character
+        for character in name
+    )
+    while name and name[0].isspace():
+        encoded = "".join(f"%{byte:02X}" for byte in name[0].encode("utf-8"))
+        name = encoded + name[1:]
+    while name and name[-1].isspace():
+        encoded = "".join(f"%{byte:02X}" for byte in name[-1].encode("utf-8"))
+        name = name[:-1] + encoded
     if name.startswith("."):
         name = "%2E" + name[1:]
     if name.endswith("."):
         name = name[:-1] + "%2E"
-    return name
+    return _clean_text(label, name)
 
 
 def _iso_date(label: str, value: str) -> date:
@@ -273,10 +289,17 @@ class Identity:
         Percent signs are escaped too, keeping this normalisation injective.
         """
 
-        email = _clean_text("mail address", address)
-        if "@" not in email or any(char.isspace() for char in email):
-            raise EventError("mail address must contain @ and no whitespace")
-        local_part = email.rsplit("@", 1)[0]
+        source_email = _clean_text("mail address", address)
+        if "@" not in source_email:
+            raise EventError("mail address must contain @")
+        email = source_email.replace("%", "%25")
+        email = "".join(
+            "".join(f"%{byte:02X}" for byte in character.encode("utf-8"))
+            if character.isspace()
+            else character
+            for character in email
+        )
+        local_part = source_email.rsplit("@", 1)[0]
         return cls(
             _git_safe_name(display_name or local_part, label="mail display name"),
             email,
@@ -499,7 +522,12 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
     for relative, target, data in writes:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-        target.chmod(stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
+        mode = (
+            stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH
+            if re.fullmatch(r"mail/[^/]+/cur/[^/]+:2,S", relative)
+            else stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH
+        )
+        target.chmod(mode)
         paths.append(relative)
     for relative, target in deletions:
         if target.exists() or target.is_symlink():

@@ -11,6 +11,11 @@ from .archive import (
     ArchiveError,
     fetch_changes,
     fetch_irc,
+    fetch_jbosnu_raw,
+    fetch_mail_mboxes,
+    fetch_maildir_zip,
+    fetch_mhonarc,
+    fetch_old_lojban_list,
     ingest_dictionary_exports,
     ingest_tiki_export,
     verify_archive,
@@ -78,6 +83,52 @@ def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
             f"next_cursor={report.next_cursor or 'none'}"
         )
         return 0
+    if args.source == "mail":
+        if not args.list_name:
+            raise ArchiveError("archive fetch mail requires --list")
+        report = fetch_maildir_zip(config.archive, args.list_name)
+        print(
+            f"archive fetch mail: list={args.list_name} "
+            f"messages={report.inventory.messages} manifest={report.manifest}"
+        )
+        return 0
+    if args.source == "mhonarc":
+        if not args.list_name:
+            raise ArchiveError("archive fetch mhonarc requires --list")
+        report = fetch_mhonarc(
+            config.archive,
+            args.list_name,
+            start=args.start,
+            max_pages=args.max_pages,
+        )
+        print(
+            f"archive fetch mhonarc: list={args.list_name} "
+            f"downloaded={report.downloaded} reused={report.reused} "
+            f"next_missing={report.next_missing if report.next_missing is not None else 'unknown'}"
+        )
+        return 0
+    if args.source == "jbosnu-raw":
+        report = fetch_jbosnu_raw(config.archive)
+        print(
+            f"archive fetch jbosnu-raw: messages={report.messages} "
+            f"manifest={report.manifest}"
+        )
+        return 0
+    if args.source == "old-lojban-list":
+        report = fetch_old_lojban_list(config.archive, max_pages=args.max_pages)
+        print(
+            f"archive fetch old-lojban-list: downloaded={report.downloaded} "
+            f"reused={report.reused} "
+            f"next_missing={report.next_missing if report.next_missing is not None else 'unknown'}"
+        )
+        return 0
+    if args.source == "mail-mboxes":
+        report = fetch_mail_mboxes(config.archive)
+        print(
+            f"archive fetch mail-mboxes: downloaded={report.downloaded} "
+            f"reused={report.reused} messages={report.messages}"
+        )
+        return 0
     return _not_implemented(f"archive fetch {args.source}")(args, config)
 
 
@@ -136,6 +187,9 @@ def parser() -> argparse.ArgumentParser:
     fetch.add_argument(
         "--since", help="source-specific timestamp or opaque continuation cursor"
     )
+    fetch.add_argument("--list", dest="list_name")
+    fetch.add_argument("--max-pages", type=int)
+    fetch.add_argument("--start", type=int, default=0)
     ingest = archive_commands.add_parser("ingest")
     ingest_commands = ingest.add_subparsers(dest="ingest_source", required=True)
     dictionary = _leaf(ingest_commands, "dictionary", _archive_ingest_dictionary)
