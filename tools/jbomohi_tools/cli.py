@@ -10,6 +10,7 @@ from pathlib import Path
 from .archive import (
     ArchiveError,
     fetch_changes,
+    fetch_cll,
     fetch_irc,
     fetch_jbosnu_raw,
     fetch_mail_mboxes,
@@ -23,7 +24,8 @@ from .archive import (
 )
 from .config import Config, ConfigError
 from .corpus import CorpusError, corpus_status, init_corpus
-from .git import EventError, GitError
+from .git import EventError, GitError, commit_event, git_output
+from .project.cll import project as project_cll
 
 LOG = logging.getLogger("jbomohi")
 Handler = Callable[[argparse.Namespace, Config], int]
@@ -69,6 +71,14 @@ def _archive_verify(_args: argparse.Namespace, config: Config) -> int:
 
 
 def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
+    if args.source == "cll":
+        report = fetch_cll(config.archive)
+        print(
+            f"archive fetch cll: refs={len(report.refs)} "
+            f"reused={str(report.reused_manifest).lower()} "
+            f"manifest={report.manifest}"
+        )
+        return 0
     if args.source == "irc":
         report = fetch_irc(config.archive, args.since)
         print(
@@ -158,6 +168,46 @@ def _archive_ingest_tiki(args: argparse.Namespace, config: Config) -> int:
     return 0
 
 
+def _cll_render(args: argparse.Namespace, config: Config) -> int:
+    status, _created = init_corpus(config)
+    events = list(project_cll(config.archive))
+    target = f"cll={args.edition}"
+    try:
+        stop = next(
+            index for index, event in enumerate(events) if event.source_id == target
+        )
+    except StopIteration as exc:
+        available = ", ".join(event.source_id.removeprefix("cll=") for event in events)
+        raise ValueError(
+            f"unknown CLL edition {args.edition!r}; available: {available}"
+        ) from exc
+    bodies = git_output(config.corpus, ["log", "--format=%B"]) if status.head else ""
+    known = {
+        line.removeprefix("Source-Id: ")
+        for line in bodies.splitlines()
+        if line.startswith("Source-Id: cll=")
+    }
+    ordered_ids = [event.source_id for event in events]
+    unknown = known - set(ordered_ids)
+    prefix = 0
+    while prefix < len(ordered_ids) and ordered_ids[prefix] in known:
+        prefix += 1
+    if unknown or any(source_id in known for source_id in ordered_ids[prefix:]):
+        raise ValueError(
+            "existing CLL render commits are not a chronological edition prefix"
+        )
+    commits = 0
+    head = status.head
+    for event in events[: stop + 1]:
+        if event.source_id in known:
+            continue
+        head = commit_event(event, config.corpus)
+        known.add(event.source_id)
+        commits += 1
+    print(f"cll render: edition={args.edition} commits={commits} head={head}")
+    return 0
+
+
 def _leaf(
     subparsers: argparse._SubParsersAction[argparse.ArgumentParser],
     name: str,
@@ -215,7 +265,7 @@ def parser() -> argparse.ArgumentParser:
 
     cll = commands.add_parser("cll", help="CLL rendering commands")
     cll_commands = cll.add_subparsers(dest="cll_command", required=True)
-    render = _leaf(cll_commands, "render", _not_implemented("cll render"))
+    render = _leaf(cll_commands, "render", _cll_render)
     render.add_argument("edition")
 
     who = commands.add_parser("who", help="identity attestation helpers")

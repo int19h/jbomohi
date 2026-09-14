@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
+GIT_OBJECT_ID = re.compile(r"^[0-9a-f]{40}$")
 
 
 class ArchiveError(RuntimeError):
@@ -53,7 +54,21 @@ def _validate_coverage(path: Path, value: object) -> dict[str, Any]:
                 f"manifest {path} has invalid coverage count {clean_key!r}"
             )
         clean_counts[clean_key] = count
-    return {"from": start, "to": end, "counts": clean_counts}
+    result: dict[str, Any] = {"from": start, "to": end, "counts": clean_counts}
+    if "refs" in value:
+        refs = value["refs"]
+        if not isinstance(refs, dict) or not refs:
+            raise ArchiveError(f"manifest {path} has invalid coverage.refs")
+        clean_refs: dict[str, str] = {}
+        for key, object_id in refs.items():
+            clean_key = _manifest_text(path, "coverage ref name", key)
+            if not isinstance(object_id, str) or not GIT_OBJECT_ID.fullmatch(object_id):
+                raise ArchiveError(
+                    f"manifest {path} has invalid git object for {clean_key!r}"
+                )
+            clean_refs[clean_key] = object_id
+        result["refs"] = clean_refs
+    return result
 
 
 @dataclass(frozen=True, slots=True)
@@ -150,6 +165,12 @@ class ArchiveManifest:
             f"{quote(name)} = {count}"
             for name, count in sorted(coverage["counts"].items())
         )
+        if "refs" in coverage:
+            lines.extend(["", "[coverage.refs]"])
+            lines.extend(
+                f"{quote(name)} = {quote(object_id)}"
+                for name, object_id in sorted(coverage["refs"].items())
+            )
         return "\n".join(lines) + "\n"
 
     def write(self, path: Path) -> None:

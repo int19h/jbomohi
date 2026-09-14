@@ -72,6 +72,25 @@ def test_archive_fetch_irc_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> No
     assert "downloaded=3 reused=4 manifests=1" in capsys.readouterr().out
 
 
+def test_archive_fetch_cll_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:
+    config = type("Config", (), {"archive": tmp_path})()
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.fetch_cll",
+        lambda archive: type(
+            "Report",
+            (),
+            {
+                "refs": {"refs/tags/v1.3.2": "a" * 40},
+                "reused_manifest": False,
+                "manifest": archive / "manifest.toml",
+            },
+        )(),
+    )
+    assert main(["archive", "fetch", "cll"]) == 0
+    assert "refs=1 reused=false" in capsys.readouterr().out
+
+
 def test_archive_fetch_dictionary_cli_wiring(
     monkeypatch, tmp_path: Path, capsys
 ) -> None:
@@ -269,3 +288,57 @@ def test_archive_ingest_tiki_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> 
         )
     ]
     assert "manifests=1 pages=2 events=3" in capsys.readouterr().out
+
+
+def test_cll_render_commits_missing_editions_through_the_target(
+    monkeypatch, tmp_path: Path, capsys
+) -> None:
+    config = type(
+        "Config", (), {"archive": tmp_path / "archive", "corpus": tmp_path / "corpus"}
+    )()
+    events = [
+        type("Event", (), {"source_id": "cll=one"})(),
+        type("Event", (), {"source_id": "cll=two"})(),
+        type("Event", (), {"source_id": "cll=three"})(),
+    ]
+    committed = []
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.init_corpus",
+        lambda _config: (type("Status", (), {"head": "a" * 40})(), False),
+    )
+    monkeypatch.setattr("jbomohi_tools.cli.project_cll", lambda _archive: iter(events))
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.git_output",
+        lambda _corpus, _args: "Source-Id: cll=one\n",
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.commit_event",
+        lambda event, corpus: committed.append((event.source_id, corpus)) or "b" * 40,
+    )
+    assert main(["cll", "render", "two"]) == 0
+    assert committed == [("cll=two", config.corpus)]
+    assert "edition=two commits=1" in capsys.readouterr().out
+
+
+def test_cll_render_rejects_a_nonprefix_existing_edition(
+    monkeypatch, tmp_path: Path
+) -> None:
+    config = type(
+        "Config", (), {"archive": tmp_path / "archive", "corpus": tmp_path / "corpus"}
+    )()
+    events = [
+        type("Event", (), {"source_id": "cll=one"})(),
+        type("Event", (), {"source_id": "cll=two"})(),
+    ]
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.init_corpus",
+        lambda _config: (type("Status", (), {"head": "a" * 40})(), False),
+    )
+    monkeypatch.setattr("jbomohi_tools.cli.project_cll", lambda _archive: iter(events))
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.git_output",
+        lambda _corpus, _args: "Source-Id: cll=two\n",
+    )
+    assert main(["cll", "render", "two"]) == 1

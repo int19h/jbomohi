@@ -1,5 +1,7 @@
 """Content-addressed raw archive support."""
 
+from .cll import CllFetchError, CllFetchReport
+from .cll import fetch as fetch_cll
 from .dictionary import (
     DictionaryFetchError,
     DictionaryFetchReport,
@@ -52,6 +54,8 @@ __all__ = [
     "ArchiveError",
     "ArchiveManifest",
     "ArchiveObject",
+    "CllFetchError",
+    "CllFetchReport",
     "DictionaryFetchError",
     "DictionaryFetchReport",
     "DictionaryIngestReport",
@@ -67,6 +71,7 @@ __all__ = [
     "TikiIngestReport",
     "extract_maildir_zip",
     "fetch_changes",
+    "fetch_cll",
     "fetch_irc",
     "fetch_jbosnu_raw",
     "fetch_mail_mboxes",
