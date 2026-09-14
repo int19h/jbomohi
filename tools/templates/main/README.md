@@ -58,7 +58,7 @@ workflow.
 
 Email addresses and names appear as they do in the public archives.
 Synthetic addresses used as git author placeholders (`…@mw.lojban.org`,
-`…@jbovlaste.lojban.org`, `irclogs@lojban.org`) are not deliverable.
+`…@jbovlaste.lojban.org`, `irclogs@irc.lojban.org`) are not deliverable.
 Rendered files (thread views, CLL edition text) are derived from the originals
 they name in their first line; the originals are the Maildir files and the
 `cll/src` submodule. Identities are recorded as dated, cited attestations, not

@@ -57,6 +57,36 @@ def test_archive_verify_rejects_corruption(tmp_path: Path) -> None:
         verify_archive(corpus, archive)
 
 
+def test_archive_verify_rejects_a_size_mismatch(tmp_path: Path) -> None:
+    corpus = tmp_path / "corpus"
+    archive = tmp_path / "archive"
+    manifest = write_fixture(corpus, archive, b"first payload")
+    digest_line = next(
+        line
+        for line in manifest.read_text().splitlines()
+        if line.startswith("sha256 = ")
+    )
+    digest = digest_line.split('"')[1]
+    object_path(archive, digest).write_bytes(b"different length")
+    with pytest.raises(ArchiveError, match="size mismatch"):
+        verify_archive(corpus, archive)
+
+
+def test_archive_verify_rejects_a_missing_object(tmp_path: Path) -> None:
+    corpus = tmp_path / "corpus"
+    archive = tmp_path / "archive"
+    manifest = write_fixture(corpus, archive, b"payload")
+    digest_line = next(
+        line
+        for line in manifest.read_text().splitlines()
+        if line.startswith("sha256 = ")
+    )
+    digest = digest_line.split('"')[1]
+    object_path(archive, digest).unlink()
+    with pytest.raises(ArchiveError, match="object missing"):
+        verify_archive(corpus, archive)
+
+
 def test_archive_verify_accepts_an_empty_manifest_set(tmp_path: Path) -> None:
     assert verify_archive(tmp_path / "corpus", tmp_path / "archive") == []
 
@@ -88,3 +118,35 @@ def test_manifest_round_trip_uses_deterministic_toml(tmp_path: Path) -> None:
     assert ArchiveManifest.load(path) == manifest
     with pytest.raises(ArchiveError, match="refusing to replace"):
         manifest.write(path)
+
+
+@pytest.mark.parametrize(
+    ("case", "message"),
+    [
+        ("missing-key", "is missing: notes"),
+        ("bad-sha", "invalid sha256"),
+        ("naive-fetched-at", "invalid fetched_at"),
+        ("negative-bytes", "invalid bytes"),
+    ],
+)
+def test_manifest_load_rejects_invalid_fields(
+    tmp_path: Path, case: str, message: str
+) -> None:
+    corpus = tmp_path / "corpus"
+    archive = tmp_path / "archive"
+    manifest = write_fixture(corpus, archive, b"payload")
+    text = manifest.read_text()
+    if case == "missing-key":
+        text = text.replace('notes = "test object"\n', "")
+    elif case == "bad-sha":
+        digest_line = next(
+            line for line in text.splitlines() if line.startswith("sha256 = ")
+        )
+        text = text.replace(digest_line, 'sha256 = "bad"')
+    elif case == "naive-fetched-at":
+        text = text.replace("2026-08-27T00:00:00Z", "2026-08-27T00:00:00")
+    elif case == "negative-bytes":
+        text = text.replace("bytes = 7", "bytes = -1")
+    manifest.write_text(text)
+    with pytest.raises(ArchiveError, match=message):
+        ArchiveManifest.load(manifest)

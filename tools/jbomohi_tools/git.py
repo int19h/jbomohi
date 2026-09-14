@@ -8,7 +8,7 @@ import stat
 import subprocess
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path, PurePosixPath
 from urllib.parse import quote
 
@@ -50,6 +50,25 @@ TRAILER_NAME = re.compile(r"^[A-Z][A-Za-z0-9-]*$")
 HEX_ESCAPE_SAFE = (
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$&'*+-/=?^_`{|}~."
 )
+GIT_REPOSITORY_ENV = {
+    "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+    "GIT_CEILING_DIRECTORIES",
+    "GIT_COMMON_DIR",
+    "GIT_DIR",
+    "GIT_INDEX_FILE",
+    "GIT_GLOB_PATHSPECS",
+    "GIT_GRAFT_FILE",
+    "GIT_ICASE_PATHSPECS",
+    "GIT_NAMESPACE",
+    "GIT_NOGLOB_PATHSPECS",
+    "GIT_NO_REPLACE_OBJECTS",
+    "GIT_OBJECT_DIRECTORY",
+    "GIT_PREFIX",
+    "GIT_QUARANTINE_PATH",
+    "GIT_REPLACE_REF_BASE",
+    "GIT_SHALLOW_FILE",
+    "GIT_WORK_TREE",
+}
 
 
 class GitError(RuntimeError):
@@ -68,11 +87,35 @@ def run_git(
     input_text: str | None = None,
     check: bool = True,
 ) -> subprocess.CompletedProcess[str]:
-    command = ["git", *args]
+    command = [
+        "git",
+        "-c",
+        "core.autocrlf=false",
+        "-c",
+        "core.safecrlf=false",
+        "-c",
+        f"core.attributesFile={os.devnull}",
+        "-c",
+        f"core.hooksPath={os.devnull}",
+        *args,
+    ]
     process_env = dict(os.environ)
-    process_env.update({"LC_ALL": "C", "TZ": "UTC"})
     if env:
         process_env.update(env)
+    for name in tuple(process_env):
+        if name in GIT_REPOSITORY_ENV or name.startswith("GIT_CONFIG_"):
+            process_env.pop(name)
+    process_env.update(
+        {
+            "GIT_CONFIG_GLOBAL": os.devnull,
+            "GIT_CONFIG_NOSYSTEM": "1",
+            "GIT_ATTR_NOSYSTEM": "1",
+            "GIT_LITERAL_PATHSPECS": "1",
+            "GIT_NO_REPLACE_OBJECTS": "1",
+            "LC_ALL": "C",
+            "TZ": "UTC",
+        }
+    )
     result = subprocess.run(
         command,
         cwd=cwd,
@@ -102,6 +145,28 @@ def _encoded_local_part(value: str) -> str:
     return quote(value, safe=HEX_ESCAPE_SAFE, encoding="utf-8", errors="strict")
 
 
+def _git_safe_mail_name(value: str) -> str:
+    """Percent-encode display-name bytes that git identity syntax cannot retain."""
+
+    name = _clean_text("mail display name", value)
+    name = name.replace("%", "%25").replace("<", "%3C").replace(">", "%3E")
+    if name.startswith("."):
+        name = "%2E" + name[1:]
+    if name.endswith("."):
+        name = name[:-1] + "%2E"
+    return name
+
+
+def _iso_date(label: str, value: str) -> date:
+    clean = _clean_text(label, value)
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", clean):
+        raise EventError(f"{label} must be an ISO date (YYYY-MM-DD)")
+    try:
+        return date.fromisoformat(clean)
+    except ValueError as exc:
+        raise EventError(f"{label} must be an ISO date (YYYY-MM-DD)") from exc
+
+
 @dataclass(frozen=True, slots=True)
 class Identity:
     """A source-scoped identity rendered into a git name and email."""
@@ -116,6 +181,15 @@ class Identity:
         _clean_text("identity namespace", self.namespace)
         if "@" not in self.email or any(char.isspace() for char in self.email):
             raise EventError("identity email must contain @ and no whitespace")
+        if "<" in self.email or ">" in self.email:
+            raise EventError("identity email must not contain < or >")
+        if (
+            "<" in self.name
+            or ">" in self.name
+            or self.name.startswith(".")
+            or self.name.endswith(".")
+        ):
+            raise EventError("identity name contains characters git cannot preserve")
         if self.namespace in {"mail", "contributed"}:
             return
         fixed = {
@@ -165,11 +239,17 @@ class Identity:
 
     @classmethod
     def mail(cls, address: str, display_name: str | None = None) -> Identity:
+        """Create a mail identity, explicitly escaping git-unsafe name syntax.
+
+        Git strips angle brackets and leading/trailing dots from author names.
+        Percent signs are escaped too, keeping this normalisation injective.
+        """
+
         email = _clean_text("mail address", address)
         if "@" not in email or any(char.isspace() for char in email):
             raise EventError("mail address must contain @ and no whitespace")
         local_part = email.rsplit("@", 1)[0]
-        return cls(display_name or local_part, email, "mail")
+        return cls(_git_safe_mail_name(display_name or local_part), email, "mail")
 
     @classmethod
     def anonymous(cls, host: str) -> Identity:
@@ -248,13 +328,21 @@ class Event:
         if self.time_confidence == "pre-epoch":
             if not self.source_date:
                 raise EventError("pre-epoch events require Source-Date")
+            _iso_date("Source-Date", self.source_date)
             if self.source_time >= EPOCH:
                 raise EventError("pre-epoch confidence requires a date before 1970")
         elif self.source_date is not None:
             raise EventError("Source-Date is only valid for pre-epoch events")
         if self.time_confidence == "window":
-            if not self.event_window or ".." not in self.event_window:
+            if not self.event_window:
                 raise EventError("window events require Event-Window as <from>..<to>")
+            parts = self.event_window.split("..")
+            if len(parts) != 2:
+                raise EventError("Event-Window must be <iso-date>..<iso-date>")
+            start = _iso_date("Event-Window start", parts[0])
+            end = _iso_date("Event-Window end", parts[1])
+            if start > end:
+                raise EventError("Event-Window start must not be after its end")
         elif self.event_window is not None:
             raise EventError("Event-Window is only valid for window events")
         if self.source_time < EPOCH and self.time_confidence != "pre-epoch":
@@ -264,6 +352,8 @@ class Event:
         if self.event == "refresh" and self.author != Identity.tool():
             raise EventError("refresh commits must use the jbomohi tool identity")
         changed = {_safe_repo_path(path).as_posix() for path in self.changes}
+        if any(not isinstance(value, (str, bytes)) for value in self.changes.values()):
+            raise EventError("event changes must contain only text or bytes")
         deleted = {_safe_repo_path(path).as_posix() for path in self.deletions}
         if changed & deleted:
             raise EventError("an event cannot both write and delete the same path")
@@ -303,14 +393,16 @@ def _commit_message(event: Event) -> str:
     return "\n".join(parts) + "\n"
 
 
-def _target(corpus: Path, relative: PurePosixPath) -> Path:
+def _target(
+    corpus: Path, relative: PurePosixPath, *, allow_final_symlink: bool = False
+) -> Path:
     current = corpus
     for part in relative.parts[:-1]:
         current = current / part
         if current.is_symlink():
             raise EventError(f"refusing to traverse symlink in corpus path: {relative}")
     target = corpus.joinpath(*relative.parts)
-    if target.is_symlink():
+    if target.is_symlink() and not allow_final_symlink:
         raise EventError(f"refusing to replace symlink in corpus path: {relative}")
     return target
 
@@ -318,6 +410,17 @@ def _target(corpus: Path, relative: PurePosixPath) -> Path:
 def _head(corpus: Path) -> str | None:
     result = run_git(corpus, ["rev-parse", "--verify", "HEAD"], check=False)
     return result.stdout.strip() if result.returncode == 0 else None
+
+
+def _tracked_at(corpus: Path, head: str | None, relative: PurePosixPath) -> bool:
+    if not head:
+        return False
+    result = run_git(
+        corpus,
+        ["cat-file", "-e", f"{head}:{relative.as_posix()}"],
+        check=False,
+    )
+    return result.returncode == 0
 
 
 def commit_event(event: Event, corpus: Path | None = None) -> str:
@@ -342,24 +445,34 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
     else:
         run_git(corpus, ["read-tree", "--empty"])
 
-    paths: list[str] = []
+    writes: list[tuple[str, Path, bytes]] = []
     for raw_path in sorted(event.changes):
         relative = _safe_repo_path(raw_path)
         target = _target(corpus, relative)
-        target.parent.mkdir(parents=True, exist_ok=True)
         value = event.changes[raw_path]
         data = value.encode("utf-8") if isinstance(value, str) else value
-        target.write_bytes(data)
-        target.chmod(stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
-        paths.append(relative.as_posix())
+        writes.append((relative.as_posix(), target, data))
+
+    deletions: list[tuple[str, Path]] = []
     for raw_path in sorted(event.deletions):
         relative = _safe_repo_path(raw_path)
-        target = _target(corpus, relative)
-        if target.exists():
-            if target.is_dir():
-                raise EventError(f"event deletions must name files: {raw_path!r}")
+        if not _tracked_at(corpus, old_head, relative):
+            raise EventError(f"deletion names an untracked path: {raw_path!r}")
+        target = _target(corpus, relative, allow_final_symlink=True)
+        if target.is_dir() and not target.is_symlink():
+            raise EventError(f"event deletions must name files: {raw_path!r}")
+        deletions.append((relative.as_posix(), target))
+
+    paths: list[str] = []
+    for relative, target, data in writes:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+        target.chmod(stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
+        paths.append(relative)
+    for relative, target in deletions:
+        if target.exists() or target.is_symlink():
             target.unlink()
-        paths.append(relative.as_posix())
+        paths.append(relative)
     if paths:
         run_git(corpus, ["add", "-A", "--", *paths])
 

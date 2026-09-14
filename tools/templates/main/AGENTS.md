@@ -121,7 +121,9 @@ Dictionary status is per definition (scores, `status`), not a ratification.
 - IRC: timestamps are in the log's own timezone (header line); bridged
   Discord/Telegram users appear as `<relaybot> <name>: …` (see
   `who/relays.toml`); the same person uses many nicks over 25 years and
-  `who/attestations.csv` only records cited claims about that.
+  `who/attestations.csv` only records cited claims about that. The May–October
+  2000 log is one undated block; only `[HH:MM]` times and rollover ordinals are
+  known.
 - CLL: `1997-online-draft` is the pre-print draft; `1.0-errata-2014` is a
   reconstruction; editions are aligned by section number (`_meta/cll/alignment.csv`).
 - Dictionary: definition history is exact only from ~2024 (Lensisku's version
@@ -130,7 +132,7 @@ Dictionary status is per definition (scores, `status`), not a ratification.
   Scores are aggregate; individual votes are not public.
 - Wiki and Tiki: anonymous or IP-only edits appear as `anonymous@<host>`.
 - Synthetic email addresses (`…@mw.lojban.org`, `…@jbovlaste.lojban.org`,
-  `irclogs@lojban.org`) are git placeholders, not addresses.
+  `irclogs@irc.lojban.org`) are git placeholders, not addresses.
 
 ## Multi-session coordination
 
