@@ -7,7 +7,7 @@ import hashlib
 import io
 import re
 from collections import Counter, defaultdict, deque
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, time, timedelta, timezone
 from pathlib import Path, PurePosixPath
@@ -69,6 +69,7 @@ MIRC_COLOR = re.compile(r"\x03(?:\d{1,2}(?:,\d{1,2})?)?")
 MIRC_HEX_COLOR = re.compile(r"\x04(?:[0-9A-Fa-f]{6}(?:,[0-9A-Fa-f]{6})?)?")
 ANSI_ESCAPE = re.compile(r"\x1b(?:\[[0-?]*[ -/]*[@-~])?")
 C0_CONTROL = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")
+SHA256 = re.compile(r"^[0-9a-f]{64}$")
 DAY_COLUMNS = (
     "date",
     "lines",
@@ -91,6 +92,24 @@ class SourceObject:
     channel: str
     path: str
     payload: bytes
+
+
+@dataclass(frozen=True, slots=True)
+class IrcAmendment:
+    """Update-mode identity for a changed archived day manifestation."""
+
+    sha256: str
+    supersedes_sha256: str | None
+
+    def validate(self) -> None:
+        if not SHA256.fullmatch(self.sha256):
+            raise IrcParseError("IRC amendment sha256 must be 64 lowercase hex digits")
+        if self.supersedes_sha256 is not None and not SHA256.fullmatch(
+            self.supersedes_sha256
+        ):
+            raise IrcParseError(
+                "IRC superseded sha256 must be 64 lowercase hex digits or none"
+            )
 
 
 @dataclass(frozen=True, slots=True)
@@ -713,8 +732,17 @@ def _merge_units(units: Sequence[IrcUnit]) -> IrcUnit:
     )
 
 
-def project(sources: Iterable[SourceObject]) -> Iterator[Event]:
-    """Project source objects to chronologically ordered IRC events."""
+def project(
+    sources: Iterable[SourceObject],
+    *,
+    amendments: Mapping[str, IrcAmendment] | None = None,
+) -> Iterator[Event]:
+    """Project source objects to chronologically ordered IRC events.
+
+    Initial builds omit ``amendments`` and receive stable date source IDs.
+    Update orchestration supplies changed output paths and archive digests;
+    the projector remains pure and emits the spec-defined unique edit IDs.
+    """
 
     parsed: list[IrcUnit] = []
     for source in sources:
@@ -722,6 +750,10 @@ def project(sources: Iterable[SourceObject]) -> Iterator[Event]:
     grouped: dict[str, list[IrcUnit]] = defaultdict(list)
     for unit in parsed:
         grouped[unit.output_path].append(unit)
+    unknown_amendments = set(amendments or {}) - set(grouped)
+    if unknown_amendments:
+        names = ", ".join(sorted(unknown_amendments))
+        raise IrcParseError(f"IRC amendments name unprojected paths: {names}")
     units = [_merge_units(group) for group in grouped.values()]
     units.sort(
         key=lambda unit: (unit.source_time, unit.channel, unit.date_key, unit.source)
@@ -746,14 +778,29 @@ def project(sources: Iterable[SourceObject]) -> Iterator[Event]:
             if missing:
                 gap_path = f"_meta/irc/{unit.channel}/gaps.csv"
                 changes[gap_path] = _render_gaps(missing)
+        amendment = (amendments or {}).get(unit.output_path)
+        event_kind = "import"
+        source_id = unit.date_key
+        trailers: dict[str, str] = {}
+        if amendment is not None:
+            amendment.validate()
+            event_kind = "edited"
+            source_id = f"{unit.date_key}@{amendment.sha256[:12]}"
+            previous = (
+                amendment.supersedes_sha256[:12]
+                if amendment.supersedes_sha256 is not None
+                else "none"
+            )
+            trailers["Supersedes-Manifestation"] = previous
         yield Event(
             source=f"irc/{unit.channel}",
-            source_id=unit.date_key,
-            event="import",
+            source_id=source_id,
+            event=event_kind,
             time_confidence=unit.time_confidence,
             source_time=unit.source_time,
             summary=f"{unit.date_key} ({unit.source_lines} lines)",
             author=Identity.irc(),
             changes=changes,
             event_window=unit.event_window,
+            trailers=trailers,
         )

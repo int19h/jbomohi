@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 from jbomohi_tools.git import Identity, commit_event
 from jbomohi_tools.project.irc import (
+    IrcAmendment,
     IrcParseError,
     SourceObject,
     parse_source,
@@ -273,6 +274,50 @@ def test_projected_days_commit_as_one_source_event_each(tmp_path: Path) -> None:
         "irclogs <irclogs@irc.lojban.org>|2014-03-01T04:07:13-08:00|2014-03-01",
         "irclogs <irclogs@irc.lojban.org>|2014-03-02T05:00:00-08:00|2014-03-02",
     ]
+
+
+def test_update_amendment_uses_unique_digest_id_and_supersession_trailer() -> None:
+    item = source(
+        "lojban/2014_03/2014_03_01.txt",
+        "2014-03-01 04:07:13 PST/-0800 <gleki> corrected\n",
+    )
+    output_path = "irc/lojban/2014/2014-03-01.txt"
+    [event] = list(
+        project(
+            [item],
+            amendments={
+                output_path: IrcAmendment("a" * 64, "b" * 64),
+            },
+        )
+    )
+    assert event.event == "edited"
+    assert event.source_id == "2014-03-01@aaaaaaaaaaaa"
+    assert event.trailers == {"Supersedes-Manifestation": "bbbbbbbbbbbb"}
+
+
+def test_update_amendment_rejects_noncanonical_digests() -> None:
+    item = source(
+        "lojban/2014_03/2014_03_01.txt",
+        "2014-03-01 04:07:13 PST/-0800 <gleki> corrected\n",
+    )
+    with pytest.raises(IrcParseError, match="64 lowercase hex"):
+        list(
+            project(
+                [item],
+                amendments={
+                    "irc/lojban/2014/2014-03-01.txt": IrcAmendment("short", None)
+                },
+            )
+        )
+    with pytest.raises(IrcParseError, match="unprojected paths"):
+        list(
+            project(
+                [item],
+                amendments={
+                    "irc/lojban/2014/missing.txt": IrcAmendment("a" * 64, None)
+                },
+            )
+        )
 
 
 def test_project_merges_overlapping_source_fragments() -> None:
