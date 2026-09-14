@@ -107,6 +107,85 @@ def test_archive_fetch_mail_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> N
     assert "list=lojban-list messages=7" in capsys.readouterr().out
 
 
+def test_archive_fetch_mhonarc_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:
+    config = SimpleNamespace(archive=tmp_path)
+    calls: list[tuple[Path, str, int | None]] = []
+
+    def fake_fetch(archive: Path, list_name: str, *, max_pages: int | None):
+        calls.append((archive, list_name, max_pages))
+        return SimpleNamespace(downloaded=2, reused=3, next_missing=5)
+
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr("jbomohi_tools.cli.fetch_mhonarc", fake_fetch)
+    assert (
+        main(
+            [
+                "archive",
+                "fetch",
+                "mhonarc",
+                "--list",
+                "announce",
+                "--max-pages",
+                "5",
+            ]
+        )
+        == 0
+    )
+    assert calls == [(tmp_path, "announce", 5)]
+    assert "downloaded=2 reused=3 next_missing=5" in capsys.readouterr().out
+
+
+def test_archive_fetch_jbosnu_raw_cli_wiring(
+    monkeypatch, tmp_path: Path, capsys
+) -> None:
+    config = SimpleNamespace(archive=tmp_path)
+    calls: list[Path] = []
+
+    def fake_fetch(archive: Path):
+        calls.append(archive)
+        return SimpleNamespace(messages=489, manifest=tmp_path / "manifest.toml")
+
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr("jbomohi_tools.cli.fetch_jbosnu_raw", fake_fetch)
+    assert main(["archive", "fetch", "jbosnu-raw"]) == 0
+    assert calls == [tmp_path]
+    assert "messages=489" in capsys.readouterr().out
+
+
+def test_archive_fetch_old_lojban_list_cli_wiring(
+    monkeypatch, tmp_path: Path, capsys
+) -> None:
+    config = SimpleNamespace(archive=tmp_path)
+    calls: list[tuple[Path, int | None]] = []
+
+    def fake_fetch(archive: Path, *, max_pages: int | None):
+        calls.append((archive, max_pages))
+        return SimpleNamespace(downloaded=2, reused=3, next_missing=6)
+
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr("jbomohi_tools.cli.fetch_old_lojban_list", fake_fetch)
+    assert main(["archive", "fetch", "old-lojban-list", "--max-pages", "5"]) == 0
+    assert calls == [(tmp_path, 5)]
+    assert "downloaded=2 reused=3 next_missing=6" in capsys.readouterr().out
+
+
+def test_archive_fetch_mail_mboxes_cli_wiring(
+    monkeypatch, tmp_path: Path, capsys
+) -> None:
+    config = SimpleNamespace(archive=tmp_path)
+    calls: list[Path] = []
+
+    def fake_fetch(archive: Path):
+        calls.append(archive)
+        return SimpleNamespace(downloaded=2, reused=3, messages=100)
+
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr("jbomohi_tools.cli.fetch_mail_mboxes", fake_fetch)
+    assert main(["archive", "fetch", "mail-mboxes"]) == 0
+    assert calls == [tmp_path]
+    assert "downloaded=2 reused=3 messages=100" in capsys.readouterr().out
+
+
 def test_archive_ingest_dictionary_cli_wiring(
     monkeypatch, tmp_path: Path, capsys
 ) -> None:

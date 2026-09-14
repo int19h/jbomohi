@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gzip
 import io
 import zipfile
 from datetime import UTC, datetime
@@ -9,8 +10,15 @@ import pytest
 from jbomohi_tools.archive.mail import (
     MailFetchError,
     extract_maildir_zip,
+    fetch_jbosnu_raw,
+    fetch_mail_mboxes,
     fetch_maildir_zip,
+    fetch_mhonarc,
+    fetch_old_lojban_list,
     inspect_maildir_zip,
+    load_mbox_manifestations,
+    load_mhonarc_manifestations,
+    load_old_lojban_manifestations,
 )
 from jbomohi_tools.archive.manifest import ArchiveManifest, object_path
 
@@ -68,3 +76,117 @@ def test_fetch_maildir_zip_writes_verified_manifest(tmp_path: Path) -> None:
     assert manifest.kind == "maildir-zip"
     assert manifest.coverage["counts"]["messages"] == 1
     assert object_path(tmp_path, manifest.sha256).is_file()
+
+
+def test_fetch_mhonarc_stops_at_404_and_resumes_existing_pages(tmp_path: Path) -> None:
+    page = b"""<!--X-Subject: Test -->
+<!--X-Date: Sat, 17 May 2003 15:37:00 &#45;0700 -->
+<!--X-Message-Id: test@example.org -->
+<li><em>From</em>: Test &lt;test@example.org&gt;</li>
+<!--X-Body-of-Message--><pre>body</pre><!--X-Body-of-Message-End-->
+"""
+
+    class Client:
+        def __init__(self) -> None:
+            self.urls: list[str] = []
+
+        def get(self, url: str) -> bytes | None:
+            self.urls.append(url)
+            return page if url.endswith("msg00000.html") else None
+
+    first_client = Client()
+    first = fetch_mhonarc(
+        tmp_path,
+        "announce",
+        client=first_client,
+        now=lambda: datetime(2026, 9, 14, tzinfo=UTC),
+    )
+    assert (first.downloaded, first.reused, first.next_missing) == (1, 0, 1)
+    assert ArchiveManifest.load(first.manifests[0]).kind == "mhonarc-page"
+
+    second_client = Client()
+    second = fetch_mhonarc(
+        tmp_path,
+        "announce",
+        client=second_client,
+        now=lambda: datetime(2026, 9, 15, tzinfo=UTC),
+    )
+    assert (second.downloaded, second.reused, second.next_missing) == (0, 1, 1)
+    assert second_client.urls == [
+        "https://mail.lojban.org/lists/announce/msg00001.html"
+    ]
+    [manifestation] = list(load_mhonarc_manifestations(tmp_path, "announce"))
+    assert manifestation.manifestation == "mhonarc"
+    assert b"Message-ID: <test@example.org>" in manifestation.raw.read()
+
+
+def test_fetch_jbosnu_raw_validates_mh_members_and_writes_manifest(
+    tmp_path: Path,
+) -> None:
+    payload = zip_bytes(
+        {
+            "jbosnu_raw/.mh_sequences": b"",
+            "jbosnu_raw/1": b"From: a@example.org\r\n\r\nbody",
+        }
+    )
+
+    class Client:
+        def download(self, url: str, destination) -> None:
+            assert url.endswith("/lists/jbosnu_raw.zip")
+            destination.write(payload)
+
+    report = fetch_jbosnu_raw(
+        tmp_path,
+        client=Client(),
+        now=lambda: datetime(2026, 9, 14, tzinfo=UTC),
+    )
+    assert report.messages == 1
+    manifest = ArchiveManifest.load(report.manifest)
+    assert manifest.kind == "mh-folder-zip"
+    assert object_path(tmp_path, manifest.sha256).is_file()
+
+
+def test_fetch_old_lojban_list_stops_and_loads_numbered_raw(tmp_path: Path) -> None:
+    raw = (
+        b"From sender@example.org Sat Jan 1 00:00:00 2000\n"
+        b"From: Sender <sender@example.org>\n"
+        b"Date: Sat, 1 Jan 2000 00:00:00 +0000\n"
+        b"Message-ID: <one@example.org>\n\nbody\n"
+    )
+
+    class Client:
+        def get(self, url: str) -> bytes | None:
+            return raw if url.endswith("/1") else None
+
+    report = fetch_old_lojban_list(
+        tmp_path,
+        client=Client(),
+        now=lambda: datetime(2026, 9, 14, tzinfo=UTC),
+    )
+    assert (report.downloaded, report.reused, report.next_missing) == (1, 0, 2)
+    [loaded] = list(load_old_lojban_manifestations(tmp_path))
+    assert loaded.raw.read().startswith(b"From: Sender")
+
+
+def test_fetch_mail_mboxes_discovers_validates_and_loads_gzip(tmp_path: Path) -> None:
+    raw = (
+        b"From sender@example.org Sat Jan 1 00:00:00 2000\n"
+        b"From: Sender <sender@example.org>\n"
+        b"Date: Sat, 1 Jan 2000 00:00:00 +0000\n"
+        b"Message-ID: <one@example.org>\n\nbody\n"
+    )
+
+    class Client:
+        def get(self, url: str) -> bytes | None:
+            if url.endswith("/lojban-list/"):
+                return b'<a href="lojban-0001.gz">one</a>'
+            return gzip.compress(raw)
+
+    report = fetch_mail_mboxes(
+        tmp_path,
+        client=Client(),
+        now=lambda: datetime(2026, 9, 14, tzinfo=UTC),
+    )
+    assert (report.downloaded, report.reused, report.messages) == (1, 0, 1)
+    [loaded] = list(load_mbox_manifestations(tmp_path))
+    assert b"Message-ID: <one@example.org>" in loaded.raw.read()

@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+import codecs
 import csv
 import hashlib
 import html
 import io
 import re
+import stat
 import unicodedata
+import zipfile
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, field, replace
@@ -24,6 +27,10 @@ from .dictionary import slug
 
 _MAX_MESSAGE_BYTES = 32 * 1024 * 1024
 _REFERENCE = re.compile(r"<([^<>]+)>")
+_MBOX_ENVELOPE = re.compile(
+    rb"^From \S+\s+(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun|Ukn)\s+"
+    rb"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+"
+)
 _RE_PREFIX = re.compile(r"^(?:(?:re|fwd?|aw|sv)(?:\[[0-9]+\])?:\s*)+", re.IGNORECASE)
 _LIST_PREFIX = re.compile(r"^(?:\[[^\]]+\]\s*)+")
 
@@ -83,6 +90,18 @@ class MailManifestation:
     provenance: str
     archive_order: int
     archive_time: datetime
+
+    def __post_init__(self) -> None:
+        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", self.list_name):
+            raise MailParseError(f"unsafe mail list name: {self.list_name!r}")
+        if self.archive_order < 0:
+            raise MailParseError("mail archive order must not be negative")
+        if self.archive_time.tzinfo is None:
+            raise MailParseError("mail archive time must include a UTC offset")
+        if not self.provenance or any(
+            character in self.provenance for character in "\r\n\0"
+        ):
+            raise MailParseError("mail provenance must be one non-empty line")
 
     @property
     def source_rank(self) -> int:
@@ -152,6 +171,26 @@ class _TextHTML(HTMLParser):
         return "\n".join(lines).strip("\n")
 
 
+class _MhonarcHTML(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == "br":
+            self.parts.append("\n")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in {"p", "div", "li"}:
+            self.parts.append("\n")
+
+    def handle_data(self, data: str) -> None:
+        self.parts.append(data)
+
+    def text(self) -> str:
+        return "".join(self.parts).strip("\r\n")
+
+
 def normalize_message_id(value: str) -> str:
     normalized = unicodedata.normalize("NFC", html.unescape(value)).strip()
     if normalized.startswith("<") and normalized.endswith(">"):
@@ -168,6 +207,101 @@ def normalize_subject(value: str) -> str:
         normalized = _RE_PREFIX.sub("", normalized)
         normalized = normalized.strip()
     return " ".join(normalized.split()).casefold()
+
+
+def _mhonarc_comment(document: str, name: str) -> list[str]:
+    pattern = re.compile(
+        rf"<!--X-{re.escape(name)}:\s*(.*?)\s*-->", re.IGNORECASE | re.DOTALL
+    )
+    return [
+        html.unescape(" ".join(match.group(1).split()))
+        for match in pattern.finditer(document)
+    ]
+
+
+def _mhonarc_rendered_header(document: str, name: str) -> str:
+    pattern = re.compile(
+        rf"<li><em>{re.escape(name)}</em>:\s*(.*?)</li>",
+        re.IGNORECASE | re.DOTALL,
+    )
+    matched = pattern.search(document)
+    if matched is None:
+        return ""
+    parser = _MhonarcHTML()
+    parser.feed(matched.group(1))
+    parser.close()
+    return " ".join(parser.text().split())
+
+
+def reconstruct_mhonarc(payload: bytes) -> bytes:
+    """Reconstruct deterministic RFC 822 from one MHonArc message page."""
+
+    try:
+        document = payload.decode("utf-8")
+    except UnicodeDecodeError:
+        document = payload.decode("cp1252")
+    message_ids = _mhonarc_comment(document, "Message-Id")
+    subjects = _mhonarc_comment(document, "Subject")
+    dates = _mhonarc_comment(document, "Date")
+    rendered_from = _mhonarc_rendered_header(document, "From")
+    plain_from = _mhonarc_comment(document, "From")
+    from_r13 = _mhonarc_comment(document, "From-R13")
+    from_value = (
+        rendered_from
+        or (plain_from[0] if plain_from else "")
+        or (codecs.decode(from_r13[0], "rot_13") if from_r13 else "")
+    )
+    message_id = message_ids[0] if message_ids else ""
+    subject = subjects[0] if subjects else _mhonarc_rendered_header(document, "Subject")
+    date_value = dates[0] if dates else _mhonarc_rendered_header(document, "Date")
+    to_value = _mhonarc_rendered_header(document, "To")
+    references = _mhonarc_comment(document, "Reference")
+    in_reply_to = _mhonarc_rendered_header(document, "In-reply-to")
+    begin = document.find("<!--X-Body-of-Message-->")
+    end = document.find("<!--X-Body-of-Message-End-->")
+    if begin < 0 or end < begin:
+        raise MailParseError("MHonArc page is missing its message body markers")
+    body_html = document[begin + len("<!--X-Body-of-Message-->") : end]
+    body_parser = _MhonarcHTML()
+    body_parser.feed(body_html)
+    body_parser.close()
+    body = body_parser.text()
+    headers = [
+        ("From", from_value),
+        ("Date", date_value),
+        ("Subject", subject or "[no subject]"),
+    ]
+    if to_value:
+        headers.append(("To", to_value))
+    if message_id:
+        headers.append(("Message-ID", f"<{normalize_message_id(message_id)}>"))
+    if references:
+        headers.append(
+            (
+                "References",
+                " ".join(f"<{normalize_message_id(value)}>" for value in references),
+            )
+        )
+    if in_reply_to:
+        values = _references(in_reply_to)
+        if values:
+            headers.append(("In-Reply-To", f"<{values[-1]}>"))
+    headers.extend(
+        [
+            ("Content-Type", "text/plain; charset=utf-8"),
+            ("X-Jbomohi-Manifestation", "mhonarc"),
+        ]
+    )
+    for name, value in headers:
+        if not value or any(character in value for character in "\r\n\0"):
+            raise MailParseError(f"MHonArc reconstructed {name} is invalid")
+    rendered_headers = "\r\n".join(f"{name}: {value}" for name, value in headers)
+    return (
+        rendered_headers
+        + "\r\n\r\n"
+        + body.replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\r\n")
+        + "\r\n"
+    ).encode("utf-8")
 
 
 def _references(value: str) -> tuple[str, ...]:
@@ -388,6 +522,156 @@ def load_maildir(
                 archive_time=archive_time,
             )
             order += 1
+
+
+def numbered_rfc822(raw: bytes) -> bytes:
+    """Remove the transport mbox envelope from one numbered raw message."""
+
+    first, separator, rest = raw.partition(b"\n")
+    if _MBOX_ENVELOPE.match(first.rstrip(b"\r")) and separator:
+        return rest
+    return raw
+
+
+def load_numbered_rfc822(
+    root: Path,
+    *,
+    list_name: str,
+    manifestation: str = "old-lojban-list",
+    provenance_prefix: str | None = None,
+) -> Iterator[MailManifestation]:
+    """Load a directory of numeric raw messages, dropping mbox envelopes."""
+
+    paths = sorted(
+        (path for path in root.iterdir() if path.is_file() and path.name.isdigit()),
+        key=lambda path: int(path.name),
+    )
+    for order, path in enumerate(paths):
+        raw = numbered_rfc822(RawMessage(path=path).read())
+        yield MailManifestation(
+            list_name=list_name,
+            raw=RawMessage(payload=raw),
+            manifestation=manifestation,
+            provenance=(
+                f"{provenance_prefix}/{path.name}" if provenance_prefix else str(path)
+            ),
+            archive_order=order,
+            archive_time=datetime(1970, 1, 1, tzinfo=UTC),
+        )
+
+
+def load_mbox(
+    path: Path,
+    *,
+    list_name: str,
+    provenance_prefix: str | None = None,
+) -> Iterator[MailManifestation]:
+    """Split one mboxo file while preserving RFC 822 bytes."""
+
+    raw = RawMessage(path=path).read()
+    yield from mbox_manifestations(
+        raw,
+        list_name=list_name,
+        provenance_prefix=provenance_prefix or str(path),
+    )
+
+
+def split_mbox(raw: bytes) -> list[bytes]:
+    """Split mboxo bytes and unescape transport-escaped From lines."""
+
+    messages: list[bytes] = []
+    current: list[bytes] = []
+    seen_envelope = False
+    lines = raw.splitlines(keepends=True)
+    for index, line in enumerate(lines):
+        next_is_header = index + 1 < len(lines) and bool(
+            re.match(rb"^[!-9;-~]+:", lines[index + 1])
+        )
+        if _MBOX_ENVELOPE.match(line.rstrip(b"\r\n")) and (
+            next_is_header or index == 0
+        ):
+            if seen_envelope and current:
+                messages.append(b"".join(current))
+            current = []
+            seen_envelope = True
+            continue
+        if seen_envelope:
+            current.append(line[1:] if line.startswith(b">From ") else line)
+    if seen_envelope and current:
+        messages.append(b"".join(current))
+    if not messages:
+        raise MailParseError("mbox contains no messages")
+    return messages
+
+
+def mbox_manifestations(
+    raw: bytes,
+    *,
+    list_name: str,
+    provenance_prefix: str,
+) -> Iterator[MailManifestation]:
+    """Yield manifestations from already decompressed mboxo bytes."""
+
+    messages = split_mbox(raw)
+    for order, payload in enumerate(messages):
+        yield MailManifestation(
+            list_name=list_name,
+            raw=RawMessage(payload=payload),
+            manifestation="files-mbox",
+            provenance=(f"{provenance_prefix}#{order + 1}"),
+            archive_order=order,
+            archive_time=datetime(1970, 1, 1, tzinfo=UTC),
+        )
+
+
+def load_mh_zip(
+    path: Path,
+    *,
+    list_name: str = "jbosnu",
+    provenance_prefix: str = "jbosnu_raw.zip",
+) -> Iterator[MailManifestation]:
+    """Load numeric RFC 822 messages from the public jbosnu MH-folder zip."""
+
+    try:
+        with zipfile.ZipFile(path) as archive:
+            members: list[tuple[int, zipfile.ZipInfo]] = []
+            for info in archive.infolist():
+                member = Path(info.filename)
+                mode = info.external_attr >> 16
+                if (
+                    member.is_absolute()
+                    or ".." in member.parts
+                    or "\\" in info.filename
+                    or stat.S_ISLNK(mode)
+                ):
+                    raise MailParseError(f"unsafe MH zip member: {info.filename!r}")
+                if info.is_dir() or member.name == ".mh_sequences":
+                    continue
+                if (
+                    len(member.parts) != 2
+                    or member.parts[0] != "jbosnu_raw"
+                    or not member.name.isdigit()
+                ):
+                    raise MailParseError(f"unexpected MH zip member: {info.filename!r}")
+                if info.file_size > _MAX_MESSAGE_BYTES:
+                    raise MailParseError(
+                        f"MH zip message is too large: {info.filename!r}"
+                    )
+                members.append((int(member.name), info))
+            if not members:
+                raise MailParseError(f"MH zip contains no numeric messages: {path}")
+            for order, (_number, info) in enumerate(sorted(members)):
+                payload = archive.read(info)
+                yield MailManifestation(
+                    list_name=list_name,
+                    raw=RawMessage(payload=payload),
+                    manifestation="jbosnu-raw",
+                    provenance=f"{provenance_prefix}/{info.filename}",
+                    archive_order=order,
+                    archive_time=datetime(1970, 1, 1, tzinfo=UTC),
+                )
+    except (OSError, zipfile.BadZipFile, zipfile.LargeZipFile) as exc:
+        raise MailParseError(f"cannot load MH zip {path}: {exc}") from exc
 
 
 def _link(parent: _Container, child: _Container) -> None:

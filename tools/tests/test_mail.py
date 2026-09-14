@@ -1,14 +1,19 @@
 from __future__ import annotations
 
+import zipfile
 from datetime import UTC, datetime
 
 from jbomohi_tools.project.mail import (
     MailManifestation,
     RawMessage,
     deduplicate,
+    load_mbox,
+    load_mh_zip,
+    load_numbered_rfc822,
     normalize_message_id,
     normalize_subject,
     project,
+    reconstruct_mhonarc,
 )
 
 
@@ -124,3 +129,59 @@ def test_missing_message_id_gets_raw_hash_identity_and_window_date() -> None:
     assert events[0].source_id.endswith("@jbomohi.invalid")
     assert events[0].time_confidence == "window"
     assert events[0].event_window == "2026-01-01..2026-01-01"
+
+
+def test_reconstruct_mhonarc_uses_comments_headers_and_rendered_body() -> None:
+    page = b"""<!--X-Subject: Re: Test -->
+<!--X-Date: Sat, 17 May 2003 15:37:00 &#45;0700 -->
+<!--X-Message-Id: child@example.org -->
+<!--X-Reference: root@example.org -->
+<li><em>From</em>: Robin &lt;<a href="mailto:r@example.org">r@example.org</a>&gt;</li>
+<li><em>To</em>: list@example.org</li>
+<li><em>In-reply-to</em>: &lt;root@example.org&gt;</li>
+<!--X-Body-of-Message--><pre>one &amp; two
+three</pre><!--X-Body-of-Message-End-->
+"""
+    reconstructed = reconstruct_mhonarc(page)
+    assert b"From: Robin <r@example.org>\r\n" in reconstructed
+    assert b"Message-ID: <child@example.org>\r\n" in reconstructed
+    assert b"References: <root@example.org>\r\n" in reconstructed
+    assert b"X-Jbomohi-Manifestation: mhonarc\r\n" in reconstructed
+    assert reconstructed.endswith(b"one & two\r\nthree\r\n")
+
+
+def test_numbered_raw_and_mbox_adapters_remove_transport_envelopes(
+    tmp_path,
+) -> None:
+    numbered = tmp_path / "numbered"
+    numbered.mkdir()
+    (numbered / "1").write_bytes(
+        b"From sender@example.org Sat Jan 1 00:00:00 2000\n"
+        + message("one@example.org")
+    )
+    [raw_message] = list(load_numbered_rfc822(numbered, list_name="lojban-list"))
+    assert raw_message.raw.read().startswith(b"From: Alice")
+
+    mbox = tmp_path / "mail.mbox"
+    mbox.write_bytes(
+        b"orphaned preamble is not a message\n"
+        b"From sender@example.org Sat Jan 1 00:00:00 2000\n"
+        + message("one@example.org", body=">From escaped\nFrom ordinary body line")
+        + b"\nFrom sender@example.org Sat Jan 1 00:01:00 2000\n"
+        + message("two@example.org", body="second")
+    )
+    loaded = list(load_mbox(mbox, list_name="lojban-list"))
+    assert len(loaded) == 2
+    assert b"\r\nFrom escaped" in loaded[0].raw.read()
+    assert b"From ordinary body line" in loaded[0].raw.read()
+
+
+def test_mh_zip_adapter_loads_only_numeric_message_members(tmp_path) -> None:
+    path = tmp_path / "jbosnu_raw.zip"
+    with zipfile.ZipFile(path, "w") as archive:
+        archive.writestr("jbosnu_raw/.mh_sequences", "unseen: 2")
+        archive.writestr("jbosnu_raw/2", message("two@example.org"))
+        archive.writestr("jbosnu_raw/1", message("one@example.org"))
+    loaded = list(load_mh_zip(path))
+    assert [item.archive_order for item in loaded] == [0, 1]
+    assert b"<one@example.org>" in loaded[0].raw.read()
