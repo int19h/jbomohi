@@ -6,7 +6,7 @@ import argparse
 import logging
 from collections.abc import Callable, Sequence
 
-from .archive import ArchiveError, verify_archive
+from .archive import ArchiveError, fetch_irc, verify_archive, verify_manifests
 from .config import Config, ConfigError
 from .corpus import CorpusError, corpus_status, init_corpus
 from .git import EventError, GitError
@@ -47,10 +47,21 @@ def _corpus_status(_args: argparse.Namespace, config: Config) -> int:
 
 def _archive_verify(_args: argparse.Namespace, config: Config) -> int:
     status = corpus_status(config.corpus)
-    if not status.exists:
-        raise CorpusError(f"corpus worktree does not exist: {config.corpus}")
-    manifests = verify_archive(config.corpus, config.archive)
+    manifests = verify_manifests(config.archive / "manifests", config.archive)
+    if status.exists:
+        manifests.extend(verify_archive(config.corpus, config.archive))
     print(f"archive verify: ok ({len(manifests)} manifests)")
+    return 0
+
+
+def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
+    if args.source != "irc":
+        return _not_implemented(f"archive fetch {args.source}")(args, config)
+    report = fetch_irc(config.archive, args.since)
+    print(
+        f"archive fetch irc: downloaded={report.downloaded_logs} "
+        f"reused={report.reused_logs} manifests={len(report.manifests)}"
+    )
     return 0
 
 
@@ -78,7 +89,7 @@ def parser() -> argparse.ArgumentParser:
         "archive", help="manage content-addressed raw archives"
     )
     archive_commands = archive.add_subparsers(dest="archive_command", required=True)
-    fetch = _leaf(archive_commands, "fetch", _not_implemented("archive fetch"))
+    fetch = _leaf(archive_commands, "fetch", _archive_fetch)
     fetch.add_argument("source")
     fetch.add_argument("--since")
     _leaf(archive_commands, "verify", _archive_verify)

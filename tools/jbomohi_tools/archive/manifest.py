@@ -198,8 +198,9 @@ def store_object(archive: Path, payload: bytes) -> ArchiveObject:
     return ArchiveObject(path=path, sha256=digest, bytes=len(payload))
 
 
-def verify_archive(corpus: Path, archive: Path) -> list[Path]:
-    manifest_root = corpus / "_meta" / "archive"
+def verify_manifests(manifest_root: Path, archive: Path) -> list[Path]:
+    """Verify every manifest below an explicit archive-manifest root."""
+
     if not manifest_root.exists():
         return []
     verified: list[Path] = []
@@ -229,3 +230,7 @@ def verify_archive(corpus: Path, archive: Path) -> list[Path]:
             raise ArchiveError(f"archive object sha256 mismatch for {path}")
         verified.append(path)
     return verified
+
+
+def verify_archive(corpus: Path, archive: Path) -> list[Path]:
+    return verify_manifests(corpus / "_meta" / "archive", archive)
