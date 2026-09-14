@@ -8,10 +8,10 @@ Three databases are wanted; one dump each, gzip'd, with a `sha256sum` line for e
 
 ## 1. Lensisku (this is also the jbovlaste data)
 
-Lensisku's PostgreSQL database *is* the jbovlaste database migrated in place (same `users`, `valsi`, `definitions`, `comments`, `definitionvotes` tables and ids), so one dump covers both. If a separate, frozen jbovlaste database still exists as well, please dump it the same way (§1b) — it is the only place a pre-migration state could differ.
+Lensisku's PostgreSQL database (`lojban_lens`) *is* the jbovlaste database migrated in place (same `users`, `valsi`, `definitions`, `comments`, `definitionvotes` tables and ids), so one dump covers both. If a separate, frozen jbovlaste database still exists as well (a `jbovlaste` database distinct from `lojban_lens`), please dump it the same way (§1b) — it is the only place a pre-migration state could differ; if `lojban_lens` is the only one, §1b does not apply.
 
 ```sh
-DB=lensisku   # adjust
+DB=lojban_lens   # the Lensisku database (contains the migrated jbovlaste tables)
 
 # a) everything except the tables that hold private data
 pg_dump -Fp --no-owner --no-privileges --exclude-table-data='*' --schema-only "$DB" > lensisku-schema.sql
