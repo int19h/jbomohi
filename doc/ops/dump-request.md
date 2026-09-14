@@ -2,7 +2,7 @@
 
 Purpose: jbomo'i (`https://github.com/int19h/jbomohi`) republishes the Lojban community's **public** record as a git repository with one commit per source event (wiki revision, definition edit, comment, …). Everything that is publicly visible on the sites goes in; everything that is not (passwords, e-mails, tokens, sessions, private messages, payments, IP addresses, unpublished/queued content, per-user notes, per-voter vote rows) must never leave your machine. The commands below produce exactly that split. Details and the reasoning behind every table are in `doc/research/dump-schemas.md` in the repository (verified against the jbovlaste, Lensisku, MediaWiki 1.38 and Tiki sources).
 
-Three databases are wanted; one dump each, gzip'd, with a `sha256sum` line for each file. Rough sizes: Lensisku/jbovlaste tens of MB, MediaWiki a few hundred MB (the `text` table), Tiki tens of MB. Any transfer method is fine (a URL behind HTTP auth, scp, …); the files are consumed locally and are never checked into git or uploaded to CI.
+Three databases are wanted; one dump each, gzip'd, with a `sha256sum` line for each file (a `SHA256SUMS` file next to the dumps is ideal). Rough sizes: Lensisku/jbovlaste tens of MB, MediaWiki a few hundred MB (the `text` table), Tiki tens of MB. Any transfer method is fine (a URL behind HTTP auth, scp, …); the files are consumed locally and are never checked into git or uploaded to CI.
 
 ---
 
@@ -95,11 +95,17 @@ MYSQLDUMP="mysqldump --single-transaction --quick --no-tablespaces \
 
 # a) pages, history, forums/comments, action log, categories, links
 $MYSQLDUMP $DB \
-  tiki_pages tiki_history tiki_comments tiki_forums tiki_actionlog \
+  tiki_pages tiki_history tiki_comments tiki_actionlog \
   tiki_categories tiki_category_objects tiki_links tiki_wiki_attachments \
   tiki_pages_translation_bits tiki_translated_objects \
   | gzip > tiki-content.sql.gz
 # (drop any table that does not exist in your Tiki version)
+
+# NOT tiki_forums: it holds forum_password and a PLAINTEXT inbound_pop_password.
+# Export only its public columns instead:
+mysql --batch --raw $DB -e \
+  "SELECT forumId, name, description, created, lastPost, comments, threads, moderator, section FROM tiki_forums" \
+  | gzip > tiki-forums.tsv.gz
 
 # b) users: login only, plus the public preference rows (real name, "information public/private")
 mysql --batch --raw $DB -e "SELECT userId, login FROM users_users" | gzip > tiki-users.tsv.gz
@@ -110,7 +116,7 @@ mysql --batch --raw $DB -e \
 sha256sum tiki-*.gz
 ```
 
-Deliberately **not** requested: every other `users_users` column (`password`, `provpass`, `hash`, `challenge`, `valid`, `email`, login timestamps, avatars), `tiki_forums.forum_password` / `inbound_pop_password`, `tiki_page_footnotes` (private per-user notes), `tiki_comments_queue` / `tiki_forums_queue` (never-published posts), `tiki_semaphores`, session/login tables, galleries and file blobs. The requested tables contain IP columns (`tiki_pages.ip`, `tiki_history.ip`, `tiki_comments.user_ip`, `tiki_actionlog.ip`); if you can null them before dumping (`UPDATE … SET ip=''` on a copy) please do — otherwise our importer discards them and they never enter the repository.
+Deliberately **not** requested: every other `users_users` column (`password`, `provpass`, `hash`, `challenge`, `valid`, `email`, login timestamps, avatars), the whole `tiki_forums` table (see above — its password columns cannot be filtered by `mysqldump`), `tiki_page_footnotes` (private per-user notes), `tiki_comments_queue` / `tiki_forums_queue` (never-published posts), `tiki_semaphores`, session/login tables, galleries and file blobs. The requested tables contain IP columns (`tiki_pages.ip`, `tiki_history.ip`, `tiki_comments.user_ip`, `tiki_actionlog.ip`); if you can null them before dumping (`UPDATE … SET ip=''` on a copy) please do — otherwise our importer discards them and they never enter the repository.
 
 ---
 
