@@ -4,7 +4,7 @@ import gzip
 from pathlib import Path
 
 import pytest
-from jbomohi_tools.archive.manifest import ArchiveManifest, object_path
+from jbomohi_tools.archive.manifest import ArchiveError, ArchiveManifest, object_path
 from jbomohi_tools.archive.tiki import ingest_tiki_export
 from jbomohi_tools.project.tiki import (
     RawTikiDump,
@@ -13,7 +13,6 @@ from jbomohi_tools.project.tiki import (
     decode_character_text,
     decode_history_blob,
     is_anonymous_tiki_user,
-    is_ip_tiki_user,
     load_tiki_dump,
     load_tiki_users,
     migrated_title_map,
@@ -53,6 +52,43 @@ def test_load_tiki_dump_checks_field_count_and_forbidden_tables(tmp_path: Path) 
     with pytest.raises(TikiParseError, match="forbidden private table tiki_forums"):
         load_tiki_dump(bad, {})
 
+    wrong_count = tmp_path / "wrong-count.sql.gz"
+    wrong_count.write_bytes(
+        gzip.compress(
+            b"CREATE TABLE `sample` (\n  `id` int,\n  `text` text\n) ENGINE=MyISAM;\n"
+            b"INSERT INTO `sample` VALUES (1);\n"
+        )
+    )
+    with pytest.raises(TikiParseError, match="has 1 values.*expected 2"):
+        load_tiki_dump(
+            wrong_count,
+            {"sample": ("id", "text")},
+            forbidden=frozenset(),
+        )
+
+    wrong_schema = tmp_path / "wrong-schema.sql.gz"
+    wrong_schema.write_bytes(
+        gzip.compress(
+            b"CREATE TABLE `sample` (\n  `id` int,\n  `changed` text\n) ENGINE=MyISAM;\n"
+            b"INSERT INTO `sample` VALUES (1,'x');\n"
+        )
+    )
+    with pytest.raises(TikiParseError, match="unexpected schema"):
+        load_tiki_dump(
+            wrong_schema,
+            {"sample": ("id", "text")},
+            forbidden=frozenset(),
+        )
+
+    missing_schema = tmp_path / "missing-schema.sql.gz"
+    missing_schema.write_bytes(gzip.compress(b"INSERT INTO `sample` VALUES (1,'x');\n"))
+    with pytest.raises(TikiParseError, match="missing schemas for: sample"):
+        load_tiki_dump(
+            missing_schema,
+            {"sample": ("id", "text")},
+            forbidden=frozenset(),
+        )
+
 
 def test_tiki_text_decoders_take_every_byte_preserving_branch() -> None:
     assert decode_character_text(b"caf\xe9", "test", "latin1-transcoded") == (
@@ -83,7 +119,6 @@ def test_tiki_anonymous_user_forms() -> None:
     assert is_anonymous_tiki_user("")
     assert is_anonymous_tiki_user("Anonymous")
     assert not is_anonymous_tiki_user("192.0.2.1")
-    assert is_ip_tiki_user("192.0.2.1")
     assert not is_anonymous_tiki_user("xorxes")
 
 
@@ -202,6 +237,84 @@ def test_project_keeps_history_only_and_colliding_current_as_forced_final() -> N
                 ),
                 _row(
                     threadId=b"101",
+                    object=b"1",
+                    objectType=b"forum",
+                    parentId=b"100",
+                    userName=b"bob",
+                    commentDate=b"251",
+                    title=b"Reply",
+                    data=b"reply body",
+                    message_id=b"reply@example.invalid",
+                    in_reply_to=b"topic@example.invalid",
+                    approved=b"y",
+                ),
+                _row(
+                    threadId=b"102",
+                    object=b"1",
+                    objectType=b"forum",
+                    parentId=b"101",
+                    userName=b"alice",
+                    commentDate=b"252",
+                    title=b"Nested",
+                    data=b"nested body",
+                    message_id=b"nested@example.invalid",
+                    in_reply_to=b"reply@example.invalid",
+                    approved=b"y",
+                ),
+                _row(
+                    threadId=b"103",
+                    object=b"1",
+                    objectType=b"forum",
+                    parentId=b"999",
+                    userName=b"alice",
+                    commentDate=b"253",
+                    title=b"Dangling",
+                    data=b"dangling body",
+                    message_id=b"dangling@example.invalid",
+                    in_reply_to=b"missing@example.invalid",
+                    approved=b"y",
+                ),
+                _row(
+                    threadId=b"104",
+                    object=b"4",
+                    objectType=b"forum",
+                    parentId=b"0",
+                    userName=b"alice",
+                    commentDate=b"254",
+                    title=b"Test forum",
+                    data=b"skip",
+                    message_id=b"",
+                    in_reply_to=b"",
+                    approved=b"y",
+                ),
+                _row(
+                    threadId=b"105",
+                    object=b"5",
+                    objectType=b"forum",
+                    parentId=b"0",
+                    userName=b"alice",
+                    commentDate=b"255",
+                    title=b"Mail mirror",
+                    data=b"skip",
+                    message_id=b"",
+                    in_reply_to=b"",
+                    approved=b"y",
+                ),
+                _row(
+                    threadId=b"106",
+                    object=b"1",
+                    objectType=b"forum",
+                    parentId=b"0",
+                    userName=b"alice",
+                    commentDate=b"256",
+                    title=b"Unapproved",
+                    data=b"skip",
+                    message_id=b"",
+                    in_reply_to=b"",
+                    approved=b"n",
+                ),
+                _row(
+                    threadId=b"110",
                     object=b"Page",
                     objectType=b"wiki page",
                     parentId=b"0",
@@ -223,6 +336,9 @@ def test_project_keeps_history_only_and_colliding_current_as_forced_final() -> N
     )
     events = list(project(data, users, character_encoding="latin1-transcoded"))
     source_ids = [event.source_id for event in events]
+    assert "tiki=forum/104" not in source_ids
+    assert "tiki=forum/105" not in source_ids
+    assert "tiki=forum/106" not in source_ids
     history = events[source_ids.index("tiki=Page@1")]
     current = events[source_ids.index("tiki=Page@current")]
     assert events.index(history) < events.index(current)
@@ -231,12 +347,21 @@ def test_project_keeps_history_only_and_colliding_current_as_forced_final() -> N
     assert current.trailers["Ordering"] == "forced-final"
     forum = events[source_ids.index("tiki=forum/100")]
     assert "Alice Public" in forum.changes["tiki/forums/WikiDiscuss/100.txt"]
-    comment = events[source_ids.index("tiki=comment/101")]
+    nested = events[source_ids.index("tiki=forum/102")]
+    assert "tiki/forums/WikiDiscuss/100.txt" in nested.changes
+    assert nested.trailers["Topic-Id"] == "100"
+    dangling = events[source_ids.index("tiki=forum/103")]
+    assert "tiki/forums/WikiDiscuss/103.txt" in dangling.changes
+    comment = events[source_ids.index("tiki=comment/110")]
     assert "page comment" in comment.changes["tiki/talk/Page.txt"]
     gaps = events[-1].changes["_meta/tiki/gaps.csv"]
     assert "Old,tiki/Old.tiki,no current row; rename/deletion undocumented" in gaps
     assert "tiki=Binary@1,Binary,tiki/Binary.tiki,non-text page content" in gaps
     assert "tiki=Binary@current,Binary,tiki/Binary.tiki,non-text page content" in gaps
+    assert (
+        "tiki=forum/103,WikiDiscuss post 103,tiki/forums/WikiDiscuss/103.txt,forum parent 999 absent from export"
+        in gaps
+    )
     assert all("tiki/Binary.tiki" not in event.changes for event in events)
     control = next(
         event for event in events if event.source_id == "tiki=Line%0D%0ABreak@1"
@@ -250,6 +375,124 @@ def test_project_keeps_history_only_and_colliding_current_as_forced_final() -> N
     assert "ascii_content_different_collisions = 1" in coverage
     assert "forced_final_current_rows = 1" in coverage
     assert "binary_page_versions_skipped = 2" in coverage
+    assert "dangling_forum_parents = 1" in coverage
+    assert '[skipped_forum_posts]\n"4" = 1\n"5" = 1' in coverage
+    assert "unapproved_comments_skipped = 1" in coverage
+
+
+def test_project_normal_page_orders_two_history_rows_then_current() -> None:
+    data = RawTikiDump(
+        {
+            "tiki_pages": (
+                _row(
+                    page_id=b"10",
+                    pageName=b"Page",
+                    data=b"current",
+                    lastModif=b"300",
+                    comment=b"current",
+                    version=b"3",
+                    user=b"alice",
+                    is_html=b"0",
+                ),
+            ),
+            "tiki_history": (
+                _row(
+                    historyId=b"1",
+                    pageName=b"Page",
+                    version=b"1",
+                    lastModif=b"100",
+                    user=b"alice",
+                    comment=b"one",
+                    data=b"one",
+                    is_html=b"0",
+                ),
+                _row(
+                    historyId=b"2",
+                    pageName=b"Page",
+                    version=b"2",
+                    lastModif=b"200",
+                    user=b"alice",
+                    comment=b"two",
+                    data=b"two",
+                    is_html=b"0",
+                ),
+            ),
+            "tiki_comments": (),
+            "tiki_actionlog": (),
+        }
+    )
+    users = TikiUsers(frozenset({"alice"}), {})
+    events = list(project(data, users, character_encoding="latin1-transcoded"))
+    assert [event.source_id for event in events] == [
+        "tiki=Page@1",
+        "tiki=Page@2",
+        "tiki=Page@current",
+    ]
+    assert [event.event for event in events] == ["created", "edited", "edited"]
+    assert "Ordering" not in events[-1].trailers
+
+
+@pytest.mark.parametrize(
+    "pages",
+    [
+        (
+            _row(
+                page_id=b"1",
+                pageName=b"Same",
+                data=b"one",
+                lastModif=b"100",
+                comment=b"",
+                version=b"1",
+                user=b"alice",
+                is_html=b"0",
+            ),
+            _row(
+                page_id=b"2",
+                pageName=b"Same",
+                data=b"two",
+                lastModif=b"101",
+                comment=b"",
+                version=b"1",
+                user=b"alice",
+                is_html=b"0",
+            ),
+        ),
+        (
+            _row(
+                page_id=b"1",
+                pageName=b"A B",
+                data=b"one",
+                lastModif=b"100",
+                comment=b"",
+                version=b"1",
+                user=b"alice",
+                is_html=b"0",
+            ),
+            _row(
+                page_id=b"2",
+                pageName=b"A_B",
+                data=b"two",
+                lastModif=b"101",
+                comment=b"",
+                version=b"1",
+                user=b"alice",
+                is_html=b"0",
+            ),
+        ),
+    ],
+)
+def test_project_rejects_duplicate_current_or_slug_collision(pages) -> None:
+    data = RawTikiDump(
+        {
+            "tiki_pages": pages,
+            "tiki_history": (),
+            "tiki_comments": (),
+            "tiki_actionlog": (),
+        }
+    )
+    users = TikiUsers(frozenset({"alice"}), {})
+    with pytest.raises(TikiParseError, match="duplicate current|slug collision"):
+        list(project(data, users, character_encoding="latin1-transcoded"))
 
 
 def test_ingest_tiki_export_writes_three_operator_export_manifests(
@@ -291,3 +534,7 @@ def test_ingest_tiki_export_writes_three_operator_export_manifests(
         assert manifest.kind == "db-export"
         assert manifest.origin == "operator export 2026-09-13"
         assert object_path(archive, manifest.sha256).is_file()
+
+    (export / "tiki-user-preferences.tsv.gz").unlink()
+    with pytest.raises(ArchiveError, match="is missing"):
+        ingest_tiki_export(tmp_path / "other-archive", export, "2026-09-13")

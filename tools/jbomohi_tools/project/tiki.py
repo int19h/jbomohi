@@ -7,7 +7,6 @@ import gzip
 import heapq
 import html
 import io
-import ipaddress
 import json
 import re
 from collections import Counter, defaultdict
@@ -415,14 +414,6 @@ def is_anonymous_tiki_user(value: str) -> bool:
     return not value or value == "Anonymous"
 
 
-def is_ip_tiki_user(value: str) -> bool:
-    try:
-        ipaddress.ip_address(value)
-    except ValueError:
-        return False
-    return True
-
-
 def _load_tsv(
     path: Path, columns: Sequence[str]
 ) -> tuple[Mapping[str, bytes | None], ...]:
@@ -782,6 +773,31 @@ def _render_comment_file(comments: Sequence[_Comment], users: TikiUsers) -> str:
     return "\n".join(parts)
 
 
+def _forum_topic(
+    item: _Comment, comments: Mapping[int, _Comment]
+) -> tuple[int, int | None]:
+    """Walk parentId to the topic root, retaining evidence for missing parents."""
+
+    current = item
+    seen = {item.thread_id}
+    while current.parent_id:
+        parent_id = current.parent_id
+        if parent_id in seen:
+            raise TikiParseError(
+                f"Tiki forum parent cycle at post {item.thread_id}: {parent_id}"
+            )
+        seen.add(parent_id)
+        parent = comments.get(parent_id)
+        if parent is None:
+            return current.thread_id, parent_id
+        if parent.object_type != "forum" or parent.object_name != item.object_name:
+            raise TikiParseError(
+                f"Tiki forum post {item.thread_id} crosses object at parent {parent_id}"
+            )
+        current = parent
+    return current.thread_id, None
+
+
 def _toml_key(value: str) -> str:
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -868,7 +884,7 @@ def project(
     ]
     included_comments: list[_Comment] = []
     wiki_discuss_posts = 0
-    skipped_forum_posts = 0
+    skipped_forum_posts: Counter[str] = Counter()
     page_comments = 0
     skipped_other_comments = 0
     unapproved_comments = 0
@@ -892,12 +908,27 @@ def project(
                 wiki_discuss_posts += 1
                 included_comments.append(item)
             else:
-                skipped_forum_posts += 1
+                skipped_forum_posts[item.object_name] += 1
         elif item.object_type == "wiki page":
             page_comments += 1
             included_comments.append(item)
         else:
             skipped_other_comments += 1
+
+    # Forum 1 is the only projected forum (WikiDiscuss); ids 4 and 5 are the
+    # test forum and mailing-list mirror respectively.
+    forum_comments = {
+        item.thread_id: item for item in comments if item.object_type == "forum"
+    }
+    forum_topics: dict[int, int] = {}
+    dangling_forum: dict[int, int] = {}
+    for item in included_comments:
+        if item.object_type != "forum":
+            continue
+        topic_id, missing_parent = _forum_topic(item, forum_comments)
+        forum_topics[item.thread_id] = topic_id
+        if missing_parent is not None:
+            dangling_forum[item.thread_id] = missing_parent
 
     remaining_history = {title: len(items) for title, items in history_by_title.items()}
     heap: list[tuple[datetime, str, int, _Operation]] = []
@@ -985,7 +1016,7 @@ def project(
         assert operation.kind == "comment" and isinstance(operation.value, _Comment)
         item = operation.value
         if item.object_type == "forum":
-            topic_id = item.thread_id if item.parent_id == 0 else item.parent_id
+            topic_id = forum_topics[item.thread_id]
             path = f"tiki/forums/WikiDiscuss/{topic_id}.txt"
             source_id = f"tiki=forum/{item.thread_id}"
             suffix = f"forum post {item.thread_id}"
@@ -1045,6 +1076,15 @@ def project(
             "reason": "non-text page content (NUL bytes); preserved in archive object",
         }
         for item in sorted(binary_versions, key=lambda value: value.source_id)
+    )
+    gaps.extend(
+        {
+            "source_id": f"tiki=forum/{thread_id}",
+            "title": f"WikiDiscuss post {thread_id}",
+            "path": f"tiki/forums/WikiDiscuss/{forum_topics[thread_id]}.txt",
+            "reason": f"forum parent {parent_id} absent from export",
+        }
+        for thread_id, parent_id in sorted(dangling_forum.items())
     )
     page_rows = []
     for title in all_titles:
@@ -1124,11 +1164,22 @@ def project(
         f"forced_final_current_rows = {forced_final}",
         f"wiki_discuss_posts = {wiki_discuss_posts}",
         f"page_comments = {page_comments}",
-        f"skipped_forum_posts = {skipped_forum_posts}",
+        f"dangling_forum_parents = {len(dangling_forum)}",
+        f"skipped_forum_posts_total = {sum(skipped_forum_posts.values())}",
         f"skipped_other_comments = {skipped_other_comments}",
         f"unapproved_comments_skipped = {unapproved_comments}",
         f"null_parent_topics = {null_parent_topics}",
     ]
+    coverage_lines.extend(
+        [
+            "",
+            "[skipped_forum_posts]",
+            *(
+                f"{_toml_key(forum_id)} = {count}"
+                for forum_id, count in sorted(skipped_forum_posts.items())
+            ),
+        ]
+    )
     for table in sorted(fidelity_rows):
         coverage_lines.extend(
             [
