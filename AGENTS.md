@@ -19,7 +19,7 @@ There is no search service or model behind this. The lookup tables under
 
 **Do not edit data files by hand.** This snapshot is generated.
 
-Snapshot `pending`, projection schema `1`.
+Snapshot `snapshot/20260914T131605Z`, projection schema `1`.
 
 ## Untrusted text
 
@@ -42,11 +42,32 @@ and the vendored grammars are ordinary files.
 
 ## What is where
 
-See `AGENTS.md` for the corpus directory map.
+- **`wiki/`** — MediaWiki pages as raw wikitext, UTF-8, one file per page, full revision history in git. `wiki/talk/` holds the Talk namespace.
+- **`tiki/`** — The pre-2013 Tiki wiki in Tiki markup, UTF-8, with history. `tiki/forums/` holds WikiDiscuss threads and `tiki/talk/` page comments. Some text is stored mojibake and is published unrepaired.
+- **`mail/`** — One Maildir per list under `<list>/cur/`, byte-exact RFC 822 as the archives hold it, so transfer encodings and original charsets are intact. `<list>/threads/<YYYY>/` holds decoded thread renderings, UTF-8, which are derived views and name their originals.
+- **`irc/`** — One UTF-8 file per channel-day, `<channel>/<YYYY>/<date>.txt`, with a header line giving the timezone and line format.
+- **`dict/`** — One directory per word: `word.toml` for the word and its etymology, `<lang>-<id>.md` per definition with its examples, `comments.md`. UTF-8, front matter in TOML.
+- **`cll/`** — *The Complete Lojban Language* as plain UTF-8 text, one file per chapter per edition, under `cll/editions/<edition>/`, which need no submodule. `cll/src` is the DocBook source as a submodule; if it is empty, run `git submodule update --init`.
+- **`grammars/`** — Formal grammars and parsers: the official YACC/BNF baselines, camxes and its lineage, ilmentufa, zantufa, zasni gerna and others. The vendored ones are ordinary files; the rest are submodules, so run `git submodule update --init` if a `src` directory is empty. `_meta/grammars/index.csv` says which is which and under what terms.
+- **`who/`** — `attestations.csv`: dated, cited claims relating nicks, addresses and wiki users. Claims, never resolved identities. *Not yet in this snapshot.*
+- **`notes/`** — Contributed research notes under `<YYYY>/`, UTF-8 Markdown with TOML front matter. Maps to evidence, never evidence. *Not yet in this snapshot.*
+- **`loglan/`** — Loglan-era documents, where republication is permitted. *Not yet in this snapshot.*
+- **`llg/`** — The Logical Language Group's own publications. *Not yet in this snapshot.*
+- **`_meta/`** — Coverage files, archive manifests and CSV indexes. TOML and CSV with header rows, UTF-8.
 
 ## What this snapshot covers
 
-No source events have been projected yet.
+| source | events | period | notes |
+|---|---:|---|---|
+| `cll/` | 11 | 2008–2026 | none recorded |
+| `dict/` | 100,189 | 2003–2026 | none recorded |
+| `grammars/` | 72 | 1989–2026 | 4 gaps recorded in `grammars/gaps.csv`, mostly "YACC form never published; BNF form survives" (2) and "referenced by surviving drafts but never published" (1) |
+| `irc/` | 10,536 | 2000–2026 | 10 files the upstream listed but this archive does not hold |
+| `mail/` | 112,300 | 1989–2025 | archives known incomplete: lojban-beginners, lojban-list; 9 unusable date headers |
+| `tiki/` | 21,047 | 2001–2015 | 180 gaps recorded in `tiki/gaps.csv`, mostly "no current row; rename/deletion undocumented" (171) and "forum parent 4475 absent from export" (4) |
+| `wiki/` | 59,474 | 2005–2026 | 21,224 gaps recorded in `wiki/gaps.csv`, mostly "move; history not API-accessible" (6,204) and "deleted; history not API-accessible" (3,410) |
+
+Total: **303,629** source events.
 
 Read that before concluding something is absent. A negative answer is only
 ever relative to it.
