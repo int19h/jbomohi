@@ -318,7 +318,7 @@ Python ≥ 3.13 with `uv`; package `jbomohi_tools`, CLI `jbomohi` (`uv run jbomo
 jbomohi corpus init|status                  create / inspect ./corpus (worktree of main)
 jbomohi archive fetch <source> [--since …]  fetch into the archive tier; write manifests
 jbomohi archive verify                      sha256-check every manifest
-jbomohi build [--sources …] [--until DATE]  full deterministic rebuild of main (orphan root)
+jbomohi build [--sources …] [--until DATE]  full deterministic rebuild of main (orphan root; --until is refused until every selected projector accepts the cut-off itself, since a merge-time filter would drop the _meta files that ride each stream's final event — decided 2026-09-14)
 jbomohi update [<source> …]                 append new events; refresh; tag snapshot/<ts>
 jbomohi verify                              invariants (§4.4)
 jbomohi cll render <edition>                per-edition rendering (§3.6)
