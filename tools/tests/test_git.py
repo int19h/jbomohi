@@ -196,6 +196,11 @@ def test_mail_name_normalisation_is_preserved_in_the_commit(tmp_path: Path) -> N
     assert git(corpus, "show", "-s", "--format=%an") == "%2EJohn %3Cjc%3E%25%2E"
 
 
+def test_mail_name_edge_whitespace_is_encoded_injectively() -> None:
+    assert Identity.mail("john@example.org", " John ").name == "%20John%20"
+    assert Identity.mail("john@example.org", "%20John%20").name == "%2520John%2520"
+
+
 def test_maildir_cur_file_is_materialized_read_only_but_git_mode_is_portable(
     tmp_path: Path,
 ) -> None:

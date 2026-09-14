@@ -160,13 +160,29 @@ def _encoded_local_part(value: str) -> str:
 def _git_safe_name(value: str, *, label: str = "identity name") -> str:
     """Injectively encode source-name syntax that git cannot retain."""
 
-    name = _clean_text(label, value)
+    if (
+        not isinstance(value, str)
+        or not value
+        or any(character in value for character in "\r\n\0")
+    ):
+        raise EventError(f"{label} must be non-empty text without line breaks or NUL")
+    name = value
     name = name.replace("%", "%25").replace("<", "%3C").replace(">", "%3E")
+    name = "".join(
+        f"%{ord(character):02X}" if ord(character) < 32 else character
+        for character in name
+    )
+    while name and name[0].isspace():
+        encoded = "".join(f"%{byte:02X}" for byte in name[0].encode("utf-8"))
+        name = encoded + name[1:]
+    while name and name[-1].isspace():
+        encoded = "".join(f"%{byte:02X}" for byte in name[-1].encode("utf-8"))
+        name = name[:-1] + encoded
     if name.startswith("."):
         name = "%2E" + name[1:]
     if name.endswith("."):
         name = name[:-1] + "%2E"
-    return name
+    return _clean_text(label, name)
 
 
 def _iso_date(label: str, value: str) -> date:

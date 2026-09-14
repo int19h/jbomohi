@@ -12,6 +12,7 @@ from .irc import IrcFetchError
 from .irc import fetch as fetch_irc
 from .mail import (
     MAILDIR_LISTS,
+    MHONARC_GAP_LISTS,
     MHONARC_LISTS,
     MaildirZipInventory,
     MailFetchError,
@@ -27,6 +28,7 @@ from .mail import (
     fetch_mhonarc,
     fetch_old_lojban_list,
     inspect_maildir_zip,
+    load_jbosnu_manifestations,
     load_mbox_manifestations,
     load_mhonarc_manifestations,
     load_old_lojban_manifestations,
@@ -45,6 +47,7 @@ from .tiki import TikiIngestReport, ingest_tiki_export
 
 __all__ = [
     "MAILDIR_LISTS",
+    "MHONARC_GAP_LISTS",
     "MHONARC_LISTS",
     "ArchiveError",
     "ArchiveManifest",
@@ -73,6 +76,7 @@ __all__ = [
     "ingest_dictionary_exports",
     "ingest_tiki_export",
     "inspect_maildir_zip",
+    "load_jbosnu_manifestations",
     "load_mbox_manifestations",
     "load_mhonarc_manifestations",
     "load_old_lojban_manifestations",

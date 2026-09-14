@@ -7,6 +7,7 @@ import csv
 import hashlib
 import html
 import io
+import json
 import re
 import stat
 import unicodedata
@@ -400,9 +401,22 @@ def parse_mail(manifestation: MailManifestation) -> ParsedMail:
     had_message_id = bool(normalized_id)
     if not normalized_id:
         normalized_id = f"{raw_sha1}@jbomohi.invalid"
-    subject = _decoded_header(message, "Subject") or "[no subject]"
-    from_header = _decoded_header(message, "From") or "unknown"
+    subject = _decoded_header(message, "Subject")
+    if not subject.strip():
+        subject = "[no subject]"
+    from_header = _decoded_header(message, "From")
+    if not from_header.strip():
+        from_header = "unknown"
     from_name, from_address = parseaddr(from_header)
+    if (
+        not from_address
+        or "@" not in from_address
+        or any(character.isspace() for character in from_address)
+    ):
+        angle_addresses = re.findall(r"<([^<>\s]+@[^<>\s]+)>", from_header)
+        if len(angle_addresses) == 1:
+            from_address = angle_addresses[0]
+            from_name = from_header.split("<", 1)[0].strip(" \"'")
     if not from_address or "@" not in from_address:
         from_address = f"unknown-{raw_sha1[:12]}@jbomohi.invalid"
         from_name = from_header
@@ -958,6 +972,7 @@ def project(
             trailers=trailers,
         )
         if pending_event is not None:
+            pending_event.validate()
             yield pending_event
         pending_event = event
 
@@ -1006,6 +1021,16 @@ def project(
     ]
     final_changes = dict(pending_event.changes)
     for list_name in sorted(by_list):
+        list_messages = [
+            message
+            for message in prepared
+            if message.manifestation.list_name == list_name
+        ]
+        list_duplicates = [
+            item
+            for item in duplicates
+            if item.winner.manifestation.list_name == list_name
+        ]
         final_changes[f"_meta/mail/{list_name}/messages.csv"] = _csv_text(
             (
                 "list",
@@ -1037,4 +1062,37 @@ def project(
             ),
             [row for row in duplicate_rows if row["list"] == list_name],
         )
-    yield replace(pending_event, changes=final_changes)
+        manifestation_counts: dict[str, int] = defaultdict(int)
+        for message in list_messages:
+            manifestation_counts[message.manifestation.manifestation] += 1
+        for item in list_duplicates:
+            manifestation_counts[item.loser.manifestation.manifestation] += 1
+        confidence_counts: dict[str, int] = defaultdict(int)
+        for message in list_messages:
+            confidence_counts[message.time_confidence] += 1
+        coverage = [
+            f"list = {json.dumps(list_name)}",
+            f"manifestations = {len(list_messages) + len(list_duplicates)}",
+            f"unique_messages = {len(list_messages)}",
+            f"duplicates = {len(list_duplicates)}",
+            f"missing_message_id = {sum(not item.had_message_id for item in list_messages)}",
+            f"spam_suspect = {sum(item.spam_suspect for item in list_messages)}",
+            'jbovlaste_admin = "excluded; machine-generated source available separately"',
+            "",
+            "[manifestation_counts]",
+            *(
+                f"{json.dumps(name)} = {count}"
+                for name, count in sorted(manifestation_counts.items())
+            ),
+            "",
+            "[time_confidence]",
+            *(
+                f"{json.dumps(name)} = {count}"
+                for name, count in sorted(confidence_counts.items())
+            ),
+            "",
+        ]
+        final_changes[f"_meta/mail/{list_name}/coverage.toml"] = "\n".join(coverage)
+    final_event = replace(pending_event, changes=final_changes)
+    final_event.validate()
+    yield final_event

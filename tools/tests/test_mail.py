@@ -79,10 +79,28 @@ def test_dedupe_keeps_more_headers_then_source_rank() -> None:
         source="files-mbox",
         provenance="mbox/rich",
     )
-    winners, duplicates = deduplicate((sparse, rich))
+    richest = manifestation(
+        message(
+            "same@example.org",
+            body="richest",
+            extra=(
+                "List-Id: <lojban-list.example.org>",
+                "X-Archive: final",
+                "X-Extra: present",
+            ),
+        ),
+        order=2,
+        source="old-lojban-list",
+        provenance="numbered/richest",
+    )
+    winners, duplicates = deduplicate((sparse, rich, richest))
     assert len(winners) == 1
-    assert winners[0].manifestation.provenance == "mbox/rich"
-    assert duplicates[0].loser.manifestation.provenance == "maildir/sparse"
+    assert winners[0].manifestation.provenance == "numbered/richest"
+    assert len(duplicates) == 2
+    assert all(
+        item.winner.manifestation.provenance == "numbered/richest"
+        for item in duplicates
+    )
 
 
 def test_project_keeps_raw_maildir_and_builds_reference_thread() -> None:
@@ -119,6 +137,7 @@ def test_project_keeps_raw_maildir_and_builds_reference_thread() -> None:
     assert events[0].trailers["Thread"] == events[1].trailers["Thread"]
     assert all(len(event.subject) <= 72 for event in events)
     assert "_meta/mail/lojban-list/messages.csv" in events[-1].changes
+    assert "_meta/mail/lojban-list/coverage.toml" in events[-1].changes
     assert "mail/lojban-list/new/.keep" in events[0].changes
     assert "mail/lojban-list/tmp/.keep" in events[0].changes
 

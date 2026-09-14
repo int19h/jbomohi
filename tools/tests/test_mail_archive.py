@@ -16,6 +16,7 @@ from jbomohi_tools.archive.mail import (
     fetch_mhonarc,
     fetch_old_lojban_list,
     inspect_maildir_zip,
+    load_jbosnu_manifestations,
     load_mbox_manifestations,
     load_mhonarc_manifestations,
     load_old_lojban_manifestations,
@@ -144,6 +145,8 @@ def test_fetch_jbosnu_raw_validates_mh_members_and_writes_manifest(
     manifest = ArchiveManifest.load(report.manifest)
     assert manifest.kind == "mh-folder-zip"
     assert object_path(tmp_path, manifest.sha256).is_file()
+    [loaded] = list(load_jbosnu_manifestations(tmp_path))
+    assert b"From: a@example.org" in loaded.raw.read()
 
 
 def test_fetch_old_lojban_list_stops_and_loads_numbered_raw(tmp_path: Path) -> None:

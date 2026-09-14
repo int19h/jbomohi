@@ -62,6 +62,8 @@ MHONARC_LISTS = (
     "lojban_story",
     "pod",
 )
+MHONARC_GAP_LISTS = ("lojban-beginners",)
+_MHONARC_SUPPORTED = frozenset((*MHONARC_LISTS, *MHONARC_GAP_LISTS))
 _TRANSIENT_HTTP = {429, 500, 502, 503, 504}
 _MAX_ZIP_BYTES = 1024 * 1024 * 1024
 _MAX_MEMBERS = 250_000
@@ -234,7 +236,7 @@ class MhonarcHttpClient:
             or not any(
                 parsed.path.startswith(f"/lists/{name}/msg")
                 and parsed.path.endswith(".html")
-                for name in MHONARC_LISTS
+                for name in _MHONARC_SUPPORTED
             )
         ):
             raise MailFetchError(f"invalid MHonArc URL: {url}")
@@ -587,8 +589,8 @@ def fetch_mhonarc(
 ) -> MhonarcFetchReport:
     """Crawl dense MHonArc message numbers until the first HTTP 404."""
 
-    if list_name not in MHONARC_LISTS:
-        raise MailFetchError(f"unsupported MHonArc-only list: {list_name!r}")
+    if list_name not in _MHONARC_SUPPORTED:
+        raise MailFetchError(f"unsupported MHonArc list: {list_name!r}")
     if max_pages is not None and max_pages < 1:
         raise MailFetchError("max_pages must be positive")
     fetched_at = now()
@@ -721,6 +723,30 @@ def fetch_jbosnu_raw(
         temporary.unlink(missing_ok=True)
 
 
+def load_jbosnu_manifestations(archive: Path) -> Iterator[MailManifestation]:
+    """Load the archived raw jbosnu MH folder."""
+
+    root = archive / "manifests" / "mail" / "jbosnu" / "mh-folder-zip"
+    paths = sorted(root.glob("*.toml")) if root.exists() else []
+    if len(paths) != 1:
+        raise MailFetchError(
+            f"expected exactly one jbosnu MH manifest, found {len(paths)}"
+        )
+    manifest = ArchiveManifest.load(paths[0])
+    obj = object_path(archive, manifest.sha256)
+    if not obj.is_file() or obj.stat().st_size != manifest.bytes:
+        raise MailFetchError(f"jbosnu MH object missing or wrong-sized: {obj}")
+    for item in load_mh_zip(obj, provenance_prefix=manifest.origin):
+        yield MailManifestation(
+            list_name=item.list_name,
+            raw=item.raw,
+            manifestation=item.manifestation,
+            provenance=item.provenance,
+            archive_order=item.archive_order,
+            archive_time=manifest.fetched_at,
+        )
+
+
 def load_mhonarc_manifestations(
     archive: Path, list_name: str
 ) -> Iterator[MailManifestation]:
@@ -785,6 +811,16 @@ def fetch_old_lojban_list(
             if not obj.is_file() or obj.stat().st_size != manifest.bytes:
                 raise MailFetchError(f"numbered raw-mail object missing: {obj}")
             raw = obj.read_bytes()
+            parse_mail(
+                MailManifestation(
+                    list_name="lojban-list",
+                    raw=RawMessage(payload=numbered_rfc822(raw)),
+                    manifestation="old-lojban-list",
+                    provenance=manifest.origin,
+                    archive_order=index,
+                    archive_time=manifest.fetched_at,
+                )
+            )
             reused += 1
             path = existing_path
         else:
