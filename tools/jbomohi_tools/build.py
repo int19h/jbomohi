@@ -290,7 +290,7 @@ def build_corpus(
     if dirty:
         raise CorpusError("corpus worktree is dirty; refusing transactional build")
 
-    temporary_root = config.repo_root / "tmp"
+    temporary_root = config.tmp
     temporary_root.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(
         prefix="jbomohi-build-", dir=temporary_root

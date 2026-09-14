@@ -601,7 +601,9 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
     """
 
     event.validate()
-    actual_corpus = corpus or Path(os.environ.get("JBOMOHI_CORPUS", "./corpus"))
+    actual_corpus = corpus or Path(
+        os.environ.get("JBOMOHI_CORPUS", Path.home() / "lojban" / "corpus")
+    )
     corpus = actual_corpus.expanduser().resolve()
     if not (corpus / ".git").exists():
         raise GitError(f"not a corpus worktree: {corpus}")

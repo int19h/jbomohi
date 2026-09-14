@@ -32,7 +32,12 @@ def test_mediawiki_pages_from_corpus_supplies_tiki_mapping_input(
 
 
 def test_source_factories_rejects_unmerged_source(tmp_path: Path) -> None:
-    config = Config(tmp_path, tmp_path / "corpus", tmp_path / "archive")
+    config = Config(
+        tmp_path / "repo",
+        tmp_path / "state/corpus",
+        tmp_path / "state/archive",
+        tmp_path / "state/tmp",
+    )
     with pytest.raises(SourceWiringError, match="not merged: wiki"):
         source_factories(config, ("wiki",))
     assert set(source_factories(config, ("irc",))) == {"irc"}
@@ -67,7 +72,12 @@ def write_tiki_manifests(config: Config, encodings: tuple[str, str, str]) -> Non
 def test_tiki_events_reads_the_agreed_manifest_encoding(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    config = Config(tmp_path, tmp_path / "corpus", tmp_path / "archive")
+    config = Config(
+        tmp_path / "repo",
+        tmp_path / "state/corpus",
+        tmp_path / "state/archive",
+        tmp_path / "state/tmp",
+    )
     write_tiki_manifests(
         config, ("latin1-transcoded", "latin1-transcoded", "latin1-transcoded")
     )
@@ -96,7 +106,12 @@ def test_tiki_events_reads_the_agreed_manifest_encoding(
 
 
 def test_tiki_events_rejects_disagreeing_manifest_encodings(tmp_path: Path) -> None:
-    config = Config(tmp_path, tmp_path / "corpus", tmp_path / "archive")
+    config = Config(
+        tmp_path / "repo",
+        tmp_path / "state/corpus",
+        tmp_path / "state/archive",
+        tmp_path / "state/tmp",
+    )
     write_tiki_manifests(config, ("latin1-transcoded", "utf8", "latin1-transcoded"))
     with pytest.raises(SourceWiringError, match="disagree on character_encoding"):
         tiki_events(config)
@@ -105,7 +120,12 @@ def test_tiki_events_rejects_disagreeing_manifest_encodings(tmp_path: Path) -> N
 def test_mail_gap_markers_clear_only_at_named_inventory_counts(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    config = Config(tmp_path, tmp_path / "corpus", tmp_path / "archive")
+    config = Config(
+        tmp_path / "repo",
+        tmp_path / "state/corpus",
+        tmp_path / "state/archive",
+        tmp_path / "state/tmp",
+    )
     old_root = config.archive / "manifests/mail/lojban-list/old-lojban-list"
     beginners_root = config.archive / "manifests/mail/lojban-beginners/mhonarc"
     old_root.mkdir(parents=True)
@@ -141,3 +161,5 @@ def test_mail_gap_markers_clear_only_at_named_inventory_counts(
     assert list(mail_events(config)) == []
     assert set(observed["lojban-list"]) == {"lojban_list_old"}
     assert "lojban-beginners" not in observed
+    assert config.tmp.is_dir()
+    assert not (config.repo_root / "tmp").exists()

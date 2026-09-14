@@ -50,7 +50,13 @@ def seed_tools_repo(path: Path) -> str:
 
 def clone_and_init(seed: Path, clone: Path) -> tuple[Config, str]:
     run(seed.parent, "git", "clone", "--branch", "tools", str(seed), str(clone))
-    config = Config(repo_root=clone, corpus=clone / "corpus", archive=clone / "archive")
+    state = clone.parent / f"{clone.name}-state"
+    config = Config(
+        repo_root=clone,
+        corpus=state / "corpus",
+        archive=state / "archive",
+        tmp=state / "tmp",
+    )
     status, created = init_corpus(config)
     assert created
     assert status.branch == "main"
@@ -123,7 +129,12 @@ def test_corpus_init_rejects_an_unrelated_main_repository(tmp_path: Path) -> Non
     unrelated = tmp_path / "corpus"
     unrelated.mkdir()
     git(unrelated, "init", "--initial-branch=main")
-    config = Config(repo_root=tools, corpus=unrelated, archive=tmp_path / "archive")
+    config = Config(
+        repo_root=tools,
+        corpus=unrelated,
+        archive=tmp_path / "archive",
+        tmp=tmp_path / "tmp",
+    )
     with pytest.raises(CorpusError, match="not a worktree of the tools repository"):
         init_corpus(config)
 
