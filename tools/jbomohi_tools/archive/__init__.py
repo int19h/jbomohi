@@ -20,6 +20,7 @@ from .manifest import (
     verify_archive,
     verify_manifests,
 )
+from .tiki import TikiIngestReport, ingest_tiki_export
 
 __all__ = [
     "ArchiveError",
@@ -30,9 +31,11 @@ __all__ = [
     "DictionaryIngestReport",
     "IrcFetchError",
     "IrcFetchReport",
+    "TikiIngestReport",
     "fetch_changes",
     "fetch_irc",
     "ingest_dictionary_exports",
+    "ingest_tiki_export",
     "object_path",
     "store_file",
     "store_object",
