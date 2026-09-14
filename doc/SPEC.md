@@ -49,7 +49,7 @@ Two branches with **no shared history**; neither is ever merged into the other.
 
 ### 2.2 Working layout (maintainers)
 
-Checkout `tools` at the repository root; the corpus is a git worktree of `main` at `./corpus/` (gitignored), created by `jbomohi corpus init` (`git worktree add corpus main`, or `--orphan` when `main` does not exist). Tools resolve it from `JBOMOHI_CORPUS` (default `./corpus`). Untracked local state: `./corpus/`, `./tmp/`, `./.venv/`. The ignored `./.exchange/` path is legacy local state, not active coordination, and tools MUST NOT depend on it.
+Checkout `tools` at the repository root; the corpus is a git worktree of `main` created by `jbomohi corpus init` (`git worktree add <path> main`, or `--orphan` when `main` does not exist). **Bulk local state never lives under the checkout** (decided 2026-09-14: `~/git` is a virtiofs mount and is slow for many small files): the worktree is at `JBOMOHI_CORPUS` (default `~/lojban/corpus`), the archive at `JBOMOHI_ARCHIVE` (default `~/lojban/archive`), and every scratch directory the tools create (build scratch repositories, extracted Maildirs, temporary downloads) under `JBOMOHI_TMP` (default `~/lojban/tmp`). `./corpus/`, `./tmp/`, `./.venv/` stay gitignored for legacy and editor state only; tools MUST NOT write bulk data there. The ignored `./.exchange/` path is legacy local state, not active coordination, and tools MUST NOT depend on it.
 
 ### 2.3 Raw archive tier
 
@@ -315,7 +315,7 @@ Python ≥ 3.13 with `uv`; package `jbomohi_tools`, CLI `jbomohi` (`uv run jbomo
 ### 4.2 CLI
 
 ```
-jbomohi corpus init|status                  create / inspect ./corpus (worktree of main)
+jbomohi corpus init|status                  create / inspect the corpus worktree of main (JBOMOHI_CORPUS)
 jbomohi archive fetch <source> [--since …]  fetch into the archive tier; write manifests
 jbomohi archive verify                      sha256-check every manifest
 jbomohi build [--sources …] [--until DATE]  full deterministic rebuild of main (orphan root; --until is refused until every selected projector accepts the cut-off itself, since a merge-time filter would drop the _meta files that ride each stream's final event — decided 2026-09-14)
@@ -327,7 +327,7 @@ jbomohi notes lint                          front matter + citation resolution (
 jbomohi cite resolve <citation>             print the cited lines (the reference resolver)
 ```
 
-Idempotent and resumable; network commands rate-limited per source (default ≤ 1 request/s) with backoff; writes only to the archive, the corpus worktree, and `tmp/`.
+Idempotent and resumable; network commands rate-limited per source (default ≤ 1 request/s) with backoff; writes only to the archive, the corpus worktree, and `JBOMOHI_TMP`.
 
 ### 4.3 Fetch/project split
 

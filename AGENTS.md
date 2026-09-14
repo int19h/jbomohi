@@ -31,8 +31,10 @@ Two branches, no shared history (`doc/SPEC.md §2`):
 - `main` — the corpus projection: data files with one commit per source event.
   Its data files are only ever written by the tools (`jbomohi build|update`);
   contributed notes and attestations are ordinary commits there. Never write
-  to it from this checkout's index. Work with
-  it through the gitignored worktree `./corpus/` (`jbomohi corpus init`).
+  to it from this checkout's index. Work with it through the worktree that
+  `jbomohi corpus init` creates at `JBOMOHI_CORPUS` (default `~/lojban/corpus`).
+  Bulk local state (corpus worktree, archive, scratch) lives under `~/lojban/`,
+  never under this checkout: `~/git` is a virtiofs mount.
 
 Never merge one branch into the other. Never commit raw archives, indexes,
 secrets, or anything under `tmp/` or `corpus/`. The ignored `.exchange/`
