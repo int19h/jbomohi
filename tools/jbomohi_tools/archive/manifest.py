@@ -6,6 +6,8 @@ import hashlib
 import json
 import os
 import re
+import stat
+import tempfile
 import tomllib
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -196,6 +198,63 @@ def store_object(archive: Path, payload: bytes) -> ArchiveObject:
             path.unlink(missing_ok=True)
         raise ArchiveError(f"cannot store archive object {path}: {exc}") from exc
     return ArchiveObject(path=path, sha256=digest, bytes=len(payload))
+
+
+def _file_digest(path: Path) -> tuple[str, int]:
+    digest = hashlib.sha256()
+    size = 0
+    try:
+        with path.open("rb") as stream:
+            while chunk := stream.read(1024 * 1024):
+                digest.update(chunk)
+                size += len(chunk)
+    except OSError as exc:
+        raise ArchiveError(f"cannot read archive object {path}: {exc}") from exc
+    return digest.hexdigest(), size
+
+
+def store_file(archive: Path, source: Path) -> ArchiveObject:
+    """Stream a regular file into the immutable content-addressed archive."""
+
+    try:
+        source_stat = source.lstat()
+    except OSError as exc:
+        raise ArchiveError(f"cannot inspect archive input {source}: {exc}") from exc
+    if not stat.S_ISREG(source_stat.st_mode):
+        raise ArchiveError(f"archive input must be a regular file: {source}")
+
+    incoming = archive / "objects" / ".incoming"
+    incoming.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(prefix="ingest-", dir=incoming)
+    temporary = Path(temporary_name)
+    digest = hashlib.sha256()
+    size = 0
+    try:
+        with (
+            source.open("rb") as input_stream,
+            os.fdopen(descriptor, "wb") as output_stream,
+        ):
+            while chunk := input_stream.read(1024 * 1024):
+                digest.update(chunk)
+                size += len(chunk)
+                output_stream.write(chunk)
+            output_stream.flush()
+            os.fsync(output_stream.fileno())
+        hexadecimal = digest.hexdigest()
+        destination = object_path(archive, hexadecimal)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            os.link(temporary, destination)
+            destination.chmod(0o444)
+        except FileExistsError:
+            actual_digest, actual_size = _file_digest(destination)
+            if (actual_digest, actual_size) != (hexadecimal, size):
+                raise ArchiveError(f"archive object collision at {destination}")
+        return ArchiveObject(path=destination, sha256=hexadecimal, bytes=size)
+    except OSError as exc:
+        raise ArchiveError(f"cannot store archive input {source}: {exc}") from exc
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def verify_manifests(manifest_root: Path, archive: Path) -> list[Path]:

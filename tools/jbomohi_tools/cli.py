@@ -5,8 +5,16 @@ from __future__ import annotations
 import argparse
 import logging
 from collections.abc import Callable, Sequence
+from pathlib import Path
 
-from .archive import ArchiveError, fetch_irc, verify_archive, verify_manifests
+from .archive import (
+    ArchiveError,
+    fetch_changes,
+    fetch_irc,
+    ingest_dictionary_exports,
+    verify_archive,
+    verify_manifests,
+)
 from .config import Config, ConfigError
 from .corpus import CorpusError, corpus_status, init_corpus
 from .git import EventError, GitError
@@ -55,12 +63,31 @@ def _archive_verify(_args: argparse.Namespace, config: Config) -> int:
 
 
 def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
-    if args.source != "irc":
-        return _not_implemented(f"archive fetch {args.source}")(args, config)
-    report = fetch_irc(config.archive, args.since)
+    if args.source == "irc":
+        report = fetch_irc(config.archive, args.since)
+        print(
+            f"archive fetch irc: downloaded={report.downloaded_logs} "
+            f"reused={report.reused_logs} manifests={len(report.manifests)}"
+        )
+        return 0
+    if args.source == "dict":
+        report = fetch_changes(config.archive, args.since)
+        print(
+            f"archive fetch dict: pages={report.pages} changes={report.changes} "
+            f"next_cursor={report.next_cursor or 'none'}"
+        )
+        return 0
+    return _not_implemented(f"archive fetch {args.source}")(args, config)
+
+
+def _archive_ingest_dictionary(args: argparse.Namespace, config: Config) -> int:
+    report = ingest_dictionary_exports(
+        config.archive, Path(args.directory), args.export_date
+    )
     print(
-        f"archive fetch irc: downloaded={report.downloaded_logs} "
-        f"reused={report.reused_logs} manifests={len(report.manifests)}"
+        f"archive ingest dictionary: manifests={len(report.manifests)} "
+        f"lensisku_words={len(report.lensisku.tables['valsi'])} "
+        f"jbovlaste_words={len(report.jbovlaste.tables['valsi'])}"
     )
     return 0
 
@@ -91,7 +118,14 @@ def parser() -> argparse.ArgumentParser:
     archive_commands = archive.add_subparsers(dest="archive_command", required=True)
     fetch = _leaf(archive_commands, "fetch", _archive_fetch)
     fetch.add_argument("source")
-    fetch.add_argument("--since")
+    fetch.add_argument(
+        "--since", help="source-specific timestamp or opaque continuation cursor"
+    )
+    ingest = archive_commands.add_parser("ingest")
+    ingest_commands = ingest.add_subparsers(dest="ingest_source", required=True)
+    dictionary = _leaf(ingest_commands, "dictionary", _archive_ingest_dictionary)
+    dictionary.add_argument("directory")
+    dictionary.add_argument("--export-date", required=True)
     _leaf(archive_commands, "verify", _archive_verify)
 
     build = _leaf(commands, "build", _not_implemented("build"))
