@@ -82,7 +82,7 @@ One commit per **source event**: a wiki revision; a Tiki page version; a mail me
 - `GIT_AUTHOR_DATE` = `GIT_COMMITTER_DATE` = the source event time. UTC when the source is unambiguous; otherwise the source's own local time, with `Time-Confidence` set.
 - **Subject**: `<source>: <summary ≤ 72 chars>` — `wiki: BPFK Section: gadri (rev 108932) fix typo`, `mail/lojban: Re: [lojban] xorlo podcast`, `irc/lojban: 2015-06-20 (412 lines)`, `dict: kau en#12345 v3`, `cll: render 1.1-2019`, `meta: refresh README and coverage`, `notes: xorlo adoption (2004–2007)`.
 - **Trailers** (`Key: value`, one per line, at the end of the body):
-  - `Source: wiki | tiki | mail/<list> | irc/<channel> | dict | cll | meta | notes | who`
+  - `Source: wiki | tiki | mail/<list> | irc/<channel> | dict | cll | loglan | llg | grammars | meta | notes | who` (the complete set; a new source directory adds its slug here first)
   - `Source-Id: <stable id>` — the citation anchor (§3.1.4)
   - `Event: created | edited | deleted | moved | comment | vote-batch | import | render | refresh | contributed`
   - `Time-Confidence: exact | tz-unknown | window | pre-epoch`
