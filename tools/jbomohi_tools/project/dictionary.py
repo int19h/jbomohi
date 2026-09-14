@@ -362,7 +362,9 @@ class _WordState:
 @contextmanager
 def _binary_stream(path: Path) -> Iterator[BinaryIO]:
     try:
-        if path.suffix == ".gz":
+        with path.open("rb") as probe:
+            compressed = probe.read(2) == b"\x1f\x8b"
+        if compressed:
             with gzip.open(path, "rb") as stream:
                 yield stream
         else:
@@ -567,7 +569,9 @@ def load_copy_tables(
 @contextmanager
 def _text_stream(path: Path) -> Iterator[TextIO]:
     try:
-        if path.suffix == ".gz":
+        with path.open("rb") as probe:
+            compressed = probe.read(2) == b"\x1f\x8b"
+        if compressed:
             with gzip.open(path, "rt", encoding="utf-8", newline="") as stream:
                 yield stream
         else:

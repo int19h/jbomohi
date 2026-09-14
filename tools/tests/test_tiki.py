@@ -66,6 +66,14 @@ def test_load_tiki_dump_checks_field_count_and_forbidden_tables(tmp_path: Path) 
             forbidden=frozenset(),
         )
 
+    extensionless = tmp_path / "content-addressed-object"
+    extensionless.write_bytes(path.read_bytes())
+    assert load_tiki_dump(
+        extensionless,
+        {"sample": ("id", "text")},
+        forbidden=frozenset(),
+    ).tables["sample"] == ({"id": b"1", "text": b"text"},)
+
     wrong_schema = tmp_path / "wrong-schema.sql.gz"
     wrong_schema.write_bytes(
         gzip.compress(

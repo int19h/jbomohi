@@ -187,9 +187,9 @@ class _Operation:
 @contextmanager
 def _stream(path: Path) -> Iterator[BinaryIO]:
     try:
-        with (
-            gzip.open(path, "rb") if path.suffix == ".gz" else path.open("rb") as stream
-        ):
+        with path.open("rb") as probe:
+            compressed = probe.read(2) == b"\x1f\x8b"
+        with gzip.open(path, "rb") if compressed else path.open("rb") as stream:
             yield stream
     except (OSError, EOFError, gzip.BadGzipFile) as exc:
         raise TikiParseError(f"cannot read Tiki SQL dump {path}: {exc}") from exc
