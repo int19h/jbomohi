@@ -43,6 +43,7 @@ class FetchReport:
     pages: int
     revision_batches: int
     log_batches: int
+    media_batches: int
     reused_responses: int
 
 
@@ -267,6 +268,7 @@ def fetch(
     retry_titles: Iterable[str] = (),
     max_pages: int | None = None,
     include_logs: bool = True,
+    include_media: bool = True,
     client: ResponseClient | None = None,
     now: Callable[[], datetime] = lambda: datetime.now(UTC),
 ) -> FetchReport:
@@ -359,6 +361,33 @@ def fetch(
     selected_titles.extend(retry_titles)
     selected_titles = sorted(set(selected_titles))
 
+    media_batches = 0
+    if include_media:
+        continuation = None
+        while True:
+            params = {
+                "action": "query",
+                "list": "allimages",
+                "ailimit": "max",
+                "aiprop": "timestamp|user|url|size|sha1|mime",
+                "aidir": "ascending",
+            }
+            if since:
+                params["aistart"] = since
+            if continuation:
+                params["aicontinue"] = continuation
+            document = request("media", params)
+            media_batches += 1
+            continued = document.get("continue")
+            continuation = (
+                continued.get("aicontinue")
+                if isinstance(continued, dict)
+                and isinstance(continued.get("aicontinue"), str)
+                else None
+            )
+            if continuation is None:
+                break
+
     revision_batches = 0
     for title in selected_titles:
         continuation = None
@@ -416,5 +445,10 @@ def fetch(
             if continuation is None:
                 break
     return FetchReport(
-        tuple(manifests), len(selected_titles), revision_batches, log_batches, reused
+        tuple(manifests),
+        len(selected_titles),
+        revision_batches,
+        log_batches,
+        media_batches,
+        reused,
     )

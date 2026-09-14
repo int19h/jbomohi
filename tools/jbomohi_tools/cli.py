@@ -92,7 +92,8 @@ def _archive_fetch(args: argparse.Namespace, config: Config) -> int:
         print(
             f"archive fetch wiki: pages={wiki.pages} "
             f"revision_batches={wiki.revision_batches} "
-            f"log_batches={wiki.log_batches} reused={wiki.reused_responses} "
+            f"log_batches={wiki.log_batches} media_batches={wiki.media_batches} "
+            f"reused={wiki.reused_responses} "
             f"manifests={len(wiki.manifests)}"
         )
         return 0

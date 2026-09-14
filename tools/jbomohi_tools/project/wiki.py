@@ -5,7 +5,6 @@ from __future__ import annotations
 import csv
 import hashlib
 import io
-import ipaddress
 import json
 import re
 import unicodedata
@@ -14,7 +13,7 @@ from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 from ..archive.manifest import ArchiveManifest, object_path
 from ..git import Event, Identity
@@ -72,6 +71,16 @@ REVISION_COLUMNS = (
     "comment",
 )
 GAP_COLUMNS = ("revid", "logid", "pageid", "title", "timestamp", "reason")
+MEDIA_COLUMNS = (
+    "pageid",
+    "title",
+    "url",
+    "sha1",
+    "size",
+    "mime",
+    "uploaded",
+    "uploader",
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -124,6 +133,18 @@ class WikiLogEvent:
     target_namespace: int | None = None
     target_title: str | None = None
     suppress_redirect: bool = False
+
+
+@dataclass(frozen=True, slots=True)
+class WikiMedia:
+    pageid: int
+    title: str
+    url: str
+    sha1: str
+    size: int
+    mime: str
+    uploaded: datetime
+    uploader: str | None
 
 
 def slug(title: str) -> str:
@@ -365,6 +386,57 @@ def parse_log_response(payload: bytes) -> list[WikiLogEvent]:
     return events
 
 
+def parse_media_response(payload: bytes) -> list[WikiMedia]:
+    """Parse manifest-only file metadata from an allimages response."""
+
+    try:
+        document = json.loads(payload)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise WikiParseError(f"invalid MediaWiki media JSON: {exc}") from exc
+    if isinstance(document, dict) and "error" in document:
+        raise WikiParseError(f"MediaWiki API error: {document['error']!r}")
+    query = document.get("query") if isinstance(document, dict) else None
+    images = query.get("allimages") if isinstance(query, dict) else None
+    if not isinstance(images, list):
+        raise WikiParseError("MediaWiki response has no query.allimages list")
+    media: list[WikiMedia] = []
+    for raw in images:
+        if not isinstance(raw, dict):
+            raise WikiParseError("MediaWiki allimages entry must be an object")
+        short_url = raw.get("descriptionshorturl")
+        if not isinstance(short_url, str):
+            raise WikiParseError("MediaWiki image lacks descriptionshorturl")
+        values = parse_qs(urlsplit(short_url).query).get("curid", [])
+        try:
+            pageid = int(values[0])
+        except (IndexError, ValueError) as exc:
+            raise WikiParseError("MediaWiki image lacks a numeric curid") from exc
+        title = raw.get("title")
+        url = raw.get("url")
+        sha1 = raw.get("sha1")
+        mime = raw.get("mime")
+        user_value = None if raw.get("userhidden") else raw.get("user")
+        if not all(isinstance(value, str) and value for value in (title, url, mime)):
+            raise WikiParseError(f"MediaWiki image {pageid} lacks title/url/mime")
+        if not isinstance(sha1, str) or not re.fullmatch(r"[0-9a-f]{40}", sha1):
+            raise WikiParseError(f"MediaWiki image {pageid} has invalid sha1")
+        size = _integer(raw.get("size"), "media size")
+        user = user_value if isinstance(user_value, str) and user_value else None
+        media.append(
+            WikiMedia(
+                pageid,
+                title,
+                url,
+                sha1,
+                size,
+                mime,
+                _timestamp(raw.get("timestamp")),
+                user,
+            )
+        )
+    return media
+
+
 def load_archive(archive: Path) -> list[WikiPageFragment]:
     """Load and verify the newest archived response for each revision query."""
 
@@ -455,6 +527,54 @@ def load_log_archive(archive: Path) -> list[WikiLogEvent]:
     return [events[logid] for logid in sorted(events)]
 
 
+def load_media_archive(archive: Path) -> list[WikiMedia]:
+    """Load and verify archived allimages metadata batches."""
+
+    root = archive / "manifests" / "wiki" / "media"
+    if not root.exists():
+        return []
+    selected: dict[str, ArchiveManifest] = {}
+    for path in sorted(root.glob("*.toml")):
+        if path.is_symlink():
+            raise WikiParseError(f"wiki media manifest must not be a symlink: {path}")
+        manifest = ArchiveManifest.load(path)
+        previous = selected.get(manifest.origin)
+        if previous is None or (manifest.fetched_at, manifest.sha256) > (
+            previous.fetched_at,
+            previous.sha256,
+        ):
+            selected[manifest.origin] = manifest
+    media: dict[int, WikiMedia] = {}
+    for origin, manifest in sorted(selected.items()):
+        parsed = urlsplit(origin)
+        if (
+            parsed.scheme != "https"
+            or parsed.hostname != "mw.lojban.org"
+            or parsed.path != "/api.php"
+        ):
+            raise WikiParseError(f"wiki media manifest has invalid origin: {origin!r}")
+        obj = object_path(archive, manifest.sha256)
+        if obj.is_symlink():
+            raise WikiParseError(f"wiki media object must not be a symlink: {obj}")
+        try:
+            payload = obj.read_bytes()
+        except OSError as exc:
+            raise WikiParseError(f"wiki media object is unreadable: {obj}") from exc
+        if (
+            len(payload) != manifest.bytes
+            or hashlib.sha256(payload).hexdigest() != manifest.sha256
+        ):
+            raise WikiParseError(f"wiki media object does not match manifest: {obj}")
+        for item in parse_media_response(payload):
+            previous = media.get(item.pageid)
+            if previous is not None and previous != item:
+                raise WikiParseError(
+                    f"media page {item.pageid}: inconsistent duplicate"
+                )
+            media[item.pageid] = item
+    return [media[pageid] for pageid in sorted(media)]
+
+
 def merge_fragments(fragments: Iterable[WikiPageFragment]) -> list[WikiPage]:
     grouped: dict[int, list[WikiPageFragment]] = defaultdict(list)
     for fragment in fragments:
@@ -481,13 +601,7 @@ def merge_fragments(fragments: Iterable[WikiPageFragment]) -> list[WikiPage]:
 
 
 def _anonymous(user: str | None) -> bool:
-    if user is None:
-        return True
-    try:
-        ipaddress.ip_address(user)
-    except ValueError:
-        return False
-    return True
+    return user is None
 
 
 def _summary(title: str, revid: int, comment: str) -> str:
@@ -525,6 +639,7 @@ def _csv(columns: Sequence[str], rows: Iterable[dict[str, object]]) -> str:
 def project(
     fragments: Iterable[WikiPageFragment],
     logs: Iterable[WikiLogEvent] = (),
+    media: Iterable[WikiMedia] = (),
 ) -> Iterator[Event]:
     """Project API- or dump-derived revisions and log events identically."""
 
@@ -558,6 +673,19 @@ def project(
             "revisions": len(page.revisions),
         }
         for page in pages
+    ]
+    media_rows = [
+        {
+            "pageid": item.pageid,
+            "title": item.title,
+            "url": item.url,
+            "sha1": item.sha1,
+            "size": item.size,
+            "mime": item.mime,
+            "uploaded": item.uploaded.isoformat().replace("+00:00", "Z"),
+            "uploader": "anonymous" if _anonymous(item.uploader) else item.uploader,
+        }
+        for item in sorted(media, key=lambda value: value.pageid)
     ]
     revision_rows: list[dict[str, object]] = []
     gap_rows: list[dict[str, object]] = []
@@ -738,6 +866,7 @@ def project(
         final_changes["_meta/wiki/revisions.csv"] = _csv(
             REVISION_COLUMNS, revision_rows
         )
+        final_changes["_meta/wiki/media.csv"] = _csv(MEDIA_COLUMNS, media_rows)
         if gap_rows:
             final_changes["_meta/wiki/gaps.csv"] = _csv(GAP_COLUMNS, gap_rows)
         events[-1] = replace(events[-1], changes=final_changes)

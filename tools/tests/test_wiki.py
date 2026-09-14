@@ -8,11 +8,13 @@ import pytest
 from jbomohi_tools.git import Identity
 from jbomohi_tools.project.wiki import (
     WikiLogEvent,
+    WikiMedia,
     WikiPageFragment,
     WikiParseError,
     WikiRevision,
     merge_fragments,
     parse_log_response,
+    parse_media_response,
     parse_revision_response,
     project,
     slug,
@@ -156,7 +158,7 @@ def test_merge_fragments_is_order_independent_and_rejects_disagreement() -> None
         merge_fragments([first, conflicting])
 
 
-def test_project_emits_revisions_anonymizes_ips_and_writes_final_indexes() -> None:
+def test_project_keeps_published_ip_user_and_anonymizes_suppression() -> None:
     [fragment] = parse_revision_response(
         response(
             {
@@ -187,15 +189,15 @@ def test_project_emits_revisions_anonymizes_ips_and_writes_final_indexes() -> No
     assert len(events) == 2
     assert events[0].event == "created"
     assert events[0].source_id == "revid=10"
-    assert events[0].author == Identity.anonymous("mw.lojban.org")
+    assert events[0].author == Identity.namespaced("mw.lojban.org", "192.0.2.1")
     assert events[0].changes == {"wiki/main/BPFK_Section%3A_gadri.wiki": b"first\n"}
     assert events[1].event == "edited"
     assert events[1].author == Identity.anonymous("mw.lojban.org")
     assert "wiki/main/BPFK_Section%3A_gadri.wiki" not in events[1].changes
     revisions = events[1].changes["_meta/wiki/revisions.csv"]
     assert isinstance(revisions, str)
-    assert "192.0.2.1" not in revisions
-    assert revisions.count(",anonymous,") == 2
+    assert "192.0.2.1" in revisions
+    assert revisions.count(",anonymous,") == 1
     gaps = events[1].changes["_meta/wiki/gaps.csv"]
     assert isinstance(gaps, str)
     assert "11,,527,BPFK Section: gadri,2014-01-02T00:00:00Z," in gaps
@@ -346,3 +348,53 @@ def test_parse_log_response_keeps_stable_move_and_delete_ids() -> None:
     assert [event.logid for event in events] == [5, 9]
     assert events[0].target_title == "New"
     assert events[1].log_type == "delete"
+
+
+def test_media_metadata_is_manifest_only_and_keeps_published_ip_uploader() -> None:
+    payload = json.dumps(
+        {
+            "query": {
+                "allimages": [
+                    {
+                        "name": "Example.png",
+                        "timestamp": "2014-01-01T00:00:00Z",
+                        "user": "192.0.2.1",
+                        "size": 123,
+                        "url": "https://mw.lojban.org/images/a/ab/Example.png",
+                        "descriptionshorturl": "https://mw.lojban.org/index.php?curid=7",
+                        "sha1": "a" * 40,
+                        "mime": "image/png",
+                        "ns": 6,
+                        "title": "File:Example.png",
+                    }
+                ]
+            }
+        }
+    ).encode()
+    [item] = parse_media_response(payload)
+    assert item == WikiMedia(
+        7,
+        "File:Example.png",
+        "https://mw.lojban.org/images/a/ab/Example.png",
+        "a" * 40,
+        123,
+        "image/png",
+        datetime(2014, 1, 1, tzinfo=UTC),
+        "192.0.2.1",
+    )
+    [page] = parse_revision_response(
+        response(
+            {
+                "pageid": 1,
+                "ns": 0,
+                "title": "Page",
+                "revisions": [revision(1)],
+            }
+        )
+    )
+    [event] = list(project([page], media=[item]))
+    index = event.changes["_meta/wiki/media.csv"]
+    assert isinstance(index, str)
+    assert "File:Example.png" in index
+    assert "192.0.2.1" in index
+    assert index.endswith(",192.0.2.1\n")

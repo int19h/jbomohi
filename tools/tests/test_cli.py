@@ -351,13 +351,13 @@ def test_archive_fetch_wiki_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> N
 
     def fake_fetch(archive: Path, since: str | None) -> WikiFetchReport:
         calls.append((archive, since))
-        return WikiFetchReport((tmp_path / "manifest.toml",), 2, 3, 4, 5)
+        return WikiFetchReport((tmp_path / "manifest.toml",), 2, 3, 4, 5, 6)
 
     monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
     monkeypatch.setattr("jbomohi_tools.cli.fetch_wiki", fake_fetch)
     assert main(["archive", "fetch", "wiki", "--since", "2026-01-01T00:00:00Z"]) == 0
     assert calls == [(tmp_path, "2026-01-01T00:00:00Z")]
     assert (
-        "pages=2 revision_batches=3 log_batches=4 reused=5 manifests=1"
+        "pages=2 revision_batches=3 log_batches=4 media_batches=5 reused=6 manifests=1"
         in capsys.readouterr().out
     )
