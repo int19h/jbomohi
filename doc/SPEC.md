@@ -127,7 +127,7 @@ grammars/       formal grammars and parsers: submodules, vendored and replayed h
 
 #### 3.1.2 Encoding and fidelity
 
-UTF-8, LF, no BOM for generated files. Raw-fidelity files (wikitext, RFC 822 messages, IRC lines, Tiki markup) are byte-exact as archived except for the normalisations listed per source. Renderings (thread views, CLL edition text) start with a `#` header line naming the source and renderer so they are never mistaken for originals.
+UTF-8, LF, no BOM for generated files. Raw-fidelity files (wikitext, RFC 822 messages, IRC lines, Tiki markup) are byte-exact as archived except for the normalisations listed per source. Renderings (thread views, CLL edition text) start with a `#` header line naming the source and renderer so they are never mistaken for originals. **Mixed-encoding originals (decided 2026-09-14):** a raw-fidelity file whose bytes are neither valid UTF-8 nor attributable to one known legacy encoding (e.g. the camxes test corpora, which mix Latin-1 bytes with valid UTF-8 sequences) is stored with an injective, reversible byte escape rather than replaced or guessed: valid UTF-8 sequences are kept, every literal backslash becomes `\\`, every other invalid byte becomes `\xHH`, and line 1 is `# <source> source bytes escaped by jbomohi <escaper>/<version> | original=<archive member>`. The archive object keeps the original bytes; the provenance row records the escaper. This is the only permitted deviation from byte-exactness and it never applies where one encoding is known (Tiki, §3.2.5(c)).
 
 #### 3.1.3 Metadata split
 
