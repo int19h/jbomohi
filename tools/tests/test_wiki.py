@@ -115,6 +115,47 @@ def test_parse_revision_response_keeps_content_and_suppression_flags() -> None:
     assert fragment.revisions[1].text_hidden
 
 
+def test_parse_and_project_revision_with_textmissing_records_gap() -> None:
+    missing = revision(12, parentid=11, timestamp="2014-01-03T00:00:00Z")
+    missing["slots"] = {"main": {"textmissing": True}}
+    [fragment] = parse_revision_response(
+        response(
+            {
+                "pageid": 527,
+                "ns": 0,
+                "title": "BPFK Section: gadri",
+                "revisions": [missing],
+            }
+        )
+    )
+    parsed = fragment.revisions[0]
+    assert parsed.content is None
+    assert parsed.text_missing
+    [event] = list(project([fragment]))
+    assert "wiki/main/BPFK_Section%3A_gadri.wiki" not in event.changes
+    gaps = event.changes["_meta/wiki/gaps.csv"]
+    assert isinstance(gaps, str)
+    assert "12,,527,BPFK Section: gadri,2014-01-03T00:00:00Z,text missing" in gaps
+
+
+def test_parse_revision_rejects_invalid_textmissing_shapes() -> None:
+    invalid = revision(12)
+    invalid["slots"] = {"main": {"textmissing": False}}
+    with pytest.raises(WikiParseError, match="invalid textmissing marker"):
+        parse_revision_response(
+            response({"pageid": 527, "ns": 0, "title": "Page", "revisions": [invalid]})
+        )
+    conflicting = revision(13)
+    assert isinstance(conflicting["slots"], dict)
+    conflicting["slots"]["main"]["textmissing"] = True
+    with pytest.raises(WikiParseError, match="conflicts with content"):
+        parse_revision_response(
+            response(
+                {"pageid": 527, "ns": 0, "title": "Page", "revisions": [conflicting]}
+            )
+        )
+
+
 def test_merge_fragments_is_order_independent_and_rejects_disagreement() -> None:
     first = WikiPageFragment(
         1,
@@ -279,6 +320,65 @@ def test_move_precedes_same_timestamp_redirect_revision() -> None:
     assert events[2].changes["wiki/main/Old.wiki"] == b"#REDIRECT [[New]]"
 
 
+def test_unassigned_move_does_not_move_its_left_behind_redirect() -> None:
+    destination = WikiPageFragment(
+        1,
+        0,
+        "New",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 3, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    redirect = WikiPageFragment(
+        2,
+        0,
+        "Old",
+        True,
+        (
+            WikiRevision(
+                2,
+                0,
+                datetime(2014, 1, 2, tzinfo=UTC),
+                "Gleki",
+                "move marker",
+                17,
+                "b" * 40,
+                "#REDIRECT [[New]]",
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        2,
+        0,
+        "Old",
+        datetime(2014, 1, 2, 0, 0, 1, tzinfo=UTC),
+        "Gleki",
+        "rename",
+        0,
+        "New",
+        False,
+    )
+    events = list(project([destination, redirect], [move]))
+    assert all(event.event != "moved" for event in events)
+    assert events[0].changes == {"wiki/main/Old.wiki": b"#REDIRECT [[New]]"}
+    assert events[1].changes["wiki/main/New.wiki"] == b"body"
+    gaps = events[1].changes["_meta/wiki/gaps.csv"]
+    assert isinstance(gaps, str)
+    assert "move; history not API-accessible" in gaps
+
+
 def test_move_history_uses_each_hops_namespace() -> None:
     page = WikiPageFragment(
         1,
@@ -317,7 +417,7 @@ def test_move_history_uses_each_hops_namespace() -> None:
     assert events[1].changes["wiki/main/BPFK_Section%3A_Draft.wiki"] == b"body"
 
 
-def test_pageid_zero_move_is_recovered_from_target_title() -> None:
+def test_unrelated_log_pageid_move_is_recovered_from_target_title() -> None:
     page = WikiPageFragment(
         1,
         0,
@@ -339,7 +439,7 @@ def test_pageid_zero_move_is_recovered_from_target_title() -> None:
     move = WikiLogEvent(
         5,
         "move",
-        0,
+        999,
         0,
         "Old",
         datetime(2014, 1, 2, tzinfo=UTC),
@@ -348,13 +448,288 @@ def test_pageid_zero_move_is_recovered_from_target_title() -> None:
         0,
         "New",
         False,
+        True,
     )
     events = list(project([page], [move]))
     assert [event.source_id for event in events] == ["revid=1", "logid=5"]
     assert events[0].changes == {"wiki/main/Old.wiki": b"body"}
     assert events[1].event == "moved"
+    assert events[1].trailers["Log-Type"] == "move_redir"
     assert events[1].deletions == ("wiki/main/Old.wiki",)
     assert events[1].changes["wiki/main/New.wiki"] == b"body"
+
+
+def test_recreated_title_stops_move_chain_at_current_lineage_root() -> None:
+    first = WikiPageFragment(
+        1,
+        0,
+        "Final A",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    second = WikiPageFragment(
+        2,
+        0,
+        "Final B",
+        False,
+        (
+            WikiRevision(
+                2,
+                0,
+                datetime(2014, 1, 4, tzinfo=UTC),
+                "Gleki",
+                "recreated",
+                5,
+                "b" * 40,
+                "other",
+            ),
+        ),
+    )
+    moves = [
+        WikiLogEvent(
+            10,
+            "move",
+            999,
+            0,
+            "Old",
+            datetime(2014, 1, 2, tzinfo=UTC),
+            "Gleki",
+            "",
+            0,
+            "Shared",
+            True,
+        ),
+        WikiLogEvent(
+            11,
+            "move",
+            999,
+            0,
+            "Shared",
+            datetime(2014, 1, 3, tzinfo=UTC),
+            "Gleki",
+            "",
+            0,
+            "Final A",
+            True,
+        ),
+        WikiLogEvent(
+            12,
+            "move",
+            999,
+            0,
+            "Shared",
+            datetime(2014, 1, 5, tzinfo=UTC),
+            "Gleki",
+            "",
+            0,
+            "Final B",
+            True,
+        ),
+    ]
+    events = list(project([first, second], moves))
+    assert [event.source_id for event in events] == [
+        "revid=1",
+        "logid=10",
+        "logid=11",
+        "revid=2",
+        "logid=12",
+    ]
+    assert events[0].changes == {"wiki/main/Old.wiki": b"body"}
+    assert events[3].changes == {"wiki/main/Shared.wiki": b"other"}
+
+
+def test_merged_lineage_is_labelled_and_placed_at_earliest_safe_path() -> None:
+    page = WikiPageFragment(
+        1,
+        0,
+        "New",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "old lineage",
+                3,
+                "a" * 40,
+                "old",
+            ),
+            WikiRevision(
+                2,
+                0,
+                datetime(2014, 1, 2, tzinfo=UTC),
+                "Gleki",
+                "current lineage",
+                7,
+                "b" * 40,
+                "current",
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        999,
+        0,
+        "Old",
+        datetime(2014, 1, 3, tzinfo=UTC),
+        "Gleki",
+        "rename",
+        0,
+        "New",
+        True,
+    )
+    events = list(project([page], [move]))
+    assert events[0].changes == {"wiki/main/Old.wiki": b"old"}
+    assert events[0].trailers["Lineage"] == "merged"
+    assert events[1].changes == {"wiki/main/Old.wiki": b"current"}
+    gaps = events[-1].changes["_meta/wiki/gaps.csv"]
+    assert isinstance(gaps, str)
+    assert "pre-merge title unknown; placed at wiki/main/Old.wiki" in gaps
+
+
+def test_branched_revision_parent_uses_newest_spine_as_current() -> None:
+    page = WikiPageFragment(
+        1,
+        0,
+        "Page",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                3,
+                "a" * 40,
+                "one",
+            ),
+            WikiRevision(
+                2,
+                1,
+                datetime(2014, 1, 2, tzinfo=UTC),
+                "Gleki",
+                "older branch",
+                3,
+                "b" * 40,
+                "two",
+            ),
+            WikiRevision(
+                3,
+                1,
+                datetime(2014, 1, 3, tzinfo=UTC),
+                "Gleki",
+                "current branch",
+                5,
+                "c" * 40,
+                "three",
+            ),
+        ),
+    )
+    events = list(project([page]))
+    by_id = {event.source_id: event for event in events}
+    assert "Lineage" not in by_id["revid=1"].trailers
+    assert by_id["revid=2"].trailers["Lineage"] == "merged"
+    assert "Lineage" not in by_id["revid=3"].trailers
+
+
+def test_migration_skew_forces_move_before_marker_revision() -> None:
+    page = WikiPageFragment(
+        1,
+        0,
+        "New",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                3,
+                "a" * 40,
+                "old",
+            ),
+            WikiRevision(
+                2,
+                1,
+                datetime(2014, 1, 2, tzinfo=UTC),
+                "Gleki",
+                "moved page [[Old]] to [[New]]",
+                3,
+                "a" * 40,
+                "old",
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        999,
+        0,
+        "Old",
+        datetime(2014, 1, 2, 0, 0, 1, tzinfo=UTC),
+        "Gleki",
+        "rename",
+        0,
+        "New",
+        True,
+    )
+    events = list(project([page], [move]))
+    assert [event.source_id for event in events] == [
+        "revid=1",
+        "logid=5",
+        "revid=2",
+    ]
+    assert events[1].trailers["Ordering"] == "forced-before"
+    assert events[2].changes["wiki/main/New.wiki"] == b"old"
+
+
+def test_same_time_move_candidates_are_gapped_as_ambiguous() -> None:
+    [page] = parse_revision_response(
+        response(
+            {
+                "pageid": 1,
+                "ns": 0,
+                "title": "New",
+                "revisions": [revision(1, timestamp="2014-01-01T00:00:00Z")],
+            }
+        )
+    )
+    moves = [
+        WikiLogEvent(
+            logid,
+            "move",
+            0,
+            0,
+            old,
+            datetime(2014, 1, 2, tzinfo=UTC),
+            "Gleki",
+            "",
+            0,
+            "New",
+            True,
+        )
+        for logid, old in ((5, "Old A"), (6, "Old B"))
+    ]
+    [event] = list(project([page], moves))
+    assert event.changes["wiki/main/New.wiki"] == b"text\n"
+    gaps = event.changes["_meta/wiki/gaps.csv"]
+    assert isinstance(gaps, str)
+    assert "move ambiguous: logid=5,logid=6" in gaps
 
 
 def test_preacquisition_delete_is_a_gap_not_an_event() -> None:
@@ -385,6 +760,51 @@ def test_preacquisition_delete_is_a_gap_not_an_event() -> None:
     assert "9,0,Gone,2013-01-01T00:00:00Z,deleted; history not API-accessible" in gaps
 
 
+def test_historical_removed_namespace_log_is_an_explicit_gap() -> None:
+    [page] = parse_revision_response(
+        response(
+            {
+                "pageid": 1,
+                "ns": 0,
+                "title": "Held",
+                "revisions": [revision(1, content="held")],
+            }
+        )
+    )
+    deletion = WikiLogEvent(
+        9,
+        "delete",
+        0,
+        1198,
+        "Special:Badtitle/NS1198:Held",
+        datetime(2013, 1, 1, tzinfo=UTC),
+        "Gleki",
+        "removed Translate namespace",
+    )
+    [event] = list(project([page], [deletion]))
+    gaps = event.changes["_meta/wiki/gaps.csv"]
+    assert isinstance(gaps, str)
+    assert "delete; unsupported historical namespace 1198" in gaps
+
+
+def test_page_without_public_revisions_is_listed_in_errors_index() -> None:
+    [held, broken] = parse_revision_response(
+        response(
+            {
+                "pageid": 1,
+                "ns": 0,
+                "title": "Held",
+                "revisions": [revision(1, content="held")],
+            },
+            {"pageid": 2, "ns": 0, "title": "Broken", "revisions": []},
+        )
+    )
+    [event] = list(project([held, broken]))
+    errors = event.changes["_meta/wiki/errors.csv"]
+    assert isinstance(errors, str)
+    assert "2,0,Broken,no public revisions returned" in errors
+
+
 def test_parse_log_response_keeps_stable_move_and_delete_ids() -> None:
     payload = json.dumps(
         {
@@ -407,6 +827,22 @@ def test_parse_log_response_keeps_stable_move_and_delete_ids() -> None:
                         "comment": "rename",
                     },
                     {
+                        "logid": 6,
+                        "ns": 0,
+                        "title": "New",
+                        "pageid": 0,
+                        "params": {
+                            "target_ns": 0,
+                            "target_title": "Newest",
+                            "suppressredirect": True,
+                        },
+                        "type": "move",
+                        "action": "move_redir",
+                        "user": "Gleki",
+                        "timestamp": "2014-01-03T00:00:00Z",
+                        "comment": "move over redirect",
+                    },
+                    {
                         "logid": 9,
                         "ns": 0,
                         "title": "Gone",
@@ -423,9 +859,12 @@ def test_parse_log_response_keeps_stable_move_and_delete_ids() -> None:
         }
     ).encode()
     events = parse_log_response(payload)
-    assert [event.logid for event in events] == [5, 9]
+    assert [event.logid for event in events] == [5, 6, 9]
     assert events[0].target_title == "New"
-    assert events[1].log_type == "delete"
+    assert events[1].target_title == "Newest"
+    assert events[1].suppress_redirect
+    assert events[1].move_redir
+    assert events[2].log_type == "delete"
 
 
 def test_media_metadata_is_manifest_only_and_keeps_published_ip_uploader() -> None:

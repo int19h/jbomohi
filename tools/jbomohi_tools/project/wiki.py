@@ -71,6 +71,7 @@ REVISION_COLUMNS = (
     "comment",
 )
 GAP_COLUMNS = ("revid", "logid", "pageid", "title", "timestamp", "reason")
+ERROR_COLUMNS = ("pageid", "ns", "title", "error")
 MEDIA_COLUMNS = (
     "pageid",
     "title",
@@ -94,6 +95,7 @@ class WikiRevision:
     sha1: str | None
     content: str | None
     text_hidden: bool = False
+    text_missing: bool = False
     user_hidden: bool = False
     comment_hidden: bool = False
 
@@ -133,6 +135,7 @@ class WikiLogEvent:
     target_namespace: int | None = None
     target_title: str | None = None
     suppress_redirect: bool = False
+    move_redir: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -254,14 +257,25 @@ def _revision(raw: object, pageid: int) -> WikiRevision:
     ):
         raise WikiParseError(f"revision {revid}: sha1 must be 40 lowercase hex digits")
     slots = raw.get("slots")
+    main_slot = slots.get("main") if isinstance(slots, dict) else None
+    text_missing = False
+    if isinstance(main_slot, dict) and "textmissing" in main_slot:
+        if main_slot["textmissing"] is not True:
+            raise WikiParseError(f"revision {revid}: invalid textmissing marker")
+        text_missing = True
     content: str | None = None
     if not text_hidden:
-        if not isinstance(slots, dict) or not isinstance(slots.get("main"), dict):
+        if not isinstance(main_slot, dict):
             raise WikiParseError(f"revision {revid}: main content slot is missing")
-        content_value = slots["main"].get("content")
-        if not isinstance(content_value, str):
+        content_value = main_slot.get("content")
+        if text_missing and "content" in main_slot:
+            raise WikiParseError(
+                f"revision {revid}: textmissing marker conflicts with content"
+            )
+        if not text_missing and not isinstance(content_value, str):
             raise WikiParseError(f"revision {revid}: main content is missing")
-        content = content_value
+        if not text_missing:
+            content = content_value
     return WikiRevision(
         revid=revid,
         parentid=parentid,
@@ -272,6 +286,7 @@ def _revision(raw: object, pageid: int) -> WikiRevision:
         sha1=sha1,
         content=content,
         text_hidden=text_hidden,
+        text_missing=text_missing,
         user_hidden=user_hidden,
         comment_hidden=comment_hidden,
     )
@@ -338,7 +353,11 @@ def parse_log_response(payload: bytes) -> list[WikiLogEvent]:
             raise WikiParseError("MediaWiki log event must be an object")
         log_type = raw.get("type")
         action = raw.get("action")
-        if (log_type, action) not in {("move", "move"), ("delete", "delete")}:
+        if (log_type, action) not in {
+            ("move", "move"),
+            ("move", "move_redir"),
+            ("delete", "delete"),
+        }:
             continue
         logid = _integer(raw.get("logid"), "logid", minimum=1)
         namespace = _integer(raw.get("ns"), "log namespace")
@@ -381,6 +400,7 @@ def parse_log_response(payload: bytes) -> list[WikiLogEvent]:
                 target_namespace=target_namespace,
                 target_title=target_title,
                 suppress_redirect=suppress_redirect,
+                move_redir=action == "move_redir",
             )
         )
     return events
@@ -605,7 +625,7 @@ def _anonymous(user: str | None) -> bool:
 
 
 def _summary(title: str, revid: int, comment: str) -> str:
-    cleaned_comment = " ".join(comment.split())[:40]
+    cleaned_comment = " ".join(comment.split())[:40].rstrip()
     suffix = f" (rev {revid})"
     comment_suffix = f" {cleaned_comment}" if cleaned_comment else ""
     budget = 72 - len("wiki: ") - len(suffix) - len(comment_suffix)
@@ -617,7 +637,7 @@ def _summary(title: str, revid: int, comment: str) -> str:
 
 
 def _log_summary(title: str, logid: int, comment: str) -> str:
-    cleaned_comment = " ".join(comment.split())[:40]
+    cleaned_comment = " ".join(comment.split())[:40].rstrip()
     suffix = f" (log {logid})"
     comment_suffix = f" {cleaned_comment}" if cleaned_comment else ""
     budget = 72 - len("wiki: ") - len(suffix) - len(comment_suffix)
@@ -636,24 +656,87 @@ def _csv(columns: Sequence[str], rows: Iterable[dict[str, object]]) -> str:
     return stream.getvalue()
 
 
+@dataclass(frozen=True, slots=True)
+class _WikiPlacementPlan:
+    chains: dict[int, tuple[WikiLogEvent, ...]]
+    move_owner: dict[int, int]
+    current_revisions: frozenset[int]
+    merged_revisions: frozenset[int]
+    components: dict[int, tuple[tuple[WikiRevision, ...], ...]]
+    current_start: dict[int, datetime]
+    gap_rows: tuple[dict[str, object], ...]
+    ambiguous_logids: frozenset[int]
+
+
+def _revision_components(page: WikiPage) -> tuple[tuple[WikiRevision, ...], ...]:
+    """Partition one API page response into its parent-linked lineages."""
+
+    revisions = {item.revid: item for item in page.revisions}
+    unassigned = set(revisions)
+    components: list[tuple[WikiRevision, ...]] = []
+    while unassigned:
+        parents = {
+            revisions[revid].parentid
+            for revid in unassigned
+            if revisions[revid].parentid in unassigned
+        }
+        leaves = unassigned - parents
+        if not leaves:
+            raise WikiParseError(
+                f"page {page.pageid}: revision parent chain contains a cycle"
+            )
+        cursor = revisions[max(leaves)]
+        reverse: list[WikiRevision] = []
+        while cursor.revid in unassigned:
+            reverse.append(cursor)
+            unassigned.remove(cursor.revid)
+            if cursor.parentid not in unassigned:
+                break
+            cursor = revisions[cursor.parentid]
+        components.append(tuple(reversed(reverse)))
+    return tuple(components)
+
+
 def _page_move_chains(
     pages: Sequence[WikiPage], log_events: Sequence[WikiLogEvent]
-) -> tuple[dict[int, tuple[WikiLogEvent, ...]], dict[int, int]]:
-    """Recover each page's title history without trusting old log page IDs."""
+) -> _WikiPlacementPlan:
+    """Recover each current revision lineage without trusting log page IDs."""
 
     moves_by_target: dict[tuple[int, str], list[WikiLogEvent]] = defaultdict(list)
-    known_moves: dict[int, list[WikiLogEvent]] = defaultdict(list)
     for item in log_events:
         if item.log_type != "move":
             continue
         assert item.target_namespace is not None and item.target_title is not None
         moves_by_target[(item.target_namespace, item.target_title)].append(item)
-        if item.pageid:
-            known_moves[item.pageid].append(item)
 
     chains: dict[int, tuple[WikiLogEvent, ...]] = {}
     owner_by_logid: dict[int, int] = {}
+    current_revisions: set[int] = set()
+    merged_revisions: set[int] = set()
+    components_by_page: dict[int, tuple[tuple[WikiRevision, ...], ...]] = {}
+    current_start: dict[int, datetime] = {}
+    gap_rows: list[dict[str, object]] = []
+    ambiguous_logids: set[int] = set()
     for page in pages:
+        if not page.revisions:
+            chains[page.pageid] = ()
+            components_by_page[page.pageid] = ()
+            continue
+        components = _revision_components(page)
+        components_by_page[page.pageid] = components
+        current_component = next(
+            values for values in components if page.revisions[-1] in values
+        )
+        current_ids = {item.revid for item in current_component}
+        current_revisions.update(current_ids)
+        merged_revisions.update(
+            item.revid
+            for values in components
+            for item in values
+            if item.revid not in current_ids
+        )
+        lineage_start = current_component[0]
+        current_start[page.pageid] = lineage_start.timestamp
         target = (page.namespace, page.title)
         before: tuple[datetime, int] | None = None
         reverse_chain: list[WikiLogEvent] = []
@@ -662,18 +745,28 @@ def _page_move_chains(
                 item
                 for item in moves_by_target.get(target, ())
                 if (before is None or (item.timestamp, item.logid) < before)
-                and item.pageid in (0, page.pageid)
+                and item.timestamp >= lineage_start.timestamp
+                and item.namespace in NAMESPACE_DIRS
             ]
             if not candidates:
                 break
             latest_time = max(item.timestamp for item in candidates)
             latest = [item for item in candidates if item.timestamp == latest_time]
             if len(latest) != 1:
-                raise WikiParseError(
-                    f"page {page.pageid}: ambiguous moves into namespace "
-                    f"{target[0]} title {target[1]!r} at "
-                    f"{latest_time.isoformat().replace('+00:00', 'Z')}"
+                ids = sorted(item.logid for item in latest)
+                ambiguous_logids.update(ids)
+                gap_rows.append(
+                    {
+                        "revid": "",
+                        "logid": "",
+                        "pageid": page.pageid,
+                        "title": target[1],
+                        "timestamp": latest_time.isoformat().replace("+00:00", "Z"),
+                        "reason": "move ambiguous: "
+                        + ",".join(f"logid={value}" for value in ids),
+                    }
                 )
+                break
             item = latest[0]
             previous_owner = owner_by_logid.get(item.logid)
             if previous_owner is not None and previous_owner != page.pageid:
@@ -687,17 +780,136 @@ def _page_move_chains(
             before = (item.timestamp, item.logid)
 
         chain = tuple(reversed(reverse_chain))
-        reached_known = {item.logid for item in chain if item.pageid == page.pageid}
-        expected_known = {item.logid for item in known_moves.get(page.pageid, ())}
-        if reached_known != expected_known:
-            missing = ", ".join(
-                str(value) for value in sorted(expected_known - reached_known)
-            )
-            raise WikiParseError(
-                f"page {page.pageid}: move log(s) do not form a title chain: {missing}"
-            )
         chains[page.pageid] = chain
-    return chains, owner_by_logid
+    return _WikiPlacementPlan(
+        chains,
+        owner_by_logid,
+        frozenset(current_revisions),
+        frozenset(merged_revisions),
+        components_by_page,
+        current_start,
+        tuple(gap_rows),
+        frozenset(ambiguous_logids),
+    )
+
+
+def _position_at(
+    page: WikiPage,
+    chain: Sequence[WikiLogEvent],
+    timestamp: datetime,
+    move_times: dict[int, datetime] | None = None,
+) -> tuple[int, str]:
+    if chain:
+        namespace = chain[0].namespace
+        title = chain[0].title
+    else:
+        namespace = page.namespace
+        title = page.title
+    for move in chain:
+        effective = move.timestamp if move_times is None else move_times[move.logid]
+        if effective > timestamp:
+            break
+        assert move.target_namespace is not None and move.target_title is not None
+        namespace = move.target_namespace
+        title = move.target_title
+    return namespace, title
+
+
+def _revision_positions(
+    pages: Sequence[WikiPage],
+    plan: _WikiPlacementPlan,
+    move_times: dict[int, datetime],
+) -> tuple[dict[int, tuple[int, str]], list[dict[str, object]]]:
+    positions: dict[int, tuple[int, str]] = {}
+    gaps: list[dict[str, object]] = []
+    for page in pages:
+        chain = plan.chains[page.pageid]
+        earliest = (
+            (chain[0].namespace, chain[0].title)
+            if chain
+            else (page.namespace, page.title)
+        )
+        start = plan.current_start.get(page.pageid)
+        for component in plan.components[page.pageid]:
+            merged = component[0].revid not in plan.current_revisions
+            fallback = merged and start is not None and component[-1].timestamp < start
+            if fallback:
+                path = wiki_path(*earliest)
+                first = component[0]
+                gaps.append(
+                    {
+                        "revid": first.revid,
+                        "logid": "",
+                        "pageid": page.pageid,
+                        "title": page.title,
+                        "timestamp": first.timestamp.isoformat().replace("+00:00", "Z"),
+                        "reason": f"pre-merge title unknown; placed at {path}",
+                    }
+                )
+            for revision in component:
+                if fallback or (
+                    merged and start is not None and revision.timestamp < start
+                ):
+                    positions[revision.revid] = earliest
+                else:
+                    positions[revision.revid] = _position_at(
+                        page, chain, revision.timestamp, move_times
+                    )
+    return positions, gaps
+
+
+def _forced_move_times(
+    pages: Sequence[WikiPage],
+    plan: _WikiPlacementPlan,
+    positions: dict[int, tuple[int, str]],
+) -> dict[int, datetime]:
+    """Move migration-skewed marker/redirect revisions behind their rename."""
+
+    effective = {
+        move.logid: move.timestamp for chain in plan.chains.values() for move in chain
+    }
+    moves_by_id = {move.logid: move for chain in plan.chains.values() for move in chain}
+    revisions_by_page = {
+        page.pageid: {revision.revid: revision for revision in page.revisions}
+        for page in pages
+    }
+    roots = {
+        component[0].revid
+        for components in plan.components.values()
+        for component in components
+    }
+    redirect_roots: dict[tuple[int, str], list[WikiRevision]] = defaultdict(list)
+    for page in pages:
+        if not page.is_redirect:
+            continue
+        for revision in page.revisions:
+            if (
+                revision.revid in roots
+                and revision.content is not None
+                and revision.content.lstrip().upper().startswith("#REDIRECT")
+            ):
+                redirect_roots[positions[revision.revid]].append(revision)
+    for logid, owner in sorted(plan.move_owner.items()):
+        move = moves_by_id[logid]
+        old_position = (move.namespace, move.title)
+        assert move.target_title is not None
+        candidates: list[datetime] = []
+        for revision in revisions_by_page[owner].values():
+            skew = (move.timestamp - revision.timestamp).total_seconds()
+            if (
+                0 < skew <= 60
+                and positions[revision.revid] == old_position
+                and move.title in revision.comment
+                and move.target_title in revision.comment
+            ):
+                candidates.append(revision.timestamp)
+        for revision in redirect_roots.get(old_position, ()):
+            skew = (move.timestamp - revision.timestamp).total_seconds()
+            if 0 < skew <= 60:
+                candidates.append(revision.timestamp)
+        if candidates:
+            effective[logid] = min(candidates)
+    return effective
 
 
 def project(
@@ -708,16 +920,22 @@ def project(
     """Project API- or dump-derived revisions and log events identically."""
 
     pages = merge_fragments(fragments)
+    page_by_id = {page.pageid: page for page in pages}
     log_events = sorted(logs, key=lambda item: (item.timestamp, item.logid))
-    moves, move_owner = _page_move_chains(pages, log_events)
-    state_path: dict[int, str] = {}
+    placement = _page_move_chains(pages, log_events)
+    actual_move_times = {
+        move.logid: move.timestamp
+        for chain in placement.chains.values()
+        for move in chain
+    }
+    revision_positions, merged_gaps = _revision_positions(
+        pages, placement, actual_move_times
+    )
+    move_times = _forced_move_times(pages, placement, revision_positions)
+    revision_positions, merged_gaps = _revision_positions(pages, placement, move_times)
     state_content: dict[int, bytes | None] = {}
     held_by_path: dict[str, int] = {}
     for page in pages:
-        first_move = moves[page.pageid][0] if moves[page.pageid] else None
-        initial_namespace = first_move.namespace if first_move else page.namespace
-        initial_title = first_move.title if first_move else page.title
-        state_path[page.pageid] = wiki_path(initial_namespace, initial_title)
         state_content[page.pageid] = None
 
     revision_pages = [(revision, page) for page in pages for revision in page.revisions]
@@ -734,6 +952,16 @@ def project(
         }
         for page in pages
     ]
+    error_rows = [
+        {
+            "pageid": page.pageid,
+            "ns": page.namespace,
+            "title": page.title,
+            "error": "no public revisions returned",
+        }
+        for page in pages
+        if not page.revisions
+    ]
     media_rows = [
         {
             "pageid": item.pageid,
@@ -748,7 +976,7 @@ def project(
         for item in sorted(media, key=lambda value: value.pageid)
     ]
     revision_rows: list[dict[str, object]] = []
-    gap_rows: list[dict[str, object]] = []
+    gap_rows: list[dict[str, object]] = [*placement.gap_rows, *merged_gaps]
     for revision, page in revision_pages:
         anonymous = _anonymous(revision.user) or revision.user_hidden
         user = "anonymous" if anonymous else revision.user
@@ -768,6 +996,8 @@ def project(
         reasons: list[str] = []
         if revision.text_hidden:
             reasons.append("text suppressed")
+        if revision.text_missing:
+            reasons.append("text missing")
         if revision.user_hidden:
             reasons.append("user suppressed")
         if revision.comment_hidden:
@@ -789,10 +1019,18 @@ def project(
         for revision, page in revision_pages
     ]
     timeline.extend(
-        (log.timestamp, 0, log.logid, "log", log, None) for log in log_events
+        (
+            move_times.get(log.logid, log.timestamp),
+            0,
+            log.logid,
+            "log",
+            log,
+            None,
+        )
+        for log in log_events
     )
     timeline.sort(key=lambda item: (item[0], item[1], item[2]))
-    events: list[Event] = []
+    pending_event: Event | None = None
     for _timestamp_value, _kind_order, _stable_id, kind, item, page in timeline:
         if kind == "revision":
             assert isinstance(item, WikiRevision) and isinstance(page, WikiPage)
@@ -802,50 +1040,71 @@ def project(
                 if anonymous
                 else Identity.namespaced("mw.lojban.org", item.user or "")
             )
-            path = state_path[page.pageid]
+            position = revision_positions[item.revid]
+            path = wiki_path(*position)
+            merged = item.revid in placement.merged_revisions
             changes: dict[str, str | bytes] = {}
             if item.content is not None:
                 content = item.content.encode("utf-8")
                 other_page = held_by_path.get(path)
-                if other_page is not None and other_page != page.pageid:
+                if not merged and other_page is not None and other_page != page.pageid:
                     raise WikiParseError(
                         f"revision {item.revid}: path already held by page {other_page}: {path}"
                     )
                 changes[path] = content
-                state_content[page.pageid] = content
-                held_by_path[path] = page.pageid
-            events.append(
-                Event(
-                    source="wiki",
-                    source_id=f"revid={item.revid}",
-                    event="created" if item.parentid == 0 else "edited",
-                    time_confidence="exact",
-                    source_time=item.timestamp,
-                    summary=_summary(page.title, item.revid, item.comment),
-                    author=author,
-                    changes=changes,
-                    trailers={
-                        "Page-Id": str(page.pageid),
-                        "Parent-Rev": str(item.parentid),
-                    },
-                )
+                if not merged:
+                    state_content[page.pageid] = content
+                    held_by_path[path] = page.pageid
+            trailers = {
+                "Page-Id": str(page.pageid),
+                "Parent-Rev": str(item.parentid),
+            }
+            if merged:
+                trailers["Lineage"] = "merged"
+            event = Event(
+                source="wiki",
+                source_id=f"revid={item.revid}",
+                event="created" if item.parentid == 0 else "edited",
+                time_confidence="exact",
+                source_time=item.timestamp,
+                summary=_summary(position[1], item.revid, item.comment),
+                author=author,
+                changes=changes,
+                trailers=trailers,
             )
+            if pending_event is not None:
+                yield pending_event
+            pending_event = event
             continue
 
         assert isinstance(item, WikiLogEvent)
+        if item.logid in placement.ambiguous_logids:
+            continue
+        if item.namespace not in NAMESPACE_DIRS:
+            gap_rows.append(
+                {
+                    "revid": "",
+                    "logid": item.logid,
+                    "pageid": item.pageid,
+                    "title": item.title,
+                    "timestamp": item.timestamp.isoformat().replace("+00:00", "Z"),
+                    "reason": (
+                        f"{item.log_type}; unsupported historical namespace "
+                        f"{item.namespace}"
+                    ),
+                }
+            )
+            continue
         old_path = wiki_path(item.namespace, item.title)
-        resolved_pageid = (
-            move_owner.get(item.logid)
-            if item.log_type == "move"
-            else item.pageid
-            if item.pageid in state_path
-            else None
-        )
-        if resolved_pageid is None:
-            resolved_pageid = held_by_path.get(old_path)
         if item.log_type == "move":
             assert item.target_namespace is not None and item.target_title is not None
+            if item.target_namespace not in NAMESPACE_DIRS:
+                raise WikiParseError(
+                    f"log event {item.logid}: unsupported move target namespace "
+                    f"{item.target_namespace}"
+                )
             target_path = wiki_path(item.target_namespace, item.target_title)
+            resolved_pageid = placement.move_owner.get(item.logid)
             if resolved_pageid is None:
                 gap_rows.append(
                     {
@@ -859,9 +1118,46 @@ def project(
                 )
                 continue
             content = state_content[resolved_pageid]
-            state_path[resolved_pageid] = target_path
-            if content is None or held_by_path.get(old_path) != resolved_pageid:
+            if content is None:
+                gap_rows.append(
+                    {
+                        "revid": "",
+                        "logid": item.logid,
+                        "pageid": resolved_pageid,
+                        "title": item.title,
+                        "timestamp": item.timestamp.isoformat().replace("+00:00", "Z"),
+                        "reason": "move; history not API-accessible",
+                    }
+                )
                 continue
+            old_holder = held_by_path.get(old_path)
+            if old_holder is None:
+                gap_rows.append(
+                    {
+                        "revid": "",
+                        "logid": item.logid,
+                        "pageid": resolved_pageid,
+                        "title": item.title,
+                        "timestamp": item.timestamp.isoformat().replace("+00:00", "Z"),
+                        "reason": "move; history not API-accessible",
+                    }
+                )
+                continue
+            if old_holder != resolved_pageid:
+                raise WikiParseError(
+                    f"log event {item.logid}: source path held by page {old_holder}: "
+                    f"{old_path}"
+                )
+            target_holder = held_by_path.get(target_path)
+            overwritten_pageid = None
+            if target_holder is not None and target_holder != resolved_pageid:
+                if not item.move_redir:
+                    raise WikiParseError(
+                        f"log event {item.logid}: target path held by page "
+                        f"{target_holder}: {target_path}"
+                    )
+                overwritten_pageid = target_holder
+                state_content[target_holder] = None
             held_by_path.pop(old_path)
             held_by_path[target_path] = resolved_pageid
             author = (
@@ -869,27 +1165,39 @@ def project(
                 if _anonymous(item.user)
                 else Identity.namespaced("mw.lojban.org", item.user or "")
             )
-            events.append(
-                Event(
-                    source="wiki",
-                    source_id=f"logid={item.logid}",
-                    event="moved",
-                    time_confidence="exact",
-                    source_time=item.timestamp,
-                    summary=_log_summary(item.title, item.logid, item.comment),
-                    author=author,
-                    changes={target_path: content},
-                    deletions=(old_path,),
-                    trailers={
-                        "Log-Type": "move",
-                        "Moved-From": old_path,
-                        "Page-Id": str(resolved_pageid),
-                    },
-                )
+            trailers = {
+                "Log-Type": "move_redir" if item.move_redir else "move",
+                "Moved-From": old_path,
+                "Page-Id": str(resolved_pageid),
+            }
+            if move_times.get(item.logid) != item.timestamp:
+                trailers["Ordering"] = "forced-before"
+            if overwritten_pageid is not None:
+                trailers["Overwritten-Page-Id"] = str(overwritten_pageid)
+                overwritten = page_by_id[overwritten_pageid]
+                if overwritten.revisions:
+                    trailers["Overwritten-Last-Rev"] = str(
+                        overwritten.revisions[-1].revid
+                    )
+            event = Event(
+                source="wiki",
+                source_id=f"logid={item.logid}",
+                event="moved",
+                time_confidence="exact",
+                source_time=item.timestamp,
+                summary=_log_summary(item.title, item.logid, item.comment),
+                author=author,
+                changes={target_path: content},
+                deletions=(old_path,),
+                trailers=trailers,
             )
+            if pending_event is not None:
+                yield pending_event
+            pending_event = event
             continue
 
-        if resolved_pageid is None or held_by_path.get(old_path) != resolved_pageid:
+        resolved_pageid = held_by_path.get(old_path)
+        if resolved_pageid is None:
             gap_rows.append(
                 {
                     "revid": "",
@@ -908,32 +1216,35 @@ def project(
             if _anonymous(item.user)
             else Identity.namespaced("mw.lojban.org", item.user or "")
         )
-        events.append(
-            Event(
-                source="wiki",
-                source_id=f"logid={item.logid}",
-                event="deleted",
-                time_confidence="exact",
-                source_time=item.timestamp,
-                summary=_log_summary(item.title, item.logid, item.comment),
-                author=author,
-                changes={},
-                deletions=(old_path,),
-                trailers={
-                    "Log-Type": "delete",
-                    "Page-Id": str(resolved_pageid),
-                },
-            )
+        event = Event(
+            source="wiki",
+            source_id=f"logid={item.logid}",
+            event="deleted",
+            time_confidence="exact",
+            source_time=item.timestamp,
+            summary=_log_summary(item.title, item.logid, item.comment),
+            author=author,
+            changes={},
+            deletions=(old_path,),
+            trailers={
+                "Log-Type": "delete",
+                "Page-Id": str(resolved_pageid),
+            },
         )
+        if pending_event is not None:
+            yield pending_event
+        pending_event = event
 
-    if events:
-        final_changes = dict(events[-1].changes)
+    if pending_event is not None:
+        final_changes = dict(pending_event.changes)
         final_changes["_meta/wiki/pages.csv"] = _csv(PAGE_COLUMNS, page_rows)
         final_changes["_meta/wiki/revisions.csv"] = _csv(
             REVISION_COLUMNS, revision_rows
         )
         final_changes["_meta/wiki/media.csv"] = _csv(MEDIA_COLUMNS, media_rows)
+        if error_rows:
+            final_changes["_meta/wiki/errors.csv"] = _csv(ERROR_COLUMNS, error_rows)
         if gap_rows:
             final_changes["_meta/wiki/gaps.csv"] = _csv(GAP_COLUMNS, gap_rows)
-        events[-1] = replace(events[-1], changes=final_changes)
-    yield from events
+        pending_event = replace(pending_event, changes=final_changes)
+        yield pending_event
