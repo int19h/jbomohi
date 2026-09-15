@@ -1352,6 +1352,14 @@ def project(
                 overwritten_last = state_last_revision[overwritten_pageid]
                 if overwritten_last is not None:
                     trailers["Overwritten-Last-Rev"] = str(overwritten_last)
+            # A rename whose source and target land on the same path moves
+            # nothing: MediaWiki normalizes the first letter in a first-letter
+            # namespace, so `Module:Documentation/doc` -> `Module:documentation/doc`
+            # is logged as a move and is a no-op. SPEC.md 3.2 keeps one source
+            # log as one commit so citations resolve, so the event is still
+            # projected — it simply carries no file change, as an unchanged
+            # source event does.
+            renamed = target_path != old_path
             event = Event(
                 source="wiki",
                 source_id=f"logid={item.logid}",
@@ -1360,8 +1368,8 @@ def project(
                 source_time=item.timestamp,
                 summary=_log_summary(item.title, item.logid, item.comment),
                 author=author,
-                changes={target_path: content},
-                deletions=(old_path,),
+                changes={target_path: content} if renamed else {},
+                deletions=(old_path,) if renamed else (),
                 trailers=trailers,
             )
             if pending_event is not None:
