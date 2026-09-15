@@ -45,6 +45,12 @@ from .project.wiki import load_log_archive as load_wiki_log_archive
 from .project.wiki import load_media_archive as load_wiki_media_archive
 from .project.wiki import merge_fragments as merge_wiki_fragments
 from .project.wiki import project as project_wiki
+from .project.wiki_sql import (
+    WikiProjectorInputs,
+    WikiSqlDump,
+    combine_inputs,
+    load_dump_archive,
+)
 
 
 class SourceWiringError(RuntimeError):
@@ -77,17 +83,51 @@ def mediawiki_pages_from_archive(
     return result
 
 
+class _Unset:
+    """Distinguishes "no export is ingested" from "the caller did not say"."""
+
+
+UNSET = _Unset()
+
+
+def wiki_inputs(
+    config: Config,
+    *,
+    fragments: Sequence[WikiPageFragment] | None = None,
+    logs: Sequence[WikiLogEvent] | None = None,
+    dump: WikiSqlDump | None | _Unset = UNSET,
+) -> WikiProjectorInputs:
+    """Union the archived API crawl with the operator export, if one is held.
+
+    SPEC.md 3.2 gives the wiki both inputs and defines them as equal over their
+    intersection, so the build projects the union: the export supplies the
+    deleted lineages and the actor-less revisions `api.php` cannot serve, and
+    `_meta/wiki/coverage.toml` names every such class.
+    """
+
+    api_fragments = (
+        load_wiki_archive(config.archive) if fragments is None else list(fragments)
+    )
+    api_logs = load_wiki_log_archive(config.archive) if logs is None else list(logs)
+    export = load_dump_archive(config.archive) if isinstance(dump, _Unset) else dump
+    return combine_inputs(export, api_fragments, api_logs)
+
+
 def wiki_events(
     config: Config,
     *,
-    fragments: Iterable[WikiPageFragment] | None = None,
-    logs: Iterable[WikiLogEvent] | None = None,
+    inputs: WikiProjectorInputs | None = None,
     media: Iterable[WikiMedia] | None = None,
 ) -> Iterable[Event]:
+    resolved = wiki_inputs(config) if inputs is None else inputs
     return project_wiki(
-        load_wiki_archive(config.archive) if fragments is None else fragments,
-        load_wiki_log_archive(config.archive) if logs is None else logs,
+        resolved.fragments,
+        resolved.logs,
         load_wiki_media_archive(config.archive) if media is None else media,
+        resolved.extra_gaps,
+        resolved.ended_at,
+        resolved.unaccounted,
+        resolved.additive,
     )
 
 
@@ -303,12 +343,19 @@ def source_factories(
 
     available = {"wiki", "irc", "dict", "tiki", "mail", "cll", "grammars"}
     selected = tuple(names or sorted(available))
-    wiki_fragments = (
-        load_wiki_archive(config.archive) if {"wiki", "tiki"} & set(selected) else None
-    )
+    wants_wiki = bool({"wiki", "tiki"} & set(selected))
+    wiki_api_fragments = load_wiki_archive(config.archive) if wants_wiki else None
+    wiki_dump = load_dump_archive(config.archive) if wants_wiki else None
     if "tiki" in selected and mediawiki_pages is None:
-        assert wiki_fragments is not None
-        mediawiki_pages = mediawiki_pages_from_archive(config, wiki_fragments)
+        assert wiki_api_fragments is not None
+        # Tiki's migration map needs the wiki's *current* pages, so it sees the
+        # live fragments of both inputs and not the deleted lineages the export
+        # lets the build rebuild.
+        live = [
+            *(wiki_dump.fragments if wiki_dump is not None else ()),
+            *wiki_api_fragments,
+        ]
+        mediawiki_pages = mediawiki_pages_from_archive(config, live)
     unknown = set(selected) - available
     if unknown:
         raise SourceWiringError(
@@ -316,14 +363,16 @@ def source_factories(
         )
     factories: dict[str, EventFactory] = {}
     if "wiki" in selected:
-        assert wiki_fragments is not None
-        wiki_logs = load_wiki_log_archive(config.archive)
+        assert wiki_api_fragments is not None
         wiki_media = load_wiki_media_archive(config.archive)
-        factories["wiki"] = lambda: wiki_events(
+        combined = wiki_inputs(
             config,
-            fragments=wiki_fragments,
-            logs=wiki_logs,
-            media=wiki_media,
+            fragments=wiki_api_fragments,
+            logs=load_wiki_log_archive(config.archive),
+            dump=wiki_dump,
+        )
+        factories["wiki"] = lambda: wiki_events(
+            config, inputs=combined, media=wiki_media
         )
     if "irc" in selected:
         factories["irc"] = lambda: irc_events(config)
