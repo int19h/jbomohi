@@ -249,6 +249,7 @@ def _cll_render(args: argparse.Namespace, config: Config) -> int:
         known.add(event.source_id)
         commits += 1
     print(f"cll render: edition={args.edition} commits={commits} head={head}")
+    return 0
 
 
 def _until(value: str | None) -> datetime | None:

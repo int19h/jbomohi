@@ -31,7 +31,7 @@ def test_unimplemented_command_is_explicit(monkeypatch, tmp_path) -> None:
         "jbomohi_tools.cli.Config.from_env",
         lambda: object(),
     )
-    assert main(["cll", "render", "1.0"]) == 2
+    assert main(["notes", "lint"]) == 2
 
 
 def test_build_update_verify_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:

@@ -10,36 +10,50 @@ from jbomohi_tools.config import Config
 from jbomohi_tools.sources import (
     SourceWiringError,
     mail_events,
-    mediawiki_pages_from_corpus,
+    mediawiki_pages_from_archive,
     source_factories,
     tiki_events,
 )
 
 
-def test_mediawiki_pages_from_corpus_supplies_tiki_mapping_input(
-    tmp_path: Path,
+def test_mediawiki_pages_from_archive_supplies_tiki_mapping_input(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    corpus = tmp_path / "corpus"
-    page = corpus / "wiki/main/New.wiki"
-    page.parent.mkdir(parents=True)
-    page.write_text("{{BPFK Section from tiki|Old|1}}\n")
-    index = corpus / "_meta/wiki/pages.csv"
-    index.parent.mkdir(parents=True)
-    index.write_text("title,path\nNew,wiki/main/New.wiki\n")
-    assert mediawiki_pages_from_corpus(corpus) == {
-        "New": "{{BPFK Section from tiki|Old|1}}\n"
-    }
-
-
-def test_source_factories_rejects_unmerged_source(tmp_path: Path) -> None:
     config = Config(
         tmp_path / "repo",
         tmp_path / "state/corpus",
         tmp_path / "state/archive",
         tmp_path / "state/tmp",
     )
-    with pytest.raises(SourceWiringError, match="not merged: wiki"):
-        source_factories(config, ("wiki",))
+    fragments = object()
+    page = SimpleNamespace(
+        title="New",
+        revisions=(SimpleNamespace(content="{{BPFK Section from tiki|Old|1}}\n"),),
+    )
+    monkeypatch.setattr("jbomohi_tools.sources.load_wiki_archive", lambda _: fragments)
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.merge_wiki_fragments",
+        lambda value: [page] if value is fragments else (),
+    )
+    assert mediawiki_pages_from_archive(config) == {
+        "New": "{{BPFK Section from tiki|Old|1}}\n"
+    }
+
+
+def test_source_factories_includes_converged_projectors(tmp_path: Path) -> None:
+    config = Config(
+        tmp_path / "repo",
+        tmp_path / "state/corpus",
+        tmp_path / "state/archive",
+        tmp_path / "state/tmp",
+    )
+    assert set(source_factories(config, ("wiki", "cll", "grammars"))) == {
+        "wiki",
+        "cll",
+        "grammars",
+    }
+    with pytest.raises(SourceWiringError, match="unknown source projector: nope"):
+        source_factories(config, ("nope",))
     assert set(source_factories(config, ("irc",))) == {"irc"}
 
 
@@ -136,6 +150,10 @@ def test_mail_gap_markers_clear_only_at_named_inventory_counts(
 
     monkeypatch.setattr("jbomohi_tools.sources.OLD_LOJBAN_LIST_PAGE_COUNT", 2)
     monkeypatch.setattr("jbomohi_tools.sources.LOJBAN_BEGINNERS_MHONARC_PAGE_COUNT", 2)
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.LOJBAN_BEGINNERS_MHONARC_KNOWN_MISSING",
+        frozenset(),
+    )
     monkeypatch.setattr("jbomohi_tools.sources.MAILDIR_LISTS", ())
     monkeypatch.setattr("jbomohi_tools.sources.MHONARC_LISTS", ())
     monkeypatch.setattr(
@@ -163,3 +181,55 @@ def test_mail_gap_markers_clear_only_at_named_inventory_counts(
     assert "lojban-beginners" not in observed
     assert config.tmp.is_dir()
     assert not (config.repo_root / "tmp").exists()
+
+
+def test_mail_gap_records_exact_unavailable_beginners_pages(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    config = Config(
+        tmp_path / "repo",
+        tmp_path / "state/corpus",
+        tmp_path / "state/archive",
+        tmp_path / "state/tmp",
+    )
+    old_root = config.archive / "manifests/mail/lojban-list/old-lojban-list"
+    beginners_root = config.archive / "manifests/mail/lojban-beginners/mhonarc"
+    old_root.mkdir(parents=True)
+    beginners_root.mkdir(parents=True)
+    for number in (0, 3):
+        (beginners_root / f"msg{number:05d}.toml").write_text("fixture\n")
+
+    monkeypatch.setattr("jbomohi_tools.sources.OLD_LOJBAN_LIST_PAGE_COUNT", 0)
+    monkeypatch.setattr("jbomohi_tools.sources.LOJBAN_BEGINNERS_MHONARC_PAGE_COUNT", 4)
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.LOJBAN_BEGINNERS_MHONARC_KNOWN_MISSING",
+        frozenset({1, 2}),
+    )
+    monkeypatch.setattr("jbomohi_tools.sources.MAILDIR_LISTS", ())
+    monkeypatch.setattr("jbomohi_tools.sources.MHONARC_LISTS", ())
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_mhonarc_manifestations", lambda *_args: iter(())
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_old_lojban_manifestations", lambda *_args: iter(())
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_mbox_manifestations", lambda *_args: iter(())
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_jbosnu_manifestations", lambda *_args: iter(())
+    )
+    observed = {}
+
+    def fake_project(sources, *, archive_gaps):
+        tuple(sources)
+        observed.update(archive_gaps)
+        return iter(())
+
+    monkeypatch.setattr("jbomohi_tools.sources.project_mail", fake_project)
+    assert list(mail_events(config)) == []
+    assert observed["lojban-beginners"] == {
+        "mhonarc_missing_pages": (
+            "numbered pages unavailable (HTTP 404): msg00001.html, msg00002.html"
+        )
+    }

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import csv
 import tempfile
 from collections.abc import Iterable, Mapping, Sequence
 from datetime import date
@@ -22,11 +21,13 @@ from .archive.manifest import ArchiveManifest, object_path
 from .build import EventFactory
 from .config import Config
 from .git import Event
+from .project.cll import project as project_cll
 from .project.dictionary import (
     load_dictionary_dump,
     load_jbovlaste_dump,
 )
 from .project.dictionary import project as project_dictionary
+from .project.grammars import project as project_grammars
 from .project.irc import load_archive as load_irc_archive
 from .project.irc import project as project_irc
 from .project.mail import DEFAULT_ARCHIVE_GAPS, load_maildir
@@ -38,6 +39,11 @@ from .project.tiki import (
     migrated_title_map,
 )
 from .project.tiki import project as project_tiki
+from .project.wiki import load_archive as load_wiki_archive
+from .project.wiki import load_log_archive as load_wiki_log_archive
+from .project.wiki import load_media_archive as load_wiki_media_archive
+from .project.wiki import merge_fragments as merge_wiki_fragments
+from .project.wiki import project as project_wiki
 
 
 class SourceWiringError(RuntimeError):
@@ -47,33 +53,38 @@ class SourceWiringError(RuntimeError):
 # Complete page inventories recorded in SPEC.md section 3.3.
 OLD_LOJBAN_LIST_PAGE_COUNT = 19_674
 LOJBAN_BEGINNERS_MHONARC_PAGE_COUNT = 20_910
+LOJBAN_BEGINNERS_MHONARC_KNOWN_MISSING = frozenset({5_411, 5_412})
 
 
-def mediawiki_pages_from_corpus(corpus: Path) -> dict[str, str]:
-    """Read the prior verified wiki title/path index for Tiki migration mapping."""
+def mediawiki_pages_from_archive(config: Config) -> dict[str, str]:
+    """Build Tiki's migration map from the same archived wiki projection input."""
 
-    index = corpus / "_meta" / "wiki" / "pages.csv"
-    if not index.is_file():
-        return {}
     result: dict[str, str] = {}
-    with index.open(encoding="utf-8", newline="") as stream:
-        reader = csv.DictReader(stream)
-        if not reader.fieldnames or not {"title", "path"} <= set(reader.fieldnames):
-            raise SourceWiringError(f"wiki pages index has unexpected columns: {index}")
-        for row_number, row in enumerate(reader, 2):
-            title = row.get("title") or ""
-            relative = row.get("path") or ""
-            path = corpus / relative
-            if not title or not relative or not path.is_file():
-                raise SourceWiringError(
-                    f"wiki pages index row is incomplete at {index}:{row_number}"
-                )
-            content = path.read_text(encoding="utf-8")
-            previous = result.get(title)
-            if previous is not None and previous != content:
-                raise SourceWiringError(f"duplicate wiki title in index: {title!r}")
-            result[title] = content
+    for page in merge_wiki_fragments(load_wiki_archive(config.archive)):
+        if not page.revisions or page.revisions[-1].content is None:
+            continue
+        previous = result.get(page.title)
+        content = page.revisions[-1].content
+        if previous is not None and previous != content:
+            raise SourceWiringError(f"duplicate wiki title in archive: {page.title!r}")
+        result[page.title] = content
     return result
+
+
+def wiki_events(config: Config) -> Iterable[Event]:
+    return project_wiki(
+        load_wiki_archive(config.archive),
+        load_wiki_log_archive(config.archive),
+        load_wiki_media_archive(config.archive),
+    )
+
+
+def cll_events(config: Config) -> Iterable[Event]:
+    return project_cll(config.archive)
+
+
+def grammar_events(config: Config) -> Iterable[Event]:
+    return project_grammars(config.archive)
 
 
 def _component(archive: Path, root: Path, prefix: str) -> Path:
@@ -246,9 +257,27 @@ def mail_events(config: Config) -> Iterable[Event]:
         )
         if old_count >= OLD_LOJBAN_LIST_PAGE_COUNT:
             gaps["lojban-list"].pop("old_lojban_list", None)
-        beginners_count = sum(1 for _path in beginners_root.glob("msg*.toml"))
-        if beginners_count >= LOJBAN_BEGINNERS_MHONARC_PAGE_COUNT:
-            gaps.pop("lojban-beginners", None)
+        beginners_ids = {
+            int(path.name[3:8])
+            for path in beginners_root.glob("msg*.toml")
+            if len(path.name) > 8 and path.name[3:8].isdigit()
+        }
+        missing_beginners = (
+            set(range(LOJBAN_BEGINNERS_MHONARC_PAGE_COUNT)) - beginners_ids
+        )
+        if missing_beginners == set(LOJBAN_BEGINNERS_MHONARC_KNOWN_MISSING):
+            if LOJBAN_BEGINNERS_MHONARC_KNOWN_MISSING:
+                pages = ", ".join(
+                    f"msg{value:05d}.html"
+                    for value in sorted(LOJBAN_BEGINNERS_MHONARC_KNOWN_MISSING)
+                )
+                gaps["lojban-beginners"] = {
+                    "mhonarc_missing_pages": (
+                        f"numbered pages unavailable (HTTP 404): {pages}"
+                    )
+                }
+            else:
+                gaps.pop("lojban-beginners", None)
         yield from project_mail(sources, archive_gaps=gaps)
 
 
@@ -258,17 +287,20 @@ def source_factories(
     *,
     mediawiki_pages: Mapping[str, str] | None = None,
 ) -> dict[str, EventFactory]:
-    """Resolve requested merged projectors without importing unmerged wiki code."""
+    """Resolve requested merged projectors and their same-build dependencies."""
 
-    selected = tuple(names or ("irc", "dict", "tiki", "mail"))
-    if mediawiki_pages is None:
-        mediawiki_pages = mediawiki_pages_from_corpus(config.corpus)
-    unknown = set(selected) - {"irc", "dict", "tiki", "mail"}
+    available = {"wiki", "irc", "dict", "tiki", "mail", "cll", "grammars"}
+    selected = tuple(names or sorted(available))
+    if "tiki" in selected and mediawiki_pages is None:
+        mediawiki_pages = mediawiki_pages_from_archive(config)
+    unknown = set(selected) - available
     if unknown:
         raise SourceWiringError(
-            f"source projector is not merged: {', '.join(sorted(unknown))}"
+            f"unknown source projector: {', '.join(sorted(unknown))}"
         )
     factories: dict[str, EventFactory] = {}
+    if "wiki" in selected:
+        factories["wiki"] = lambda: wiki_events(config)
     if "irc" in selected:
         factories["irc"] = lambda: irc_events(config)
     if "dict" in selected:
@@ -277,4 +309,8 @@ def source_factories(
         factories["tiki"] = lambda: tiki_events(config, mediawiki_pages)
     if "mail" in selected:
         factories["mail"] = lambda: mail_events(config)
+    if "cll" in selected:
+        factories["cll"] = lambda: cll_events(config)
+    if "grammars" in selected:
+        factories["grammars"] = lambda: grammar_events(config)
     return factories
