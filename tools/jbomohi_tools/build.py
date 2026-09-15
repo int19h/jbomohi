@@ -17,7 +17,16 @@ from pathlib import Path
 from .archive.manifest import ArchiveManifest
 from .config import Config
 from .corpus import CorpusError, corpus_status, init_corpus
-from .git import EPOCH, Event, GitError, Identity, commit_event, git_output, run_git
+from .git import (
+    EPOCH,
+    Event,
+    EventError,
+    GitError,
+    Identity,
+    commit_event,
+    git_output,
+    run_git,
+)
 from .render import RenderContext, commit_instruction_refresh, commit_root
 
 EventFactory = Callable[[], Iterable[Event]]
@@ -331,6 +340,56 @@ def build_corpus(
         _install_main(config, scratch, final_head)
     _tag_snapshot(config.repo_root, final_head, snapshot, last_time, coverage)
     return BuildReport(final_head, commits, event_count, snapshot, coverage)
+
+
+@dataclass(frozen=True, slots=True)
+class EventAudit:
+    """What `verify --events` found in the merged stream."""
+
+    events: int
+    invalid: tuple[tuple[str, str, str], ...]
+
+
+def audit_events(
+    sources: Mapping[str, EventFactory], until: datetime | None = None
+) -> EventAudit:
+    """Validate every event the sources would commit, without committing any.
+
+    A build stops at its first invalid event, so a corpus-wide problem costs
+    one full build per instance to find. This is what `build` should be asked
+    to do first.
+
+    Each source is walked on its own rather than through the merge, because an
+    event that is invalid on construction raises out of its projector and ends
+    that stream: merged, one such event would hide every other source's
+    problems behind it. Walking separately also costs nothing, since validity
+    is a property of an event and not of its place in the order.
+    """
+
+    invalid: list[tuple[str, str, str]] = []
+    count = 0
+    for name in sorted(sources):
+        stream = iter(sources[name]())
+        produced = 0
+        while True:
+            try:
+                event = next(stream)
+            except StopIteration:
+                break
+            except EventError as exc:
+                # The projector could not build the event at all, which ends
+                # this stream; report where it stopped instead of an id.
+                invalid.append((name, f"<after {produced} events>", str(exc)))
+                break
+            produced += 1
+            count += 1
+            if until is not None and event.source_time > until:
+                continue
+            try:
+                event.validate()
+            except EventError as exc:
+                invalid.append((name, event.source_id, str(exc)))
+    return EventAudit(count, tuple(invalid))
 
 
 def _trailers_from_body(body: str) -> dict[str, str]:
