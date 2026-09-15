@@ -475,3 +475,35 @@ def test_audit_events_reports_every_invalid_event(tmp_path: Path) -> None:
 
     clean = audit_events({"wiki": lambda: iter((good,))})
     assert clean.events == 1 and clean.invalid == ()
+
+
+def test_verify_does_not_require_gap_paths_to_exist(tmp_path: Path) -> None:
+    """A gaps file names what could not be projected, not an index of files.
+
+    The first complete production build tripped on this: Tiki's gaps.csv has
+    180 rows carrying a `path`, of which 178 name a page kept from its history
+    alone — those files exist — and 2 name the NUL-byte page that SPEC.md
+    3.2.5(d) deliberately does not project. Requiring either would be wrong.
+    """
+
+    config, _commit = tools_repo(tmp_path / "repo")
+    build_corpus(config, {})
+    kept = config.corpus / "tiki/kept.tiki"
+    kept.parent.mkdir(parents=True, exist_ok=True)
+    kept.write_text("body\n")
+    gaps = config.corpus / "_meta/tiki/gaps.csv"
+    gaps.parent.mkdir(parents=True, exist_ok=True)
+    gaps.write_text(
+        "source_id,title,path,reason\n"
+        ",kept,tiki/kept.tiki,no current row; rename/deletion undocumented\n"
+        ",gone,tiki/gone.tiki,non-text page content (NUL bytes)\n"
+    )
+    commit_fixture(config.corpus, valid_message("gaps"))
+    verify_corpus(config.corpus)
+
+    # An ordinary index still has to name files that are there.
+    index = config.corpus / "_meta/tiki/pages.csv"
+    index.write_text("title,path\nabsent,tiki/absent.tiki\n")
+    commit_fixture(config.corpus, valid_message("pages"))
+    with pytest.raises(CorpusError, match="CSV path missing"):
+        verify_corpus(config.corpus)
