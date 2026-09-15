@@ -17,7 +17,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 from ..archive.manifest import ArchiveManifest, object_path
-from ..git import Event, Identity
+from ..git import UNTITLED, Event, Identity
 
 
 class WikiParseError(ValueError):
@@ -670,6 +670,7 @@ def _log_author(item: WikiLogEvent) -> Identity:
 
 
 def _summary(title: str, revid: int, comment: str) -> str:
+    title = title.strip() or UNTITLED
     cleaned_comment = " ".join(comment.split())[:40].rstrip()
     suffix = f" (rev {revid})"
     comment_suffix = f" {cleaned_comment}" if cleaned_comment else ""
@@ -682,6 +683,7 @@ def _summary(title: str, revid: int, comment: str) -> str:
 
 
 def _log_summary(title: str, logid: int, comment: str) -> str:
+    title = title.strip() or UNTITLED
     cleaned_comment = " ".join(comment.split())[:40].rstrip()
     suffix = f" (log {logid})"
     comment_suffix = f" {cleaned_comment}" if cleaned_comment else ""

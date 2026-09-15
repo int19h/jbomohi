@@ -17,7 +17,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import BinaryIO, Literal
 
-from ..git import Event, Identity
+from ..git import UNTITLED, Event, Identity
 from . import sqldump
 from .dictionary import slug
 
@@ -505,7 +505,7 @@ def _one_line(value: str, context: str) -> str:
 
 
 def _summary(label: str, suffix: str) -> str:
-    clean = " ".join(label.split())
+    clean = " ".join(label.split()) or UNTITLED
     tail = f" {suffix}"
     budget = 72 - len("tiki: ") - len(tail)
     shown = clean if len(clean) <= budget else clean[: max(1, budget - 1)] + "…"
