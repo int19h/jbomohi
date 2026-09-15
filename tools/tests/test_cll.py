@@ -224,6 +224,7 @@ def test_project_emits_cumulative_metadata_and_exact_gitlinks(
     ]
     assert events[0].source_date == "1997"
     assert events[1].gitlinks == {"cll/src": "2" * 40}
+    assert events[1].submodules == {"cll/src": "https://github.com/int19h/cll"}
     edition_rows = list(
         csv.DictReader(io.StringIO(events[1].changes["_meta/cll/editions.csv"]))
     )

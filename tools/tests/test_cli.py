@@ -92,6 +92,27 @@ def test_archive_fetch_cll_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> No
     assert "refs=1 reused=false" in capsys.readouterr().out
 
 
+def test_archive_fetch_grammars_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:
+    config = type("Config", (), {"archive": tmp_path})()
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.fetch_grammars",
+        lambda _archive, **_kwargs: type(
+            "Report",
+            (),
+            {
+                "mirrors": (
+                    type("Mirror", (), {"reused_manifest": False})(),
+                    type("Mirror", (), {"reused_manifest": True})(),
+                ),
+                "vendor_manifests": (tmp_path / "camxes.toml",),
+            },
+        )(),
+    )
+    assert main(["archive", "fetch", "grammars"]) == 0
+    assert "mirrors=2 reused=1 vendor_manifests=1" in capsys.readouterr().out
+
+
 def test_archive_fetch_dictionary_cli_wiring(
     monkeypatch, tmp_path: Path, capsys
 ) -> None:

@@ -53,7 +53,6 @@ CHAPTER_SLUGS = {
     "A2": "peg-morphology",
     "A3": "changes",
 }
-SUBMODULES = f'[submodule "cll/src"]\n\tpath = cll/src\n\turl = {CLL_URL}\n'
 EDITION_COLUMNS = (
     "edition",
     "ref",
@@ -769,7 +768,6 @@ def project(archive: Path) -> Iterable[Event]:
         ]
         changes = {
             **item.changes,
-            ".gitmodules": SUBMODULES,
             "_meta/cll/editions.csv": _csv(EDITION_COLUMNS, edition_rows),
             "_meta/cll/alignment.csv": _csv(ALIGNMENT_COLUMNS, all_alignment),
         }
@@ -784,6 +782,7 @@ def project(archive: Path) -> Iterable[Event]:
             author=Identity.tool(),
             changes=changes,
             gitlinks={"cll/src": item.edition.object_id},
+            submodules={"cll/src": CLL_URL},
             trailers={"Edition": item.edition.name, "Renderer": RENDERER},
         )
         event.validate()

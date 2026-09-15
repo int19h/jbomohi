@@ -7,6 +7,8 @@ import re
 import stat
 import subprocess
 from collections.abc import Mapping, Sequence
+from configparser import ConfigParser
+from configparser import Error as ConfigParserError
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 from pathlib import Path, PurePosixPath
@@ -235,7 +237,7 @@ class Identity:
             or self.name.endswith(".")
         ):
             raise EventError("identity name contains characters git cannot preserve")
-        if self.namespace in {"mail", "contributed"}:
+        if self.namespace in {"mail", "contributed", "upstream", "document"}:
             return
         fixed = {
             "jbomohi": ("jbomohi", "tools@jbomohi.invalid"),
@@ -324,6 +326,27 @@ class Identity:
         )
 
     @classmethod
+    def upstream(cls, name: str, email: str) -> Identity:
+        """Retain the public author identity stored in an upstream git commit."""
+
+        return cls(name, email, "upstream")
+
+    @classmethod
+    def document(cls, host: str, name: str, author_slug: str) -> Identity:
+        """Create a source-stated document author with an attested email slug."""
+
+        clean_host = _clean_text("document author host", host)
+        clean_name = _clean_text("document author name", name)
+        clean_slug = _clean_text("document author slug", author_slug)
+        if (
+            any(char.isspace() for char in clean_host)
+            or "@" in clean_host
+            or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", clean_slug)
+        ):
+            raise EventError("invalid document author host or slug")
+        return cls(clean_name, f"{clean_slug}@{clean_host}", "document")
+
+    @classmethod
     def anonymous(cls, host: str) -> Identity:
         clean_host = _clean_text("anonymous host", host)
         if any(char.isspace() for char in clean_host) or "@" in clean_host:
@@ -373,6 +396,7 @@ class Event:
     author: Identity
     changes: Mapping[str, str | bytes] = field(default_factory=dict)
     gitlinks: Mapping[str, str] = field(default_factory=dict)
+    submodules: Mapping[str, str] = field(default_factory=dict)
     deletions: tuple[str, ...] = ()
     body: str = ""
     source_date: str | None = None
@@ -429,12 +453,25 @@ class Event:
         if self.event == "refresh" and self.author != Identity.tool():
             raise EventError("refresh commits must use the jbomohi tool identity")
         changed = {_safe_repo_path(path).as_posix() for path in self.changes}
+        if ".gitmodules" in changed:
+            raise EventError(
+                "projectors must declare submodules, not write .gitmodules"
+            )
         if any(not isinstance(value, (str, bytes)) for value in self.changes.values()):
             raise EventError("event changes must contain only text or bytes")
         gitlinks = {_safe_repo_path(path).as_posix() for path in self.gitlinks}
         for path, object_id in self.gitlinks.items():
             if not isinstance(object_id, str) or not GITLINK_ID.fullmatch(object_id):
                 raise EventError(f"gitlink {path!r} must name a 40-digit object id")
+        submodules = {_safe_repo_path(path).as_posix() for path in self.submodules}
+        if gitlinks != submodules:
+            raise EventError("gitlinks and submodules must declare the same paths")
+        for path, url in self.submodules.items():
+            if '"' in path or "\\" in path:
+                raise EventError(f"submodule path is unsafe for .gitmodules: {path!r}")
+            clean_url = _clean_text(f"submodule URL for {path}", url)
+            if any(char.isspace() for char in clean_url):
+                raise EventError(f"submodule URL contains whitespace: {path!r}")
         deleted = {_safe_repo_path(path).as_posix() for path in self.deletions}
         if changed & deleted or changed & gitlinks or deleted & gitlinks:
             raise EventError("an event cannot write, link, and delete the same path")
@@ -504,6 +541,46 @@ def _tracked_at(corpus: Path, head: str | None, relative: PurePosixPath) -> bool
     return result.returncode == 0
 
 
+def _submodules_at(corpus: Path, head: str | None) -> dict[str, str]:
+    if head is None:
+        return {}
+    result = run_git(corpus, ["show", f"{head}:.gitmodules"], check=False)
+    if result.returncode != 0:
+        return {}
+    parser = ConfigParser(interpolation=None, strict=True)
+    parser.optionxform = str
+    try:
+        parser.read_string(result.stdout)
+    except ConfigParserError as exc:
+        raise EventError("parent .gitmodules is invalid") from exc
+    submodules: dict[str, str] = {}
+    for section in parser.sections():
+        matched = re.fullmatch(r'submodule "([^"]+)"', section)
+        if matched is None or set(parser[section]) != {"path", "url"}:
+            raise EventError("parent .gitmodules has an unsupported section")
+        path = _safe_repo_path(parser[section]["path"]).as_posix()
+        if matched.group(1) != path or path in submodules:
+            raise EventError("parent .gitmodules has an inconsistent path")
+        url = _clean_text(f"parent submodule URL for {path}", parser[section]["url"])
+        if any(char.isspace() for char in url):
+            raise EventError("parent .gitmodules has an invalid URL")
+        submodules[path] = url
+    return submodules
+
+
+def _render_submodules(submodules: Mapping[str, str]) -> bytes:
+    lines: list[str] = []
+    for path, url in sorted(submodules.items()):
+        lines.extend(
+            [
+                f'[submodule "{path}"]',
+                f"\tpath = {path}",
+                f"\turl = {url}",
+            ]
+        )
+    return ("\n".join(lines) + "\n").encode()
+
+
 def commit_event(event: Event, corpus: Path | None = None) -> str:
     """Commit one validated event without consulting the clock.
 
@@ -533,6 +610,17 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
         value = event.changes[raw_path]
         data = value.encode("utf-8") if isinstance(value, str) else value
         writes.append((relative.as_posix(), target, data))
+    if event.submodules:
+        submodules = _submodules_at(corpus, old_head)
+        submodules.update(event.submodules)
+        relative = _safe_repo_path(".gitmodules")
+        writes.append(
+            (
+                relative.as_posix(),
+                _target(corpus, relative),
+                _render_submodules(submodules),
+            )
+        )
 
     deletions: list[tuple[str, Path]] = []
     for raw_path in sorted(event.deletions):
