@@ -1082,7 +1082,9 @@ def _csv_text(columns: Sequence[str], rows: Sequence[Mapping[str, object]]) -> s
 
 
 def _summary(subject: str, list_name: str) -> str:
-    cleaned = " ".join(subject.split())
+    # Mail keeps its own placeholder, which predates the general rule and is
+    # already what `messages.csv` and the thread views show.
+    cleaned = " ".join(subject.split()) or "[no subject]"
     budget = 72 - len(f"mail/{list_name}: ")
     return cleaned[: max(1, budget - 1)] + "…" if len(cleaned) > budget else cleaned
 

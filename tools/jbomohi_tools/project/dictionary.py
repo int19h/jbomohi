@@ -19,7 +19,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import BinaryIO, TextIO
 
-from ..git import Event, Identity
+from ..git import UNTITLED, Event, Identity
 
 
 class DictionaryParseError(ValueError):
@@ -944,6 +944,7 @@ def _summary(word: str, suffix: str, message: str = "") -> str:
     # Truncating to 36 characters can cut immediately after a word and leave
     # the space behind, which a commit subject may not end with. The wiki
     # projector already strips for the same reason.
+    word = word.strip() or UNTITLED
     clean_message = " ".join(message.split())[:36].rstrip()
     tail = f" {suffix}"
     message_tail = f" {clean_message}" if clean_message else ""

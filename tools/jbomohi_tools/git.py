@@ -15,6 +15,10 @@ from pathlib import Path, PurePosixPath
 from urllib.parse import quote, unquote
 
 EPOCH = datetime(1970, 1, 1, tzinfo=UTC)
+# SPEC.md 3.1: a commit subject is always one non-empty line, and a source that
+# offers no title, subject or comment gets a placeholder rather than an
+# invented description. Mail keeps its own, older `[no subject]`.
+UNTITLED = "[untitled]"
 SOURCES = {
     "wiki",
     "tiki",
