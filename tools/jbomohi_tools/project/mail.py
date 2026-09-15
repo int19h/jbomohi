@@ -24,7 +24,7 @@ from email.utils import parseaddr, parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 
-from ..git import Event, Identity
+from ..git import EPOCH, Event, Identity
 from .dictionary import slug
 
 _MAX_MESSAGE_BYTES = 32 * 1024 * 1024
@@ -381,39 +381,38 @@ def _preserved_header(raw: bytes, message: Message, name: str) -> tuple[str, boo
     return decoded, False
 
 
+def _naive_header_date(value: str | None) -> datetime | None:
+    """Parse one RFC 822 date header, or None when it does not parse."""
+
+    if not value:
+        return None
+    try:
+        parsed = parsedate_to_datetime(value)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return parsed
+
+
 def _message_date(
     message: Message, manifestation: MailManifestation
 ) -> tuple[datetime, str, str | None, bool]:
-    date_value = _decoded_header(message, "Date")
-    if date_value:
-        try:
-            parsed = parsedate_to_datetime(date_value)
-        except (TypeError, ValueError, OverflowError):
-            parsed = None
-        if parsed is not None:
+    parsed = _naive_header_date(_decoded_header(message, "Date"))
+    if parsed is not None:
+        aware = parsed if parsed.tzinfo is not None else parsed.replace(tzinfo=UTC)
+        moment = aware.astimezone(UTC).replace(microsecond=0)
+        if moment > EPOCH:
             if parsed.tzinfo is None:
-                return parsed.replace(tzinfo=UTC), "tz-unknown", None, True
-            return (
-                parsed.astimezone(UTC).replace(microsecond=0),
-                "exact",
-                None,
-                True,
-            )
+                return moment, "tz-unknown", None, True
+            return moment, "exact", None, True
     for received in message.get_all("Received", []):
         candidate = str(received).rsplit(";", 1)[-1].strip()
-        try:
-            parsed = parsedate_to_datetime(candidate)
-        except (TypeError, ValueError, OverflowError):
+        parsed = _naive_header_date(candidate)
+        if parsed is None:
             continue
-        if parsed is not None:
-            if parsed.tzinfo is None:
-                parsed = parsed.replace(tzinfo=UTC)
-            return (
-                parsed.astimezone(UTC).replace(microsecond=0),
-                "tz-unknown",
-                None,
-                True,
-            )
+        aware = parsed if parsed.tzinfo is not None else parsed.replace(tzinfo=UTC)
+        moment = aware.astimezone(UTC).replace(microsecond=0)
+        if moment > EPOCH:
+            return moment, "tz-unknown", None, True
     timestamp = manifestation.archive_time.astimezone(UTC).replace(microsecond=0)
     day = timestamp.date().isoformat()
     return timestamp, "window", f"{day}..{day}", False
