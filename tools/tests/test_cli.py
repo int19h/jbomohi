@@ -5,6 +5,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from jbomohi_tools.archive.irc import FetchReport
+from jbomohi_tools.archive.wiki import FetchReport as WikiFetchReport
 from jbomohi_tools.cli import main, parser
 
 
@@ -342,3 +343,21 @@ def test_cll_render_rejects_a_nonprefix_existing_edition(
         lambda _corpus, _args: "Source-Id: cll=two\n",
     )
     assert main(["cll", "render", "two"]) == 1
+
+
+def test_archive_fetch_wiki_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:
+    config = SimpleNamespace(archive=tmp_path)
+    calls: list[tuple[Path, str | None]] = []
+
+    def fake_fetch(archive: Path, since: str | None) -> WikiFetchReport:
+        calls.append((archive, since))
+        return WikiFetchReport((tmp_path / "manifest.toml",), 2, 3, 4, 5, 6)
+
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr("jbomohi_tools.cli.fetch_wiki", fake_fetch)
+    assert main(["archive", "fetch", "wiki", "--since", "2026-01-01T00:00:00Z"]) == 0
+    assert calls == [(tmp_path, "2026-01-01T00:00:00Z")]
+    assert (
+        "pages=2 revision_batches=3 log_batches=4 media_batches=5 reused=6 manifests=1"
+        in capsys.readouterr().out
+    )
