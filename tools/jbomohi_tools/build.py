@@ -234,15 +234,37 @@ def _snapshot_name(source_time: datetime) -> str:
 
 
 def _tag_snapshot(
-    repo_root: Path, head: str, name: str, source_time: datetime, message: str
+    repo_root: Path,
+    head: str,
+    name: str,
+    source_time: datetime,
+    message: str,
+    *,
+    replace: bool = False,
 ) -> None:
+    """Tag the snapshot, replacing a stale one only for a rebuild.
+
+    SPEC.md 4.2: `build` replaces `main` by definition, so a snapshot tag left
+    naming a commit that is no longer in the history is stale and the build
+    re-points it. `update` only ever appends, so a tag it would move names a
+    commit that is still there and moving it would break a citation.
+    """
+
     existing = run_git(
         repo_root, ["rev-parse", "--verify", f"refs/tags/{name}^{{}}"], check=False
     )
     if existing.returncode == 0:
-        if existing.stdout.strip() != head:
+        previous = existing.stdout.strip()
+        if previous == head:
+            return
+        reachable = run_git(
+            repo_root,
+            ["merge-base", "--is-ancestor", previous, head],
+            check=False,
+        )
+        if not replace or reachable.returncode == 0:
             raise GitError(f"snapshot tag already names another commit: {name}")
-        return
+        run_git(repo_root, ["tag", "-d", name])
     date = source_time.astimezone(UTC).replace(microsecond=0).isoformat()
     run_git(
         repo_root,
@@ -334,7 +356,9 @@ def build_corpus(
         final_head = git_output(scratch, ["rev-parse", "HEAD"])
         commits = int(git_output(scratch, ["rev-list", "--count", "HEAD"]))
         _install_main(config, scratch, final_head)
-    _tag_snapshot(config.repo_root, final_head, snapshot, last_time, coverage)
+    _tag_snapshot(
+        config.repo_root, final_head, snapshot, last_time, coverage, replace=True
+    )
     return BuildReport(final_head, commits, event_count, snapshot, coverage)
 
 
