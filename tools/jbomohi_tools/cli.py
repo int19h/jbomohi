@@ -22,6 +22,7 @@ from .archive import (
     fetch_wiki,
     ingest_dictionary_exports,
     ingest_tiki_export,
+    ingest_wiki_sql_export,
     verify_archive,
     verify_manifests,
 )
@@ -193,6 +194,21 @@ def _archive_ingest_tiki(args: argparse.Namespace, config: Config) -> int:
     return 0
 
 
+def _archive_ingest_wiki(args: argparse.Namespace, config: Config) -> int:
+    report = ingest_wiki_sql_export(
+        config.archive, Path(args.directory), args.export_date
+    )
+    print(
+        f"archive ingest wiki: manifests={len(report.manifests)} "
+        f"tables={len(report.inventory.table_rows)} "
+        f"pages={report.inventory.table_rows['page']} "
+        f"revisions={report.inventory.table_rows['revision']} "
+        f"archive={report.inventory.table_rows['archive']} "
+        f"users={report.inventory.users}"
+    )
+    return 0
+
+
 def _cll_render(args: argparse.Namespace, config: Config) -> int:
     status, _created = init_corpus(config)
     events = list(project_cll(config.archive))
@@ -282,6 +298,9 @@ def parser() -> argparse.ArgumentParser:
         choices=("latin1-transcoded", "utf8"),
         default="latin1-transcoded",
     )
+    wiki = _leaf(ingest_commands, "wiki", _archive_ingest_wiki)
+    wiki.add_argument("directory")
+    wiki.add_argument("--export-date", required=True)
     _leaf(archive_commands, "verify", _archive_verify)
 
     build = _leaf(commands, "build", _not_implemented("build"))

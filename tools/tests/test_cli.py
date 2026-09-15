@@ -312,6 +312,42 @@ def test_archive_ingest_tiki_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> 
     assert "manifests=1 pages=2 events=3" in capsys.readouterr().out
 
 
+def test_archive_ingest_wiki_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:
+    config = SimpleNamespace(archive=tmp_path / "archive")
+    calls: list[tuple[Path, Path, str]] = []
+
+    def fake_ingest(archive: Path, directory: Path, export_date: str):
+        calls.append((archive, directory, export_date))
+        return SimpleNamespace(
+            manifests=(tmp_path / "manifest-a.toml", tmp_path / "manifest-b.toml"),
+            inventory=SimpleNamespace(
+                table_rows={"page": 14_486, "revision": 53_279, "archive": 1_291},
+                users=418,
+            ),
+        )
+
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr("jbomohi_tools.cli.ingest_wiki_sql_export", fake_ingest)
+    assert (
+        main(
+            [
+                "archive",
+                "ingest",
+                "wiki",
+                str(tmp_path / "export"),
+                "--export-date",
+                "2026-09-15",
+            ]
+        )
+        == 0
+    )
+    assert calls == [(config.archive, tmp_path / "export", "2026-09-15")]
+    assert (
+        "manifests=2 tables=3 pages=14486 revisions=53279 archive=1291 users=418"
+        in capsys.readouterr().out
+    )
+
+
 def test_cll_render_commits_missing_editions_through_the_target(
     monkeypatch, tmp_path: Path, capsys
 ) -> None:
