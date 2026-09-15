@@ -410,6 +410,12 @@ def test_a_date_at_or_before_the_epoch_is_not_a_date() -> None:
     assert recovered.time_confidence == "tz-unknown"
     assert recovered.timestamp == datetime(2000, 1, 1, 12, tzinfo=UTC)
 
+    # Every discarded value is kept verbatim so the record can show it.
+    assert parsed.date_source == "archive-order"
+    assert parsed.unusable_dates == ("Thu, 1 Jan 1970 00:00:00 +0000",)
+    assert recovered.date_source == "received"
+    assert recovered.unusable_dates == ("Thu, 1 Jan 1970 00:00:00 +0000",)
+
     # A real date is still exact, and the first second after the epoch counts.
     just_after = manifestation(
         message("after@example.org", date="Thu, 1 Jan 1970 00:00:01 +0000"),
@@ -417,3 +423,42 @@ def test_a_date_at_or_before_the_epoch_is_not_a_date() -> None:
     )
     assert parse_mail(just_after).time_confidence == "exact"
     assert parse_mail(just_after).timestamp == datetime(1970, 1, 1, 0, 0, 1, tzinfo=UTC)
+    assert parse_mail(just_after).date_source == "header"
+    assert parse_mail(just_after).unusable_dates == ()
+
+
+def test_an_unusable_date_is_named_in_the_record() -> None:
+    """SPEC.md 3.3: the discarded value is written down, not just dropped."""
+
+    events = list(
+        project(
+            [
+                manifestation(
+                    message("kept@example.org", date="Sat, 1 Jan 2000 00:00:00 +0000"),
+                    order=0,
+                ),
+                manifestation(
+                    message(
+                        "broken@example.org", date="Thu, 1 Jan 1970 00:00:00 +0000"
+                    ),
+                    order=1,
+                ),
+            ],
+            archive_gaps={},
+        )
+    )
+    final = events[-1].changes
+    gaps = final["_meta/mail/lojban-list/gaps.csv"].splitlines()
+    assert gaps[0] == "list,message_id,file,manifestation,reason"
+    assert len(gaps) == 2
+    assert gaps[1].endswith('"date header unusable: Thu, 1 Jan 1970 00:00:00 +0000"')
+    assert "broken@example.org" in gaps[1]
+
+    messages = final["_meta/mail/lojban-list/messages.csv"].splitlines()
+    assert messages[0].split(",")[:4] == ["list", "message_id", "date", "date_source"]
+    sources = {row.split(",")[1]: row.split(",")[3] for row in messages[1:]}
+    assert sources["kept@example.org"] == "header"
+    assert sources["broken@example.org"] == "archive-order"
+
+    coverage = final["_meta/mail/lojban-list/coverage.toml"]
+    assert "unusable_date_headers = 1" in coverage
