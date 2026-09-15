@@ -941,7 +941,10 @@ def _render_comments(state: _WordState) -> str:
 
 
 def _summary(word: str, suffix: str, message: str = "") -> str:
-    clean_message = " ".join(message.split())[:36]
+    # Truncating to 36 characters can cut immediately after a word and leave
+    # the space behind, which a commit subject may not end with. The wiki
+    # projector already strips for the same reason.
+    clean_message = " ".join(message.split())[:36].rstrip()
     tail = f" {suffix}"
     message_tail = f" {clean_message}" if clean_message else ""
     budget = 72 - len("dict: ") - len(tail) - len(message_tail)

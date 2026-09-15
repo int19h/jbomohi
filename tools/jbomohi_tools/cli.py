@@ -27,7 +27,13 @@ from .archive import (
     verify_archive,
     verify_manifests,
 )
-from .build import build_corpus, push_main_ranges, update_corpus, verify_corpus
+from .build import (
+    audit_events,
+    build_corpus,
+    push_main_ranges,
+    update_corpus,
+    verify_corpus,
+)
 from .config import Config, ConfigError
 from .corpus import CorpusError, corpus_status, init_corpus
 from .git import EventError, GitError, commit_event, git_output
@@ -293,7 +299,13 @@ def _update(args: argparse.Namespace, config: Config) -> int:
     return 0
 
 
-def _verify(_args: argparse.Namespace, config: Config) -> int:
+def _verify(args: argparse.Namespace, config: Config) -> int:
+    if args.events:
+        audit = audit_events(source_factories(config, args.sources or None))
+        for source, source_id, problem in audit.invalid:
+            print(f"invalid event: {source} {source_id}: {problem}")
+        print(f"verify events: events={audit.events} invalid={len(audit.invalid)}")
+        return 1 if audit.invalid else 0
     report = verify_corpus(config.corpus)
     print(
         f"verify: commits={report.commits} files={report.files} "
@@ -365,7 +377,13 @@ def parser() -> argparse.ArgumentParser:
     update = _leaf(commands, "update", _update)
     update.add_argument("sources", nargs="*")
     update.add_argument("--push", action="store_true")
-    _leaf(commands, "verify", _verify)
+    verify = _leaf(commands, "verify", _verify)
+    verify.add_argument(
+        "--events",
+        action="store_true",
+        help="validate every event the sources would commit, and commit none",
+    )
+    verify.add_argument("--sources", nargs="+")
 
     cll = commands.add_parser("cll", help="CLL rendering commands")
     cll_commands = cll.add_subparsers(dest="cll_command", required=True)

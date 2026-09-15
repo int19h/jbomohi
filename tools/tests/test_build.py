@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import shutil
 import subprocess
+from collections.abc import Iterator
 from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
@@ -18,7 +19,7 @@ from jbomohi_tools.build import (
 )
 from jbomohi_tools.config import Config
 from jbomohi_tools.corpus import CorpusError
-from jbomohi_tools.git import Event, GitError, Identity
+from jbomohi_tools.git import Event, EventError, GitError, Identity
 
 HERE = Path(__file__).resolve()
 WORKSPACE = HERE.parents[2]
@@ -416,3 +417,61 @@ def test_verify_validates_dictionary_front_matter(tmp_path: Path) -> None:
     commit_fixture(config.corpus, valid_message("dict-front", source="dict"))
     with pytest.raises(CorpusError, match="front matter is missing"):
         verify_corpus(config.corpus)
+
+
+def test_audit_events_reports_every_invalid_event(tmp_path: Path) -> None:
+    """A build stops at the first bad event; the audit names them all.
+
+    Finding a corpus-wide problem one build at a time costs a full build per
+    instance, which is how two of them were found the slow way.
+    """
+
+    from jbomohi_tools.build import audit_events
+
+    def event(source_id: str, **changes: object) -> Event:
+        fields: dict[str, object] = {
+            "source": "wiki",
+            "source_id": source_id,
+            "event": "created",
+            "time_confidence": "exact",
+            "source_time": datetime(2004, 1, 1, tzinfo=UTC),
+            "summary": "a page (rev 1)",
+            "author": Identity.namespaced("mw.lojban.org", "someone"),
+            "changes": {"wiki/main/A.wiki": "x\n"},
+        }
+        fields.update(changes)
+        return Event(**fields)  # type: ignore[arg-type]
+
+    good = event("revid=1")
+    overlapping = event(
+        "revid=3",
+        changes={"wiki/main/B.wiki": "y\n"},
+        deletions=("wiki/main/B.wiki",),
+    )
+    audit = audit_events({"wiki": lambda: iter((good, overlapping))})
+    assert audit.events == 2
+    assert [source_id for _s, source_id, _p in audit.invalid] == ["revid=3"]
+    assert "delete the same path" in audit.invalid[0][2]
+
+    # A blank summary is caught by validation, with its own id.
+    audit = audit_events(
+        {"wiki": lambda: iter((good, event("revid=2", summary="   ")))}
+    )
+    assert [source_id for _s, source_id, _p in audit.invalid] == ["revid=2"]
+    assert "summary" in audit.invalid[0][2]
+
+    # A projector that cannot build an event at all raises out of its stream,
+    # which ends that source; the audit says where it stopped and still checks
+    # the others, so one bad source cannot hide the rest.
+    def broken() -> Iterator[Event]:
+        yield good
+        raise EventError("projector gave up")
+
+    audit = audit_events({"wiki": broken, "irc": lambda: iter((good,))})
+    assert audit.events == 2
+    assert [source for source, _i, _p in audit.invalid] == ["wiki"]
+    assert "after 1 events" in audit.invalid[0][1]
+    assert "projector gave up" in audit.invalid[0][2]
+
+    clean = audit_events({"wiki": lambda: iter((good,))})
+    assert clean.events == 1 and clean.invalid == ()
