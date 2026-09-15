@@ -653,3 +653,35 @@ def test_a_rebuild_repoints_its_snapshot_tag_but_update_never_does(
             datetime(2000, 1, 1, tzinfo=UTC),
             "coverage",
         )
+
+
+def test_every_backend_builds_the_same_corpus(tmp_path: Path) -> None:
+    """The backend is how the history is written, never what it says.
+
+    `--backend` exists so this can be checked on the real corpus and not only
+    on fixtures: the same tools commit built twice, two different backends,
+    one head.
+    """
+
+    from jbomohi_tools.build import BACKENDS
+
+    events = {
+        "wiki": lambda: iter(
+            (
+                event("rev=1", 1, "wiki/main/One.wiki"),
+                event("rev=2", 2, "wiki/main/Two.wiki"),
+                event("rev=3", 3, "wiki/main/Three.wiki"),
+            )
+        )
+    }
+    heads = {}
+    for backend in BACKENDS:
+        config, _commit = tools_repo(tmp_path / f"repo-{backend}")
+        report = build_corpus(config, events, backend=backend)
+        heads[backend] = report.head
+        assert report.events == 3
+    assert len(set(heads.values())) == 1, heads
+
+    config, _commit = tools_repo(tmp_path / "repo-unknown")
+    with pytest.raises(GitError, match="unknown build backend"):
+        build_corpus(config, events, backend="carrier-pigeon")
