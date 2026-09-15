@@ -791,6 +791,32 @@ def _unshar(payload: bytes) -> dict[str, bytes]:
     return files
 
 
+def _vendor_day_event(
+    *,
+    source_id: str,
+    date_text: str,
+    summary: str,
+    author: Identity,
+    changes: Mapping[str, str | bytes],
+    trailers: Mapping[str, str],
+) -> Event:
+    source_day = date.fromisoformat(date_text)
+    event = Event(
+        source="grammars",
+        source_id=source_id,
+        event="import",
+        time_confidence="window",
+        source_time=datetime.combine(source_day, time.max, UTC).replace(microsecond=0),
+        event_window=f"{date_text}..{date_text}",
+        summary=summary,
+        author=author,
+        changes=changes,
+        trailers=trailers,
+    )
+    event.validate()
+    return event
+
+
 def _vendor_events(archive: Path) -> list[Event]:
     payloads = {
         source.key: _vendor_manifest(archive, source.key)[1] for source in VENDOR_FILES
@@ -798,20 +824,13 @@ def _vendor_events(archive: Path) -> list[Event]:
     events: list[Event] = []
     for source_id, date_text, entries in VENDOR_GROUPS:
         changes = {target: _text(payloads[key], key) for key, target in entries}
-        source_day = date.fromisoformat(date_text)
         trailers = {"Grammar": "official"}
         if source_id == "official-1990-07-20":
             trailers["Includes-Undated"] = "GRAMMAR.B17, GRAMMAR.NEW"
         events.append(
-            Event(
-                source="grammars",
+            _vendor_day_event(
                 source_id=f"grammars/{source_id}",
-                event="import",
-                time_confidence="window",
-                source_time=datetime.combine(source_day, time.max, UTC).replace(
-                    microsecond=0
-                ),
-                event_window=f"{date_text}..{date_text}",
+                date_text=date_text,
                 summary=source_id.replace("official-", "official "),
                 author=Identity.document("lojban.org", "Logical Language Group", "llg"),
                 changes=changes,

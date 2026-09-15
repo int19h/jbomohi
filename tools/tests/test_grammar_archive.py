@@ -21,10 +21,11 @@ from jbomohi_tools.archive.grammars import (
     ingest_camxes_backup,
 )
 from jbomohi_tools.archive.manifest import ArchiveManifest, object_path, store_object
-from jbomohi_tools.git import commit_event
+from jbomohi_tools.git import Identity, commit_event
 from jbomohi_tools.project.grammars import (
     GrammarProjectError,
     _unshar,
+    _vendor_day_event,
     _vendor_manifest,
     _zasni_event,
     escape_mixed_bytes,
@@ -366,6 +367,20 @@ def test_vendor_projector_rejects_a_mismatched_manifest_kind(
     ).write(archive / "manifests/grammars/vendor/fixture/source.toml")
     with pytest.raises(GrammarProjectError, match="identity mismatch"):
         _vendor_manifest(archive, "fixture")
+
+
+def test_vendor_date_only_event_records_a_one_day_window() -> None:
+    event = _vendor_day_event(
+        source_id="grammars/official-test",
+        date_text="1997-01-10",
+        summary="official test",
+        author=Identity.document("lojban.org", "Logical Language Group", "llg"),
+        changes={"grammars/official/test": b"text\n"},
+        trailers={"Grammar": "official"},
+    )
+    assert event.time_confidence == "window"
+    assert event.event_window == "1997-01-10..1997-01-10"
+    assert event.source_time.isoformat() == "1997-01-10T23:59:59+00:00"
 
 
 def test_fetch_grammar_mirror_rejects_rewritten_tags(tmp_path: Path) -> None:
