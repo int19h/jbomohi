@@ -1050,14 +1050,20 @@ def project(
         }
         for thread_id, parent_id in sorted(dangling_forum.items())
     )
+    # SPEC.md 3.2/4.4: a row with no file at the tip carries an empty path and
+    # says why. Tiki has no rename or deletion log, so the only reason a page
+    # has no file is that every one of its versions was non-text (3.2.5(d)).
+    projected_titles = {item.title for item in (*histories, *current_pages)}
     page_rows = []
     for title in all_titles:
         current = all_current_by_title.get(title)
         versions = all_history_by_title.get(title, ())
+        projected = title in projected_titles
         page_rows.append(
             {
                 "title": title,
-                "path": f"tiki/{slug(title)}.tiki",
+                "state": "current" if projected else "not-projected",
+                "path": f"tiki/{slug(title)}.tiki" if projected else "",
                 "current_version": current.version if current else "",
                 "current_source_id": current.source_id if current else "",
                 "versions": len(versions) + (1 if current else 0),
@@ -1067,6 +1073,7 @@ def project(
     version_rows = [
         {
             "title": item.title,
+            "state": "current" if item.title in projected_titles else "not-projected",
             "source_id": item.source_id,
             "version": item.version,
             "time": _iso(item.timestamp),
@@ -1075,7 +1082,11 @@ def project(
             "is_html": str(item.is_html).lower(),
             "encoding": item.encoding,
             "current": str(item.current).lower(),
-            "path": f"tiki/{slug(item.title)}.tiki",
+            "path": (
+                f"tiki/{slug(item.title)}.tiki"
+                if item.title in projected_titles
+                else ""
+            ),
         }
         for item in sorted(
             (*all_histories, *all_current_pages),
@@ -1175,6 +1186,7 @@ def project(
     final_changes["_meta/tiki/pages.csv"] = _csv_text(
         (
             "title",
+            "state",
             "path",
             "current_version",
             "current_source_id",
@@ -1186,6 +1198,7 @@ def project(
     final_changes["_meta/tiki/versions.csv"] = _csv_text(
         (
             "title",
+            "state",
             "source_id",
             "version",
             "time",

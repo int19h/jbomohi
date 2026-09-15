@@ -563,3 +563,45 @@ def test_a_tools_commit_does_not_rewrite_the_corpus(tmp_path: Path) -> None:
     # And the tip is where the tools commit is recorded.
     schema = git(config.corpus, "show", "HEAD:_meta/schema.toml")
     assert git(config.repo_root, "rev-parse", "HEAD") in schema
+
+
+def test_verify_requires_a_path_exactly_when_the_state_says_current(
+    tmp_path: Path,
+) -> None:
+    """SPEC.md 4.4: an index says whether a row still has a file.
+
+    297 rows of the first complete corpus named files that were not there —
+    292 deleted wiki pages and the Tiki page that is never projected — so a
+    path is now carried exactly when there is one to carry.
+    """
+
+    config, _commit = tools_repo(tmp_path / "repo")
+    build_corpus(config, {})
+    kept = config.corpus / "wiki/main/Kept.wiki"
+    kept.parent.mkdir(parents=True, exist_ok=True)
+    kept.write_text("body\n")
+    index = config.corpus / "_meta/wiki/pages.csv"
+    index.parent.mkdir(parents=True, exist_ok=True)
+    index.write_text(
+        "title,state,path\n"
+        "Kept,current,wiki/main/Kept.wiki\n"
+        "Gone,deleted,\n"
+        "Never,not-projected,\n"
+    )
+    commit_fixture(config.corpus, valid_message("index"))
+    verify_corpus(config.corpus)
+
+    index.write_text("title,state,path\nGone,deleted,wiki/main/Gone.wiki\n")
+    commit_fixture(config.corpus, valid_message("index-with-path"))
+    with pytest.raises(CorpusError, match="state and path disagree"):
+        verify_corpus(config.corpus)
+
+    index.write_text("title,state,path\nKept,current,\n")
+    commit_fixture(config.corpus, valid_message("index-without-path"))
+    with pytest.raises(CorpusError, match="state and path disagree"):
+        verify_corpus(config.corpus)
+
+    index.write_text("title,state,path\nKept,elsewhere,wiki/main/Kept.wiki\n")
+    commit_fixture(config.corpus, valid_message("index-bad-state"))
+    with pytest.raises(CorpusError, match="unknown index state"):
+        verify_corpus(config.corpus)

@@ -376,7 +376,8 @@ def test_project_keeps_history_only_and_colliding_current_as_forced_final() -> N
     )
     assert "tiki/Line%0D%0ABreak.tiki" in control.changes
     versions = events[-1].changes["_meta/tiki/versions.csv"]
-    assert '"Line\r\nBreak",tiki=Line%0D%0ABreak@1' in versions
+    # The index now says whether a row has a file at the tip (SPEC.md 3.2/4.4).
+    assert '"Line\r\nBreak",current,tiki=Line%0D%0ABreak@1' in versions
     coverage = events[-1].changes["_meta/tiki/coverage.toml"]
     assert "history_only_pages = 2" in coverage
     assert "current_history_version_collisions = 2" in coverage
