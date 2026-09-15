@@ -766,6 +766,13 @@ def verify_corpus(corpus: Path) -> VerifyReport:
         sorted((corpus / "_meta").rglob("*.csv")) if (corpus / "_meta").exists() else ()
     ):
         csv_indexes += 1
+        if path.name == "gaps.csv":
+            # A gaps file names what a projector could *not* project, so its
+            # paths are not an index of corpus files: some are absent by
+            # definition (Tiki's NUL-byte page, SPEC.md 3.2.5(d)) and some
+            # exist for another reason (a page kept from its history alone
+            # still has a file). Requiring either would be wrong.
+            continue
         for row_number, row in enumerate(_read_csv(path), 2):
             referenced = row.get("path") or row.get("file")
             if referenced and not (corpus / referenced).is_file():
