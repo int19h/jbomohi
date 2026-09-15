@@ -12,6 +12,7 @@ import pytest
 from jbomohi_tools.archive.manifest import ArchiveManifest
 from jbomohi_tools.build import (
     _archive_manifest_changes,
+    _tag_snapshot,
     build_corpus,
     push_main_ranges,
     update_corpus,
@@ -546,12 +547,6 @@ def test_a_tools_commit_does_not_rewrite_the_corpus(tmp_path: Path) -> None:
     )
     assert git(config.repo_root, "rev-parse", "HEAD") != _first
 
-    # The snapshot name comes from the last event time, so a rebuild wants the
-    # same tag for a different tip; `_tag_snapshot` refuses to move one, which
-    # is right for a published citation and means a deliberate rebuild has to
-    # retire the old tag first.
-    git(config.repo_root, "tag", "-d", first.snapshot)
-
     second = build_corpus(config, events)
     second_ids = git(config.corpus, "rev-list", "--reverse", "HEAD").splitlines()
 
@@ -605,3 +600,50 @@ def test_verify_requires_a_path_exactly_when_the_state_says_current(
     commit_fixture(config.corpus, valid_message("index-bad-state"))
     with pytest.raises(CorpusError, match="unknown index state"):
         verify_corpus(config.corpus)
+
+
+def test_a_rebuild_repoints_its_snapshot_tag_but_update_never_does(
+    tmp_path: Path,
+) -> None:
+    """SPEC.md 4.2: a build replaces main, so a stale tag is the build's to move.
+
+    The snapshot name comes from the last event's time, so a rebuild wants the
+    same name for a different tip. Leaving the tag on a commit that is no
+    longer in the history would make it a citation to nothing; moving one that
+    *is* still in the history would break a citation that still resolves.
+    """
+
+    config, _first = tools_repo(tmp_path / "repo")
+    events = {"wiki": lambda: iter((event("rev=1", 1, "wiki/main/One.wiki"),))}
+    first = build_corpus(config, events)
+    first_tag = git(config.repo_root, "rev-parse", f"{first.snapshot}^{{}}")
+    assert first_tag == first.head
+
+    # A tools commit changes only the tip, so the rebuild needs the same tag
+    # name for a different commit.
+    (config.repo_root / "NOTES.md").write_text("later\n")
+    git(config.repo_root, "add", ".")
+    git(
+        config.repo_root,
+        "-c",
+        "user.name=fixture",
+        "-c",
+        "user.email=fixture@example.invalid",
+        "commit",
+        "-m",
+        "tools: later",
+    )
+    second = build_corpus(config, events)
+    assert second.snapshot == first.snapshot
+    assert second.head != first.head
+    assert git(config.repo_root, "rev-parse", f"{second.snapshot}^{{}}") == second.head
+
+    # An update appends, so any tag it would move still names a live commit.
+    with pytest.raises(GitError, match="already names another commit"):
+        _tag_snapshot(
+            config.repo_root,
+            first.head,
+            second.snapshot,
+            datetime(2000, 1, 1, tzinfo=UTC),
+            "coverage",
+        )
