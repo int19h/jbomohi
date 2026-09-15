@@ -547,3 +547,29 @@ def test_ingest_tiki_export_writes_three_operator_export_manifests(
     (export / "tiki-user-preferences.tsv.gz").unlink()
     with pytest.raises(ArchiveError, match="is missing"):
         ingest_tiki_export(tmp_path / "other-archive", export, "2026-09-13")
+
+
+def test_stored_mojibake_is_recognised_by_definition_not_by_spelling() -> None:
+    """A latin-1 reading of UTF-8 is what mojibake *is*, so test that.
+
+    The 2026-09-15 utf8mb4 re-export shows the mojibake is in the database
+    itself, so SPEC.md 3.2.5(c) publishes those bytes unrepaired and coverage
+    merely counts them.
+    """
+
+    from jbomohi_tools.project.tiki import looks_like_stored_mojibake
+
+    # Real text, stored as its UTF-8 bytes read back as latin-1.
+    for original in ("caf\u00e9", "\u201cquoted\u201d", "na\u00efve"):
+        assert looks_like_stored_mojibake(original.encode("utf-8").decode("latin-1")), (
+            original
+        )
+    # Text that is simply correct, in any script, is not mojibake.
+    for good in (
+        "caf\u00e9",
+        "plain ascii",
+        "\u65e5\u672c\u8a9e",
+        "Gr\u00fc\u00dfe",
+        "",
+    ):
+        assert not looks_like_stored_mojibake(good), good
