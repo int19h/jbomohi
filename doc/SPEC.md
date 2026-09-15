@@ -334,7 +334,7 @@ jbomohi corpus init|status                  create / inspect the corpus worktree
 jbomohi archive fetch <source> [--since …]  fetch into the archive tier; write manifests
 jbomohi archive verify                      sha256-check every manifest
 jbomohi build [--sources …] [--until DATE]  full deterministic rebuild of main (orphan root; --until is refused until every selected projector accepts the cut-off itself, since a merge-time filter would drop the _meta files that ride each stream's final event — decided 2026-09-14)
-jbomohi update [<source> …]                 append new events; refresh; tag snapshot/<ts>
+jbomohi update [<source> …]                 append new events; refresh; tag snapshot/<ts> (never moves an existing tag; build, which replaces main by definition, retires and re-creates a snapshot tag that names a commit outside the new history, and the push of a rebuilt main updates such tags with --force only under the same human authorisation as the branch — decided 2026-09-15)
 jbomohi verify                              invariants (§4.4)
 jbomohi cll render <edition>                per-edition rendering (§3.6)
 jbomohi who propose|promote                 attestation helpers (§3.7)
