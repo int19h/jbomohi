@@ -848,10 +848,13 @@ class FastImportSession:
         self.submodules = _submodules_at(self.corpus, self.head)
         self.tracked: set[str] = set()
         if self.head:
-            listing = git_output(
-                self.corpus, ["ls-tree", "-r", "--name-only", self.head]
-            )
-            self.tracked = {line for line in listing.splitlines() if line}
+            # -z, because `ls-tree` C-quotes any path with a space, a quote or
+            # a non-ASCII byte, and a quoted name would not match the path an
+            # event deletes.
+            listing = run_git(
+                self.corpus, ["ls-tree", "-r", "-z", "--name-only", self.head]
+            ).stdout
+            self.tracked = {name for name in listing.split("\0") if name}
         self.process = subprocess.Popen(
             git_command(["fast-import", "--quiet", "--done", "--date-format=raw"]),
             cwd=self.corpus,

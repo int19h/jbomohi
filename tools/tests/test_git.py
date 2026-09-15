@@ -711,3 +711,133 @@ def test_fast_import_continues_an_existing_history(tmp_path: Path) -> None:
         stream.commit(follow)
     assert git(corpus, "rev-parse", "HEAD~1") == root
     assert (corpus / "wiki/main/Test.wiki").read_text() == "second\n"
+
+
+def _three_ways(tmp_path: Path, events: tuple[Event, ...]) -> str:
+    """Run one history through all three backends and return the shared head."""
+
+    from jbomohi_tools.git import BuildCommitSession, FastImportSession
+
+    careful = _fresh(tmp_path, "careful")
+    for event in events:
+        commit_event(event, careful)
+
+    session = _fresh(tmp_path, "session")
+    with BuildCommitSession(session) as live:
+        for event in events:
+            live.commit(event)
+
+    imported = _fresh(tmp_path, "imported")
+    with FastImportSession(imported) as stream:
+        for event in events:
+            stream.commit(event)
+
+    expected = git(careful, "rev-parse", "HEAD")
+    assert git(session, "rev-parse", "HEAD") == expected
+    assert git(imported, "rev-parse", "HEAD") == expected
+    return expected
+
+
+def test_pre_epoch_events_are_dated_alike_by_every_backend(tmp_path: Path) -> None:
+    """A pre-1970 document commits at the epoch with its true date recorded.
+
+    `_git_date` clamps to the epoch and the fast-import stream computes its own
+    raw timestamp; nothing else pins them to the same instant.
+    """
+
+    event = base_event(
+        source="loglan",
+        source_id="loglan=1",
+        time_confidence="pre-epoch",
+        source_time=datetime(1960, 5, 1, tzinfo=UTC),
+        source_date="1960-05-01",
+        changes={"loglan/notebook.txt": "before the fork\n"},
+    )
+    _three_ways(tmp_path, (event,))
+    careful = tmp_path / "careful" / "repo"
+    assert git(careful, "log", "-1", "--format=%ad", "--date=iso-strict") == (
+        "1970-01-01T00:00:00Z"
+    )
+    assert "Source-Date: 1960-05-01" in git(careful, "log", "-1", "--format=%B")
+
+
+def test_paths_needing_quoting_are_written_alike_by_every_backend(
+    tmp_path: Path,
+) -> None:
+    """fast-import reads one path per line, so odd paths must survive quoting.
+
+    `_safe_repo_path` refuses a backslash, so the cases that can actually occur
+    are spaces, quotes and non-ASCII — all of which `ls-tree` would C-quote on
+    the way back in, which is why the tracked set is read NUL-separated.
+    """
+
+    odd = 'mail/lojban-list/cur/caf é "quoted" name:2,S'
+    first = base_event(changes={odd: "body\n", "wiki/main/Plain.wiki": "x\n"})
+    second = base_event(
+        source_id="revid=2",
+        source_time=datetime(2004, 1, 3, tzinfo=UTC),
+        event="edited",
+        changes={"wiki/main/Plain.wiki": "y\n"},
+        deletions=(odd,),
+    )
+    _three_ways(tmp_path, (first, second))
+    for name in ("careful", "session", "imported"):
+        repo = tmp_path / name / "repo"
+        assert not (repo / odd).exists()
+        assert git(repo, "rev-list", "--count", "HEAD") == "2"
+    # The deletion had to be recognised as tracked, not refused as unknown:
+    # the path is in the first commit's tree and gone from the second. Read it
+    # NUL-separated, because git quotes such a path in ordinary output.
+    imported = tmp_path / "imported" / "repo"
+    before = git(imported, "ls-tree", "-r", "-z", "--name-only", "HEAD~1").split("\0")
+    after = git(imported, "ls-tree", "-r", "-z", "--name-only", "HEAD").split("\0")
+    assert odd in before
+    assert odd not in after
+
+
+def test_a_session_resuming_history_knows_its_quoted_paths(tmp_path: Path) -> None:
+    """A session reads the paths it inherits, and git quotes those by default.
+
+    Within one session a path is tracked because the session itself wrote it,
+    so the inherited set only matters when a build continues existing history —
+    which is exactly when `ls-tree` would hand back a C-quoted name that
+    matches nothing, and a legitimate deletion would be refused as untracked.
+    """
+
+    from jbomohi_tools.git import FastImportSession
+
+    odd = 'mail/lojban-list/cur/caf é "quoted" name:2,S'
+    corpus = _fresh(tmp_path, "corpus")
+    commit_event(base_event(changes={odd: "body\n"}), corpus)
+
+    removal = base_event(
+        source_id="revid=2",
+        source_time=datetime(2004, 1, 3, tzinfo=UTC),
+        event="edited",
+        changes={"wiki/main/Plain.wiki": "x\n"},
+        deletions=(odd,),
+    )
+    with FastImportSession(corpus) as stream:
+        stream.commit(removal)
+
+    assert git(corpus, "rev-list", "--count", "HEAD") == "2"
+    assert odd not in git(corpus, "ls-tree", "-r", "-z", "--name-only", "HEAD").split(
+        "\0"
+    )
+    assert not (corpus / odd).exists()
+
+
+def test_encoded_author_names_are_identical_in_every_backend(tmp_path: Path) -> None:
+    """`commit-tree` sanitises idents; fast-import takes them literally.
+
+    What keeps the two equal is `_git_safe_name`, which encodes the syntax git
+    cannot retain before either backend sees it.
+    """
+
+    author = Identity.namespaced("mw.lojban.org", "odd <name> with %")
+    event = base_event(author=author, changes={"wiki/main/Odd.wiki": "x\n"})
+    _three_ways(tmp_path, (event,))
+    careful = tmp_path / "careful" / "repo"
+    recorded = git(careful, "log", "-1", "--format=%an <%ae>")
+    assert "<" not in recorded.split(" <")[0]
+    assert recorded == f"{author.name} <{author.email}>"
