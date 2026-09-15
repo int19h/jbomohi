@@ -277,7 +277,7 @@ def _build(args: argparse.Namespace, config: Config) -> int:
         f"snapshot={report.snapshot}"
     )
     if args.push:
-        pushed = push_main_ranges(config.repo_root, report.snapshot)
+        pushed = push_main_ranges(config.corpus, report.snapshot)
         print(f"push: main_updates={pushed.main_updates} snapshot={pushed.snapshot}")
     return 0
 
@@ -292,7 +292,7 @@ def _update(args: argparse.Namespace, config: Config) -> int:
             f"events={report.events} snapshot={report.snapshot}"
         )
         if args.push:
-            pushed = push_main_ranges(config.repo_root, report.snapshot)
+            pushed = push_main_ranges(config.corpus, report.snapshot)
             print(
                 f"push: main_updates={pushed.main_updates} snapshot={pushed.snapshot}"
             )
@@ -330,7 +330,7 @@ def parser() -> argparse.ArgumentParser:
     root.add_argument("-v", "--verbose", action="count", default=0)
     commands = root.add_subparsers(dest="command", required=True)
 
-    corpus = commands.add_parser("corpus", help="manage the main corpus worktree")
+    corpus = commands.add_parser("corpus", help="manage the corpus repository")
     corpus_commands = corpus.add_subparsers(dest="corpus_command", required=True)
     _leaf(corpus_commands, "init", _corpus_init)
     _leaf(corpus_commands, "status", _corpus_status)

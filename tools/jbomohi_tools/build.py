@@ -234,7 +234,7 @@ def _snapshot_name(source_time: datetime) -> str:
 
 
 def _tag_snapshot(
-    repo_root: Path,
+    corpus: Path,
     head: str,
     name: str,
     source_time: datetime,
@@ -251,23 +251,23 @@ def _tag_snapshot(
     """
 
     existing = run_git(
-        repo_root, ["rev-parse", "--verify", f"refs/tags/{name}^{{}}"], check=False
+        corpus, ["rev-parse", "--verify", f"refs/tags/{name}^{{}}"], check=False
     )
     if existing.returncode == 0:
         previous = existing.stdout.strip()
         if previous == head:
             return
         reachable = run_git(
-            repo_root,
+            corpus,
             ["merge-base", "--is-ancestor", previous, head],
             check=False,
         )
         if not replace or reachable.returncode == 0:
             raise GitError(f"snapshot tag already names another commit: {name}")
-        run_git(repo_root, ["tag", "-d", name])
+        run_git(corpus, ["tag", "-d", name])
     date = source_time.astimezone(UTC).replace(microsecond=0).isoformat()
     run_git(
-        repo_root,
+        corpus,
         ["tag", "-a", name, head, "-m", message],
         env={
             "GIT_COMMITTER_NAME": Identity.tool().name,
@@ -278,21 +278,20 @@ def _tag_snapshot(
 
 
 def _install_main(config: Config, scratch: Path, final_head: str) -> None:
+    """Move the finished history into the corpus repository, not the tools one."""
+
     old = run_git(
-        config.repo_root, ["rev-parse", "--verify", "refs/heads/main"], check=False
+        config.corpus, ["rev-parse", "--verify", "refs/heads/main"], check=False
     )
     old_head = old.stdout.strip() if old.returncode == 0 else "0" * len(final_head)
-    run_git(config.repo_root, ["fetch", "--no-tags", str(scratch), "main"])
-    run_git(
-        config.repo_root,
-        ["update-ref", "refs/heads/main", final_head, old_head],
-    )
+    run_git(config.corpus, ["fetch", "--no-tags", str(scratch), "main"])
+    run_git(config.corpus, ["update-ref", "refs/heads/main", final_head, old_head])
     run_git(config.corpus, ["reset", "--hard", final_head])
     _materialize_maildir_modes(config.corpus)
 
 
 def _materialize_maildir_modes(corpus: Path) -> None:
-    """Apply the worktree-only Maildir mode that git trees cannot retain."""
+    """Apply the working-tree-only Maildir mode that git trees cannot retain."""
 
     root = corpus / "mail"
     if not root.exists():
@@ -314,12 +313,12 @@ def build_corpus(
     tools_commit = require_clean_tools(config.repo_root)
     status, _created = init_corpus(config)
     if status.branch != "main":
-        raise CorpusError("build requires the corpus worktree on main")
+        raise CorpusError("build requires the corpus repository on main")
     dirty = git_output(
         config.corpus, ["status", "--porcelain=v1", "--untracked-files=all"]
     )
     if dirty:
-        raise CorpusError("corpus worktree is dirty; refusing transactional build")
+        raise CorpusError("corpus working tree is dirty; refusing transactional build")
 
     temporary_root = config.tmp
     temporary_root.mkdir(parents=True, exist_ok=True)
@@ -357,7 +356,7 @@ def build_corpus(
         commits = int(git_output(scratch, ["rev-list", "--count", "HEAD"]))
         _install_main(config, scratch, final_head)
     _tag_snapshot(
-        config.repo_root, final_head, snapshot, last_time, coverage, replace=True
+        config.corpus, final_head, snapshot, last_time, coverage, replace=True
     )
     return BuildReport(final_head, commits, event_count, snapshot, coverage)
 
@@ -702,7 +701,7 @@ def update_corpus(
         config.corpus, ["status", "--porcelain=v1", "--untracked-files=all"]
     )
     if dirty:
-        raise CorpusError("corpus worktree is dirty; refusing update")
+        raise CorpusError("corpus working tree is dirty; refusing update")
     known = existing_source_ids(config.corpus)
     event_count = 0
     last_time: datetime | None = None
@@ -740,7 +739,7 @@ def update_corpus(
         extra_changes=refresh_changes,
     )
     head = git_output(config.corpus, ["rev-parse", "HEAD"])
-    _tag_snapshot(config.repo_root, head, snapshot, last_time, coverage)
+    _tag_snapshot(config.corpus, head, snapshot, last_time, coverage)
     commits = int(git_output(config.corpus, ["rev-list", "--count", "HEAD"]))
     return BuildReport(head, commits, event_count, snapshot, coverage)
 
@@ -753,7 +752,7 @@ def verify_corpus(corpus: Path) -> VerifyReport:
         raise CorpusError("cannot verify a missing or unborn corpus")
     dirty = git_output(corpus, ["status", "--porcelain=v1", "--untracked-files=all"])
     if dirty:
-        raise CorpusError("corpus worktree is dirty")
+        raise CorpusError("corpus working tree is dirty")
     seen: set[tuple[str, str, str]] = set()
     sources: set[str] = set()
     records = _history_records(corpus)
@@ -822,27 +821,31 @@ def verify_corpus(corpus: Path) -> VerifyReport:
 
 
 def push_main_ranges(
-    repo_root: Path,
+    corpus: Path,
     snapshot: str,
     *,
     remote: str = "origin",
     commits_per_push: int = 5_000,
 ) -> PushReport:
-    """Fast-forward main in bounded commit ranges, then publish one snapshot tag."""
+    """Fast-forward main in bounded commit ranges, then publish one snapshot tag.
+
+    Runs in the corpus repository, which is where `main` and its tags live
+    (SPEC.md 2.2).
+    """
 
     if commits_per_push < 1:
         raise ValueError("commits_per_push must be positive")
-    local_head = git_output(repo_root, ["rev-parse", "refs/heads/main"])
+    local_head = git_output(corpus, ["rev-parse", "refs/heads/main"])
     advertised = run_git(
-        repo_root,
+        corpus,
         ["ls-remote", "--heads", remote, "refs/heads/main"],
     ).stdout.strip()
     remote_head = advertised.split()[0] if advertised else None
     if remote_head is not None:
-        run_git(repo_root, ["fetch", "--no-tags", remote, "refs/heads/main"])
+        run_git(corpus, ["fetch", "--no-tags", remote, "refs/heads/main"])
         if (
             run_git(
-                repo_root,
+                corpus,
                 ["merge-base", "--is-ancestor", remote_head, local_head],
                 check=False,
             ).returncode
@@ -852,16 +855,16 @@ def push_main_ranges(
         revset = f"{remote_head}..{local_head}"
     else:
         revset = local_head
-    commits = git_output(repo_root, ["rev-list", "--reverse", revset]).splitlines()
+    commits = git_output(corpus, ["rev-list", "--reverse", revset]).splitlines()
     updates = 0
     for index in range(commits_per_push - 1, len(commits), commits_per_push):
         run_git(
-            repo_root,
+            corpus,
             ["push", remote, f"{commits[index]}:refs/heads/main"],
         )
         updates += 1
     if commits and (len(commits) - 1) % commits_per_push != commits_per_push - 1:
-        run_git(repo_root, ["push", remote, f"{local_head}:refs/heads/main"])
+        run_git(corpus, ["push", remote, f"{local_head}:refs/heads/main"])
         updates += 1
-    run_git(repo_root, ["push", remote, f"refs/tags/{snapshot}"])
+    run_git(corpus, ["push", remote, f"refs/tags/{snapshot}"])
     return PushReport(updates, snapshot)
