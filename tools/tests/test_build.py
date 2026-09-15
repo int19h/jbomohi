@@ -507,3 +507,59 @@ def test_verify_does_not_require_gap_paths_to_exist(tmp_path: Path) -> None:
     commit_fixture(config.corpus, valid_message("pages"))
     with pytest.raises(CorpusError, match="CSV path missing"):
         verify_corpus(config.corpus)
+
+
+def test_a_tools_commit_does_not_rewrite_the_corpus(tmp_path: Path) -> None:
+    """SPEC.md 3.11/§5: the root is build-invariant, so history is stable.
+
+    Before this, the root rendered the tools commit into `_meta/schema.toml`
+    and README, so every change to the tools branch changed the root hash and
+    therefore every commit beneath it. Two builds of the same events from two
+    different tools commits must now agree on every event commit, and differ
+    only in the tip refresh that names the build.
+    """
+
+    config, _first = tools_repo(tmp_path / "repo")
+    events = {
+        "wiki": lambda: iter(
+            (
+                event("rev=1", 1, "wiki/main/One.wiki"),
+                event("rev=2", 2, "wiki/main/Two.wiki"),
+            )
+        )
+    }
+    first = build_corpus(config, events)
+    first_ids = git(config.corpus, "rev-list", "--reverse", "HEAD").splitlines()
+
+    # Any commit on the tools branch: a doc tweak is enough to move HEAD.
+    (config.repo_root / "NOTES.md").write_text("a later tools commit\n")
+    git(config.repo_root, "add", ".")
+    git(
+        config.repo_root,
+        "-c",
+        "user.name=fixture",
+        "-c",
+        "user.email=fixture@example.invalid",
+        "commit",
+        "-m",
+        "tools: a later commit",
+    )
+    assert git(config.repo_root, "rev-parse", "HEAD") != _first
+
+    # The snapshot name comes from the last event time, so a rebuild wants the
+    # same tag for a different tip; `_tag_snapshot` refuses to move one, which
+    # is right for a published citation and means a deliberate rebuild has to
+    # retire the old tag first.
+    git(config.repo_root, "tag", "-d", first.snapshot)
+
+    second = build_corpus(config, events)
+    second_ids = git(config.corpus, "rev-list", "--reverse", "HEAD").splitlines()
+
+    assert len(first_ids) == len(second_ids)
+    # Root and both event commits identical; only the tip refresh differs.
+    assert first_ids[:-1] == second_ids[:-1]
+    assert first_ids[-1] != second_ids[-1]
+    assert first.head != second.head
+    # And the tip is where the tools commit is recorded.
+    schema = git(config.corpus, "show", "HEAD:_meta/schema.toml")
+    assert git(config.repo_root, "rev-parse", "HEAD") in schema
