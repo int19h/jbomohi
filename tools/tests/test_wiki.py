@@ -1221,3 +1221,55 @@ def test_move_back_is_not_forced_before_the_move_that_preceded_it() -> None:
     assert events[1].changes["wiki/main/New.wiki"] == b"body"
     assert events[3].changes["wiki/main/Old.wiki"] == b"body"
     assert events[4].changes["wiki/main/Old.wiki"] == b"body"
+
+
+def test_a_move_onto_its_own_path_is_a_commit_that_changes_nothing() -> None:
+    """MediaWiki logs a case-only rename that normalizes back to the source.
+
+    In a first-letter namespace `Module:documentation` is `Module:Documentation`,
+    so the move is a no-op. SPEC.md 3.2 keeps one source log as one commit so a
+    citation resolves, and an event may not write and delete the same path, so
+    the commit carries no file change at all.
+    """
+
+    page = WikiPageFragment(
+        1,
+        828,
+        "Module:Documentation",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        1,
+        828,
+        "Module:Documentation",
+        datetime(2014, 1, 2, tzinfo=UTC),
+        "Gleki",
+        "case only",
+        828,
+        "Module:Documentation",
+        True,
+    )
+    events = list(project([page], [move]))
+    assert [event.source_id for event in events] == ["revid=1", "logid=5"]
+    moved = events[1]
+    assert moved.event == "moved"
+    # The last event of a run also carries the folded `_meta` indexes, so what
+    # matters is that the move itself contributes no page file and removes none.
+    assert [path for path in moved.changes if path.startswith("wiki/")] == []
+    assert moved.deletions == ()
+    assert moved.trailers["Moved-From"] == "wiki/module/Documentation.wiki"
+    moved.validate()
