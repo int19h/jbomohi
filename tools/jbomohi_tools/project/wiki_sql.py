@@ -1279,6 +1279,7 @@ class WikiProjectorInputs:
     extra_gaps: list[dict[str, object]]
     ended_at: dict[int, tuple[datetime, int]]
     unaccounted: set[int]
+    additive: list[tuple[str, int, str]]
 
 
 def combine_inputs(
@@ -1299,7 +1300,7 @@ def combine_inputs(
     """
 
     if dump is None:
-        return WikiProjectorInputs(list(fragments), list(logs), [], {}, set())
+        return WikiProjectorInputs(list(fragments), list(logs), [], {}, set(), [])
     combined_logs: dict[int, WikiLogEvent] = {}
     for event in (*dump.logs, *logs):
         previous = combined_logs.get(event.logid)
@@ -1316,10 +1317,67 @@ def combine_inputs(
         live = {fragment.pageid for fragment in (*dump.fragments, *fragments)}
         deleted, ended_at, unaccounted, deleted_gaps = archived_fragments(dump, live)
         gaps.extend(deleted_gaps)
+    api_revisions = {
+        revision.revid for fragment in fragments for revision in fragment.revisions
+    }
+    dump_revisions = {
+        revision.revid for fragment in dump.fragments for revision in fragment.revisions
+    }
+    counts = dump.counts
     return WikiProjectorInputs(
         [*dump.fragments, *fragments, *deleted],
         [combined_logs[logid] for logid in sorted(combined_logs)],
         [gap.as_row() for gap in gaps],
         ended_at,
         unaccounted,
+        [
+            (
+                "export_revisions_without_actor_row",
+                counts.get("revisions_without_author", 0),
+                (
+                    "no revision_actor_temp row and rev_actor = 0: the foreign "
+                    "half of a transwiki import, which MediaWiki 1.38 hides "
+                    "from api.php because RevisionStore inner-joins the temp "
+                    "table under SCHEMA_COMPAT_READ_TEMP"
+                ),
+            ),
+            (
+                "export_move_logs_without_actor_row",
+                counts.get("log_events_without_actor", 0),
+                (
+                    "log_actor names no actor row, so list=logevents hides the "
+                    "entry; all are from the 2013-2014 Move page script run"
+                ),
+            ),
+            (
+                "pages_outside_the_projected_namespaces",
+                counts.get("pages", 0) - counts.get("pages_projected", 0),
+                (
+                    "namespaces 274 Widget, 275 Widget talk and 1198 "
+                    "Translations are extension machinery SPEC.md 3.2 does "
+                    "not project"
+                ),
+            ),
+            (
+                "revisions_naming_no_page_row",
+                counts.get("revisions_orphaned", 0),
+                (
+                    "rev_page names no row in page, so the revision cannot be "
+                    "placed and api.php cannot serve it either"
+                ),
+            ),
+            (
+                "deleted_revisions_rebuilt_from_archive",
+                counts.get("archived_revisions_projected", 0),
+                "archive rows: revisions of deleted pages the public API refuses",
+            ),
+            (
+                "api_revisions_newer_than_the_export",
+                len(api_revisions - dump_revisions),
+                (
+                    "edits made after the operator took the snapshot; the API "
+                    "path covers them"
+                ),
+            ),
+        ],
     )

@@ -673,6 +673,33 @@ def _log_summary(title: str, logid: int, comment: str) -> str:
     return f"{shown_title}{suffix}{comment_suffix}"
 
 
+def _toml_string(value: str) -> str:
+    escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
+
+
+def _coverage_toml(additive: Sequence[tuple[str, int, str]]) -> str:
+    """Render the additive coverage classes SPEC.md 3.2 requires.
+
+    Each class is a kind of row one input holds and the other structurally
+    cannot, so a reader can tell coverage apart from disagreement.
+    """
+
+    lines = [
+        "# Rows one input holds and the other cannot serve (SPEC.md 3.2).",
+        "# Written by jbomohi build; do not edit.",
+        "",
+    ]
+    for name, count, cause in additive:
+        if not re.fullmatch(r"[A-Za-z0-9_]+", name):
+            raise WikiParseError(f"invalid coverage class name: {name!r}")
+        lines.append(f"[additive.{name}]")
+        lines.append(f"count = {count}")
+        lines.append(f"cause = {_toml_string(cause)}")
+        lines.append("")
+    return "\n".join(lines).rstrip("\n") + "\n"
+
+
 def _csv(columns: Sequence[str], rows: Iterable[dict[str, object]]) -> str:
     stream = io.StringIO(newline="")
     writer = csv.DictWriter(stream, fieldnames=columns, lineterminator="\n")
@@ -965,6 +992,7 @@ def project(
     extra_gaps: Iterable[Mapping[str, object]] = (),
     ended_at: Mapping[int, tuple[datetime, int]] = {},
     unaccounted: Iterable[int] = (),
+    additive: Sequence[tuple[str, int, str]] = (),
 ) -> Iterator[Event]:
     """Project API- or dump-derived revisions and log events identically.
 
@@ -1377,5 +1405,7 @@ def project(
             final_changes["_meta/wiki/errors.csv"] = _csv(ERROR_COLUMNS, error_rows)
         if gap_rows:
             final_changes["_meta/wiki/gaps.csv"] = _csv(GAP_COLUMNS, gap_rows)
+        if additive:
+            final_changes["_meta/wiki/coverage.toml"] = _coverage_toml(additive)
         pending_event = replace(pending_event, changes=final_changes)
         yield pending_event
