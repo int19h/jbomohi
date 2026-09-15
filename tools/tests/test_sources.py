@@ -40,6 +40,39 @@ def test_mediawiki_pages_from_archive_supplies_tiki_mapping_input(
     }
 
 
+def test_source_factories_shares_loaded_wiki_fragments(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    config = Config(
+        tmp_path / "repo",
+        tmp_path / "state/corpus",
+        tmp_path / "state/archive",
+        tmp_path / "state/tmp",
+    )
+    fragments = object()
+    seen: list[object] = []
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_wiki_archive", lambda _archive: fragments
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.mediawiki_pages_from_archive",
+        lambda _config, value: seen.append(value) or {},
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_wiki_log_archive", lambda _archive: ()
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_wiki_media_archive", lambda _archive: ()
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.wiki_events",
+        lambda _config, *, fragments, logs, media: seen.append(fragments) or (),
+    )
+    factories = source_factories(config, ("wiki", "tiki"))
+    list(factories["wiki"]())
+    assert seen == [fragments, fragments]
+
+
 def test_source_factories_includes_converged_projectors(tmp_path: Path) -> None:
     config = Config(
         tmp_path / "repo",
