@@ -641,6 +641,13 @@ def merge_fragments(fragments: Iterable[WikiPageFragment]) -> list[WikiPage]:
                     raise WikiParseError(
                         f"revision {revision.revid}: inconsistent duplicate response"
                     )
+                if previous is not None and previous.text_cause:
+                    # Identical revisions may still explain unresolvable text
+                    # differently, because each input can only say what it
+                    # itself could not resolve. The first explanation offered
+                    # stands, and `combine_inputs` puts the export first
+                    # because it names the missing `text` row.
+                    continue
                 revisions[revision.revid] = revision
         ordered = tuple(sorted(revisions.values(), key=lambda item: item.revid))
         pages.append(WikiPage(pageid, namespace, title, is_redirect, ordered))

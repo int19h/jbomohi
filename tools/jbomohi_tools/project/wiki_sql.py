@@ -826,17 +826,6 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
                     )
                 else:
                     content = _text(payload, f"revision {revid} content")
-        if text_missing:
-            gaps.append(
-                WikiSqlGap(
-                    revid,
-                    None,
-                    pageid,
-                    title,
-                    timestamp,
-                    f"text unresolvable: {text_cause}",
-                )
-            )
         return WikiRevision(
             revid=revid,
             parentid=parentid,
@@ -1147,7 +1136,12 @@ def load_dump_archive(archive: Path) -> WikiSqlDump | None:
 
 def archived_fragments(
     dump: WikiSqlDump, live: Iterable[int] = ()
-) -> tuple[list[WikiPageFragment], dict[int, tuple[datetime, int]], list[WikiSqlGap]]:
+) -> tuple[
+    list[WikiPageFragment],
+    dict[int, tuple[datetime, int]],
+    set[int],
+    list[WikiSqlGap],
+]:
     """Rebuild the deleted lineages `archive` holds, one fragment per page id.
 
     SPEC.md 3.2 lets a deletion be projected only for a page whose history the

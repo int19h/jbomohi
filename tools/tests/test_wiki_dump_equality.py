@@ -15,6 +15,7 @@ Run them with the archive in place:
 from __future__ import annotations
 
 import os
+from collections import Counter
 from dataclasses import replace
 from pathlib import Path
 
@@ -176,6 +177,10 @@ def test_both_paths_project_the_same_events_over_the_same_range(inputs) -> None:
     assert [event.source_id for event in left] == [event.source_id for event in right]
 
     differing: list[tuple[str, str]] = []
+    # Exactly one revision in this archive has text neither path can resolve,
+    # and it is the only place the two are allowed to word a gap differently.
+    permitted_cause_differences = {"57624"}
+    seen_cause_differences: set[str] = set()
     for one, other in zip(left, right, strict=True):
         for field in EVENT_FIELDS:
             if getattr(one, field) == getattr(other, field):
@@ -196,14 +201,17 @@ def test_both_paths_project_the_same_events_over_the_same_range(inputs) -> None:
                     theirs = other.changes[key].splitlines()
                     assert len(mine) == len(theirs)
                     for a, b in zip(mine, theirs, strict=True):
-                        if a != b:
-                            assert (
-                                a.split(",text unresolvable:")[0]
-                                == b.split(",text unresolvable:")[0]
-                            ), "only the unresolvable-text cause may differ"
+                        if a == b:
+                            continue
+                        assert (
+                            a.split(",text unresolvable:")[0]
+                            == b.split(",text unresolvable:")[0]
+                        ), "only the unresolvable-text cause may differ"
+                        seen_cause_differences.add(a.split(",")[0])
                 continue
             differing.append((one.source_id, field))
     assert differing == []
+    assert seen_cause_differences == permitted_cause_differences
 
 
 def test_the_union_projects_and_records_every_additive_class(inputs) -> None:
@@ -221,6 +229,17 @@ def test_the_union_projects_and_records_every_additive_class(inputs) -> None:
         )
     )
     assert events
+    gap_rows = events[-1].changes["_meta/wiki/gaps.csv"].splitlines()[1:]
+
+    # Each input explains unresolvable text in its own terms, so the union has
+    # to settle on one: exactly one row per revision, carrying the export's
+    # more specific cause.
+    unresolvable = [row for row in gap_rows if "text unresolvable" in row]
+    by_revid = Counter(row.split(",")[0] for row in unresolvable)
+    assert by_revid and max(by_revid.values()) == 1
+    [row] = [row for row in unresolvable if row.split(",")[0] == "57624"]
+    assert row.endswith("text unresolvable: content references absent text row 35883")
+
     coverage = events[-1].changes["_meta/wiki/coverage.toml"]
     for name, count, _cause in combined.additive:
         assert f"[additive.{name}]" in coverage

@@ -137,6 +137,22 @@ def load(builder: DumpBuilder, tmp_path: Path):
     return load_wiki_sql_dump(builder.render(tmp_path / "wiki-content.sql.gz"))
 
 
+def _text_gap_rows(dump, revid: int) -> list[str]:
+    """Every `text unresolvable` reason the projector records for one revision."""
+
+    from jbomohi_tools.project.wiki import project
+
+    events = list(
+        project(dump.fragments, dump.logs, (), [g.as_row() for g in dump.gaps])
+    )
+    rows = events[-1].changes.get("_meta/wiki/gaps.csv", "").splitlines()[1:]
+    return [
+        row.split(",", 5)[5]
+        for row in rows
+        if row.split(",")[0] == str(revid) and "text unresolvable" in row
+    ]
+
+
 def test_loads_a_plain_revision_with_its_joins(tmp_path: Path) -> None:
     dump = load(baseline(), tmp_path)
     assert len(dump.fragments) == 1
@@ -259,8 +275,11 @@ def test_content_that_fails_its_digest_is_a_gap_not_text(tmp_path: Path) -> None
     revision = {r.revid: r for r in dump.fragments[0].revisions}[101]
     assert revision.content is None
     assert revision.text_missing is True
+    assert revision.text_cause == "content 2 disagrees with its declared size or SHA-1"
     assert dump.counts["integrity_failures"] == 1
-    assert [gap.reason for gap in dump.gaps] == [
+    # The row is written once, by the projector, from the revision itself.
+    assert dump.gaps == ()
+    assert _text_gap_rows(dump, 101) == [
         "text unresolvable: content 2 disagrees with its declared size or SHA-1"
     ]
 
@@ -277,9 +296,10 @@ def test_absent_text_row_is_a_gap(tmp_path: Path) -> None:
     dump = load(builder, tmp_path)
     revision = {r.revid: r for r in dump.fragments[0].revisions}[101]
     assert revision.content is None and revision.text_missing is True
-    assert dump.gaps[0].reason == (
+    assert dump.gaps == ()
+    assert _text_gap_rows(dump, 101) == [
         "text unresolvable: content references absent text row 4242"
-    )
+    ]
 
 
 def test_revision_deletion_bits_are_honoured(tmp_path: Path) -> None:
