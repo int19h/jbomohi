@@ -20,6 +20,12 @@ DEFAULT_PROVENANCE = (
 )
 
 
+# What the root commit shows where a build-specific value would go. SPEC.md
+# 3.11/§5: the root must not change when the tools do, so it names neither the
+# tools commit nor a snapshot; the tip refresh commit carries both.
+PENDING = "pending"
+
+
 @dataclass(frozen=True, slots=True)
 class RenderContext:
     snapshot: str = "root"
@@ -29,6 +35,16 @@ class RenderContext:
     coverage_tables: str = DEFAULT_COVERAGE
     layout_summary: str = DEFAULT_LAYOUT
     provenance: str = DEFAULT_PROVENANCE
+
+    @classmethod
+    def root(cls) -> RenderContext:
+        """The build-invariant form the root commit is rendered with."""
+
+        return cls(snapshot=PENDING, tools_commit=PENDING)
+
+    @property
+    def is_root(self) -> bool:
+        return self.tools_commit == PENDING
 
     def values(self) -> dict[str, str]:
         return {
@@ -61,7 +77,7 @@ def _render(text: str, context: RenderContext, template: Path) -> str:
 
 
 def _validate_context(context: RenderContext) -> None:
-    if not OBJECT_ID.fullmatch(context.tools_commit):
+    if not context.is_root and not OBJECT_ID.fullmatch(context.tools_commit):
         raise ValueError("render context tools_commit must be a git object id")
     if (
         not context.schema.isascii()
@@ -107,9 +123,16 @@ def render_main(
         if "\r" in output or output.startswith("\ufeff"):
             raise ValueError(f"rendered template is not UTF-8/LF-safe: {template}")
         rendered[relative] = output.encode("utf-8")
+    # The root carries the schema and the renderer versions only: naming the
+    # tools commit there would make every tools commit rewrite all of main.
+    tools_line = (
+        ""
+        if actual_context.is_root
+        else f'tools_commit = "{actual_context.tools_commit}"\n'
+    )
     schema = (
         f"projection_schema = {int(actual_context.schema)}\n"
-        f'tools_commit = "{actual_context.tools_commit}"\n'
+        f"{tools_line}"
         "\n[renderers]\n"
         "instructions = 1\n"
     )
@@ -117,12 +140,9 @@ def render_main(
     return rendered
 
 
-def commit_root(
-    repo_root: Path, corpus: Path, context: RenderContext | None = None
-) -> str:
-    actual_context = context or RenderContext(
-        tools_commit=git_output(repo_root, ["rev-parse", "HEAD"])
-    )
+def commit_root(repo_root: Path, corpus: Path) -> str:
+    """Commit the deterministic root, which never names the build that made it."""
+
     event = Event(
         source="meta",
         source_id="root",
@@ -131,7 +151,7 @@ def commit_root(
         source_time=EPOCH,
         summary="initialise corpus root",
         author=Identity.tool(),
-        changes=render_main(repo_root, actual_context),
+        changes=render_main(repo_root, RenderContext.root()),
         trailers={"Renderer": "instructions/1"},
     )
     return commit_event(event, corpus)

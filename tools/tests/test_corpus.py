@@ -98,11 +98,15 @@ def test_clean_clone_gets_one_rendered_epoch_root(tmp_path: Path) -> None:
     }
     readme = (config.corpus / "README.md").read_text()
     assert "{{" not in readme
-    assert tools_commit in readme
-    assert (
-        f'tools_commit = "{tools_commit}"'
-        in (config.corpus / "_meta/schema.toml").read_text()
-    )
+    # SPEC.md 3.11/§5: the root names neither the tools commit nor a snapshot,
+    # so that a tools commit does not rewrite every hash in main. The tip
+    # refresh commit carries both.
+    assert tools_commit not in readme
+    assert "built by tools commit `pending`" in readme
+    schema = (config.corpus / "_meta/schema.toml").read_text()
+    assert "tools_commit" not in schema
+    assert "projection_schema = 1" in schema
+    assert "instructions = 1" in schema
 
 
 def test_root_commit_is_deterministic_across_two_clean_clones(tmp_path: Path) -> None:

@@ -309,11 +309,7 @@ def build_corpus(
             scratch.parent,
             ["init", "--initial-branch=main", str(scratch)],
         )
-        commit_root(
-            config.repo_root,
-            scratch,
-            RenderContext(tools_commit=tools_commit),
-        )
+        commit_root(config.repo_root, scratch)
         event_count = 0
         last_time = EPOCH
         for event in merge_events(sources, until=until):
