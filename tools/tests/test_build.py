@@ -133,7 +133,7 @@ def test_build_is_transactional_chronological_and_deterministic(tmp_path: Path) 
     assert git(config.corpus, "rev-parse", "HEAD") == first.head
     assert tools_commit in (config.corpus / "_meta/schema.toml").read_text()
     assert (config.corpus / "_meta/archive/wiki/source.toml").is_file()
-    assert git(config.repo_root, "rev-parse", f"{first.snapshot}^{{}}") == first.head
+    assert git(config.corpus, "rev-parse", f"{first.snapshot}^{{}}") == first.head
     assert config.tmp.is_dir()
     assert not (config.repo_root / "tmp").exists()
 
@@ -242,6 +242,8 @@ def test_update_folds_final_stream_metadata_into_refresh(tmp_path: Path) -> None
 
 
 def test_push_main_uses_commit_ranges_then_snapshot_tag(tmp_path: Path) -> None:
+    """SPEC.md 2.2/2.7: the push runs in the corpus, where main and its tags are."""
+
     config, _commit = tools_repo(tmp_path / "repo")
     remote = tmp_path / "remote.git"
     git(tmp_path, "init", "--bare", str(remote))
@@ -251,7 +253,9 @@ def test_push_main_uses_commit_ranges_then_snapshot_tag(tmp_path: Path) -> None:
         for number in range(1, 6)
     )
     report = build_corpus(config, {"wiki": lambda: iter(events)})
-    pushed = push_main_ranges(config.repo_root, report.snapshot, commits_per_push=2)
+    # init took the remote from the tools checkout, so the corpus can publish.
+    assert git(config.corpus, "remote", "get-url", "origin") == str(remote)
+    pushed = push_main_ranges(config.corpus, report.snapshot, commits_per_push=2)
     assert pushed.main_updates == 4
     assert git(remote, "rev-parse", "refs/heads/main") == report.head
     assert git(remote, "rev-parse", f"refs/tags/{report.snapshot}^{{}}") == report.head
@@ -269,9 +273,11 @@ def test_push_main_rejects_a_nonancestor_remote(tmp_path: Path) -> None:
     commit_fixture(seed, valid_message("unrelated"))
     git(seed, "remote", "add", "origin", str(remote))
     git(seed, "push", "origin", "main")
-    git(config.repo_root, "remote", "add", "origin", str(remote))
+    # The remote gains its unrelated main after the corpus was built, so the
+    # push is the first thing that sees it.
+    git(config.corpus, "remote", "add", "origin", str(remote))
     with pytest.raises(GitError, match="not an ancestor"):
-        push_main_ranges(config.repo_root, report.snapshot)
+        push_main_ranges(config.corpus, report.snapshot)
 
 
 def test_page_manifests_are_consolidated_for_main_projection(tmp_path: Path) -> None:
@@ -616,7 +622,7 @@ def test_a_rebuild_repoints_its_snapshot_tag_but_update_never_does(
     config, _first = tools_repo(tmp_path / "repo")
     events = {"wiki": lambda: iter((event("rev=1", 1, "wiki/main/One.wiki"),))}
     first = build_corpus(config, events)
-    first_tag = git(config.repo_root, "rev-parse", f"{first.snapshot}^{{}}")
+    first_tag = git(config.corpus, "rev-parse", f"{first.snapshot}^{{}}")
     assert first_tag == first.head
 
     # A tools commit changes only the tip, so the rebuild needs the same tag
@@ -636,12 +642,12 @@ def test_a_rebuild_repoints_its_snapshot_tag_but_update_never_does(
     second = build_corpus(config, events)
     assert second.snapshot == first.snapshot
     assert second.head != first.head
-    assert git(config.repo_root, "rev-parse", f"{second.snapshot}^{{}}") == second.head
+    assert git(config.corpus, "rev-parse", f"{second.snapshot}^{{}}") == second.head
 
     # An update appends, so any tag it would move still names a live commit.
     with pytest.raises(GitError, match="already names another commit"):
         _tag_snapshot(
-            config.repo_root,
+            config.corpus,
             first.head,
             second.snapshot,
             datetime(2000, 1, 1, tzinfo=UTC),
