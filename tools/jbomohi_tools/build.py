@@ -771,6 +771,19 @@ def verify_corpus(corpus: Path) -> VerifyReport:
             continue
         for row_number, row in enumerate(_read_csv(path), 2):
             referenced = row.get("path") or row.get("file")
+            state = row.get("state")
+            if state is not None:
+                # SPEC.md 4.4: an index says whether a row still has a file,
+                # and carries a path exactly when it does.
+                if state not in {"current", "deleted", "not-projected"}:
+                    raise CorpusError(
+                        f"unknown index state at {path}:{row_number}: {state!r}"
+                    )
+                if bool(referenced) != (state == "current"):
+                    raise CorpusError(
+                        f"index state and path disagree at {path}:{row_number}: "
+                        f"state={state!r} path={referenced!r}"
+                    )
             if referenced and not (corpus / referenced).is_file():
                 raise CorpusError(
                     f"CSV path missing at {path}:{row_number}: {referenced}"

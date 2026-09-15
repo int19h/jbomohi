@@ -55,6 +55,7 @@ PAGE_COLUMNS = (
     "pageid",
     "ns",
     "title",
+    "state",
     "path",
     "is_redirect",
     "first_rev",
@@ -1056,6 +1057,9 @@ def project(
             "pageid": page.pageid,
             "ns": page.namespace,
             "title": page.title,
+            # SPEC.md 3.2/4.4: filled in after the walk, because whether a page
+            # still has a file is only known once every event has been applied.
+            "state": "",
             "path": page.path,
             "is_redirect": str(page.is_redirect).lower(),
             "first_rev": page.revisions[0].revid if page.revisions else "",
@@ -1064,6 +1068,7 @@ def project(
         }
         for page in pages
     ]
+    written_pages: set[int] = set()
     error_rows = [
         {
             "pageid": page.pageid,
@@ -1418,6 +1423,18 @@ def project(
 
     if pending_event is not None:
         final_changes = dict(pending_event.changes)
+        for row in page_rows:
+            pageid = row["pageid"]
+            path = row["path"]
+            assert isinstance(path, str) and isinstance(pageid, int)
+            if held_by_path.get(path) == pageid:
+                row["state"] = "current"
+            else:
+                # A page with no file at the tip carries no path: an index that
+                # points at nothing is worse to hand a reader than one that
+                # says plainly there is none (SPEC.md 3.2/4.4).
+                row["state"] = "deleted" if pageid in written_pages else "not-projected"
+                row["path"] = ""
         final_changes["_meta/wiki/pages.csv"] = _csv(PAGE_COLUMNS, page_rows)
         final_changes["_meta/wiki/revisions.csv"] = _csv(
             REVISION_COLUMNS, revision_rows
