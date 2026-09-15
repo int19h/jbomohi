@@ -646,6 +646,79 @@ def test_branched_revision_parent_uses_newest_spine_as_current() -> None:
     assert "Lineage" not in by_id["revid=3"].trailers
 
 
+def test_merged_placeholder_does_not_overwrite_another_page() -> None:
+    held = WikiPageFragment(
+        1,
+        0,
+        "Shared",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "held",
+            ),
+        ),
+    )
+    merged = WikiPageFragment(
+        2,
+        0,
+        "Another",
+        False,
+        (
+            WikiRevision(
+                2,
+                0,
+                datetime(2014, 1, 2, tzinfo=UTC),
+                "Gleki",
+                "merged placeholder",
+                5,
+                "b" * 40,
+                "other",
+            ),
+            WikiRevision(
+                3,
+                0,
+                datetime(2014, 1, 3, tzinfo=UTC),
+                "Gleki",
+                "current unavailable lineage",
+                None,
+                None,
+                None,
+                True,
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        999,
+        0,
+        "Shared",
+        datetime(2014, 1, 4, tzinfo=UTC),
+        "Gleki",
+        "",
+        0,
+        "Another",
+        True,
+    )
+    events = list(project([held, merged], [move]))
+    placeholder = next(event for event in events if event.source_id == "revid=2")
+    assert placeholder.changes == {}
+    assert placeholder.trailers["Lineage"] == "merged"
+    gaps = events[-1].changes["_meta/wiki/gaps.csv"]
+    assert isinstance(gaps, str)
+    assert (
+        "pre-merge title unknown; path wiki/main/Shared.wiki held by page 1; "
+        "not projected" in gaps
+    )
+
+
 def test_migration_skew_forces_move_before_marker_revision() -> None:
     page = WikiPageFragment(
         1,

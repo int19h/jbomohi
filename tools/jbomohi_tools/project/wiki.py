@@ -935,6 +935,7 @@ def project(
     revision_positions, merged_gaps = _revision_positions(pages, placement, move_times)
     state_content: dict[int, bytes | None] = {}
     held_by_path: dict[str, int] = {}
+    placeholder_paths: set[str] = set()
     for page in pages:
         state_content[page.pageid] = None
 
@@ -1048,13 +1049,36 @@ def project(
                 content = item.content.encode("utf-8")
                 other_page = held_by_path.get(path)
                 if not merged and other_page is not None and other_page != page.pageid:
-                    raise WikiParseError(
-                        f"revision {item.revid}: path already held by page {other_page}: {path}"
+                    if path not in placeholder_paths:
+                        raise WikiParseError(
+                            f"revision {item.revid}: path already held by page "
+                            f"{other_page}: {path}"
+                        )
+                    state_content[other_page] = None
+                if merged and other_page is not None and other_page != page.pageid:
+                    gap_rows.append(
+                        {
+                            "revid": item.revid,
+                            "logid": "",
+                            "pageid": page.pageid,
+                            "title": position[1],
+                            "timestamp": item.timestamp.isoformat().replace(
+                                "+00:00", "Z"
+                            ),
+                            "reason": (
+                                f"pre-merge title unknown; path {path} held by page "
+                                f"{other_page}; not projected"
+                            ),
+                        }
                     )
-                changes[path] = content
-                if not merged:
+                else:
+                    changes[path] = content
                     state_content[page.pageid] = content
                     held_by_path[path] = page.pageid
+                    if merged:
+                        placeholder_paths.add(path)
+                    else:
+                        placeholder_paths.discard(path)
             trailers = {
                 "Page-Id": str(page.pageid),
                 "Parent-Rev": str(item.parentid),
@@ -1144,22 +1168,27 @@ def project(
                 )
                 continue
             if old_holder != resolved_pageid:
-                raise WikiParseError(
-                    f"log event {item.logid}: source path held by page {old_holder}: "
-                    f"{old_path}"
-                )
+                if old_path not in placeholder_paths:
+                    raise WikiParseError(
+                        f"log event {item.logid}: source path held by page {old_holder}: "
+                        f"{old_path}"
+                    )
+                state_content[old_holder] = None
             target_holder = held_by_path.get(target_path)
             overwritten_pageid = None
             if target_holder is not None and target_holder != resolved_pageid:
-                if not item.move_redir:
+                if not item.move_redir and target_path not in placeholder_paths:
                     raise WikiParseError(
                         f"log event {item.logid}: target path held by page "
                         f"{target_holder}: {target_path}"
                     )
-                overwritten_pageid = target_holder
+                if item.move_redir:
+                    overwritten_pageid = target_holder
                 state_content[target_holder] = None
             held_by_path.pop(old_path)
+            placeholder_paths.discard(old_path)
             held_by_path[target_path] = resolved_pageid
+            placeholder_paths.discard(target_path)
             author = (
                 Identity.anonymous("mw.lojban.org")
                 if _anonymous(item.user)
@@ -1210,6 +1239,7 @@ def project(
             )
             continue
         held_by_path.pop(old_path)
+        placeholder_paths.discard(old_path)
         state_content[resolved_pageid] = None
         author = (
             Identity.anonymous("mw.lojban.org")
