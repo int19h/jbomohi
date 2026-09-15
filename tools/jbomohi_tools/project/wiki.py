@@ -1024,7 +1024,6 @@ def project(
     """
 
     pages = merge_fragments(fragments)
-    page_by_id = {page.pageid: page for page in pages}
     log_events = sorted(logs, key=lambda item: (item.timestamp, item.logid))
     placement = _page_move_chains(pages, log_events, dict(ended_at))
     actual_move_times = {
@@ -1038,6 +1037,7 @@ def project(
     move_times = _forced_move_times(pages, placement, revision_positions)
     revision_positions, merged_gaps = _revision_positions(pages, placement, move_times)
     state_content: dict[int, bytes | None] = {}
+    state_last_revision: dict[int, int | None] = {}
     held_by_path: dict[str, int] = {}
     placeholder_paths: set[str] = set()
     # Why a path is a placeholder, so the release is reported in the right
@@ -1046,6 +1046,7 @@ def project(
     unaccounted_pages = set(unaccounted)
     for page in pages:
         state_content[page.pageid] = None
+        state_last_revision[page.pageid] = None
 
     revision_pages = [(revision, page) for page in pages for revision in page.revisions]
     page_rows = [
@@ -1214,6 +1215,7 @@ def project(
                 else:
                     changes[path] = content
                     state_content[page.pageid] = content
+                    state_last_revision[page.pageid] = item.revid
                     held_by_path[path] = page.pageid
                     if yielding:
                         placeholder_paths.add(path)
@@ -1347,11 +1349,9 @@ def project(
                 trailers["Ordering"] = "forced-before"
             if overwritten_pageid is not None:
                 trailers["Overwritten-Page-Id"] = str(overwritten_pageid)
-                overwritten = page_by_id[overwritten_pageid]
-                if overwritten.revisions:
-                    trailers["Overwritten-Last-Rev"] = str(
-                        overwritten.revisions[-1].revid
-                    )
+                overwritten_last = state_last_revision[overwritten_pageid]
+                if overwritten_last is not None:
+                    trailers["Overwritten-Last-Rev"] = str(overwritten_last)
             event = Event(
                 source="wiki",
                 source_id=f"logid={item.logid}",
