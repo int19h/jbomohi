@@ -766,6 +766,7 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
             )
             return None
         user = actors.get(actor_id)
+        unrecorded_author = False
         if user == "":
             # One actor row in this database has an empty `actor_name` and a
             # NULL `actor_user`. MediaWiki publishes that as `Unknown user`, so
@@ -774,7 +775,9 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
             user = UNKNOWN_USER
         if user is None:
             # 1.38 hides these from api.php entirely (module docstring); the
-            # export keeps the content but records no recoverable author.
+            # export keeps the content but records no recoverable author, which
+            # SPEC.md 2.5 attributes to `unrecorded@`, never `anonymous@`.
+            unrecorded_author = True
             unresolved_authors += 1
             gaps.append(
                 WikiSqlGap(
@@ -795,12 +798,13 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
             ) from exc
         content: str | None = None
         text_missing = False
+        text_cause = ""
         if not deleted & DELETED_TEXT:
             try:
                 payload = text_store.resolve(old_id)
             except WikiSqlTextMissing as exc:
                 text_missing = True
-                gaps.append(WikiSqlGap(revid, None, pageid, title, timestamp, str(exc)))
+                text_cause = str(exc)
             else:
                 if (
                     sha1_base36(payload).encode("ascii") != content_sha1
@@ -811,18 +815,23 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
                     # not text to publish.
                     integrity_failures += 1
                     text_missing = True
-                    gaps.append(
-                        WikiSqlGap(
-                            revid,
-                            None,
-                            pageid,
-                            title,
-                            timestamp,
-                            f"content integrity check failed for content {content_id}",
-                        )
+                    text_cause = (
+                        f"content {content_id} disagrees with its declared size "
+                        "or SHA-1"
                     )
                 else:
                     content = _text(payload, f"revision {revid} content")
+        if text_missing:
+            gaps.append(
+                WikiSqlGap(
+                    revid,
+                    None,
+                    pageid,
+                    title,
+                    timestamp,
+                    f"text unresolvable: {text_cause}",
+                )
+            )
         return WikiRevision(
             revid=revid,
             parentid=parentid,
@@ -836,6 +845,8 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
             text_missing=text_missing,
             user_hidden=bool(deleted & DELETED_USER),
             comment_hidden=bool(deleted & DELETED_COMMENT),
+            author_unrecorded=unrecorded_author,
+            text_cause=text_cause,
         )
 
     pages: dict[int, tuple[int, str, bool]] = {}
@@ -1135,8 +1146,9 @@ def archived_fragments(
     2. Otherwise the remaining entries for the title, deletions and the
        `move_redir` moves that overwrite it, are assigned to the remaining
        lineages in time order, each entry used once.
-    3. A lineage left without an entry is recorded, not projected: nothing in
-       the export says when it stopped holding its title.
+    3. A lineage left without an entry is still projected, with no bound on
+       when it stopped holding its title: SPEC.md 3.2 rule 3 says it yields its
+       path to the next page that claims it rather than being refused.
 
     MediaWiki keeps `ar_page_id` when it archives revisions and reuses that id
     for a later page, so a lineage whose id a live page now owns cannot be told
@@ -1183,8 +1195,7 @@ def archived_fragments(
             record(
                 pageid,
                 rows,
-                f"deleted page id {pageid} is reused by a live page; "
-                "deleted history not projected",
+                f"deleted lineage; page id reused by {pageid}",
             )
             continue
         if len(identities) != 1:
@@ -1242,14 +1253,10 @@ def archived_fragments(
             ended_at[pageid] = match
 
     fragments: list[WikiPageFragment] = []
+    unaccounted: set[int] = set()
     for pageid, (namespace, title, revisions) in lineages.items():
         if pageid not in ended_at:
-            record(
-                pageid,
-                grouped[pageid],
-                "deleted lineage has no deletion log; not projected",
-            )
-            continue
+            unaccounted.add(pageid)
         final = revisions[-1].content or ""
         fragments.append(
             WikiPageFragment(
@@ -1260,7 +1267,7 @@ def archived_fragments(
                 revisions,
             )
         )
-    return fragments, ended_at, gaps
+    return fragments, ended_at, unaccounted, gaps
 
 
 @dataclass(frozen=True, slots=True)
@@ -1271,6 +1278,7 @@ class WikiProjectorInputs:
     logs: list[WikiLogEvent]
     extra_gaps: list[dict[str, object]]
     ended_at: dict[int, tuple[datetime, int]]
+    unaccounted: set[int]
 
 
 def combine_inputs(
@@ -1278,7 +1286,7 @@ def combine_inputs(
     fragments: Sequence[WikiPageFragment],
     logs: Sequence[WikiLogEvent],
     *,
-    backfill_deleted: bool = False,
+    backfill_deleted: bool = True,
 ) -> WikiProjectorInputs:
     """Union the export with the API crawl, refusing any real disagreement.
 
@@ -1286,15 +1294,12 @@ def combine_inputs(
     identical; `merge_fragments` already enforces that for revisions, and this
     does it for log entries, which are keyed by `logid` rather than merged.
 
-    `backfill_deleted` adds the `archive` lineages. It is off by default while
-    the placement of a reused title is still being settled: on the 2026-09-15
-    export a handful of lineages that no log entry accounts for still hold a
-    path when the next page claims it, and `project` refuses that rather than
-    overwrite another page's state. Issue #14 tracks the remaining cases.
+    `backfill_deleted` adds the `archive` lineages, which is what turns a
+    `deleted; history not API-accessible` gap into a real `Event: deleted`.
     """
 
     if dump is None:
-        return WikiProjectorInputs(list(fragments), list(logs), [], {})
+        return WikiProjectorInputs(list(fragments), list(logs), [], {}, set())
     combined_logs: dict[int, WikiLogEvent] = {}
     for event in (*dump.logs, *logs):
         previous = combined_logs.get(event.logid)
@@ -1305,14 +1310,16 @@ def combine_inputs(
         combined_logs[event.logid] = event
     deleted: list[WikiPageFragment] = []
     ended_at: dict[int, tuple[datetime, int]] = {}
+    unaccounted: set[int] = set()
     gaps = list(dump.gaps)
     if backfill_deleted:
         live = {fragment.pageid for fragment in (*dump.fragments, *fragments)}
-        deleted, ended_at, deleted_gaps = archived_fragments(dump, live)
+        deleted, ended_at, unaccounted, deleted_gaps = archived_fragments(dump, live)
         gaps.extend(deleted_gaps)
     return WikiProjectorInputs(
         [*dump.fragments, *fragments, *deleted],
         [combined_logs[logid] for logid in sorted(combined_logs)],
         [gap.as_row() for gap in gaps],
         ended_at,
+        unaccounted,
     )

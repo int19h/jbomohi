@@ -135,7 +135,10 @@ def test_parse_and_project_revision_with_textmissing_records_gap() -> None:
     assert "wiki/main/BPFK_Section%3A_gadri.wiki" not in event.changes
     gaps = event.changes["_meta/wiki/gaps.csv"]
     assert isinstance(gaps, str)
-    assert "12,,527,BPFK Section: gadri,2014-01-03T00:00:00Z,text missing" in gaps
+    assert (
+        "12,,527,BPFK Section: gadri,2014-01-03T00:00:00Z,text unresolvable: text missing"
+        in gaps
+    )
 
 
 def test_parse_revision_rejects_invalid_textmissing_shapes() -> None:

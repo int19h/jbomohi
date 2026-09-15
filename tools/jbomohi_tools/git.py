@@ -247,19 +247,17 @@ class Identity:
             if (self.name, self.email) != fixed[self.namespace]:
                 raise EventError(f"invalid identity for namespace {self.namespace!r}")
             return
-        if self.namespace.startswith("anonymous:"):
-            host = self.namespace.removeprefix("anonymous:")
+        for label in ("anonymous", "unrecorded"):
+            if not self.namespace.startswith(f"{label}:"):
+                continue
+            host = self.namespace.removeprefix(f"{label}:")
             if (
                 not host
                 or any(char.isspace() for char in host)
                 or "@" in host
-                or (self.name, self.email)
-                != (
-                    "anonymous",
-                    f"anonymous@{host}",
-                )
+                or (self.name, self.email) != (label, f"{label}@{host}")
             ):
-                raise EventError("invalid anonymous identity")
+                raise EventError(f"invalid {label} identity")
             return
         if any(char.isspace() for char in self.namespace) or "@" in self.namespace:
             raise EventError("identity namespace must be an email host")
@@ -292,7 +290,7 @@ class Identity:
             "contributed",
             "jbomohi",
             "irc.lojban.org",
-        } or host.startswith("anonymous:"):
+        } or host.startswith(("anonymous:", "unrecorded:")):
             raise EventError(f"reserved identity namespace: {host!r}")
         return cls(
             _git_safe_name(user, label="username"),
@@ -352,6 +350,20 @@ class Identity:
         if any(char.isspace() for char in clean_host) or "@" in clean_host:
             raise EventError("anonymous host must be an email host")
         return cls("anonymous", f"anonymous@{clean_host}", f"anonymous:{clean_host}")
+
+    @classmethod
+    def unrecorded(cls, host: str) -> Identity:
+        """The source keeps no author at all, which is not suppression.
+
+        SPEC.md 2.5 keeps this distinct from `anonymous@`: a MediaWiki
+        transwiki import with no actor row records nobody, while `anonymous`
+        means the wiki deliberately withheld a name it holds.
+        """
+
+        clean_host = _clean_text("unrecorded host", host)
+        if any(char.isspace() for char in clean_host) or "@" in clean_host:
+            raise EventError("unrecorded host must be an email host")
+        return cls("unrecorded", f"unrecorded@{clean_host}", f"unrecorded:{clean_host}")
 
     @classmethod
     def irc(cls) -> Identity:

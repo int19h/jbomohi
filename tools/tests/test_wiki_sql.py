@@ -261,7 +261,7 @@ def test_content_that_fails_its_digest_is_a_gap_not_text(tmp_path: Path) -> None
     assert revision.text_missing is True
     assert dump.counts["integrity_failures"] == 1
     assert [gap.reason for gap in dump.gaps] == [
-        "content integrity check failed for content 2"
+        "text unresolvable: content 2 disagrees with its declared size or SHA-1"
     ]
 
 
@@ -277,7 +277,9 @@ def test_absent_text_row_is_a_gap(tmp_path: Path) -> None:
     dump = load(builder, tmp_path)
     revision = {r.revid: r for r in dump.fragments[0].revisions}[101]
     assert revision.content is None and revision.text_missing is True
-    assert dump.gaps[0].reason == "content references absent text row 4242"
+    assert dump.gaps[0].reason == (
+        "text unresolvable: content references absent text row 4242"
+    )
 
 
 def test_revision_deletion_bits_are_honoured(tmp_path: Path) -> None:
@@ -771,13 +773,14 @@ def test_backfill_rebuilds_a_deleted_lineage_and_its_end(tmp_path: Path) -> None
     from jbomohi_tools.project.wiki_sql import archived_fragments
 
     dump = load(deleted_page_dump(tmp_path), tmp_path)
-    fragments, ended_at, gaps = archived_fragments(dump, live={5})
+    fragments, ended_at, unaccounted, gaps = archived_fragments(dump, live={5})
     assert [(f.pageid, f.namespace, f.title) for f in fragments] == [
         (77, 0, "ka nu cilre")
     ]
     assert [r.revid for r in fragments[0].revisions] == [200]
     # The delete log names page 77 outright, so it bounds that lineage.
     assert ended_at == {77: (datetime(2014, 3, 1, tzinfo=UTC), 900)}
+    assert unaccounted == set()
     assert gaps == []
 
 
@@ -787,11 +790,9 @@ def test_backfill_skips_a_lineage_whose_page_id_a_live_page_reuses(
     from jbomohi_tools.project.wiki_sql import archived_fragments
 
     dump = load(deleted_page_dump(tmp_path), tmp_path)
-    fragments, ended_at, gaps = archived_fragments(dump, live={5, 77})
-    assert fragments == [] and ended_at == {}
-    assert [gap.reason for gap in gaps] == [
-        "deleted page id 77 is reused by a live page; deleted history not projected"
-    ]
+    fragments, ended_at, unaccounted, gaps = archived_fragments(dump, live={5, 77})
+    assert fragments == [] and ended_at == {} and unaccounted == set()
+    assert [gap.reason for gap in gaps] == ["deleted lineage; page id reused by 77"]
 
 
 def test_backfill_records_a_lineage_no_log_accounts_for(tmp_path: Path) -> None:
@@ -820,12 +821,13 @@ def test_backfill_records_a_lineage_no_log_accounts_for(tmp_path: Path) -> None:
         sha1_base36(b"earlier"),
     )
     dump = load(builder, tmp_path)
-    fragments, ended_at, gaps = archived_fragments(dump, live={5})
-    assert [f.pageid for f in fragments] == [77]
+    fragments, ended_at, unaccounted, gaps = archived_fragments(dump, live={5})
+    # Both lineages are projected; the one no entry accounts for yields its
+    # path to whoever claims it next (SPEC.md 3.2 rule 3).
+    assert sorted(f.pageid for f in fragments) == [77, 78]
     assert set(ended_at) == {77}
-    assert [gap.reason for gap in gaps] == [
-        "deleted lineage has no deletion log; not projected"
-    ]
+    assert unaccounted == {78}
+    assert gaps == []
 
 
 def test_move_redir_can_end_a_lineage_without_a_delete_log(tmp_path: Path) -> None:
@@ -869,11 +871,11 @@ def test_move_redir_can_end_a_lineage_without_a_delete_log(tmp_path: Path) -> No
         0,
     )
     dump = load(builder, tmp_path)
-    fragments, ended_at, gaps = archived_fragments(dump, live={5})
+    fragments, ended_at, unaccounted, gaps = archived_fragments(dump, live={5})
     assert [f.pageid for f in fragments] == [77]
     assert fragments[0].is_redirect is True
     assert ended_at == {77: (datetime(2014, 3, 1, tzinfo=UTC), 900)}
-    assert gaps == []
+    assert unaccounted == set() and gaps == []
 
 
 def test_combine_inputs_unions_both_sources_and_refuses_disagreement(
@@ -886,16 +888,16 @@ def test_combine_inputs_unions_both_sources_and_refuses_disagreement(
     dump = load(deleted_page_dump(tmp_path), tmp_path)
     api_only = WikiPageFragmentStub(9, 0, "api only")
     combined = combine_inputs(dump, [api_only.fragment], list(dump.logs))
-    assert [f.pageid for f in combined.fragments] == [5, 9]
+    assert [f.pageid for f in combined.fragments] == [5, 9, 77]
     assert [e.logid for e in combined.logs] == [900]
-    assert combined.ended_at == {}
+    assert set(combined.ended_at) == {77}
     assert combined.extra_gaps == []
 
-    backfilled = combine_inputs(
-        dump, [api_only.fragment], list(dump.logs), backfill_deleted=True
+    without = combine_inputs(
+        dump, [api_only.fragment], list(dump.logs), backfill_deleted=False
     )
-    assert [f.pageid for f in backfilled.fragments] == [5, 9, 77]
-    assert set(backfilled.ended_at) == {77}
+    assert [f.pageid for f in without.fragments] == [5, 9]
+    assert without.ended_at == {}
 
     disagreeing = replace(dump.logs[0], comment="something else")
     with pytest.raises(WikiSqlParseError, match="differs between the export"):

@@ -11,6 +11,7 @@ import unicodedata
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, replace
+from dataclasses import field as dataclass_field
 from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
@@ -98,6 +99,16 @@ class WikiRevision:
     text_missing: bool = False
     user_hidden: bool = False
     comment_hidden: bool = False
+    # The source records no author at all, which SPEC.md 2.5 keeps distinct
+    # from a suppressed one: `unrecorded@` rather than `anonymous@`.
+    author_unrecorded: bool = False
+    # Why the content could not be resolved, for the gaps.csv row. Each input
+    # can only say what it itself could not resolve — the API knows the blob is
+    # gone, the export knows which `text` row is missing — so this explanation
+    # is deliberately outside the revision's identity: the two paths agree that
+    # the text is unresolvable, and the export's more specific cause wins when
+    # both are loaded.
+    text_cause: str = dataclass_field(default="", compare=False)
 
 
 @dataclass(frozen=True, slots=True)
@@ -264,6 +275,7 @@ def _revision(raw: object, pageid: int) -> WikiRevision:
             raise WikiParseError(f"revision {revid}: invalid textmissing marker")
         text_missing = True
     content: str | None = None
+    text_cause = "text missing" if text_missing else ""
     if not text_hidden:
         if not isinstance(main_slot, dict):
             raise WikiParseError(f"revision {revid}: main content slot is missing")
@@ -276,6 +288,18 @@ def _revision(raw: object, pageid: int) -> WikiRevision:
             raise WikiParseError(f"revision {revid}: main content is missing")
         if not text_missing:
             content = content_value
+    if content is not None:
+        # SPEC.md 3.2: content that disagrees with the source's declared size or
+        # SHA-1 is a missing blob, not text. MediaWiki serves an empty string
+        # for a revision whose `text` row is gone while still declaring the
+        # original length, and publishing that as an empty page would be a lie.
+        payload = content.encode("utf-8")
+        if size is not None and len(payload) != size:
+            content, text_missing = None, True
+            text_cause = f"declared size {size} but served {len(payload)} bytes"
+        elif sha1 is not None and hashlib.sha1(payload).hexdigest() != sha1:
+            content, text_missing = None, True
+            text_cause = "served content does not match the declared SHA-1"
     return WikiRevision(
         revid=revid,
         parentid=parentid,
@@ -289,6 +313,7 @@ def _revision(raw: object, pageid: int) -> WikiRevision:
         text_missing=text_missing,
         user_hidden=user_hidden,
         comment_hidden=comment_hidden,
+        text_cause=text_cause,
     )
 
 
@@ -939,6 +964,7 @@ def project(
     media: Iterable[WikiMedia] = (),
     extra_gaps: Iterable[Mapping[str, object]] = (),
     ended_at: Mapping[int, tuple[datetime, int]] = {},
+    unaccounted: Iterable[int] = (),
 ) -> Iterator[Event]:
     """Project API- or dump-derived revisions and log events identically.
 
@@ -966,6 +992,10 @@ def project(
     state_content: dict[int, bytes | None] = {}
     held_by_path: dict[str, int] = {}
     placeholder_paths: set[str] = set()
+    # Why a path is a placeholder, so the release is reported in the right
+    # words: a merged pre-move chain, or a deleted lineage nothing accounts for.
+    placeholder_reason: dict[str, str] = {}
+    unaccounted_pages = set(unaccounted)
     for page in pages:
         state_content[page.pageid] = None
 
@@ -1014,8 +1044,9 @@ def project(
     ]
     for revision, page in revision_pages:
         anonymous = _anonymous(revision.user) or revision.user_hidden
-        user = "anonymous" if anonymous else revision.user
-        assert user is not None
+        user = "unrecorded" if revision.author_unrecorded else revision.user
+        if user is None or (anonymous and not revision.author_unrecorded):
+            user = "anonymous"
         revision_rows.append(
             {
                 "revid": revision.revid,
@@ -1032,7 +1063,9 @@ def project(
         if revision.text_hidden:
             reasons.append("text suppressed")
         if revision.text_missing:
-            reasons.append("text missing")
+            reasons.append(
+                f"text unresolvable: {revision.text_cause or 'text missing'}"
+            )
         if revision.user_hidden:
             reasons.append("user suppressed")
         if revision.comment_hidden:
@@ -1070,26 +1103,46 @@ def project(
         if kind == "revision":
             assert isinstance(item, WikiRevision) and isinstance(page, WikiPage)
             anonymous = _anonymous(item.user) or item.user_hidden
-            author = (
-                Identity.anonymous("mw.lojban.org")
-                if anonymous
-                else Identity.namespaced("mw.lojban.org", item.user or "")
-            )
+            if item.author_unrecorded:
+                author = Identity.unrecorded("mw.lojban.org")
+            elif anonymous:
+                author = Identity.anonymous("mw.lojban.org")
+            else:
+                author = Identity.namespaced("mw.lojban.org", item.user or "")
             position = revision_positions[item.revid]
             path = wiki_path(*position)
             merged = item.revid in placement.merged_revisions
+            yielding = merged or page.pageid in unaccounted_pages
             changes: dict[str, str | bytes] = {}
             if item.content is not None:
                 content = item.content.encode("utf-8")
                 other_page = held_by_path.get(path)
-                if not merged and other_page is not None and other_page != page.pageid:
+                taken = other_page is not None and other_page != page.pageid
+                if taken and not yielding:
                     if path not in placeholder_paths:
                         raise WikiParseError(
                             f"revision {item.revid}: path already held by page "
                             f"{other_page}: {path}"
                         )
+                    assert other_page is not None
+                    released = placeholder_reason.pop(path, "placeholder")
+                    gap_rows.append(
+                        {
+                            "revid": item.revid,
+                            "logid": "",
+                            "pageid": other_page,
+                            "title": position[1],
+                            "timestamp": item.timestamp.isoformat().replace(
+                                "+00:00", "Z"
+                            ),
+                            "reason": (
+                                f"{released}; path {path} released to page "
+                                f"{page.pageid}"
+                            ),
+                        }
+                    )
                     state_content[other_page] = None
-                if merged and other_page is not None and other_page != page.pageid:
+                if taken and yielding:
                     gap_rows.append(
                         {
                             "revid": item.revid,
@@ -1102,6 +1155,11 @@ def project(
                             "reason": (
                                 f"pre-merge title unknown; path {path} held by page "
                                 f"{other_page}; not projected"
+                            )
+                            if merged
+                            else (
+                                f"deleted lineage unaccounted; path {path} held by "
+                                f"page {other_page}; not projected"
                             ),
                         }
                     )
@@ -1109,10 +1167,16 @@ def project(
                     changes[path] = content
                     state_content[page.pageid] = content
                     held_by_path[path] = page.pageid
-                    if merged:
+                    if yielding:
                         placeholder_paths.add(path)
+                        placeholder_reason[path] = (
+                            "pre-merge title unknown"
+                            if merged
+                            else "deleted lineage unaccounted"
+                        )
                     else:
                         placeholder_paths.discard(path)
+                        placeholder_reason.pop(path, None)
             trailers = {
                 "Page-Id": str(page.pageid),
                 "Parent-Rev": str(item.parentid),
@@ -1221,8 +1285,10 @@ def project(
                 state_content[target_holder] = None
             held_by_path.pop(old_path)
             placeholder_paths.discard(old_path)
+            placeholder_reason.pop(old_path, None)
             held_by_path[target_path] = resolved_pageid
             placeholder_paths.discard(target_path)
+            placeholder_reason.pop(target_path, None)
             author = (
                 Identity.anonymous("mw.lojban.org")
                 if _anonymous(item.user)
@@ -1274,6 +1340,7 @@ def project(
             continue
         held_by_path.pop(old_path)
         placeholder_paths.discard(old_path)
+        placeholder_reason.pop(old_path, None)
         state_content[resolved_pageid] = None
         author = (
             Identity.anonymous("mw.lojban.org")
