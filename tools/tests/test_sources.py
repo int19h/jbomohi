@@ -40,23 +40,36 @@ def test_mediawiki_pages_from_archive_supplies_tiki_mapping_input(
     }
 
 
-def test_source_factories_shares_loaded_wiki_fragments(
+def test_source_factories_reads_each_wiki_input_once(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """The archived crawl and the export are each loaded once and shared.
+
+    Both are expensive — the export is a 448 MB stream — and SPEC.md 3.2 has
+    the wiki projector and Tiki's migration map read the same wiki state, so a
+    build must not parse either input twice.
+    """
+
     config = Config(
         tmp_path / "repo",
         tmp_path / "state/corpus",
         tmp_path / "state/archive",
         tmp_path / "state/tmp",
     )
-    fragments = object()
+    fragments = [object()]
+    loads: list[str] = []
     seen: list[object] = []
     monkeypatch.setattr(
-        "jbomohi_tools.sources.load_wiki_archive", lambda _archive: fragments
+        "jbomohi_tools.sources.load_wiki_archive",
+        lambda _archive: loads.append("api") or fragments,
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_dump_archive",
+        lambda _archive: loads.append("export") or None,
     )
     monkeypatch.setattr(
         "jbomohi_tools.sources.mediawiki_pages_from_archive",
-        lambda _config, value: seen.append(value) or {},
+        lambda _config, value: seen.append(list(value)) or {},
     )
     monkeypatch.setattr(
         "jbomohi_tools.sources.load_wiki_log_archive", lambda _archive: ()
@@ -66,11 +79,53 @@ def test_source_factories_shares_loaded_wiki_fragments(
     )
     monkeypatch.setattr(
         "jbomohi_tools.sources.wiki_events",
-        lambda _config, *, fragments, logs, media: seen.append(fragments) or (),
+        lambda _config, *, inputs, media: seen.append(inputs.fragments) or (),
     )
     factories = source_factories(config, ("wiki", "tiki"))
     list(factories["wiki"]())
+    assert loads == ["api", "export"]
     assert seen == [fragments, fragments]
+
+
+def test_source_factories_unions_the_export_with_the_crawl(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """With an export ingested, the wiki projector sees both inputs."""
+
+    from jbomohi_tools.project.wiki import WikiPageFragment
+    from jbomohi_tools.project.wiki_sql import WikiSqlDump
+
+    config = Config(
+        tmp_path / "repo",
+        tmp_path / "state/corpus",
+        tmp_path / "state/archive",
+        tmp_path / "state/tmp",
+    )
+    crawled = WikiPageFragment(1, 0, "From the crawl", False, ())
+    exported = WikiPageFragment(2, 0, "From the export", False, ())
+    dump = WikiSqlDump((exported,), (), (), (), {"revisions": 0})
+    seen: list[object] = []
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_wiki_archive", lambda _archive: [crawled]
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_dump_archive", lambda _archive: dump
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_wiki_log_archive", lambda _archive: ()
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_wiki_media_archive", lambda _archive: ()
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.wiki_events",
+        lambda _config, *, inputs, media: seen.append(inputs) or (),
+    )
+    list(source_factories(config, ("wiki",))["wiki"]())
+    [inputs] = seen
+    # The export comes first, so its explanation of an unresolvable text wins.
+    assert [f.pageid for f in inputs.fragments] == [2, 1]
+    assert [name for name, _count, _cause in inputs.additive]
 
 
 def test_source_factories_includes_converged_projectors(tmp_path: Path) -> None:
