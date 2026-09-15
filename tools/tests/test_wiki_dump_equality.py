@@ -2,14 +2,17 @@
 
 SPEC.md 3.2 defines the two wiki inputs as equal over their intersection:
 every `revid` and `logid` present in both must yield byte-identical events.
-That is a property of the actual data, not of a fixture, so these tests run
-only where the archive holds both inputs and skip everywhere else, which keeps
-CI green while a local run proves the claim the PR body makes.
+That is a property of the actual data, not of a fixture, so these tests are run
+deliberately, never as part of a plain `pytest`: they read the whole wiki
+export, which costs minutes and several gigabytes. They skip unless
+`JBOMOHI_ARCHIVE` names the archive explicitly.
 
 Run them with the archive in place:
 
     JBOMOHI_ARCHIVE=~/lojban/archive uv run --python 3.13 pytest \\
         tools/tests/test_wiki_dump_equality.py -q
+
+The result belongs in the pull request that claims the two inputs agree.
 """
 
 from __future__ import annotations
@@ -71,18 +74,26 @@ EVENT_FIELDS = (
 )
 
 
-def archive_root() -> Path:
+def archive_root() -> Path | None:
+    """The archive to prove the claim against, or None when none was asked for.
+
+    Falling back to the default location made these tests run wherever an
+    archive happened to sit at `~/lojban/archive`, turning a plain `pytest`
+    into a multi-gigabyte job without saying so. Requiring the variable also
+    means the skip is exercised on the machines that have the data, rather than
+    only on CI, where it passes for the trivial reason that there is no archive
+    at all.
+    """
+
     configured = os.environ.get("JBOMOHI_ARCHIVE")
-    return (
-        Path(configured).expanduser()
-        if configured
-        else Path.home() / "lojban" / "archive"
-    )
+    return Path(configured).expanduser() if configured else None
 
 
 @pytest.fixture(scope="module")
 def inputs() -> tuple[object, list, list, list]:
     root = archive_root()
+    if root is None:
+        pytest.skip("set JBOMOHI_ARCHIVE to run the export/API equality proof")
     if not (root / "manifests" / "wiki" / "db-export").is_dir():
         pytest.skip(f"no ingested wiki SQL export under {root}")
     if not (root / "manifests" / "wiki" / "revisions").is_dir():
