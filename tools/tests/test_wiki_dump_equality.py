@@ -20,6 +20,7 @@ from dataclasses import replace
 from pathlib import Path
 
 import pytest
+
 from jbomohi_tools.project.wiki import (
     load_archive,
     load_log_archive,

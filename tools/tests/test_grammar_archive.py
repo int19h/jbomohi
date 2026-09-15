@@ -11,6 +11,7 @@ from email.message import Message
 from pathlib import Path
 
 import pytest
+
 from jbomohi_tools.archive.grammars import (
     GitGrammar,
     GrammarFetchError,

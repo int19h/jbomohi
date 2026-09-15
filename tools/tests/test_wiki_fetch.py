@@ -7,6 +7,7 @@ from pathlib import Path
 from urllib.error import URLError
 
 import pytest
+
 from jbomohi_tools.archive import verify_manifests
 from jbomohi_tools.archive.wiki import (
     ApiResponse,

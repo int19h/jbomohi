@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from urllib.error import URLError
 
 import pytest
+
 from jbomohi_tools.archive import verify_manifests
 from jbomohi_tools.archive.irc import (
     FetchReport,
