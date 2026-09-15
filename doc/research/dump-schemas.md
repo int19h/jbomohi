@@ -567,6 +567,62 @@ revisions sit in the dump *in the clear* — masking is enforced by our projecto
 
 ---
 
+### 3.10 What the 2026-09-15 operator export actually held ✅
+
+Measured on `wiki-content.sql.gz` (448,799,470 bytes, sha256 `09e0886e…5422`), decoded against
+the 2026-09-14 API crawl (14,368 archived responses). Row counts: `page` 14,486, `revision`
+53,279, `archive` 1,291, `logging` 81,872, `text` 46,163, `actor` 520.
+
+**Blobs.** No external store at all: every `content_address` is `tt:<old_id>`, and `old_flags`
+takes only three values — `utf-8` (9,823), `object,utf-8` (16,333), `utf-8,gzip` (20,007). The
+object rows hold `ConcatenatedGzipHistoryBlob` (3,601) and `HistoryBlobStub` (12,732) and nothing
+else, so no `DiffHistoryBlob` and no `xdiff` dependency. 50,651 of 50,662 `content` rows decode
+with both `content_sha1` (base 36) and `content_size` matching; the 11 that do not are ten
+StructuredDiscussions leftovers whose stored size is 1 while the blob is `[]` or a
+`flow-workflow` JSON, and one `HistoryBlobStub` pointing at a `text` row (`old_id` 35883) that is
+gone.
+
+**Four places where the export states a fact differently from `api.php`.** Each is a property of
+this database, not of the loader, and each had to be matched to what MediaWiki itself publishes
+before the two paths agreed:
+
+| Fact | Evidence | Rows affected |
+|---|---|---|
+| `rev_len` is NULL, and `api.php` serializes that as 0 | 247 `revision` rows | 225 shared revisions differed before the match |
+| One `actor` row (id 354) has an empty `actor_name` and NULL `actor_user`; MediaWiki renders it `Unknown user` — and a *separate* real account is also named `Unknown user` | `actor` 354 | 198 shared revisions |
+| `ApiQueryLogEvents` LEFT JOINs `page` on `(log_namespace, log_title)` and reports **that current page id**, never the historical `log_page` | `log_page` is 0 on 2,794 of 4,418 `delete` rows while the API reports a live id | 4,707 shared log entries |
+| `siprop=namespaces` reports `case` per namespace: this wiki runs `$wgCapitalLinks = false` with first-letter overrides for −1, 2, 3, 8, 9, 10, 11, 828, 829, so a move target is capitalized **only** there; a namespace the wiki no longer registers has no name and renders `Special:Badtitle/NS<id>:<text>` | `siteinfo`; namespaces 90, 274, 275, 1198 are unregistered | 4,054 targets, 193 titles, 62 target namespaces |
+
+**Why the export holds rows the API cannot serve.** MediaWiki 1.38 reads revisions under
+`SCHEMA_COMPAT_READ_TEMP` (§3.1), so `RevisionStore` **inner**-joins `revision_actor_temp`: a
+revision with no row there is invisible to `api.php` however well-formed it is. 2,633 revisions
+are in that state (`rev_actor` 0, no temp row) — the foreign halves of transwiki imports, each
+followed by a local "1 revision imported" wrapper revision the API *does* return. `list=logevents`
+hides an entry whose `log_actor` names no `actor` row the same way: 1,620 move logs, all from the
+2013–2014 "Move page script" run. This is why the export is a strict superset in the shared range
+rather than a disagreement with it, and why those revisions have no recoverable author at all
+(`unrecorded@`, `doc/SPEC.md` §2.5 — not `anonymous@`, which means suppressed).
+
+**The export does not supply pre-move titles for merged lineages** ⚠️ — verified 2026-09-15, and
+the reason `doc/SPEC.md` §3.2 rule 3's placements stand as the permanent record:
+
+1. There are **no `merge` log entries at all**; the multi-parent chains come from transwiki imports.
+2. All 21,674 `import`/`upload` log rows have an **empty `log_params`**, so no source title is recorded.
+3. `log_search` carries only `associated_rev_id` (710 rows), `ipb_id` and `pr_id` — no title association.
+4. `revision_actor_temp.revactor_page` equals `rev_page` for **all 50,646 rows**, so the temp table
+   preserves no pre-merge page id either.
+
+Only 171 of 9,081 merged revisions name any bracketed title in their comment, and those name an
+unrelated page (protection-log text), so there is nothing to read even heuristically.
+
+**Reconciliation against the API crawl.** `page` 14,486 = 14,176 API pages + 310 in namespaces
+274/275/1198. `revision` 53,279 = 49,783 API revisions + 2,633 actor-less + 886 outside the crawl
+(595 in those namespaces, 291 whose `rev_page` names no `page` row) − 23 API revisions newer than
+the snapshot (the export's newest revision is 2026-09-13T13:08:45Z, `rev_id` 125,598). Over the
+intersection the two paths emit byte-identical events.
+
+---
+
 ## 4. Tiki Wiki (tiki.lojban.org)
 
 Schema read from three vintages of the installer SQL: **1.9.11** (SourceForge tarball),

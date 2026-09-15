@@ -135,7 +135,10 @@ def test_parse_and_project_revision_with_textmissing_records_gap() -> None:
     assert "wiki/main/BPFK_Section%3A_gadri.wiki" not in event.changes
     gaps = event.changes["_meta/wiki/gaps.csv"]
     assert isinstance(gaps, str)
-    assert "12,,527,BPFK Section: gadri,2014-01-03T00:00:00Z,text missing" in gaps
+    assert (
+        "12,,527,BPFK Section: gadri,2014-01-03T00:00:00Z,text unresolvable: text missing"
+        in gaps
+    )
 
 
 def test_parse_revision_rejects_invalid_textmissing_shapes() -> None:
@@ -988,3 +991,90 @@ def test_media_metadata_is_manifest_only_and_keeps_published_ip_uploader() -> No
     assert "File:Example.png" in index
     assert "192.0.2.1" in index
     assert index.endswith(",192.0.2.1\n")
+
+
+def test_move_back_is_not_forced_before_the_move_that_preceded_it() -> None:
+    """A page moved away and straight back keeps both renames in log order.
+
+    Each rename leaves a null revision whose comment names both titles, so
+    SPEC.md 3.2 rule 4's migration-skew test fits the second rename as well as
+    the first. Ordering the second one before the first would put the page back
+    at its original title while the redirect left there still holds the path.
+    """
+
+    page = WikiPageFragment(
+        1,
+        0,
+        "Old",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                3,
+                "a" * 40,
+                "body",
+            ),
+            WikiRevision(
+                2,
+                1,
+                datetime(2014, 1, 2, tzinfo=UTC),
+                "Gleki",
+                "Gleki moved page [[Old]] to [[New]]",
+                3,
+                "a" * 40,
+                "body",
+            ),
+            WikiRevision(
+                3,
+                2,
+                datetime(2014, 1, 2, 0, 0, 40, tzinfo=UTC),
+                "Gleki",
+                "Gleki moved page [[New]] to [[Old]]",
+                3,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    away = WikiLogEvent(
+        5,
+        "move",
+        1,
+        0,
+        "Old",
+        datetime(2014, 1, 2, tzinfo=UTC),
+        "Gleki",
+        "",
+        0,
+        "New",
+        False,
+    )
+    back = WikiLogEvent(
+        6,
+        "move",
+        1,
+        0,
+        "New",
+        datetime(2014, 1, 2, 0, 0, 40, tzinfo=UTC),
+        "Gleki",
+        "",
+        0,
+        "Old",
+        False,
+    )
+    events = list(project([page], [away, back]))
+    assert [event.source_id for event in events] == [
+        "revid=1",
+        "logid=5",
+        "revid=2",
+        "logid=6",
+        "revid=3",
+    ]
+    assert "Ordering" not in events[3].trailers
+    assert events[1].changes["wiki/main/New.wiki"] == b"body"
+    assert events[3].changes["wiki/main/Old.wiki"] == b"body"
+    assert events[4].changes["wiki/main/Old.wiki"] == b"body"

@@ -9,8 +9,9 @@ import json
 import re
 import unicodedata
 from collections import defaultdict
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, replace
+from dataclasses import field as dataclass_field
 from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
@@ -98,6 +99,16 @@ class WikiRevision:
     text_missing: bool = False
     user_hidden: bool = False
     comment_hidden: bool = False
+    # The source records no author at all, which SPEC.md 2.5 keeps distinct
+    # from a suppressed one: `unrecorded@` rather than `anonymous@`.
+    author_unrecorded: bool = False
+    # Why the content could not be resolved, for the gaps.csv row. Each input
+    # can only say what it itself could not resolve — the API knows the blob is
+    # gone, the export knows which `text` row is missing — so this explanation
+    # is deliberately outside the revision's identity: the two paths agree that
+    # the text is unresolvable, and the export's more specific cause wins when
+    # both are loaded.
+    text_cause: str = dataclass_field(default="", compare=False)
 
 
 @dataclass(frozen=True, slots=True)
@@ -136,6 +147,9 @@ class WikiLogEvent:
     target_title: str | None = None
     suppress_redirect: bool = False
     move_redir: bool = False
+    # The source records no actor for this entry at all, which SPEC.md 2.5
+    # keeps distinct from a suppressed one: `unrecorded@`, not `anonymous@`.
+    author_unrecorded: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -264,6 +278,7 @@ def _revision(raw: object, pageid: int) -> WikiRevision:
             raise WikiParseError(f"revision {revid}: invalid textmissing marker")
         text_missing = True
     content: str | None = None
+    text_cause = "text missing" if text_missing else ""
     if not text_hidden:
         if not isinstance(main_slot, dict):
             raise WikiParseError(f"revision {revid}: main content slot is missing")
@@ -276,6 +291,18 @@ def _revision(raw: object, pageid: int) -> WikiRevision:
             raise WikiParseError(f"revision {revid}: main content is missing")
         if not text_missing:
             content = content_value
+    if content is not None:
+        # SPEC.md 3.2: content that disagrees with the source's declared size or
+        # SHA-1 is a missing blob, not text. MediaWiki serves an empty string
+        # for a revision whose `text` row is gone while still declaring the
+        # original length, and publishing that as an empty page would be a lie.
+        payload = content.encode("utf-8")
+        if size is not None and len(payload) != size:
+            content, text_missing = None, True
+            text_cause = f"declared size {size} but served {len(payload)} bytes"
+        elif sha1 is not None and hashlib.sha1(payload).hexdigest() != sha1:
+            content, text_missing = None, True
+            text_cause = "served content does not match the declared SHA-1"
     return WikiRevision(
         revid=revid,
         parentid=parentid,
@@ -289,6 +316,7 @@ def _revision(raw: object, pageid: int) -> WikiRevision:
         text_missing=text_missing,
         user_hidden=user_hidden,
         comment_hidden=comment_hidden,
+        text_cause=text_cause,
     )
 
 
@@ -613,6 +641,13 @@ def merge_fragments(fragments: Iterable[WikiPageFragment]) -> list[WikiPage]:
                     raise WikiParseError(
                         f"revision {revision.revid}: inconsistent duplicate response"
                     )
+                if previous is not None and previous.text_cause:
+                    # Identical revisions may still explain unresolvable text
+                    # differently, because each input can only say what it
+                    # itself could not resolve. The first explanation offered
+                    # stands, and `combine_inputs` puts the export first
+                    # because it names the missing `text` row.
+                    continue
                 revisions[revision.revid] = revision
         ordered = tuple(sorted(revisions.values(), key=lambda item: item.revid))
         pages.append(WikiPage(pageid, namespace, title, is_redirect, ordered))
@@ -622,6 +657,16 @@ def merge_fragments(fragments: Iterable[WikiPageFragment]) -> list[WikiPage]:
 
 def _anonymous(user: str | None) -> bool:
     return user is None
+
+
+def _log_author(item: WikiLogEvent) -> Identity:
+    """Attribute a log entry, keeping `unrecorded` apart from `anonymous`."""
+
+    if item.author_unrecorded:
+        return Identity.unrecorded("mw.lojban.org")
+    if _anonymous(item.user):
+        return Identity.anonymous("mw.lojban.org")
+    return Identity.namespaced("mw.lojban.org", item.user)
 
 
 def _summary(title: str, revid: int, comment: str) -> str:
@@ -646,6 +691,33 @@ def _log_summary(title: str, logid: int, comment: str) -> str:
         budget = 72 - len("wiki: ") - len(suffix)
     shown_title = title if len(title) <= budget else title[: max(1, budget - 1)] + "…"
     return f"{shown_title}{suffix}{comment_suffix}"
+
+
+def _toml_string(value: str) -> str:
+    escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
+
+
+def _coverage_toml(additive: Sequence[tuple[str, int, str]]) -> str:
+    """Render the additive coverage classes SPEC.md 3.2 requires.
+
+    Each class is a kind of row one input holds and the other structurally
+    cannot, so a reader can tell coverage apart from disagreement.
+    """
+
+    lines = [
+        "# Rows one input holds and the other cannot serve (SPEC.md 3.2).",
+        "# Written by jbomohi build; do not edit.",
+        "",
+    ]
+    for name, count, cause in additive:
+        if not re.fullmatch(r"[A-Za-z0-9_]+", name):
+            raise WikiParseError(f"invalid coverage class name: {name!r}")
+        lines.append(f"[additive.{name}]")
+        lines.append(f"count = {count}")
+        lines.append(f"cause = {_toml_string(cause)}")
+        lines.append("")
+    return "\n".join(lines).rstrip("\n") + "\n"
 
 
 def _csv(columns: Sequence[str], rows: Iterable[dict[str, object]]) -> str:
@@ -698,9 +770,20 @@ def _revision_components(page: WikiPage) -> tuple[tuple[WikiRevision, ...], ...]
 
 
 def _page_move_chains(
-    pages: Sequence[WikiPage], log_events: Sequence[WikiLogEvent]
+    pages: Sequence[WikiPage],
+    log_events: Sequence[WikiLogEvent],
+    ended_at: Mapping[int, tuple[datetime, int]] = {},
 ) -> _WikiPlacementPlan:
-    """Recover each current revision lineage without trusting log page IDs."""
+    """Recover each current revision lineage without trusting log page IDs.
+
+    `ended_at` bounds a lineage that no longer exists, as the `(timestamp,
+    logid)` of the deletion that ended it. A deleted page holds its title only
+    up to that point, so a later move into the title belongs to whichever page
+    took it afterwards; MediaWiki logs the deletion and the move that reuses
+    the title in the same second, which is why the bound needs the log id and
+    not the timestamp alone. Without it a reused title makes one move log fit
+    two lineages and placement fails closed.
+    """
 
     moves_by_target: dict[tuple[int, str], list[WikiLogEvent]] = defaultdict(list)
     for item in log_events:
@@ -738,7 +821,7 @@ def _page_move_chains(
         lineage_start = current_component[0]
         current_start[page.pageid] = lineage_start.timestamp
         target = (page.namespace, page.title)
-        before: tuple[datetime, int] | None = None
+        before: tuple[datetime, int] | None = ended_at.get(page.pageid)
         reverse_chain: list[WikiLogEvent] = []
         while True:
             candidates = [
@@ -908,7 +991,17 @@ def _forced_move_times(
             if 0 < skew <= 60:
                 candidates.append(revision.timestamp)
         if candidates:
-            effective[logid] = min(candidates)
+            forced = min(candidates)
+            # A page moved away and back between the same two titles gives both
+            # moves a null revision whose comment names both titles, so rule 4's
+            # test fits the second move as well as the first. A move can never
+            # be ordered at or before the move that precedes it in its own
+            # page's chain, so that pair is left alone.
+            chain = plan.chains[owner]
+            position = [move.logid for move in chain].index(logid)
+            if position and forced <= effective[chain[position - 1].logid]:
+                continue
+            effective[logid] = forced
     return effective
 
 
@@ -916,13 +1009,24 @@ def project(
     fragments: Iterable[WikiPageFragment],
     logs: Iterable[WikiLogEvent] = (),
     media: Iterable[WikiMedia] = (),
+    extra_gaps: Iterable[Mapping[str, object]] = (),
+    ended_at: Mapping[int, tuple[datetime, int]] = {},
+    unaccounted: Iterable[int] = (),
+    additive: Sequence[tuple[str, int, str]] = (),
 ) -> Iterator[Event]:
-    """Project API- or dump-derived revisions and log events identically."""
+    """Project API- or dump-derived revisions and log events identically.
+
+    `extra_gaps` carries rows an input recorded before projection began, such as
+    the rows of the SQL export that name no projectable page (SPEC.md 3.2).
+    They are appended to `_meta/wiki/gaps.csv` in the order given. `ended_at`
+    gives, per backfilled deleted lineage, the `(timestamp, logid)` of the
+    deletion after which it no longer holds its title.
+    """
 
     pages = merge_fragments(fragments)
     page_by_id = {page.pageid: page for page in pages}
     log_events = sorted(logs, key=lambda item: (item.timestamp, item.logid))
-    placement = _page_move_chains(pages, log_events)
+    placement = _page_move_chains(pages, log_events, dict(ended_at))
     actual_move_times = {
         move.logid: move.timestamp
         for chain in placement.chains.values()
@@ -936,6 +1040,10 @@ def project(
     state_content: dict[int, bytes | None] = {}
     held_by_path: dict[str, int] = {}
     placeholder_paths: set[str] = set()
+    # Why a path is a placeholder, so the release is reported in the right
+    # words: a merged pre-move chain, or a deleted lineage nothing accounts for.
+    placeholder_reason: dict[str, str] = {}
+    unaccounted_pages = set(unaccounted)
     for page in pages:
         state_content[page.pageid] = None
 
@@ -977,11 +1085,16 @@ def project(
         for item in sorted(media, key=lambda value: value.pageid)
     ]
     revision_rows: list[dict[str, object]] = []
-    gap_rows: list[dict[str, object]] = [*placement.gap_rows, *merged_gaps]
+    gap_rows: list[dict[str, object]] = [
+        *placement.gap_rows,
+        *merged_gaps,
+        *(dict(row) for row in extra_gaps),
+    ]
     for revision, page in revision_pages:
         anonymous = _anonymous(revision.user) or revision.user_hidden
-        user = "anonymous" if anonymous else revision.user
-        assert user is not None
+        user = "unrecorded" if revision.author_unrecorded else revision.user
+        if user is None or (anonymous and not revision.author_unrecorded):
+            user = "anonymous"
         revision_rows.append(
             {
                 "revid": revision.revid,
@@ -998,7 +1111,9 @@ def project(
         if revision.text_hidden:
             reasons.append("text suppressed")
         if revision.text_missing:
-            reasons.append("text missing")
+            reasons.append(
+                f"text unresolvable: {revision.text_cause or 'text missing'}"
+            )
         if revision.user_hidden:
             reasons.append("user suppressed")
         if revision.comment_hidden:
@@ -1036,26 +1151,46 @@ def project(
         if kind == "revision":
             assert isinstance(item, WikiRevision) and isinstance(page, WikiPage)
             anonymous = _anonymous(item.user) or item.user_hidden
-            author = (
-                Identity.anonymous("mw.lojban.org")
-                if anonymous
-                else Identity.namespaced("mw.lojban.org", item.user or "")
-            )
+            if item.author_unrecorded:
+                author = Identity.unrecorded("mw.lojban.org")
+            elif anonymous:
+                author = Identity.anonymous("mw.lojban.org")
+            else:
+                author = Identity.namespaced("mw.lojban.org", item.user or "")
             position = revision_positions[item.revid]
             path = wiki_path(*position)
             merged = item.revid in placement.merged_revisions
+            yielding = merged or page.pageid in unaccounted_pages
             changes: dict[str, str | bytes] = {}
             if item.content is not None:
                 content = item.content.encode("utf-8")
                 other_page = held_by_path.get(path)
-                if not merged and other_page is not None and other_page != page.pageid:
+                taken = other_page is not None and other_page != page.pageid
+                if taken and not yielding:
                     if path not in placeholder_paths:
                         raise WikiParseError(
                             f"revision {item.revid}: path already held by page "
                             f"{other_page}: {path}"
                         )
+                    assert other_page is not None
+                    released = placeholder_reason.pop(path, "placeholder")
+                    gap_rows.append(
+                        {
+                            "revid": item.revid,
+                            "logid": "",
+                            "pageid": other_page,
+                            "title": position[1],
+                            "timestamp": item.timestamp.isoformat().replace(
+                                "+00:00", "Z"
+                            ),
+                            "reason": (
+                                f"{released}; path {path} released to page "
+                                f"{page.pageid}"
+                            ),
+                        }
+                    )
                     state_content[other_page] = None
-                if merged and other_page is not None and other_page != page.pageid:
+                if taken and yielding:
                     gap_rows.append(
                         {
                             "revid": item.revid,
@@ -1068,6 +1203,11 @@ def project(
                             "reason": (
                                 f"pre-merge title unknown; path {path} held by page "
                                 f"{other_page}; not projected"
+                            )
+                            if merged
+                            else (
+                                f"deleted lineage unaccounted; path {path} held by "
+                                f"page {other_page}; not projected"
                             ),
                         }
                     )
@@ -1075,10 +1215,16 @@ def project(
                     changes[path] = content
                     state_content[page.pageid] = content
                     held_by_path[path] = page.pageid
-                    if merged:
+                    if yielding:
                         placeholder_paths.add(path)
+                        placeholder_reason[path] = (
+                            "pre-merge title unknown"
+                            if merged
+                            else "deleted lineage unaccounted"
+                        )
                     else:
                         placeholder_paths.discard(path)
+                        placeholder_reason.pop(path, None)
             trailers = {
                 "Page-Id": str(page.pageid),
                 "Parent-Rev": str(item.parentid),
@@ -1187,13 +1333,11 @@ def project(
                 state_content[target_holder] = None
             held_by_path.pop(old_path)
             placeholder_paths.discard(old_path)
+            placeholder_reason.pop(old_path, None)
             held_by_path[target_path] = resolved_pageid
             placeholder_paths.discard(target_path)
-            author = (
-                Identity.anonymous("mw.lojban.org")
-                if _anonymous(item.user)
-                else Identity.namespaced("mw.lojban.org", item.user or "")
-            )
+            placeholder_reason.pop(target_path, None)
+            author = _log_author(item)
             trailers = {
                 "Log-Type": "move_redir" if item.move_redir else "move",
                 "Moved-From": old_path,
@@ -1240,12 +1384,9 @@ def project(
             continue
         held_by_path.pop(old_path)
         placeholder_paths.discard(old_path)
+        placeholder_reason.pop(old_path, None)
         state_content[resolved_pageid] = None
-        author = (
-            Identity.anonymous("mw.lojban.org")
-            if _anonymous(item.user)
-            else Identity.namespaced("mw.lojban.org", item.user or "")
-        )
+        author = _log_author(item)
         event = Event(
             source="wiki",
             source_id=f"logid={item.logid}",
@@ -1276,5 +1417,7 @@ def project(
             final_changes["_meta/wiki/errors.csv"] = _csv(ERROR_COLUMNS, error_rows)
         if gap_rows:
             final_changes["_meta/wiki/gaps.csv"] = _csv(GAP_COLUMNS, gap_rows)
+        if additive:
+            final_changes["_meta/wiki/coverage.toml"] = _coverage_toml(additive)
         pending_event = replace(pending_event, changes=final_changes)
         yield pending_event

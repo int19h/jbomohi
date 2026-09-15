@@ -52,6 +52,12 @@ from .tiki import TikiIngestReport, ingest_tiki_export
 from .wiki import FetchReport as WikiFetchReport
 from .wiki import WikiFetchError
 from .wiki import fetch as fetch_wiki
+from .wiki_sql import (
+    WikiSqlIngestReport,
+    WikiSqlInventory,
+    ingest_wiki_sql_export,
+    inspect_wiki_sql_export,
+)
 
 __all__ = [
     "GRAMMAR_VENDOR_FILES",
@@ -80,6 +86,8 @@ __all__ = [
     "TikiIngestReport",
     "WikiFetchError",
     "WikiFetchReport",
+    "WikiSqlIngestReport",
+    "WikiSqlInventory",
     "extract_maildir_zip",
     "fetch_changes",
     "fetch_cll",
@@ -93,7 +101,9 @@ __all__ = [
     "fetch_wiki",
     "ingest_dictionary_exports",
     "ingest_tiki_export",
+    "ingest_wiki_sql_export",
     "inspect_maildir_zip",
+    "inspect_wiki_sql_export",
     "load_jbosnu_manifestations",
     "load_mbox_manifestations",
     "load_mhonarc_manifestations",

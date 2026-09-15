@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import BinaryIO, Literal
 
 from ..git import Event, Identity
+from . import sqldump
 from .dictionary import slug
 
 
@@ -207,77 +208,12 @@ def _line(stream: BinaryIO, path: Path) -> bytes | None:
     return raw.removesuffix(b"\n")
 
 
-def _quoted(body: bytes, start: int, context: str) -> tuple[bytes, int]:
-    value = bytearray()
-    index = start + 1
-    escapes = {
-        ord("0"): 0,
-        ord("b"): 8,
-        ord("n"): 10,
-        ord("r"): 13,
-        ord("t"): 9,
-        ord("Z"): 26,
-    }
-    while index < len(body):
-        byte = body[index]
-        if byte == 39:
-            return bytes(value), index + 1
-        if byte != 92:
-            value.append(byte)
-            index += 1
-            continue
-        index += 1
-        if index == len(body):
-            raise TikiParseError(f"{context}: trailing string escape")
-        escaped = body[index]
-        value.append(escapes.get(escaped, escaped))
-        index += 1
-    raise TikiParseError(f"{context}: unterminated SQL string")
-
-
 def parse_insert_values(
     body: bytes, context: str = "Tiki INSERT"
 ) -> tuple[bytes | None, ...]:
     """Parse one --skip-extended-insert VALUES tuple without decoding text."""
 
-    if not body.startswith(b"(") or not body.endswith(b")"):
-        raise TikiParseError(f"{context}: expected one VALUES tuple")
-    values: list[bytes | None] = []
-    index = 1
-    limit = len(body) - 1
-    while index < limit:
-        if body[index] == 39:
-            value, index = _quoted(body, index, context)
-        else:
-            end = index
-            while end < limit and body[end] != 44:
-                end += 1
-            token = body[index:end]
-            if token == b"NULL":
-                value = None
-            elif token.startswith(b"0x"):
-                hexadecimal = token[2:]
-                if (
-                    not hexadecimal
-                    or len(hexadecimal) % 2
-                    or not re.fullmatch(rb"[0-9A-F]+", hexadecimal)
-                ):
-                    raise TikiParseError(f"{context}: invalid hexadecimal value")
-                value = bytes.fromhex(hexadecimal.decode("ascii"))
-            elif re.fullmatch(rb"-?[0-9]+(?:\.[0-9]+)?", token):
-                value = token
-            else:
-                raise TikiParseError(f"{context}: unsupported bare SQL value")
-            index = end
-        values.append(value)
-        if index == limit:
-            break
-        if body[index] != 44:
-            raise TikiParseError(f"{context}: expected a comma between values")
-        index += 1
-    if index != limit:
-        raise TikiParseError(f"{context}: trailing data after VALUES tuple")
-    return tuple(values)
+    return sqldump.parse_insert_values(body, context, TikiParseError)
 
 
 def load_tiki_dump(
