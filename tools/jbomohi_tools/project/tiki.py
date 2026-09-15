@@ -571,6 +571,28 @@ _CHARACTER_FIELDS: dict[str, tuple[str, ...]] = {
 }
 
 
+def looks_like_stored_mojibake(text: str) -> bool:
+    """True when the text is a latin-1 reading of UTF-8 bytes.
+
+    The 2026-09-15 utf8mb4 re-export shows that some rows hold mojibake in the
+    database itself, from an earlier bad migration rather than from the export
+    client. SPEC.md 3.2.5(c) never repairs characters, so this only counts
+    them, and it counts them by definition rather than by looking for `Ã©`:
+    text that re-reads as different, valid UTF-8 when taken as latin-1 bytes
+    is exactly what a latin-1 reading of UTF-8 is.
+    """
+
+    try:
+        candidate = text.encode("latin-1")
+    except UnicodeEncodeError:
+        return False
+    try:
+        repaired = candidate.decode("utf-8")
+    except UnicodeDecodeError:
+        return False
+    return repaired != text
+
+
 def _fidelity(
     data: RawTikiDump, mode: CharacterEncoding
 ) -> tuple[dict[str, dict[str, int]], dict[str, Counter[str]]]:
@@ -579,6 +601,7 @@ def _fidelity(
     for table, fields in _CHARACTER_FIELDS.items():
         questions = 0
         high_bytes = 0
+        mojibake = 0
         branches: Counter[str] = Counter()
         for row_number, row in enumerate(data.tables[table], 1):
             values = [row[field] for field in fields if row.get(field) is not None]
@@ -590,17 +613,21 @@ def _fidelity(
                 if value is not None
             ):
                 high_bytes += 1
+            row_is_mojibake = False
             for field in fields:
                 value = row.get(field)
                 if value is None:
                     continue
-                _text, encoding = decode_character_text(
+                text, encoding = decode_character_text(
                     value,
                     f"{table} row {row_number}: {field}",
                     mode,
                     allow_nul=True,
                 )
                 branches[encoding] += 1
+                row_is_mojibake = row_is_mojibake or looks_like_stored_mojibake(text)
+            if row_is_mojibake:
+                mojibake += 1
             if table == "tiki_history" and row.get("data") is not None:
                 _text, encoding = decode_history_blob(
                     _required(row, "data", f"{table} row {row_number}"),
@@ -611,6 +638,7 @@ def _fidelity(
         row_counts[table] = {
             "question_rows": questions,
             "high_byte_rows": high_bytes,
+            "stored_mojibake_rows": mojibake,
         }
         branch_counts[table] = branches
     return row_counts, branch_counts
@@ -1084,7 +1112,15 @@ def project(
         "tiki_comments, tiki_actionlog may be lost as '?'; tiki_history blobs exact "
         "where decoded as UTF-8; no characters repaired"
         if character_encoding == "latin1-transcoded"
-        else "utf8mb4 export: character columns decoded strictly as UTF-8; no characters repaired"
+        else (
+            "utf8mb4 export: character columns decoded strictly as UTF-8; no "
+            "characters repaired. The '?' in question_rows are stored in the "
+            "database, not lost by an export client: the count is the same in "
+            "the latin1-transcoded and utf8mb4 exports. stored_mojibake_rows "
+            "counts rows whose text is a latin-1 reading of UTF-8 from an "
+            "earlier migration; those bytes are published as the database "
+            "holds them"
+        )
     )
     coverage_lines = [
         'rename_delete_log = "unavailable"',
@@ -1123,6 +1159,10 @@ def project(
                 f"[fidelity.{table}]",
                 f"question_rows = {fidelity_rows[table]['question_rows']}",
                 f"high_byte_rows = {fidelity_rows[table]['high_byte_rows']}",
+                (
+                    "stored_mojibake_rows = "
+                    f"{fidelity_rows[table]['stored_mojibake_rows']}"
+                ),
             ]
         )
         coverage_lines.extend(
