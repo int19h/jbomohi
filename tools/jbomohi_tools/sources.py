@@ -39,6 +39,7 @@ from .project.tiki import (
     migrated_title_map,
 )
 from .project.tiki import project as project_tiki
+from .project.wiki import WikiLogEvent, WikiMedia, WikiPageFragment
 from .project.wiki import load_archive as load_wiki_archive
 from .project.wiki import load_log_archive as load_wiki_log_archive
 from .project.wiki import load_media_archive as load_wiki_media_archive
@@ -56,11 +57,16 @@ LOJBAN_BEGINNERS_MHONARC_PAGE_COUNT = 20_910
 LOJBAN_BEGINNERS_MHONARC_KNOWN_MISSING = frozenset({5_411, 5_412})
 
 
-def mediawiki_pages_from_archive(config: Config) -> dict[str, str]:
+def mediawiki_pages_from_archive(
+    config: Config, fragments: Iterable[WikiPageFragment] | None = None
+) -> dict[str, str]:
     """Build Tiki's migration map from the same archived wiki projection input."""
 
     result: dict[str, str] = {}
-    for page in merge_wiki_fragments(load_wiki_archive(config.archive)):
+    source_fragments = (
+        load_wiki_archive(config.archive) if fragments is None else fragments
+    )
+    for page in merge_wiki_fragments(source_fragments):
         if not page.revisions or page.revisions[-1].content is None:
             continue
         previous = result.get(page.title)
@@ -71,11 +77,17 @@ def mediawiki_pages_from_archive(config: Config) -> dict[str, str]:
     return result
 
 
-def wiki_events(config: Config) -> Iterable[Event]:
+def wiki_events(
+    config: Config,
+    *,
+    fragments: Iterable[WikiPageFragment] | None = None,
+    logs: Iterable[WikiLogEvent] | None = None,
+    media: Iterable[WikiMedia] | None = None,
+) -> Iterable[Event]:
     return project_wiki(
-        load_wiki_archive(config.archive),
-        load_wiki_log_archive(config.archive),
-        load_wiki_media_archive(config.archive),
+        load_wiki_archive(config.archive) if fragments is None else fragments,
+        load_wiki_log_archive(config.archive) if logs is None else logs,
+        load_wiki_media_archive(config.archive) if media is None else media,
     )
 
 
@@ -291,8 +303,12 @@ def source_factories(
 
     available = {"wiki", "irc", "dict", "tiki", "mail", "cll", "grammars"}
     selected = tuple(names or sorted(available))
+    wiki_fragments = (
+        load_wiki_archive(config.archive) if {"wiki", "tiki"} & set(selected) else None
+    )
     if "tiki" in selected and mediawiki_pages is None:
-        mediawiki_pages = mediawiki_pages_from_archive(config)
+        assert wiki_fragments is not None
+        mediawiki_pages = mediawiki_pages_from_archive(config, wiki_fragments)
     unknown = set(selected) - available
     if unknown:
         raise SourceWiringError(
@@ -300,7 +316,15 @@ def source_factories(
         )
     factories: dict[str, EventFactory] = {}
     if "wiki" in selected:
-        factories["wiki"] = lambda: wiki_events(config)
+        assert wiki_fragments is not None
+        wiki_logs = load_wiki_log_archive(config.archive)
+        wiki_media = load_wiki_media_archive(config.archive)
+        factories["wiki"] = lambda: wiki_events(
+            config,
+            fragments=wiki_fragments,
+            logs=wiki_logs,
+            media=wiki_media,
+        )
     if "irc" in selected:
         factories["irc"] = lambda: irc_events(config)
     if "dict" in selected:
