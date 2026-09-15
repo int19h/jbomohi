@@ -75,8 +75,18 @@ class DumpBuilder:
     def revision_slot(self, revid: int, content_id: int) -> None:
         self.add("slots", revid, 1, content_id, revid)
 
-    def render(self, path: Path) -> Path:
+    def render(self, path: Path, *, all_tables: bool = False) -> Path:
         body = bytearray(b"/*!40101 SET NAMES binary */;\n")
+        if all_tables:
+            # `archive.wiki_sql` checks the whole requested table list, which is
+            # wider than the set the projector reads.
+            from jbomohi_tools.archive.wiki_sql import WIKI_SQL_TABLES
+
+            for table in sorted(WIKI_SQL_TABLES - set(SQL_COLUMNS)):
+                body.extend(f"CREATE TABLE `{table}` (\n".encode())
+                body.extend(b"  `id` int NOT NULL\n")
+                body.extend(b") ENGINE=InnoDB DEFAULT CHARSET=binary;\n")
+                body.extend(f"INSERT INTO `{table}` VALUES (1);\n".encode())
         for table, columns in SQL_COLUMNS.items():
             body.extend(f"CREATE TABLE `{table}` (\n".encode())
             for column in columns:
@@ -715,3 +725,240 @@ def test_php_unserialize_reads_the_supported_types() -> None:
         b'a:4:{s:1:"a";i:-3;s:1:"b";b:1;s:1:"c";N;s:1:"d";s:2:"hi";}', "test"
     )
     assert value == {b"a": -3, b"b": True, b"c": None, b"d": b"hi"}
+
+
+def deleted_page_dump(tmp_path: Path) -> DumpBuilder:
+    """A live page, plus a deleted lineage that a delete log accounts for."""
+
+    builder = baseline()
+    builder.add("comment", 40, 0, b"page text", None)
+    builder.revision_slot(200, builder.content(builder.text(b"gone"), payload=b"gone"))
+    builder.add(
+        "archive",
+        1,
+        0,
+        b"ka_nu_cilre",
+        40,
+        7,
+        b"20140201000000",
+        0,
+        200,
+        0,
+        4,
+        77,
+        0,
+        sha1_base36(b"gone"),
+    )
+    builder.add("comment", 41, 0, b"spam", None)
+    builder.add(
+        "logging",
+        900,
+        b"delete",
+        b"delete",
+        b"20140301000000",
+        7,
+        0,
+        b"ka_nu_cilre",
+        77,
+        41,
+        b"a:0:{}",
+        0,
+    )
+    return builder
+
+
+def test_backfill_rebuilds_a_deleted_lineage_and_its_end(tmp_path: Path) -> None:
+    from jbomohi_tools.project.wiki_sql import archived_fragments
+
+    dump = load(deleted_page_dump(tmp_path), tmp_path)
+    fragments, ended_at, gaps = archived_fragments(dump, live={5})
+    assert [(f.pageid, f.namespace, f.title) for f in fragments] == [
+        (77, 0, "ka nu cilre")
+    ]
+    assert [r.revid for r in fragments[0].revisions] == [200]
+    # The delete log names page 77 outright, so it bounds that lineage.
+    assert ended_at == {77: (datetime(2014, 3, 1, tzinfo=UTC), 900)}
+    assert gaps == []
+
+
+def test_backfill_skips_a_lineage_whose_page_id_a_live_page_reuses(
+    tmp_path: Path,
+) -> None:
+    from jbomohi_tools.project.wiki_sql import archived_fragments
+
+    dump = load(deleted_page_dump(tmp_path), tmp_path)
+    fragments, ended_at, gaps = archived_fragments(dump, live={5, 77})
+    assert fragments == [] and ended_at == {}
+    assert [gap.reason for gap in gaps] == [
+        "deleted page id 77 is reused by a live page; deleted history not projected"
+    ]
+
+
+def test_backfill_records_a_lineage_no_log_accounts_for(tmp_path: Path) -> None:
+    from jbomohi_tools.project.wiki_sql import archived_fragments
+
+    builder = deleted_page_dump(tmp_path)
+    # A second lineage at the same title, with no further deletion to claim.
+    builder.add("comment", 42, 0, b"earlier text", None)
+    builder.revision_slot(
+        201, builder.content(builder.text(b"earlier"), payload=b"earlier")
+    )
+    builder.add(
+        "archive",
+        2,
+        0,
+        b"ka_nu_cilre",
+        42,
+        7,
+        b"20130101000000",
+        0,
+        201,
+        0,
+        7,
+        78,
+        0,
+        sha1_base36(b"earlier"),
+    )
+    dump = load(builder, tmp_path)
+    fragments, ended_at, gaps = archived_fragments(dump, live={5})
+    assert [f.pageid for f in fragments] == [77]
+    assert set(ended_at) == {77}
+    assert [gap.reason for gap in gaps] == [
+        "deleted lineage has no deletion log; not projected"
+    ]
+
+
+def test_move_redir_can_end_a_lineage_without_a_delete_log(tmp_path: Path) -> None:
+    from jbomohi_tools.project.wiki_sql import archived_fragments
+
+    builder = baseline()
+    builder.add("comment", 40, 0, b"redirect", None)
+    builder.revision_slot(
+        200,
+        builder.content(builder.text(b"#REDIRECT [[x]]"), payload=b"#REDIRECT [[x]]"),
+    )
+    builder.add(
+        "archive",
+        1,
+        0,
+        b"ka_nu_cilre",
+        40,
+        7,
+        b"20140201000000",
+        0,
+        200,
+        0,
+        15,
+        77,
+        0,
+        sha1_base36(b"#REDIRECT [[x]]"),
+    )
+    builder.add("comment", 41, 0, b"over the redirect", None)
+    builder.add(
+        "logging",
+        900,
+        b"move",
+        b"move_redir",
+        b"20140301000000",
+        7,
+        0,
+        b"lo_nu_tavla",
+        0,
+        41,
+        b'a:1:{s:9:"4::target";s:11:"ka nu cilre";}',
+        0,
+    )
+    dump = load(builder, tmp_path)
+    fragments, ended_at, gaps = archived_fragments(dump, live={5})
+    assert [f.pageid for f in fragments] == [77]
+    assert fragments[0].is_redirect is True
+    assert ended_at == {77: (datetime(2014, 3, 1, tzinfo=UTC), 900)}
+    assert gaps == []
+
+
+def test_combine_inputs_unions_both_sources_and_refuses_disagreement(
+    tmp_path: Path,
+) -> None:
+    from dataclasses import replace
+
+    from jbomohi_tools.project.wiki_sql import combine_inputs
+
+    dump = load(deleted_page_dump(tmp_path), tmp_path)
+    api_only = WikiPageFragmentStub(9, 0, "api only")
+    combined = combine_inputs(dump, [api_only.fragment], list(dump.logs))
+    assert [f.pageid for f in combined.fragments] == [5, 9]
+    assert [e.logid for e in combined.logs] == [900]
+    assert combined.ended_at == {}
+    assert combined.extra_gaps == []
+
+    backfilled = combine_inputs(
+        dump, [api_only.fragment], list(dump.logs), backfill_deleted=True
+    )
+    assert [f.pageid for f in backfilled.fragments] == [5, 9, 77]
+    assert set(backfilled.ended_at) == {77}
+
+    disagreeing = replace(dump.logs[0], comment="something else")
+    with pytest.raises(WikiSqlParseError, match="differs between the export"):
+        combine_inputs(dump, [], [disagreeing])
+
+
+class WikiPageFragmentStub:
+    def __init__(self, pageid: int, namespace: int, title: str) -> None:
+        from jbomohi_tools.project.wiki import WikiPageFragment
+
+        self.fragment = WikiPageFragment(pageid, namespace, title, False, ())
+
+
+def test_load_dump_archive_verifies_the_archived_object(tmp_path: Path) -> None:
+    from jbomohi_tools.archive.wiki_sql import ingest_wiki_sql_export
+    from jbomohi_tools.project.wiki_sql import load_dump_archive
+
+    archive = tmp_path / "archive"
+    assert load_dump_archive(archive) is None
+
+    export = tmp_path / "export"
+    export.mkdir()
+    deleted_page_dump(tmp_path).render(export / "wiki-content.sql.gz", all_tables=True)
+    (export / "wiki-users.tsv.gz").write_bytes(
+        gzip.compress(
+            b"user_id\tuser_name\tuser_real_name\tuser_registration\tuser_editcount\n"
+            b"1\tGleki\t\t20120927162528\t1\n"
+        )
+    )
+    ingest_wiki_sql_export(archive, export, "2026-09-15")
+    dump = load_dump_archive(archive)
+    assert dump is not None
+    assert [f.pageid for f in dump.fragments] == [5]
+    assert [a.revision.revid for a in dump.archived] == [200]
+
+    # A manifest whose object no longer hashes to it must not be trusted.
+    obj = max(
+        (
+            path
+            for path in (archive / "objects" / "sha256").rglob("*")
+            if path.is_file()
+        ),
+        key=lambda path: path.stat().st_size,
+    )
+    obj.chmod(0o644)
+    payload = obj.read_bytes()
+    # Same length, different bytes: the size check passes and the digest fails.
+    obj.write_bytes(payload[:-1] + bytes([payload[-1] ^ 0x01]))
+    with pytest.raises(WikiSqlParseError, match="does not match manifest"):
+        load_dump_archive(archive)
+
+    obj.write_bytes(payload + b"\n")
+    with pytest.raises(WikiSqlParseError, match="missing or wrong-sized"):
+        load_dump_archive(archive)
+
+
+def test_extra_gaps_reach_the_projected_metadata(tmp_path: Path) -> None:
+    from jbomohi_tools.project.wiki import project
+
+    dump = load(baseline(), tmp_path)
+    events = list(
+        project(dump.fragments, dump.logs, (), [{"revid": 1, "reason": "recorded"}])
+    )
+    gaps = events[-1].changes["_meta/wiki/gaps.csv"]
+    assert gaps.splitlines()[0] == "revid,logid,pageid,title,timestamp,reason"
+    assert gaps.splitlines()[-1] == "1,,,,,recorded"

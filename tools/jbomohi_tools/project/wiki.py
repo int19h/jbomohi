@@ -9,7 +9,7 @@ import json
 import re
 import unicodedata
 from collections import defaultdict
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from pathlib import Path
@@ -698,9 +698,20 @@ def _revision_components(page: WikiPage) -> tuple[tuple[WikiRevision, ...], ...]
 
 
 def _page_move_chains(
-    pages: Sequence[WikiPage], log_events: Sequence[WikiLogEvent]
+    pages: Sequence[WikiPage],
+    log_events: Sequence[WikiLogEvent],
+    ended_at: Mapping[int, tuple[datetime, int]] = {},
 ) -> _WikiPlacementPlan:
-    """Recover each current revision lineage without trusting log page IDs."""
+    """Recover each current revision lineage without trusting log page IDs.
+
+    `ended_at` bounds a lineage that no longer exists, as the `(timestamp,
+    logid)` of the deletion that ended it. A deleted page holds its title only
+    up to that point, so a later move into the title belongs to whichever page
+    took it afterwards; MediaWiki logs the deletion and the move that reuses
+    the title in the same second, which is why the bound needs the log id and
+    not the timestamp alone. Without it a reused title makes one move log fit
+    two lineages and placement fails closed.
+    """
 
     moves_by_target: dict[tuple[int, str], list[WikiLogEvent]] = defaultdict(list)
     for item in log_events:
@@ -738,7 +749,7 @@ def _page_move_chains(
         lineage_start = current_component[0]
         current_start[page.pageid] = lineage_start.timestamp
         target = (page.namespace, page.title)
-        before: tuple[datetime, int] | None = None
+        before: tuple[datetime, int] | None = ended_at.get(page.pageid)
         reverse_chain: list[WikiLogEvent] = []
         while True:
             candidates = [
@@ -916,13 +927,22 @@ def project(
     fragments: Iterable[WikiPageFragment],
     logs: Iterable[WikiLogEvent] = (),
     media: Iterable[WikiMedia] = (),
+    extra_gaps: Iterable[Mapping[str, object]] = (),
+    ended_at: Mapping[int, tuple[datetime, int]] = {},
 ) -> Iterator[Event]:
-    """Project API- or dump-derived revisions and log events identically."""
+    """Project API- or dump-derived revisions and log events identically.
+
+    `extra_gaps` carries rows an input recorded before projection began, such as
+    the rows of the SQL export that name no projectable page (SPEC.md 3.2).
+    They are appended to `_meta/wiki/gaps.csv` in the order given. `ended_at`
+    gives, per backfilled deleted lineage, the `(timestamp, logid)` of the
+    deletion after which it no longer holds its title.
+    """
 
     pages = merge_fragments(fragments)
     page_by_id = {page.pageid: page for page in pages}
     log_events = sorted(logs, key=lambda item: (item.timestamp, item.logid))
-    placement = _page_move_chains(pages, log_events)
+    placement = _page_move_chains(pages, log_events, dict(ended_at))
     actual_move_times = {
         move.logid: move.timestamp
         for chain in placement.chains.values()
@@ -977,7 +997,11 @@ def project(
         for item in sorted(media, key=lambda value: value.pageid)
     ]
     revision_rows: list[dict[str, object]] = []
-    gap_rows: list[dict[str, object]] = [*placement.gap_rows, *merged_gaps]
+    gap_rows: list[dict[str, object]] = [
+        *placement.gap_rows,
+        *merged_gaps,
+        *(dict(row) for row in extra_gaps),
+    ]
     for revision, page in revision_pages:
         anonymous = _anonymous(revision.user) or revision.user_hidden
         user = "anonymous" if anonymous else revision.user

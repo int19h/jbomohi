@@ -26,10 +26,11 @@ import re
 import zlib
 from collections import defaultdict
 from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 
+from ..archive.manifest import ArchiveManifest, object_path
 from . import sqldump
 from .wiki import (
     NAMESPACE_DIRS,
@@ -234,6 +235,12 @@ class WikiSqlDump:
     archived: tuple[WikiArchivedRevision, ...]
     gaps: tuple[WikiSqlGap, ...]
     counts: Mapping[str, int]
+    # `logging.log_page` names the page a deletion removed, which is the only
+    # unambiguous link from a deleted lineage to the log entry that ended it:
+    # several lineages can share one title over time. It is kept apart from
+    # `logs` because `WikiLogEvent.pageid` carries what the API reports there,
+    # which is the page holding that title now.
+    deleted_page_logs: Mapping[int, tuple[datetime, int]] = field(default_factory=dict)
 
 
 class _PhpParser:
@@ -935,6 +942,7 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
     )
 
     logs: list[WikiLogEvent] = []
+    deleted_page_logs: dict[int, tuple[datetime, int]] = {}
     hidden_log_actors = 0
     for row in rows["logging"]:
         logid = _required_integer(row[0], "logging.log_id")
@@ -986,6 +994,12 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
         comment = comments.get(comment_id)
         if comment is None:
             raise WikiSqlParseError(f"log event {logid} references absent comment")
+        logged_page = _integer(row[7], "logging.log_page", optional=True) or 0
+        if log_type == "delete" and logged_page:
+            previous = deleted_page_logs.get(logged_page)
+            entry = (timestamp, logid)
+            if previous is None or entry < previous:
+                deleted_page_logs[logged_page] = entry
         target_namespace: int | None = None
         target_title: str | None = None
         suppress_redirect = False
@@ -1067,4 +1081,238 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
         tuple(archived),
         tuple(gaps),
         counts,
+        deleted_page_logs,
+    )
+
+
+def load_dump_archive(archive: Path) -> WikiSqlDump | None:
+    """Load the ingested operator export, or None when none was ingested."""
+
+    root = archive / "manifests" / "wiki" / "db-export"
+    if not root.exists():
+        return None
+    selected: ArchiveManifest | None = None
+    for path in sorted(root.glob("wiki-content.sql.gz-*.toml")):
+        if path.is_symlink():
+            raise WikiSqlParseError(
+                f"wiki export manifest must not be a symlink: {path}"
+            )
+        manifest = ArchiveManifest.load(path)
+        if selected is None or (manifest.fetched_at, manifest.sha256) > (
+            selected.fetched_at,
+            selected.sha256,
+        ):
+            selected = manifest
+    if selected is None:
+        return None
+    obj = object_path(archive, selected.sha256)
+    if obj.is_symlink():
+        raise WikiSqlParseError(f"wiki export object must not be a symlink: {obj}")
+    if not obj.is_file() or obj.stat().st_size != selected.bytes:
+        raise WikiSqlParseError(f"wiki export object is missing or wrong-sized: {obj}")
+    digest = hashlib.sha256()
+    with obj.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    if digest.hexdigest() != selected.sha256:
+        raise WikiSqlParseError(f"wiki export object does not match manifest: {obj}")
+    return load_wiki_sql_dump(obj)
+
+
+def archived_fragments(
+    dump: WikiSqlDump, live: Iterable[int] = ()
+) -> tuple[list[WikiPageFragment], dict[int, tuple[datetime, int]], list[WikiSqlGap]]:
+    """Rebuild the deleted lineages `archive` holds, one fragment per page id.
+
+    SPEC.md 3.2 lets a deletion be projected only for a page whose history the
+    projection already holds, so this backfill is what turns a `deleted; history
+    not API-accessible` gap into a real `Event: deleted`. Each lineage must be
+    matched to the single log entry that ended it, because one title can belong
+    to several lineages in turn and a lineage the corpus never removes would
+    still hold its path when the next page claims it:
+
+    1. `logging.log_page` names the deleted page outright; that link wins.
+    2. Otherwise the remaining entries for the title, deletions and the
+       `move_redir` moves that overwrite it, are assigned to the remaining
+       lineages in time order, each entry used once.
+    3. A lineage left without an entry is recorded, not projected: nothing in
+       the export says when it stopped holding its title.
+
+    MediaWiki keeps `ar_page_id` when it archives revisions and reuses that id
+    for a later page, so a lineage whose id a live page now owns cannot be told
+    apart from it by page id alone and is recorded as well.
+    """
+
+    live_ids = set(live)
+    grouped: dict[int, list[WikiArchivedRevision]] = defaultdict(list)
+    gaps: list[WikiSqlGap] = []
+    for archived in dump.archived:
+        if archived.pageid is None:
+            gaps.append(
+                WikiSqlGap(
+                    archived.revision.revid,
+                    None,
+                    None,
+                    archived.title,
+                    archived.revision.timestamp,
+                    "deleted revision records no page id; not projected",
+                )
+            )
+            continue
+        grouped[archived.pageid].append(archived)
+
+    def record(pageid: int, rows: list[WikiArchivedRevision], reason: str) -> None:
+        gaps.extend(
+            WikiSqlGap(
+                row.revision.revid,
+                None,
+                pageid,
+                row.title,
+                row.revision.timestamp,
+                reason,
+            )
+            for row in rows
+        )
+
+    # Candidate lineages, and the entries that could have ended each title.
+    lineages: dict[int, tuple[int, str, tuple[WikiRevision, ...]]] = {}
+    for pageid in sorted(grouped):
+        rows = grouped[pageid]
+        identities = {(row.namespace, row.title) for row in rows}
+        if pageid in live_ids:
+            record(
+                pageid,
+                rows,
+                f"deleted page id {pageid} is reused by a live page; "
+                "deleted history not projected",
+            )
+            continue
+        if len(identities) != 1:
+            record(
+                pageid,
+                rows,
+                f"deleted page id {pageid} has more than one title; "
+                "deleted history not projected",
+            )
+            continue
+        namespace, title = identities.pop()
+        lineages[pageid] = (
+            namespace,
+            title,
+            tuple(sorted((row.revision for row in rows), key=lambda r: r.revid)),
+        )
+
+    endings: dict[tuple[int, str], list[tuple[datetime, int]]] = defaultdict(list)
+    for event in dump.logs:
+        if event.log_type == "delete":
+            key = (event.namespace, event.title)
+        elif event.move_redir and event.target_namespace is not None:
+            assert event.target_title is not None
+            key = (event.target_namespace, event.target_title)
+        else:
+            continue
+        endings[key].append((event.timestamp, event.logid))
+    for entries in endings.values():
+        entries.sort()
+
+    ended_at: dict[int, tuple[datetime, int]] = {}
+    claimed: set[int] = set()
+    for pageid in lineages:
+        bound = dump.deleted_page_logs.get(pageid)
+        if bound is not None:
+            ended_at[pageid] = bound
+            claimed.add(bound[1])
+    by_title: dict[tuple[int, str], list[int]] = defaultdict(list)
+    for pageid, (namespace, title, revisions) in lineages.items():
+        if pageid not in ended_at:
+            by_title[(namespace, title)].append(pageid)
+    for key, pageids in by_title.items():
+        pageids.sort(key=lambda value: lineages[value][2][-1].timestamp)
+        available = [entry for entry in endings.get(key, ()) if entry[1] not in claimed]
+        for pageid in pageids:
+            last = lineages[pageid][2][-1].timestamp
+            match = next(
+                (entry for entry in available if entry[0] >= last),
+                None,
+            )
+            if match is None:
+                continue
+            available.remove(match)
+            claimed.add(match[1])
+            ended_at[pageid] = match
+
+    fragments: list[WikiPageFragment] = []
+    for pageid, (namespace, title, revisions) in lineages.items():
+        if pageid not in ended_at:
+            record(
+                pageid,
+                grouped[pageid],
+                "deleted lineage has no deletion log; not projected",
+            )
+            continue
+        final = revisions[-1].content or ""
+        fragments.append(
+            WikiPageFragment(
+                pageid,
+                namespace,
+                title,
+                final.lstrip().upper().startswith("#REDIRECT"),
+                revisions,
+            )
+        )
+    return fragments, ended_at, gaps
+
+
+@dataclass(frozen=True, slots=True)
+class WikiProjectorInputs:
+    """Everything `project.wiki.project` needs, from both inputs at once."""
+
+    fragments: list[WikiPageFragment]
+    logs: list[WikiLogEvent]
+    extra_gaps: list[dict[str, object]]
+    ended_at: dict[int, tuple[datetime, int]]
+
+
+def combine_inputs(
+    dump: WikiSqlDump | None,
+    fragments: Sequence[WikiPageFragment],
+    logs: Sequence[WikiLogEvent],
+    *,
+    backfill_deleted: bool = False,
+) -> WikiProjectorInputs:
+    """Union the export with the API crawl, refusing any real disagreement.
+
+    Both inputs describe one wiki, so a revision or log entry they share must be
+    identical; `merge_fragments` already enforces that for revisions, and this
+    does it for log entries, which are keyed by `logid` rather than merged.
+
+    `backfill_deleted` adds the `archive` lineages. It is off by default while
+    the placement of a reused title is still being settled: on the 2026-09-15
+    export a handful of lineages that no log entry accounts for still hold a
+    path when the next page claims it, and `project` refuses that rather than
+    overwrite another page's state. Issue #14 tracks the remaining cases.
+    """
+
+    if dump is None:
+        return WikiProjectorInputs(list(fragments), list(logs), [], {})
+    combined_logs: dict[int, WikiLogEvent] = {}
+    for event in (*dump.logs, *logs):
+        previous = combined_logs.get(event.logid)
+        if previous is not None and previous != event:
+            raise WikiSqlParseError(
+                f"log event {event.logid} differs between the export and the API"
+            )
+        combined_logs[event.logid] = event
+    deleted: list[WikiPageFragment] = []
+    ended_at: dict[int, tuple[datetime, int]] = {}
+    gaps = list(dump.gaps)
+    if backfill_deleted:
+        live = {fragment.pageid for fragment in (*dump.fragments, *fragments)}
+        deleted, ended_at, deleted_gaps = archived_fragments(dump, live)
+        gaps.extend(deleted_gaps)
+    return WikiProjectorInputs(
+        [*dump.fragments, *fragments, *deleted],
+        [combined_logs[logid] for logid in sorted(combined_logs)],
+        [gap.as_row() for gap in gaps],
+        ended_at,
     )
