@@ -919,7 +919,17 @@ def _forced_move_times(
             if 0 < skew <= 60:
                 candidates.append(revision.timestamp)
         if candidates:
-            effective[logid] = min(candidates)
+            forced = min(candidates)
+            # A page moved away and back between the same two titles gives both
+            # moves a null revision whose comment names both titles, so rule 4's
+            # test fits the second move as well as the first. A move can never
+            # be ordered at or before the move that precedes it in its own
+            # page's chain, so that pair is left alone.
+            chain = plan.chains[owner]
+            position = [move.logid for move in chain].index(logid)
+            if position and forced <= effective[chain[position - 1].logid]:
+                continue
+            effective[logid] = forced
     return effective
 
 
