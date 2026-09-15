@@ -9,6 +9,7 @@ import subprocess
 from collections.abc import Mapping, Sequence
 from configparser import ConfigParser
 from configparser import Error as ConfigParserError
+from contextlib import suppress
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 from pathlib import Path, PurePosixPath
@@ -87,15 +88,10 @@ class EventError(ValueError):
     """An event violates the corpus commit contract."""
 
 
-def run_git(
-    cwd: Path,
-    args: Sequence[str],
-    *,
-    env: Mapping[str, str] | None = None,
-    input_text: str | None = None,
-    check: bool = True,
-) -> subprocess.CompletedProcess[str]:
-    command = [
+def git_command(args: Sequence[str]) -> list[str]:
+    """The git invocation the corpus uses, pinned against local configuration."""
+
+    return [
         "git",
         "-c",
         "core.autocrlf=false",
@@ -107,6 +103,11 @@ def run_git(
         f"core.hooksPath={os.devnull}",
         *args,
     ]
+
+
+def git_environment(env: Mapping[str, str] | None = None) -> dict[str, str]:
+    """The environment the corpus uses, with the caller's git config removed."""
+
     process_env = dict(os.environ)
     if env:
         process_env.update(env)
@@ -124,6 +125,19 @@ def run_git(
             "TZ": "UTC",
         }
     )
+    return process_env
+
+
+def run_git(
+    cwd: Path,
+    args: Sequence[str],
+    *,
+    env: Mapping[str, str] | None = None,
+    input_text: str | None = None,
+    check: bool = True,
+) -> subprocess.CompletedProcess[str]:
+    command = git_command(args)
+    process_env = git_environment(env)
     result = subprocess.run(
         command,
         cwd=cwd,
@@ -779,6 +793,194 @@ class BuildCommitSession:
     def __exit__(self, *exc: object) -> None:
         if exc[0] is None:
             self.flush()
+
+
+def _fast_import_path(relative: str) -> bytes:
+    """Quote a path for fast-import, which reads one path per line.
+
+    Always quoting removes any question about spaces, quotes or the leading
+    double quote fast-import would otherwise read as the start of a quoted
+    path, and C-style escaping is what it expects inside the quotes.
+    """
+
+    escaped = relative.encode("utf-8").decode("latin-1")
+    body = escaped.translate(
+        {
+            0x22: '\\"',
+            0x5C: "\\\\",
+            0x0A: "\\n",
+            0x0D: "\\r",
+            0x09: "\\t",
+        }
+    )
+    return f'"{body}"'.encode("latin-1")
+
+
+class FastImportSession:
+    """Build a whole history through one `git fast-import` process.
+
+    The plumbing path spends its time on work proportional to the corpus
+    rather than to the event: it rebuilds and rewrites the index for every
+    commit, so a build slows down as it goes — the first production build ran
+    at 244 commits a minute in its first hour and 57 in its seventh. Feeding
+    one stream to fast-import makes a commit cost what the event costs, and
+    nothing more.
+
+    The commits are byte-identical to the plumbing path's: the same author and
+    committer, date, message, trailers and tree, including gitlinks and the
+    accumulated `.gitmodules`. Identical heads are the acceptance, not a
+    resemblance. The worktree is not touched until the end, because
+    fast-import writes objects and refs only; `__exit__` checks it out once.
+
+    `update` keeps the plumbing path: it writes into a corpus contributors
+    share, where the careful per-event checks are the point.
+    """
+
+    def __init__(self, corpus: Path, branch: str = "refs/heads/main") -> None:
+        self.corpus = _resolve_corpus(corpus)
+        dirty = git_output(
+            self.corpus, ["status", "--porcelain=v1", "--untracked-files=all"]
+        )
+        if dirty:
+            raise GitError("corpus worktree is not clean; refusing to build into it")
+        self.branch = branch
+        self.head = _head(self.corpus)
+        self.started = self.head
+        self.count = 0
+        self.submodules = _submodules_at(self.corpus, self.head)
+        self.tracked: set[str] = set()
+        if self.head:
+            listing = git_output(
+                self.corpus, ["ls-tree", "-r", "--name-only", self.head]
+            )
+            self.tracked = {line for line in listing.splitlines() if line}
+        self.process = subprocess.Popen(
+            git_command(["fast-import", "--quiet", "--done", "--date-format=raw"]),
+            cwd=self.corpus,
+            env=git_environment(),
+            stdin=subprocess.PIPE,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+        )
+
+    def _write(self, payload: bytes) -> None:
+        assert self.process.stdin is not None
+        try:
+            self.process.stdin.write(payload)
+        except BrokenPipeError as exc:  # pragma: no cover - fast-import died
+            raise GitError(
+                f"git fast-import closed its input: {self._stderr()}"
+            ) from exc
+
+    def _stderr(self) -> str:
+        if self.process.stderr is None:
+            return "unknown fast-import error"
+        return self.process.stderr.read().decode("utf-8", "replace").strip()
+
+    @staticmethod
+    def _blob(payload: bytes) -> bytes:
+        return b"data " + str(len(payload)).encode("ascii") + b"\n" + payload + b"\n"
+
+    def commit(self, event: Event) -> str:
+        event.validate()
+        writes: list[tuple[str, bytes]] = []
+        for raw_path in sorted(event.changes):
+            relative = _safe_repo_path(raw_path).as_posix()
+            value = event.changes[raw_path]
+            writes.append(
+                (relative, value.encode("utf-8") if isinstance(value, str) else value)
+            )
+        if event.submodules:
+            self.submodules.update(event.submodules)
+            writes.append(
+                (
+                    _safe_repo_path(".gitmodules").as_posix(),
+                    _render_submodules(self.submodules),
+                )
+            )
+        removals: list[str] = []
+        for raw_path in sorted(event.deletions):
+            relative = _safe_repo_path(raw_path).as_posix()
+            if relative not in self.tracked:
+                raise EventError(f"deletion names an untracked path: {raw_path!r}")
+            removals.append(relative)
+        gitlinks: list[tuple[str, str]] = []
+        for raw_path, object_id in sorted(event.gitlinks.items()):
+            gitlinks.append((_safe_repo_path(raw_path).as_posix(), object_id))
+
+        self.count += 1
+        mark = self.count
+        moment = EPOCH if event.time_confidence == "pre-epoch" else event.source_time
+        stamp = f"{int(moment.timestamp())} +0000"
+        identity = f"{event.author.name} <{event.author.email}> {stamp}"
+        message = _commit_message(event).encode("utf-8")
+        lines = [
+            b"commit " + self.branch.encode("ascii"),
+            b"mark :" + str(mark).encode("ascii"),
+            b"author " + identity.encode("utf-8"),
+            b"committer " + identity.encode("utf-8"),
+        ]
+        self._write(b"\n".join(lines) + b"\n" + self._blob(message))
+        if mark == 1 and self.head:
+            # Continue the branch the deterministic root commit started; an
+            # unborn branch has no parent to name.
+            self._write(b"from " + self.head.encode("ascii") + b"\n")
+        for relative, payload in writes:
+            self._write(b"M 100644 inline " + _fast_import_path(relative) + b"\n")
+            self._write(self._blob(payload))
+            self.tracked.add(relative)
+        for relative, object_id in gitlinks:
+            self._write(
+                b"M 160000 "
+                + object_id.encode("ascii")
+                + b" "
+                + _fast_import_path(relative)
+                + b"\n"
+            )
+            self.tracked.add(relative)
+        for relative in removals:
+            self._write(b"D " + _fast_import_path(relative) + b"\n")
+            self.tracked.discard(relative)
+        self._write(b"\n")
+        return f":{mark}"
+
+    def finish(self) -> str | None:
+        """Close the stream, then make the worktree match what was written."""
+
+        assert self.process.stdin is not None
+        # `--done` makes the terminator mandatory, including for a build that
+        # produced no events at all.
+        self._write(b"done\n")
+        self.process.stdin.close()
+        if self.process.wait() != 0:
+            raise GitError(f"git fast-import failed: {self._stderr()}")
+        if self.process.stderr is not None:
+            self.process.stderr.close()
+        if self.count:
+            run_git(self.corpus, ["reset", "--hard", self.branch])
+        self.head = _head(self.corpus)
+        return self.head
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, *exc: object) -> None:
+        if exc[0] is None:
+            self.finish()
+            return
+        # The build failed: abandon the stream without letting a broken pipe
+        # or a stuck child hide the error that actually matters.
+        self.abandon()
+
+    def abandon(self) -> None:
+        for stream in (self.process.stdin, self.process.stderr):
+            if stream is None:
+                continue
+            with suppress(OSError):
+                stream.close()
+        if self.process.poll() is None:
+            self.process.kill()
+        self.process.wait()
 
 
 def git_output_with_input(

@@ -587,3 +587,127 @@ def test_build_session_carries_submodules_and_gitlinks(tmp_path: Path) -> None:
     assert git(fast, "show", "HEAD:.gitmodules") == git(
         careful, "show", "HEAD:.gitmodules"
     )
+
+
+def test_fast_import_history_is_identical_to_both_other_paths(tmp_path: Path) -> None:
+    """Three backends, one history: the objects must be the same objects.
+
+    fast-import writes commits directly instead of staging an index, so this
+    pins every part the plumbing path decides: author and committer identity,
+    the raw date, the message and its trailers, the tree, and the worktree the
+    build leaves for `verify` to read.
+    """
+
+    from jbomohi_tools.git import BuildCommitSession, FastImportSession
+
+    events = _sequence(12)
+
+    careful = _fresh(tmp_path, "careful")
+    for event in events:
+        commit_event(event, careful)
+
+    session = _fresh(tmp_path, "session")
+    with BuildCommitSession(session) as live:
+        for event in events:
+            live.commit(event)
+
+    imported = _fresh(tmp_path, "imported")
+    with FastImportSession(imported) as stream:
+        for event in events:
+            stream.commit(event)
+
+    expected = git(careful, "rev-parse", "HEAD")
+    assert git(session, "rev-parse", "HEAD") == expected
+    assert git(imported, "rev-parse", "HEAD") == expected
+    assert git(imported, "rev-list", "--count", "HEAD") == git(
+        careful, "rev-list", "--count", "HEAD"
+    )
+    assert git(imported, "status", "--porcelain=v1", "--untracked-files=all") == ""
+    for name in ("wiki/main/Page11.wiki", "_meta/wiki/pages.csv"):
+        assert (imported / name).read_bytes() == (careful / name).read_bytes()
+
+
+def test_fast_import_keeps_submodules_gitlinks_and_empty_trees(tmp_path: Path) -> None:
+    """The .gitmodules merge, gitlink modes and unchanged-tree events survive."""
+
+    from jbomohi_tools.git import FastImportSession
+
+    first = base_event(
+        source="cll",
+        source_id="cll=1",
+        changes={"cll/README": "one\n"},
+        submodules={"cll/src": "https://example.invalid/cll.git"},
+        gitlinks={"cll/src": "1" * 40},
+    )
+    second = base_event(
+        source="grammars",
+        source_id="grammars=1",
+        source_time=datetime(2005, 1, 2, 3, 4, 5, tzinfo=UTC),
+        changes={"grammars/README": "two\n"},
+        submodules={"grammars/src": "https://example.invalid/g.git"},
+        gitlinks={"grammars/src": "2" * 40},
+    )
+    # An event that changes nothing is still an event, and still a commit.
+    third = base_event(
+        source="tiki",
+        source_id="tiki=page@current",
+        source_time=datetime(2006, 1, 2, 3, 4, 5, tzinfo=UTC),
+        changes={},
+    )
+    events = (first, second, third)
+
+    careful = _fresh(tmp_path, "careful")
+    for event in events:
+        commit_event(event, careful)
+    imported = _fresh(tmp_path, "imported")
+    with FastImportSession(imported) as stream:
+        for event in events:
+            stream.commit(event)
+
+    assert git(imported, "rev-parse", "HEAD") == git(careful, "rev-parse", "HEAD")
+    assert git(imported, "show", "HEAD:.gitmodules") == git(
+        careful, "show", "HEAD:.gitmodules"
+    )
+    assert git(imported, "rev-list", "--count", "HEAD") == "3"
+    # The last event changed nothing, so its tree is its parent's.
+    assert git(imported, "rev-parse", "HEAD^{tree}") == git(
+        imported, "rev-parse", "HEAD~1^{tree}"
+    )
+
+
+def test_fast_import_refuses_a_deletion_of_an_untracked_path(tmp_path: Path) -> None:
+    from jbomohi_tools.git import FastImportSession
+
+    imported = _fresh(tmp_path, "imported")
+    with (
+        pytest.raises(EventError, match="untracked path"),
+        FastImportSession(imported) as stream,
+    ):
+        stream.commit(base_event())
+        stream.commit(
+            base_event(
+                source_id="revid=2",
+                source_time=datetime(2004, 1, 3, tzinfo=UTC),
+                changes={"wiki/main/Other.wiki": "x\n"},
+                deletions=("wiki/main/Absent.wiki",),
+            )
+        )
+
+
+def test_fast_import_continues_an_existing_history(tmp_path: Path) -> None:
+    """A build starts from the deterministic root commit, not an empty branch."""
+
+    from jbomohi_tools.git import FastImportSession
+
+    corpus = _fresh(tmp_path, "corpus")
+    root = commit_event(base_event(), corpus)
+    follow = base_event(
+        source_id="revid=2",
+        source_time=datetime(2004, 1, 3, tzinfo=UTC),
+        changes={"wiki/main/Test.wiki": "second\n"},
+        event="edited",
+    )
+    with FastImportSession(corpus) as stream:
+        stream.commit(follow)
+    assert git(corpus, "rev-parse", "HEAD~1") == root
+    assert (corpus / "wiki/main/Test.wiki").read_text() == "second\n"

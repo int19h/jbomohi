@@ -19,9 +19,9 @@ from .config import Config
 from .corpus import CorpusError, corpus_status, init_corpus
 from .git import (
     EPOCH,
-    BuildCommitSession,
     Event,
     EventError,
+    FastImportSession,
     GitError,
     Identity,
     commit_event,
@@ -334,7 +334,7 @@ def build_corpus(
         commit_root(config.repo_root, scratch)
         event_count = 0
         last_time = EPOCH
-        with BuildCommitSession(scratch) as session:
+        with FastImportSession(scratch) as session:
             for event in merge_events(sources, until=until):
                 session.commit(event)
                 event_count += 1
