@@ -317,7 +317,7 @@ Every formal grammar and parser implementation of Lojban is part of the record. 
 
 ### 3.11 `_meta/` and coverage
 
-`_meta/schema.toml` (`projection_schema`, renderer versions, tools commit), `_meta/archive/*.toml` (§2.3), per-source `coverage.toml` (`from, to, counts, gaps = [...], updated`), and the CSV indexes above. `build`/`update` re-render `README.md` (coverage tables) and the instruction files from `tools/templates/main/` as an `Event: refresh` commit at the tip, dated at the last event's time. Per-source `_meta/<source>/**` index files ride each projector's final event; `update` folds those files into the refresh commit whenever the source yielded at least one new event, even when that final event's own `Source-Id` was already present (decided 2026-09-14).
+`_meta/schema.toml` (`projection_schema`, renderer versions; **the tools commit and snapshot name only in the tip refresh commit, never in the root** — decided 2026-09-15: the root commit's rendered files are a pure function of the templates and the projection schema version, so a tools change that leaves every projected byte unchanged leaves every event commit hash unchanged, and one that changes output changes hashes only from the first affected event; the README's "built by tools commit" line and the snapshot name are therefore rendered as `pending` in the root and filled in by the refresh commit), `_meta/archive/*.toml` (§2.3), per-source `coverage.toml` (`from, to, counts, gaps = [...], updated`), and the CSV indexes above. `build`/`update` re-render `README.md` (coverage tables) and the instruction files from `tools/templates/main/` as an `Event: refresh` commit at the tip, dated at the last event's time. Per-source `_meta/<source>/**` index files ride each projector's final event; `update` folds those files into the refresh commit whenever the source yielded at least one new event, even when that final event's own `Source-Id` was already present (decided 2026-09-14).
 
 ---
 
@@ -360,7 +360,7 @@ Every `main` commit has `Source`, `Source-Id`, `Event`, `Time-Confidence`; `Sour
 
 ## 5. Instruction files on `main` (the librarian)
 
-Rendered from `tools/templates/main/` into `main`'s root commit and refreshed at every update. They are what turns a clone into a librarian:
+Rendered from `tools/templates/main/` into `main`'s root commit (build-invariant form: no tools commit, no snapshot, no coverage) and refreshed at the tip of every build and update with the tools commit, snapshot and coverage tables. They are what turns a clone into a librarian:
 
 - `AGENTS.md` — what the corpus is, layout and coverage, the citation grammar and short forms, the research method (search iteratively with `rg`/`git grep`, read neighbourhoods, follow leads, use `git log/blame/show/diff` for history and as-of, `_meta` CSVs for lookups), the answer contract (claims cite primary units, verbatim quotes only, positions attributed and dated, Positions/Ratified/Open for disputes, coverage-relative negatives), the status vocabulary and bodies, known quirks, and the untrusted-text rule. Draft: `tools/templates/main/AGENTS.md`.
 - `CLAUDE.md`, `GEMINI.md` → `@AGENTS.md`; `.agents/rules/jbomohi.md` (Antigravity always-on rule pointing at `AGENTS.md`).
