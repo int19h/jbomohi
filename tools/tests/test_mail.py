@@ -371,3 +371,49 @@ def test_phantom_reference_is_thread_root_and_key_input() -> None:
     assert roots["child@example.org"] == "phantom@example.org"
     assert list(threads) == ["phantom@example.org"]
     assert _thread_key("phantom@example.org", "topic").startswith("6992fbabfb82-")
+
+
+def test_a_date_at_or_before_the_epoch_is_not_a_date() -> None:
+    """A header no message on these lists could carry is corrupt, not history.
+
+    SPEC.md 2.6 reserves `pre-epoch` for documents that genuinely predate 1970
+    and 3.3 says a mail date is never the Unix epoch, so such a header is
+    discarded and the next evidence is used, exactly as for one that does not
+    parse. Without this the whole build fails closed on one broken header.
+    """
+
+    epoch_dated = manifestation(
+        message("epoch@example.org", date="Thu, 1 Jan 1970 00:00:00 +0000"),
+        order=0,
+    )
+    parsed = parse_mail(epoch_dated)
+    assert parsed.time_confidence == "window"
+    assert parsed.source_dated is False
+    assert parsed.timestamp == datetime(2026, 1, 1, tzinfo=UTC)
+
+    before = manifestation(
+        message("before@example.org", date="Wed, 31 Dec 1969 23:59:59 +0000"),
+        order=1,
+    )
+    assert parse_mail(before).time_confidence == "window"
+
+    # A Received: header is the next evidence, and is refused on the same terms.
+    received = manifestation(
+        message(
+            "received@example.org",
+            date="Thu, 1 Jan 1970 00:00:00 +0000",
+            extra=("Received: from host by list; Sat, 1 Jan 2000 12:00:00 +0000",),
+        ),
+        order=2,
+    )
+    recovered = parse_mail(received)
+    assert recovered.time_confidence == "tz-unknown"
+    assert recovered.timestamp == datetime(2000, 1, 1, 12, tzinfo=UTC)
+
+    # A real date is still exact, and the first second after the epoch counts.
+    just_after = manifestation(
+        message("after@example.org", date="Thu, 1 Jan 1970 00:00:01 +0000"),
+        order=3,
+    )
+    assert parse_mail(just_after).time_confidence == "exact"
+    assert parse_mail(just_after).timestamp == datetime(1970, 1, 1, 0, 0, 1, tzinfo=UTC)
