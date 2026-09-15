@@ -311,11 +311,13 @@ def test_revision_deletion_bits_are_honoured(tmp_path: Path) -> None:
     assert revisions[101].content is None and revisions[101].text_hidden is True
     assert revisions[102].comment == "" and revisions[102].comment_hidden is True
     assert revisions[103].user is None and revisions[103].user_hidden is True
-    assert 104 not in revisions
-    assert any(
-        gap.revid == 104 and gap.reason == "suppressed; not projected"
-        for gap in dump.gaps
-    )
+    # Bit 8 masks text, comment and user together; the event still exists, so
+    # the dump and API paths agree by construction rather than by absence.
+    suppressed = revisions[104]
+    assert suppressed.content is None and suppressed.text_hidden is True
+    assert suppressed.comment == "" and suppressed.comment_hidden is True
+    assert suppressed.user is None and suppressed.user_hidden is True
+    assert any(gap.revid == 104 and gap.reason == "suppressed" for gap in dump.gaps)
 
 
 def test_missing_actor_row_becomes_anonymous_with_a_gap(tmp_path: Path) -> None:
@@ -964,3 +966,156 @@ def test_extra_gaps_reach_the_projected_metadata(tmp_path: Path) -> None:
     gaps = events[-1].changes["_meta/wiki/gaps.csv"]
     assert gaps.splitlines()[0] == "revid,logid,pageid,title,timestamp,reason"
     assert gaps.splitlines()[-1] == "1,,,,,recorded"
+
+
+def test_lineage_bound_is_the_last_deletion_of_a_page_id(tmp_path: Path) -> None:
+    """A page deleted, restored and deleted again is bounded at the second.
+
+    `archive` keeps rows up to the last deletion, so that is when the title
+    stopped being this lineage's. Bounding at the first would hide any move
+    made into the title between the two.
+    """
+
+    from jbomohi_tools.project.wiki_sql import archived_fragments
+
+    builder = baseline()
+    for index, (revid, when) in enumerate(
+        ((200, b"20140201000000"), (201, b"20140401000000")), 1
+    ):
+        comment_id = 40 + index
+        builder.add("comment", comment_id, 0, b"edit", None)
+        builder.revision_slot(
+            revid,
+            builder.content(builder.text(b"body%d" % index), payload=b"body%d" % index),
+        )
+        builder.add(
+            "archive",
+            index,
+            0,
+            b"ka_nu_cilre",
+            comment_id,
+            7,
+            when,
+            0,
+            revid,
+            0,
+            5,
+            77,
+            0,
+            sha1_base36(b"body%d" % index),
+        )
+    builder.add("comment", 50, 0, b"first deletion", None)
+    builder.add(
+        "logging",
+        900,
+        b"delete",
+        b"delete",
+        b"20140301000000",
+        7,
+        0,
+        b"ka_nu_cilre",
+        77,
+        50,
+        b"a:0:{}",
+        0,
+    )
+    builder.add("comment", 51, 0, b"restored", None)
+    builder.add(
+        "logging",
+        901,
+        b"delete",
+        b"restore",
+        b"20140315000000",
+        7,
+        0,
+        b"ka_nu_cilre",
+        77,
+        51,
+        b"a:0:{}",
+        0,
+    )
+    builder.add("comment", 52, 0, b"second deletion", None)
+    builder.add(
+        "logging",
+        902,
+        b"delete",
+        b"delete",
+        b"20140501000000",
+        7,
+        0,
+        b"ka_nu_cilre",
+        77,
+        52,
+        b"a:0:{}",
+        0,
+    )
+    dump = load(builder, tmp_path)
+    # `restore` is not a projected log type, so only the two deletions are kept.
+    assert [(e.logid, e.log_type) for e in dump.logs] == [
+        (900, "delete"),
+        (902, "delete"),
+    ]
+    fragments, ended_at, unaccounted, gaps = archived_fragments(dump, live={5})
+    assert [f.pageid for f in fragments] == [77]
+    assert [r.revid for r in fragments[0].revisions] == [200, 201]
+    assert ended_at == {77: (datetime(2014, 5, 1, tzinfo=UTC), 902)}
+    assert unaccounted == set() and gaps == []
+
+
+def test_log_entry_without_an_actor_row_is_unrecorded_not_anonymous(
+    tmp_path: Path,
+) -> None:
+    from jbomohi_tools.git import Identity
+    from jbomohi_tools.project.wiki import project
+
+    builder = baseline()
+    # The page's current title is the move's target, so the title chain can
+    # attribute the rename to it and the projector emits a moved event.
+    original = builder.rows["page"][0]
+    builder.rows["page"][0] = (*original[:2], b"lo_nu_ciska", *original[3:])
+    builder.add("comment", 30, 0, b"", None)
+    builder.add(
+        "logging",
+        900,
+        b"move",
+        b"move",
+        b"20140105000000",
+        4242,
+        0,
+        b"lo_nu_tavla",
+        0,
+        30,
+        b'a:1:{s:9:"4::target";s:11:"lo nu ciska";}',
+        0,
+    )
+    dump = load(builder, tmp_path)
+    assert dump.logs[0].author_unrecorded is True
+    assert dump.logs[0].user is None
+    moved = [e for e in project(dump.fragments, dump.logs) if e.event == "moved"]
+    assert [e.author for e in moved] == [Identity.unrecorded("mw.lojban.org")]
+
+
+def test_namespace_prefixes_match_case_insensitively() -> None:
+    assert parse_title("user talk:foo", "test") == (3, "User talk:Foo")
+    assert parse_title("TEMPLATE:stub", "test") == (10, "Template:Stub")
+
+
+def test_a_serialized_log_params_array_must_parse(tmp_path: Path) -> None:
+    builder = baseline()
+    builder.add("comment", 30, 0, b"", None)
+    builder.add(
+        "logging",
+        900,
+        b"move",
+        b"move",
+        b"20140105000000",
+        7,
+        0,
+        b"lo_nu_tavla",
+        0,
+        30,
+        b'a:1:{s:9:"4::target";s:99:"truncated";}',
+        0,
+    )
+    with pytest.raises(WikiSqlParseError, match="PHP serialization"):
+        load(builder, tmp_path)

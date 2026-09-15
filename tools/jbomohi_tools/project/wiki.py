@@ -147,6 +147,9 @@ class WikiLogEvent:
     target_title: str | None = None
     suppress_redirect: bool = False
     move_redir: bool = False
+    # The source records no actor for this entry at all, which SPEC.md 2.5
+    # keeps distinct from a suppressed one: `unrecorded@`, not `anonymous@`.
+    author_unrecorded: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -647,6 +650,16 @@ def merge_fragments(fragments: Iterable[WikiPageFragment]) -> list[WikiPage]:
 
 def _anonymous(user: str | None) -> bool:
     return user is None
+
+
+def _log_author(item: WikiLogEvent) -> Identity:
+    """Attribute a log entry, keeping `unrecorded` apart from `anonymous`."""
+
+    if item.author_unrecorded:
+        return Identity.unrecorded("mw.lojban.org")
+    if _anonymous(item.user):
+        return Identity.anonymous("mw.lojban.org")
+    return Identity.namespaced("mw.lojban.org", item.user)
 
 
 def _summary(title: str, revid: int, comment: str) -> str:
@@ -1317,11 +1330,7 @@ def project(
             held_by_path[target_path] = resolved_pageid
             placeholder_paths.discard(target_path)
             placeholder_reason.pop(target_path, None)
-            author = (
-                Identity.anonymous("mw.lojban.org")
-                if _anonymous(item.user)
-                else Identity.namespaced("mw.lojban.org", item.user or "")
-            )
+            author = _log_author(item)
             trailers = {
                 "Log-Type": "move_redir" if item.move_redir else "move",
                 "Moved-From": old_path,
@@ -1370,11 +1379,7 @@ def project(
         placeholder_paths.discard(old_path)
         placeholder_reason.pop(old_path, None)
         state_content[resolved_pageid] = None
-        author = (
-            Identity.anonymous("mw.lojban.org")
-            if _anonymous(item.user)
-            else Identity.namespaced("mw.lojban.org", item.user or "")
-        )
+        author = _log_author(item)
         event = Event(
             source="wiki",
             source_id=f"logid={item.logid}",

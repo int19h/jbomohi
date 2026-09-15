@@ -165,9 +165,13 @@ NAMESPACE_ALIASES = {
 # `$wgCapitalLinks = false` with first-letter overrides for exactly these,
 # so a title elsewhere keeps the case it was typed in.
 FIRST_LETTER_NAMESPACES = frozenset({-1, 2, 3, 8, 9, 10, 11, 828, 829})
+# MediaWiki matches a namespace prefix case-insensitively, so `user talk:foo`
+# names the same namespace as `User talk:Foo`.
 PREFIX_NAMESPACES = {
-    prefix: namespace for namespace, prefix in NAMESPACE_PREFIXES.items() if prefix
-} | NAMESPACE_ALIASES
+    prefix.lower(): namespace
+    for namespace, prefix in NAMESPACE_PREFIXES.items()
+    if prefix
+} | {alias.lower(): namespace for alias, namespace in NAMESPACE_ALIASES.items()}
 
 
 # `rev_deleted` / `ar_deleted` bits, includes/Revision/RevisionRecord.php:53-58.
@@ -455,7 +459,7 @@ def parse_title(value: str, context: str) -> tuple[int, str]:
     if not text:
         raise WikiSqlParseError(f"{context}: move target is empty")
     prefix, separator, remainder = text.partition(":")
-    namespace = PREFIX_NAMESPACES.get(prefix.strip())
+    namespace = PREFIX_NAMESPACES.get(prefix.strip().lower())
     if separator and namespace is not None and remainder.strip():
         if namespace < 0:
             raise WikiSqlParseError(
@@ -644,15 +648,17 @@ def _log_params(payload: bytes | None, context: str) -> dict[bytes | int, object
 
     if payload is None or payload == b"":
         return {}
-    try:
-        value = php_unserialize(payload, context)
-    except WikiSqlParseError:
-        # DatabaseLogEntry.php:182-194: a legacy entry is newline-separated.
+    if not payload.startswith(b"a:"):
+        # DatabaseLogEntry.php:182-194: a pre-1.21 entry is a newline-separated
+        # positional list. Anything that claims to be a serialized array must
+        # parse as one; silently reinterpreting a broken array would make its
+        # first line the move target.
         return {
             index: part
             for index, part in enumerate(payload.split(b"\n"))
             if part != b""
         }
+    value = php_unserialize(payload, context)
     if not isinstance(value, dict):
         raise WikiSqlParseError(f"{context}: log parameters are not an array")
     return value
@@ -758,13 +764,12 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
     ) -> WikiRevision | None:
         nonlocal unresolved_authors, integrity_failures
         if deleted & DELETED_RESTRICTED:
-            # SPEC.md section 3.2: oversighted material is never projected.
-            gaps.append(
-                WikiSqlGap(
-                    revid, None, pageid, title, timestamp, "suppressed; not projected"
-                )
-            )
-            return None
+            # SPEC.md 3.2: oversighted material is never written, but the event
+            # still exists. Bit 8 masks text, comment and user together, which
+            # is what the API path does with the same revision, so the two
+            # paths agree by construction rather than by absence.
+            deleted |= DELETED_TEXT | DELETED_COMMENT | DELETED_USER
+            gaps.append(WikiSqlGap(revid, None, pageid, title, timestamp, "suppressed"))
         user = actors.get(actor_id)
         unrecorded_author = False
         if user == "":
@@ -989,7 +994,13 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
             continue
         actor_id = _required_integer(row[4], "logging.log_actor")
         user = actors.get(actor_id)
+        log_author_unrecorded = False
+        if user == "":
+            user = UNKNOWN_USER
         if user is None:
+            # Same "the source records nobody" case as an actor-less revision:
+            # SPEC.md 2.5 attributes it to `unrecorded@`, never `anonymous@`.
+            log_author_unrecorded = True
             hidden_log_actors += 1
             gaps.append(
                 WikiSqlGap(
@@ -1007,9 +1018,12 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
             raise WikiSqlParseError(f"log event {logid} references absent comment")
         logged_page = _integer(row[7], "logging.log_page", optional=True) or 0
         if log_type == "delete" and logged_page:
+            # A page deleted, restored and deleted again has `archive` rows up
+            # to the *last* deletion, so that is when its title stopped being
+            # its own. Bounding at the first would hide a move made in between.
             previous = deleted_page_logs.get(logged_page)
             entry = (timestamp, logid)
-            if previous is None or entry < previous:
+            if previous is None or entry > previous:
                 deleted_page_logs[logged_page] = entry
         target_namespace: int | None = None
         target_title: str | None = None
@@ -1041,6 +1055,7 @@ def load_wiki_sql_dump(path: Path) -> WikiSqlDump:
                 target_title=target_title,
                 suppress_redirect=suppress_redirect,
                 move_redir=action == "move_redir",
+                author_unrecorded=log_author_unrecorded,
             )
         )
     counts["log_events"] = len(logs)
