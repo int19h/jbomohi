@@ -12,6 +12,7 @@ from configparser import Error as ConfigParserError
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 from pathlib import Path, PurePosixPath
+from typing import Self
 from urllib.parse import quote, unquote
 
 EPOCH = datetime(1970, 1, 1, tzinfo=UTC)
@@ -597,6 +598,16 @@ def _render_submodules(submodules: Mapping[str, str]) -> bytes:
     return ("\n".join(lines) + "\n").encode()
 
 
+def _resolve_corpus(corpus: Path | None) -> Path:
+    actual_corpus = corpus or Path(
+        os.environ.get("JBOMOHI_CORPUS", Path.home() / "lojban" / "corpus")
+    )
+    resolved = actual_corpus.expanduser().resolve()
+    if not (resolved / ".git").exists():
+        raise GitError(f"not a corpus repository: {resolved}")
+    return resolved
+
+
 def commit_event(event: Event, corpus: Path | None = None) -> str:
     """Commit one validated event without consulting the clock.
 
@@ -604,23 +615,33 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
     erase unrelated state. Only the event's declared paths are staged.
     """
 
-    event.validate()
-    actual_corpus = corpus or Path(
-        os.environ.get("JBOMOHI_CORPUS", Path.home() / "lojban" / "corpus")
-    )
-    corpus = actual_corpus.expanduser().resolve()
-    if not (corpus / ".git").exists():
-        raise GitError(f"not a corpus repository: {corpus}")
-    dirty = git_output(corpus, ["status", "--porcelain=v1", "--untracked-files=all"])
+    resolved = _resolve_corpus(corpus)
+    dirty = git_output(resolved, ["status", "--porcelain=v1", "--untracked-files=all"])
     if dirty:
         raise GitError("corpus working tree is not clean; refusing to commit an event")
-
-    old_head = _head(corpus)
+    old_head = _head(resolved)
     if old_head:
-        run_git(corpus, ["read-tree", old_head])
+        run_git(resolved, ["read-tree", old_head])
     else:
-        run_git(corpus, ["read-tree", "--empty"])
+        run_git(resolved, ["read-tree", "--empty"])
+    return _commit_event_into(event, resolved, old_head)
 
+
+def _commit_event_into(
+    event: Event,
+    corpus: Path,
+    old_head: str | None,
+    *,
+    move_head: bool = True,
+) -> str:
+    """Stage and commit one event into an index the caller has prepared.
+
+    With `move_head` false the commit is written but `HEAD` is left where it
+    was: a build chains commits by parent and only has to move the ref once,
+    at the end, which is one process fewer per event.
+    """
+
+    event.validate()
     writes: list[tuple[str, Path, bytes]] = []
     for raw_path in sorted(event.changes):
         relative = _safe_repo_path(raw_path)
@@ -698,13 +719,66 @@ def commit_event(event: Event, corpus: Path | None = None) -> str:
     commit = git_output_with_input(
         corpus, commit_args, _commit_message(event), identity_env
     )
-    update_args = ["update-ref", "HEAD", commit]
-    if old_head:
-        update_args.append(old_head)
-    else:
-        update_args.append("0" * len(commit))
-    run_git(corpus, update_args)
+    if move_head:
+        _move_head(corpus, commit, old_head)
     return commit
+
+
+def _move_head(corpus: Path, commit: str, old_head: str | None) -> None:
+    update_args = ["update-ref", "HEAD", commit]
+    update_args.append(old_head if old_head else "0" * len(commit))
+    run_git(corpus, update_args)
+
+
+class BuildCommitSession:
+    """Commit a whole build into a scratch repository the tools own.
+
+    `commit_event` proves the worktree clean and rebuilds the index from HEAD
+    before every event. Both are O(files in the corpus), so the cost per commit
+    climbs as the corpus grows and the full build takes hours. A build owns its
+    scratch repository outright — nothing else writes to it — so the clean
+    check is answered once at the start and the index is kept alive across
+    events instead. `write-tree` then rewrites only the subtrees the event
+    touched, because the index keeps its cache-tree, and the commits are
+    byte-identical to the ones the per-event path produces.
+
+    `update` keeps the careful path: it writes into a corpus contributors share.
+    """
+
+    def __init__(self, corpus: Path) -> None:
+        self.corpus = _resolve_corpus(corpus)
+        self.started: str | None = None
+        dirty = git_output(
+            self.corpus, ["status", "--porcelain=v1", "--untracked-files=all"]
+        )
+        if dirty:
+            raise GitError(
+                "corpus working tree is not clean; refusing to build into it"
+            )
+        self.head = _head(self.corpus)
+        self.started = self.head
+        if self.head:
+            run_git(self.corpus, ["read-tree", self.head])
+        else:
+            run_git(self.corpus, ["read-tree", "--empty"])
+
+    def commit(self, event: Event) -> str:
+        self.head = _commit_event_into(event, self.corpus, self.head, move_head=False)
+        return self.head
+
+    def flush(self) -> None:
+        """Point HEAD at the last commit written, once."""
+
+        if self.head is not None and self.head != self.started:
+            _move_head(self.corpus, self.head, self.started)
+            self.started = self.head
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, *exc: object) -> None:
+        if exc[0] is None:
+            self.flush()
 
 
 def git_output_with_input(

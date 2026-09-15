@@ -19,6 +19,7 @@ from .config import Config
 from .corpus import CorpusError, corpus_status, init_corpus
 from .git import (
     EPOCH,
+    BuildCommitSession,
     Event,
     EventError,
     GitError,
@@ -333,10 +334,11 @@ def build_corpus(
         commit_root(config.repo_root, scratch)
         event_count = 0
         last_time = EPOCH
-        for event in merge_events(sources, until=until):
-            commit_event(event, scratch)
-            event_count += 1
-            last_time = event.source_time
+        with BuildCommitSession(scratch) as session:
+            for event in merge_events(sources, until=until):
+                session.commit(event)
+                event_count += 1
+                last_time = event.source_time
         snapshot = _snapshot_name(last_time)
         coverage = _coverage_summary(scratch)
         refresh_id = "refresh@" + snapshot.removeprefix("snapshot/")
