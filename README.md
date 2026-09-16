@@ -10,7 +10,8 @@ This is the `tools` branch — the maintainers' checkout. It holds the tooling
 that builds and maintains the corpus, the templates for the instruction files
 that make a clone of `main` usable by a coding harness, the documentation, and
 CI. End users clone `main`. The corpus itself is the `main` branch (no shared
-history), materialised as a git worktree at `./corpus/`.
+history), materialised at `JBOMOHI_CORPUS` (default `~/lojban/corpus`) as a git
+worktree.
 
 - Start here: `AGENTS.md` (charter and working protocol), then `doc/SPEC.md`.
 - Multi-session coordination: external Herdr Collab project `jbomohi`; see

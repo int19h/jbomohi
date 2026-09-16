@@ -17,7 +17,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 from ..archive.manifest import ArchiveManifest, object_path
-from ..git import Event, Identity
+from ..git import UNTITLED, Event, Identity
 
 
 class WikiParseError(ValueError):
@@ -55,6 +55,7 @@ PAGE_COLUMNS = (
     "pageid",
     "ns",
     "title",
+    "state",
     "path",
     "is_redirect",
     "first_rev",
@@ -670,6 +671,7 @@ def _log_author(item: WikiLogEvent) -> Identity:
 
 
 def _summary(title: str, revid: int, comment: str) -> str:
+    title = title.strip() or UNTITLED
     cleaned_comment = " ".join(comment.split())[:40].rstrip()
     suffix = f" (rev {revid})"
     comment_suffix = f" {cleaned_comment}" if cleaned_comment else ""
@@ -682,6 +684,7 @@ def _summary(title: str, revid: int, comment: str) -> str:
 
 
 def _log_summary(title: str, logid: int, comment: str) -> str:
+    title = title.strip() or UNTITLED
     cleaned_comment = " ".join(comment.split())[:40].rstrip()
     suffix = f" (log {logid})"
     comment_suffix = f" {cleaned_comment}" if cleaned_comment else ""
@@ -1024,7 +1027,6 @@ def project(
     """
 
     pages = merge_fragments(fragments)
-    page_by_id = {page.pageid: page for page in pages}
     log_events = sorted(logs, key=lambda item: (item.timestamp, item.logid))
     placement = _page_move_chains(pages, log_events, dict(ended_at))
     actual_move_times = {
@@ -1038,6 +1040,7 @@ def project(
     move_times = _forced_move_times(pages, placement, revision_positions)
     revision_positions, merged_gaps = _revision_positions(pages, placement, move_times)
     state_content: dict[int, bytes | None] = {}
+    state_last_revision: dict[int, int | None] = {}
     held_by_path: dict[str, int] = {}
     placeholder_paths: set[str] = set()
     # Why a path is a placeholder, so the release is reported in the right
@@ -1046,6 +1049,7 @@ def project(
     unaccounted_pages = set(unaccounted)
     for page in pages:
         state_content[page.pageid] = None
+        state_last_revision[page.pageid] = None
 
     revision_pages = [(revision, page) for page in pages for revision in page.revisions]
     page_rows = [
@@ -1053,6 +1057,9 @@ def project(
             "pageid": page.pageid,
             "ns": page.namespace,
             "title": page.title,
+            # SPEC.md 3.2/4.4: filled in after the walk, because whether a page
+            # still has a file is only known once every event has been applied.
+            "state": "",
             "path": page.path,
             "is_redirect": str(page.is_redirect).lower(),
             "first_rev": page.revisions[0].revid if page.revisions else "",
@@ -1061,6 +1068,7 @@ def project(
         }
         for page in pages
     ]
+    written_pages: set[int] = set()
     error_rows = [
         {
             "pageid": page.pageid,
@@ -1214,6 +1222,7 @@ def project(
                 else:
                     changes[path] = content
                     state_content[page.pageid] = content
+                    state_last_revision[page.pageid] = item.revid
                     held_by_path[path] = page.pageid
                     if yielding:
                         placeholder_paths.add(path)
@@ -1347,11 +1356,17 @@ def project(
                 trailers["Ordering"] = "forced-before"
             if overwritten_pageid is not None:
                 trailers["Overwritten-Page-Id"] = str(overwritten_pageid)
-                overwritten = page_by_id[overwritten_pageid]
-                if overwritten.revisions:
-                    trailers["Overwritten-Last-Rev"] = str(
-                        overwritten.revisions[-1].revid
-                    )
+                overwritten_last = state_last_revision[overwritten_pageid]
+                if overwritten_last is not None:
+                    trailers["Overwritten-Last-Rev"] = str(overwritten_last)
+            # A rename whose source and target land on the same path moves
+            # nothing: MediaWiki normalizes the first letter in a first-letter
+            # namespace, so `Module:Documentation/doc` -> `Module:documentation/doc`
+            # is logged as a move and is a no-op. SPEC.md 3.2 keeps one source
+            # log as one commit so citations resolve, so the event is still
+            # projected — it simply carries no file change, as an unchanged
+            # source event does.
+            renamed = target_path != old_path
             event = Event(
                 source="wiki",
                 source_id=f"logid={item.logid}",
@@ -1360,8 +1375,8 @@ def project(
                 source_time=item.timestamp,
                 summary=_log_summary(item.title, item.logid, item.comment),
                 author=author,
-                changes={target_path: content},
-                deletions=(old_path,),
+                changes={target_path: content} if renamed else {},
+                deletions=(old_path,) if renamed else (),
                 trailers=trailers,
             )
             if pending_event is not None:
@@ -1408,6 +1423,18 @@ def project(
 
     if pending_event is not None:
         final_changes = dict(pending_event.changes)
+        for row in page_rows:
+            pageid = row["pageid"]
+            path = row["path"]
+            assert isinstance(path, str) and isinstance(pageid, int)
+            if held_by_path.get(path) == pageid:
+                row["state"] = "current"
+            else:
+                # A page with no file at the tip carries no path: an index that
+                # points at nothing is worse to hand a reader than one that
+                # says plainly there is none (SPEC.md 3.2/4.4).
+                row["state"] = "deleted" if pageid in written_pages else "not-projected"
+                row["path"] = ""
         final_changes["_meta/wiki/pages.csv"] = _csv(PAGE_COLUMNS, page_rows)
         final_changes["_meta/wiki/revisions.csv"] = _csv(
             REVISION_COLUMNS, revision_rows

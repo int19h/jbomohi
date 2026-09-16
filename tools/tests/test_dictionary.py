@@ -66,6 +66,21 @@ def test_copy_loader_decodes_pg_text_and_ignores_public_extra_tables(
     }
 
 
+def test_copy_loader_detects_gzip_without_a_filename_suffix(tmp_path: Path) -> None:
+    path = tmp_path / "content-addressed-object"
+    path.write_bytes(
+        gzip.compress(
+            b"COPY public.sample (id, text) FROM stdin;\n1\tvalue\n\\.\n",
+            mtime=0,
+        )
+    )
+    assert load_copy_tables(
+        path,
+        {"sample": ("id", "text")},
+        forbidden=frozenset(),
+    )["sample"] == ({"id": "1", "text": "value"},)
+
+
 def test_copy_loader_recovers_literal_newline_in_exported_field(tmp_path: Path) -> None:
     path = tmp_path / "dump.sql"
     path.write_bytes(
@@ -835,3 +850,25 @@ def test_changes_feed_rejects_an_injected_off_origin_response(tmp_path: Path) ->
             client=OffOrigin(),
             now=lambda: datetime(2026, 9, 14, tzinfo=UTC),
         )
+
+
+def test_a_truncated_change_message_never_ends_the_subject_in_a_space() -> None:
+    """Cutting the message at 36 characters can land just after a word.
+
+    `definition=88416 version=0` did exactly that on the real dump: the message
+    'Add periodic-table gismu assignment algorithm' truncates to '...assignment '
+    and a commit subject may not end in a space.
+    """
+
+    from jbomohi_tools.project.dictionary import _summary
+
+    summary = _summary(
+        "Periodic-table gismu assignment algorithm",
+        "en#88416 v0",
+        "Add periodic-table gismu assignment algorithm",
+    )
+    assert summary == summary.strip()
+    assert "  " not in summary
+
+    # A message that needs no truncation is untouched.
+    assert _summary("valsi", "en#1 v1", "tweak").endswith("tweak")

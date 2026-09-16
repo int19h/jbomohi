@@ -31,7 +31,51 @@ def test_unimplemented_command_is_explicit(monkeypatch, tmp_path) -> None:
         "jbomohi_tools.cli.Config.from_env",
         lambda: object(),
     )
-    assert main(["build"]) == 2
+    assert main(["notes", "lint"]) == 2
+
+
+def test_build_update_verify_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> None:
+    config = SimpleNamespace(corpus=tmp_path / "corpus")
+    factories = {"wiki": lambda: iter(())}
+    calls: list[tuple[str, object]] = []
+    monkeypatch.setattr("jbomohi_tools.cli.Config.from_env", lambda: config)
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.source_factories",
+        lambda _config, names: calls.append(("sources", names)) or factories,
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.build_corpus",
+        lambda _config, sources, *, until: (
+            calls.append(("build", (sources, until)))
+            or SimpleNamespace(
+                head="a" * 40, commits=4, events=2, snapshot="snapshot/x"
+            )
+        ),
+    )
+    assert main(["build", "--sources", "wiki"]) == 0
+    assert calls[0] == ("sources", ["wiki"])
+    assert calls[1][0] == "build"
+    assert "events=2" in capsys.readouterr().out
+
+    assert main(["build", "--sources", "wiki", "--until", "2000-01-01"]) == 1
+
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.update_corpus",
+        lambda _config, sources: SimpleNamespace(
+            head="b" * 40, commits=6, events=1, snapshot="snapshot/y"
+        ),
+    )
+    assert main(["update", "wiki"]) == 0
+    assert "events=1" in capsys.readouterr().out
+
+    monkeypatch.setattr(
+        "jbomohi_tools.cli.verify_corpus",
+        lambda _corpus: SimpleNamespace(
+            commits=6, files=10, sources=2, csv_indexes=1, mail_messages=3
+        ),
+    )
+    assert main(["verify"]) == 0
+    assert "mail_messages=3" in capsys.readouterr().out
 
 
 def test_corpus_status_runs_through_real_cli_configuration(
@@ -40,7 +84,7 @@ def test_corpus_status_runs_through_real_cli_configuration(
     capsys,
 ) -> None:
     root = tmp_path / "tools-checkout"
-    corpus = root / "corpus"
+    corpus = tmp_path / "corpus"
     subprocess.run(
         ["git", "init", "--initial-branch=tools", str(root)],
         check=True,
@@ -53,6 +97,7 @@ def test_corpus_status_runs_through_real_cli_configuration(
         capture_output=True,
         text=True,
     )
+    monkeypatch.setenv("JBOMOHI_CORPUS", str(corpus))
     monkeypatch.chdir(root)
     assert main(["corpus", "status"]) == 0
     assert f"corpus ready: path={corpus}" in capsys.readouterr().out

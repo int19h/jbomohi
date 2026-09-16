@@ -31,9 +31,11 @@ Two branches, no shared history (`doc/SPEC.md §2`):
 - `main` — the corpus projection: data files with one commit per source event.
   Its data files are only ever written by the tools (`jbomohi build|update`);
   contributed notes and attestations are ordinary commits there. Never write
-  to it from this checkout's index. Work with it through the worktree that
-  `jbomohi corpus init` creates at `JBOMOHI_CORPUS` (default `~/lojban/corpus`).
-  File-heavy local state (corpus worktree, archive, scratch) lives under
+  to it from this checkout's index. Work with it through the separate
+  repository that `jbomohi corpus init` creates at `JBOMOHI_CORPUS` (default
+  `~/lojban/corpus`), which keeps its own objects rather than sharing this
+  checkout's.
+  File-heavy local state (corpus repository, archive, scratch) lives under
   `~/lojban/`, never under this checkout: `~/git` is a virtiofs mount, where
   per-file operations such as grep over many tiny files are much slower than
   native.

@@ -67,6 +67,14 @@ def test_load_tiki_dump_checks_field_count_and_forbidden_tables(tmp_path: Path) 
             forbidden=frozenset(),
         )
 
+    extensionless = tmp_path / "content-addressed-object"
+    extensionless.write_bytes(path.read_bytes())
+    assert load_tiki_dump(
+        extensionless,
+        {"sample": ("id", "text")},
+        forbidden=frozenset(),
+    ).tables["sample"] == ({"id": b"1", "text": b"text"},)
+
     wrong_schema = tmp_path / "wrong-schema.sql.gz"
     wrong_schema.write_bytes(
         gzip.compress(
@@ -369,7 +377,8 @@ def test_project_keeps_history_only_and_colliding_current_as_forced_final() -> N
     )
     assert "tiki/Line%0D%0ABreak.tiki" in control.changes
     versions = events[-1].changes["_meta/tiki/versions.csv"]
-    assert '"Line\r\nBreak",tiki=Line%0D%0ABreak@1' in versions
+    # The index now says whether a row has a file at the tip (SPEC.md 3.2/4.4).
+    assert '"Line\r\nBreak",current,tiki=Line%0D%0ABreak@1' in versions
     coverage = events[-1].changes["_meta/tiki/coverage.toml"]
     assert "history_only_pages = 2" in coverage
     assert "current_history_version_collisions = 2" in coverage
@@ -534,8 +543,35 @@ def test_ingest_tiki_export_writes_three_operator_export_manifests(
         assert manifest.source == "tiki"
         assert manifest.kind == "db-export"
         assert manifest.origin == "operator export 2026-09-13"
+        assert manifest.coverage["character_encoding"] == "latin1-transcoded"
         assert object_path(archive, manifest.sha256).is_file()
 
     (export / "tiki-user-preferences.tsv.gz").unlink()
     with pytest.raises(ArchiveError, match="is missing"):
         ingest_tiki_export(tmp_path / "other-archive", export, "2026-09-13")
+
+
+def test_stored_mojibake_is_recognised_by_definition_not_by_spelling() -> None:
+    """A latin-1 reading of UTF-8 is what mojibake *is*, so test that.
+
+    The 2026-09-15 utf8mb4 re-export shows the mojibake is in the database
+    itself, so SPEC.md 3.2.5(c) publishes those bytes unrepaired and coverage
+    merely counts them.
+    """
+
+    from jbomohi_tools.project.tiki import looks_like_stored_mojibake
+
+    # Real text, stored as its UTF-8 bytes read back as latin-1.
+    for original in ("caf\u00e9", "\u201cquoted\u201d", "na\u00efve"):
+        assert looks_like_stored_mojibake(original.encode("utf-8").decode("latin-1")), (
+            original
+        )
+    # Text that is simply correct, in any script, is not mojibake.
+    for good in (
+        "caf\u00e9",
+        "plain ascii",
+        "\u65e5\u672c\u8a9e",
+        "Gr\u00fc\u00dfe",
+        "",
+    ):
+        assert not looks_like_stored_mojibake(good), good

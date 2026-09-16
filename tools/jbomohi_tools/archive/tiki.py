@@ -94,6 +94,7 @@ def ingest_tiki_export(
             coverage={
                 "from": export_date,
                 "to": export_date,
+                "character_encoding": character_encoding,
                 "counts": counts[name],
             },
             notes=" ".join(notes),

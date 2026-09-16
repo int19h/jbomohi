@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import logging
 from collections.abc import Callable, Sequence
+from datetime import datetime
 from pathlib import Path
 
 from .archive import (
@@ -26,10 +27,18 @@ from .archive import (
     verify_archive,
     verify_manifests,
 )
+from .build import (
+    audit_events,
+    build_corpus,
+    push_main_ranges,
+    update_corpus,
+    verify_corpus,
+)
 from .config import Config, ConfigError
 from .corpus import CorpusError, corpus_status, init_corpus
 from .git import EventError, GitError, commit_event, git_output
 from .project.cll import project as project_cll
+from .sources import SourceWiringError, source_factories
 
 LOG = logging.getLogger("jbomohi")
 Handler = Callable[[argparse.Namespace, Config], int]
@@ -249,6 +258,63 @@ def _cll_render(args: argparse.Namespace, config: Config) -> int:
     return 0
 
 
+def _until(value: str | None) -> datetime | None:
+    if value is None:
+        return None
+    raise ValueError(
+        "--until is not supported until every selected projector accepts a cut-off"
+    )
+
+
+def _build(args: argparse.Namespace, config: Config) -> int:
+    report = build_corpus(
+        config,
+        source_factories(config, args.sources),
+        until=_until(args.until),
+    )
+    print(
+        f"build: head={report.head} commits={report.commits} events={report.events} "
+        f"snapshot={report.snapshot}"
+    )
+    if args.push:
+        pushed = push_main_ranges(config.corpus, report.snapshot)
+        print(f"push: main_updates={pushed.main_updates} snapshot={pushed.snapshot}")
+    return 0
+
+
+def _update(args: argparse.Namespace, config: Config) -> int:
+    report = update_corpus(config, source_factories(config, args.sources or None))
+    if report is None:
+        print("update: no new source events")
+    else:
+        print(
+            f"update: head={report.head} commits={report.commits} "
+            f"events={report.events} snapshot={report.snapshot}"
+        )
+        if args.push:
+            pushed = push_main_ranges(config.corpus, report.snapshot)
+            print(
+                f"push: main_updates={pushed.main_updates} snapshot={pushed.snapshot}"
+            )
+    return 0
+
+
+def _verify(args: argparse.Namespace, config: Config) -> int:
+    if args.events:
+        audit = audit_events(source_factories(config, args.sources or None))
+        for source, source_id, problem in audit.invalid:
+            print(f"invalid event: {source} {source_id}: {problem}")
+        print(f"verify events: events={audit.events} invalid={len(audit.invalid)}")
+        return 1 if audit.invalid else 0
+    report = verify_corpus(config.corpus)
+    print(
+        f"verify: commits={report.commits} files={report.files} "
+        f"sources={report.sources} csv_indexes={report.csv_indexes} "
+        f"mail_messages={report.mail_messages}"
+    )
+    return 0
+
+
 def _leaf(
     subparsers: argparse._SubParsersAction[argparse.ArgumentParser],
     name: str,
@@ -264,7 +330,7 @@ def parser() -> argparse.ArgumentParser:
     root.add_argument("-v", "--verbose", action="count", default=0)
     commands = root.add_subparsers(dest="command", required=True)
 
-    corpus = commands.add_parser("corpus", help="manage the main corpus worktree")
+    corpus = commands.add_parser("corpus", help="manage the corpus repository")
     corpus_commands = corpus.add_subparsers(dest="corpus_command", required=True)
     _leaf(corpus_commands, "init", _corpus_init)
     _leaf(corpus_commands, "status", _corpus_status)
@@ -303,13 +369,21 @@ def parser() -> argparse.ArgumentParser:
     wiki.add_argument("--export-date", required=True)
     _leaf(archive_commands, "verify", _archive_verify)
 
-    build = _leaf(commands, "build", _not_implemented("build"))
+    build = _leaf(commands, "build", _build)
     build.add_argument("--sources", nargs="+")
     build.add_argument("--until")
+    build.add_argument("--push", action="store_true")
 
-    update = _leaf(commands, "update", _not_implemented("update"))
+    update = _leaf(commands, "update", _update)
     update.add_argument("sources", nargs="*")
-    _leaf(commands, "verify", _not_implemented("verify"))
+    update.add_argument("--push", action="store_true")
+    verify = _leaf(commands, "verify", _verify)
+    verify.add_argument(
+        "--events",
+        action="store_true",
+        help="validate every event the sources would commit, and commit none",
+    )
+    verify.add_argument("--sources", nargs="+")
 
     cll = commands.add_parser("cll", help="CLL rendering commands")
     cll_commands = cll.add_subparsers(dest="cll_command", required=True)
@@ -347,6 +421,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         CorpusError,
         EventError,
         GitError,
+        SourceWiringError,
         OSError,
         ValueError,
     ) as exc:

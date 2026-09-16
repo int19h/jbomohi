@@ -24,7 +24,7 @@ from email.utils import parseaddr, parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 
-from ..git import Event, Identity
+from ..git import EPOCH, Event, Identity
 from .dictionary import slug
 
 _MAX_MESSAGE_BYTES = 32 * 1024 * 1024
@@ -48,19 +48,16 @@ SOURCE_RANKS = {
 DEFAULT_ARCHIVE_GAPS: dict[str, dict[str, str]] = {
     "lojban-list": {
         "old_lojban_list": (
-            "not fully populated; resume: JBOMOHI_ARCHIVE=~/lojban/archive "
-            "uv run --isolated --python 3.13 jbomohi archive fetch old-lojban-list"
+            "not fully populated; resume: jbomohi archive fetch old-lojban-list"
         ),
         "lojban_list_old": (
             "selective gap source not populated; resume only after absent Message-IDs are known: "
-            "JBOMOHI_ARCHIVE=~/lojban/archive uv run --isolated --python 3.13 jbomohi "
-            "archive fetch mhonarc --list lojban-list-old --start 1"
+            "jbomohi archive fetch mhonarc --list lojban-list-old --start 1"
         ),
     },
     "lojban-beginners": {
         "mhonarc_union": (
-            "not fully populated; resume: JBOMOHI_ARCHIVE=~/lojban/archive "
-            "uv run --isolated --python 3.13 jbomohi archive fetch mhonarc "
+            "not fully populated; resume: jbomohi archive fetch mhonarc "
             "--list lojban-beginners"
         )
     },
@@ -150,6 +147,8 @@ class ParsedMail:
     time_confidence: str
     event_window: str | None
     source_dated: bool
+    date_source: str
+    unusable_dates: tuple[str, ...]
     references: tuple[str, ...]
     in_reply_to: str | None
     header_count: int
@@ -384,42 +383,69 @@ def _preserved_header(raw: bytes, message: Message, name: str) -> tuple[str, boo
     return decoded, False
 
 
+def _naive_header_date(value: str | None) -> datetime | None:
+    """Parse one RFC 822 date header, or None when it does not parse."""
+
+    if not value:
+        return None
+    try:
+        parsed = parsedate_to_datetime(value)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return parsed
+
+
 def _message_date(
-    message: Message, manifestation: MailManifestation
-) -> tuple[datetime, str, str | None, bool]:
+    message: Message, manifestation: MailManifestation, raw: bytes
+) -> tuple[datetime, str, str | None, bool, str, tuple[str, ...]]:
+    """Date one message, saying where the date came from and what was refused.
+
+    SPEC.md 3.3: a `Date:` or `Received:` value resolving at or before the Unix
+    epoch is a corrupt header rather than a date, so it is discarded and the
+    next evidence is used. Each discarded value is returned verbatim so
+    `gaps.csv` can record it and `coverage.toml` can count it.
+    """
+
+    unusable: list[str] = []
     date_value = _decoded_header(message, "Date")
-    if date_value:
-        try:
-            parsed = parsedate_to_datetime(date_value)
-        except (TypeError, ValueError, OverflowError):
-            parsed = None
-        if parsed is not None:
-            if parsed.tzinfo is None:
-                return parsed.replace(tzinfo=UTC), "tz-unknown", None, True
-            return (
-                parsed.astimezone(UTC).replace(microsecond=0),
-                "exact",
-                None,
-                True,
-            )
+    # The record keeps the header as the message actually carried it, not as
+    # the email policy re-renders it.
+    literal = _raw_header(raw, "Date")
+    verbatim = _decode_raw_header(literal) if literal is not None else date_value
+    parsed = _naive_header_date(date_value)
+    if parsed is not None:
+        aware = parsed if parsed.tzinfo is not None else parsed.replace(tzinfo=UTC)
+        moment = aware.astimezone(UTC).replace(microsecond=0)
+        if moment > EPOCH:
+            confidence = "tz-unknown" if parsed.tzinfo is None else "exact"
+            return moment, confidence, None, True, "header", ()
+        unusable.append(_one_line(verbatim))
     for received in message.get_all("Received", []):
         candidate = str(received).rsplit(";", 1)[-1].strip()
-        try:
-            parsed = parsedate_to_datetime(candidate)
-        except (TypeError, ValueError, OverflowError):
+        parsed = _naive_header_date(candidate)
+        if parsed is None:
             continue
-        if parsed is not None:
-            if parsed.tzinfo is None:
-                parsed = parsed.replace(tzinfo=UTC)
-            return (
-                parsed.astimezone(UTC).replace(microsecond=0),
-                "tz-unknown",
-                None,
-                True,
-            )
+        aware = parsed if parsed.tzinfo is not None else parsed.replace(tzinfo=UTC)
+        moment = aware.astimezone(UTC).replace(microsecond=0)
+        if moment > EPOCH:
+            return moment, "tz-unknown", None, True, "received", tuple(unusable)
+        unusable.append(_one_line(candidate))
     timestamp = manifestation.archive_time.astimezone(UTC).replace(microsecond=0)
     day = timestamp.date().isoformat()
-    return timestamp, "window", f"{day}..{day}", False
+    return (
+        timestamp,
+        "window",
+        f"{day}..{day}",
+        False,
+        "archive-order",
+        tuple(unusable),
+    )
+
+
+def _one_line(value: str | None) -> str:
+    """Collapse a header to one CSV-safe line, preserving its characters."""
+
+    return " ".join((value or "").split())
 
 
 def _body_bytes(part: Message) -> bytes:
@@ -497,9 +523,14 @@ def parse_mail(manifestation: MailManifestation) -> ParsedMail:
     if not from_address or "@" not in from_address:
         from_address = f"unknown-{raw_sha1[:12]}@jbomohi.invalid"
         from_name = from_header
-    timestamp, confidence, event_window, source_dated = _message_date(
-        message, manifestation
-    )
+    (
+        timestamp,
+        confidence,
+        event_window,
+        source_dated,
+        date_source,
+        unusable_dates,
+    ) = _message_date(message, manifestation, raw)
     references = tuple(
         reference
         for header in message.get_all("References", [])
@@ -529,6 +560,8 @@ def parse_mail(manifestation: MailManifestation) -> ParsedMail:
         time_confidence=confidence,
         event_window=event_window,
         source_dated=source_dated,
+        date_source=date_source,
+        unusable_dates=unusable_dates,
         references=references,
         in_reply_to=in_reply_to,
         header_count=sum(1 for _name, _value in message.raw_items()),
@@ -1049,7 +1082,9 @@ def _csv_text(columns: Sequence[str], rows: Sequence[Mapping[str, object]]) -> s
 
 
 def _summary(subject: str, list_name: str) -> str:
-    cleaned = " ".join(subject.split())
+    # Mail keeps its own placeholder, which predates the general rule and is
+    # already what `messages.csv` and the thread views show.
+    cleaned = " ".join(subject.split()) or "[no subject]"
     budget = 72 - len(f"mail/{list_name}: ")
     return cleaned[: max(1, budget - 1)] + "…" if len(cleaned) > budget else cleaned
 
@@ -1173,6 +1208,7 @@ def project(
             "list": message.manifestation.list_name,
             "message_id": message.message_id,
             "date": _iso(message.timestamp),
+            "date_source": message.date_source,
             "from": message.from_header,
             "subject": message.subject,
             "thread_key": message.thread_key,
@@ -1226,6 +1262,7 @@ def project(
                 "list",
                 "message_id",
                 "date",
+                "date_source",
                 "from",
                 "subject",
                 "thread_key",
@@ -1236,6 +1273,22 @@ def project(
             ),
             [row for row in message_rows if row["list"] == list_name],
         )
+        unusable_rows = [
+            {
+                "list": list_name,
+                "message_id": message.message_id,
+                "file": message.file,
+                "manifestation": message.manifestation.manifestation,
+                "reason": f"date header unusable: {literal}",
+            }
+            for message in list_messages
+            for literal in message.unusable_dates
+        ]
+        if unusable_rows:
+            final_changes[f"_meta/mail/{list_name}/gaps.csv"] = _csv_text(
+                ("list", "message_id", "file", "manifestation", "reason"),
+                unusable_rows,
+            )
         final_changes[f"_meta/mail/{list_name}/threads.csv"] = _csv_text(
             ("list", "thread_key", "root_message_id", "messages", "path"),
             [row for row in thread_index_rows if row["list"] == list_name],
@@ -1268,6 +1321,10 @@ def project(
             f"missing_message_id = {sum(not item.had_message_id for item in list_messages)}",
             f"raw_8bit_headers = {sum(item.raw_8bit_headers for item in list_messages)}",
             f"spam_suspect = {sum(item.spam_suspect for item in list_messages)}",
+            (
+                "unusable_date_headers = "
+                f"{sum(len(item.unusable_dates) for item in list_messages)}"
+            ),
             'jbovlaste_admin = "excluded; machine-generated source available separately"',
             "",
             "[manifestation_counts]",
