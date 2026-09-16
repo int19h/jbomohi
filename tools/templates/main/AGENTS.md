@@ -157,8 +157,10 @@ One commit per source event, so git's own tools are the interface to time.
   when its title does, and `git log --follow -- <path>` will cross that
   rename. But once the real renames run out, git keeps guessing by content
   similarity and can splice an unrelated file onto the front of the history.
-  It does that on real pages here: on `BPFK Section: gadri` it adds four
-  versions of an unrelated Tiki page. Check what `--follow` returns against
+  It does that on real pages here, and not by a little: on `BPFK Section:
+  gadri` it adds four versions of an unrelated Tiki page, and on `BPFK
+  Section: Non-logical Connectives` it adds twenty-nine, more than doubling
+  the history with the versions of a page about something else. Check what `--follow` returns against
   the page's `revisions` count in `_meta/wiki/pages.csv` and against the
   `Moved-From:` trailers of its `moved` commits. A page that was moved away
   and back to the same name needs no `--follow` at all: plain
@@ -286,7 +288,9 @@ say so.
   rather than one day — and within them only `[HH:MM]` times and the order of
   midnight rollovers are known; a line whose timestamp is absent is written
   `--:--:--`.
-- **Tiki**: some text is *mojibake*, a latin-1 reading of UTF-8 left by an old
+- **Tiki**: Tiki kept no edit summaries, so a Tiki version has an author and a
+  time and nothing else; `_meta/tiki/versions.csv` has no `comment` column
+  because there is nothing to put in it. Some text is *mojibake*, a latin-1 reading of UTF-8 left by an old
   migration, such as `Ã©` where `é` was meant. Those bytes are published as the
   database holds them, never repaired, and `_meta/tiki/coverage.toml` counts
   them per table. Quote them as they are and say what they are.
