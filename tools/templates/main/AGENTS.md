@@ -147,20 +147,24 @@ One commit per source event, so git's own tools are the interface to time.
 ```
 
 `<Source-Id>` names the version: `revid=<n>` (wiki), the `Message-ID` (mail),
-`YYYY-MM-DD` (IRC day), `definition=<id> version=<n>` (dict), `cll=<edition>`
+`YYYY-MM-DD` (IRC day), `definition=<id> version=<n>` (dict; versions count from 0), `cll=<edition>`
 (CLL), `tiki=<page>@<v>` (Tiki).
 
 A `Source-Id` may itself contain `@`: the path ends at the first `@` and the
-line range starts at the last `:L`. Copy the id verbatim from the commit
-trailer, angle brackets included for mail.
+line range starts at the last `:L`.
+
+For mail the id is the message's `Message-ID`, written in a citation with the
+angle brackets that are part of its syntax. The `Source-Id:` trailer stores it
+without them, so search for the bare form:
+`git log --grep='Source-Id: 20041225202752.gd20429@chain.digitalkingdom.org'`.
 
 ```
 wiki/main/BPFK_Section%3A_gadri.wiki@revid=123823:L12-30
 mail/lojban-list/threads/2004/72b2a97637f2-holiday_present_from_the_bpfk%3A_the_gadri_prop.txt@<20041225202752.gd20429@chain.digitalkingdom.org>:L1-40
-dict/kau/en-1700.md@definition=1700 version=1:L4-9
+dict/kau/en-1700.md@definition=1700 version=0:L4-9
 cll/editions/1.1-2019/09-sumti-tcita.txt@cll=1.1-2019:L40-52
-irc/lojban/2015/2015-06-20.txt@2015-06-20:L143-160
-tiki/gadri.tiki@tiki=gadri@12:L3-8
+irc/lojban/2015/2015-06-02.txt@2015-06-02:L2-20
+tiki/BPFK_Section%3A_Inexact_Numbers.tiki@tiki=BPFK_Section%3A_Inexact_Numbers@2:L3-12
 ```
 
 A citation to the current version may omit `@<Source-Id>`; the line numbers

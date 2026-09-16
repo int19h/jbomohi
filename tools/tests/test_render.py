@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import os
 import re
+import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -285,3 +287,89 @@ def test_no_development_or_coordination_content_reaches_main() -> None:
         lowered = text.lower()
         for word in banned:
             assert word not in lowered, f"{name} mentions {word!r}"
+
+
+def test_every_citation_example_resolves_in_the_corpus() -> None:
+    """Shape is not resolution, and checking shape is how a broken one got in.
+
+    A Tiki example was added with an invented version number and a sibling test
+    that checked the grammar it was written in. It parsed perfectly and pointed
+    at nothing. This resolves each example against a real corpus when one is
+    configured, which is the only check that would have caught it.
+    """
+
+    corpus = os.environ.get("JBOMOHI_CORPUS")
+    if not corpus:
+        pytest.skip("set JBOMOHI_CORPUS to resolve the citation examples")
+    root = Path(corpus)
+    if not (root / ".git").is_dir():
+        pytest.skip(f"no corpus repository at {root}")
+
+    template = (
+        Path(__file__).resolve().parents[2] / "tools/templates/main/AGENTS.md"
+    ).read_text(encoding="utf-8")
+    unresolved: list[str] = []
+    for line in template.splitlines():
+        match = CITATION.match(line.strip())
+        if match is None:
+            continue
+        path, span = match.group("path"), match.group(0).rsplit(":L", 1)[1]
+        first = int(span.split("-", 1)[0])
+        target = root / path
+        if not (root / path.split("/", 1)[0]).is_dir():
+            # A source this snapshot does not carry yet, such as irc/ before
+            # its first fetch. Skipping the whole directory is honest; skipping
+            # a missing file inside a present one would hide the bug this test
+            # exists for.
+            continue
+        if not target.is_file():
+            unresolved.append(f"{path}: no such file in the corpus")
+            continue
+        lines = target.read_text(encoding="utf-8", errors="replace").count("\n")
+        if first > lines:
+            unresolved.append(f"{path}: cites L{span} but has {lines} lines")
+    assert not unresolved, "; ".join(unresolved)
+
+
+def test_every_cited_source_id_exists_in_the_history() -> None:
+    """The version an example names must be one the history actually recorded."""
+
+    corpus = os.environ.get("JBOMOHI_CORPUS")
+    if not corpus:
+        pytest.skip("set JBOMOHI_CORPUS to resolve the citation examples")
+    root = Path(corpus)
+    if not (root / ".git").is_dir():
+        pytest.skip(f"no corpus repository at {root}")
+
+    template = (
+        Path(__file__).resolve().parents[2] / "tools/templates/main/AGENTS.md"
+    ).read_text(encoding="utf-8")
+    missing: list[str] = []
+    for line in template.splitlines():
+        match = CITATION.match(line.strip())
+        if match is None:
+            continue
+        source_id = match.group("id")
+        if not (root / match.group("path").split("/", 1)[0]).is_dir():
+            continue
+        # A citation writes a mail Message-ID inside the angle brackets that
+        # are part of its syntax; the trailer stores it bare (SPEC.md 3.1.4).
+        source_id = source_id.strip("<>")
+        found = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(root),
+                "log",
+                "-1",
+                "--format=%H",
+                f"--grep=Source-Id: {re.escape(source_id)}$",
+                "--extended-regexp",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if not found.stdout.strip():
+            missing.append(f"{source_id}: no commit carries this Source-Id")
+    assert not missing, "; ".join(missing)
