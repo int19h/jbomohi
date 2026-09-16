@@ -743,6 +743,11 @@ def _verify_mail(corpus: Path) -> int:
     return mail_messages
 
 
+# How many events an update commits before it moves HEAD. Small enough that a
+# kill costs seconds of work, large enough that the ref update is noise.
+UPDATE_FLUSH_EVENTS = 256
+
+
 def update_corpus(
     config: Config,
     sources: Mapping[str, EventFactory],
@@ -758,7 +763,14 @@ def update_corpus(
         config.corpus, ["status", "--porcelain=v1", "--untracked-files=all"]
     )
     if dirty:
-        raise CorpusError("corpus working tree is dirty; refusing update")
+        raise CorpusError(
+            "corpus working tree is dirty; refusing update. An update that was "
+            "killed between flushes leaves the files of up to "
+            f"{UPDATE_FLUSH_EVENTS} events that were never committed: if that "
+            "is what this is, `git -C <corpus> reset --hard HEAD` discards "
+            "them and the events are appended again on the next run. Check "
+            "first that none of it is contributed work."
+        )
     known = existing_source_ids(config.corpus)
     event_count = 0
     last_time: datetime | None = None
@@ -768,15 +780,27 @@ def update_corpus(
     # describes the corpus, and an update that adds three messages has not made
     # the other hundred thousand stop existing.
     tallies: dict[str, SourceTally] = {}
-    for source_name, event in merge_named_events(sources, meta_sink=source_meta):
-        tallies.setdefault(source_name, SourceTally()).record(event.source_time)
-        if (event.source, event.source_id) in known:
-            continue
-        commit_event(event, config.corpus)
-        sources_with_new_events.add(source_name)
-        known.add((event.source, event.source_id))
-        event_count += 1
-        last_time = event.source_time
+    # One session for the whole append. Committing each event through
+    # `commit_event` proved the worktree clean and rebuilt the index from HEAD
+    # first, so every appended day cost a scan of the entire corpus: appending
+    # 3,300 IRC days to a 286,212-file corpus ran at 7 seconds a commit, six
+    # hours for work the event itself does in milliseconds.
+    with BuildCommitSession(config.corpus) as live:
+        for source_name, event in merge_named_events(sources, meta_sink=source_meta):
+            tallies.setdefault(source_name, SourceTally()).record(event.source_time)
+            if (event.source, event.source_id) in known:
+                continue
+            live.commit(event)
+            sources_with_new_events.add(source_name)
+            known.add((event.source, event.source_id))
+            event_count += 1
+            last_time = event.source_time
+            if event_count % UPDATE_FLUSH_EVENTS == 0:
+                # A session that moved HEAD only at the end would lose the
+                # whole append to a kill. Flushing keeps an interrupted update
+                # resumable, which is how a six-hour run was stopped without
+                # losing the days it had already written.
+                live.flush()
     if last_time is None:
         return None
     snapshot = _snapshot_name(last_time)
