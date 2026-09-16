@@ -278,3 +278,77 @@ def test_channels_are_ordered_smallest_first() -> None:
 
     assert CHANNELS.index("lojban") == len(CHANNELS) - 1
     assert set(CHANNELS) == {"ckule", "jbosnu", "lojban"}
+
+
+def test_a_refetched_directory_index_is_counted_once(tmp_path: Path) -> None:
+    """Two manifests for one index are two versions of it, not two directories.
+
+    The current month's index changes whenever a day is added, and every
+    version is kept. Summing them counted that month's files once per fetch,
+    which inflates what the server is said to have listed and so understates
+    the gap.
+    """
+
+    from jbomohi_tools.project.irc import load_channel_archives
+
+    log = b"2014-03-01 04:07:13 PST/-0800 <gleki> coi\n"
+    fetch(
+        tmp_path,
+        channels=("lojban",),
+        client=FakeClient(fixture_responses(log)),
+        now=lambda: datetime(2026, 9, 14, tzinfo=UTC),
+    )
+    responses = fixture_responses(log)
+    responses["https://lojban.org/irclogs/lojban/2014_03/"] += b"<!-- changed -->"
+    fetch(
+        tmp_path,
+        channels=("lojban",),
+        client=FakeClient(responses),
+        now=lambda: datetime(2026, 9, 15, tzinfo=UTC),
+    )
+
+    archives = load_channel_archives(tmp_path)
+    assert archives["lojban"].listed == 1
+    assert archives["lojban"].held == 1
+    assert archives["lojban"].directories_walked == 1
+    assert archives["lojban"].walk_complete is True
+
+
+def test_an_interrupted_walk_is_visible_in_the_channel_archive(tmp_path: Path) -> None:
+    """A fetch that dies after one directory must not look nearly complete.
+
+    `listed` comes from the indexes that were archived, so a walk that visited
+    one directory of three compares that directory against itself. The channel
+    index says how many directories exist, which is what makes the shortfall
+    visible at all.
+    """
+
+    from jbomohi_tools.project.irc import load_channel_archives
+
+    log = b"2014-03-01 04:07:13 PST/-0800 <gleki> coi\n"
+    responses = {
+        "https://lojban.org/irclogs/lojban/": index("2014_03/", "2015_04/", "2016_05/"),
+        "https://lojban.org/irclogs/lojban/2014_03/": index("2014_03_01.txt"),
+        "https://lojban.org/irclogs/lojban/2014_03/2014_03_01.txt": log,
+    }
+
+    class DyingClient(FakeClient):
+        def get(self, url: str) -> HttpResponse:
+            if url not in self.responses:
+                raise IrcFetchError(f"failed to fetch {url}: HTTP Error 523")
+            return super().get(url)
+
+    with pytest.raises(IrcFetchError):
+        fetch(
+            tmp_path,
+            channels=("lojban",),
+            client=DyingClient(responses),
+            now=lambda: datetime(2026, 9, 14, tzinfo=UTC),
+        )
+
+    archive = load_channel_archives(tmp_path)["lojban"]
+    assert archive.directories_listed == 3
+    assert archive.directories_walked == 1
+    assert archive.walk_complete is False
+    # The trap: one of one file taken, from one of three directories.
+    assert (archive.listed, archive.held, archive.unfetched) == (1, 1, 0)
