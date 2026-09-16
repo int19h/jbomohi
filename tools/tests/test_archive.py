@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -101,6 +102,60 @@ def test_store_object_is_content_addressed_immutable_and_idempotent(
     assert first == second
     assert first.path.read_bytes() == b"same bytes"
     assert first.path.stat().st_mode & 0o222 == 0
+
+
+def test_store_object_survives_a_temporary_left_by_a_killed_process(
+    tmp_path: Path,
+) -> None:
+    """A stale temporary is not the object, and must not be read as one.
+
+    The temporary used to be named per process, so a name left behind by a
+    process the kernel killed (no `finally`, no unlink) collided with the next
+    process the kernel gave that pid, and the collision handler read a
+    destination that was not there.
+    """
+
+    payload = b"payload the killed process was writing"
+    digest = hashlib.sha256(payload).hexdigest()
+    path = object_path(tmp_path, digest)
+    path.parent.mkdir(parents=True)
+    stale = path.with_name(f".{digest}.{os.getpid()}.tmp")
+    stale.write_bytes(b"half of the pay")
+    stale.chmod(0o444)
+
+    stored = store_object(tmp_path, payload)
+
+    assert stored.path.read_bytes() == payload
+    assert stored.sha256 == digest
+
+
+def test_store_object_reports_a_collision_rather_than_overwriting(
+    tmp_path: Path,
+) -> None:
+    payload = b"the bytes this digest names"
+    path = object_path(tmp_path, hashlib.sha256(payload).hexdigest())
+    path.parent.mkdir(parents=True)
+    path.write_bytes(b"something else entirely")
+    with pytest.raises(ArchiveError, match="collision"):
+        store_object(tmp_path, payload)
+
+
+def test_store_object_writes_nothing_when_the_object_is_already_held(
+    tmp_path: Path,
+) -> None:
+    """Re-storing held bytes is the common case; it must not write a payload.
+
+    Making the directory unwritable is the only way to observe the difference
+    from outside: creating a temporary there would fail.
+    """
+
+    payload = b"already in the archive"
+    first = store_object(tmp_path, payload)
+    first.path.parent.chmod(0o555)
+    try:
+        assert store_object(tmp_path, payload) == first
+    finally:
+        first.path.parent.chmod(0o755)
 
 
 def test_store_file_streams_content_and_reuses_the_same_object(tmp_path: Path) -> None:
