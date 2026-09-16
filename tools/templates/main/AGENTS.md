@@ -179,10 +179,14 @@ One commit per source event, so git's own tools are the interface to time.
 (IRC day), `definition=<id> version=<n>` (dict; versions count from 0),
 `cll=<edition>` (CLL), `tiki=<page>@<v>` (Tiki).
 
-A fact about the event itself rather than about the text — who made it, when,
-with what edit summary — cites the `Source-Id` alone, for example
-`revid=119555` or `logid=61219`; the reader resolves it with
-`git log --grep='Source-Id: revid=119555'` and reads the commit.
+A fact about a wiki event itself rather than about its text — who made it,
+when, and what its trailers say — cites the wiki id alone, `revid=119555` or
+`logid=61219`; the reader resolves it with
+`git log --grep='Source-Id: revid=119555'` and reads the commit. Only wiki
+ids are unique across the repository, so this bare form is for wiki events
+only; a cross-posted mail message, for instance, has one Message-ID and one
+commit per list. The commit holds a truncated edit summary; the full one is
+in `_meta/wiki/revisions.csv`.
 
 A `Source-Id` may itself contain `@`: the path ends at the first `@` and the
 line range starts at the last `:L`.
