@@ -279,6 +279,10 @@ def test_projected_days_commit_as_one_source_event_each(tmp_path: Path) -> None:
     assert git(corpus, "rev-list", "--count", "HEAD") == "2"
     assert set(git(corpus, "ls-tree", "-r", "--name-only", "HEAD").splitlines()) == {
         "_meta/irc/lojban/days.csv",
+        # SPEC.md 3.4 gives IRC a day index and a gaps file; neither says how
+        # far the archive itself reaches, so the final event carries a coverage
+        # file as well.
+        "_meta/irc/lojban/coverage.toml",
         "irc/lojban/2014/2014-03-01.txt",
         "irc/lojban/2014/2014-03-02.txt",
     }
@@ -477,3 +481,73 @@ def test_units_sort_by_actual_instant_across_offsets() -> None:
     events = list(project([later, early]))
     assert [event.source for event in events] == ["irc/lojban", "irc/ckule"]
     assert events[1].source_time - events[0].source_time == timedelta(hours=1)
+
+
+def test_coverage_distinguishes_a_short_record_from_a_short_fetch() -> None:
+    """A channel that stops in 2022 needs to say which kind of stop it was.
+
+    `days.csv` lists what was projected and `gaps.csv` what was recorded absent
+    within that span. Neither reaches past the last day held, so a fetch that
+    died mid-run and a conversation that ended looked identical.
+    """
+
+    from jbomohi_tools.project.irc import ChannelArchive, _coverage_toml
+
+    units = [
+        _unit("lojban", "2022-07-30"),
+        _unit("lojban", "2022-07-31"),
+    ]
+    complete = _coverage_toml(
+        "lojban", units, [], ChannelArchive(listed=2, held=2, fetched_on="2026-09-16")
+    )
+    assert "days = 2" in complete
+    assert 'first_day = "2022-07-30"' in complete
+    assert 'last_day = "2022-07-31"' in complete
+    assert 'fetched_on = "2026-09-16"' in complete
+    assert "files_listed_but_not_archived = 0" in complete
+    assert "note = " not in complete
+
+    truncated = _coverage_toml(
+        "lojban", units, [], ChannelArchive(listed=953, held=2, fetched_on="2026-09-16")
+    )
+    assert "files_the_server_listed = 953" in truncated
+    assert "files_listed_but_not_archived = 951" in truncated
+    # The distinction the file exists for.
+    assert "the gap is in the fetch rather than in the record" in truncated
+
+
+def test_coverage_counts_days_recorded_absent_separately() -> None:
+    """Days inside the span that were never logged are not a fetch failure."""
+
+    from datetime import date as _date
+
+    from jbomohi_tools.project.irc import ChannelArchive, _coverage_toml
+
+    units = [_unit("lojban", "2015-05-01"), _unit("lojban", "2015-05-03")]
+    rendered = _coverage_toml(
+        "lojban", units, [_date(2015, 5, 2)], ChannelArchive(listed=2, held=2)
+    )
+    assert "days = 2" in rendered
+    assert "days_recorded_absent = 1" in rendered
+
+
+def _unit(channel: str, day: str):
+    """A minimal projected unit, for renderers that only read its date."""
+
+    from datetime import datetime as _dt
+
+    from jbomohi_tools.project.irc import IrcUnit as _IrcUnit
+
+    return _IrcUnit(
+        channel=channel,
+        date_key=day,
+        format="iso",
+        tz="+00:00",
+        source=f"{channel}/{day}.txt",
+        body=("00:00:00 <a> hi",),
+        source_lines=1,
+        messages=1,
+        nicks=1,
+        source_time=_dt.fromisoformat(f"{day}T23:59:59+00:00"),
+        time_confidence="exact",
+    )
