@@ -587,3 +587,257 @@ def test_build_session_carries_submodules_and_gitlinks(tmp_path: Path) -> None:
     assert git(fast, "show", "HEAD:.gitmodules") == git(
         careful, "show", "HEAD:.gitmodules"
     )
+
+
+def test_fast_import_history_is_identical_to_both_other_paths(tmp_path: Path) -> None:
+    """Three backends, one history: the objects must be the same objects.
+
+    fast-import writes commits directly instead of staging an index, so this
+    pins every part the plumbing path decides: author and committer identity,
+    the raw date, the message and its trailers, the tree, and the worktree the
+    build leaves for `verify` to read.
+    """
+
+    from jbomohi_tools.git import BuildCommitSession, FastImportSession
+
+    events = _sequence(12)
+
+    careful = _fresh(tmp_path, "careful")
+    for event in events:
+        commit_event(event, careful)
+
+    session = _fresh(tmp_path, "session")
+    with BuildCommitSession(session) as live:
+        for event in events:
+            live.commit(event)
+
+    imported = _fresh(tmp_path, "imported")
+    with FastImportSession(imported) as stream:
+        for event in events:
+            stream.commit(event)
+
+    expected = git(careful, "rev-parse", "HEAD")
+    assert git(session, "rev-parse", "HEAD") == expected
+    assert git(imported, "rev-parse", "HEAD") == expected
+    assert git(imported, "rev-list", "--count", "HEAD") == git(
+        careful, "rev-list", "--count", "HEAD"
+    )
+    assert git(imported, "status", "--porcelain=v1", "--untracked-files=all") == ""
+    for name in ("wiki/main/Page11.wiki", "_meta/wiki/pages.csv"):
+        assert (imported / name).read_bytes() == (careful / name).read_bytes()
+
+
+def test_fast_import_keeps_submodules_gitlinks_and_empty_trees(tmp_path: Path) -> None:
+    """The .gitmodules merge, gitlink modes and unchanged-tree events survive."""
+
+    from jbomohi_tools.git import FastImportSession
+
+    first = base_event(
+        source="cll",
+        source_id="cll=1",
+        changes={"cll/README": "one\n"},
+        submodules={"cll/src": "https://example.invalid/cll.git"},
+        gitlinks={"cll/src": "1" * 40},
+    )
+    second = base_event(
+        source="grammars",
+        source_id="grammars=1",
+        source_time=datetime(2005, 1, 2, 3, 4, 5, tzinfo=UTC),
+        changes={"grammars/README": "two\n"},
+        submodules={"grammars/src": "https://example.invalid/g.git"},
+        gitlinks={"grammars/src": "2" * 40},
+    )
+    # An event that changes nothing is still an event, and still a commit.
+    third = base_event(
+        source="tiki",
+        source_id="tiki=page@current",
+        source_time=datetime(2006, 1, 2, 3, 4, 5, tzinfo=UTC),
+        changes={},
+    )
+    events = (first, second, third)
+
+    careful = _fresh(tmp_path, "careful")
+    for event in events:
+        commit_event(event, careful)
+    imported = _fresh(tmp_path, "imported")
+    with FastImportSession(imported) as stream:
+        for event in events:
+            stream.commit(event)
+
+    assert git(imported, "rev-parse", "HEAD") == git(careful, "rev-parse", "HEAD")
+    assert git(imported, "show", "HEAD:.gitmodules") == git(
+        careful, "show", "HEAD:.gitmodules"
+    )
+    assert git(imported, "rev-list", "--count", "HEAD") == "3"
+    # The last event changed nothing, so its tree is its parent's.
+    assert git(imported, "rev-parse", "HEAD^{tree}") == git(
+        imported, "rev-parse", "HEAD~1^{tree}"
+    )
+
+
+def test_fast_import_refuses_a_deletion_of_an_untracked_path(tmp_path: Path) -> None:
+    from jbomohi_tools.git import FastImportSession
+
+    imported = _fresh(tmp_path, "imported")
+    with (
+        pytest.raises(EventError, match="untracked path"),
+        FastImportSession(imported) as stream,
+    ):
+        stream.commit(base_event())
+        stream.commit(
+            base_event(
+                source_id="revid=2",
+                source_time=datetime(2004, 1, 3, tzinfo=UTC),
+                changes={"wiki/main/Other.wiki": "x\n"},
+                deletions=("wiki/main/Absent.wiki",),
+            )
+        )
+
+
+def test_fast_import_continues_an_existing_history(tmp_path: Path) -> None:
+    """A build starts from the deterministic root commit, not an empty branch."""
+
+    from jbomohi_tools.git import FastImportSession
+
+    corpus = _fresh(tmp_path, "corpus")
+    root = commit_event(base_event(), corpus)
+    follow = base_event(
+        source_id="revid=2",
+        source_time=datetime(2004, 1, 3, tzinfo=UTC),
+        changes={"wiki/main/Test.wiki": "second\n"},
+        event="edited",
+    )
+    with FastImportSession(corpus) as stream:
+        stream.commit(follow)
+    assert git(corpus, "rev-parse", "HEAD~1") == root
+    assert (corpus / "wiki/main/Test.wiki").read_text() == "second\n"
+
+
+def _three_ways(tmp_path: Path, events: tuple[Event, ...]) -> str:
+    """Run one history through all three backends and return the shared head."""
+
+    from jbomohi_tools.git import BuildCommitSession, FastImportSession
+
+    careful = _fresh(tmp_path, "careful")
+    for event in events:
+        commit_event(event, careful)
+
+    session = _fresh(tmp_path, "session")
+    with BuildCommitSession(session) as live:
+        for event in events:
+            live.commit(event)
+
+    imported = _fresh(tmp_path, "imported")
+    with FastImportSession(imported) as stream:
+        for event in events:
+            stream.commit(event)
+
+    expected = git(careful, "rev-parse", "HEAD")
+    assert git(session, "rev-parse", "HEAD") == expected
+    assert git(imported, "rev-parse", "HEAD") == expected
+    return expected
+
+
+def test_pre_epoch_events_are_dated_alike_by_every_backend(tmp_path: Path) -> None:
+    """A pre-1970 document commits at the epoch with its true date recorded.
+
+    `_git_date` clamps to the epoch and the fast-import stream computes its own
+    raw timestamp; nothing else pins them to the same instant.
+    """
+
+    event = base_event(
+        source="loglan",
+        source_id="loglan=1",
+        time_confidence="pre-epoch",
+        source_time=datetime(1960, 5, 1, tzinfo=UTC),
+        source_date="1960-05-01",
+        changes={"loglan/notebook.txt": "before the fork\n"},
+    )
+    _three_ways(tmp_path, (event,))
+    careful = tmp_path / "careful" / "repo"
+    assert git(careful, "log", "-1", "--format=%ad", "--date=iso-strict") == (
+        "1970-01-01T00:00:00Z"
+    )
+    assert "Source-Date: 1960-05-01" in git(careful, "log", "-1", "--format=%B")
+
+
+def test_paths_needing_quoting_are_written_alike_by_every_backend(
+    tmp_path: Path,
+) -> None:
+    """fast-import reads one path per line, so odd paths must survive quoting.
+
+    `_safe_repo_path` refuses a backslash, so the cases that can actually occur
+    are spaces, quotes and non-ASCII — all of which `ls-tree` would C-quote on
+    the way back in, which is why the tracked set is read NUL-separated.
+    """
+
+    odd = 'mail/lojban-list/cur/caf é "quoted" name:2,S'
+    first = base_event(changes={odd: "body\n", "wiki/main/Plain.wiki": "x\n"})
+    second = base_event(
+        source_id="revid=2",
+        source_time=datetime(2004, 1, 3, tzinfo=UTC),
+        event="edited",
+        changes={"wiki/main/Plain.wiki": "y\n"},
+        deletions=(odd,),
+    )
+    _three_ways(tmp_path, (first, second))
+    for name in ("careful", "session", "imported"):
+        repo = tmp_path / name / "repo"
+        assert not (repo / odd).exists()
+        assert git(repo, "rev-list", "--count", "HEAD") == "2"
+    # The deletion had to be recognised as tracked, not refused as unknown:
+    # the path is in the first commit's tree and gone from the second. Read it
+    # NUL-separated, because git quotes such a path in ordinary output.
+    imported = tmp_path / "imported" / "repo"
+    before = git(imported, "ls-tree", "-r", "-z", "--name-only", "HEAD~1").split("\0")
+    after = git(imported, "ls-tree", "-r", "-z", "--name-only", "HEAD").split("\0")
+    assert odd in before
+    assert odd not in after
+
+
+def test_a_session_resuming_history_knows_its_quoted_paths(tmp_path: Path) -> None:
+    """A session reads the paths it inherits, and git quotes those by default.
+
+    Within one session a path is tracked because the session itself wrote it,
+    so the inherited set only matters when a build continues existing history —
+    which is exactly when `ls-tree` would hand back a C-quoted name that
+    matches nothing, and a legitimate deletion would be refused as untracked.
+    """
+
+    from jbomohi_tools.git import FastImportSession
+
+    odd = 'mail/lojban-list/cur/caf é "quoted" name:2,S'
+    corpus = _fresh(tmp_path, "corpus")
+    commit_event(base_event(changes={odd: "body\n"}), corpus)
+
+    removal = base_event(
+        source_id="revid=2",
+        source_time=datetime(2004, 1, 3, tzinfo=UTC),
+        event="edited",
+        changes={"wiki/main/Plain.wiki": "x\n"},
+        deletions=(odd,),
+    )
+    with FastImportSession(corpus) as stream:
+        stream.commit(removal)
+
+    assert git(corpus, "rev-list", "--count", "HEAD") == "2"
+    assert odd not in git(corpus, "ls-tree", "-r", "-z", "--name-only", "HEAD").split(
+        "\0"
+    )
+    assert not (corpus / odd).exists()
+
+
+def test_encoded_author_names_are_identical_in_every_backend(tmp_path: Path) -> None:
+    """`commit-tree` sanitises idents; fast-import takes them literally.
+
+    What keeps the two equal is `_git_safe_name`, which encodes the syntax git
+    cannot retain before either backend sees it.
+    """
+
+    author = Identity.namespaced("mw.lojban.org", "odd <name> with %")
+    event = base_event(author=author, changes={"wiki/main/Odd.wiki": "x\n"})
+    _three_ways(tmp_path, (event,))
+    careful = tmp_path / "careful" / "repo"
+    recorded = git(careful, "log", "-1", "--format=%an <%ae>")
+    assert "<" not in recorded.split(" <")[0]
+    assert recorded == f"{author.name} <{author.email}>"

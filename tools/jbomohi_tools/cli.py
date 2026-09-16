@@ -28,6 +28,7 @@ from .archive import (
     verify_manifests,
 )
 from .build import (
+    BACKENDS,
     audit_events,
     build_corpus,
     push_main_ranges,
@@ -271,10 +272,11 @@ def _build(args: argparse.Namespace, config: Config) -> int:
         config,
         source_factories(config, args.sources),
         until=_until(args.until),
+        backend=args.backend,
     )
     print(
         f"build: head={report.head} commits={report.commits} events={report.events} "
-        f"snapshot={report.snapshot}"
+        f"snapshot={report.snapshot} backend={args.backend}"
     )
     if args.push:
         pushed = push_main_ranges(config.corpus, report.snapshot)
@@ -373,6 +375,12 @@ def parser() -> argparse.ArgumentParser:
     build.add_argument("--sources", nargs="+")
     build.add_argument("--until")
     build.add_argument("--push", action="store_true")
+    build.add_argument(
+        "--backend",
+        choices=BACKENDS,
+        default="fast-import",
+        help="how the history is written; every backend must produce the same commits",
+    )
 
     update = _leaf(commands, "update", _update)
     update.add_argument("sources", nargs="*")

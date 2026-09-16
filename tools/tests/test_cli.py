@@ -45,8 +45,8 @@ def test_build_update_verify_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> 
     )
     monkeypatch.setattr(
         "jbomohi_tools.cli.build_corpus",
-        lambda _config, sources, *, until: (
-            calls.append(("build", (sources, until)))
+        lambda _config, sources, *, until, backend: (
+            calls.append(("build", (sources, until, backend)))
             or SimpleNamespace(
                 head="a" * 40, commits=4, events=2, snapshot="snapshot/x"
             )
@@ -54,6 +54,7 @@ def test_build_update_verify_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> 
     )
     assert main(["build", "--sources", "wiki"]) == 0
     assert calls[0] == ("sources", ["wiki"])
+    assert calls[1][1][2] == "fast-import"
     assert calls[1][0] == "build"
     assert "events=2" in capsys.readouterr().out
 

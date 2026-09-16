@@ -22,6 +22,7 @@ from .git import (
     BuildCommitSession,
     Event,
     EventError,
+    FastImportSession,
     GitError,
     Identity,
     commit_event,
@@ -303,11 +304,49 @@ def _materialize_maildir_modes(corpus: Path) -> None:
         path.chmod(0o444)
 
 
+BACKENDS = ("fast-import", "session", "plumbing")
+
+
+def _commit_all(
+    scratch: Path, events: Iterable[Event], backend: str
+) -> tuple[int, datetime]:
+    """Commit the whole event stream through the chosen backend.
+
+    Every backend must produce the same commits; the choice is only how much
+    work it takes to get there. Keeping all three callable is what makes that
+    claim testable on the real corpus rather than on fixtures alone.
+    """
+
+    count = 0
+    last_time = EPOCH
+    if backend == "fast-import":
+        with FastImportSession(scratch) as session:
+            for event in events:
+                session.commit(event)
+                count += 1
+                last_time = event.source_time
+    elif backend == "session":
+        with BuildCommitSession(scratch) as live:
+            for event in events:
+                live.commit(event)
+                count += 1
+                last_time = event.source_time
+    elif backend == "plumbing":
+        for event in events:
+            commit_event(event, scratch)
+            count += 1
+            last_time = event.source_time
+    else:
+        raise GitError(f"unknown build backend: {backend!r}")
+    return count, last_time
+
+
 def build_corpus(
     config: Config,
     sources: Mapping[str, EventFactory],
     *,
     until: datetime | None = None,
+    backend: str = "fast-import",
 ) -> BuildReport:
     """Build a new orphan main history, installing it only after full success."""
 
@@ -332,13 +371,9 @@ def build_corpus(
             ["init", "--initial-branch=main", str(scratch)],
         )
         commit_root(config.repo_root, scratch)
-        event_count = 0
-        last_time = EPOCH
-        with BuildCommitSession(scratch) as session:
-            for event in merge_events(sources, until=until):
-                session.commit(event)
-                event_count += 1
-                last_time = event.source_time
+        event_count, last_time = _commit_all(
+            scratch, merge_events(sources, until=until), backend
+        )
         snapshot = _snapshot_name(last_time)
         coverage = _coverage_summary(scratch)
         refresh_id = "refresh@" + snapshot.removeprefix("snapshot/")
