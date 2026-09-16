@@ -454,9 +454,23 @@ def audit_events(
     return EventAudit(count, tuple(invalid))
 
 
+def _lf_lines(text: str) -> list[str]:
+    """Split on LF only, which is what the corpus is delimited by.
+
+    `str.splitlines` also breaks on U+0085, U+2028 and U+2029. Those are
+    ordinary characters inside archived text — a 2007 #lojban line contains
+    U+0085 — so splitting on them turns one stored line into several, shifts
+    every line number after it, and makes a file the projector wrote look
+    malformed to the reader. SPEC.md 3.1.2 fixes the delimiter as LF.
+    """
+
+    text = text.removesuffix("\n")
+    return text.split("\n") if text else []
+
+
 def _trailers_from_body(body: str) -> dict[str, str]:
     trailers: dict[str, str] = {}
-    for line in body.splitlines():
+    for line in _lf_lines(body):
         matched = _TRAILER.fullmatch(line)
         if matched:
             trailers[matched.group(1)] = matched.group(2)
@@ -524,7 +538,7 @@ def _verify_irc(corpus: Path) -> None:
             raise CorpusError(f"invalid IRC output path: {relative}")
         channel, year, filename = parts
         try:
-            lines = path.read_text(encoding="utf-8").splitlines()
+            lines = _lf_lines(path.read_text(encoding="utf-8"))
         except (OSError, UnicodeError) as exc:
             raise CorpusError(f"cannot read IRC output {relative}: {exc}") from exc
         matched = _IRC_HEADER.fullmatch(lines[0] if lines else "")
@@ -712,9 +726,9 @@ def _verify_mail(corpus: Path) -> int:
             try:
                 entry_lines = [
                     line
-                    for line in (corpus / thread_path)
-                    .read_text(encoding="utf-8")
-                    .splitlines()
+                    for line in _lf_lines(
+                        (corpus / thread_path).read_text(encoding="utf-8")
+                    )
                     if line.startswith("=== ")
                 ]
             except (OSError, UnicodeError) as exc:

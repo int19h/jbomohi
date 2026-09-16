@@ -686,3 +686,35 @@ def test_every_backend_builds_the_same_corpus(tmp_path: Path) -> None:
     config, _commit = tools_repo(tmp_path / "repo-unknown")
     with pytest.raises(GitError, match="unknown build backend"):
         build_corpus(config, events, backend="carrier-pigeon")
+
+
+def test_verify_reads_lines_the_way_the_corpus_writes_them() -> None:
+    """A Unicode line separator inside archived text is text, not a break.
+
+    A 2007 #lojban line contains U+0085. `str.splitlines` breaks there, so one
+    stored line became three, every line number after it shifted, and verify
+    called a file malformed that the projector had written correctly and had
+    validated on the way out.
+    """
+
+    from jbomohi_tools.build import _lf_lines
+
+    stored = "11:27:45 <Tene> do mo " + chr(0x85) + "9#" + chr(0x85) + "9"
+    assert len(stored.splitlines()) == 3, "the hazard this guards against"
+    assert _lf_lines(stored + "\n") == [stored]
+
+    # Every other separator Python treats as a break behaves the same way.
+    for code in (0x2028, 0x2029, 0x0B, 0x0C):
+        line = "12:00:00 <nick> a" + chr(code) + "b"
+        assert _lf_lines(line + "\n") == [line]
+
+    # Ordinary LF content still splits, with no phantom trailing entry.
+
+    # SPEC.md 3.4 removes mIRC control codes and NULs and nothing else, so a
+    # separator a speaker typed is text the corpus must keep. U+2028 is the
+    # other shape this takes.
+    paragraph = "12:00:00 <nick> before" + chr(0x2028) + "after"
+    assert _lf_lines(paragraph + "\n") == [paragraph]
+
+    assert _lf_lines("one\ntwo\n") == ["one", "two"]
+    assert _lf_lines("") == []
