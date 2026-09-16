@@ -15,6 +15,10 @@ from pathlib import Path, PurePosixPath
 from urllib.parse import quote, unquote
 
 EPOCH = datetime(1970, 1, 1, tzinfo=UTC)
+# SPEC.md 3.1: a commit subject is always one non-empty line, and a source that
+# offers no title, subject or comment gets a placeholder rather than an
+# invented description. Mail keeps its own, older `[no subject]`.
+UNTITLED = "[untitled]"
 SOURCES = {
     "wiki",
     "tiki",
@@ -596,18 +600,20 @@ def _render_submodules(submodules: Mapping[str, str]) -> bytes:
 def commit_event(event: Event, corpus: Path | None = None) -> str:
     """Commit one validated event without consulting the clock.
 
-    The worktree must be clean so that an event can neither absorb nor erase
-    unrelated state. Only the event's declared paths are staged.
+    The working tree must be clean so that an event can neither absorb nor
+    erase unrelated state. Only the event's declared paths are staged.
     """
 
     event.validate()
-    actual_corpus = corpus or Path(os.environ.get("JBOMOHI_CORPUS", "./corpus"))
+    actual_corpus = corpus or Path(
+        os.environ.get("JBOMOHI_CORPUS", Path.home() / "lojban" / "corpus")
+    )
     corpus = actual_corpus.expanduser().resolve()
     if not (corpus / ".git").exists():
-        raise GitError(f"not a corpus worktree: {corpus}")
+        raise GitError(f"not a corpus repository: {corpus}")
     dirty = git_output(corpus, ["status", "--porcelain=v1", "--untracked-files=all"])
     if dirty:
-        raise GitError("corpus worktree is not clean; refusing to commit an event")
+        raise GitError("corpus working tree is not clean; refusing to commit an event")
 
     old_head = _head(corpus)
     if old_head:

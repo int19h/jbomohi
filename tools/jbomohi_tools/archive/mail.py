@@ -814,31 +814,42 @@ def fetch_old_lojban_list(
             if not obj.is_file() or obj.stat().st_size != manifest.bytes:
                 raise MailFetchError(f"numbered raw-mail object missing: {obj}")
             raw = obj.read_bytes()
-            parse_mail(
-                MailManifestation(
-                    list_name="lojban-list",
-                    raw=RawMessage(payload=numbered_rfc822(raw)),
-                    manifestation="old-lojban-list",
-                    provenance=manifest.origin,
-                    archive_order=index,
-                    archive_time=manifest.fetched_at,
+            payload = numbered_rfc822(raw)
+            messages = int(bool(payload))
+            if payload:
+                parse_mail(
+                    MailManifestation(
+                        list_name="lojban-list",
+                        raw=RawMessage(payload=payload),
+                        manifestation="old-lojban-list",
+                        provenance=manifest.origin,
+                        archive_order=index,
+                        archive_time=manifest.fetched_at,
+                    )
                 )
-            )
+            if manifest.coverage["counts"].get("messages") != messages:
+                raise MailFetchError(
+                    f"numbered raw-mail count disagrees after validation: {existing_path}"
+                )
             reused += 1
             path = existing_path
         else:
             raw = http.get(url)
             if raw is None:
                 return NumberedFetchReport(tuple(manifests), downloaded, reused, index)
-            parsed_source = MailManifestation(
-                list_name="lojban-list",
-                raw=RawMessage(payload=numbered_rfc822(raw)),
-                manifestation="old-lojban-list",
-                provenance=url,
-                archive_order=index,
-                archive_time=fetched_at,
-            )
-            parse_mail(parsed_source)
+            payload = numbered_rfc822(raw)
+            messages = int(bool(payload))
+            if payload:
+                parse_mail(
+                    MailManifestation(
+                        list_name="lojban-list",
+                        raw=RawMessage(payload=payload),
+                        manifestation="old-lojban-list",
+                        provenance=url,
+                        archive_order=index,
+                        archive_time=fetched_at,
+                    )
+                )
             stored = store_object(archive, raw)
             manifest = ArchiveManifest(
                 source="mail/lojban-list",
@@ -850,9 +861,13 @@ def fetch_old_lojban_list(
                 coverage={
                     "from": "unknown",
                     "to": "unknown",
-                    "counts": {"messages": 1},
+                    "counts": {"messages": messages},
                 },
-                notes="Public old_lojban-list numbered raw RFC 822 with mbox envelope.",
+                notes=(
+                    "Public old_lojban-list numbered raw RFC 822 with mbox envelope."
+                    if messages
+                    else "Public old_lojban-list numbered source is an empty HTTP 200 gap."
+                ),
             )
             path = (
                 archive
@@ -877,9 +892,12 @@ def load_old_lojban_manifestations(archive: Path) -> Iterator[MailManifestation]
         obj = object_path(archive, manifest.sha256)
         if not obj.is_file() or obj.stat().st_size != manifest.bytes:
             raise MailFetchError(f"numbered raw-mail object missing: {obj}")
+        payload = numbered_rfc822(obj.read_bytes())
+        if not payload:
+            continue
         yield MailManifestation(
             list_name="lojban-list",
-            raw=RawMessage(payload=numbered_rfc822(obj.read_bytes())),
+            raw=RawMessage(payload=payload),
             manifestation="old-lojban-list",
             provenance=manifest.origin,
             archive_order=index,

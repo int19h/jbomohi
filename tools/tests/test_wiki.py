@@ -809,6 +809,148 @@ def test_same_time_move_candidates_are_gapped_as_ambiguous() -> None:
     assert "move ambiguous: logid=5,logid=6" in gaps
 
 
+def test_move_redir_overwrites_a_held_redirect_lineage() -> None:
+    moved = WikiPageFragment(
+        1,
+        0,
+        "New",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    redirect = WikiPageFragment(
+        2,
+        0,
+        "Elsewhere",
+        True,
+        (
+            WikiRevision(
+                2,
+                0,
+                datetime(2014, 1, 2, tzinfo=UTC),
+                "Gleki",
+                "old redirect lineage",
+                23,
+                "b" * 40,
+                "#REDIRECT [[Elsewhere]]",
+            ),
+            WikiRevision(
+                3,
+                0,
+                datetime(2014, 1, 3, 0, 0, 30, tzinfo=UTC),
+                "Gleki",
+                "moved page [[New]] to [[Elsewhere]]",
+                17,
+                "c" * 40,
+                "#REDIRECT [[Final]]",
+            ),
+        ),
+    )
+    overwrite = WikiLogEvent(
+        5,
+        "move",
+        0,
+        0,
+        "Old",
+        datetime(2014, 1, 3, tzinfo=UTC),
+        "Gleki",
+        "overwrite redirect",
+        0,
+        "New",
+        True,
+        True,
+    )
+    later = WikiLogEvent(
+        6,
+        "move",
+        0,
+        0,
+        "New",
+        datetime(2014, 1, 3, 0, 0, 31, tzinfo=UTC),
+        "Gleki",
+        "later lineage",
+        0,
+        "Elsewhere",
+        True,
+    )
+    events = list(project([moved, redirect], [overwrite, later]))
+    event = next(value for value in events if value.source_id == "logid=5")
+    assert event.event == "moved"
+    assert event.deletions == ("wiki/main/Old.wiki",)
+    assert event.changes["wiki/main/New.wiki"] == b"body"
+    assert event.trailers["Log-Type"] == "move_redir"
+    assert event.trailers["Overwritten-Page-Id"] == "2"
+    assert event.trailers["Overwritten-Last-Rev"] == "2"
+
+
+def test_deleted_title_can_be_recreated_by_a_different_page() -> None:
+    old = WikiPageFragment(
+        1,
+        0,
+        "Reused",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                3,
+                "a" * 40,
+                "old",
+            ),
+        ),
+    )
+    new = WikiPageFragment(
+        2,
+        0,
+        "Reused",
+        False,
+        (
+            WikiRevision(
+                2,
+                0,
+                datetime(2014, 1, 3, tzinfo=UTC),
+                "Gleki",
+                "recreate",
+                3,
+                "b" * 40,
+                "new",
+            ),
+        ),
+    )
+    deletion = WikiLogEvent(
+        9,
+        "delete",
+        999,
+        0,
+        "Reused",
+        datetime(2014, 1, 2, tzinfo=UTC),
+        "Gleki",
+        "delete old page",
+    )
+    events = list(project([old, new], [deletion]))
+    assert [event.source_id for event in events] == [
+        "revid=1",
+        "logid=9",
+        "revid=2",
+    ]
+    assert events[1].event == "deleted"
+    assert events[1].trailers["Page-Id"] == "1"
+    assert events[2].changes["wiki/main/Reused.wiki"] == b"new"
+
+
 def test_preacquisition_delete_is_a_gap_not_an_event() -> None:
     [page] = parse_revision_response(
         response(
@@ -1079,3 +1221,55 @@ def test_move_back_is_not_forced_before_the_move_that_preceded_it() -> None:
     assert events[1].changes["wiki/main/New.wiki"] == b"body"
     assert events[3].changes["wiki/main/Old.wiki"] == b"body"
     assert events[4].changes["wiki/main/Old.wiki"] == b"body"
+
+
+def test_a_move_onto_its_own_path_is_a_commit_that_changes_nothing() -> None:
+    """MediaWiki logs a case-only rename that normalizes back to the source.
+
+    In a first-letter namespace `Module:documentation` is `Module:Documentation`,
+    so the move is a no-op. SPEC.md 3.2 keeps one source log as one commit so a
+    citation resolves, and an event may not write and delete the same path, so
+    the commit carries no file change at all.
+    """
+
+    page = WikiPageFragment(
+        1,
+        828,
+        "Module:Documentation",
+        False,
+        (
+            WikiRevision(
+                1,
+                0,
+                datetime(2014, 1, 1, tzinfo=UTC),
+                "Gleki",
+                "",
+                4,
+                "a" * 40,
+                "body",
+            ),
+        ),
+    )
+    move = WikiLogEvent(
+        5,
+        "move",
+        1,
+        828,
+        "Module:Documentation",
+        datetime(2014, 1, 2, tzinfo=UTC),
+        "Gleki",
+        "case only",
+        828,
+        "Module:Documentation",
+        True,
+    )
+    events = list(project([page], [move]))
+    assert [event.source_id for event in events] == ["revid=1", "logid=5"]
+    moved = events[1]
+    assert moved.event == "moved"
+    # The last event of a run also carries the folded `_meta` indexes, so what
+    # matters is that the move itself contributes no page file and removes none.
+    assert [path for path in moved.changes if path.startswith("wiki/")] == []
+    assert moved.deletions == ()
+    assert moved.trailers["Moved-From"] == "wiki/module/Documentation.wiki"
+    moved.validate()

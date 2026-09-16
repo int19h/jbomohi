@@ -19,7 +19,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import BinaryIO, TextIO
 
-from ..git import Event, Identity
+from ..git import UNTITLED, Event, Identity
 
 
 class DictionaryParseError(ValueError):
@@ -362,7 +362,9 @@ class _WordState:
 @contextmanager
 def _binary_stream(path: Path) -> Iterator[BinaryIO]:
     try:
-        if path.suffix == ".gz":
+        with path.open("rb") as probe:
+            compressed = probe.read(2) == b"\x1f\x8b"
+        if compressed:
             with gzip.open(path, "rb") as stream:
                 yield stream
         else:
@@ -567,7 +569,9 @@ def load_copy_tables(
 @contextmanager
 def _text_stream(path: Path) -> Iterator[TextIO]:
     try:
-        if path.suffix == ".gz":
+        with path.open("rb") as probe:
+            compressed = probe.read(2) == b"\x1f\x8b"
+        if compressed:
             with gzip.open(path, "rt", encoding="utf-8", newline="") as stream:
                 yield stream
         else:
@@ -937,7 +941,11 @@ def _render_comments(state: _WordState) -> str:
 
 
 def _summary(word: str, suffix: str, message: str = "") -> str:
-    clean_message = " ".join(message.split())[:36]
+    # Truncating to 36 characters can cut immediately after a word and leave
+    # the space behind, which a commit subject may not end with. The wiki
+    # projector already strips for the same reason.
+    word = word.strip() or UNTITLED
+    clean_message = " ".join(message.split())[:36].rstrip()
     tail = f" {suffix}"
     message_tail = f" {clean_message}" if clean_message else ""
     budget = 72 - len("dict: ") - len(tail) - len(message_tail)

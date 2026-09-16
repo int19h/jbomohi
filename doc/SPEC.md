@@ -49,7 +49,7 @@ Two branches with **no shared history**; neither is ever merged into the other.
 
 ### 2.2 Working layout (maintainers)
 
-Checkout `tools` at the repository root; the corpus is a **separate git repository** (its own object store) at `JBOMOHI_CORPUS`, created by `jbomohi corpus init` (a clone of the remote's `main` when it exists, otherwise an empty repository whose `main` the first `build` installs), with `origin` set to the same remote as the tools checkout. It is not a worktree of the tools checkout: a worktree would share the tools repository's object store, which lives under the checkout — decided 2026-09-15 after the first full build wrote 5 GiB of objects into `~/git/jbomohi/.git` on the virtiofs mount. `build` installs its scratch history into the corpus repository (fetch + `update-ref`), `update` commits there, and `push` runs from there. **Bulk local state never lives under the checkout** (decided 2026-09-14: `~/git` is a virtiofs mount; the cost is per file, not per byte — grep and stat over many tiny files run far slower than on a native filesystem, and the corpus is exactly that kind of tree): the worktree is at `JBOMOHI_CORPUS` (default `~/lojban/corpus`), the archive at `JBOMOHI_ARCHIVE` (default `~/lojban/archive`), and every scratch directory the tools create (build scratch repositories, extracted Maildirs, temporary downloads) under `JBOMOHI_TMP` (default `~/lojban/tmp`). `./corpus/`, `./tmp/`, `./.venv/` stay gitignored for legacy and editor state only; tools MUST NOT write bulk data there. The ignored `./.exchange/` path is legacy local state, not active coordination, and tools MUST NOT depend on it.
+Checkout `tools` at the repository root; the corpus is a **separate git repository** (its own object store) at `JBOMOHI_CORPUS`, created by `jbomohi corpus init` (a clone of the remote's `main` when it exists, otherwise an empty repository whose `main` the first `build` installs), with `origin` set to the same remote as the tools checkout. It is not a worktree of the tools checkout: a worktree would share the tools repository's object store, which lives under the checkout — decided 2026-09-15 after the first full build wrote 5 GiB of objects into `~/git/jbomohi/.git` on the virtiofs mount. `build` installs its scratch history into the corpus repository (fetch + `update-ref`), `update` commits there, and `push` runs from there. **Bulk local state never lives under the checkout** (decided 2026-09-14: `~/git` is a virtiofs mount; the cost is per file, not per byte — grep and stat over many tiny files run far slower than on a native filesystem, and the corpus is exactly that kind of tree): the corpus repository is at `JBOMOHI_CORPUS` (default `~/lojban/corpus`), the archive at `JBOMOHI_ARCHIVE` (default `~/lojban/archive`), and every scratch directory the tools create (build scratch repositories, extracted Maildirs, temporary downloads) under `JBOMOHI_TMP` (default `~/lojban/tmp`). `./corpus/`, `./tmp/`, `./.venv/` stay gitignored for legacy and editor state only; tools MUST NOT write bulk data there. The ignored `./.exchange/` path is legacy local state, not active coordination, and tools MUST NOT depend on it.
 
 ### 2.3 Raw archive tier
 
@@ -330,7 +330,7 @@ Python ≥ 3.13 with `uv`; package `jbomohi_tools`, CLI `jbomohi` (`uv run jbomo
 ### 4.2 CLI
 
 ```
-jbomohi corpus init|status                  create / inspect the corpus worktree of main (JBOMOHI_CORPUS)
+jbomohi corpus init|status                  create / inspect the corpus repository holding main (JBOMOHI_CORPUS)
 jbomohi archive fetch <source> [--since …]  fetch into the archive tier; write manifests
 jbomohi archive verify                      sha256-check every manifest
 jbomohi build [--sources …] [--until DATE]  full deterministic rebuild of main (orphan root; --until is refused until every selected projector accepts the cut-off itself, since a merge-time filter would drop the _meta files that ride each stream's final event — decided 2026-09-14)
@@ -342,7 +342,7 @@ jbomohi notes lint                          front matter + citation resolution (
 jbomohi cite resolve <citation>             print the cited lines (the reference resolver)
 ```
 
-Idempotent and resumable; network commands rate-limited per source (default ≤ 1 request/s) with backoff; writes only to the archive, the corpus worktree, and `JBOMOHI_TMP`.
+Idempotent and resumable; network commands rate-limited per source (default ≤ 1 request/s) with backoff; writes only to the archive, the corpus repository, and `JBOMOHI_TMP`.
 
 ### 4.3 Fetch/project split
 
@@ -350,11 +350,11 @@ Each source module exposes `fetch(archive, since) -> manifests` (network; writes
 
 ### 4.4 Invariants (`jbomohi verify`)
 
-Every `main` commit has `Source`, `Source-Id`, `Event`, `Time-Confidence`; `Source-Id` unique per `(Source, path)`; `_meta/*.csv` rows ↔ files (every non-empty `path`/`file` cell names a file present at the tip; a row whose page has no file at the tip — deleted, or never projected such as a NUL-content Tiki page — carries an **empty** `path` and a `state` column value `deleted` or `not-projected`, all other rows `current`; gaps files are records of non-projection and are exempt — decided 2026-09-15); Maildirs contain only `cur/` files per §3.3 (git stores them as `100644`; the tools materialise them `0444` in the worktree, which `verify` checks on the worktree, not the tree), every message has a thread-view entry; IRC files parse under §3.4 and sit in the right year; dictionary front matter and `votes.csv` validate; notes lint clean; a determinism sample (rebuild the last 30 days of each source twice → identical commits).
+Every `main` commit has `Source`, `Source-Id`, `Event`, `Time-Confidence`; `Source-Id` unique per `(Source, path)`; `_meta/*.csv` rows ↔ files (every non-empty `path`/`file` cell names a file present at the tip; a row whose page has no file at the tip — deleted, or never projected such as a NUL-content Tiki page — carries an **empty** `path` and a `state` column value `deleted` or `not-projected`, all other rows `current`; gaps files are records of non-projection and are exempt — decided 2026-09-15); Maildirs contain only `cur/` files per §3.3 (git stores them as `100644`; the tools materialise them `0444` in the working tree, which `verify` checks on the working tree, not the tree), every message has a thread-view entry; IRC files parse under §3.4 and sit in the right year; dictionary front matter and `votes.csv` validate; notes lint clean; a determinism sample (rebuild the last 30 days of each source twice → identical commits).
 
 ### 4.5 Cadence and CI
 
-`.github/workflows/check.yml` on push/PR to `tools`: tool tests, lint, determinism sample. `.github/workflows/update.yml` weekly + manual: checkout `tools`, worktree `main`, `archive fetch` for public sources (cached), `update`, `verify`, push `main` and the tag; a failing `verify` never pushes. The initial `build` runs locally (hours; 6-hour CI limit). Private dumps are applied locally with `jbomohi update dict --dump <file>` (and `wiki --dump`, `tiki --dump`); the operator-side export commands are `doc/ops/dump-request.md`.
+`.github/workflows/check.yml` on push/PR to `tools`: tool tests, lint, determinism sample. `.github/workflows/update.yml` weekly + manual: checkout `tools`, `corpus init` for `main`, `archive fetch` for public sources (cached), `update`, `verify`, push `main` and the tag; a failing `verify` never pushes. The initial `build` runs locally (hours; 6-hour CI limit). Private dumps are applied locally with `jbomohi update dict --dump <file>` (and `wiki --dump`, `tiki --dump`); the operator-side export commands are `doc/ops/dump-request.md`.
 
 ---
 
