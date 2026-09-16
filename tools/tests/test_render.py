@@ -373,3 +373,84 @@ def test_every_cited_source_id_exists_in_the_history() -> None:
         if not found.stdout.strip():
             missing.append(f"{source_id}: no commit carries this Source-Id")
     assert not missing, "; ".join(missing)
+
+
+def _corpus_root() -> Path:
+    corpus = os.environ.get("JBOMOHI_CORPUS")
+    if not corpus:
+        pytest.skip("set JBOMOHI_CORPUS to check the claim against a real history")
+    root = Path(corpus)
+    if not (root / ".git").is_dir():
+        pytest.skip(f"no corpus repository at {root}")
+    return root
+
+
+def _commits_with_their_parent_s_tree(root: Path) -> list[str]:
+    """Commits that record a source event which changed nothing on disk."""
+
+    listing = subprocess.run(
+        ["git", "-C", str(root), "log", "--format=%H %T %P"],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.splitlines()
+    tree = {}
+    rows = []
+    for line in listing:
+        fields = line.split()
+        tree[fields[0]] = fields[1]
+        rows.append((fields[0], fields[1], fields[2:]))
+    return [
+        commit
+        for commit, own, parents in rows
+        if len(parents) == 1 and tree.get(parents[0]) == own
+    ]
+
+
+def test_the_no_change_commit_claim_holds_in_a_real_history() -> None:
+    """AGENTS.md tells the reader a file's log can skip a version. Prove it.
+
+    A Sonnet librarian reading the rendered instructions reported a Tiki page
+    version as missing. It was not missing: the version changed no text, so the
+    commit's tree equals its parent's and `git log -- <path>` prunes it. The
+    instructions now say so, and this checks that the shape they describe is
+    still the shape the projector produces — if it ever stops being, the
+    paragraph is stale and must go rather than mislead in the other direction.
+    """
+
+    root = _corpus_root()
+    unchanged = _commits_with_their_parent_s_tree(root)
+    assert unchanged, "no commit has its parent's tree; the AGENTS.md note is stale"
+
+    indexes = {
+        "tiki": (root / "_meta/tiki/versions.csv", lambda value: value),
+        "wiki": (root / "_meta/wiki/revisions.csv", lambda value: value.split("=")[1]),
+    }
+    unindexed: list[str] = []
+    for source, (index, key_of) in indexes.items():
+        if not index.is_file():
+            continue
+        sample = None
+        for commit in unchanged:
+            body = subprocess.run(
+                ["git", "-C", str(root), "log", "-1", "--format=%B", commit],
+                capture_output=True,
+                text=True,
+                check=True,
+            ).stdout
+            trailers = dict(
+                line.split(": ", 1)
+                for line in body.splitlines()
+                if ": " in line and not line.startswith(" ")
+            )
+            if trailers.get("Source") == source:
+                sample = (commit, trailers["Source-Id"])
+                break
+        if sample is None:
+            continue
+        commit, source_id = sample
+        key = key_of(source_id)
+        rows = index.read_text(encoding="utf-8").splitlines()
+        if not any(key in row.split(",") or key == row.split(",")[0] for row in rows):
+            unindexed.append(f"{commit} ({source_id}) is in no row of {index.name}")
+    assert not unindexed, "; ".join(unindexed)

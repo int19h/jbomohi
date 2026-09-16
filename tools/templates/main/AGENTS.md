@@ -119,6 +119,15 @@ One commit per source event, so git's own tools are the interface to time.
   `pre-epoch` marks a document genuinely older than 1970, which git cannot
   date: the commit sits just after the first one with the true date in
   `Source-Date:`.
+- **An event that changed no text still has its own commit, and a file's log
+  does not show it.** A save that altered nothing, a page move that left the
+  file where it was, a rename that changed only a letter's case: the commit is
+  there with its `Source-Id:`, but its tree equals its parent's, and
+  `git log -- <path>` lists only the commits that changed that path. So a
+  file's own log can skip a version number that exists. For wiki pages and
+  Tiki pages the per-version indexes are the authority for what the source
+  recorded — `_meta/wiki/revisions.csv`, `_meta/tiki/versions.csv` — and
+  `git log --grep='Source-Id: <id>'` opens any such commit directly.
 - **Reading a file as of a date** takes two steps, because the first finds the
   commit and the second reads the file at it:
 
