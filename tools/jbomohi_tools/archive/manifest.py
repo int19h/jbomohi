@@ -181,14 +181,32 @@ class ArchiveManifest:
         return "\n".join(lines) + "\n"
 
     def write(self, path: Path) -> None:
+        """Write the manifest so a concurrent reader sees all of it or none.
+
+        Exclusive create stops one writer clobbering another, which is not the
+        same as being safe to read while it happens: a reader can see a
+        half-written file. That is why a build could not run beside a fetch —
+        the IRC loader checks every object against its manifest and a partial
+        read fails the build. Writing to a temporary name and renaming makes
+        the file appear whole.
+        """
+
         if path.exists():
             raise ArchiveError(f"refusing to replace archive manifest: {path}")
         path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
         try:
-            with path.open("x", encoding="utf-8", newline="\n") as stream:
+            with temporary.open("w", encoding="utf-8", newline="\n") as stream:
                 stream.write(self.to_toml())
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.link(temporary, path)
+        except FileExistsError as exc:
+            raise ArchiveError(f"refusing to replace archive manifest: {path}") from exc
         except OSError as exc:
             raise ArchiveError(f"cannot write manifest {path}: {exc}") from exc
+        finally:
+            temporary.unlink(missing_ok=True)
 
 
 @dataclass(frozen=True, slots=True)
@@ -210,21 +228,24 @@ def store_object(archive: Path, payload: bytes) -> ArchiveObject:
     digest = hashlib.sha256(payload).hexdigest()
     path = object_path(archive, digest)
     path.parent.mkdir(parents=True, exist_ok=True)
-    created = False
+    # Written under a temporary name and linked into place, so a reader either
+    # sees the whole object or does not see it at all. `link` keeps the
+    # exclusive-create guarantee: it fails if the name already exists.
+    temporary = path.with_name(f".{digest}.{os.getpid()}.tmp")
     try:
-        descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
-        created = True
+        descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
         with os.fdopen(descriptor, "wb") as stream:
             stream.write(payload)
             stream.flush()
             os.fsync(stream.fileno())
+        os.link(temporary, path)
     except FileExistsError:
         if path.is_symlink() or path.read_bytes() != payload:
             raise ArchiveError(f"archive object collision at {path}")
     except OSError as exc:
-        if created:
-            path.unlink(missing_ok=True)
         raise ArchiveError(f"cannot store archive object {path}: {exc}") from exc
+    finally:
+        temporary.unlink(missing_ok=True)
     return ArchiveObject(path=path, sha256=digest, bytes=len(payload))
 
 

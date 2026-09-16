@@ -689,17 +689,42 @@ def _coverage_toml(
     a fetch did.
     """
 
-    days = sorted({unit.date_key for unit in units if unit.date_key != "unknown"})
+    # A range block's key is `<from>..<to>`, so a field called first_day must
+    # read the endpoints out of it rather than store the key. Naming a range as
+    # though it were a day tells the reader something false and breaks anything
+    # that parses this file as dates.
+    days: set[str] = set()
+    for unit in units:
+        if unit.date_key == "unknown":
+            continue
+        days.update(unit.date_key.split(".."))
+    ordered = sorted(days)
     lines = [
         "# What this channel's projection covers (SPEC.md 3.4).",
         "# Written by jbomohi build; do not edit.",
         "",
         f"channel = {_toml_string(channel)}",
-        f"days = {len(days)}",
+        # One row per projected file, which is what days.csv holds. A range
+        # block is one file covering many days, so calling this "days" was the
+        # other half of the same inaccuracy.
+        f"files = {len(units)}",
     ]
-    if days:
-        lines.append(f"first_day = {_toml_string(days[0])}")
-        lines.append(f"last_day = {_toml_string(days[-1])}")
+    ranges = sum(1 for unit in units if ".." in unit.date_key)
+    if ranges:
+        lines.append(f"range_files = {ranges}")
+    if ordered:
+        lines.append(f"first_day = {_toml_string(ordered[0])}")
+        lines.append(f"last_day = {_toml_string(ordered[-1])}")
+    if not units:
+        lines.append(
+            "note = "
+            + _toml_string(
+                "this channel is configured but nothing is archived for it, so "
+                "the repository holds none of it; a negative answer about it "
+                "says only that it was never fetched"
+            )
+        )
+        return "\n".join(lines).rstrip("\n") + "\n"
     lines.append(f"days_recorded_absent = {len(missing)}")
     undated = sum(1 for unit in units if unit.date_key == "unknown")
     if undated:
@@ -949,6 +974,7 @@ def project(
     *,
     amendments: Mapping[str, IrcAmendment] | None = None,
     archives: Mapping[str, ChannelArchive] | None = None,
+    channels: Iterable[str] | None = None,
 ) -> Iterator[Event]:
     """Project source objects to chronologically ordered IRC events.
 
@@ -960,6 +986,12 @@ def project(
     parsed: list[IrcUnit] = []
     for source in sources:
         parsed.extend(parse_source(source))
+    # A channel nobody fetched has no source objects, so the projector would
+    # never mention it and a reader could not tell it apart from a channel that
+    # does not exist. SPEC.md 3.4's gaps files say what is absent; a whole
+    # absent channel deserves the same treatment, and only the caller knows
+    # which channels were configured.
+    configured = sorted(set(channels or ()) - {unit.channel for unit in parsed})
     grouped: dict[str, list[IrcUnit]] = defaultdict(list)
     for unit in parsed:
         grouped[unit.output_path].append(unit)
@@ -997,6 +1029,11 @@ def project(
                 missing,
                 (archives or {}).get(unit.channel, ChannelArchive()),
             )
+        if index == len(units) - 1:
+            for absent in configured:
+                changes[f"_meta/irc/{absent}/coverage.toml"] = _coverage_toml(
+                    absent, [], [], (archives or {}).get(absent, ChannelArchive())
+                )
         amendment = (amendments or {}).get(unit.output_path)
         event_kind = "import"
         source_id = unit.date_key

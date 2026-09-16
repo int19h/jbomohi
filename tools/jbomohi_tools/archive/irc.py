@@ -21,7 +21,10 @@ from urllib.request import Request, urlopen
 from .manifest import ArchiveError, ArchiveManifest, store_object
 
 BASE_URL = "https://lojban.org/irclogs/"
-CHANNELS = ("lojban", "jbosnu", "ckule")
+# Smallest first, so a channel that stalls cannot starve the others.
+# #lojban holds twenty-five years of logs and the other two are small,
+# and a fetch that died inside it left both untouched for an evening.
+CHANNELS = ("ckule", "jbosnu", "lojban")
 SPECIAL_DIRECTORIES = {
     "2000_all": date(2000, 10, 28),
     "2002_middle": date(2002, 11, 28),
@@ -301,62 +304,79 @@ def fetch(
     if fetched_at.tzinfo is None:
         raise IrcFetchError("fetch time must include a UTC offset")
 
+    failures: dict[str, str] = {}
     for channel in channels:
         if not re.fullmatch(r"[a-z][a-z0-9_-]*", channel):
             raise IrcFetchError(f"invalid IRC channel slug: {channel!r}")
-        channel_url = urljoin(BASE_URL, f"{channel}/")
-        channel_index = http.get(channel_url)
-        directories = _links(channel_index, directories=True)
-        manifests.append(
-            _archive_response(
-                archive,
-                channel,
-                "apache-index",
-                channel_index,
-                fetched_at,
-                counts={"directories": len(directories)},
-            )
-        )
-        for directory_link in directories:
-            directory = directory_link.removesuffix("/")
-            end = _directory_end(directory)
-            if cutoff is not None and end is not None and end < cutoff:
-                continue
-            directory_url = urljoin(channel_index.url, directory_link)
-            directory_index = http.get(directory_url)
-            files = _links(directory_index, directories=False)
-            prior_digests = {
-                manifest.sha256 for manifest in known.get(directory_index.url, [])
-            }
-            index_digest = hashlib.sha256(directory_index.body).hexdigest()
-            index_changed = index_digest not in prior_digests
+        try:
+            channel_url = urljoin(BASE_URL, f"{channel}/")
+            channel_index = http.get(channel_url)
+            directories = _links(channel_index, directories=True)
             manifests.append(
                 _archive_response(
                     archive,
                     channel,
                     "apache-index",
-                    directory_index,
+                    channel_index,
                     fetched_at,
-                    counts={"files": len(files)},
+                    counts={"directories": len(directories)},
                 )
             )
-            for filename in files:
-                file_end = _file_end(filename, directory)
-                if cutoff is not None and file_end is not None and file_end < cutoff:
+            for directory_link in directories:
+                directory = directory_link.removesuffix("/")
+                end = _directory_end(directory)
+                if cutoff is not None and end is not None and end < cutoff:
                     continue
-                url = urljoin(directory_index.url, filename)
-                if not index_changed and known.get(url):
-                    reused += 1
-                    continue
-                response = http.get(url)
+                directory_url = urljoin(channel_index.url, directory_link)
+                directory_index = http.get(directory_url)
+                files = _links(directory_index, directories=False)
+                prior_digests = {
+                    manifest.sha256 for manifest in known.get(directory_index.url, [])
+                }
+                index_digest = hashlib.sha256(directory_index.body).hexdigest()
+                index_changed = index_digest not in prior_digests
                 manifests.append(
                     _archive_response(
                         archive,
                         channel,
-                        "irc-log",
-                        response,
+                        "apache-index",
+                        directory_index,
                         fetched_at,
+                        counts={"files": len(files)},
                     )
                 )
-                downloaded += 1
+                for filename in files:
+                    file_end = _file_end(filename, directory)
+                    if (
+                        cutoff is not None
+                        and file_end is not None
+                        and file_end < cutoff
+                    ):
+                        continue
+                    url = urljoin(directory_index.url, filename)
+                    if not index_changed and known.get(url):
+                        reused += 1
+                        continue
+                    response = http.get(url)
+                    manifests.append(
+                        _archive_response(
+                            archive,
+                            channel,
+                            "irc-log",
+                            response,
+                            fetched_at,
+                        )
+                    )
+                    downloaded += 1
+        except IrcFetchError as exc:
+            # One unreachable channel is not a reason to abandon the rest:
+            # the server was failing for #lojban while the two small
+            # channels would have finished in minutes.
+            failures[channel] = str(exc)
+
+    if failures:
+        detail = "; ".join(f"{name}: {why}" for name, why in failures.items())
+        raise IrcFetchError(
+            f"fetched {len(manifests)} manifests; channels that failed: {detail}"
+        )
     return FetchReport(tuple(manifests), downloaded, reused)

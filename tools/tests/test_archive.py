@@ -178,3 +178,43 @@ def test_manifest_load_rejects_invalid_fields(
     manifest.write_text(text)
     with pytest.raises(ArchiveError, match=message):
         ArchiveManifest.load(manifest)
+
+
+def test_a_reader_never_sees_a_half_written_object_or_manifest(tmp_path: Path) -> None:
+    """Exclusive create is not the same as safe to read while it happens.
+
+    A build could not run beside a fetch because the IRC loader checks every
+    object against its manifest, and a partially written file fails that check
+    an hour into a run. Both writers now build under a temporary name and link
+    into place, so what appears at the final path is always complete.
+    """
+
+    archive = tmp_path / "archive"
+    payload = b"x" * 100_000
+
+    stored = store_object(archive, payload)
+
+    # Nothing is left behind, and what is there is whole.
+    assert stored.path.read_bytes() == payload
+    leftovers = [p.name for p in stored.path.parent.iterdir() if p.name.startswith(".")]
+    assert not leftovers, leftovers
+
+    manifest = ArchiveManifest(
+        source="irc/lojban",
+        kind="irc-log",
+        origin="https://lojban.org/irclogs/lojban/2014_03/2014_03_01.txt",
+        fetched_at=datetime(2026, 9, 16, tzinfo=UTC),
+        sha256=stored.sha256,
+        bytes=stored.bytes,
+        coverage={"from": "2014-03-01", "to": "2014-03-01", "counts": {"lines": 1}},
+        notes="one archived day",
+    )
+    path = archive / "manifests" / "irc" / "lojban" / "one.toml"
+    manifest.write(path)
+
+    assert ArchiveManifest.load(path).sha256 == stored.sha256
+    assert not [p.name for p in path.parent.iterdir() if p.name.startswith(".")]
+
+    # The existing-file guarantee survives the change.
+    with pytest.raises(ArchiveError, match="refusing to replace"):
+        manifest.write(path)

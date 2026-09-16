@@ -500,12 +500,25 @@ def test_coverage_distinguishes_a_short_record_from_a_short_fetch() -> None:
     complete = _coverage_toml(
         "lojban", units, [], ChannelArchive(listed=2, held=2, fetched_on="2026-09-16")
     )
-    assert "days = 2" in complete
+    assert "files = 2" in complete
     assert 'first_day = "2022-07-30"' in complete
     assert 'last_day = "2022-07-31"' in complete
     assert 'fetched_on = "2026-09-16"' in complete
     assert "files_listed_but_not_archived = 0" in complete
     assert "note = " not in complete
+
+    # A range block covers many days in one file, so the date fields read its
+    # endpoints rather than its key.
+    ranged = _coverage_toml(
+        "lojban",
+        [_unit("lojban", "2000-05-26..2000-10-28")],
+        [],
+        ChannelArchive(listed=1, held=1),
+    )
+    assert 'first_day = "2000-05-26"' in ranged
+    assert 'last_day = "2000-10-28"' in ranged
+    assert "range_files = 1" in ranged
+    assert ".." not in ranged.split("first_day")[1].split("\n")[0]
 
     truncated = _coverage_toml(
         "lojban", units, [], ChannelArchive(listed=953, held=2, fetched_on="2026-09-16")
@@ -527,7 +540,7 @@ def test_coverage_counts_days_recorded_absent_separately() -> None:
     rendered = _coverage_toml(
         "lojban", units, [_date(2015, 5, 2)], ChannelArchive(listed=2, held=2)
     )
-    assert "days = 2" in rendered
+    assert "files = 2" in rendered
     assert "days_recorded_absent = 1" in rendered
 
 
@@ -548,7 +561,8 @@ def _unit(channel: str, day: str):
         source_lines=1,
         messages=1,
         nicks=1,
-        source_time=_dt.fromisoformat(f"{day}T23:59:59+00:00"),
+        # A range key is `<from>..<to>`; its unit is dated by the end.
+        source_time=_dt.fromisoformat(f"{day.split('..')[-1]}T23:59:59+00:00"),
         time_confidence="exact",
     )
 
@@ -588,3 +602,37 @@ def test_an_undated_file_named_with_a_month_projects_to_that_day() -> None:
     # Undated lines keep the explicit placeholder rather than a guessed time.
     assert all(line.startswith("--:--:-- ") for line in unit.body)
     assert unit.time_confidence == "window"
+
+
+def test_a_configured_channel_with_nothing_archived_is_absent_not_invisible() -> None:
+    """A reader told "negative answers are relative to coverage" needs to see it.
+
+    #ckule was configured and never fetched, so the projector had no objects
+    for it and said nothing at all: no row, no gaps entry, nothing. A channel
+    that is missing and a channel that does not exist looked identical.
+    """
+
+    source = SourceObject(
+        channel="lojban",
+        path="lojban/2014_03/2014_03_01.txt",
+        payload=b"2014-03-01 00:00:00 UTC/+0000 <a> coi\n",
+    )
+
+    changes: dict[str, object] = {}
+    for event in project([source], channels=("lojban", "jbosnu", "ckule")):
+        changes.update(event.changes)
+
+    assert "_meta/irc/lojban/coverage.toml" in changes
+    for absent in ("jbosnu", "ckule"):
+        path = f"_meta/irc/{absent}/coverage.toml"
+        assert path in changes, f"{absent} is invisible"
+        body = changes[path]
+        text = body.decode() if isinstance(body, bytes) else body
+        assert f'channel = "{absent}"' in text
+        assert "files = 0" in text
+        assert "never fetched" in text
+    # The channel that was fetched says what it holds, not what it lacks.
+    held = changes["_meta/irc/lojban/coverage.toml"]
+    held_text = held.decode() if isinstance(held, bytes) else held
+    assert "files = 1" in held_text
+    assert "never fetched" not in held_text
