@@ -77,9 +77,9 @@ ever relative to it.
      yourself; look the title up in `_meta/wiki/pages.csv`, which has `title`
      and `path` columns, or `_meta/tiki/pages.csv` for Tiki. One title can
      have several rows: a page that was moved away and back has a second,
-     dead page id with `state` `not-projected`, and the Talk page shares the
-     title under namespace 1. Pick the row with `state` `current` and the
-     namespace you want.
+     dead page id with `state` `not-projected`, and its Talk page is a
+     separate row whose title carries the `Talk:` prefix, under namespace 1.
+     Pick the row with `state` `current` and the namespace you want.
    - **A Message-ID → a file and its thread.** Maildir names are
      `<unixtime>.<hash>.jbomohi:2,S` and cannot be derived from a Message-ID.
      `_meta/mail/<list>/messages.csv` maps `message_id` to `file` and
@@ -115,9 +115,9 @@ One commit per source event, so git's own tools are the interface to time.
   dates is known, and `Source-Date:` where the source states a publication date
   of its own. Wiki commits also carry `Page-Id:`, and a `moved` commit carries
   `Moved-From:` and `Log-Type:`.
-- **Commit subjects are truncated.** A subject shows the start of the page
-  title and of the edit summary, cut with `…`, and the commit body does not
-  repeat them. The full edit summary of a wiki revision is the `comment`
+- **Wiki revision subjects are truncated.** A subject shows the start of the
+  page title and of the edit summary, cut with `…`, and the commit body does
+  not repeat them. The full edit summary of a wiki revision is the `comment`
   column of `_meta/wiki/revisions.csv`, joined on `revid`.
 - **`Time-Confidence:` says how far to trust the date.** `exact` is a real
   timestamp. `tz-unknown` means the source gave a wall-clock time with no
@@ -264,9 +264,11 @@ say so.
   `anonymous@<host>`, and edits whose author the source does not record appear
   as `unrecorded@<host>`. The 2014 lowercase-title round trip left some pages
   with two page ids for one title: the lowercase copy was deleted to make way
-  for the move back. Both ids' events sit on the same file path, so
-  `git log -- <path>` finds all of them, but a filter on one `Page-Id:` or
-  one `pageid` in `_meta/wiki/revisions.csv` does not.
+  for the move back. Both ids contribute commits to the same file path, so
+  a path log mixes the two lineages while still omitting no-change saves; a
+  filter on one `Page-Id:` or one `pageid` in `_meta/wiki/revisions.csv` sees
+  only one lineage. For the complete history enumerate every page id the
+  title has held, with the source filter, or read the revision index.
 - **Mail**: quoted text and signatures are kept in the thread views, and a
   quote is not an independent statement. Messages from the Google Groups era
   may appear in more than one archive; `_meta/mail/<list>/duplicates.csv` lists
