@@ -333,6 +333,19 @@ def mail_events(config: Config) -> Iterable[Event]:
         yield from project_mail(sources, archive_gaps=gaps)
 
 
+def _handover(held: dict[str, object], *keys: str) -> tuple[object, ...]:
+    """Take the named inputs out of `held`, so only the caller still has them.
+
+    A factory that closed over its inputs kept them for the whole build, which
+    on the 2026-09-16 corpus meant 11.5 GiB held through a 41-minute install
+    that needed none of it. Popping hands ownership to the projector's own
+    iterator, which drops them when its stream ends. Every other source was
+    already like this; only the wiki pair was not.
+    """
+
+    return tuple(held.pop(key) for key in keys)
+
+
 def source_factories(
     config: Config,
     names: Sequence[str] | None = None,
@@ -343,6 +356,11 @@ def source_factories(
 
     available = {"wiki", "irc", "dict", "tiki", "mail", "cll", "grammars"}
     selected = tuple(names or sorted(available))
+    unknown = set(selected) - available
+    if unknown:
+        raise SourceWiringError(
+            f"unknown source projector: {', '.join(sorted(unknown))}"
+        )
     wants_wiki = bool({"wiki", "tiki"} & set(selected))
     wiki_api_fragments = load_wiki_archive(config.archive) if wants_wiki else None
     wiki_dump = load_dump_archive(config.archive) if wants_wiki else None
@@ -356,30 +374,45 @@ def source_factories(
             *wiki_api_fragments,
         ]
         mediawiki_pages = mediawiki_pages_from_archive(config, live)
-    unknown = set(selected) - available
-    if unknown:
-        raise SourceWiringError(
-            f"unknown source projector: {', '.join(sorted(unknown))}"
-        )
+        # `live` is a second list over the same fragments; the map is built and
+        # it is not needed again.
+        del live
+
+    # Inputs live here rather than in a closure, so that handing them to a
+    # projector is the same act as letting go of them.
+    held: dict[str, object] = {}
     factories: dict[str, EventFactory] = {}
     if "wiki" in selected:
         assert wiki_api_fragments is not None
-        wiki_media = load_wiki_media_archive(config.archive)
-        combined = wiki_inputs(
+        held["wiki_media"] = load_wiki_media_archive(config.archive)
+        held["wiki_inputs"] = wiki_inputs(
             config,
             fragments=wiki_api_fragments,
             logs=load_wiki_log_archive(config.archive),
             dump=wiki_dump,
         )
-        factories["wiki"] = lambda: wiki_events(
-            config, inputs=combined, media=wiki_media
-        )
+
+        def wiki_factory() -> Iterable[Event]:
+            inputs, media = _handover(held, "wiki_inputs", "wiki_media")
+            return wiki_events(config, inputs=inputs, media=media)
+
+        factories["wiki"] = wiki_factory
+    # The union is built; the two raw inputs are inside it or discarded.
+    wiki_api_fragments = None
+    wiki_dump = None
     if "irc" in selected:
         factories["irc"] = lambda: irc_events(config)
     if "dict" in selected:
         factories["dict"] = lambda: dictionary_events(config)
     if "tiki" in selected:
-        factories["tiki"] = lambda: tiki_events(config, mediawiki_pages)
+        held["mediawiki_pages"] = mediawiki_pages
+
+        def tiki_factory() -> Iterable[Event]:
+            (pages,) = _handover(held, "mediawiki_pages")
+            return tiki_events(config, pages)
+
+        factories["tiki"] = tiki_factory
+        mediawiki_pages = None
     if "mail" in selected:
         factories["mail"] = lambda: mail_events(config)
     if "cll" in selected:

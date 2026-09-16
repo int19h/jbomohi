@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import gc
+import weakref
 from datetime import UTC, datetime
 from pathlib import Path
 from types import SimpleNamespace
@@ -322,3 +324,67 @@ def test_mail_gap_records_exact_unavailable_beginners_pages(
             "numbered pages unavailable (HTTP 404): msg00001.html, msg00002.html"
         )
     }
+
+
+class _Inputs:
+    """A stand-in for the multi-gigabyte wiki union, so a weakref can watch it."""
+
+
+def test_wiki_inputs_are_released_when_the_wiki_stream_ends(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """SPEC.md 2.4 does not care where inputs live; a shared machine does.
+
+    The wiki pair were the only inputs a factory closed over, so they stayed
+    resident for the whole build. On the 2026-09-16 corpus that meant 11.5 GiB
+    held through a 41-minute install that needed none of it. Handing them to
+    the projector makes the end of the stream the end of the memory.
+    """
+
+    # The loaders hand their result over and keep nothing, so that the only
+    # references in play are the ones under test rather than the test's own.
+    box = {"inputs": _Inputs(), "media": _Inputs()}
+    watch_inputs = weakref.ref(box["inputs"])
+    watch_media = weakref.ref(box["media"])
+
+    def fake_wiki_events(_config, *, inputs, media):
+        def stream():
+            assert inputs is not None and media is not None
+            yield from ()
+
+        return stream()
+
+    monkeypatch.setattr("jbomohi_tools.sources.load_wiki_archive", lambda _root: [])
+    monkeypatch.setattr("jbomohi_tools.sources.load_dump_archive", lambda _root: None)
+    monkeypatch.setattr("jbomohi_tools.sources.load_wiki_log_archive", lambda _root: [])
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.load_wiki_media_archive",
+        lambda _root: box.pop("media"),
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.sources.wiki_inputs", lambda *_a, **_k: box.pop("inputs")
+    )
+    monkeypatch.setattr("jbomohi_tools.sources.wiki_events", fake_wiki_events)
+
+    config = Config(
+        repo_root=tmp_path,
+        corpus=tmp_path / "corpus",
+        archive=tmp_path / "archive",
+        tmp=tmp_path / "tmp",
+    )
+    factories = source_factories(config, ["wiki"])
+    assert not box, "the test itself must not hold the inputs"
+
+    stream = factories["wiki"]()
+    # While the projector is producing, its inputs are of course still alive.
+    assert watch_inputs() is not None
+    assert watch_media() is not None
+
+    # Exhausting and dropping the stream is what a finished source looks like
+    # to the merge, which pops it from the heap and keeps no reference.
+    assert list(stream) == []
+    del stream
+    gc.collect()
+
+    assert watch_inputs() is None, "wiki inputs outlived the stream that consumed them"
+    assert watch_media() is None, "wiki media outlived the stream that consumed it"
