@@ -203,6 +203,7 @@ def _notes_for(corpus: Path, source: str) -> list[str]:
             notes.append(note)
     incomplete: list[str] = []
     unusable = 0
+    unfetched = 0
     for coverage in sorted(root.rglob("coverage.toml")):
         data = _load(coverage)
         archive_gaps = data.get("archive_gaps")
@@ -211,10 +212,22 @@ def _notes_for(corpus: Path, source: str) -> list[str]:
         value = data.get("unusable_date_headers")
         if isinstance(value, int):
             unusable += value
+        # A source can also record that its own fetch fell short of what the
+        # upstream offered, which is a different fact from a gap in the record.
+        archive_block = data.get("archive")
+        if isinstance(archive_block, dict):
+            short = archive_block.get("files_listed_but_not_archived")
+            if isinstance(short, int) and short:
+                unfetched += short
     if incomplete:
         notes.append("archives known incomplete: " + ", ".join(sorted(incomplete)))
     if unusable:
         notes.append(f"{_plural(unusable, 'unusable date header')}")
+    if unfetched:
+        notes.append(
+            f"{_plural(unfetched, 'file')} the upstream listed but this "
+            "archive does not hold"
+        )
     return notes
 
 

@@ -225,3 +225,25 @@ def test_the_irc_example_is_marked_as_not_yet_present() -> None:
     # The caveat sits in the sentence introducing the example, not far above it.
     preamble = "\n".join(lines[max(index - 4, 0) : index])
     assert "once `irc/` is present" in preamble, preamble
+
+
+def test_a_short_fetch_and_a_short_record_read_differently(tmp_path: Path) -> None:
+    corpus = _corpus_with(tmp_path, "irc")
+    root = corpus / "_meta" / "irc" / "lojban"
+    root.mkdir(parents=True)
+    (root / "coverage.toml").write_text(
+        "days = 6892\n\n[archive]\nfiles_listed_but_not_archived = 951\n",
+        encoding="utf-8",
+    )
+    tally = SourceTally()
+    tally.record(datetime(2000, 5, 26, tzinfo=UTC))
+    tally.record(datetime(2022, 7, 31, tzinfo=UTC))
+
+    table = coverage_table(corpus, {"irc/lojban": tally})
+
+    assert "951 files the upstream listed but this archive does not hold" in table
+    # And a complete fetch says nothing, rather than saying zero.
+    (root / "coverage.toml").write_text(
+        "days = 10\n\n[archive]\nfiles_listed_but_not_archived = 0\n", encoding="utf-8"
+    )
+    assert "does not hold" not in coverage_table(corpus, {"irc/lojban": tally})

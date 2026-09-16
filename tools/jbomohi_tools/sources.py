@@ -29,6 +29,7 @@ from .project.dictionary import (
 from .project.dictionary import project as project_dictionary
 from .project.grammars import project as project_grammars
 from .project.irc import load_archive as load_irc_archive
+from .project.irc import load_channel_archives as load_irc_channel_archives
 from .project.irc import project as project_irc
 from .project.mail import DEFAULT_ARCHIVE_GAPS, load_maildir
 from .project.mail import project as project_mail
@@ -243,7 +244,10 @@ def tiki_events(
 
 
 def irc_events(config: Config) -> Iterable[Event]:
-    return project_irc(load_irc_archive(config.archive))
+    return project_irc(
+        load_irc_archive(config.archive),
+        archives=load_irc_channel_archives(config.archive),
+    )
 
 
 def _maildir_manifest(config: Config, list_name: str) -> Path:

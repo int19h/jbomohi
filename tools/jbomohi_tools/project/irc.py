@@ -86,6 +86,25 @@ DAY_COLUMNS = (
 
 
 @dataclass(frozen=True, slots=True)
+class ChannelArchive:
+    """What the archive proves about one channel's fetch, beyond the logs.
+
+    The month index pages are archived alongside the logs, and each records how
+    many files the server listed in that directory. Comparing that with what
+    was taken turns "the tail is missing" from an assertion into something the
+    archive can show, without trusting anything outside it.
+    """
+
+    listed: int = 0
+    held: int = 0
+    fetched_on: str = ""
+
+    @property
+    def unfetched(self) -> int:
+        return max(self.listed - self.held, 0)
+
+
+@dataclass(frozen=True, slots=True)
 class SourceObject:
     """One immutable IRC source object selected from the archive."""
 
@@ -528,6 +547,44 @@ def parse_source(source: SourceObject) -> list[IrcUnit]:
     return _parse_undated(source, raw_lines)
 
 
+def load_channel_archives(archive: Path) -> dict[str, ChannelArchive]:
+    """What the archived month indexes prove about each channel's fetch.
+
+    Every directory index the fetch walked is archived beside the logs, with
+    the number of files the server listed there. Held against what was taken,
+    that is the difference between "the record ends here" and "our copy of it
+    does", and it needs nothing outside the archive to establish.
+    """
+
+    root = archive / "manifests" / "irc"
+    if not root.exists():
+        return {}
+    listed: dict[str, int] = defaultdict(int)
+    held: dict[str, int] = defaultdict(int)
+    fetched: dict[str, str] = {}
+    for path in sorted(root.rglob("*.toml")):
+        manifest = ArchiveManifest.load(path)
+        if not manifest.source.startswith("irc/"):
+            continue
+        channel = manifest.source.removeprefix("irc/")
+        day = manifest.fetched_at.date().isoformat()
+        fetched[channel] = max(fetched.get(channel, day), day)
+        if manifest.kind == "apache-index":
+            files = manifest.coverage.get("counts", {}).get("files")
+            if isinstance(files, int):
+                listed[channel] += files
+        elif manifest.kind == "irc-log":
+            held[channel] += 1
+    return {
+        channel: ChannelArchive(
+            listed=listed.get(channel, 0),
+            held=held.get(channel, 0),
+            fetched_on=fetched.get(channel, ""),
+        )
+        for channel in sorted(set(listed) | set(held))
+    }
+
+
 def load_archive(archive: Path) -> list[SourceObject]:
     """Load the newest immutable manifestation of each fetched IRC URL."""
 
@@ -587,6 +644,61 @@ def validate_rendered(unit: IrcUnit) -> None:
             raise IrcParseError(
                 f"{unit.output_path}:{number}: invalid normalized line {line!r}"
             )
+
+
+def _toml_string(value: str) -> str:
+    escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
+
+
+def _coverage_toml(
+    channel: str,
+    units: Sequence[IrcUnit],
+    missing: Sequence[date],
+    archive: ChannelArchive,
+) -> str:
+    """What this channel's projection covers, and what it demonstrably lacks.
+
+    SPEC.md 3.4 gives IRC a day index and a gaps file, which between them say
+    what was projected and what was recorded as absent. Neither says how far
+    the archive itself reaches, so a reader could not tell a channel that ends
+    in 2022 because the conversation stopped from one that ends in 2022 because
+    a fetch did.
+    """
+
+    days = sorted({unit.date_key for unit in units if unit.date_key != "unknown"})
+    lines = [
+        "# What this channel's projection covers (SPEC.md 3.4).",
+        "# Written by jbomohi build; do not edit.",
+        "",
+        f"channel = {_toml_string(channel)}",
+        f"days = {len(days)}",
+    ]
+    if days:
+        lines.append(f"first_day = {_toml_string(days[0])}")
+        lines.append(f"last_day = {_toml_string(days[-1])}")
+    lines.append(f"days_recorded_absent = {len(missing)}")
+    undated = sum(1 for unit in units if unit.date_key == "unknown")
+    if undated:
+        lines.append(f"undated_sources = {undated}")
+    if archive.fetched_on:
+        lines.append(f"fetched_on = {_toml_string(archive.fetched_on)}")
+    if archive.listed:
+        lines.append("")
+        lines.append("[archive]")
+        lines.append(f"files_the_server_listed = {archive.listed}")
+        lines.append(f"files_archived = {archive.held}")
+        lines.append(f"files_listed_but_not_archived = {archive.unfetched}")
+        if archive.unfetched:
+            lines.append(
+                "note = "
+                + _toml_string(
+                    "the server listed files this archive does not hold, so the "
+                    "gap is in the fetch rather than in the record; refetching "
+                    "closes it"
+                )
+            )
+    return "\n".join(lines).rstrip("\n") + "\n"
 
 
 def _render_days(rows: Sequence[dict[str, str | int]]) -> str:
@@ -813,6 +925,7 @@ def project(
     sources: Iterable[SourceObject],
     *,
     amendments: Mapping[str, IrcAmendment] | None = None,
+    archives: Mapping[str, ChannelArchive] | None = None,
 ) -> Iterator[Event]:
     """Project source objects to chronologically ordered IRC events.
 
@@ -855,6 +968,12 @@ def project(
             if missing:
                 gap_path = f"_meta/irc/{unit.channel}/gaps.csv"
                 changes[gap_path] = _render_gaps(missing)
+            changes[f"_meta/irc/{unit.channel}/coverage.toml"] = _coverage_toml(
+                unit.channel,
+                channel_units[unit.channel],
+                missing,
+                (archives or {}).get(unit.channel, ChannelArchive()),
+            )
         amendment = (amendments or {}).get(unit.output_path)
         event_kind = "import"
         source_id = unit.date_key
