@@ -34,6 +34,13 @@ git log --follow -p -- "wiki/main/BPFK_Section%3A_gadri.wiki" | less
 git show "$(git log -1 --format=%H --before=2015-06-01 -- wiki/main/xorlo.wiki)":wiki/main/xorlo.wiki
 ```
 
+If you already cloned without `--recurse-submodules`, run `git submodule
+update --init --recursive`. Without it `cll/src` and the grammar sources are
+empty directories, which reads like a missing source. Most questions do not
+need them: the CLL text is rendered plain text under `cll/editions/` and the
+vendored grammars are ordinary files, so the submodules matter only when you
+want the upstream DocBook or a parser's own history.
+
 If you use a coding assistant, open the clone in it and ask your question:
 `AGENTS.md` tells it how this repository is arranged and how to cite what it
 finds.

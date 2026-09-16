@@ -1273,3 +1273,31 @@ def test_a_move_onto_its_own_path_is_a_commit_that_changes_nothing() -> None:
     assert moved.deletions == ()
     assert moved.trailers["Moved-From"] == "wiki/module/Documentation.wiki"
     moved.validate()
+
+
+def test_wiki_coverage_reports_what_it_covers_not_only_what_it_could_not_serve() -> (
+    None
+):
+    """Every count in this file used to sit under an [additive.*] table.
+
+    Anything reading top-level counters therefore found nothing, and the
+    README rendered the wiki — the largest source after the dictionary — as an
+    empty line. The additive classes are still there; they are just no longer
+    the only thing there.
+    """
+
+    from jbomohi_tools.project.wiki import _coverage_toml
+
+    rendered = _coverage_toml(
+        (("export_revisions_without_actor_row", 2608, "no actor row"),),
+        {"pages": 14486, "revisions": 53279, "not_projected": 21224},
+    )
+
+    assert "pages = 14486" in rendered
+    assert "revisions = 53279" in rendered
+    assert "not_projected = 21224" in rendered
+    # What one input could not serve is still recorded, with its cause.
+    assert "[additive.export_revisions_without_actor_row]" in rendered
+    assert "count = 2608" in rendered
+    # The plain counts come first: what is here, before what is missing.
+    assert rendered.index("pages = ") < rendered.index("[additive.")

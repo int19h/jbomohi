@@ -701,18 +701,29 @@ def _toml_string(value: str) -> str:
     return f'"{escaped}"'
 
 
-def _coverage_toml(additive: Sequence[tuple[str, int, str]]) -> str:
-    """Render the additive coverage classes SPEC.md 3.2 requires.
+def _coverage_toml(
+    additive: Sequence[tuple[str, int, str]], counts: Mapping[str, int]
+) -> str:
+    """Render what the wiki projection covers, and the additive classes.
 
-    Each class is a kind of row one input holds and the other structurally
-    cannot, so a reader can tell coverage apart from disagreement.
+    The additive classes are kinds of row one input holds and the other
+    structurally cannot, so a reader can tell coverage apart from disagreement.
+    They were all this file held, and they all sit in `[additive.*]` tables, so
+    anything reading top-level counters found nothing here and reported the
+    wiki as covering nothing at all. The plain counts come first for that
+    reason: what is here, before what one input could not serve.
     """
 
     lines = [
-        "# Rows one input holds and the other cannot serve (SPEC.md 3.2).",
-        "# Written by jbomohi build; do not edit.",
+        "# What the wiki projection covers, and the rows one input holds that",
+        "# the other cannot serve (SPEC.md 3.2). Written by jbomohi build; do",
+        "# not edit.",
         "",
     ]
+    for name, count in counts.items():
+        lines.append(f"{name} = {count}")
+    if counts:
+        lines.append("")
     for name, count, cause in additive:
         if not re.fullmatch(r"[A-Za-z0-9_]+", name):
             raise WikiParseError(f"invalid coverage class name: {name!r}")
@@ -1444,7 +1455,17 @@ def project(
             final_changes["_meta/wiki/errors.csv"] = _csv(ERROR_COLUMNS, error_rows)
         if gap_rows:
             final_changes["_meta/wiki/gaps.csv"] = _csv(GAP_COLUMNS, gap_rows)
-        if additive:
-            final_changes["_meta/wiki/coverage.toml"] = _coverage_toml(additive)
+        final_changes["_meta/wiki/coverage.toml"] = _coverage_toml(
+            additive,
+            {
+                "pages": len(page_rows),
+                "pages_with_a_file": sum(
+                    1 for row in page_rows if row.get("state") == "current"
+                ),
+                "revisions": len(revision_rows),
+                "media_files": len(media_rows),
+                "not_projected": len(gap_rows),
+            },
+        )
         pending_event = replace(pending_event, changes=final_changes)
         yield pending_event

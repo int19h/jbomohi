@@ -26,6 +26,23 @@ Snapshot `{{snapshot}}`, schema `{{schema}}`.
 
 {{layout_summary}}
 
+## Submodules, before anything else
+
+`cll/src` and the grammar sources under `grammars/` are submodules. A plain
+clone leaves them as empty directories, and an empty directory reads exactly
+like an absent source:
+
+```sh
+git clone --recurse-submodules <url> jbomohi     # or, after cloning:
+git submodule update --init --recursive
+```
+
+You do not need them for most questions. The CLL text you cite lives in
+`cll/editions/`, which is rendered plain text in this repository, and the
+vendored grammars are ordinary files. The submodules hold the upstream sources
+behind those: the DocBook the editions were rendered from, and each parser's
+own history.
+
 ## What this snapshot covers
 
 {{coverage_tables}}
