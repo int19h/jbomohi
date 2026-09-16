@@ -498,7 +498,16 @@ def test_coverage_distinguishes_a_short_record_from_a_short_fetch() -> None:
         _unit("lojban", "2022-07-31"),
     ]
     complete = _coverage_toml(
-        "lojban", units, [], ChannelArchive(listed=2, held=2, fetched_on="2026-09-16")
+        "lojban",
+        units,
+        [],
+        ChannelArchive(
+            listed=2,
+            held=2,
+            fetched_on="2026-09-16",
+            directories_listed=1,
+            directories_walked=1,
+        ),
     )
     assert "files = 2" in complete
     assert 'first_day = "2022-07-30"' in complete
@@ -513,7 +522,7 @@ def test_coverage_distinguishes_a_short_record_from_a_short_fetch() -> None:
         "lojban",
         [_unit("lojban", "2000-05-26..2000-10-28")],
         [],
-        ChannelArchive(listed=1, held=1),
+        ChannelArchive(listed=1, held=1, directories_listed=1, directories_walked=1),
     )
     assert 'first_day = "2000-05-26"' in ranged
     assert 'last_day = "2000-10-28"' in ranged
@@ -521,7 +530,16 @@ def test_coverage_distinguishes_a_short_record_from_a_short_fetch() -> None:
     assert ".." not in ranged.split("first_day")[1].split("\n")[0]
 
     truncated = _coverage_toml(
-        "lojban", units, [], ChannelArchive(listed=953, held=2, fetched_on="2026-09-16")
+        "lojban",
+        units,
+        [],
+        ChannelArchive(
+            listed=953,
+            held=2,
+            fetched_on="2026-09-16",
+            directories_listed=1,
+            directories_walked=1,
+        ),
     )
     assert "files_the_server_listed = 953" in truncated
     assert "files_listed_but_not_archived = 951" in truncated
@@ -538,7 +556,10 @@ def test_coverage_counts_days_recorded_absent_separately() -> None:
 
     units = [_unit("lojban", "2015-05-01"), _unit("lojban", "2015-05-03")]
     rendered = _coverage_toml(
-        "lojban", units, [_date(2015, 5, 2)], ChannelArchive(listed=2, held=2)
+        "lojban",
+        units,
+        [_date(2015, 5, 2)],
+        ChannelArchive(listed=2, held=2, directories_listed=1, directories_walked=1),
     )
     assert "files = 2" in rendered
     assert "days_recorded_absent = 1" in rendered
@@ -636,3 +657,61 @@ def test_a_configured_channel_with_nothing_archived_is_absent_not_invisible() ->
     held_text = held.decode() if isinstance(held, bytes) else held
     assert "files = 1" in held_text
     assert "never fetched" not in held_text
+
+
+def test_coverage_refuses_to_size_a_gap_a_partial_walk_cannot_size() -> None:
+    """An unfinished walk compares a few directories against themselves.
+
+    jbosnu's coverage file said ten files were listed but not archived, and a
+    reader concluded the channel was ten files from complete. It was 1,775
+    files and thirteen years short: the fetch had walked 126 of 254 directories,
+    so the count of what exists was as partial as the count of what was taken.
+    """
+
+    from jbomohi_tools.project.irc import ChannelArchive, _coverage_toml
+
+    units = [_unit("jbosnu", "2013-09-04"), _unit("jbosnu", "2013-09-05")]
+    partial = _coverage_toml(
+        "jbosnu",
+        units,
+        [],
+        ChannelArchive(
+            listed=2611,
+            held=2601,
+            fetched_on="2026-09-14",
+            directories_listed=254,
+            directories_walked=126,
+        ),
+    )
+    assert "directories_the_server_listed = 254" in partial
+    assert "directories_walked = 126" in partial
+    assert "index_walk_complete = false" in partial
+    assert "126 of 254 directories were visited" in partial
+    assert "lower bound on what is missing, not its size" in partial
+    # The claim that was wrong, and must not be made here.
+    assert "refetching closes it" not in partial
+
+    absent_index = _coverage_toml(
+        "jbosnu",
+        units,
+        [],
+        ChannelArchive(listed=2611, held=2601, directories_walked=126),
+    )
+    assert "directories_the_server_listed" not in absent_index
+    assert "index_walk_complete = false" in absent_index
+    assert "how many directories the server lists is unknown" in absent_index
+
+    whole = _coverage_toml(
+        "jbosnu",
+        units,
+        [],
+        ChannelArchive(
+            listed=2,
+            held=2,
+            fetched_on="2026-09-16",
+            directories_listed=254,
+            directories_walked=254,
+        ),
+    )
+    assert "index_walk_complete = true" in whole
+    assert "note = " not in whole

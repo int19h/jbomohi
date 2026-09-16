@@ -100,15 +100,38 @@ class ChannelArchive:
     many files the server listed in that directory. Comparing that with what
     was taken turns "the tail is missing" from an assertion into something the
     archive can show, without trusting anything outside it.
+
+    That comparison is only as complete as the walk that produced it. An
+    interrupted fetch archives indexes for the directories it reached and none
+    for the rest, so `listed` counts what those directories held and the
+    difference from `held` looks small however much is absent — the count of
+    what exists is itself partial, and the arithmetic is self-consistent and
+    wrong. The channel index records how many directories the server lists, so
+    holding that against how many were walked says whether the comparison can
+    be read as a gap at all.
     """
 
     listed: int = 0
     held: int = 0
     fetched_on: str = ""
+    directories_listed: int | None = None
+    directories_walked: int = 0
 
     @property
     def unfetched(self) -> int:
         return max(self.listed - self.held, 0)
+
+    @property
+    def walk_complete(self) -> bool | None:
+        """Whether every directory the channel index lists was walked.
+
+        `None` when the channel index itself is not archived, which is not the
+        same as a complete walk and must not be reported as one.
+        """
+
+        if self.directories_listed is None:
+            return None
+        return self.directories_walked >= self.directories_listed
 
 
 @dataclass(frozen=True, slots=True)
@@ -582,20 +605,42 @@ def load_channel_archives(archive: Path) -> dict[str, ChannelArchive]:
     root = archive / "manifests" / "irc"
     if not root.exists():
         return {}
-    listed: dict[str, int] = defaultdict(int)
-    held: dict[str, int] = defaultdict(int)
-    fetched: dict[str, str] = {}
+    # One URL can have several manifests: a directory index changes whenever a
+    # day is added to that month, and every version is kept. Counting them all
+    # would count that month's files once per fetch, so each URL contributes
+    # only its newest manifest, as load_archive selects log objects.
+    newest: dict[str, ArchiveManifest] = {}
     for path in sorted(root.rglob("*.toml")):
         manifest = ArchiveManifest.load(path)
         if not manifest.source.startswith("irc/"):
             continue
+        previous = newest.get(manifest.origin)
+        if previous is None or (manifest.fetched_at, manifest.sha256) > (
+            previous.fetched_at,
+            previous.sha256,
+        ):
+            newest[manifest.origin] = manifest
+
+    listed: dict[str, int] = defaultdict(int)
+    held: dict[str, int] = defaultdict(int)
+    walked: dict[str, int] = defaultdict(int)
+    directories: dict[str, int] = {}
+    fetched: dict[str, str] = {}
+    for manifest in newest.values():
         channel = manifest.source.removeprefix("irc/")
         day = manifest.fetched_at.date().isoformat()
         fetched[channel] = max(fetched.get(channel, day), day)
+        counts = manifest.coverage.get("counts", {})
         if manifest.kind == "apache-index":
-            files = manifest.coverage.get("counts", {}).get("files")
+            files = counts.get("files")
             if isinstance(files, int):
+                # A directory index: it lists log files.
                 listed[channel] += files
+                walked[channel] += 1
+            listing = counts.get("directories")
+            if isinstance(listing, int):
+                # The channel index: it lists the directories that exist.
+                directories[channel] = listing
         elif manifest.kind == "irc-log":
             held[channel] += 1
     return {
@@ -603,8 +648,10 @@ def load_channel_archives(archive: Path) -> dict[str, ChannelArchive]:
             listed=listed.get(channel, 0),
             held=held.get(channel, 0),
             fetched_on=fetched.get(channel, ""),
+            directories_listed=directories.get(channel),
+            directories_walked=walked.get(channel, 0),
         )
-        for channel in sorted(set(listed) | set(held))
+        for channel in sorted(set(listed) | set(held) | set(directories))
     }
 
 
@@ -731,22 +778,54 @@ def _coverage_toml(
         lines.append(f"undated_sources = {undated}")
     if archive.fetched_on:
         lines.append(f"fetched_on = {_toml_string(archive.fetched_on)}")
-    if archive.listed:
+    if archive.listed or archive.directories_walked:
+        complete = archive.walk_complete
         lines.append("")
         lines.append("[archive]")
+        if archive.directories_listed is not None:
+            lines.append(
+                f"directories_the_server_listed = {archive.directories_listed}"
+            )
+        lines.append(f"directories_walked = {archive.directories_walked}")
+        lines.append("index_walk_complete = " + ("true" if complete else "false"))
         lines.append(f"files_the_server_listed = {archive.listed}")
         lines.append(f"files_archived = {archive.held}")
         lines.append(f"files_listed_but_not_archived = {archive.unfetched}")
-        if archive.unfetched:
-            lines.append(
-                "note = "
-                + _toml_string(
-                    "the server listed files this archive does not hold, so the "
-                    "gap is in the fetch rather than in the record; refetching "
-                    "closes it"
-                )
-            )
+        note = _archive_note(archive, complete)
+        if note:
+            lines.append("note = " + _toml_string(note))
     return "\n".join(lines).rstrip("\n") + "\n"
+
+
+def _archive_note(archive: ChannelArchive, complete: bool | None) -> str:
+    """What the file counts above may and may not be read as.
+
+    When the walk did not finish, the difference between listed and archived is
+    a lower bound and nothing more: the directories never visited contribute to
+    neither side. Reporting it as the gap is how a channel thirteen years and
+    1,775 files short of the record read as ten files short.
+    """
+
+    if complete is None:
+        return (
+            "the channel index is not in this archive, so how many directories "
+            "the server lists is unknown and the counts above cover only the "
+            "directories that were walked; the difference is a lower bound on "
+            "what is missing, not its size"
+        )
+    if not complete:
+        return (
+            f"the index walk did not finish: {archive.directories_walked} of "
+            f"{archive.directories_listed} directories were visited, so the "
+            "counts above cover only those; the fetch is incomplete and the "
+            "difference is a lower bound on what is missing, not its size"
+        )
+    if archive.unfetched:
+        return (
+            "the server listed files this archive does not hold, so the gap is "
+            "in the fetch rather than in the record; refetching closes it"
+        )
+    return ""
 
 
 def _render_days(rows: Sequence[dict[str, str | int]]) -> str:
