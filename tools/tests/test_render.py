@@ -205,26 +205,15 @@ def test_every_citation_example_is_shaped_like_a_citation() -> None:
         by_source[path.split("/", 1)[0]] = match.group("id")
 
     # One worked example per source a reader is likely to start from.
-    assert {"wiki", "mail", "dict", "cll", "irc"} <= set(by_source)
+    assert {"wiki", "mail", "dict", "cll", "irc", "tiki"} <= set(by_source)
     # Each id is in the grammar the same document defines.
     assert by_source["wiki"].startswith("revid=")
     assert by_source["mail"].startswith("<") and by_source["mail"].endswith(">")
     assert by_source["dict"].startswith("definition=")
     assert by_source["cll"].startswith("cll=")
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", by_source["irc"])
-
-
-def test_the_irc_example_is_marked_as_not_yet_present() -> None:
-    """`irc/` is absent from this snapshot, so its example cannot be tried yet."""
-
-    template = (
-        Path(__file__).resolve().parents[2] / "tools/templates/main/AGENTS.md"
-    ).read_text(encoding="utf-8")
-    lines = template.splitlines()
-    index = next(i for i, line in enumerate(lines) if line.startswith("irc/lojban/"))
-    # The caveat sits in the sentence introducing the example, not far above it.
-    preamble = "\n".join(lines[max(index - 4, 0) : index])
-    assert "once `irc/` is present" in preamble, preamble
+    # A Source-Id may itself contain "@"; the path ends at the first one.
+    assert by_source["tiki"].startswith("tiki=") and "@" in by_source["tiki"]
 
 
 def test_a_short_fetch_and_a_short_record_read_differently(tmp_path: Path) -> None:
@@ -247,3 +236,52 @@ def test_a_short_fetch_and_a_short_record_read_differently(tmp_path: Path) -> No
         "days = 10\n\n[archive]\nfiles_listed_but_not_archived = 0\n", encoding="utf-8"
     )
     assert "does not hold" not in coverage_table(corpus, {"irc/lojban": tally})
+
+
+def _templates() -> dict[str, str]:
+    root = Path(__file__).resolve().parents[2] / "tools/templates/main"
+    return {
+        "AGENTS.md": (root / "AGENTS.md").read_text(encoding="utf-8"),
+        "README.md": (root / "README.md").read_text(encoding="utf-8"),
+        "rules": (root / ".agents/rules/jbomohi.md").read_text(encoding="utf-8"),
+    }
+
+
+def test_the_three_files_do_not_repeat_each_other() -> None:
+    """Each fact belongs in one file; the others point at it.
+
+    The citation grammar was in two files and had already drifted into two
+    spellings, and the rules file carried a compressed copy of a contract it
+    could not keep in step with.
+    """
+
+    files = _templates()
+    # The grammar itself lives only in AGENTS.md.
+    grammar = "<path>@<Source-Id>:L<start>"
+    assert grammar in files["AGENTS.md"]
+    assert grammar not in files["rules"]
+    # The rules file points rather than restates.
+    assert "AGENTS.md" in files["rules"]
+    assert len(files["rules"].splitlines()) < 25, "the rules file is a pointer"
+    # The synthetic-address list is worded once, not twice differently.
+    assert files["README.md"].count("irclogs@irc.lojban.org") == 1
+
+
+def test_the_tools_branch_pointer_is_one_sentence_at_the_end() -> None:
+    """The human partner's rule: a brief mention, not a section, and not early."""
+
+    for name, text in (("AGENTS.md", None), ("README.md", None)):
+        body = _templates()[name]
+        assert body.count("tools` branch") == 1, name
+        where = body.index("tools` branch") / len(body)
+        assert where > 0.9, f"{name}: pointer at {where:.0%} of the file"
+
+
+def test_no_development_or_coordination_content_reaches_main() -> None:
+    """These files ship to readers of the corpus, not to its maintainers."""
+
+    banned = ("herdr", "collab", "pull request", "worktree", "pytest", "uv run")
+    for name, text in _templates().items():
+        lowered = text.lower()
+        for word in banned:
+            assert word not in lowered, f"{name} mentions {word!r}"
