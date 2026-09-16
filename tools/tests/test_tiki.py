@@ -11,6 +11,7 @@ from jbomohi_tools.project.tiki import (
     RawTikiDump,
     TikiParseError,
     TikiUsers,
+    _fidelity_note,
     decode_character_text,
     decode_history_blob,
     is_anonymous_tiki_user,
@@ -549,6 +550,100 @@ def test_ingest_tiki_export_writes_three_operator_export_manifests(
     (export / "tiki-user-preferences.tsv.gz").unlink()
     with pytest.raises(ArchiveError, match="is missing"):
         ingest_tiki_export(tmp_path / "other-archive", export, "2026-09-13")
+
+
+def test_utf8_fidelity_note_claims_only_what_the_two_exports_prove() -> None:
+    """The note is the reader's guide to how far to trust the text.
+
+    An earlier version said the '?' characters were stored in the database
+    because both exports counted the same number of rows containing one. Most
+    '?' are ordinary punctuation, so that inference does not hold, and the note
+    must not make it.
+    """
+
+    note = _fidelity_note("utf8")
+    assert "not evidence that any '?' is stored" in note
+    assert "are stored in the database, not lost by an export client" not in note
+    # What the equality does show is worth keeping, stated as itself.
+    assert "identical in the latin1-transcoded and utf8mb4 exports" in note
+    # SPEC.md 3.2.5(c): mojibake is published, not repaired.
+    assert "no characters repaired" in note
+    # Why the two exports agree on history and differ on pages.
+    assert "BLOB" in note
+
+
+def test_latin1_fidelity_note_says_the_text_is_not_the_stored_bytes() -> None:
+    """The 2026-09-15 re-export proved the latin1 client altered text.
+
+    The note used to say characters "may be lost", which reads as a caution
+    about something that might have happened. It did happen, and a reader
+    deciding whether to quote this text needs to know that.
+    """
+
+    note = _fidelity_note("latin1-transcoded")
+    assert "are not the stored bytes" in note
+    assert "may be lost" not in note
+    assert "BLOB" in note
+
+
+def test_content_manifest_note_states_what_the_export_actually_is(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """SPEC.md 2.3: the manifest is the evidence of what was used.
+
+    The note used to assert, for every export, that tiki_forums had been
+    stripped locally and that the client was latin1. The 2026-09-15 export is
+    utf8mb4 and the operator excluded the table themselves, so both halves were
+    false where it mattered most: on the component whose encoding is the whole
+    question.
+    """
+
+    export = tmp_path / "export"
+    export.mkdir()
+    for name in (
+        "tiki-content.sanitized.sql.gz",
+        "tiki-users.tsv.gz",
+        "tiki-user-preferences.tsv.gz",
+    ):
+        (export / name).write_bytes(name.encode())
+    data = RawTikiDump(
+        {
+            "tiki_pages": (_row(page_id=b"1"),),
+            "tiki_history": (),
+            "tiki_comments": (),
+            "tiki_actionlog": (),
+        }
+    )
+    users = TikiUsers(frozenset({"alice"}), {"alice": "Alice"})
+    monkeypatch.setattr("jbomohi_tools.archive.tiki.load_tiki_dump", lambda _path: data)
+    monkeypatch.setattr(
+        "jbomohi_tools.archive.tiki.load_tiki_users",
+        lambda *_args, **_kwargs: users,
+    )
+    monkeypatch.setattr(
+        "jbomohi_tools.archive.tiki.project", lambda *_args, **_kwargs: iter(())
+    )
+
+    def content_note(archive: Path, encoding: str) -> str:
+        report = ingest_tiki_export(
+            archive, export, "2026-09-15", character_encoding=encoding
+        )
+        for path in report.manifests:
+            manifest = ArchiveManifest.load(path)
+            if "content" in path.name:
+                return manifest.notes
+        raise AssertionError("no content manifest")
+
+    utf8 = content_note(tmp_path / "utf8-archive", "utf8")
+    assert "utf8mb4" in utf8
+    assert "latin1" not in utf8
+    assert "Locally sanitized" not in utf8
+    assert "tiki_forums" in utf8 and "inbound_pop_password" in utf8
+
+    latin1 = content_note(tmp_path / "latin1-archive", "latin1-transcoded")
+    assert "latin1 client" in latin1
+    assert "loses characters" in latin1
+    assert "tiki_forums" in latin1
 
 
 def test_stored_mojibake_is_recognised_by_definition_not_by_spelling() -> None:
