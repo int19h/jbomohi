@@ -75,7 +75,11 @@ ever relative to it.
      become `_` and other punctuation is percent-encoded, so "BPFK Section:
      gadri" is `wiki/main/BPFK_Section%3A_gadri.wiki`. Do not build the slug
      yourself; look the title up in `_meta/wiki/pages.csv`, which has `title`
-     and `path` columns, or `_meta/tiki/pages.csv` for Tiki.
+     and `path` columns, or `_meta/tiki/pages.csv` for Tiki. One title can
+     have several rows: a page that was moved away and back has a second,
+     dead page id with `state` `not-projected`, and the Talk page shares the
+     title under namespace 1. Pick the row with `state` `current` and the
+     namespace you want.
    - **A Message-ID → a file and its thread.** Maildir names are
      `<unixtime>.<hash>.jbomohi:2,S` and cannot be derived from a Message-ID.
      `_meta/mail/<list>/messages.csv` maps `message_id` to `file` and
@@ -109,7 +113,12 @@ One commit per source event, so git's own tools are the interface to time.
   `edited`, `deleted`, `moved`, `comment`, `vote-batch`, `import`, `render`,
   `refresh` or `contributed`. `Event-Window:` appears where only a range of
   dates is known, and `Source-Date:` where the source states a publication date
-  of its own.
+  of its own. Wiki commits also carry `Page-Id:`, and a `moved` commit carries
+  `Moved-From:` and `Log-Type:`.
+- **Commit subjects are truncated.** A subject shows the start of the page
+  title and of the edit summary, cut with `…`, and the commit body does not
+  repeat them. The full edit summary of a wiki revision is the `comment`
+  column of `_meta/wiki/revisions.csv`, joined on `revid`.
 - **`Time-Confidence:` says how far to trust the date.** `exact` is a real
   timestamp. `tz-unknown` means the source gave a wall-clock time with no
   usable zone: an IRC log whose header records no offset writes `tz=unknown` in
@@ -140,11 +149,23 @@ One commit per source event, so git's own tools are the interface to time.
   a commit with an old date, so checking out a commit by date does not give
   everything as it stood then. For a whole-tree cut use the
   `snapshot/<timestamp>` tags.
-- **`--follow` crosses renames**, which matters because a wiki page's file name
-  changes when its title does.
+- **`--follow` is a guess, not a ledger.** A wiki page's file name changes
+  when its title does, and `git log --follow -- <path>` will cross that
+  rename. But once the real renames run out, git keeps guessing by content
+  similarity and can splice an unrelated file onto the front of the history.
+  It does that on real pages here: on `BPFK Section: gadri` it adds four
+  versions of an unrelated Tiki page. Check what `--follow` returns against
+  the page's `revisions` count in `_meta/wiki/pages.csv` and against the
+  `Moved-From:` trailers of its `moved` commits. A page that was moved away
+  and back to the same name needs no `--follow` at all: plain
+  `git log -- <path>` already lists both sides of each move.
 - **Some commits have an empty diff.** A source can record a new version whose
   text is identical to the last one. The event still happened; the commit
-  message and trailers carry it.
+  message and trailers carry it. Path-based `git log` shows such commits, but
+  tools that look for content changes skip them. To enumerate every event of
+  one wiki page regardless of content, use its page id together with the
+  source, because a Tiki page can carry the same number:
+  `git log --all-match --grep='^Source: wiki$' --grep='^Page-Id: 527$'`.
 - **`git blame` gives the commit that last wrote a line.** Open that commit's
   message for its `Source-Id:`. On an IRC day file the commit is the day, not
   the speaker.
@@ -155,16 +176,23 @@ One commit per source event, so git's own tools are the interface to time.
 <path>@<Source-Id>:L<start>[-<end>]
 ```
 
-`<Source-Id>` names the version: `revid=<n>` (wiki), the `Message-ID` (mail),
-`YYYY-MM-DD` (IRC day), `definition=<id> version=<n>` (dict; versions count from 0), `cll=<edition>`
-(CLL), `tiki=<page>@<v>` (Tiki).
+`<Source-Id>` names the version: `revid=<n>` (wiki revision), `logid=<n>`
+(wiki move or deletion, from the log), the `Message-ID` (mail), `YYYY-MM-DD`
+(IRC day), `definition=<id> version=<n>` (dict; versions count from 0),
+`cll=<edition>` (CLL), `tiki=<page>@<v>` (Tiki).
+
+A fact about the event itself rather than about the text — who made it, when,
+with what edit summary — cites the `Source-Id` alone, for example
+`revid=119555` or `logid=61219`; the reader resolves it with
+`git log --grep='Source-Id: revid=119555'` and reads the commit.
 
 A `Source-Id` may itself contain `@`: the path ends at the first `@` and the
 line range starts at the last `:L`.
 
 For mail the id is the message's `Message-ID`, written in a citation with the
 angle brackets that are part of its syntax. The `Source-Id:` trailer stores it
-without them, so search for the bare form:
+without them and in lower case, and `_meta/mail/<list>/messages.csv` uses the
+same lower-case form, so search for the bare, lower-cased id:
 `git log --grep='Source-Id: 20041225202752.gd20429@chain.digitalkingdom.org'`.
 
 ```
@@ -236,7 +264,11 @@ say so.
   MediaWiki template named `BPFK Section from tiki`, so their pre-import
   history is under `tiki/`. Anonymous or IP-only edits appear as
   `anonymous@<host>`, and edits whose author the source does not record appear
-  as `unrecorded@<host>`.
+  as `unrecorded@<host>`. The 2014 lowercase-title round trip left some pages
+  with two page ids for one title: the lowercase copy was deleted to make way
+  for the move back. Both ids' events sit on the same file path, so
+  `git log -- <path>` finds all of them, but a filter on one `Page-Id:` or
+  one `pageid` in `_meta/wiki/revisions.csv` does not.
 - **Mail**: quoted text and signatures are kept in the thread views, and a
   quote is not an independent statement. Messages from the Google Groups era
   may appear in more than one archive; `_meta/mail/<list>/duplicates.csv` lists
@@ -255,7 +287,11 @@ say so.
   database holds them, never repaired, and `_meta/tiki/coverage.toml` counts
   them per table. Quote them as they are and say what they are.
 - **CLL**: editions are aligned by section number in
-  `_meta/cll/alignment.csv`.
+  `_meta/cll/alignment.csv`. The files under `cll/editions/` are renderings,
+  so `git log` and `git blame` on them attribute every line to the tool's
+  `render` commit, not to the person who wrote or changed the prose. Who
+  changed the book, and when, is a question for the `cll/src` submodule's own
+  history.
 - **Grammars**: the dated versions under `grammars/official/` are the official
   baseline grammars of 1990, 1991 and 1997. `camxes` is the later community
   "standard" lineage written as a PEG, a parsing-expression grammar;
