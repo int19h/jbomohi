@@ -80,9 +80,21 @@ def ingest_tiki_export(
             "Operator supplied an export date only; fetched_at is normalized to midnight UTC.",
         ]
         if name == "tiki-content.sanitized.sql.gz":
+            # The note is provenance (SPEC.md 2.3), so it states what this
+            # component actually is. Asserting a latin1 client over a utf8
+            # export, or local stripping the operator had already done, would
+            # make the manifest evidence for something untrue.
             notes.append(
-                "Locally sanitized by removing all tiki_forums INSERT rows; this latin1-client "
-                "export is projected with explicit byte-preserving fidelity caveats."
+                f"Holds only {', '.join(sorted(data.tables))}: tiki_forums is "
+                "excluded because it carries forum_password and a plaintext "
+                "inbound_pop_password."
+            )
+            notes.append(
+                "Exported through a utf8mb4 client; text is the stored bytes."
+                if character_encoding == "utf8"
+                else "Exported through a latin1 client, which loses characters "
+                "the database stores outside latin1; projected with explicit "
+                "byte-preserving fidelity caveats."
             )
         manifest = ArchiveManifest(
             source="tiki",

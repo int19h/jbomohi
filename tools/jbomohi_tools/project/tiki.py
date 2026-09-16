@@ -794,6 +794,40 @@ def migrated_title_map(
     return result
 
 
+def _fidelity_note(character_encoding: str) -> str:
+    """How far the reader may trust this projection's text.
+
+    What it may claim is limited by what the two exports actually prove
+    (spec-lead, 2026-09-16). The latin1 client demonstrably altered text; equal
+    '?' counts demonstrate almost nothing, because most '?' are ordinary
+    punctuation.
+    """
+
+    return (
+        "latin1 client export: the client transcoded stored UTF-8 to latin-1, "
+        "so character columns here are not the stored bytes. A page storing "
+        "C3 BC arrived as a bare FC, and characters outside latin-1 cannot "
+        "survive at all. tiki_history is a BLOB column, which the client "
+        "charset does not transcode, so its bytes are exact. No characters "
+        "repaired"
+        if character_encoding == "latin1-transcoded"
+        else (
+            "utf8mb4 client export: character columns are the stored bytes, "
+            "decoded strictly as UTF-8; no characters repaired. "
+            "stored_mojibake_rows counts rows whose text is a latin-1 reading "
+            "of UTF-8 left by an earlier migration, such as U+00C3 U+00A9 "
+            "where U+00E9 was meant; SPEC.md 3.2.5(c) publishes those bytes as "
+            "the database holds them. question_rows counts literal '?' "
+            "characters, most of which are ordinary punctuation: the count is "
+            "identical in the latin1-transcoded and utf8mb4 exports, which "
+            "shows only that the latin1 client added none at row granularity "
+            "in these tables, and is not evidence that any '?' is stored. "
+            "tiki_history agrees between the two exports because it is a BLOB "
+            "column and escaped transcoding; tiki_pages.data did not"
+        )
+    )
+
+
 def project(
     data: RawTikiDump,
     users: TikiUsers,
@@ -1118,21 +1152,7 @@ def project(
         ):
             ascii_content_differences += 1
 
-    fidelity_note = (
-        "latin1-transcoded export: non-latin1 characters in tiki_pages.data, "
-        "tiki_comments, tiki_actionlog may be lost as '?'; tiki_history blobs exact "
-        "where decoded as UTF-8; no characters repaired"
-        if character_encoding == "latin1-transcoded"
-        else (
-            "utf8mb4 export: character columns decoded strictly as UTF-8; no "
-            "characters repaired. The '?' in question_rows are stored in the "
-            "database, not lost by an export client: the count is the same in "
-            "the latin1-transcoded and utf8mb4 exports. stored_mojibake_rows "
-            "counts rows whose text is a latin-1 reading of UTF-8 from an "
-            "earlier migration; those bytes are published as the database "
-            "holds them"
-        )
-    )
+    fidelity_note = _fidelity_note(character_encoding)
     coverage_lines = [
         'rename_delete_log = "unavailable"',
         f"tiki_text_fidelity = {json.dumps(fidelity_note)}",
