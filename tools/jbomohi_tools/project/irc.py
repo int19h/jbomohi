@@ -51,6 +51,13 @@ OUTPUT_LINE = re.compile(
 NORMAL_MESSAGE = re.compile(r"^(?:\d{2}:\d{2}:\d{2}|--:--:--) <([^>]+)> ")
 NORMAL_ACTION = re.compile(r"^(?:\d{2}:\d{2}:\d{2}|--:--:--) \* (\S+) ")
 DATED_FILENAME = re.compile(r"(?P<date>\d{4}_\d{2}_\d{2})(?:-\d{2}_\d{2})?\.txt$")
+# SPEC.md 3.4: a wholly undated file "becomes the day its file name names".
+# #jbosnu holds one hand-saved log that names its day the other way round,
+# `jbosnu-robins_history_04_Apr_2004.txt`. The day is named; only the spelling
+# differs, so reading it is following the rule rather than widening it.
+NAMED_MONTH_FILENAME = re.compile(
+    r"(?P<day>\d{1,2})_(?P<month>[A-Za-z]{3})_(?P<year>\d{4})\.txt$"
+)
 MONTHS = {
     "Jan": 1,
     "Feb": 2,
@@ -497,11 +504,27 @@ def _parse_bracket(source: SourceObject, raw_lines: Sequence[str]) -> list[IrcUn
     ]
 
 
+def _day_from_filename(name: str) -> date | None:
+    """The day a file name names, in either spelling the logs use."""
+
+    match = DATED_FILENAME.search(name)
+    if match:
+        return date.fromisoformat(match["date"].replace("_", "-"))
+    named = NAMED_MONTH_FILENAME.search(name)
+    if named:
+        month = MONTHS.get(named["month"].capitalize())
+        if month is not None:
+            try:
+                return date(int(named["year"]), month, int(named["day"]))
+            except ValueError:
+                return None
+    return None
+
+
 def _parse_undated(source: SourceObject, raw_lines: Sequence[str]) -> list[IrcUnit]:
-    match = DATED_FILENAME.search(PurePosixPath(source.path).name)
-    if not match:
+    day = _day_from_filename(PurePosixPath(source.path).name)
+    if day is None:
         raise IrcParseError(f"{source.path}: undated source lacks a dated filename")
-    day = date.fromisoformat(match["date"].replace("_", "-"))
     lines = [_normalize_body("--:--:--", raw) for raw in raw_lines]
     nicks = {line.nick for line in lines if line.nick is not None}
     return [
