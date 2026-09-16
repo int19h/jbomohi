@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
+
 from jbomohi_tools.config import Config
 from jbomohi_tools.corpus import CorpusError, corpus_status, init_corpus
 from jbomohi_tools.render import RenderContext, commit_instruction_refresh

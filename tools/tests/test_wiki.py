@@ -5,6 +5,7 @@ import json
 from datetime import UTC, datetime
 
 import pytest
+
 from jbomohi_tools.git import Identity
 from jbomohi_tools.project.wiki import (
     WikiLogEvent,

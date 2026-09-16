@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
+
 from jbomohi_tools.archive.mail import (
     MailFetchError,
     extract_maildir_zip,

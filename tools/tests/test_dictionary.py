@@ -9,6 +9,7 @@ from email.message import Message
 from pathlib import Path
 
 import pytest
+
 from jbomohi_tools.archive.dictionary import (
     DictionaryFetchError,
     FeedResponse,

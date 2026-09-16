@@ -6,6 +6,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import pytest
+
 from jbomohi_tools.git import Identity, commit_event
 from jbomohi_tools.project.irc import (
     IrcAmendment,

@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
+
 from jbomohi_tools.project.wiki_sql import (
     SQL_COLUMNS,
     WikiSqlParseError,

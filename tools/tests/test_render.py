@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+
 from jbomohi_tools.render import RenderContext, render_main
 
 OBJECT_ID = "a" * 40

@@ -22,6 +22,14 @@ default-groups = ["dev"]
 [tool.uv.build-backend]
 module-root = "tools"
 
+[tool.ruff.lint.isort]
+# Which imports are ours must not depend on where ruff is invoked from. Run
+# from the repository root, ruff finds no `jbomohi_tools` package in its src
+# root and sorts it beside pytest; run from `tools/`, it is first-party and
+# needs its own block, so the same tree is clean from one directory and reports
+# 21 I001 errors from the other. Naming it settles the question everywhere.
+known-first-party = ["jbomohi_tools"]
+
 [tool.pytest.ini_options]
 testpaths = ["tools/tests"]
 addopts = "-ra"
