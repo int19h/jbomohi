@@ -181,14 +181,32 @@ class ArchiveManifest:
         return "\n".join(lines) + "\n"
 
     def write(self, path: Path) -> None:
+        """Write the manifest so a concurrent reader sees all of it or none.
+
+        Exclusive create stops one writer clobbering another, which is not the
+        same as being safe to read while it happens: a reader can see a
+        half-written file. That is why a build could not run beside a fetch —
+        the IRC loader checks every object against its manifest and a partial
+        read fails the build. Writing to a temporary name and renaming makes
+        the file appear whole.
+        """
+
         if path.exists():
             raise ArchiveError(f"refusing to replace archive manifest: {path}")
         path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
         try:
-            with path.open("x", encoding="utf-8", newline="\n") as stream:
+            with temporary.open("w", encoding="utf-8", newline="\n") as stream:
                 stream.write(self.to_toml())
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.link(temporary, path)
+        except FileExistsError as exc:
+            raise ArchiveError(f"refusing to replace archive manifest: {path}") from exc
         except OSError as exc:
             raise ArchiveError(f"cannot write manifest {path}: {exc}") from exc
+        finally:
+            temporary.unlink(missing_ok=True)
 
 
 @dataclass(frozen=True, slots=True)
@@ -204,27 +222,56 @@ def object_path(archive: Path, digest: str) -> Path:
     return archive / "objects" / "sha256" / digest[:2] / digest[2:]
 
 
+def _confirm_stored(path: Path, payload: bytes) -> None:
+    """Accept an object that is already in place, or refuse it as a collision."""
+
+    try:
+        if path.is_symlink() or path.read_bytes() != payload:
+            raise ArchiveError(f"archive object collision at {path}")
+    except OSError as exc:
+        raise ArchiveError(f"cannot read archive object {path}: {exc}") from exc
+
+
 def store_object(archive: Path, payload: bytes) -> ArchiveObject:
     """Store bytes once under their digest, refusing mutable collisions."""
 
     digest = hashlib.sha256(payload).hexdigest()
     path = object_path(archive, digest)
     path.parent.mkdir(parents=True, exist_ok=True)
-    created = False
+    # The name is the digest, so an object already at it is either this payload
+    # or a collision; there is nothing to write either way. Looking first costs
+    # a stat and saves writing the whole payload to a temporary only to unlink
+    # it, which is the common case while re-walking an archive already held.
+    # A racing writer that creates the object after this check lands in the
+    # same collision path below.
+    if path.exists() or path.is_symlink():
+        _confirm_stored(path, payload)
+        return ArchiveObject(path=path, sha256=digest, bytes=len(payload))
+    # Written under a temporary name and linked into place, so a reader either
+    # sees the whole object or does not see it at all. `link` keeps the
+    # exclusive-create guarantee: it fails if the name already exists. The
+    # temporary name is unique per call, not per process: a process killed
+    # between creating one and unlinking it (this machine has been OOM-killed
+    # mid-build) leaves the name behind, and a later process that the kernel
+    # gave the same pid must not mistake that for the object being in place.
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{digest}.", suffix=".tmp", dir=path.parent
+    )
+    temporary = Path(temporary_name)
     try:
-        descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
-        created = True
         with os.fdopen(descriptor, "wb") as stream:
             stream.write(payload)
             stream.flush()
             os.fsync(stream.fileno())
-    except FileExistsError:
-        if path.is_symlink() or path.read_bytes() != payload:
-            raise ArchiveError(f"archive object collision at {path}")
+        os.chmod(temporary, 0o444)
+        try:
+            os.link(temporary, path)
+        except FileExistsError:
+            _confirm_stored(path, payload)
     except OSError as exc:
-        if created:
-            path.unlink(missing_ok=True)
         raise ArchiveError(f"cannot store archive object {path}: {exc}") from exc
+    finally:
+        temporary.unlink(missing_ok=True)
     return ArchiveObject(path=path, sha256=digest, bytes=len(payload))
 
 

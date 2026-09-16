@@ -241,3 +241,40 @@ def test_http_client_retries_transient_errors_with_bounded_backoff(
     assert response.body == b"ok"
     assert calls == 2
     assert sleeps == [1]
+
+
+def test_one_failing_channel_does_not_abandon_the_others(tmp_path: Path) -> None:
+    """A dead channel cost us both small ones for an entire evening.
+
+    The loop was sequential and an HTTP failure propagated out of it, so
+    #ckule and #jbosnu were never attempted while #lojban returned 522. They
+    are small and would have finished in minutes.
+    """
+
+    class _PartlyBroken:
+        def __init__(self) -> None:
+            self.asked: list[str] = []
+
+        def get(self, url: str) -> HttpResponse:
+            self.asked.append(url)
+            if "/lojban/" in url:
+                raise IrcFetchError(f"failed to fetch {url}: HTTP Error 522")
+            return HttpResponse(url=url, body=b"<html></html>", headers={})
+
+    client = _PartlyBroken()
+    with pytest.raises(IrcFetchError, match="channels that failed"):
+        fetch(tmp_path / "archive", client=client)
+
+    asked = " ".join(client.asked)
+    # Every channel was attempted, not just the ones before the failure.
+    for channel in ("ckule", "jbosnu", "lojban"):
+        assert f"/irclogs/{channel}/" in asked, channel
+
+
+def test_channels_are_ordered_smallest_first() -> None:
+    """Ordering alone stops a stalled giant starving the small channels."""
+
+    from jbomohi_tools.archive.irc import CHANNELS
+
+    assert CHANNELS.index("lojban") == len(CHANNELS) - 1
+    assert set(CHANNELS) == {"ckule", "jbosnu", "lojban"}

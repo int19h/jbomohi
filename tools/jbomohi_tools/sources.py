@@ -17,6 +17,7 @@ from .archive import (
     load_mhonarc_manifestations,
     load_old_lojban_manifestations,
 )
+from .archive.irc import CHANNELS as IRC_CHANNELS
 from .archive.manifest import ArchiveManifest, object_path
 from .build import EventFactory
 from .config import Config
@@ -244,9 +245,13 @@ def tiki_events(
 
 
 def irc_events(config: Config) -> Iterable[Event]:
+    # The configured channel list lives with the fetcher; the projector sees
+    # only what was archived. Passing it through is what lets a channel nobody
+    # fetched appear as absent rather than not appear at all.
     return project_irc(
         load_irc_archive(config.archive),
         archives=load_irc_channel_archives(config.archive),
+        channels=IRC_CHANNELS,
     )
 
 
