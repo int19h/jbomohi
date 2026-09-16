@@ -153,7 +153,10 @@ def test_clean_clone_gets_one_rendered_epoch_root(tmp_path: Path) -> None:
     # so that a tools commit does not rewrite every hash in main. The tip
     # refresh commit carries both.
     assert tools_commit not in readme
-    assert "built by tools commit `pending`" in readme
+    # The property is that the root renders the placeholder rather than a real
+    # build's identity. Pinning the sentence around it made an edit to the
+    # README's prose look like a regression in the root contract.
+    assert "`pending`" in readme
     schema = git(config.corpus, "show", f"{root}:_meta/schema.toml")
     assert "tools_commit" not in schema
     assert "projection_schema = 1" in schema

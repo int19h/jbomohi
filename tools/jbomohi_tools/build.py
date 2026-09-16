@@ -29,7 +29,14 @@ from .git import (
     git_output,
     run_git,
 )
-from .render import RenderContext, commit_instruction_refresh, commit_root
+from .render import (
+    RenderContext,
+    SourceTally,
+    commit_instruction_refresh,
+    commit_root,
+    coverage_table,
+    layout_summary,
+)
 
 EventFactory = Callable[[], Iterable[Event]]
 _TRAILER = re.compile(r"^([A-Z][A-Za-z0-9-]*): (.*)$")
@@ -155,27 +162,6 @@ def merge_events(
 ) -> Iterator[Event]:
     for _name, event in merge_named_events(sources, until=until):
         yield event
-
-
-def _coverage_summary(corpus: Path) -> str:
-    rows: list[str] = []
-    root = corpus / "_meta"
-    if root.exists():
-        for path in sorted(root.rglob("coverage.toml")):
-            relative = path.relative_to(corpus).as_posix()
-            try:
-                data = tomllib.loads(path.read_text(encoding="utf-8"))
-            except (OSError, UnicodeError, tomllib.TOMLDecodeError) as exc:
-                raise CorpusError(f"cannot summarize coverage {path}: {exc}") from exc
-            counts = [
-                f"{name}={value}"
-                for name, value in sorted(data.items())
-                if isinstance(value, int) and not isinstance(value, bool)
-            ]
-            rows.append(
-                f"- `{relative}`" + (f": {', '.join(counts)}" if counts else "")
-            )
-    return "\n".join(rows) if rows else "No source coverage files were emitted."
 
 
 def _archive_manifest_changes(archive: Path) -> dict[str, bytes]:
@@ -341,6 +327,22 @@ def _commit_all(
     return count, last_time
 
 
+def _tallied(
+    stream: Iterator[tuple[str, Event]], tallies: dict[str, SourceTally]
+) -> Iterator[Event]:
+    """Count what each source contributed, as the build emits it.
+
+    The counts have to come from the stream rather than from the corpus
+    afterwards, because `_meta` records what a projector found and not how many
+    commits it produced, and walking 293,095 commits to recover that at render
+    time would cost minutes for a number the merge already knows.
+    """
+
+    for name, event in stream:
+        tallies.setdefault(name, SourceTally()).record(event.source_time)
+        yield event
+
+
 def build_corpus(
     config: Config,
     sources: Mapping[str, EventFactory],
@@ -371,11 +373,14 @@ def build_corpus(
             ["init", "--initial-branch=main", str(scratch)],
         )
         commit_root(config.repo_root, scratch)
+        tallies: dict[str, SourceTally] = {}
         event_count, last_time = _commit_all(
-            scratch, merge_events(sources, until=until), backend
+            scratch,
+            _tallied(merge_named_events(sources, until=until), tallies),
+            backend,
         )
         snapshot = _snapshot_name(last_time)
-        coverage = _coverage_summary(scratch)
+        coverage = coverage_table(scratch, tallies)
         refresh_id = "refresh@" + snapshot.removeprefix("snapshot/")
         commit_instruction_refresh(
             config.repo_root,
@@ -386,6 +391,7 @@ def build_corpus(
                 snapshot=snapshot,
                 tools_commit=tools_commit,
                 coverage_tables=coverage,
+                layout_summary=layout_summary(scratch),
             ),
             extra_changes=_archive_manifest_changes(config.archive),
         )
@@ -744,7 +750,12 @@ def update_corpus(
     last_time: datetime | None = None
     source_meta: dict[str, dict[str, str | bytes]] = {}
     sources_with_new_events: set[str] = set()
+    # Every event is tallied, not only the new ones: the coverage table
+    # describes the corpus, and an update that adds three messages has not made
+    # the other hundred thousand stop existing.
+    tallies: dict[str, SourceTally] = {}
     for source_name, event in merge_named_events(sources, meta_sink=source_meta):
+        tallies.setdefault(source_name, SourceTally()).record(event.source_time)
         if (event.source, event.source_id) in known:
             continue
         commit_event(event, config.corpus)
@@ -755,7 +766,7 @@ def update_corpus(
     if last_time is None:
         return None
     snapshot = _snapshot_name(last_time)
-    coverage = _coverage_summary(config.corpus)
+    coverage = coverage_table(config.corpus, tallies)
     refresh_changes = _archive_manifest_changes(config.archive)
     for source_name in sorted(sources_with_new_events):
         for path, value in source_meta.get(source_name, {}).items():
@@ -771,6 +782,7 @@ def update_corpus(
         context=RenderContext(
             snapshot=snapshot,
             tools_commit=tools_commit,
+            layout_summary=layout_summary(config.corpus),
             coverage_tables=coverage,
         ),
         extra_changes=refresh_changes,
