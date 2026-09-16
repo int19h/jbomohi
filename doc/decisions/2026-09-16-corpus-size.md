@@ -51,20 +51,31 @@ posts carrying long quoted digests.
 **Repository size.** **992.50 MiB** (988,636,654 bytes) packed with git's default settings, against
 the 5 GB recommendation. That is 0.99 GB decimal, inside the 0.6 to 1.2 GB the specification predicted before anything was measured, and about a fifth of the recommendation. There is no reading of the limit, decimal or binary, under which this corpus is close to it.
 
-Two numbers are recorded, because the difference between them is a finding in
-its own right:
+Three measurements are recorded, because the difference between them was
+misread once and the misreading is worth preventing.
 
-| repack | settings | packed |
+| command | packed | wall |
 |---|---|---|
-| bounded | `pack.windowMemory=256m`, `pack.threads=2` | 4.89 GiB (5,253,197,474 bytes) |
-| default | git's own window and thread defaults | **992.50 MiB** (988,636,654 bytes) |
+| `gc --prune=now`, `pack.windowMemory=256m`, `pack.threads=2` | 4.89 GiB | 1,029 s |
+| `gc --prune=now`, git's defaults | 5.04 GiB | 525 s |
+| `repack -a -d -f`, git's defaults | **992.50 MiB** | 1,971 s |
 
-The first was run that way to protect a shared machine that had already lost
-two builds to memory exhaustion. Bounding the delta window is exactly the
-setting that costs compression on a corpus of a hundred thousand similar mail
-messages, so it is not the figure this decision rests on. It is, however, what
-anyone rebuilding this corpus on a small machine should expect their local pack
-to cost, which is why it stays in the record rather than being discarded.
+**The cause is the command, not the settings.** `gc` reuses the deltas already
+in the pack, and a `fast-import` build writes poor ones because it optimises
+for speed. `repack -f` discards them and recomputes. The middle row is the one
+that proves it: git's full defaults, no memory bound and no thread cap, and it
+still lands near five gigabytes because it reuses what fast-import left.
+
+An earlier version of this record said the difference was the delta window,
+and that a bounded window is what a memory-constrained machine should expect
+its local pack to cost. Both claims were wrong. Two variables changed between
+the first two runs measured — the command and the window — and the result was
+attributed to the window. A memory-constrained machine running `repack -f`
+gets the small pack as well; it only takes longer.
+
+What this does not change is the decision. Section 2.7 asks whether the corpus
+fits, and 992.50 MiB answers it whichever knob produced that number. The
+correction is to the explanation, not to the conclusion.
 
 **Push.** The initial push runs in commit ranges under `jbomohi build --push`,
 which fast-forwards `main` in 5,000-commit steps and publishes the snapshot tag
@@ -77,7 +88,10 @@ it leaves is larger than the same history repacked. The build left 10.33 GiB
 across three packs, of which one was the previous history the build replaced
 and one the history retired by the corpus migration; only after the collection
 does a single pack describe this corpus alone, at 1,859,713 objects.
-The figure that matters is what a server stores and a clone transfers, which is the repacked one.
+The figure that matters is what a server stores and a clone transfers, which is
+the force-repacked one. Collecting alone is not enough: it drops what is
+unreachable but keeps fast-import's deltas, so it leaves a pack several times
+larger than the history needs.
 
 ## Provenance of these numbers
 
