@@ -765,3 +765,51 @@ def test_update_scans_the_whole_corpus_a_bounded_number_of_times(
     assert scans["read-tree"] < len(appended)
     assert scans["status"] <= 6
     assert scans["read-tree"] <= 6
+
+
+def test_update_refreshes_the_instruction_files_with_no_new_events(
+    tmp_path: Path,
+) -> None:
+    """A template change must be able to reach main on a quiet day.
+
+    `update` returned as soon as it found no new event, and the instruction
+    files are written only by the refresh commit. So a template correction
+    could reach main only as a side effect of some source having new events;
+    with nothing to append it reported success and did nothing. A refresh is
+    the same snapshot re-rendered, so it reuses the snapshot name and mints no
+    tag.
+    """
+
+    config, _commit = tools_repo(tmp_path / "repo")
+    base = event("rev=1", 1, "wiki/main/One.wiki")
+    build_corpus(config, {"wiki": lambda: iter((base,))})
+    before = git(config.corpus, "rev-parse", "HEAD")
+    tags_before = git(config.corpus, "tag", "--list")
+
+    template = config.repo_root / "tools/templates/main/AGENTS.md"
+    template.write_text(
+        template.read_text() + "\nA correction made on the tools branch.\n"
+    )
+    commit_fixture(config.repo_root, "templates: a correction")
+
+    report = update_corpus(config, {"wiki": lambda: iter((base,))})
+
+    assert report is not None
+    assert report.events == 0
+    assert report.head != before
+    assert (
+        "A correction made on the tools branch."
+        in (config.corpus / "AGENTS.md").read_text()
+    )
+    # The same snapshot, re-rendered: no new tag, and the refresh names the
+    # commit it was applied on top of rather than reusing the snapshot's id.
+    assert git(config.corpus, "tag", "--list") == tags_before
+    assert f"Source-Id: refresh@{before}" in git(
+        config.corpus, "log", "-1", "--format=%B"
+    )
+    # Its date is the corpus tip's, not the clock.
+    assert git(config.corpus, "log", "-1", "--format=%cI") == git(
+        config.corpus, "log", "-1", "--format=%cI", before
+    )
+
+    assert update_corpus(config, {"wiki": lambda: iter((base,))}) is None
