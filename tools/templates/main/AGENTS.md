@@ -136,7 +136,11 @@ One commit per source event, so git's own tools are the interface to time.
   file's own log can skip a version number that exists. For wiki pages and
   Tiki pages the per-version indexes are the authority for what the source
   recorded — `_meta/wiki/revisions.csv`, `_meta/tiki/versions.csv` — and
-  `git log --grep='Source-Id: <id>'` opens any such commit directly.
+  `git log --grep='Source-Id: <id>'` opens any such commit directly. To list
+  every event of one wiki page in git regardless of whether it changed text,
+  use its page id together with the source, because a Tiki page can carry the
+  same number: `git log --all-match --grep='^Source: wiki$' --grep='^Page-Id:
+  527$'`.
 - **Reading a file as of a date** takes two steps, because the first finds the
   commit and the second reads the file at it:
 
@@ -158,14 +162,8 @@ One commit per source event, so git's own tools are the interface to time.
   the page's `revisions` count in `_meta/wiki/pages.csv` and against the
   `Moved-From:` trailers of its `moved` commits. A page that was moved away
   and back to the same name needs no `--follow` at all: plain
-  `git log -- <path>` already lists both sides of each move.
-- **Some commits have an empty diff.** A source can record a new version whose
-  text is identical to the last one. The event still happened; the commit
-  message and trailers carry it. Path-based `git log` shows such commits, but
-  tools that look for content changes skip them. To enumerate every event of
-  one wiki page regardless of content, use its page id together with the
-  source, because a Tiki page can carry the same number:
-  `git log --all-match --grep='^Source: wiki$' --grep='^Page-Id: 527$'`.
+  `git log -- <path>` already lists both sides of each move, though like any
+  path log it omits the no-change saves described above.
 - **`git blame` gives the commit that last wrote a line.** Open that commit's
   message for its `Source-Id:`. On an IRC day file the commit is the day, not
   the speaker.
