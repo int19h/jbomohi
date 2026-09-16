@@ -123,5 +123,5 @@ it how the repository is arranged, how to search each kind of file, and how to
 cite what it finds. Some harnesses read `AGENTS.md` on their own; others need
 to be pointed at it.
 
-Built by tools commit `19f90782da7cdc5b6b324403a289521dc8140e66`; rebuilding or updating this snapshot
+Built by tools commit `d2d96b41870dfa89be5565fccab5e824af586b9d`; rebuilding or updating this snapshot
 needs the tools and instructions on the `tools` branch of this repository.
