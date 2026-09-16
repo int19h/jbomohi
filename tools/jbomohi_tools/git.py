@@ -709,7 +709,15 @@ def _commit_event_into(
             target.unlink()
         paths.append(relative)
     if paths:
-        run_git(corpus, ["add", "-A", "--", *paths])
+        # One argument per path exceeded ARG_MAX once IRC arrived: a single
+        # refresh commit carries every archive manifest, and 71,752 of them do
+        # not fit on a command line. Git reads them from stdin instead, NUL
+        # separated so that no path needs quoting.
+        run_git(
+            corpus,
+            ["add", "-A", "--pathspec-from-file=-", "--pathspec-file-nul"],
+            input_text="\0".join(paths) + "\0",
+        )
     for relative, target, object_id in gitlinks:
         target.mkdir(parents=True, exist_ok=True)
         run_git(
