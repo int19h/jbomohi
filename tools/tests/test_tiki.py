@@ -11,6 +11,7 @@ from jbomohi_tools.project.tiki import (
     RawTikiDump,
     TikiParseError,
     TikiUsers,
+    _fidelity_note,
     decode_character_text,
     decode_history_blob,
     is_anonymous_tiki_user,
@@ -551,7 +552,7 @@ def test_ingest_tiki_export_writes_three_operator_export_manifests(
         ingest_tiki_export(tmp_path / "other-archive", export, "2026-09-13")
 
 
-def test_fidelity_note_claims_only_what_the_two_exports_prove() -> None:
+def test_utf8_fidelity_note_claims_only_what_the_two_exports_prove() -> None:
     """The note is the reader's guide to how far to trust the text.
 
     An earlier version said the '?' characters were stored in the database
@@ -560,47 +561,29 @@ def test_fidelity_note_claims_only_what_the_two_exports_prove() -> None:
     must not make it.
     """
 
-    from jbomohi_tools.project.tiki import _fidelity_note
-
-    utf8 = _fidelity_note("utf8")
-    assert "not evidence that any '?' is stored" in utf8
-    assert "are stored in the database, not lost by an export client" not in utf8
+    note = _fidelity_note("utf8")
+    assert "not evidence that any '?' is stored" in note
+    assert "are stored in the database, not lost by an export client" not in note
     # What the equality does show is worth keeping, stated as itself.
-    assert "identical in the latin1-transcoded and utf8mb4 exports" in utf8
+    assert "identical in the latin1-transcoded and utf8mb4 exports" in note
     # SPEC.md 3.2.5(c): mojibake is published, not repaired.
-    assert "no characters repaired" in utf8
-    assert "BLOB" in utf8
-
-    latin1 = _fidelity_note("latin1-transcoded")
-    # The latin1 client altered text; the note says so rather than hedging.
-    assert "are not the stored bytes" in latin1
-    assert "BLOB" in latin1
+    assert "no characters repaired" in note
+    # Why the two exports agree on history and differ on pages.
+    assert "BLOB" in note
 
 
-def test_fidelity_note_claims_only_what_the_two_exports_prove() -> None:
-    """The note is the reader's guide to how far to trust the text.
+def test_latin1_fidelity_note_says_the_text_is_not_the_stored_bytes() -> None:
+    """The 2026-09-15 re-export proved the latin1 client altered text.
 
-    An earlier version said the '?' characters were stored in the database
-    because both exports counted the same number of rows containing one. Most
-    '?' are ordinary punctuation, so that inference does not hold, and the note
-    must not make it.
+    The note used to say characters "may be lost", which reads as a caution
+    about something that might have happened. It did happen, and a reader
+    deciding whether to quote this text needs to know that.
     """
 
-    from jbomohi_tools.project.tiki import _fidelity_note
-
-    utf8 = _fidelity_note("utf8")
-    assert "not evidence that any '?' is stored" in utf8
-    assert "are stored in the database, not lost by an export client" not in utf8
-    # What the equality does show is worth keeping, stated as itself.
-    assert "identical in the latin1-transcoded and utf8mb4 exports" in utf8
-    # SPEC.md 3.2.5(c): mojibake is published, not repaired.
-    assert "no characters repaired" in utf8
-    assert "BLOB" in utf8
-
-    latin1 = _fidelity_note("latin1-transcoded")
-    # The latin1 client altered text; the note says so rather than hedging.
-    assert "are not the stored bytes" in latin1
-    assert "BLOB" in latin1
+    note = _fidelity_note("latin1-transcoded")
+    assert "are not the stored bytes" in note
+    assert "may be lost" not in note
+    assert "BLOB" in note
 
 
 def test_content_manifest_note_states_what_the_export_actually_is(
