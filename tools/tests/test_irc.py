@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import subprocess
 from dataclasses import replace
-from datetime import timedelta
+from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
@@ -551,3 +551,40 @@ def _unit(channel: str, day: str):
         source_time=_dt.fromisoformat(f"{day}T23:59:59+00:00"),
         time_confidence="exact",
     )
+
+
+def test_a_day_is_read_from_either_spelling_of_a_file_name() -> None:
+    """SPEC.md 3.4: a wholly undated file becomes the day its file name names.
+
+    #jbosnu holds one hand-saved log named `…_04_Apr_2004.txt`. The rule is
+    about the day a name states, not about one spelling of it, and the whole
+    build failed on this single file out of 2,611.
+    """
+
+    from jbomohi_tools.project.irc import _day_from_filename
+
+    assert _day_from_filename("2015_06_02.txt") == date(2015, 6, 2)
+    assert _day_from_filename("2004_04_08-14_29.txt") == date(2004, 4, 8)
+    assert _day_from_filename("jbosnu-robins_history_04_Apr_2004.txt") == date(
+        2004, 4, 4
+    )
+    # A name that states no day is still a name that states no day.
+    assert _day_from_filename("all_logs.txt") is None
+    assert _day_from_filename("32_Foo_2004.txt") is None
+
+
+def test_an_undated_file_named_with_a_month_projects_to_that_day() -> None:
+    source = SourceObject(
+        channel="jbosnu",
+        path="jbosnu/2004_04/jbosnu-robins_history_04_Apr_2004.txt",
+        payload=b"lament: .ui\nBroca: oi le dei velsku\n",
+    )
+
+    unit = parse_source(source)[0]
+
+    assert unit.date_key == "2004-04-04"
+    assert unit.format == "undated"
+    assert unit.output_path == "irc/jbosnu/2004/2004-04-04.txt"
+    # Undated lines keep the explicit placeholder rather than a guessed time.
+    assert all(line.startswith("--:--:-- ") for line in unit.body)
+    assert unit.time_confidence == "window"
