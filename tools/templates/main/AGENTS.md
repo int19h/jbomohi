@@ -96,13 +96,24 @@ One commit per source event, so git's own tools are the interface to time.
    the decoded thread views for content and the Maildir for headers. IRC day
    files are plain text with a header line. Wiki files are raw wikitext, so
    markup sits between words you are looking for.
-4. **Use the indexes** under `_meta/` rather than walking the tree. They are
-   CSV with header rows: page and revision indexes for the wiki, message and
-   thread indexes for mail, definition indexes for the dictionary. A row's
-   `state` column says whether the thing still exists at this snapshot:
-   `current` means there is a file at `path`, while `deleted` and
-   `not-projected` have an empty `path` and tell you why there is nothing to
-   read.
+4. **Use the indexes** under `_meta/` rather than walking the tree, and to go
+   from a name you have to the file you want. They are CSV with header rows.
+   - **A wiki or Tiki title → a file.** File names are slugged titles: spaces
+     become `_` and other punctuation is percent-encoded, so "BPFK Section:
+     gadri" is `wiki/main/BPFK_Section%3A_gadri.wiki`. Do not construct the
+     slug yourself; look the title up in `_meta/wiki/pages.csv`, which has
+     `title` and `path` columns, and `_meta/tiki/pages.csv` for Tiki.
+   - **A Message-ID → a file and its thread.** Maildir names are
+     `<unixtime>.<hash>.jbomohi:2,S` and cannot be derived from a Message-ID
+     by hand. `_meta/mail/<list>/messages.csv` maps `message_id` to `file` and
+     `thread_key`; `_meta/mail/<list>/threads.csv` maps `thread_key` to the
+     thread view's `path`.
+   - **A word → its definitions.** `_meta/dict/definitions.csv` has
+     `definition_id`, `word`, `lang` and `path`.
+   - A row's `state` column says whether the thing still exists at this
+     snapshot: `current` means there is a file at `path`, while `deleted` and
+     `not-projected` have an empty `path` and tell you why there is nothing to
+     read.
 5. **Read the gaps files.** `_meta/<source>/gaps.csv` records what was *not*
    projected and why. A question that ends there has a real answer — "the
    record does not contain it, and here is the recorded reason" — which is
@@ -137,12 +148,19 @@ One commit per source event, so git's own tools are the interface to time.
 `YYYY-MM-DD` (IRC day), `definition=<id> version=<n>` (dict), `cll=<edition>`
 (CLL), `tiki=<page>@<v>`. Line numbers are 1-based in that version.
 
+These four resolve in this snapshot; try them.
+
 ```
-wiki/main/BPFK_Section%3A_gadri.wiki@revid=108932:L12-30
-mail/lojban-list/threads/2004/3f2a9c1d0b7e-the-gadri-proposal.txt@<20041225150211.GA1234@chain.digitalkingdom.org>:L1-40
-irc/lojban/2015/2015-06-20.txt@2015-06-20:L143-160
-dict/kau/en-12345.md@definition=12345 version=3:L4-9
+wiki/main/BPFK_Section%3A_gadri.wiki@revid=123823:L12-30
+mail/lojban-list/threads/2004/72b2a97637f2-holiday_present_from_the_bpfk%3A_the_gadri_prop.txt@<20041225202752.gd20429@chain.digitalkingdom.org>:L1-40
+dict/kau/en-1700.md@definition=1700 version=1:L4-9
 cll/editions/1.1-2019/09-sumti-tcita.txt@cll=1.1-2019:L40-52
+```
+
+IRC citations take the day's date as the version, once `irc/` is present:
+
+```
+irc/lojban/2015/2015-06-20.txt@2015-06-20:L143-160
 ```
 
 A citation to the current version may omit `@<Source-Id>`; the line numbers

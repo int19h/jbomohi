@@ -68,8 +68,9 @@ LAYOUT: tuple[tuple[str, str], ...] = (
         "cll/",
         (
             "*The Complete Lojban Language* as plain UTF-8 text, one file per "
-            "chapter per edition, under `cll/editions/<edition>/`. `cll/src` is "
-            "the DocBook source as a submodule."
+            "chapter per edition, under `cll/editions/<edition>/`, which need "
+            "no submodule. `cll/src` is the DocBook source as a submodule; if "
+            "it is empty, run `git submodule update --init`."
         ),
     ),
     (
@@ -77,8 +78,10 @@ LAYOUT: tuple[tuple[str, str], ...] = (
         (
             "Formal grammars and parsers: the official YACC/BNF baselines, "
             "camxes and its lineage, ilmentufa, zantufa, zasni gerna and "
-            "others, as submodules or vendored text. `_meta/grammars/index.csv` "
-            "says which is which and under what terms."
+            "others. The vendored ones are ordinary files; the rest are "
+            "submodules, so run `git submodule update --init` if a `src` "
+            "directory is empty. `_meta/grammars/index.csv` says which is "
+            "which and under what terms."
         ),
     ),
     (
@@ -159,6 +162,30 @@ def _plural(count: int, singular: str, plural: str | None = None) -> str:
     return f"{count:,} {singular if count == 1 else (plural or singular + 's')}"
 
 
+def _gap_reasons(path: Path, most: int = 2) -> tuple[int, list[str]]:
+    """How many non-projections a source recorded, and the commonest reasons."""
+
+    counts: dict[str, int] = {}
+    total = 0
+    with path.open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            total += 1
+            reason = (row.get("reason") or row.get("cause") or "").strip()
+            if reason:
+                counts[reason] = counts.get(reason, 0) + 1
+    ranked = sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+    return total, [f'"{_clip(reason)}" ({count:,})' for reason, count in ranked[:most]]
+
+
+def _clip(text: str, width: int = 52) -> str:
+    """Enough of a reason to recognise it; the file has the rest."""
+
+    collapsed = " ".join(text.split())
+    if len(collapsed) <= width:
+        return collapsed
+    return collapsed[: width - 1].rstrip(" ,;") + "…"
+
+
 def _notes_for(corpus: Path, source: str) -> list[str]:
     """The honest gaps for one source, from what it recorded about itself."""
 
@@ -166,9 +193,14 @@ def _notes_for(corpus: Path, source: str) -> list[str]:
     root = corpus / "_meta" / source
     gaps = root / "gaps.csv"
     if gaps.is_file():
-        count = _rows(gaps)
+        count, reasons = _gap_reasons(gaps)
         if count:
-            notes.append(f"{_plural(count, 'gap')} recorded in `{source}/gaps.csv`")
+            note = f"{_plural(count, 'gap')} recorded in `{source}/gaps.csv`"
+            if reasons:
+                # A bare five-figure count reads as damage. The two commonest
+                # reasons say what kind of absence it is.
+                note += ", mostly " + " and ".join(reasons)
+            notes.append(note)
     incomplete: list[str] = []
     unusable = 0
     for coverage in sorted(root.rglob("coverage.toml")):

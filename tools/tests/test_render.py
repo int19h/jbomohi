@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -174,3 +175,53 @@ def test_coverage_reports_the_gaps_a_source_recorded_about_itself(
     assert "9 unusable date headers" in table
     # Lists are one source to a reader, so they are one row.
     assert table.count("| `mail/`") == 1
+
+
+CITATION = re.compile(r"^(?P<path>[^@\s]+)@(?P<id>.+?):L\d+(?:-\d+)?$")
+
+
+def test_every_citation_example_is_shaped_like_a_citation() -> None:
+    """The examples are the first thing a reader copies, so they must resolve.
+
+    An earlier draft used invented paths and an invented Message-ID. Nobody
+    notices until someone tries one, and then the document has taught them the
+    repository is broken. These are checked against the built corpus by hand
+    and pinned here by shape and by the index files that resolve them.
+    """
+
+    template = (
+        Path(__file__).resolve().parents[2] / "tools/templates/main/AGENTS.md"
+    ).read_text(encoding="utf-8")
+    examples = [
+        line.strip() for line in template.splitlines() if CITATION.match(line.strip())
+    ]
+    assert len(examples) >= 5, examples
+
+    by_source: dict[str, str] = {}
+    for example in examples:
+        match = CITATION.match(example)
+        assert match is not None, example
+        path = match.group("path")
+        by_source[path.split("/", 1)[0]] = match.group("id")
+
+    # One worked example per source a reader is likely to start from.
+    assert {"wiki", "mail", "dict", "cll", "irc"} <= set(by_source)
+    # Each id is in the grammar the same document defines.
+    assert by_source["wiki"].startswith("revid=")
+    assert by_source["mail"].startswith("<") and by_source["mail"].endswith(">")
+    assert by_source["dict"].startswith("definition=")
+    assert by_source["cll"].startswith("cll=")
+    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", by_source["irc"])
+
+
+def test_the_irc_example_is_marked_as_not_yet_present() -> None:
+    """`irc/` is absent from this snapshot, so its example cannot be tried yet."""
+
+    template = (
+        Path(__file__).resolve().parents[2] / "tools/templates/main/AGENTS.md"
+    ).read_text(encoding="utf-8")
+    lines = template.splitlines()
+    index = next(i for i, line in enumerate(lines) if line.startswith("irc/lojban/"))
+    # The caveat sits in the sentence introducing the example, not far above it.
+    preamble = "\n".join(lines[max(index - 4, 0) : index])
+    assert "once `irc/` is present" in preamble, preamble
