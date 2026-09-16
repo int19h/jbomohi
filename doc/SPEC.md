@@ -344,6 +344,32 @@ jbomohi cite resolve <citation>             print the cited lines (the reference
 
 Idempotent and resumable; network commands rate-limited per source (default ≤ 1 request/s) with backoff; writes only to the archive, the corpus repository, and `JBOMOHI_TMP`.
 
+**What `update` guarantees about the corpus it writes to (decided 2026-09-16).**
+An update proves the corpus worktree clean once, before it appends anything,
+and keeps one index alive for the whole append rather than rebuilding it per
+event: the cost of appending an event is the cost of the event, not of the
+corpus. It moves `main` by compare-and-swap against the head it started from,
+every 256 events and once at the end. So a commit that another writer lands on
+`main` during an update makes that update **fail**, and the events it had
+already flushed stay; it is never chained onto silently, which is what the
+earlier per-event clean check did while appearing to prevent it. An update
+killed between flushes leaves the files of the events since the last flush in
+the worktree and nothing in the history; the next update refuses the dirty tree
+and says so, and the events are appended again once it is reset.
+
+**Refresh without new events (decided 2026-09-16).** `main`'s instruction files
+and `_meta` archive manifests are written only by the refresh commit, so before
+this a template correction could reach `main` only as a side effect of some
+source having new events, and an update with nothing to append reported success
+and did nothing. An update that finds no new event still refreshes when the
+rendered files differ from what the corpus holds, and does nothing when they do
+not. A refresh is the same snapshot re-rendered, not a new one: it reuses the
+snapshot name, mints no tag, is dated from the corpus tip's own committer time
+(a pure function of the corpus, per §2.4), and carries
+`Source-Id: refresh@<the commit it was applied on top of>`, which is unique by
+construction and is what a citation of that refresh means. The snapshot-derived
+`refresh@<ts>` id stays with the update that minted the snapshot.
+
 ### 4.3 Fetch/project split
 
 Each source module exposes `fetch(archive, since) -> manifests` (network; writes only the archive) and `project(archive, state) -> events` (pure: no network, no clock). A single `commit_event(event)` helper enforces §2.5. Renderers are versioned; a renderer version bump is a `build`, not an `update`.
