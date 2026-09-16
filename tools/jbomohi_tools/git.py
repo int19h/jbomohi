@@ -764,7 +764,15 @@ class BuildCommitSession:
     touched, because the index keeps its cache-tree, and the commits are
     byte-identical to the ones the per-event path produces.
 
-    `update` keeps the careful path: it writes into a corpus contributors share.
+    `update` uses this too, on the shared corpus, and loses nothing by it. The
+    per-event clean check never protected against a contributor writing during
+    an update: it only noticed sooner, and `commit_event` reads HEAD afresh
+    each time, so a commit landing mid-update was chained onto rather than
+    refused. Here the ref moves by compare-and-swap against the head the
+    session started from, so a contributor's commit makes the update fail
+    instead of absorbing it. What the per-event path did buy was durability
+    under a kill, and `flush` gives that back: an update flushes periodically,
+    so an interrupted run keeps all but the last few events and resumes.
     """
 
     def __init__(self, corpus: Path) -> None:
@@ -840,8 +848,8 @@ class FastImportSession:
     resemblance. The worktree is not touched until the end, because
     fast-import writes objects and refs only; `__exit__` checks it out once.
 
-    `update` keeps the plumbing path: it writes into a corpus contributors
-    share, where the careful per-event checks are the point.
+    `update` uses `BuildCommitSession` instead: it appends to a history rather
+    than replacing one, and must leave the worktree usable at every flush.
     """
 
     def __init__(self, corpus: Path, branch: str = "refs/heads/main") -> None:

@@ -718,3 +718,50 @@ def test_verify_reads_lines_the_way_the_corpus_writes_them() -> None:
 
     assert _lf_lines("one\ntwo\n") == ["one", "two"]
     assert _lf_lines("") == []
+
+
+def test_update_scans_the_whole_corpus_a_bounded_number_of_times(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Appending N events must not cost N scans of the corpus.
+
+    `commit_event` proves the worktree clean and rebuilds the index from HEAD
+    before each event, both O(files in the corpus). Appending 3,300 IRC days to
+    a 286,212-file corpus therefore ran at seven seconds a commit — six hours
+    of work the events themselves do in milliseconds. Counting the scans is the
+    stable way to assert this; timing it would be flaky.
+    """
+
+    from jbomohi_tools import git as git_module
+
+    config, _commit = tools_repo(tmp_path / "repo")
+    base = event("rev=1", 1, "wiki/main/One.wiki")
+    build_corpus(config, {"wiki": lambda: iter((base,))})
+    appended = [
+        event(f"rev={index}", index, f"wiki/main/Page{index}.wiki")
+        for index in range(2, 22)
+    ]
+
+    scans = {"status": 0, "read-tree": 0}
+
+    def counted(original):
+        def wrapper(corpus, args, *rest, **keywords):
+            if args and args[0] in scans:
+                scans[args[0]] += 1
+            return original(corpus, args, *rest, **keywords)
+
+        return wrapper
+
+    monkeypatch.setattr(git_module, "run_git", counted(git_module.run_git))
+    monkeypatch.setattr(git_module, "git_output", counted(git_module.git_output))
+
+    report = update_corpus(config, {"wiki": lambda: iter([base, *appended])})
+
+    assert report is not None
+    assert report.events == len(appended)
+    # The exact constant is not the point; that it does not grow with the
+    # number of events is. The old path did one of each per event.
+    assert scans["status"] < len(appended)
+    assert scans["read-tree"] < len(appended)
+    assert scans["status"] <= 6
+    assert scans["read-tree"] <= 6
