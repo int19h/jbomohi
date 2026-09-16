@@ -841,3 +841,35 @@ def test_encoded_author_names_are_identical_in_every_backend(tmp_path: Path) -> 
     recorded = git(careful, "log", "-1", "--format=%an <%ae>")
     assert "<" not in recorded.split(" <")[0]
     assert recorded == f"{author.name} <{author.email}>"
+
+
+def test_an_event_with_more_paths_than_a_command_line_holds(tmp_path: Path) -> None:
+    """One `git add` per event met ARG_MAX when IRC arrived.
+
+    A refresh commit carries every archive manifest, and the IRC fetch took the
+    archive past 70,000 of them. The whole build died after 65 minutes with
+    `[Errno 7] Argument list too long: 'git'` — a failure no fixture with a
+    handful of files can produce, so the test has to be large enough to fail.
+    """
+
+    corpus = unborn_worktree(tmp_path)
+    # Comfortably past a typical 2 MiB ARG_MAX once the paths are joined.
+    changes = {
+        f"_meta/archive/bulk/{index:06d}-{'x' * 60}.toml": b"k = 1\n"
+        for index in range(40_000)
+    }
+    event = Event(
+        source="meta",
+        source_id="bulk@1",
+        event="refresh",
+        time_confidence="exact",
+        source_time=datetime(2026, 9, 16, tzinfo=UTC),
+        summary="many paths in one event",
+        author=Identity.tool(),
+        changes=changes,
+    )
+
+    head = commit_event(event, corpus)
+
+    listed = run_git(corpus, ["ls-tree", "-r", "--name-only", head]).stdout.split()
+    assert len(listed) == len(changes)
