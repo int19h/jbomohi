@@ -479,3 +479,111 @@ def test_commit_refuses_to_traverse_a_tracked_symlink(tmp_path: Path) -> None:
     with pytest.raises(EventError, match="refusing to traverse symlink"):
         commit_event(base_event(), corpus)
     assert not outside.exists()
+
+
+def _fresh(tmp_path: Path, name: str) -> Path:
+    root = tmp_path / name
+    root.mkdir()
+    return unborn_worktree(root)
+
+
+def _sequence(count: int) -> list[Event]:
+    """A run of events touching writes, rewrites, deletions and a submodule."""
+
+    start = datetime(2004, 1, 2, 3, 4, 5, tzinfo=UTC)
+    events: list[Event] = []
+    for index in range(count):
+        changes: dict[str, str | bytes] = {
+            f"wiki/main/Page{index}.wiki": f"body {index}\n",
+            # Rewrite a shared index file every time, as the projectors do.
+            "_meta/wiki/pages.csv": f"pageid\n{index}\n",
+        }
+        deletions: tuple[str, ...] = ()
+        if index and index % 5 == 0:
+            deletions = (f"wiki/main/Page{index - 1}.wiki",)
+        events.append(
+            base_event(
+                source_id=f"revid={index + 1}",
+                source_time=start + timedelta(minutes=index),
+                summary=f"create Page{index} (rev {index + 1})",
+                changes=changes,
+                deletions=deletions,
+                event="created" if index == 0 else "edited",
+            )
+        )
+    return events
+
+
+def test_build_session_commits_are_identical_to_the_per_event_path(
+    tmp_path: Path,
+) -> None:
+    """The fast build path must produce the same history, commit for commit.
+
+    It skips the clean check and keeps one index alive, so nothing about the
+    resulting objects may change: same trees, same commits, same head.
+    """
+
+    from jbomohi_tools.git import BuildCommitSession
+
+    events = _sequence(12)
+
+    careful = _fresh(tmp_path, "careful")
+    careful_heads = [commit_event(event, careful) for event in events]
+
+    fast = _fresh(tmp_path, "fast")
+    with BuildCommitSession(fast) as session:
+        fast_heads = [session.commit(event) for event in events]
+
+    assert fast_heads == careful_heads
+    assert git(fast, "rev-parse", "HEAD") == git(careful, "rev-parse", "HEAD")
+    assert git(fast, "rev-list", "--count", "HEAD") == git(
+        careful, "rev-list", "--count", "HEAD"
+    )
+    # The worktree the session leaves behind must match the careful path too,
+    # since `verify` reads files and their modes, not only the trees.
+    assert git(fast, "status", "--porcelain=v1", "--untracked-files=all") == ""
+    for name in ("wiki/main/Page11.wiki", "_meta/wiki/pages.csv"):
+        assert (fast / name).read_bytes() == (careful / name).read_bytes()
+
+
+def test_build_session_refuses_a_dirty_corpus(tmp_path: Path) -> None:
+    from jbomohi_tools.git import BuildCommitSession
+
+    corpus = _fresh(tmp_path, "dirty")
+    commit_event(base_event(), corpus)
+    (corpus / "stray").write_text("unexpected\n")
+    with pytest.raises(GitError, match="refusing to build into it"):
+        BuildCommitSession(corpus)
+
+
+def test_build_session_carries_submodules_and_gitlinks(tmp_path: Path) -> None:
+    """The .gitmodules merge must still accumulate across session commits."""
+
+    from jbomohi_tools.git import BuildCommitSession
+
+    first = base_event(
+        source="cll",
+        source_id="cll=1",
+        changes={"cll/README": "one\n"},
+        submodules={"cll/src": "https://example.invalid/cll.git"},
+        gitlinks={"cll/src": "1" * 40},
+    )
+    second = base_event(
+        source="grammars",
+        source_id="grammars=1",
+        source_time=datetime(2005, 1, 2, 3, 4, 5, tzinfo=UTC),
+        changes={"grammars/README": "two\n"},
+        submodules={"grammars/src": "https://example.invalid/g.git"},
+        gitlinks={"grammars/src": "2" * 40},
+    )
+    careful = _fresh(tmp_path, "careful")
+    for event in (first, second):
+        commit_event(event, careful)
+    fast = _fresh(tmp_path, "fast")
+    with BuildCommitSession(fast) as session:
+        for event in (first, second):
+            session.commit(event)
+    assert git(fast, "rev-parse", "HEAD") == git(careful, "rev-parse", "HEAD")
+    assert git(fast, "show", "HEAD:.gitmodules") == git(
+        careful, "show", "HEAD:.gitmodules"
+    )
