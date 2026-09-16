@@ -14,7 +14,7 @@ when they made it. That is the whole idea. It means standard tools answer
 questions about the language's history: `rg` finds the words, and `git log`,
 `git blame` and `git show` find the when, the who, and what changed.
 
-Snapshot `snapshot/20260914T131605Z`.
+Snapshot `snapshot/20260916T095816Z`.
 
 ## What is where
 
@@ -38,12 +38,12 @@ Snapshot `snapshot/20260914T131605Z`.
 | `cll/` | 11 | 2008–2026 | none recorded |
 | `dict/` | 100,189 | 2003–2026 | none recorded |
 | `grammars/` | 72 | 1989–2026 | 4 gaps recorded in `grammars/gaps.csv`, mostly "YACC form never published; BNF form survives" (2) and "referenced by surviving drafts but never published" (1) |
-| `irc/` | 10,536 | 2000–2026 | 10 files the upstream listed but this archive does not hold |
+| `irc/` | 14,006 | 2000–2026 | none recorded |
 | `mail/` | 112,300 | 1989–2025 | archives known incomplete: lojban-beginners, lojban-list; 9 unusable date headers |
 | `tiki/` | 21,047 | 2001–2015 | 180 gaps recorded in `tiki/gaps.csv`, mostly "no current row; rename/deletion undocumented" (171) and "forum parent 4475 absent from export" (4) |
 | `wiki/` | 59,474 | 2005–2026 | 21,224 gaps recorded in `wiki/gaps.csv`, mostly "move; history not API-accessible" (6,204) and "deleted; history not API-accessible" (3,410) |
 
-Total: **303,629** source events.
+Total: **307,099** source events.
 
 This matters for reading answers as much as for finding them. "Nobody ever
 proposed that" is only ever shorthand for "not in what this snapshot covers",
@@ -123,5 +123,5 @@ it how the repository is arranged, how to search each kind of file, and how to
 cite what it finds. Some harnesses read `AGENTS.md` on their own; others need
 to be pointed at it.
 
-Built by tools commit `2891f82ce593f0fa624167fc060ba05e4db9b777`; rebuilding or updating this snapshot
+Built by tools commit `19f90782da7cdc5b6b324403a289521dc8140e66`; rebuilding or updating this snapshot
 needs the tools and instructions on the `tools` branch of this repository.
