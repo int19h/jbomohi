@@ -133,14 +133,15 @@ One commit per source event, so git's own tools are the interface to time.
   file where it was, a rename that changed only a letter's case: the commit is
   there with its `Source-Id:`, but its tree equals its parent's, and
   `git log -- <path>` lists only the commits that changed that path. So a
-  file's own log can skip a version number that exists. For wiki pages and
-  Tiki pages the per-version indexes are the authority for what the source
-  recorded — `_meta/wiki/revisions.csv`, `_meta/tiki/versions.csv` — and
-  `git log --grep='Source-Id: <id>'` opens any such commit directly. To list
-  every event of one wiki page in git regardless of whether it changed text,
-  use its page id together with the source, because a Tiki page can carry the
-  same number: `git log --all-match --grep='^Source: wiki$' --grep='^Page-Id:
-  527$'`.
+  file's own log can skip a version number that exists, and a few percent of
+  this snapshot's commits are of that kind, so expect it rather than reading
+  it as an anomaly. For wiki pages and Tiki pages the per-version indexes are
+  the authority for what the source recorded — `_meta/wiki/revisions.csv`,
+  `_meta/tiki/versions.csv` — and `git log --grep='Source-Id: <id>'` opens any
+  such commit directly. To list every event of one wiki page in git regardless
+  of whether it changed text, use its page id together with the source,
+  because a Tiki page can carry the same number:
+  `git log --all-match --grep='^Source: wiki$' --grep='^Page-Id: 527$'`.
 - **Reading a file as of a date** takes two steps, because the first finds the
   commit and the second reads the file at it:
 
