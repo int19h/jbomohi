@@ -715,3 +715,38 @@ def test_coverage_refuses_to_size_a_gap_a_partial_walk_cannot_size() -> None:
     )
     assert "index_walk_complete = true" in whole
     assert "note = " not in whole
+
+
+def test_every_channel_s_meta_rides_the_stream_s_final_event() -> None:
+    """A channel that gained no day still needs its coverage re-rendered.
+
+    Each channel's index and coverage used to ride that channel's own last
+    unit. In an update, an event already in the corpus is skipped, so a
+    complete channel's meta was never rewritten: #lojban's coverage.toml kept
+    `days = 7956` and a range key in `first_day` — the shape from before those
+    were fixed — while the two channels that gained days got the current one.
+    Attaching every channel's meta to the stream's final event is what lets the
+    refresh commit carry it.
+    """
+
+    sources = [
+        source(
+            "lojban/2014_03/2014_03_01.txt",
+            "2014-03-01 04:00:00 PST/-0800 <gleki> older\n",
+        ),
+        source(
+            "jbosnu/2015_04/2015_04_02.txt",
+            "2015-04-02 05:00:00 PST/-0800 <ilmen> newer\n",
+            channel="jbosnu",
+        ),
+    ]
+    events = list(project(sources))
+
+    assert [event.source for event in events] == ["irc/lojban", "irc/jbosnu"]
+    # The older channel's own event carries its day file and nothing else.
+    assert set(events[0].changes) == {"irc/lojban/2014/2014-03-01.txt"}
+    final = events[-1].changes
+    for channel in ("lojban", "jbosnu"):
+        assert f"_meta/irc/{channel}/days.csv" in final
+        assert f"_meta/irc/{channel}/coverage.toml" in final
+    assert "irc/jbosnu/2015/2015-04-02.txt" in final

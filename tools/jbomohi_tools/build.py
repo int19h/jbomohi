@@ -790,7 +790,6 @@ def update_corpus(
     by_source: Counter[str] = Counter()
     last_time: datetime | None = None
     source_meta: dict[str, dict[str, str | bytes]] = {}
-    sources_with_new_events: set[str] = set()
     # Every event is tallied, not only the new ones: the coverage table
     # describes the corpus, and an update that adds three messages has not made
     # the other hundred thousand stop existing.
@@ -806,7 +805,6 @@ def update_corpus(
             if (event.source, event.source_id) in known:
                 continue
             live.commit(event)
-            sources_with_new_events.add(source_name)
             known.add((event.source, event.source_id))
             event_count += 1
             by_source[source_name] += 1
@@ -832,7 +830,13 @@ def update_corpus(
     assert last_time is not None
     coverage = coverage_table(config.corpus, tallies)
     refresh_changes = _archive_manifest_changes(config.archive)
-    for source_name in sorted(sources_with_new_events):
+    # Every source's metadata, not only that of sources with new events. A
+    # source that appended nothing still has `_meta` files rendered by the
+    # current projector, and folding only the noisy sources meant a quiet one
+    # kept whatever shape it had when it last gained an event — #52's defect
+    # one level down. Git records a change only where the content differs, so
+    # the cost is a larger diff exactly when there is something to record.
+    for source_name in sorted(source_meta):
         for path, value in source_meta.get(source_name, {}).items():
             previous = refresh_changes.get(path)
             if previous is not None and previous != value:

@@ -1084,35 +1084,40 @@ def project(
     )
     rows: dict[str, list[dict[str, str | int]]] = defaultdict(list)
     channel_units: dict[str, list[IrcUnit]] = defaultdict(list)
-    last_for_channel: dict[str, int] = {}
-    for index, unit in enumerate(units):
+    for unit in units:
         rows[unit.channel].append(unit.day_row())
         channel_units[unit.channel].append(unit)
-        last_for_channel[unit.channel] = index
     for channel_rows in rows.values():
         channel_rows.sort(key=lambda row: str(row["date"]))
 
+    # Every channel's index and coverage ride the stream's final event, not the
+    # final event of their own channel. A file that describes a whole channel
+    # must not depend on whether one of that channel's days happened to be new:
+    # #lojban was complete, so its last event was already in the corpus and was
+    # skipped, and its coverage.toml kept a shape two releases old while the
+    # channels that gained days got the current one. SPEC.md 4.2 already treats
+    # a source's _meta as riding its stream's final event; this makes IRC do
+    # that rather than fan it across channels.
+    stream_meta: dict[str, str | bytes] = {}
+    for channel in sorted({*channel_units, *configured}):
+        held = channel_units.get(channel, [])
+        missing = _missing_dates(held)
+        if held:
+            stream_meta[f"_meta/irc/{channel}/days.csv"] = _render_days(rows[channel])
+            if missing:
+                stream_meta[f"_meta/irc/{channel}/gaps.csv"] = _render_gaps(missing)
+        stream_meta[f"_meta/irc/{channel}/coverage.toml"] = _coverage_toml(
+            channel,
+            held,
+            missing,
+            (archives or {}).get(channel, ChannelArchive()),
+        )
+
     for index, unit in enumerate(units):
         validate_rendered(unit)
-        changes = {unit.output_path: unit.render()}
-        if last_for_channel[unit.channel] == index:
-            index_path = f"_meta/irc/{unit.channel}/days.csv"
-            changes[index_path] = _render_days(rows[unit.channel])
-            missing = _missing_dates(channel_units[unit.channel])
-            if missing:
-                gap_path = f"_meta/irc/{unit.channel}/gaps.csv"
-                changes[gap_path] = _render_gaps(missing)
-            changes[f"_meta/irc/{unit.channel}/coverage.toml"] = _coverage_toml(
-                unit.channel,
-                channel_units[unit.channel],
-                missing,
-                (archives or {}).get(unit.channel, ChannelArchive()),
-            )
+        changes: dict[str, str | bytes] = {unit.output_path: unit.render()}
         if index == len(units) - 1:
-            for absent in configured:
-                changes[f"_meta/irc/{absent}/coverage.toml"] = _coverage_toml(
-                    absent, [], [], (archives or {}).get(absent, ChannelArchive())
-                )
+            changes.update(stream_meta)
         amendment = (amendments or {}).get(unit.output_path)
         event_kind = "import"
         source_id = unit.date_key

@@ -816,3 +816,41 @@ def test_update_refreshes_the_instruction_files_with_no_new_events(
     quiet = update_corpus(config, {"wiki": lambda: iter((base,))})
     assert (quiet.events, quiet.refreshed, quiet.tagged) == (0, False, False)
     assert quiet.head == report.head
+
+
+def test_update_refreshes_meta_for_a_source_with_no_new_events(tmp_path: Path) -> None:
+    """A projector improvement must reach a source that appended nothing.
+
+    The refresh folded `_meta` only for sources with new events, so a source
+    whose every event was already in the corpus kept whatever its metadata
+    looked like when it last gained one. That is how `_meta/irc/lojban/
+    coverage.toml` stayed two releases behind while the channels that gained
+    days were rewritten: the channel was complete, so nothing about it was new.
+
+    I predicted the opposite before that run — that the tail's events would
+    carry every channel's coverage — which is why this test exists.
+    """
+
+    config, _commit = tools_repo(tmp_path / "repo")
+    first = event("rev=1", 1, "wiki/main/One.wiki")
+    final = event("rev=2", 2, "wiki/main/Two.wiki")
+    stale = replace(
+        final,
+        changes={**final.changes, "_meta/wiki/index.csv": "path\nold\n"},
+    )
+    build_corpus(config, {"wiki": lambda: iter((first, stale))})
+    assert (config.corpus / "_meta/wiki/index.csv").read_text() == "path\nold\n"
+
+    # The same events, rendered by an improved projector: nothing to append.
+    improved = replace(
+        final,
+        changes={**final.changes, "_meta/wiki/index.csv": "path,note\nnew,rendered\n"},
+    )
+    report = update_corpus(config, {"wiki": lambda: iter((first, improved))})
+
+    assert report.events == 0
+    assert report.refreshed is True
+    assert report.tagged is False
+    assert (config.corpus / "_meta/wiki/index.csv").read_text() == (
+        "path,note\nnew,rendered\n"
+    )
