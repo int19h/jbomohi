@@ -352,10 +352,12 @@ corpus. It moves `main` by compare-and-swap against the head it started from,
 every 256 events and once at the end. So a commit that another writer lands on
 `main` during an update makes that update **fail**, and the events it had
 already flushed stay; it is never chained onto silently, which is what the
-earlier per-event clean check did while appearing to prevent it. An update
-killed between flushes leaves the files of the events since the last flush in
-the worktree and nothing in the history; the next update refuses the dirty tree
-and says so, and the events are appended again once it is reset.
+earlier per-event clean check did while appearing to prevent it. No kill can leave a
+commit half-made: the ref moves in one `update-ref`, so the history is either
+at a commit or at its parent, never between. What a kill between flushes does
+leave is the index and worktree carrying the events since that flush while the
+history carries none of them; the next update refuses the dirty tree and says
+so, `reset --hard` clears both, and those events are appended again.
 
 **Refresh without new events (decided 2026-09-16).** `main`'s instruction files
 and `_meta` archive manifests are written only by the refresh commit, so before
