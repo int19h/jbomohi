@@ -286,18 +286,25 @@ def _build(args: argparse.Namespace, config: Config) -> int:
 
 def _update(args: argparse.Namespace, config: Config) -> int:
     report = update_corpus(config, source_factories(config, args.sources or None))
-    if report is None:
-        print("update: no new source events")
-    else:
-        print(
-            f"update: head={report.head} commits={report.commits} "
-            f"events={report.events} snapshot={report.snapshot}"
+    # An update that says only "no new source events" leaves the reader to infer
+    # what happened to the instruction files and the tag. Say all three.
+    appended = (
+        ", ".join(
+            f"{source}={count}" for source, count in report.events_by_source.items()
         )
-        if args.push:
-            pushed = push_main_ranges(config.corpus, report.snapshot)
-            print(
-                f"push: main_updates={pushed.main_updates} snapshot={pushed.snapshot}"
-            )
+        or "none"
+    )
+    print(
+        f"update: head={report.head} commits={report.commits} "
+        f"events={report.events} ({appended}) snapshot={report.snapshot} "
+        f"instructions={'refreshed' if report.refreshed else 'already current'} "
+        f"tag={'minted' if report.tagged else 'unchanged'}"
+    )
+    if not report.events and not report.refreshed:
+        print("update: no change — no new source events, instruction files current")
+    if args.push:
+        pushed = push_main_ranges(config.corpus, report.snapshot)
+        print(f"push: main_updates={pushed.main_updates} snapshot={pushed.snapshot}")
     return 0
 
 

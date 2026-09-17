@@ -9,8 +9,9 @@ import re
 import stat
 import tempfile
 import tomllib
+from collections import Counter
 from collections.abc import Callable, Iterable, Iterator, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, date, datetime, time
 from pathlib import Path
 
@@ -81,6 +82,11 @@ class BuildReport:
     events: int
     snapshot: str
     coverage: str
+    # What an update did, so that it can say so rather than leave the reader to
+    # infer it. A build sets neither: it writes everything by definition.
+    events_by_source: Mapping[str, int] = field(default_factory=dict)
+    refreshed: bool = False
+    tagged: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -752,8 +758,15 @@ UPDATE_FLUSH_EVENTS = 256
 def update_corpus(
     config: Config,
     sources: Mapping[str, EventFactory],
-) -> BuildReport | None:
-    """Append source IDs not already present, then refresh and snapshot."""
+) -> BuildReport:
+    """Append source IDs not already present, then refresh and snapshot.
+
+    Always returns a report, including for a run that changes nothing: an
+    update that says only "no new source events" leaves the reader to infer
+    what happened to the instruction files and the tag, and inferring success
+    from a short message is how a refresh that could not have happened was
+    nearly accepted as one.
+    """
 
     tools_commit = require_clean_tools(config.repo_root)
     status, _created = init_corpus(config)
@@ -774,6 +787,7 @@ def update_corpus(
         )
     known = existing_source_ids(config.corpus)
     event_count = 0
+    by_source: Counter[str] = Counter()
     last_time: datetime | None = None
     source_meta: dict[str, dict[str, str | bytes]] = {}
     sources_with_new_events: set[str] = set()
@@ -795,6 +809,7 @@ def update_corpus(
             sources_with_new_events.add(source_name)
             known.add((event.source, event.source_id))
             event_count += 1
+            by_source[source_name] += 1
             last_time = event.source_time
             if event_count % UPDATE_FLUSH_EVENTS == 0:
                 # A session that moved HEAD only at the end would lose the
@@ -836,7 +851,16 @@ def update_corpus(
         pending = dict(render_main(config.repo_root, context))
         pending.update(refresh_changes)
         if not _differs_from_worktree(config.corpus, pending):
-            return None
+            return BuildReport(
+                head=git_output(config.corpus, ["rev-parse", "HEAD"]),
+                commits=int(git_output(config.corpus, ["rev-list", "--count", "HEAD"])),
+                events=0,
+                snapshot=snapshot,
+                coverage=coverage,
+                events_by_source={},
+                refreshed=False,
+                tagged=False,
+            )
         # The parent names this refresh uniquely: every refresh has a distinct
         # one, and "the refresh applied on top of <commit>" is what a citation
         # of it means. The snapshot-derived id belongs to the update that
@@ -856,7 +880,16 @@ def update_corpus(
     if not refresh_only:
         _tag_snapshot(config.corpus, head, snapshot, last_time, coverage)
     commits = int(git_output(config.corpus, ["rev-list", "--count", "HEAD"]))
-    return BuildReport(head, commits, event_count, snapshot, coverage)
+    return BuildReport(
+        head=head,
+        commits=commits,
+        events=event_count,
+        snapshot=snapshot,
+        coverage=coverage,
+        events_by_source=dict(sorted(by_source.items())),
+        refreshed=True,
+        tagged=not refresh_only,
+    )
 
 
 def _tip_time(corpus: Path) -> datetime:

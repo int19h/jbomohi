@@ -206,10 +206,11 @@ def test_update_appends_only_new_source_ids_and_refreshes(tmp_path: Path) -> Non
     assert report is not None
     assert report.events == 1
     assert int(git(config.corpus, "rev-list", "--count", "HEAD")) == before + 2
-    assert (
-        update_corpus(config, {"wiki": lambda: iter((first_event, second_event))})
-        is None
-    )
+    # A run with nothing to do still reports, rather than leaving the reader to
+    # infer from a short message what happened to the instruction files.
+    quiet = update_corpus(config, {"wiki": lambda: iter((first_event, second_event))})
+    assert (quiet.events, quiet.refreshed, quiet.tagged) == (0, False, False)
+    assert quiet.events_by_source == {}
 
 
 def test_update_folds_final_stream_metadata_into_refresh(tmp_path: Path) -> None:
@@ -812,4 +813,6 @@ def test_update_refreshes_the_instruction_files_with_no_new_events(
         config.corpus, "log", "-1", "--format=%cI", before
     )
 
-    assert update_corpus(config, {"wiki": lambda: iter((base,))}) is None
+    quiet = update_corpus(config, {"wiki": lambda: iter((base,))})
+    assert (quiet.events, quiet.refreshed, quiet.tagged) == (0, False, False)
+    assert quiet.head == report.head

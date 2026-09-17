@@ -63,11 +63,20 @@ def test_build_update_verify_cli_wiring(monkeypatch, tmp_path: Path, capsys) -> 
     monkeypatch.setattr(
         "jbomohi_tools.cli.update_corpus",
         lambda _config, sources: SimpleNamespace(
-            head="b" * 40, commits=6, events=1, snapshot="snapshot/y"
+            head="b" * 40,
+            commits=6,
+            events=1,
+            snapshot="snapshot/y",
+            events_by_source={"wiki": 1},
+            refreshed=True,
+            tagged=True,
         ),
     )
     assert main(["update", "wiki"]) == 0
-    assert "events=1" in capsys.readouterr().out
+    printed = capsys.readouterr().out
+    assert "events=1 (wiki=1)" in printed
+    assert "instructions=refreshed" in printed
+    assert "tag=minted" in printed
 
     monkeypatch.setattr(
         "jbomohi_tools.cli.verify_corpus",
